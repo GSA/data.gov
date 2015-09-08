@@ -1,1 +1,3 @@
-cache/*
+src
+db/*.db
+.vagrant
