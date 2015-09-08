@@ -1,0 +1,83 @@
+#!/bin/bash
+
+
+# Written 2012 by Nils Toedtmann for OKFN <nils.toedtmann@okfn.org>
+
+
+###########################################################################
+# WARNING: 
+#
+#   This script removes anything older than $OLDER_THAN_DAYS from the
+#   directories listed in $DIRS_TO_CLEANUP. 
+#   
+#   It runs as user $RUN_AS - do NOT set that to 'root', or you risk 
+#   that a misconfiguring of e.g. $DIRS_TO_CLEANUP wipes this machine.
+#
+#   Drop this script as e.g.
+#    
+#       /ect/cron.daily/remove_old_files
+#
+###########################################################################
+#
+#   Alternatively, you could not set RUN_AS, and then call this script from 
+#   some unprivileged user's (e.g. "www-data") crontab instead. E.g. drop 
+#   this very script as /home/okfn/sbin/remove_old_files [*], edit the 
+#   user's crontab ...
+#   
+#       $ sudo crontab -e -u www-data
+#   
+#   and append the following line in order to run it daily at 4:37am:
+#   
+#       37 4 * * *  /home/okfn/sbin/remove_old_files
+#  
+#  
+#   [*] Do not use /home/okfn/bin/ because that often is only a softlink 
+#       into our sysadmin HG repo. Use /home/okfn/sbin/ instead.
+#  
+###########################################################################
+
+
+# Configure the options in this sections properly
+
+# user id to do the delete operation.
+# WARNING: Do *NOT* set this to 'root', or configuration mistake might wipe 
+# this machine. Instead, set it to the owner of the directories to be cleaned
+# up. Usually that is the owner of the serice processes, e.g. 'www-data'.
+if [ -z "${RUN_AS}" ]; then
+  RUN_AS="www-data"
+fi
+
+# Directories to be cleaned, separated by white space.
+# Typical examples: CKAN sessions directories
+if [ -z "${DIRS_TO_CLEANUP}" ]; then
+  DIRS_TO_CLEANUP="/tmp/*/session/ /tmp/sstore/"
+fi
+
+# Remove everything which is older than how namy days?
+if [ -z "${REMOVE_OLDER_THAN_DAYS}" ]; then
+  REMOVE_OLDER_THAN_DAYS=7
+fi
+# find's option "-atime" has an odd 1-day offset, therefore we use "-amin":
+REMOVE_OLDER_THAN_MINS=$((REMOVE_OLDER_THAN_DAYS*24*60))
+
+
+# Change this if you want not only old *files* to get removed
+FIND_OPTIONS="-type f"
+
+
+FIND_BIN="/usr/bin/find"
+SUDO_BIN="/usr/bin/sudo"
+
+
+###########################################################################
+
+
+if [ "X${RUN_AS}" = "X" ] || [ "X${RUN_AS}" = "X`id -un`" ]; then
+    SUDO=""
+else
+    SUDO="${SUDO_BIN} -u ${RUN_AS}"
+fi
+
+for dir in ${DIRS_TO_CLEANUP}; do
+    ${SUDO} ${FIND_BIN} $dir ${FIND_OPTIONS} -amin +${REMOVE_OLDER_THAN_MINS} -delete
+done

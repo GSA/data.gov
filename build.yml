@@ -1,0 +1,220 @@
+---
+- hosts: geodatagov23
+  user: ubuntu
+  sudo: yes
+
+  vars_prompt:
+    - name: "local_ckan"
+      prompt: "Use local ckan tarball? (yes/no)\nChoose yes on LAN to speed things up:"
+      default: "no"
+      private: no
+    - name: "local_solr"
+      prompt: "Use local solr tarball? (yes/no)\nChoose yes on LAN to speed things up:"
+      default: "no"
+      private: no
+
+  tasks:
+    - name: make sure packages are installed
+      action: apt pkg={{item}} state=installed
+      with_items:
+        - htop
+        - atool
+        - ruby
+        - python-virtualenv
+        - python-setuptools
+        - git
+        - python-dev
+        - ruby-dev
+        - postgresql-client
+        - bison
+        - apache2
+        - libapache2-mod-wsgi
+        - python-pip
+        - python-psycopg2
+        - redis-server
+        - libgeos-c1
+        - libxml2-dev
+        - libxslt1-dev
+        - lib32z1-dev
+
+#CKAN setup
+    - name: remove old code
+      action: file path=/usr/lib/ckan/src state=absent
+    - name: create directories
+      action: file path=/usr/lib/ckan/src state=directory
+
+    - name: get ckan version
+      action: git repo=https://github.com/GSA/ckan.git dest=/usr/lib/ckan/src/ckan version=ckan-2.3
+      when: local_ckan == "no" or local_ckan == "n"
+    - name: Copy and unarchive local ckan
+      action: unarchive src=cache/ckan-2.3.tgz dest=/usr/lib/ckan/src/
+      when: local_ckan == "yes" or local_ckan == "y"
+
+    - name: get pip
+      action: easy_install name=https://pypi.python.org/packages/source/p/pip/pip-1.3.1.tar.gz
+
+    - name: install requirements and make virtualenv
+      action: pip requirements=/usr/lib/ckan/src/ckan/requirements.txt virtualenv=/usr/lib/ckan/ virtualenv_site_packages=yes
+
+    - name: run setup.py develop for ckan
+      action: command chdir=/usr/lib/ckan/src/ckan/ ../../bin/python setup.py develop
+
+
+
+    - name: get harvest extension
+      action: git repo=https://github.com/ckan/ckanext-harvest dest=/usr/lib/ckan/src/ckanext-harvest version=stable
+
+    - name: install requirements for harvest
+      action: pip requirements=/usr/lib/ckan/src/ckanext-harvest/pip-requirements.txt virtualenv=/usr/lib/ckan/
+
+    - name: run setup.py develop for harvest
+      action: command chdir=/usr/lib/ckan/src/ckanext-harvest/ ../../bin/python setup.py develop
+
+    - name: get spatial extension
+      action: git repo=https://github.com/ckan/ckanext-spatial dest=/usr/lib/ckan/src/ckanext-spatial version=stable
+
+    - name: use a good version of Shapely
+      replace: dest=/usr/lib/ckan/src/ckanext-spatial/pip-requirements.txt regexp='^Shapely>=1.2.*$' replace='Shapely==1.3.1'
+    - name: install requirements for spatial
+      action: pip requirements=/usr/lib/ckan/src/ckanext-spatial/pip-requirements.txt virtualenv=/usr/lib/ckan/
+
+    - name: run setup.py develop for spatial
+      action: command chdir=/usr/lib/ckan/src/ckanext-spatial/ ../../bin/python setup.py develop
+
+
+
+
+    - name: remove psycopg2
+      action: pip name=psycopg2 virtualenv=/usr/lib/ckan/ state=absent
+
+    - name: install supervisor
+      action: pip name=supervisor virtualenv=/usr/lib/ckan/
+
+    - name: create directories
+      action: file path={{item}} state=directory
+      with_items:
+        - /etc/ckan
+
+    - name: default apache removed
+      action: file path=/etc/apache2/sites-enabled/000-default.conf state=absent
+
+    - name: copy all needed files
+      action: copy src={{item}} dest=/{{item}}
+      with_items:
+        - etc/ckan/who.ini
+        - etc/ckan/apache.wsgi
+        - etc/ckan/production.ini
+        - etc/apache2/sites-enabled/ckan.conf
+        - etc/cron.daily/remove_old_sessions
+        - etc/supervisord.conf
+        - etc/cron.d/ckan-harvest
+        - etc/cron.d/supervisor
+        - etc/supervisord.conf
+        - etc/init/supervisor.conf
+
+    - name: copy executables
+      action: copy src={{item}} dest=/{{item}} mode=744
+      with_items:
+        - usr/bin/ckan
+
+    - name: Apache | Enable some required modules
+      action: command a2enmod rewrite headers 
+      tags: common
+
+    - name: restart apache
+      action: service name=apache2 state=restarted
+
+    - name: create superviserctl symlink
+      action: file src=/usr/lib/ckan/bin/supervisorctl dest=/usr/bin/supervisorctl state=link
+
+    - name: start supervisor
+      action: command initctl start supervisor
+
+##################################
+# SOLR setup
+##################################
+    - name: prepare packages needed for solr
+      action: apt pkg={{item}} state=installed
+      with_items:
+        - tomcat6
+
+    - name: Download solr 4.2.1
+      command: creates=~/solr-4.2.1.tgz chdir=~/ wget -T 40  http://archive.apache.org/dist/lucene/solr/4.2.1/solr-4.2.1.tgz
+      when: local_solr == "no" or local_solr == "n"
+    - name: Copy solr 4.2.1
+      action: copy src=cache/solr-4.2.1.tgz dest=~/solr-4.2.1.tgz
+      when: local_solr == "yes" or local_solr == "y"
+
+    - name: Unpack solr
+      shell: "cd ~/ && tar -zxvf solr-4.2.1.tgz && cd solr-4.2.1/dist && cp solr-4.2.1.war /var/lib/tomcat6/webapps/solr.war"
+
+    - name: wait for the solr directory to be created
+      wait_for: path=/var/lib/tomcat6/webapps/solr/WEB-INF/
+
+    - name: Setup solr home folder
+      shell: "mkdir -p /home/solr && cp -R ~/solr-4.2.1/example/solr/* /home/solr && mv /home/solr/collection1 /home/solr/ckan"
+
+    - name: Change default solr collection1 to ckan
+      replace: dest=/home/solr/solr.xml regexp='collection1' replace='ckan'
+
+    - name: copy needed solr config file
+      action: copy src=misc/web.xml dest=/var/lib/tomcat6/webapps/solr/WEB-INF/web.xml force=yes
+    - name: copy needed solr config file
+      action: copy src=misc/schema.xml dest=/home/solr/ckan/conf/schema.xml force=yes
+
+    - name: Setup solr permissions
+      shell: "chown -R tomcat6 /home/solr"
+
+    - name: restarting tomcat service
+      action: service name=tomcat6 state=restarted
+
+##################################
+# postgresql DB setup
+##################################
+    - name: make sure postgresql packages are installed
+      action: apt pkg={{item}} state=installed
+      with_items:
+        - postgresql
+        - postgis
+        - postgresql-9.3-postgis-2.1
+
+    - name: reload postgres config
+      command: /etc/init.d/postgresql restart
+
+    - name: create geo.gov role
+      shell: psql -c "CREATE USER ckan WITH PASSWORD 'pass' SUPERUSER;"
+      sudo: yes
+      sudo_user: postgres
+
+    - name: create ckan database
+      shell: psql -c "CREATE DATABASE ckan OWNER ckan;"
+      sudo: yes
+      sudo_user: postgres
+
+    - name: install postgis script
+      shell: "psql -d ckan -f /usr/share/postgresql/9.3/contrib/postgis-2.1/postgis.sql"
+      sudo: yes
+      sudo_user: postgres
+
+    - name: install postgis script
+      shell: "psql -d ckan -f /usr/share/postgresql/9.3/contrib/postgis-2.1/spatial_ref_sys.sql"
+      sudo: yes
+      sudo_user: postgres
+
+    - name: install postgis script
+      shell: "psql -d ckan -f /usr/share/postgresql/9.3/contrib/postgis-2.1/rtpostgis.sql"
+      sudo: yes
+      sudo_user: postgres
+
+    - name: install postgis script
+      shell: "psql -d ckan -f /usr/share/postgresql/9.3/contrib/postgis-2.1/topology.sql"
+      sudo: yes
+      sudo_user: postgres
+
+    - name: install postgis script
+      shell: psql -d ckan -c "GRANT SELECT, UPDATE, INSERT, DELETE ON spatial_ref_sys TO ckan;"
+      sudo: yes
+      sudo_user: postgres
+
+    - name: Initialize ckan db
+      action: command ckan db init
