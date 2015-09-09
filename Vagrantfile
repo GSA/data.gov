@@ -16,20 +16,19 @@ Vagrant.configure(2) do |config|
   end
 
   # Configure synced_folders
-=begin
   config.vm.synced_folder "synced_folders/src", "/usr/lib/ckan/src",
                           id: "ckan_src",
-                          owner: "vagrant",
-                          group: "vagrant",
+                          owner: "root",
+                          group: "root",
                           mount_options: ["dmode=775","fmode=664"],
                           create: true
+
   config.vm.synced_folder "synced_folders/config", "/etc/ckan/",
                           id: "ckan_config",
-                          owner: "vagrant",
-                          group: "vagrant",
+                          owner: "root",
+                          group: "root",
                           mount_options: ["dmode=775","fmode=664"],
                           create: true
-=end
 
   # Provision vm through ansible
   config.vm.provision "ansible" do |ansible|
