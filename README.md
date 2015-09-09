@@ -2,7 +2,9 @@ Catalog Deploy
 ===============================
 
 **CKAN Version:** >= 2.3
+
 **Vagrant requirements:** vagrant-hostmanager
+
 **Ansible requirements:** >= 1.9.2
 
 ...work in progress...
