@@ -1,3 +1,17 @@
-src
-db/*.db
+*~
+*#
+.#*
+\#*#
+.*.sw[a-z]
+*.un~
+pkg/
+
+.DS_Store
 .vagrant
+
+# Ignore everything in these directories
+synced_folders/*
+synced_folders/*
+synced_folders/*
+# Except this .gitkeep file
+!synced_folders/.gitkeep
