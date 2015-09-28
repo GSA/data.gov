@@ -131,7 +131,7 @@
       action: file src=/usr/lib/ckan/bin/supervisorctl dest=/usr/bin/supervisorctl state=link
 
     - name: start supervisor
-      action: command initctl start supervisor
+      service: name=supervisor state=started
 
 ##################################
 # SOLR setup
