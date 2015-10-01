@@ -40,6 +40,15 @@
         - libxslt1-dev
         - lib32z1-dev
 
+
+    - name: make sure saml dependency packages are installed
+      action: apt pkg={{item}} state=installed
+      with_items:
+        - memcached
+        - m2crypto
+        - xmlsec1
+        - swig
+
 #CKAN setup
     - name: remove old code
       action: file path=/usr/lib/ckan/src state=absent
