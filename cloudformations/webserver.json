@@ -5,21 +5,10 @@
       "EC2Instance":{  
          "Type":"AWS::EC2::Instance",
          "Properties":{  
-            "AvailabilityZone":"us-east-1",
-            "BlockDeviceMappings":[  
-               {  
-                  "DeviceName":"/dev/sda1",
-                  "Ebs":{  
-                     "DeleteOnTermination":"false",
-                     "VolumeSize":"20",
-                     "VolumeType":"gp2",
-                     "SnapshotId":"snap-catalog-deploy"
-                  }
-               }
-            ],
+            "AvailabilityZone":"us-east-1a",
             "ImageId":"ami-45826e2e",
             "InstanceType":"m3.medium",
-            "KeyName":"ckan-csw-aws",
+            "KeyName":"rei-aws-pub",
             "SecurityGroups":[  
                {  
                   "Ref":"CatalogDeploySecurityGroup"
@@ -27,7 +16,7 @@
             ],
             "Tags":[  
                {  
-                  "Key":"name",
+                  "Key":"Name",
                   "Value":"catalog-deploy"
                },
                {  
@@ -63,7 +52,7 @@
             "InstanceId":{  
                "Ref":"EC2Instance"
             },
-            "EIP":"54.243.131.201"
+            "EIP":"54.227.241.29"
          }
       }
    }
