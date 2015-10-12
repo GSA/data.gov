@@ -1,0 +1,37 @@
+- name: create geo.gov role
+  shell: psql -c "CREATE USER ckan WITH PASSWORD 'pass' SUPERUSER;"
+  sudo: yes
+  sudo_user: postgres
+
+- name: create ckan database
+  shell: psql -c "CREATE DATABASE ckan OWNER ckan;"
+  sudo: yes
+  sudo_user: postgres
+
+- name: install postgis script
+  shell: "psql -d ckan -f /usr/share/postgresql/9.3/contrib/postgis-2.1/postgis.sql"
+  sudo: yes
+  sudo_user: postgres
+
+- name: install postgis script
+  shell: "psql -d ckan -f /usr/share/postgresql/9.3/contrib/postgis-2.1/spatial_ref_sys.sql"
+  sudo: yes
+  sudo_user: postgres
+
+- name: install postgis script
+  shell: "psql -d ckan -f /usr/share/postgresql/9.3/contrib/postgis-2.1/rtpostgis.sql"
+  sudo: yes
+  sudo_user: postgres
+
+- name: install postgis script
+  shell: "psql -d ckan -f /usr/share/postgresql/9.3/contrib/postgis-2.1/topology.sql"
+  sudo: yes
+  sudo_user: postgres
+
+- name: install postgis script
+  shell: psql -d ckan -c "GRANT SELECT, UPDATE, INSERT, DELETE ON spatial_ref_sys TO ckan;"
+  sudo: yes
+  sudo_user: postgres
+
+- name: Initialize ckan db
+  action: command ckan db init

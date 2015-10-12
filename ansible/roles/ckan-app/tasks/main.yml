@@ -1,0 +1,6 @@
+---
+- name: get ckan app
+  action: git repo=https://github.com/GSA/catalog-app.git dest=/tmp/catalog-app 
+
+- name: install ckan app
+  action: pip requirements=/tmp/catalog-app/requirements.txt virtualenv=/usr/lib/ckan/

@@ -1,0 +1,15 @@
+---
+- name: Install CKAN Stack
+  hosts: ckan-server
+  remote_user: root
+
+  roles:
+    - common
+    - saml2
+    - apache       
+    - postgresql
+    - solr
+    - ckan-app     
+    - ckan-config  
+    - ckan-db      
+    - ckan-harvest

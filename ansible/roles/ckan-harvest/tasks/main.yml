@@ -1,0 +1,24 @@
+---
+- name: install supervisor
+  action: pip name=supervisor virtualenv=/usr/lib/ckan/
+
+- name: copy all needed files
+  action: copy src={{item}} dest=/{{item}}
+  with_items:
+    - etc/cron.daily/remove_old_sessions
+    - etc/supervisord.conf
+    - etc/cron.d/ckan-harvest
+    - etc/cron.d/supervisor
+    - etc/supervisord.conf
+    - etc/init/supervisor.conf
+
+- name: copy executables
+  action: copy src={{item}} dest=/{{item}} mode=744
+  with_items:
+    - usr/bin/ckan
+
+- name: create superviserctl symlink
+  action: file src=/usr/lib/ckan/bin/supervisorctl dest=/usr/bin/supervisorctl state=link
+
+- name: start supervisor
+  service: name=supervisor state=started

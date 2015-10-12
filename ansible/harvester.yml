@@ -1,0 +1,14 @@
+---
+- name: Install CKAN Harvester
+  hosts: ckan-harvester
+  remote_user: root
+
+  roles:
+    - common
+    - apache       
+    - postgresql
+    - solr
+    - ckan-app     
+    - ckan-config  
+    - ckan-db      
+    - ckan-harvest
