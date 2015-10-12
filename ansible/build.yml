@@ -49,52 +49,23 @@
         - xmlsec1
         - swig
 
-#CKAN setup
-    - name: remove old code
-      action: file path=/usr/lib/ckan/src state=absent
-    - name: create directories
-      action: file path=/usr/lib/ckan/src state=directory
-
-    - name: get ckan version
-      action: git repo=https://github.com/GSA/ckan.git dest=/usr/lib/ckan/src/ckan version=ckan-2.3
-      when: local_ckan == "no" or local_ckan == "n"
-    - name: Copy and unarchive local ckan
-      action: unarchive src=cache/ckan-2.3.tgz dest=/usr/lib/ckan/src/
-      when: local_ckan == "yes" or local_ckan == "y"
-
     - name: get pip
       action: easy_install name=https://pypi.python.org/packages/source/p/pip/pip-1.3.1.tar.gz
 
-    - name: install requirements and make virtualenv
-      action: pip requirements=/usr/lib/ckan/src/ckan/requirements.txt virtualenv=/usr/lib/ckan/ virtualenv_site_packages=yes
-
-    - name: run setup.py develop for ckan
-      action: command chdir=/usr/lib/ckan/src/ckan/ ../../bin/python setup.py develop
+    - name: create ckan virtualenv
+      action: command virtualenv /usr/lib/ckan --system-site-packages
 
 
-
-    - name: get harvest extension
-      action: git repo=https://github.com/ckan/ckanext-harvest dest=/usr/lib/ckan/src/ckanext-harvest version=stable
-
-    - name: install requirements for harvest
-      action: pip requirements=/usr/lib/ckan/src/ckanext-harvest/pip-requirements.txt virtualenv=/usr/lib/ckan/
-
-    - name: run setup.py develop for harvest
-      action: command chdir=/usr/lib/ckan/src/ckanext-harvest/ ../../bin/python setup.py develop
-
-    - name: get spatial extension
-      action: git repo=https://github.com/ckan/ckanext-spatial dest=/usr/lib/ckan/src/ckanext-spatial version=stable
-
-    - name: use a good version of Shapely
-      replace: dest=/usr/lib/ckan/src/ckanext-spatial/pip-requirements.txt regexp='^Shapely>=1.2.*$' replace='Shapely==1.3.1'
-    - name: install requirements for spatial
-      action: pip requirements=/usr/lib/ckan/src/ckanext-spatial/pip-requirements.txt virtualenv=/usr/lib/ckan/
-
-    - name: run setup.py develop for spatial
-      action: command chdir=/usr/lib/ckan/src/ckanext-spatial/ ../../bin/python setup.py develop
+#Install CKAN app
+#    - name: get ckan app
+#      action: git repo=https://github.com/GSA/catalog-app.git dest=/tmp/catalog-app
+#    - name: install ckan app
+#      action: pip requirements=/tmp/catalog-app/requirements.txt virtualenv=/usr/lib/ckan/
 
 
-
+#CKAN configuration
+    - name: create directories
+      action: file path=/usr/lib/ckan/src state=directory
 
     - name: remove psycopg2
       action: pip name=psycopg2 virtualenv=/usr/lib/ckan/ state=absent
