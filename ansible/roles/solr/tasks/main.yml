@@ -23,8 +23,11 @@
 - name: Copy solr files to home dir
   shell: cp -R ~/solr-4.2.1/example/solr/* /home/solr
 
+- name: remove old /home/solr/ckan if exists
+  shell: rm -r /home/solr/ckan removes=/home/solr/ckan 
+
 - name: move collection1 files to home dir
-  shell: rm -r /home/solr/ckan && mv /home/solr/collection1 /home/solr/ckan
+  shell: mv /home/solr/collection1 /home/solr/ckan creates=/home/solr/ckan
 
 - name: Change default solr collection1 to ckan
   replace: dest=/home/solr/solr.xml regexp='collection1' replace='ckan'
