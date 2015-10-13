@@ -2,11 +2,28 @@
   shell: psql -c "CREATE USER ckan WITH PASSWORD 'pass' SUPERUSER;"
   sudo: yes
   sudo_user: postgres
+  register: create_user
+  ignore_errors: True
+
+- name: create geo.gov role
+  shell: psql -c "CREATE USER ckan WITH PASSWORD 'pass' SUPERUSER;"
+  sudo: yes
+  sudo_user: postgres
+  when: create_user.stdout.find("already exists") ==1
 
 - name: create ckan database
   shell: psql -c "CREATE DATABASE ckan OWNER ckan;"
   sudo: yes
   sudo_user: postgres
+  register: create_database
+  ignore_errors: True
+
+- name: create ckan database
+  shell: psql -c "CREATE DATABASE ckan OWNER ckan;"
+  sudo: yes
+  sudo_user: postgres
+  when: create_database.stdout.find("already exists") ==1
+  
 
 - name: install postgis script
   shell: "psql -d ckan -f /usr/share/postgresql/9.3/contrib/postgis-2.1/postgis.sql"
