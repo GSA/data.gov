@@ -1,6 +1,4 @@
-- name: create directories
-  action: file path=/etc/ckan state=directory
-
+---
 - name: who.ini config
   action: copy src=who.ini dest=/etc/ckan/who.ini
 

@@ -5,7 +5,6 @@
 
   roles:
     - common
-    - saml2
     - apache       
     - postgresql
     - solr

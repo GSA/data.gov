@@ -12,11 +12,6 @@
     - etc/supervisord.conf
     - etc/init/supervisor.conf
 
-- name: copy executables
-  action: copy src={{item}} dest=/{{item}} mode=744
-  with_items:
-    - usr/bin/ckan
-
 - name: create superviserctl symlink
   action: file src=/usr/lib/ckan/bin/supervisorctl dest=/usr/bin/supervisorctl state=link
 
