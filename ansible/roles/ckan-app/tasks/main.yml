@@ -1,12 +1,16 @@
 ---
-- name: Clone ckan app
+- name: Clone CKAN app
   action: git repo={{ app_repo }} dest={{ app_source_path }} 
 
-- name: Install ckan app
-  pip: requirements={{ app_source_path }}/requirements.txt virtualenv={{ virtual_env }}
+# Remove virtualenv
+- name: Remove CKAN virtualenv
+  shell: rm -rf {{ virtual_env }} 
+
+- name: Install CKAN app
+  pip: requirements={{ app_source_path }}/requirements.txt virtualenv={{ virtual_env }} virtualenv_site_packages=yes
 
 # CKAN Core installation
-- name: Install & configure ckan core
+- name: Install CKAN Core
   pip: requirements={{ virtual_env }}/src/ckan/requirements.txt virtualenv={{ virtual_env }}
 
 # CKAN Extensions installation
@@ -16,6 +20,9 @@
 - name: Install ckanext-spatial
   pip: requirements={{ virtual_env }}/src/ckanext-spatial/pip-requirements.txt virtualenv={{ virtual_env }}
 
+#- name: Install ckanext-saml2
+#  pip: requirements={{ virtual_env }}/src/ckanext-saml2/requirements.txt virtualenv={{ virtual_env }}
+
 # Configure CKAN
 - name: Configure CKAN App
-  shell: cp -r {{ app_source_path }}/config/environments/local/* /etc/ckan
+  shell: cp -r {{ app_source_path }}/config/environments/{{ env }}/* /etc/ckan

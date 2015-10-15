@@ -4,7 +4,7 @@
     - tomcat6
 
 - name: Download solr 4.2.1
-  command: creates=~/solr-4.2.1.tgz chdir=~/ wget -T 40  http://archive.apache.org/dist/lucene/solr/4.2.1/solr-4.2.1.tgz
+  command: creates=~/solr-4.2.1.tgz chdir=~/ wget -T 40  {{ solr_url }}
   when: local_solr == "no" or local_solr == "n"
 
 - name: Copy solr 4.2.1

@@ -28,12 +28,6 @@
 - name: get pip
   action: easy_install name=https://pypi.python.org/packages/source/p/pip/pip-1.3.1.tar.gz
 
-- name: create ckan virtualenv
-  command: virtualenv /usr/lib/ckan --system-site-packages
-  args:
-    creates: /usr/lib/ckan
-
-
 - name: create ckan config dir
   action: file path=/etc/ckan state=directory
 
