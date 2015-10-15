@@ -9,6 +9,5 @@
     - postgresql
     - solr
     - ckan-app     
-    - ckan-config  
     - ckan-db      
     - ckan-harvest

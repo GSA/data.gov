@@ -1,6 +1,21 @@
 ---
-- name: get ckan app
-  action: git repo=https://github.com/GSA/catalog-app.git dest=/tmp/catalog-app 
+- name: Clone ckan app
+  action: git repo={{ app_repo }} dest={{ app_source_path }} 
 
-- name: install ckan app
-  action: pip requirements=/tmp/catalog-app/requirements.txt virtualenv=/usr/lib/ckan/
+- name: Install ckan app
+  pip: requirements={{ app_source_path }}/requirements.txt virtualenv={{ virtual_env }}
+
+# CKAN Core installation
+- name: Install & configure ckan core
+  pip: requirements={{ virtual_env }}/src/ckan/requirements.txt virtualenv={{ virtual_env }}
+
+# CKAN Extensions installation
+- name: Install ckanext-harvest
+  pip: requirements={{ virtual_env }}/src/ckanext-harvest/pip-requirements.txt virtualenv={{ virtual_env }}
+
+- name: Install ckanext-spatial
+  pip: requirements={{ virtual_env }}/src/ckanext-spatial/pip-requirements.txt virtualenv={{ virtual_env }}
+
+# Configure CKAN
+- name: Configure CKAN App
+  shell: cp -r {{ app_source_path }}/config/environments/local/* /etc/ckan

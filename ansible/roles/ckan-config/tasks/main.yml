@@ -1,6 +1,0 @@
----
-- name: who.ini config
-  action: copy src=who.ini dest=/etc/ckan/who.ini
-
-- name: production.ini config
-  action: copy src=production.ini dest=/etc/ckan/production.ini
