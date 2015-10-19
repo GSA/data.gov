@@ -6,11 +6,9 @@
   shell: rm -rf {{ virtual_env }} 
 
 - name: Create CKAN virtualenv
-  shell: virtualenv {{ virtual_env }} --system-site-packages
+  shell: virtualenv {{ virtual_env }} --no-site-packages
 
 - name: Install CKAN app
-  #pip: requirements={{ app_source_path }}/requirements.txt virtualenv={{ virtual_env }} \
-  #  virtualenv_site_packages=yes extra_args='--build=/usr/lib/ckan/src'
   pip: requirements={{ app_source_path }}/requirements.txt virtualenv={{ virtual_env }} extra_args='--build=/usr/lib/ckan/src/'
   
 # ckan core
