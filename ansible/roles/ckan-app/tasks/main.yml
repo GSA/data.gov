@@ -51,5 +51,11 @@
   when: env != "local"
 
 # Configure CKAN
-- name: Configure CKAN App
-  shell: cp -r {{ app_source_path }}/config/environments/{{ env }}/* /etc/ckan
+- name: Configure production.ini
+  shell: cp -r {{ app_source_path }}/config/environments/{{ env }}/production.ini /etc/ckan
+
+- name: Configure who.ini
+  shell: cp -r {{ app_source_path }}/config/environments/{{ env }}/saml2/who.ini /etc/ckan
+
+- name: Configure saml2
+  shell: cp -r {{ app_source_path }}/config/environments/{{ env }}/saml2/* {{ virtual_env }}/src/ckanext-saml2/ckanext/saml2/config

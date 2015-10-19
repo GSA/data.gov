@@ -1,7 +1,8 @@
 ---
 - name: Install CKAN Stack
   hosts: ckan-server
-  remote_user: root
+  sudo: yes
+  #remote_user: root
 
   roles:
     - common
