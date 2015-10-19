@@ -24,7 +24,7 @@ Vagrant.configure(2) do |config|
       local_ckan: "no",
       local_solr: "no"
     }
-    ansible.inventory_path = "ansible/inventory"
+    ansible.inventory_path = "ansible/local"
   end
 
   # Configure synced_folders
