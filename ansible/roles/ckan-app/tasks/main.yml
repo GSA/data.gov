@@ -42,11 +42,13 @@
 #  command: chdir={{ virtual_env }}/src/ckanext-datajson/ ../../bin/python setup.py develop
 
 # ckanext-saml2
-#- name: Install ckanext-saml2
-#  pip: requirements={{ virtual_env }}/src/ckanext-saml2/requirements.txt virtualenv={{ virtual_env }}
+- name: Install ckanext-saml2
+  pip: requirements={{ virtual_env }}/src/ckanext-saml2/requirements.txt virtualenv={{ virtual_env }}
+  when: env != "local"
 
-#- name: Run setup.py develop for ckanext-saml2
-#  command: chdir={{ virtual_env }}/src/ckanext-saml2/ ../../bin/python setup.py develop
+- name: Run setup.py develop for ckanext-saml2
+  command: chdir={{ virtual_env }}/src/ckanext-saml2/ ../../bin/python setup.py develop
+  when: env != "local"
 
 # Configure CKAN
 - name: Configure CKAN App
