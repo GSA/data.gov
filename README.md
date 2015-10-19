@@ -26,3 +26,10 @@ This ansible script will install ckanext-geodatagov with CKAN core >= 2.3 on Ubu
 `aws cloudformation create-stack --stack-name catalog-deploy-stack --template-body file://cloudformations/webserver.json`
 
 Note: you might need to modify `cloudformations/webserver.json` to suit your needs.
+
+####Provision Through Ansible:
+Use the following command to provision VMs: `ansible-playbook {role} -i {inventory} --private-key={secret_private_key}`
+
+**DEVELOP**: `ansible-playbook ansible/site.yml -i ansible/develop --private-key=secret-key.pem`
+
+**QA**: `ansible-playbook ansible/site.yml -i ansible/qa --private-key=secret-private-key.pem`
