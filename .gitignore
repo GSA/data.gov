@@ -9,6 +9,10 @@ pkg/
 .DS_Store
 .vagrant
 
+# Ignoring symlinks
+config/
+src/
+
 # Ignore everything in these directories
 synced_folders/*
 synced_folders/*

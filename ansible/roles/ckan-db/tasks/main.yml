@@ -1,29 +1,26 @@
+- name: check if psql geo.gov role exists
+  shell: psql -c "SELECT 1 FROM pg_roles WHERE rolname='ckan';"
+  sudo: yes
+  sudo_user: postgres
+  register: check_ckan_db_user
+
 - name: create geo.gov role
+  when: check_ckan_db_user.stdout.find("(0 rows)") != -1
   shell: psql -c "CREATE USER ckan WITH PASSWORD 'pass' SUPERUSER;"
   sudo: yes
   sudo_user: postgres
-  register: create_user
-  ignore_errors: True
 
-- name: create geo.gov role
-  shell: psql -c "CREATE USER ckan WITH PASSWORD 'pass' SUPERUSER;"
+- name: check if ckan database already exists
+  shell: psql -c "SELECT 1 FROM pg_database WHERE datname = 'ckan';"
   sudo: yes
   sudo_user: postgres
-  when: create_user.stdout.find("already exists") ==1
+  register: check_ckan_database
 
 - name: create ckan database
+  when: check_ckan_database.stdout.find("(0 rows)") != -1
   shell: psql -c "CREATE DATABASE ckan OWNER ckan;"
   sudo: yes
   sudo_user: postgres
-  register: create_database
-  ignore_errors: True
-
-- name: create ckan database
-  shell: psql -c "CREATE DATABASE ckan OWNER ckan;"
-  sudo: yes
-  sudo_user: postgres
-  when: create_database.stdout.find("already exists") ==1
-  
 
 - name: install postgis script
   shell: "psql -d ckan -f /usr/share/postgresql/9.3/contrib/postgis-2.1/postgis.sql"
