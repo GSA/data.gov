@@ -1,52 +1,12 @@
 ---
-- name: Clone CKAN app
-  action: git repo={{ app_repo }} dest={{ app_source_path }} 
-
 - name: Remove CKAN virtualenv
   shell: rm -rf {{ virtual_env }} 
 
-- name: Create CKAN virtualenv
-  shell: virtualenv {{ virtual_env }} --no-site-packages
+- name: Clone CKAN app
+  action: git repo={{ app_repo }} dest={{ app_source_path }} 
 
 - name: Install CKAN app
-  pip: requirements={{ app_source_path }}/requirements.txt virtualenv={{ virtual_env }} extra_args='--build=/usr/lib/ckan/src/'
-  
-# ckan core
-- name: Install CKAN Core
-  pip: requirements={{ virtual_env }}/src/ckan/requirements.txt virtualenv={{ virtual_env }}
-
-- name: Run setup.py develop for ckan core
-  command: chdir={{ virtual_env }}/src/ckan/ ../../bin/python setup.py develop
-
-# ckanext-harvest
-- name: Install ckanext-harvest
-  pip: requirements={{ virtual_env }}/src/ckanext-harvest/pip-requirements.txt virtualenv={{ virtual_env }}
-
-- name: Run setup.py develop for ckanext-harvest
-  command: chdir={{ virtual_env }}/src/ckanext-harvest/ ../../bin/python setup.py develop
-
-# ckanext-spatial
-- name: Install ckanext-spatial
-  pip: requirements={{ virtual_env }}/src/ckanext-spatial/pip-requirements.txt virtualenv={{ virtual_env }}
-
-- name: Run setup.py develop for ckanext-spatial
-  command: chdir={{ virtual_env }}/src/ckanext-spatial/ ../../bin/python setup.py develop
-
-# ckanext-datajson
-#- name: Install ckanext-datajson
-#  pip: requirements={{ virtual_env }}/src/ckanext-datajson/pip-requirements.txt virtualenv={{ virtual_env }}
-
-#- name: Run setup.py develop for ckanext-datajson
-#  command: chdir={{ virtual_env }}/src/ckanext-datajson/ ../../bin/python setup.py develop
-
-# ckanext-saml2
-- name: Install ckanext-saml2
-  pip: requirements={{ virtual_env }}/src/ckanext-saml2/requirements.txt virtualenv={{ virtual_env }}
-  when: env != "local"
-
-- name: Run setup.py develop for ckanext-saml2
-  command: chdir={{ virtual_env }}/src/ckanext-saml2/ ../../bin/python setup.py develop
-  when: env != "local"
+  command: sh install.sh chdir={{ app_source_path }} 
 
 # Configure CKAN
 - name: Configure production.ini
@@ -58,3 +18,7 @@
 - name: Configure saml2
   shell: cp -r {{ app_source_path }}/config/environments/{{ env }}/saml2/* {{ virtual_env }}/src/ckanext-saml2/ckanext/saml2/config
   when: env != "local"
+
+- name: Upgrade repoze.who to 2.0 for local env
+  pip: name=repoze.who version=2.0 virtualenv={{ virtual_env }}
+  when: env == "local"
