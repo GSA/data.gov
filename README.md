@@ -14,6 +14,10 @@ This ansible script will install ckanext-geodatagov with CKAN core >= 2.3 on Ubu
 - vagrant: `https://docs.vagrantup.com/v2/installation/`
 - vagrant-hostmanager: `https://github.com/smdahlen/vagrant-hostmanager`
 
+**Installation**
+ - Run `vagrant up`
+ - Open http://catalog.dev/ in your browser
+
 ####VM Provisioning Requirements
 **Ansible:**
 `http://docs.ansible.com/ansible/intro_installation.html`
