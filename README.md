@@ -27,7 +27,15 @@ This ansible script will install ckanext-geodatagov with CKAN core >= 2.3 on Ubu
 
 ####CloudFormation:
 - Run the following command to create the AWS EC2 Stack (ec2 instance + security group + elastic ip)
-`aws cloudformation create-stack --stack-name catalog-deploy-stack --template-body file://cloudformations/webserver.json`
+`aws cloudformation create-stack --stack-name catalog-deploy-stack \
+	--template-body file://cloudformations/webserver.json \
+	--parameters \
+		ParameterKey=InstanceType,ParameterValue=m3.medium \
+		ParameterKey=ImageId,ParameterValue=ami-45826e2e \
+		ParameterKey=AvailabilityZone,ParameterValue=us-east-1a \
+		ParameterKey=KeyName,ParameterValue=rei-aws-pub \
+		ParameterKey=Environment,ParameterValue=develop \
+		ParameterKey=ElasticIP,ParameterValue=54.227.241.29`
 
 Note: you might need to modify `cloudformations/webserver.json` to suit your needs.
 
