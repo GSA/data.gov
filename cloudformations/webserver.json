@@ -29,7 +29,7 @@
       },
       "KeyName":{  
          "Type":"String",
-         "Default":"rei-aws-pub"
+         "Default":"ckan-csw-aws"
       },
       "Environment":{  
          "Type":"String",
@@ -44,7 +44,7 @@
          "Type":"String",
          "Default":"54.227.241.29",
          "AllowedValues":[  
-            "54.227.241.29",
+            "54.197.246.60",
             "54.235.145.65"
          ]
       }
@@ -57,7 +57,7 @@
                "Ref":"AvailabilityZone"
             },
             "ImageId":{  
-               "Ref":"InstanceId"
+               "Ref":"ImageId"
             },
             "InstanceType":{  
                "Ref":"InstanceType"

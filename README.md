@@ -34,9 +34,9 @@ aws cloudformation create-stack --stack-name catalog-deploy-stack \
 		ParameterKey=InstanceType,ParameterValue=m3.medium \
 		ParameterKey=ImageId,ParameterValue=ami-45826e2e \
 		ParameterKey=AvailabilityZone,ParameterValue=us-east-1a \
-		ParameterKey=KeyName,ParameterValue=rei-aws-pub \
+		ParameterKey=KeyName,ParameterValue=ckan-csw-aws \
 		ParameterKey=Environment,ParameterValue=develop \
-		ParameterKey=ElasticIP,ParameterValue=54.227.241.29
+		ParameterKey=ElasticIP,ParameterValue=54.197.246.60
 ```
 Note: you might need to modify `cloudformations/webserver.json` to suit your needs.
 
