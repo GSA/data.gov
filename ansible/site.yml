@@ -12,3 +12,4 @@
     - ckan-app     
     - ckan-db      
     - ckan-harvest
+    - saml2
