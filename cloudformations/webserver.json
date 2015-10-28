@@ -1,14 +1,70 @@
 {  
    "AWSTemplateFormatVersion":"2010-09-09",
    "Description":"catalog-deploy ec2 stack",
+   "Parameters":{  
+      "InstanceType":{  
+         "Type":"String",
+         "Default":"m3.medium",
+         "AllowedValues":[  
+            "t2.micro",
+            "t2.small",
+            "m3.medium",
+            "m4.large",
+            "m4.xlarge"
+         ]
+      },
+      "ImageId":{  
+         "Type":"String",
+         "Default":"ami-45826e2e"
+      },
+      "AvailabilityZone":{  
+         "Type":"String",
+         "Default":"us-east-1a",
+         "AllowedValues":[  
+            "us-east-1a",
+            "us-east-1b",
+            "us-east-1c",
+            "us-east-1d"
+         ]
+      },
+      "KeyName":{  
+         "Type":"String",
+         "Default":"rei-aws-pub"
+      },
+      "Environment":{  
+         "Type":"String",
+         "Default":"develop",
+         "AllowedValues":[  
+            "develop",
+            "qa",
+            "prod"
+         ]
+      },
+      "ElasticIP":{  
+         "Type":"String",
+         "Default":"54.227.241.29",
+         "AllowedValues":[  
+            "54.227.241.29",
+            "54.235.145.65"
+         ]
+      }
+   },
    "Resources":{  
       "EC2Instance":{  
          "Type":"AWS::EC2::Instance",
          "Properties":{  
-            "AvailabilityZone":"us-east-1a",
-            "ImageId":"ami-45826e2e",
-            "InstanceType":"m3.medium",
-            "KeyName":"rei-aws-pub",
+            "AvailabilityZone":{  
+               "Ref":"AvailabilityZone"
+            },
+            "ImageId":{  
+               "Ref":"InstanceId"
+            },
+            "InstanceType":{  
+               "Ref":"InstanceType"
+            },
+            "KeyName":{  
+               "Ref":"KeyName"
+            },
             "SecurityGroups":[  
                {  
                   "Ref":"CatalogDeploySecurityGroup"
@@ -22,6 +78,12 @@
                {  
                   "Key":"owner",
                   "Value":"dan.olaru"
+               },
+               {  
+                  "Key":"Environment",
+                  "Value":{  
+                     "Ref":"Environment"
+                  }
                }
             ]
          }
@@ -52,7 +114,9 @@
             "InstanceId":{  
                "Ref":"EC2Instance"
             },
-            "EIP":"54.227.241.29"
+            "EIP":{  
+               "Ref":"ElasticIP"
+            }
          }
       }
    }
