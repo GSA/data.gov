@@ -42,7 +42,7 @@
       },
       "ElasticIP":{  
          "Type":"String",
-         "Default":"54.235.145.65",
+         "Default":"54.197.246.60",
          "AllowedValues":[  
             "54.197.246.60",
             "54.235.145.65"
