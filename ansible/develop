@@ -1,2 +1,2 @@
 [ckan-server] 
-cd.devopsplatform.com ansible_connection=ssh ansible_ssh_user=ubuntu env=develop 
+dev-cd.reisys.io ansible_connection=ssh ansible_ssh_user=ubuntu env=develop 
