@@ -100,7 +100,14 @@
                   "FromPort":"22",
                   "ToPort":"22",
                   "CidrIp":"65.242.97.254/32"
+               },
+               {  
+                  "IpProtocol":"tcp",
+                  "FromPort":"22",
+                  "ToPort":"22",
+                  "CidrIp":"54.243.131.201/32"
                }
+
             ]
          }
       },
