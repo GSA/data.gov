@@ -12,4 +12,5 @@
     - ckan-app     
     - ckan-db      
     - ckan-harvest
+    - pycsw
     - saml2

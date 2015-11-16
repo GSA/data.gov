@@ -1,0 +1,9 @@
+## refresh pycsw server keywords weekly
+0  0 * * 0 root /usr/lib/ckan/bin/paster --plugin=ckanext-spatial ckan-pycsw set_keywords -p /etc/ckan/pycsw-collection.cfg >> /var/log/pycsw_keywords.log 2>&1
+10 0 * * 0 root /usr/lib/ckan/bin/paster --plugin=ckanext-spatial ckan-pycsw set_keywords -p /etc/ckan/pycsw-all.cfg >> /var/log/pycsw_keywords.log 2>&1
+
+## sync metadata records daily at 0400h
+0 4 * * * root /usr/lib/ckan/bin/paster --plugin=ckanext-spatial ckan-pycsw load -p /etc/ckan/pycsw-all.cfg >> /var/log/pycsw_load.log 2>&1 && /usr/lib/ckan/bin/python /usr/lib/ckan/bin/pycsw-db-admin.py vacuumdb /etc/ckan/pycsw-all.cfg >> /var/log/pycsw_vacuum.log 2>&1
+
+## reindex FTS GIN every Sunday at 0600h
+0 5 * * 0 root /usr/lib/ckan/bin/python /usr/lib/ckan/bin/pycsw-db-admin.py reindex_fts /etc/ckan/pycsw-all.cfg >> /var/log/pycsw_fts.log 2>&1
