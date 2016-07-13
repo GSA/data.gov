@@ -1,0 +1,18 @@
+---
+
+#- hosts: localhost
+#  connection: local
+#  gather_facts: False
+#  vars_files:
+#    - ../vars/main.yml
+
+#tasks:
+  - name: Create/Delete datagov VPC
+    ec2_vpc:
+      cidr_block: "{{ vpc_cidr_block }}" 
+      region: "{{ vpc_region }}"
+      resource_tags: {"Name":"{{ vpc_name }}" }
+      state: "{{ state }}"
+    register: vpc
+
+  - debug: var=vpc

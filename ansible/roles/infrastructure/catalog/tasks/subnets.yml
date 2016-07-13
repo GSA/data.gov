@@ -1,0 +1,39 @@
+---
+#- hosts: localhost
+#  connection: local
+#  gather_facts: False
+#  vars_files:
+#    - ../vars/main.yml
+#
+#  tasks:
+
+#- debug: var=vpc.vpc_id
+
+# Create Public & Private Subnets in 2 AZs
+- name: Create/Delete public subnet for "{{ item }}"
+  ec2_vpc_subnet:
+    region: "{{ region }}"
+    #az: subnets.{{ item }}.az
+    az: us-east-1b
+    state: "{{ state }}"
+    vpc_id: "{{ vpc.vpc_id }}"
+    cidr: "{{ subnets[item]['cidr'] }}"
+    resource_tags: {"Name":"{{ app }}_{{ item }}_{{ subnets[item]['az'] }}" }
+  #register: #{ public_subnet_"{{ item.az }}" }
+  #register: public_subnet
+  with_items: "{{ subnets }}"
+
+##- debug: var=subnets.{{ item }}.cidr
+##  with_items: "{{ subnets }}"
+
+
+# private subnet @ Primary AZ
+#- name: Create/Delete private subnet for "{{ vpc.vpc_id }}" in AZ "{{ primary_az}}"
+#  ec2_vpc_subnet:
+#    region: "{{ region }}"
+#    az: "{{ primary_az }}"
+#    state: "{{ state }}" 
+#    vpc_id: "{{ vpc.vpc_id }}"
+#    cidr: "{{ private_subnet_cidr }}"
+#    resource_tags: {"Name":"{{ app }}_private_subnet" }
+#  register: private_subnet_primary_az

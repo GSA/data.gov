@@ -1,0 +1,16 @@
+app: catalog
+subnets:
+  public_subnet_1:
+    cidr: 172.22.0.0/24 
+    az: us-east-1b
+  public_subnet_2:
+    cidr: 172.22.1.0/24
+    az: us-east-1c
+  private_subnet_1:
+    cidr: 172.22.2.0/24
+    az: us-east-1b
+  private_subnet_2:
+    cidr: 172.22.3.0/24
+    az: us-east-1c
+region: us-east-1
+state: present
