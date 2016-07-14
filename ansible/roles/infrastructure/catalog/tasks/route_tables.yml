@@ -1,0 +1,15 @@
+# Set Up Public subnets route tables
+
+- name: Set up public subnet route table
+  ec2_vpc_route_table:
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    #tags: { "Name":"{{ app }}-public-subnet-route-table" }
+    subnets: 
+      # todo: find a better way to extract public subnets from registered datagov_subnets variable
+      - "{{ datagov_subnets.results[1].subnet.id }}"
+      - "{{ datagov_subnets.results[2].subnet.id }}"
+    routes:
+      - dest: 0.0.0.0/0
+        gateway_id: "{{ igw.gateway_id }}"
+  register: public_route_table

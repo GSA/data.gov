@@ -1,0 +1,7 @@
+---
+- name: Create/Delete IGW
+  ec2_vpc_igw:
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    state: "{{ state }}"
+  register: igw

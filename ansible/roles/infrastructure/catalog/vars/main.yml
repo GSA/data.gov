@@ -1,4 +1,6 @@
 app: catalog
+
+# AWS Subnets vars
 subnets:
   public_subnet_1:
     cidr: 172.22.0.0/24 
@@ -14,3 +16,7 @@ subnets:
     az: us-east-1c
 region: us-east-1
 state: present
+
+#AWS IGW vars
+
+#AWS Route Tables vars

@@ -14,5 +14,3 @@
       resource_tags: {"Name":"{{ vpc_name }}" }
       state: "{{ state }}"
     register: vpc
-
-  - debug: var=vpc
