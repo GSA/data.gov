@@ -1,0 +1,99 @@
+---
+
+- name: web ec2 security group
+  ec2_group:
+    name: web-sg
+    description: web security group
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    rules:
+      - proto: tcp
+        from_port: 80
+        to_port: 80
+        group_id: webproxy-sg.id
+      - proto: tcp
+        from_port: 443
+        to_port: 443
+        group_id: webproxy-sg.id
+#      - proto: tcp
+#        from_port: 22
+#        to_port: 22
+#        group_id: "{{ jump_host_cidr }}" 
+  register: web-sg
+
+- name: app ec2 security group
+  ec2_group:
+    name: app-sg
+    description: app security group
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    rules:
+#      - proto: tcp
+#        from_port: 22
+#        to_port: 22
+#        group_id: "{{ jump_host_cidr }}" 
+  register: app-sg
+
+- name: db security group
+  ec2_group:
+    name: db-sg
+    description: db security group
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    rules:
+      - proto: tcp
+        from_port: 5432
+        to_port: 5432
+        group_id: web-sg.id
+      - proto: tcp
+        from_port: 5432
+        to_port: 5432
+        group_id: app-sg.id
+  register: db-sg
+
+- name: redis ec2 security group
+  ec2_group:
+    name: redis-sg
+    description: redis ec2 security group
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    rules:
+      - proto: tcp
+        from_port: 6380
+        to_port: 6380
+        group_id: app-sg.id
+  register: redis-sg
+
+- name: ELB security group
+  ec2_group:
+    name: elb-sg
+    description: ELB security group
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    rules:
+      - proto: tcp
+        from_port: 80
+        to_port: 80
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: 443
+        to_port: 443
+        cidr_ip: 0.0.0.0/0
+  register: elb-sg
+
+- name: WebProxy security group
+  ec2_group:
+    name: webproxy-sg
+    description: WebProxy security group
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    rules:
+      - proto: tcp
+        from_port: 80
+        to_port: 80
+        group_id: elb-sg.id
+      - proto: tcp
+        from_port: 443
+        to_port: 443
+        group_id: elg-sg.id
+  register: elb-sg
