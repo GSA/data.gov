@@ -1,72 +1,27 @@
 ---
 
-- name: web ec2 security group
+#Jump Host SG
+- name: Jump Host security group
   ec2_group:
-    name: web-sg
-    description: web security group
+    name: "{{ app }}-jump-host-sg"
+    description: Jump Host security group
     vpc_id: "{{ vpc.vpc_id }}"
     region: "{{ region }}"
     rules:
       - proto: tcp
-        from_port: 80
-        to_port: 80
-        group_id: webproxy-sg.id
+        from_port: 22
+        to_port: 22
+        cidr_ip: 74.96.208.193/32
       - proto: tcp
-        from_port: 443
-        to_port: 443
-        group_id: webproxy-sg.id
-#      - proto: tcp
-#        from_port: 22
-#        to_port: 22
-#        group_id: "{{ jump_host_cidr }}" 
-  register: web-sg
+        from_port: 22
+        to_port: 22
+        cidr_ip: 65.242.97.254/32
+  register: jump_host_sg
 
-- name: app ec2 security group
-  ec2_group:
-    name: app-sg
-    description: app security group
-    vpc_id: "{{ vpc.vpc_id }}"
-    region: "{{ region }}"
-    rules:
-#      - proto: tcp
-#        from_port: 22
-#        to_port: 22
-#        group_id: "{{ jump_host_cidr }}" 
-  register: app-sg
-
-- name: db security group
-  ec2_group:
-    name: db-sg
-    description: db security group
-    vpc_id: "{{ vpc.vpc_id }}"
-    region: "{{ region }}"
-    rules:
-      - proto: tcp
-        from_port: 5432
-        to_port: 5432
-        group_id: web-sg.id
-      - proto: tcp
-        from_port: 5432
-        to_port: 5432
-        group_id: app-sg.id
-  register: db-sg
-
-- name: redis ec2 security group
-  ec2_group:
-    name: redis-sg
-    description: redis ec2 security group
-    vpc_id: "{{ vpc.vpc_id }}"
-    region: "{{ region }}"
-    rules:
-      - proto: tcp
-        from_port: 6380
-        to_port: 6380
-        group_id: app-sg.id
-  register: redis-sg
-
+#ELB SG
 - name: ELB security group
   ec2_group:
-    name: elb-sg
+    name: "{{ app }}-elb-sg"
     description: ELB security group
     vpc_id: "{{ vpc.vpc_id }}"
     region: "{{ region }}"
@@ -79,11 +34,12 @@
         from_port: 443
         to_port: 443
         cidr_ip: 0.0.0.0/0
-  register: elb-sg
+  register: elb_sg
 
+# Web Proxy SG
 - name: WebProxy security group
   ec2_group:
-    name: webproxy-sg
+    name: "{{ app }}-web-proxy-sg"
     description: WebProxy security group
     vpc_id: "{{ vpc.vpc_id }}"
     region: "{{ region }}"
@@ -91,9 +47,103 @@
       - proto: tcp
         from_port: 80
         to_port: 80
-        group_id: elb-sg.id
+        group_id: "{{ elb_sg.group_id }}"
       - proto: tcp
         from_port: 443
         to_port: 443
-        group_id: elg-sg.id
-  register: elb-sg
+        group_id: "{{ elb_sg.group_id }}"
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        group_id: "{{ jump_host_sg.group_id }}"
+  register: web_proxy_sg
+
+# Web SG
+- name: Web ec2 security group
+  ec2_group:
+    name: "{{ app }}-web-sg"
+    description: web security group
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    rules:
+      - proto: tcp
+        from_port: 80
+        to_port: 80
+        group_id: "{{ web_proxy_sg.group_id }}"
+      - proto: tcp
+        from_port: 443
+        to_port: 443
+        group_id: "{{ web_proxy_sg.group_id }}"
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        group_id: "{{ jump_host_sg.group_id }}" 
+  register: web_sg
+
+# Harvester SG
+- name: Harverster ec2 security group
+  ec2_group:
+    name: "{{ app }}-harvester-sg"
+    description: web security group
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    rules:
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        group_id: "{{ jump_host_sg.group_id }}" 
+  register: harvester_sg
+
+# RDS SG
+- name: db security group
+  ec2_group:
+    name: "{{ app }}-db-sg"
+    description: db security group
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    rules:
+      - proto: tcp
+        from_port: 5432
+        to_port: 5432
+        group_id: "{{ web_sg.group_id }}"
+      - proto: tcp
+        from_port: 5432
+        to_port: 5432
+        group_id: "{{ harvester_sg.group_id }}"
+  register: db_sg
+
+# Elastic Cache SG
+- name: elasticache/redis security group
+  ec2_group:
+    name: "{{ app }}-redis-sg"
+    description: redis ec2 security group
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    rules:
+      - proto: tcp
+        from_port: 8080
+        to_port: 8080
+        group_id: "{{ web_sg.group_id }}"
+      - proto: tcp
+        from_port: 6380
+        to_port: 6380
+        group_id: "{{ harvester_sg.group_id }}"
+  register: redis_sg
+
+# SOLR SG
+- name: SOLR security group
+  ec2_group:
+    name: "{{ app }}-solr-sg"
+    description: SOLR security group
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    rules:
+      - proto: tcp
+        from_port: 8080
+        to_port: 8080
+        group_id: "{{ web_sg.group_id }}"
+      - proto: tcp
+        from_port: 8080
+        to_port: 8080
+        group_id: "{{ harvester_sg.group_id }}"
+  register: solr_sg
