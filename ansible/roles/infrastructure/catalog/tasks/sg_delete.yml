@@ -1,0 +1,49 @@
+---
+
+# Elastic Cache SG
+- name: elasticache/redis security group
+  ec2_group:
+    name: "{{ app }}-redis-sg"
+    state: "{{ state }}"
+
+# SOLR SG
+- name: SOLR security group
+  ec2_group:
+    name: "{{ app }}-solr-sg"
+    state: "{{ state }}"
+
+# RDS SG
+- name: db security group
+  ec2_group:
+    name: "{{ app }}-db-sg"
+    state: "{{ state }}"
+
+# Harvester SG
+- name: Harverster ec2 security group
+  ec2_group:
+    name: "{{ app }}-harvester-sg"
+    state: "{{ state }}"
+
+# Web Proxy SG
+- name: WebProxy security group
+  ec2_group:
+    name: "{{ app }}-web-proxy-sg"
+    state: "{{ state }}"
+
+# Web SG
+- name: Web ec2 security group
+  ec2_group:
+    name: "{{ app }}-web-sg"
+    state: "{{ state }}"
+
+#Jump Host SG
+- name: Jump Host security group
+  ec2_group:
+    name: "{{ app }}-jump-host-sg"
+    state: "{{ state }}"
+
+#ELB SG
+- name: ELB security group
+  ec2_group:
+    name: "{{ app }}-elb-sg"
+    state: "{{ state }}"

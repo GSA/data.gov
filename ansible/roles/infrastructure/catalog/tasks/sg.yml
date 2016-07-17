@@ -110,6 +110,10 @@
         from_port: 5432
         to_port: 5432
         group_id: "{{ harvester_sg.group_id }}"
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        group_id: "{{ jump_host_sg.group_id }}"
   register: db_sg
 
 # Elastic Cache SG
