@@ -7,8 +7,8 @@
     - roles/infrastructure/catalog/vars/main.yml
 
   tasks:
-    - include: roles/infrastructure/catalog/tasks/delete_sg.yml
-    - include: roles/infrastructure/catalog/tasks/delete_route_tables.yml
-    - include: roles/infrastructure/catalog/tasks/delete_subnets.yml
-    - include: roles/infrastructure/common/tasks/delete_igw.yml
-    - include: roles/infrastructure/common/tasks/delete_vpc.yml
+    - include: roles/infrastructure/catalog/tasks/sg_delete.yml
+    - include: roles/infrastructure/catalog/tasks/route_tables_delete.yml
+    - include: roles/infrastructure/catalog/tasks/subnets_delete.yml
+    - include: roles/infrastructure/common/tasks/igw_delete.yml
+    - include: roles/infrastructure/common/tasks/vpc_delete.yml
