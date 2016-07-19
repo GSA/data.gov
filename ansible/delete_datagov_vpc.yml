@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  vars_files:
+    - roles/infrastructure/common/vars/main.yml
+
+  tasks:
+    - include: roles/infrastructure/common/tasks/vpc_delete.yml

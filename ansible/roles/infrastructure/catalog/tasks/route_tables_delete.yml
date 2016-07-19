@@ -1,12 +1,19 @@
-# Set Up Public subnets route tables
+---
 
-- name: Set up public subnet route table
+- name: Gather facts about route tables
+  ec2_vpc_route_table_facts:
+    region: "{{ region }}"
+    filters:
+      vpc-id: "{{ vpc_subnet_facts.subnets[0].vpc_id }}"
+  register: route_table_facts
+  when: vpc_subnet_facts.subnets|length > 0
+
+- name: Remove route tables
   ec2_vpc_route_table:
     state: absent
-    vpc_id: "{{ vpc.vpc_id }}"
-    subnets: 
-      - "{{ datagov_subnets.results[1].subnet.id }}"
-      - "{{ datagov_subnets.results[2].subnet.id }}"
-    routes:
-      - dest: 0.0.0.0/0
-        gateway_id: "{{ igw.gateway_id }}"
+    region: "{{ region }}"
+    vpc_id: "{{ vpc_subnet_facts.subnets[0].vpc_id }}"
+    route_table_id: item.id
+    resource_tags: { "Name":"{{ app }}-public-subnet-route-table" }
+  with_items: route_table_facts.route_tables
+  when: route_table_facts.route_tables|length > 0

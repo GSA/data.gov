@@ -1,9 +1,17 @@
 ---
 
-# Create Public & Private Subnets in 2 AZs
+- name: Gather subnets' facts
+  ec2_vpc_subnet_facts:
+    region: "{{ region }}"
+    filters:
+      { "tag:app": "{{ app }}", "tag:portofolio": "{{ vpc_name }}" }
+  register: vpc_subnet_facts
+
 - name: Delete public/private subnets for "{{ app }}" app
   ec2_vpc_subnet:
     state: absent
-    vpc_id: "{{ vpc.vpc_id }}"
-    cidr: "{{ subnets[item]['cidr'] }}"
-  with_items: "{{ subnets }}"
+    cidr: "{{ item['cidr_block'] }}"
+    vpc_id: "{{ item['vpc_id'] }}"
+    region: "{{ region }}"
+  with_items: "{{ vpc_subnet_facts.subnets }}"
+  when: vpc_subnet_facts.subnets|length > 0

@@ -1,7 +1,7 @@
 ---
 
 #Jump Host SG
-- name: Jump Host security group
+- name: Create Jump Host security group
   ec2_group:
     name: "{{ app }}-jump-host-sg"
     description: Jump Host security group
@@ -19,7 +19,7 @@
   register: jump_host_sg
 
 #ELB SG
-- name: ELB security group
+- name: Create ELB security group
   ec2_group:
     name: "{{ app }}-elb-sg"
     description: ELB security group
@@ -37,7 +37,7 @@
   register: elb_sg
 
 # Web Proxy SG
-- name: WebProxy security group
+- name: Create WebProxy security group
   ec2_group:
     name: "{{ app }}-web-proxy-sg"
     description: WebProxy security group
@@ -59,7 +59,7 @@
   register: web_proxy_sg
 
 # Web SG
-- name: Web ec2 security group
+- name: Create Web ec2 security group
   ec2_group:
     name: "{{ app }}-web-sg"
     description: web security group
@@ -81,10 +81,10 @@
   register: web_sg
 
 # Harvester SG
-- name: Harverster ec2 security group
+- name: Create Harverster ec2 security group
   ec2_group:
     name: "{{ app }}-harvester-sg"
-    description: web security group
+    description: harvester security group
     vpc_id: "{{ vpc.vpc_id }}"
     region: "{{ region }}"
     rules:
@@ -95,7 +95,7 @@
   register: harvester_sg
 
 # RDS SG
-- name: db security group
+- name: Create db security group
   ec2_group:
     name: "{{ app }}-db-sg"
     description: db security group
@@ -117,7 +117,7 @@
   register: db_sg
 
 # Elastic Cache SG
-- name: elasticache/redis security group
+- name: Create elasticache/redis security group
   ec2_group:
     name: "{{ app }}-redis-sg"
     description: redis ec2 security group
@@ -135,7 +135,7 @@
   register: redis_sg
 
 # SOLR SG
-- name: SOLR security group
+- name: Create SOLR security group
   ec2_group:
     name: "{{ app }}-solr-sg"
     description: SOLR security group

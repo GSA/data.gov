@@ -5,9 +5,14 @@
   ec2_vpc_subnet:
     region: "{{ region }}"
     az: "{{ subnets[item]['az'] }}"
-    state: "{{ state }}"
+    state: present
     vpc_id: "{{ vpc.vpc_id }}"
     cidr: "{{ subnets[item]['cidr'] }}"
-    resource_tags: {"Name":"{{ app }}_{{ item }}_{{ subnets[item]['az'] }}" }
+    resource_tags: {
+      "Name":"{{ app }}_{{ item }}_{{ subnets[item]['az'] }}",
+      "app":"{{ app }}", 
+      "type":"{{ subnets[item]['type'] }}",
+      "portofolio":"{{ vpc_name }}"
+    }
   register: datagov_subnets
   with_items: "{{ subnets }}"

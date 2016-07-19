@@ -1,49 +1,65 @@
 ---
 
 # Elastic Cache SG
-- name: elasticache/redis security group
+- name: Delete elasticache/redis security group
   ec2_group:
+    description: redis ec2 security group
+    region: "{{ region }}"
     name: "{{ app }}-redis-sg"
-    state: "{{ state }}"
+    state: absent
 
 # SOLR SG
-- name: SOLR security group
+- name: Delete SOLR security group
   ec2_group:
+    description: SOLR security group
+    region: "{{ region }}"
     name: "{{ app }}-solr-sg"
-    state: "{{ state }}"
+    state: absent
 
 # RDS SG
-- name: db security group
+- name: Delete db security group
   ec2_group:
+    description: db security group
+    region: "{{ region }}"
     name: "{{ app }}-db-sg"
-    state: "{{ state }}"
+    state: absent
 
 # Harvester SG
-- name: Harverster ec2 security group
+- name: Delete Harverster ec2 security group
   ec2_group:
+    description: harvester security group
+    region: "{{ region }}"
     name: "{{ app }}-harvester-sg"
-    state: "{{ state }}"
-
-# Web Proxy SG
-- name: WebProxy security group
-  ec2_group:
-    name: "{{ app }}-web-proxy-sg"
-    state: "{{ state }}"
+    state: absent
 
 # Web SG
-- name: Web ec2 security group
+- name: Delete Web ec2 security group
   ec2_group:
+    description: web security group
+    region: "{{ region }}"
     name: "{{ app }}-web-sg"
-    state: "{{ state }}"
+    state: absent
+
+# Web Proxy SG
+- name: Delete WebProxy security group
+  ec2_group:
+    description: WebProxy security group
+    region: "{{ region }}"
+    name: "{{ app }}-web-proxy-sg"
+    state: absent
 
 #Jump Host SG
-- name: Jump Host security group
+- name: Delete Jump Host security group
   ec2_group:
+    description: Jump Host security group
     name: "{{ app }}-jump-host-sg"
-    state: "{{ state }}"
+    region: "{{ region }}"
+    state: absent
 
 #ELB SG
-- name: ELB security group
+- name: Delete ELB security group
   ec2_group:
+    description: ELB security group
     name: "{{ app }}-elb-sg"
+    region: "{{ region }}"
     state: "{{ state }}"

@@ -1,10 +1,8 @@
 ---
 
-#tasks:
-  - name: Create/Delete datagov VPC
-    ec2_vpc:
-      state: absent
-      vpc_id: "{{ vpc_id }}"
-      #cidr_block: "{{ vpc_cidr_block }}" 
-      region: "{{ vpc_region }}"
-      #resource_tags: {"Name":"{{ vpc_name }}" }
+- name: Delete "{{ app }}" VPC
+  ec2_vpc:
+    state: absent
+    #vpc_id: "{{ vpc_id }}"
+    cidr_block: "{{ vpc_cidr_block }}" 
+    region: "{{ vpc_region }}"
