@@ -62,4 +62,4 @@
     description: ELB security group
     name: "{{ app }}-elb-sg"
     region: "{{ region }}"
-    state: "{{ state }}"
+    state: absent

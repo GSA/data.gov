@@ -1,8 +1,9 @@
 ---
 
-- name: Delete "{{ app }}" VPC
+- name: Delete "{{ vpc_name }}" VPC
   ec2_vpc:
     state: absent
-    #vpc_id: "{{ vpc_id }}"
     cidr_block: "{{ vpc_cidr_block }}" 
+    resource_tags: 
+      Name: "{{ vpc_name }}"
     region: "{{ vpc_region }}"
