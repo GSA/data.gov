@@ -1,0 +1,16 @@
+---
+- name: Create Web Proxy Auto Scaling Group
+  ec2_asg:
+    name: "{{ app }}_web_proxy_asg"
+    region: "{{ region }}"
+    load_balancers: "{{ external_elb.elb.name }}"
+    launch_config_name: "{{ app }}-web-proxy-lc"
+    min_size: "{{ web_proxy.min_size }}"
+    max_size: "{{ web_proxy.max_size }}"
+    vpc_zone_identifier: "{{ public_subnet_ids }}"
+    health_check_period: "{{ web_proxy.health_check_period }}"
+    health_check_type: "{{ web_proxy.health_check_type }}"
+    tags:
+      - app: "{{ app }}"
+      - portofolio: "{{ vpc_name }}"
+      - type: asg

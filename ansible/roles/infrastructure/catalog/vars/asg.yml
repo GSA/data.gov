@@ -1,0 +1,31 @@
+# Web Proxy Auto Scaling Group
+web_proxy:
+  min_size: 2 
+  max_size: 5
+  desired_capacity: 2
+  health_check_period: 120
+  health_check_type: EC2
+
+# Web Auto Scaling Group
+web: 
+  min_size: 2 
+  max_size: 5
+  desired_capacity: 2
+  health_check_period: 120
+  health_check_type: EC2
+
+# Harvester Auto Scaling Group
+harvester:
+  min_size: 2 
+  max_size: 5
+  desired_capacity: 2
+  health_check_period: 120
+  health_check_type: EC2
+
+# Solr Auto Scaling Group
+solr:
+  min_size: 2 
+  max_size: 5
+  desired_capacity: 2
+  health_check_period: 120
+  health_check_type: EC2

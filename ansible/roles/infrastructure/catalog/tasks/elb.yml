@@ -50,6 +50,7 @@
       - protocol: http
         load_balancer_port: 80
         instance_port: 80
+  register: external_elb
 
 - name: Create the internal ELB
   ec2_elb_lb:
@@ -80,3 +81,4 @@
       - protocol: http
         load_balancer_port: 80
         instance_port: 80
+  register: internal_elb
