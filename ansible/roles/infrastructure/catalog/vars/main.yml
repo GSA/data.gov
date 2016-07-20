@@ -26,3 +26,14 @@ state: present
 #AWS IGW vars
 
 #AWS Route Tables vars
+
+#AWS ELB vars
+ping_protocol: http
+ping_port: 80
+ping_path: "/index.html"
+response_timeout: 5
+interval: 30
+unhealthy_threshold: 2
+healthy_threshold: 10
+connection_draining_timeout: 60
+idle_timeout: 300

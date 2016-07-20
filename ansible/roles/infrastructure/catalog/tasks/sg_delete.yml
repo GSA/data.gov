@@ -40,6 +40,14 @@
     name: "{{ app }}-web-sg"
     state: absent
 
+#Internal ELB SG
+- name: Delete Internal ELB security group
+  ec2_group:
+    description: Internal ELB security group
+    name: "{{ app }}-internal-elb-sg"
+    region: "{{ region }}"
+    state: absent
+
 # Web Proxy SG
 - name: Delete WebProxy security group
   ec2_group:
@@ -56,10 +64,10 @@
     region: "{{ region }}"
     state: absent
 
-#ELB SG
-- name: Delete ELB security group
+#External ELB SG
+- name: Delete External ELB security group
   ec2_group:
-    description: ELB security group
-    name: "{{ app }}-elb-sg"
+    description: External ELB security group
+    name: "{{ app }}-external-elb-sg"
     region: "{{ region }}"
     state: absent

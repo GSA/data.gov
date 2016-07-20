@@ -18,10 +18,10 @@
         cidr_ip: 65.242.97.254/32
   register: jump_host_sg
 
-#ELB SG
-- name: Create ELB security group
+# External ELB SG
+- name: Create External ELB security group
   ec2_group:
-    name: "{{ app }}-elb-sg"
+    name: "{{ app }}-external-elb-sg"
     description: ELB security group
     vpc_id: "{{ vpc.vpc_id }}"
     region: "{{ region }}"
@@ -34,7 +34,8 @@
         from_port: 443
         to_port: 443
         cidr_ip: 0.0.0.0/0
-  register: elb_sg
+  register: external_elb_sg
+
 
 # Web Proxy SG
 - name: Create WebProxy security group
@@ -47,16 +48,34 @@
       - proto: tcp
         from_port: 80
         to_port: 80
-        group_id: "{{ elb_sg.group_id }}"
+        group_id: "{{ external_elb_sg.group_id }}"
       - proto: tcp
         from_port: 443
         to_port: 443
-        group_id: "{{ elb_sg.group_id }}"
+        group_id: "{{ external_elb_sg.group_id }}"
       - proto: tcp
         from_port: 22
         to_port: 22
         group_id: "{{ jump_host_sg.group_id }}"
   register: web_proxy_sg
+
+# Internal ELB SG
+- name: Create Internal ELB security group
+  ec2_group:
+    name: "{{ app }}-internal-elb-sg"
+    description: ELB security group
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    rules:
+      - proto: tcp
+        from_port: 80
+        to_port: 80
+        group_id: "{{ web_proxy_sg.group_id }}"
+      - proto: tcp
+        from_port: 443
+        to_port: 443
+        group_id: "{{ web_proxy_sg.group_id }}"
+  register: internal_elb_sg
 
 # Web SG
 - name: Create Web ec2 security group

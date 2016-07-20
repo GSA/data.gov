@@ -15,5 +15,5 @@
     vpc_id: "{{ vpc_subnet_facts.subnets[0].vpc_id }}"
     route_table_id: item.id
     resource_tags: { "Name":"{{ app }}-public-subnet-route-table" }
-  with_items: route_table_facts.route_tables
+  with_items: "{{ route_table_facts.route_tables }}"
   when: route_table_facts.route_tables|length > 0
