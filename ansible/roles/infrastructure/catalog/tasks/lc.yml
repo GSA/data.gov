@@ -1,0 +1,17 @@
+---
+
+- name: Create Web Proxy Launch Configuration
+  ec2_lc:
+    name: "{{ app }}-web-proxy-lc"
+    state: present
+    region: "{{ region }}"
+    image_id: "{{ web_proxy_ami_id }}"
+    key_name: "{{ key_name }}"
+    security_groups: "{{ web_proxy_sg.group_id }}"
+    instance_type: "{{ web_proxy_instance_size }}"
+    volumes:
+    - device_name: "{{ device_name }}"
+      volume_size: "{{ volume_size }}"
+      device_type: "{{ device_type }}"
+      iops: "{{ iops }}"
+      delete_on_termination: "{{ delete_on_termination }}"

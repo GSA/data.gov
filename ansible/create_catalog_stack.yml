@@ -5,10 +5,13 @@
   vars_files:
     - roles/infrastructure/common/vars/main.yml
     - roles/infrastructure/catalog/vars/main.yml
+    - roles/infrastructure/catalog/vars/elb.yml
+    - roles/infrastructure/catalog/vars/lc.yml
 
   tasks:
     - include: roles/infrastructure/common/tasks/vpc.yml
-    - include: roles/infrastructure/catalog/tasks/subnets.yml
-    - include: roles/infrastructure/catalog/tasks/route_tables.yml
+#    - include: roles/infrastructure/catalog/tasks/subnets.yml
+#    - include: roles/infrastructure/catalog/tasks/route_tables.yml
     - include: roles/infrastructure/catalog/tasks/sg.yml
-    - include: roles/infrastructure/catalog/tasks/elb.yml
+#    - include: roles/infrastructure/catalog/tasks/elb.yml
+    - include: roles/infrastructure/catalog/tasks/lc.yml

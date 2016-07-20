@@ -1,0 +1,26 @@
+# Web Proxy
+web_proxy_ami_id: ami-c3f5e7a9
+web_proxy_instance_size: t2.micro
+
+# Web
+web_ami_id: ami-c3f5e7a9 
+web_instance_size: t2.medium
+
+# Harvester
+harvester_ami_id: ami-c3f5e7a9
+harvester_instance_size: t2.medium
+
+# Solr
+solr_ami_id: ami-c3f5e7a9
+solr_instance_size: t2.medium
+
+
+# Volumes
+device_name: /dev/sda1
+volume_size: 10 
+device_type: io1
+iops: 100
+delete_on_termination: true
+
+# Other
+key_name: datagov

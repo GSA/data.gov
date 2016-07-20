@@ -1,0 +1,8 @@
+---
+
+- name: Delete Web Proxy Launch Configuration
+  ec2_lc:
+    name: "{{ app }}-web-proxy-lc"
+    image_id: "{{ web_proxy_ami_id }}"
+    region: "{{ region }}"
+    state: absent

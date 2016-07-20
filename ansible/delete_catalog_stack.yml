@@ -5,11 +5,12 @@
   vars_files:
     - roles/infrastructure/common/vars/main.yml
     - roles/infrastructure/catalog/vars/main.yml
+    - roles/infrastructure/catalog/vars/elb.yml
+    - roles/infrastructure/catalog/vars/lc.yml
 
   tasks:
-    - include: roles/infrastructure/catalog/tasks/elb_delete.yml
+#    - include: roles/infrastructure/catalog/tasks/elb_delete.yml
     - include: roles/infrastructure/catalog/tasks/sg_delete.yml
-    - include: roles/infrastructure/catalog/tasks/subnets_delete.yml
-    - include: roles/infrastructure/catalog/tasks/route_tables_delete.yml
-#    - include: roles/infrastructure/common/tasks/igw_delete.yml
-#    - include: roles/infrastructure/common/tasks/vpc_delete.yml
+#    - include: roles/infrastructure/catalog/tasks/subnets_delete.yml
+#    - include: roles/infrastructure/catalog/tasks/route_tables_delete.yml
+    - include: roles/infrastructure/catalog/tasks/lc_delete.yml
