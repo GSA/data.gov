@@ -1,3 +1,5 @@
+---
+
 ping_protocol: http
 ping_port: 80
 ping_path: "/index.html"

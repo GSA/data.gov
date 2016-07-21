@@ -1,3 +1,5 @@
+---
+
 # Web Proxy
 web_proxy_ami_id: ami-c3f5e7a9
 web_proxy_instance_size: t2.micro
@@ -13,7 +15,6 @@ harvester_instance_size: t2.medium
 # Solr
 solr_ami_id: ami-c3f5e7a9
 solr_instance_size: t2.medium
-
 
 # Volumes
 device_name: /dev/sda1

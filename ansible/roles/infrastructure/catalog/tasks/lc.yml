@@ -15,3 +15,51 @@
       device_type: "{{ device_type }}"
       iops: "{{ iops }}"
       delete_on_termination: "{{ delete_on_termination }}"
+
+- name: Create Web  Launch Configuration
+  ec2_lc:
+    name: "{{ app }}-web-lc"
+    state: present
+    region: "{{ region }}"
+    image_id: "{{ web_ami_id }}"
+    key_name: "{{ key_name }}"
+    security_groups: "{{ web_sg.group_id }}"
+    instance_type: "{{ web_instance_size }}"
+    volumes:
+    - device_name: "{{ device_name }}"
+      volume_size: "{{ volume_size }}"
+      device_type: "{{ device_type }}"
+      iops: "{{ iops }}"
+      delete_on_termination: "{{ delete_on_termination }}"
+
+- name: Create Harvester Launch Configuration
+  ec2_lc:
+    name: "{{ app }}-harvester-lc"
+    state: present
+    region: "{{ region }}"
+    image_id: "{{ harvester_ami_id }}"
+    key_name: "{{ key_name }}"
+    security_groups: "{{ harvester_sg.group_id }}"
+    instance_type: "{{ harvester_instance_size }}"
+    volumes:
+    - device_name: "{{ device_name }}"
+      volume_size: "{{ volume_size }}"
+      device_type: "{{ device_type }}"
+      iops: "{{ iops }}"
+      delete_on_termination: "{{ delete_on_termination }}"
+
+- name: Create Solr Launch Configuration
+  ec2_lc:
+    name: "{{ app }}-solr-lc"
+    state: present
+    region: "{{ region }}"
+    image_id: "{{ solr_ami_id }}"
+    key_name: "{{ key_name }}"
+    security_groups: "{{ solr_sg.group_id }}"
+    instance_type: "{{ solr_instance_size }}"
+    volumes:
+    - device_name: "{{ device_name }}"
+      volume_size: "{{ volume_size }}"
+      device_type: "{{ device_type }}"
+      iops: "{{ iops }}"
+      delete_on_termination: "{{ delete_on_termination }}"

@@ -1,7 +1,7 @@
 ---
 
 # Create Public & Private Subnets in 2 AZs
-- name: Create/Delete public/private subnets for "{{ app }}" app
+- name: Create public/private subnets for "{{ app }}" app
   ec2_vpc_subnet:
     region: "{{ region }}"
     az: "{{ subnets[item]['az'] }}"

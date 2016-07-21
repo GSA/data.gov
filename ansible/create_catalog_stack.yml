@@ -8,6 +8,7 @@
     - roles/infrastructure/catalog/vars/elb.yml
     - roles/infrastructure/catalog/vars/lc.yml
     - roles/infrastructure/catalog/vars/asg.yml
+    - roles/infrastructure/catalog/vars/subnet.yml
 
   tasks:
     - include: roles/infrastructure/common/tasks/vpc.yml
