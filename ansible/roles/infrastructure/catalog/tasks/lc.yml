@@ -63,3 +63,19 @@
       device_type: "{{ device_type }}"
       iops: "{{ iops }}"
       delete_on_termination: "{{ delete_on_termination }}"
+
+- name: Create Jump Box Launch Configuration
+  ec2_lc:
+    name: "{{ app }}-jump-box-lc"
+    state: present
+    region: "{{ region }}"
+    image_id: "{{ jump_box_ami_id }}"
+    key_name: "{{ key_name }}"
+    security_groups: "{{ jump_host_sg.group_id }}"
+    instance_type: "{{ jump_box_instance_size }}"
+    volumes:
+    - device_name: "{{ device_name }}"
+      volume_size: "{{ volume_size }}"
+      device_type: "{{ device_type }}"
+      iops: "{{ iops }}"
+      delete_on_termination: "{{ delete_on_termination }}"

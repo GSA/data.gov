@@ -64,3 +64,19 @@
       - portofolio: "{{ vpc_name }}"
       - type: asg
       - service: solr
+
+- name: Create Jump Box Auto Scaling Group
+  ec2_asg:
+    name: "{{ app }}_jump_box_asg"
+    region: "{{ region }}"
+    launch_config_name: "{{ app }}-jump-box-lc"
+    min_size: "{{ jump_box.min_size }}"
+    max_size: "{{ jump_box.max_size }}"
+    vpc_zone_identifier: "{{ public_subnet_ids }}"
+    health_check_period: "{{ jump_box.health_check_period }}"
+    health_check_type: "{{ jump_box.health_check_type }}"
+    tags:
+      - app: "{{ app }}"
+      - portofolio: "{{ vpc_name }}"
+      - type: asg
+      - service: jump_box

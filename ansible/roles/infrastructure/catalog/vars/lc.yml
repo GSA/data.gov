@@ -16,6 +16,10 @@ harvester_instance_size: t2.medium
 solr_ami_id: ami-c3f5e7a9
 solr_instance_size: t2.medium
 
+# Jump Box
+jump_box_ami_id: ami-c3f5e7a9
+jump_box_instance_size: t2.micro
+
 # Volumes
 device_name: /dev/sda1
 volume_size: 10 
