@@ -7,8 +7,10 @@
     - roles/infrastructure/catalog/vars/main.yml
     - roles/infrastructure/catalog/vars/elb.yml
     - roles/infrastructure/catalog/vars/lc.yml
+    - roles/infrastructure/catalog/vars/subnet.yml
 
   tasks:
+    - include: roles/infrastructure/catalog/tasks/elasticache_delete.yml
     - include: roles/infrastructure/catalog/tasks/asg_delete.yml
     - include: roles/infrastructure/catalog/tasks/lc_delete.yml
     - include: roles/infrastructure/catalog/tasks/elb_delete.yml

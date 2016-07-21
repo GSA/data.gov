@@ -1,0 +1,9 @@
+---
+
+- name: Delete ElastiCache Redis Service
+  elasticache:
+    name: "{{ app }}-redis"
+    region: "{{ region }}"
+    state: absent
+#    cache_security_groups: "{{ app }}-redis-sg"
+    zone: "{{ subnets.private_subnet_1.az }}"
