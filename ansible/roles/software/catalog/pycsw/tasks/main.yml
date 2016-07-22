@@ -24,4 +24,4 @@
     - usr/lib/ckan/bin/pycsw-load.sh
 
 - name: Initialize pycsw db
-  action: command chdir=/usr/lib/ckan/bin/ ./pycsw-ckan.py -c setup_db -f /etc/ckan/pycsw-all.cfgetc/ckan/pycsw-all.cfg
+  action: command chdir=/usr/lib/ckan/bin/ ./pycsw-ckan.py -c setup_db -f /etc/ckan/pycsw-all.cfg
