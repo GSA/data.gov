@@ -1,6 +1,6 @@
 ---
 - name: get pycsw version
-  action: git repo=https://github.com/geopython/pycsw.git dest=/usr/lib/ckan/src/pycsw version=1.10.3
+  action: git repo=https://github.com/GSA/pycsw.git dest=/usr/lib/ckan/src/pycsw version=ckan
 
 - name: run setup build for pycsw
   action: command chdir=/usr/lib/ckan/src/pycsw/ ../../bin/python setup.py build
@@ -20,9 +20,8 @@
     - etc/ckan/pycsw-all.cfg
     - etc/ckan/pycsw-collection.cfg
     - etc/ckan/pycsw.wsgi
-    - etc/cron.d/ckan-pycsw
-    - usr/lib/ckan/bin/pycsw-db-admin.py
+    - etc/cron.d/pycsw
+    - usr/lib/ckan/bin/pycsw-load.sh
 
 - name: Initialize pycsw db
-  action: command chdir=/usr/lib/ckan/src/ckanext-spatial/ ../../bin/paster ckan-pycsw setup -p /etc/ckan/pycsw-all.cfg
-  ignore_errors: yes
+  action: command chdir=/usr/lib/ckan/bin/ ./pycsw-ckan.py -c setup_db -f /etc/ckan/pycsw-all.cfgetc/ckan/pycsw-all.cfg

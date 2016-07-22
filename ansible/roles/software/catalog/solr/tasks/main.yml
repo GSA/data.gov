@@ -32,11 +32,11 @@
 - name: Change default solr collection1 to ckan
   replace: dest=/home/solr/solr.xml regexp='collection1' replace='ckan'
 
-- name: copy needed solr config file
-  action: copy src=web.xml dest=/var/lib/tomcat6/webapps/solr/WEB-INF/web.xml force=yes
-
-- name: copy needed solr config file
-  action: copy src=schema.xml dest=/home/solr/ckan/conf/schema.xml force=yes
+- name: copy solr config files
+  action: copy src={{item}} dest=/{{item}} mode=644 force=yes
+  with_items:
+    - var/lib/tomcat6/webapps/solr/WEB-INF/web.xml
+    - home/solr/ckan/conf/schema.xml
 
 - name: Setup solr permissions
   shell: "chown -R tomcat6 /home/solr"

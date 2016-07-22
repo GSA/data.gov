@@ -65,5 +65,18 @@
   sudo: yes
   sudo_user: postgres
 
+- name: copy locations sql script
+  action: copy src={{item}} dest=/{{item}} mode=644
+  with_items:
+    - tmp/locations.sql.gz
+
+- name: create locations table
+  shell: gunzip -c /tmp/locations.sql.gz | psql -d ckan
+  sudo: yes
+  sudo_user: postgres
+
 - name: Initialize ckan db
   action: command ckan db init
+
+- name: Initialize ckan report db
+  action: command ckan --plugin=ckanext-report report initdb

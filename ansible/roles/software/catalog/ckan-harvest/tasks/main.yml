@@ -13,9 +13,8 @@
   with_items:
     - etc/cron.daily/remove_old_sessions
     - etc/supervisord.conf
-    - etc/cron.d/ckan-harvest
+    - etc/cron.d/ckan
     - etc/cron.d/supervisor
-    - etc/supervisord.conf
     - etc/init/supervisor.conf
     - var/lib/tomcat6/webapps/fgdc2iso.war
 

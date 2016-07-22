@@ -22,3 +22,6 @@
 - name: Upgrade repoze.who to 2.0 for local env
   pip: name=repoze.who version=2.0 virtualenv={{ virtual_env }}
   when: env == "local"
+
+- name: point site_url in production.ini to localhost
+  action: lineinfile dest=/etc/hosts line="127.0.0.1 catalog.data.gov"
