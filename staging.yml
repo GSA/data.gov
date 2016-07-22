@@ -1,0 +1,54 @@
+---
+# set these parameters to control the region, keypair, and AMI that are launched
+ec2_region: us-east-1
+instances_keypair: keypair-name
+image_id: ami-bf5021d6
+
+# security groups to be created
+security_groups:
+  - name: ssh
+    desc: the security group for the jumphost
+    rules:
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 0.0.0.0/0
+
+  - name: web
+    desc: the security group for the web server
+    rules:
+      - proto: tcp
+        from_port: "80"
+        to_port: "80"
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: "443"
+        to_port: "443"
+        cidr_ip: 0.0.0.0/0
+
+# Instances to launch be launched.
+# If you re-run the playbook after modifying exact_count,
+# instances will be terminated if the actual count > exact_count,
+# or new instances will be launched if actual count < exact_count.
+
+ec2_instances:
+  - instance_type: m1.small
+    image: "{{ image_id }}"
+    assign_public_ip: true
+    keypair: "{{instances_keypair}}"
+    group: ['ssh']
+    instance_tags:
+        Name: dev_jumphost
+    exact_count: 1
+    count_tag:
+        Name: dev_jumphost
+
+  - instance_type: m1.small
+    image: "{{ image_id }}"
+    keypair: "{{instances_keypair}}"
+    group: ['web', 'ssh']
+    instance_tags:
+        Name: web
+    exact_count: 1
+    count_tag:
+        Name: web

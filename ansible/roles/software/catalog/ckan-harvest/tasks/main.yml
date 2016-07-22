@@ -1,0 +1,26 @@
+---
+- name: prepare packages needed for harvester
+  action: apt pkg={{item}} state=installed
+  with_items:
+    - default-jdk
+    - tomcat6
+
+- name: install supervisor
+  action: pip name=supervisor virtualenv=/usr/lib/ckan/
+
+- name: copy all needed files
+  action: copy src={{item}} dest=/{{item}}
+  with_items:
+    - etc/cron.daily/remove_old_sessions
+    - etc/supervisord.conf
+    - etc/cron.d/ckan-harvest
+    - etc/cron.d/supervisor
+    - etc/supervisord.conf
+    - etc/init/supervisor.conf
+    - var/lib/tomcat6/webapps/fgdc2iso.war
+
+- name: create superviserctl symlink
+  action: file src=/usr/lib/ckan/bin/supervisorctl dest=/usr/bin/supervisorctl state=link
+
+- name: start supervisor
+  service: name=supervisor state=started

@@ -1,0 +1,24 @@
+---
+- name: Remove CKAN virtualenv
+  shell: rm -rf {{ virtual_env }} 
+
+- name: Clone CKAN app
+  action: git repo={{ app_repo }} dest={{ app_source_path }} 
+
+- name: Install CKAN app
+  command: sh install.sh chdir={{ app_source_path }} 
+
+# Configure CKAN
+- name: Configure production.ini
+  shell: cp -r {{ app_source_path }}/config/environments/{{ env }}/production.ini /etc/ckan
+
+- name: Configure who.ini
+  shell: cp -r {{ app_source_path }}/config/environments/{{ env }}/saml2/who.ini /etc/ckan
+
+- name: Configure saml2
+  shell: cp -r {{ app_source_path }}/config/environments/{{ env }}/saml2/* {{ virtual_env }}/src/ckanext-saml2/ckanext/saml2/config
+  when: env != "local"
+
+- name: Upgrade repoze.who to 2.0 for local env
+  pip: name=repoze.who version=2.0 virtualenv={{ virtual_env }}
+  when: env == "local"

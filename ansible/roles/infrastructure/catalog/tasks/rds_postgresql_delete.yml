@@ -1,0 +1,16 @@
+- hosts: localhost
+  connection: local
+
+  tasks:
+    - name: Delete postgres data instance, but create a snapshot before doing so
+      rds:
+        command: delete
+        instance_name: "{{ db_data_instance }}"
+        region: "{{ db_region }}"
+        snapshot: postgres-data-snapshot
+    - name: Delete postgres metadata instance, but create a snapshot before doing so
+      rds:
+        command: delete
+        instance_name: "{{ db_metadata_instance }}"
+        region: "{{ db_region }}"
+        snapshot: postgres-metadata-snapshot

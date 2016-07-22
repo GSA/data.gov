@@ -1,0 +1,94 @@
+- hosts: localhost
+  connection: local
+
+  tasks:
+    - name: Create multi-zone Postgres instance for data on RDS
+      rds:
+        command: create
+        instance_name: "{{ db_data_instance }}"
+        region: "{{ db_region }}"
+        db_engine: postgres
+        instance_type: "{{ db_instance_type }}"
+        multi_zone: "{{ db_multi_zone}}"
+        publicly_accessible: "{{ db_publicly_accessible }}"
+        size: "{{ db_data_size }}"
+        maint_window: "{{ db_maint_window }}"
+        backup_retention: "{{ db_backup_retention }}"
+        backup_window: "{{ db_backup_window }}"
+        license_model: "{{ db_license_model }}"
+        storage_type: "{{ db_storage_type }}"
+        subnet: "{{ db_vpc_subnet }}"
+        vpc_security_groups: "{{ db_vpc_group }}"
+        db_name: "{{ db_data_instance }}"
+        username: "{{ db_user }}"
+        password: "{{ db_password }}"
+        tags:
+          environment: testing
+          application: worldmap
+          owner: ariel
+
+    - name: Create multi-zone Postgres instance for metadata on RDS
+      rds:
+        command: create
+        instance_name: "{{ db_metadata_instance }}"
+        region: "{{ db_region }}"
+        db_engine: postgres
+        instance_type: "{{ db_instance_type }}"
+        multi_zone: "{{ db_multi_zone}}"
+        publicly_accessible: "{{ db_publicly_accessible }}"
+        size: "{{ db_metadata_size }}"
+        maint_window: "{{ db_maint_window }}"
+        backup_retention: "{{ db_backup_retention }}"
+        backup_window: "{{ db_backup_window }}"
+        license_model: "{{ db_license_model }}"
+        storage_type: "{{ db_storage_type }}"
+        subnet: "{{ db_vpc_subnet }}"
+        vpc_security_groups: "{{ db_vpc_group }}"
+        db_name: "{{ db_metadata_instance }}"
+        username: "{{ db_user }}"
+        password: "{{ db_password }}"
+        tags:
+          environment: testing
+          application: worldmap
+          owner: ariel
+
+
+
+    - name: Get facts about data instance.
+      rds:
+        command: facts
+        instance_name: "{{ db_data_instance }}"
+        region: "{{ db_region }}"
+      register: postgres_facts_data
+
+
+
+    - name: Get facts about metadata instance.
+      rds:
+        command: facts
+        instance_name: "{{ db_metadata_instance }}"
+        region: "{{ db_region }}"
+      register: postgres_facts_metadata
+
+    - debug: var=postgres_facts_data
+
+    - debug: var=postgres_facts_metadata
+
+    - name: Set host name
+      set_fact:
+        db_data_host: "{{ postgres_facts_data.instance.endpoint}}"
+        db_metadata_host: "{{ postgres_facts_metadata.instance.endpoint}}"
+
+    - name: Ensure postgresql postgis extension is created in data db
+      shell: "PGPASSWORD='{{db_password}}' psql -h {{db_data_host}} -d {{db_data_instance}} -U {{db_user}}  -c 'CREATE EXTENSION postgis;'"
+      register: psql_result
+      failed_when: >
+         psql_result.rc != 0 and ("already exists" not in psql_result.stderr)
+      changed_when: "psql_result.rc == 0"
+
+    - name: Ensure postgresql postgis extension is created in metadata db
+      shell: "PGPASSWORD='{{db_password}}' psql -h {{db_metadata_host}} -d {{db_metadata_instance}} -U {{db_user}}  -c 'CREATE EXTENSION postgis;'"
+      register: psql_result
+      failed_when: >
+         psql_result.rc != 0 and ("already exists" not in psql_result.stderr)
+      changed_when: "psql_result.rc == 0"
