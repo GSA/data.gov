@@ -1,0 +1,8 @@
+---
+virtual_env: /usr/lib/ckan
+
+##################################
+# Secret vars section
+##################################
+catalog_db_user: "{{ vault_catalog_db_user }}"
+catalog_db_pass: "{{ vault_catalog_db_pass }}"

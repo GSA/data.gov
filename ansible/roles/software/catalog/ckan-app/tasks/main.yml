@@ -12,6 +12,12 @@
 - name: Configure production.ini
   shell: cp -r {{ app_source_path }}/config/environments/{{ env }}/production.ini /etc/ckan
 
+- name: Configure production.ini - set db user
+  action: lineinfile dest=/etc/ckan/production.ini regexp='^db_user\s*=' line='db_user = {{ catalog_db_user }}'
+
+- name: Configure production.ini - set db pass
+  action: lineinfile dest=/etc/ckan/production.ini regexp='^db_pass\s*=' line='db_pass = {{ catalog_db_pass }}'
+
 - name: Configure who.ini
   shell: cp -r {{ app_source_path }}/config/environments/{{ env }}/saml2/who.ini /etc/ckan
 

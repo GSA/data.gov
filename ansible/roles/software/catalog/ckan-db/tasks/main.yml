@@ -1,12 +1,12 @@
 - name: check if psql geo.gov role exists
-  shell: psql -c "SELECT 1 FROM pg_roles WHERE rolname='ckan';"
+  shell: psql -c "SELECT 1 FROM pg_roles WHERE rolname='{{ catalog_db_user }}';"
   sudo: yes
   sudo_user: postgres
   register: check_ckan_db_user
 
 - name: create geo.gov role
   when: check_ckan_db_user.stdout.find("(0 rows)") != -1
-  shell: psql -c "CREATE USER ckan WITH PASSWORD 'pass' SUPERUSER;"
+  shell: psql -c "CREATE USER {{ catalog_db_user }} WITH PASSWORD '{{ catalog_db_pass }}' SUPERUSER;"
   sudo: yes
   sudo_user: postgres
 
@@ -18,7 +18,7 @@
 
 - name: create ckan database
   when: check_ckan_database.stdout.find("(0 rows)") != -1
-  shell: psql -c "CREATE DATABASE ckan OWNER ckan;"
+  shell: psql -c "CREATE DATABASE ckan OWNER {{ catalog_db_user }};"
   sudo: yes
   sudo_user: postgres
 
@@ -30,7 +30,7 @@
 
 - name: create pycsw database
   when: check_pycsw_database.stdout.find("(0 rows)") != -1
-  shell: psql -c "CREATE DATABASE pycsw OWNER ckan;"
+  shell: psql -c "CREATE DATABASE pycsw OWNER {{ catalog_db_user }};"
   sudo: yes
   sudo_user: postgres
 
@@ -61,7 +61,7 @@
   sudo_user: postgres
 
 - name: install postgis script
-  shell: psql -d ckan -c "GRANT SELECT, UPDATE, INSERT, DELETE ON spatial_ref_sys TO ckan;"
+  shell: psql -d ckan -c "GRANT SELECT, UPDATE, INSERT, DELETE ON spatial_ref_sys TO {{ catalog_db_user }};"
   sudo: yes
   sudo_user: postgres
 
