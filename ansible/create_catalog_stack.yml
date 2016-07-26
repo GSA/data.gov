@@ -15,7 +15,7 @@
     - include: roles/infrastructure/catalog/tasks/subnets.yml
     - include: roles/infrastructure/catalog/tasks/route_tables.yml
     - include: roles/infrastructure/catalog/tasks/sg.yml
-#    - include: roles/infrastructure/catalog/tasks/elb.yml
-#    - include: roles/infrastructure/catalog/tasks/lc.yml
-#    - include: roles/infrastructure/catalog/tasks/asg.yml
-    - include: roles/infrastructure/catalog/tasks/elasticache.yml
+    - include: roles/infrastructure/catalog/tasks/elb.yml
+    - include: roles/infrastructure/catalog/tasks/lc.yml
+    - include: roles/infrastructure/catalog/tasks/asg.yml
+#    - include: roles/infrastructure/catalog/tasks/elasticache.yml

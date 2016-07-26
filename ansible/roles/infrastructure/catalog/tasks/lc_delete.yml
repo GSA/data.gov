@@ -27,3 +27,10 @@
     image_id: "{{ solr_ami_id }}"
     region: "{{ region }}"
     state: absent
+
+- name: Delete Jump Box Launch Configuration
+  ec2_lc:
+    name: "{{ app }}-jump-box-lc"
+    image_id: "{{ solr_ami_id }}"
+    region: "{{ region }}"
+    state: absent

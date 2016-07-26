@@ -1,31 +1,24 @@
 ---
 
 # Web Proxy
-web_proxy_ami_id: ami-c3f5e7a9
+web_proxy_ami_id: ami-1279f305
 web_proxy_instance_size: t2.micro
 
 # Web
-web_ami_id: ami-c3f5e7a9 
-web_instance_size: t2.medium
+web_ami_id: ami-367ff521 
+web_instance_size: t2.micro
 
 # Harvester
 harvester_ami_id: ami-c3f5e7a9
-harvester_instance_size: t2.medium
+harvester_instance_size: t2.micro
 
 # Solr
 solr_ami_id: ami-c3f5e7a9
-solr_instance_size: t2.medium
+solr_instance_size: t2.micro
 
 # Jump Box
 jump_box_ami_id: ami-c3f5e7a9
 jump_box_instance_size: t2.micro
-
-# Volumes
-device_name: /dev/sda1
-volume_size: 10 
-device_type: io1
-iops: 100
-delete_on_termination: true
 
 # Other
 key_name: datagov

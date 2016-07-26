@@ -9,12 +9,11 @@
     key_name: "{{ key_name }}"
     security_groups: "{{ web_proxy_sg.group_id }}"
     instance_type: "{{ web_proxy_instance_size }}"
-    volumes:
-    - device_name: "{{ device_name }}"
-      volume_size: "{{ volume_size }}"
-      device_type: "{{ device_type }}"
-      iops: "{{ iops }}"
-      delete_on_termination: "{{ delete_on_termination }}"
+    user_data: |
+      #!/bin/sh
+      set -e
+      sed -i "s\proxy_pass\proxy_pass http://{{ internal_elb.elb.dns_name }};\g" /etc/nginx/nginx.conf
+      service nginx start
 
 - name: Create Web  Launch Configuration
   ec2_lc:
@@ -25,45 +24,29 @@
     key_name: "{{ key_name }}"
     security_groups: "{{ web_sg.group_id }}"
     instance_type: "{{ web_instance_size }}"
-    volumes:
-    - device_name: "{{ device_name }}"
-      volume_size: "{{ volume_size }}"
-      device_type: "{{ device_type }}"
-      iops: "{{ iops }}"
-      delete_on_termination: "{{ delete_on_termination }}"
 
-- name: Create Harvester Launch Configuration
-  ec2_lc:
-    name: "{{ app }}-harvester-lc"
-    state: present
-    region: "{{ region }}"
-    image_id: "{{ harvester_ami_id }}"
-    key_name: "{{ key_name }}"
-    security_groups: "{{ harvester_sg.group_id }}"
-    instance_type: "{{ harvester_instance_size }}"
-    volumes:
-    - device_name: "{{ device_name }}"
-      volume_size: "{{ volume_size }}"
-      device_type: "{{ device_type }}"
-      iops: "{{ iops }}"
-      delete_on_termination: "{{ delete_on_termination }}"
-
-- name: Create Solr Launch Configuration
-  ec2_lc:
-    name: "{{ app }}-solr-lc"
-    state: present
-    region: "{{ region }}"
-    image_id: "{{ solr_ami_id }}"
-    key_name: "{{ key_name }}"
-    security_groups: "{{ solr_sg.group_id }}"
-    instance_type: "{{ solr_instance_size }}"
-    volumes:
-    - device_name: "{{ device_name }}"
-      volume_size: "{{ volume_size }}"
-      device_type: "{{ device_type }}"
-      iops: "{{ iops }}"
-      delete_on_termination: "{{ delete_on_termination }}"
-
+#- name: Create Harvester Launch Configuration
+#  ec2_lc:
+#    name: "{{ app }}-harvester-lc"
+#    state: present
+#    region: "{{ region }}"
+#    image_id: "{{ harvester_ami_id }}"
+#    key_name: "{{ key_name }}"
+#    security_groups: "{{ harvester_sg.group_id }}"
+#    instance_type: "{{ harvester_instance_size }}"
+#
+#- name: Create Solr Launch Configuration
+#  ec2_lc:
+#    name: "{{ app }}-solr-lc"
+#    state: present
+#    region: "{{ region }}"
+#    image_id: "{{ solr_ami_id }}"
+#    key_name: "{{ key_name }}"
+#    security_groups: "{{ solr_sg.group_id }}"
+#    instance_type: "{{ solr_instance_size }}"
+#
+#- debug: var=jump_host_sg.group_id
+#
 - name: Create Jump Box Launch Configuration
   ec2_lc:
     name: "{{ app }}-jump-box-lc"
@@ -73,9 +56,4 @@
     key_name: "{{ key_name }}"
     security_groups: "{{ jump_host_sg.group_id }}"
     instance_type: "{{ jump_box_instance_size }}"
-    volumes:
-    - device_name: "{{ device_name }}"
-      volume_size: "{{ volume_size }}"
-      device_type: "{{ device_type }}"
-      iops: "{{ iops }}"
-      delete_on_termination: "{{ delete_on_termination }}"
+    assign_public_ip: yes
