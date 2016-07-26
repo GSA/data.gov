@@ -8,6 +8,8 @@ pkg/
 
 .DS_Store
 .vagrant
+ansible-secret.txt
+ansible/site.retry
 
 # Ignoring symlinks
 config/

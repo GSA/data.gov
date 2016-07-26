@@ -1,0 +1,50 @@
+###
+# Install PostGIS and Postgres 9.4 from the main apt repo.
+#
+---
+- name: configure the PostgreSQL APT key
+  apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc state=present
+  sudo: yes
+
+- name: configure the PostgreSQL APT repositories
+  apt_repository: repo="deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" state=present
+  sudo: yes
+
+- name: install PostGIS
+  apt: pkg={{ item }} state=present
+  sudo: yes
+  with_items:
+   - python-psycopg2
+   - postgresql-9.4
+   - postgresql-contrib-9.4
+   - postgresql-9.4-postgis-2.1
+
+
+- name: check if postgres cluster is created already
+  shell: "psql postgres -c 'select 1'"
+  register: db_setup
+  ignore_errors: yes
+  sudo: yes
+  sudo_user: postgres
+
+- name: setup postgres cluster to default to utf8
+  # if the dbs haven't been created yet, we want to destroy the whole db
+  # cluster and recreate it with proper utf8 support. From http://ph.ly/pg
+  sudo: yes
+  shell: "pg_createcluster --start -e UTF-8 9.4 main"
+  when: db_setup.rc != 0 # only do this if the dbs haven't been created yet
+
+- name: create database user
+  postgresql_user: name={{db_user}}
+                   password={{db_password}}
+                   role_attr_flags=LOGIN,CREATEDB,NOSUPERUSER
+  sudo: yes
+  sudo_user: postgres
+
+- name: write the pg_hba.conf file 
+  template: src=pg_hba.conf dest=/etc/postgresql/9.4/main/pg_hba.conf
+  sudo: yes
+
+- name: restart postgres
+  command: /etc/init.d/postgresql restart
+  sudo: yes

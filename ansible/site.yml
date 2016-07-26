@@ -5,12 +5,12 @@
   #remote_user: ubuntu
 
   roles:
-    - common
-    - apache       
-    - postgresql
-    - solr
-    - ckan-app     
-    - ckan-db      
-    - ckan-harvest
-    - pycsw
-    - saml2
+    - roles/software/catalog/common
+    - roles/software/catalog/apache
+    - roles/software/catalog/postgresql
+    - roles/software/catalog/solr
+    - roles/software/catalog/ckan-app
+    - roles/software/catalog/ckan-db
+    - roles/software/catalog/ckan-harvest
+    - roles/software/catalog/pycsw
+    - roles/software/catalog/saml2

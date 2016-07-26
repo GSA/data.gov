@@ -1,0 +1,27 @@
+---
+- name: get pycsw version
+  action: git repo=https://github.com/GSA/pycsw.git dest=/usr/lib/ckan/src/pycsw version=ckan
+
+- name: run setup build for pycsw
+  action: command chdir=/usr/lib/ckan/src/pycsw/ ../../bin/python setup.py build
+
+- name: run setup install for pycsw
+  action: command chdir=/usr/lib/ckan/src/pycsw/ ../../bin/python setup.py install
+
+- name: install pyproj
+  action: pip name=pyproj version=1.9.3 virtualenv=/usr/lib/ckan/
+
+- name: install geolinks
+  action: pip name=geolinks version=0.0.1 virtualenv=/usr/lib/ckan/
+
+- name: copy pycsw configuration files
+  action: copy src={{item}} dest=/{{item}} mode=644
+  with_items:
+    - etc/ckan/pycsw-all.cfg
+    - etc/ckan/pycsw-collection.cfg
+    - etc/ckan/pycsw.wsgi
+    - etc/cron.d/pycsw
+    - usr/lib/ckan/bin/pycsw-load.sh
+
+- name: Initialize pycsw db
+  action: command chdir=/usr/lib/ckan/bin/ ./pycsw-ckan.py -c setup_db -f /etc/ckan/pycsw-all.cfg
