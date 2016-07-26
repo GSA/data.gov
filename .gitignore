@@ -18,7 +18,9 @@ src/
 
 # Ignore everything in these directories
 synced_folders/*
-synced_folders/*
-synced_folders/*
+
 # Except this .gitkeep file
 !synced_folders/.gitkeep
+
+# Intellij
+.idea
