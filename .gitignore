@@ -8,6 +8,7 @@ pkg/
 
 .DS_Store
 .vagrant
+secrets.yml
 ansible-secret.txt
 ansible/site.retry
 

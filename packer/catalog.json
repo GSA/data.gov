@@ -1,8 +1,8 @@
 {
   "variables": {
-    "aws_access_key": "",
-    "aws_secret_key": "",
-    "vault_secret": ""
+    "aws_access_key": null,
+    "aws_secret_key": null,
+    "ansible_vault_password": null
   },
   "builders": [{
     "type": "amazon-ebs",
@@ -10,7 +10,7 @@
     "secret_key": "{{user `aws_secret_key`}}",
     "region": "us-east-1",
     "source_ami": "ami-2d39803a",
-    "instance_type": "t2.medium",
+    "instance_type": "m3.medium",
     "ssh_username": "ubuntu",
     "ami_name": "catalog-ami {{timestamp}}"
   }],
@@ -23,7 +23,7 @@
         "sudo apt-add-repository -y ppa:ansible/ansible",
         "sudo apt-get -y update",
         "sudo apt-get -y install ansible",
-        "echo {{user `vault_secret`}} > /tmp/vault_secret.txt"
+        "echo {{user `ansible_vault_password`}} > /tmp/ansible_vault_password.txt"
     ]},
 
     {
@@ -33,7 +33,7 @@
         "staging_directory": "/tmp/ansible-local",
         "playbook_file": "ansible/site.yml",
         "extra_arguments": [
-          "--vault-password-file=/tmp/vault_secret.txt"
+          "--vault-password-file=/tmp/ansible_vault_password.txt"
         ]
   }]
 }
