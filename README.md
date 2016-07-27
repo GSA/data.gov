@@ -29,10 +29,10 @@ This ansible script will install ckanext-geodatagov with CKAN core >= 2.3 on Ubu
 - Run the following command to create a AWS AMI:
 ```
 packer build \
-  -var "vault_secret=$(cat ansible-secret.txt)" \
-  -var "aws_access_key=XXX" \
-  -var "aws_secret_key=YYY" \
-  packer.json
+  -var "ansible_vault_password=$(ansible/get-vault-password.py)" \
+  -var "aws_access_key=$(packer/get-access-key.py)" \
+  -var "aws_secret_key=$(packer/get-secret-key.py)" \
+  packer/catalog.json
 ```
 
 ####CloudFormation:
