@@ -1,0 +1,34 @@
+{
+  "builders": [{
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "us-east-1",
+    "source_ami": "ami-2d39803a",
+    "instance_type": "m3.medium",
+    "ssh_username": "ubuntu",
+    "ami_name": "webproxy-ami {{timestamp}}"
+  }],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sleep 20",
+        "sudo apt-add-repository -y ppa:ansible/ansible",
+        "sudo apt-get -y update",
+        "sudo apt-get -y install ansible",
+        "echo {{user `ansible_vault_password`}} > /tmp/ansible_vault_password.txt"
+    ]},
+
+    {
+        "type": "ansible-local",
+        "playbook_dir": "ansible",
+        "inventory_file": "ansible/packer-host",
+        "staging_directory": "/tmp/ansible-local",
+        "playbook_file": "ansible/web-proxy.yml",
+        "extra_arguments": [
+          "--vault-password-file=/tmp/ansible_vault_password.txt"
+        ]
+  }]
+}

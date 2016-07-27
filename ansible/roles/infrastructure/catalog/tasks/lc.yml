@@ -1,30 +1,44 @@
 ---
 
-#- name: Create Web Proxy Launch Configuration
-#  ec2_lc:
-#    name: "{{ app }}-web-proxy-lc"
-#    state: present
-#    region: "{{ region }}"
-#    image_id: "{{ web_proxy_ami_id }}"
-#    key_name: "{{ key_name }}"
-#    security_groups: "{{ web_proxy_sg.group_id }}"
-#    instance_type: "{{ web_proxy_instance_size }}"
+- name: Get facts about data instance.
+  rds:
+    command: facts
+    instance_name: "{{ ckan_db_instance_name }}"
+    region: "{{ region }}"
+  register: ckan_rds_db
+
+- name: Create Web Proxy Launch Configuration
+  ec2_lc:
+    name: "{{ app }}-web-proxy-lc"
+    state: present
+    region: "{{ region }}"
+    image_id: "{{ web_proxy_ami_id }}"
+    key_name: "{{ key_name }}"
+    security_groups: "{{ web_proxy_sg.group_id }}"
+    instance_type: "{{ web_proxy_instance_size }}"
+    user_data: |
+      !/bin/sh
+      set -e
+      sed -i "s\data.gov\{{ internal_elb.elb.dns_name }}\g" "{{ nginx_config_path }}"
+      service nginx start
+
+- name: Create Web Launch Configuration
+  ec2_lc:
+    name: "{{ app }}-web-lc"
+    state: present
+    region: "{{ region }}"
+    image_id: "{{ web_ami_id }}"
+    key_name: "{{ key_name }}"
+    security_groups: "{{ web_sg.group_id }}"
+    instance_type: "{{ web_instance_size }}"
 #    user_data: |
 #      #!/bin/sh
 #      set -e
-#      sed -i "s\proxy_pass\proxy_pass http://{{ internal_elb.elb.dns_name }};\g" /etc/nginx/nginx.conf
-#      service nginx start
-#
-#- name: Create Web  Launch Configuration
-#  ec2_lc:
-#    name: "{{ app }}-web-lc"
-#    state: present
-#    region: "{{ region }}"
-#    image_id: "{{ web_ami_id }}"
-#    key_name: "{{ key_name }}"
-#    security_groups: "{{ web_sg.group_id }}"
-#    instance_type: "{{ web_instance_size }}"
-#
+#      /env_var.sh
+#      export CKAN_DB_ENDPOINT=ckan_rds_db.instance.endpoint
+#      export CKAN_REDIS_ENDPOINT=elasticache.instance.endpoint
+#      export CKAN_SOLR_ENDPOINT=solr.instance.endpoint 
+
 #- name: Create Harvester Launch Configuration
 #  ec2_lc:
 #    name: "{{ app }}-harvester-lc"

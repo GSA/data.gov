@@ -25,6 +25,7 @@
       app: "{{ app }}"
       portofolio: "{{ vpc_name }}"
       type: db
+    register ckan_rds
 
 - name: Create multi-zone Postgres instance for pycsw on RDS
   rds:
@@ -50,3 +51,4 @@
       app: "{{ app }}"
       portofolio: "{{ vpc_name }}"
       type: db
+    register: pycsw_rds
