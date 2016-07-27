@@ -1,0 +1,26 @@
+---
+
+# Gather subnet facts
+- name: Gather private subnet facts
+  ec2_vpc_subnet_facts:
+    region: "{{ region }}"
+    filters:
+      { "tag:app": "{{ app }}", "tag:portofolio": "{{ vpc_name }}", "tag:type": "db-private" }
+  register: private_subnets
+
+- name: Extract the ids of the private subnets
+  set_fact: db_private_subnet_ids={{ private_subnets.subnets | map(attribute='id') | list }}
+
+- debug: var=db_private_subnet_ids
+
+- name: Create RDS Subnet Group
+  rds_subnet_group:
+    state: present
+    region: "{{ region }}"
+    name: "{{ app }}-rds-subnet-group"
+    description: DB Subnet Group
+#    subnets: db_private_subnet_ids
+    subnets: 
+      - subnet-108a6759
+      - subnet-848cb1dc
+  register: rds_subnet_group

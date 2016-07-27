@@ -1,6 +1,6 @@
 ---
 
-# Create Public & Private Subnets in 2 AZs
+# Create Public & Private Multi-AZ Subnets 
 - name: Create public/private subnets for "{{ app }}" app
   ec2_vpc_subnet:
     region: "{{ region }}"
