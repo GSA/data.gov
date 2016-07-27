@@ -5,7 +5,7 @@
   #remote_user: ubuntu
 
   roles:
-    - roles/software/catalog/common
+    - roles/software/ckan/common
     - roles/software/catalog/apache
     - roles/software/catalog/postgresql
     - roles/software/catalog/solr

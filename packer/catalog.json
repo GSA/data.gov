@@ -26,7 +26,7 @@
         "playbook_dir": "ansible",
         "inventory_file": "ansible/packer-host",
         "staging_directory": "/tmp/ansible-local",
-        "playbook_file": "ansible/site.yml",
+        "playbook_file": "ansible/catalog.yml",
         "extra_arguments": [
           "--vault-password-file=/tmp/ansible_vault_password.txt"
         ]

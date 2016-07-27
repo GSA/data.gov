@@ -17,7 +17,7 @@ Vagrant.configure(2) do |config|
 
   # Provision vm through ansible
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "ansible/site.yml"
+    ansible.playbook = "ansible/catalog.yml"
     ansible.sudo = true
     ansible.extra_vars = {
       ansible_ssh_user: "vagrant",
