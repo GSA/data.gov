@@ -24,3 +24,4 @@ synced_folders/*
 
 # Intellij
 .idea
+/.project
