@@ -10,7 +10,7 @@ pkg/
 .vagrant
 secrets.yml
 ansible-secret.txt
-ansible/site.retry
+ansible/*.retry
 
 # Ignoring symlinks
 config/
