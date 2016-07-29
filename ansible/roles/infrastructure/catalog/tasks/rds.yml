@@ -25,7 +25,7 @@
       app: "{{ app }}"
       portofolio: "{{ vpc_name }}"
       type: db
-    register ckan_rds
+  register: ckan_rds
 
 - name: Create multi-zone Postgres instance for pycsw on RDS
   rds:
@@ -44,6 +44,7 @@
     subnet: "{{ app }}-rds-subnet-group"
     vpc_security_groups: "{{ db_sg.group_id }}"
     wait: yes
+    wait_timeout: 1200  
     db_name: "{{ pycsw_db_name }}"
     username: "{{ catalog_db_user }}"
     password: "{{ catalog_db_pass }}"
@@ -51,4 +52,4 @@
       app: "{{ app }}"
       portofolio: "{{ vpc_name }}"
       type: db
-    register: pycsw_rds
+  register: pycsw_rds

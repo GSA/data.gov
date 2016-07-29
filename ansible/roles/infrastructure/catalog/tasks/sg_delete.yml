@@ -24,6 +24,15 @@
     name: "{{ app }}-db-sg"
     state: absent
 
+
+#Solr ELB SG
+- name: Delete Solr ELB security group
+  ec2_group:
+    description: Solr ELB security group
+    name: "{{ app }}-solr-elb-sg"
+    region: "{{ region }}"
+    state: absent
+
 # Harvester SG
 - name: Delete Harverster ec2 security group
   ec2_group:

@@ -3,11 +3,15 @@
     command: delete
     instance_name: "{{ ckan_db_instance_name }}"
     region: "{{ region }}"
+    wait: yes
+    wait_timeout: 600
 #    snapshot: "{{ ckan_db_instance_name }}_snapshot"
 
 - name: Delete postgres pycsw instance, but create a snapshot before doing so
   rds:
     command: delete
     instance_name: "{{ pycsw_db_instance_name }}"
-    region: "{{ db_region }}"
+    region: "{{ region }}"
+    wait: yes
+    wait_timeout: 600
 #    snapshot: "{{ pycsw_db_instance_name }}_snapshot" 

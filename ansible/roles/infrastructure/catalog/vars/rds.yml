@@ -2,7 +2,7 @@
 
 # common
 db_engine: postgres
-db_instance_type: db.t2.medium
+db_instance_type: db.m3.medium
 db_multi_zone: no
 db_publicly_accessible: no
 db_maint_window: mon:05:00-mon:06:00
@@ -12,10 +12,10 @@ db_license_model: postgresql-license
 
 # ckan db
 ckan_db_instance_name: "{{ app }}-ckan-db"
-ckan_db_name: "{{ app }}_db"
-ckan_db_size: 50 
+ckan_db_name: ckan_db
+ckan_db_size: 50
 
 # pycsw db
 pycsw_db_instance_name: "{{ app }}-pycsw-db"
 pycsw_db_size: 50
-pycsw_db_name: "{{ pycsw }}_db"
+pycsw_db_name: pycsw_db

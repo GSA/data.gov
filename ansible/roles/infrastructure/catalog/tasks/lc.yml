@@ -1,11 +1,23 @@
 ---
 
-- name: Get facts about data instance.
+- name: Get facts about ckan db instance.
   rds:
     command: facts
     instance_name: "{{ ckan_db_instance_name }}"
     region: "{{ region }}"
   register: ckan_rds_db
+
+- name: Get facts about pycsw db instance.
+  rds:
+    command: facts
+    instance_name: "{{ pycsw_db_instance_name }}"
+    region: "{{ region }}"
+  register: pycsw_rds_db
+
+- debug: var=ckan_rds_db.instance.endpoint
+- debug: var=pycsw_rds_db.instance.endpoint 
+- debug: var=elasticache_instance.elasticache.data.CacheNodes[0].Endpoint.Address
+- debug: var=solr_elb.elb.dns_name
 
 - name: Create Web Proxy Launch Configuration
   ec2_lc:
@@ -17,10 +29,10 @@
     security_groups: "{{ web_proxy_sg.group_id }}"
     instance_type: "{{ web_proxy_instance_size }}"
     user_data: |
-      !/bin/sh
+      #!/bin/sh
       set -e
       sed -i "s\data.gov\{{ internal_elb.elb.dns_name }}\g" "{{ nginx_config_path }}"
-      service nginx start
+      service nginx restart
 
 - name: Create Web Launch Configuration
   ec2_lc:
@@ -31,36 +43,43 @@
     key_name: "{{ key_name }}"
     security_groups: "{{ web_sg.group_id }}"
     instance_type: "{{ web_instance_size }}"
-#    user_data: |
-#      #!/bin/sh
-#      set -e
-#      /env_var.sh
-#      export CKAN_DB_ENDPOINT=ckan_rds_db.instance.endpoint
-#      export CKAN_REDIS_ENDPOINT=elasticache.instance.endpoint
-#      export CKAN_SOLR_ENDPOINT=solr.instance.endpoint 
+    user_data: |
+      #!/bin/sh
+      echo 'export CKAN_DB_SERVER={{ ckan_rds_db.instance.endpoint }}' >> ~/.bashrc
+      echo 'export PYCSW_DB_SERVER={{ pycsw_rds_db.instance.endpoint }}' >> ~/.bashrc
+      echo 'export REDIS_SERVER={{ elasticache_instance.elasticache.data.CacheNodes[0].Endpoint.Address }}' >> ~/.bashrc
+      echo 'export SOLR_SERVER={{ solr_elb.elb.dns_name }}' >> ~/.bashrc 
+      exec ~/.bashrc
 
-#- name: Create Harvester Launch Configuration
-#  ec2_lc:
-#    name: "{{ app }}-harvester-lc"
-#    state: present
-#    region: "{{ region }}"
-#    image_id: "{{ harvester_ami_id }}"
-#    key_name: "{{ key_name }}"
-#    security_groups: "{{ harvester_sg.group_id }}"
-#    instance_type: "{{ harvester_instance_size }}"
-#
-#- name: Create Solr Launch Configuration
-#  ec2_lc:
-#    name: "{{ app }}-solr-lc"
-#    state: present
-#    region: "{{ region }}"
-#    image_id: "{{ solr_ami_id }}"
-#    key_name: "{{ key_name }}"
-#    security_groups: "{{ solr_sg.group_id }}"
-#    instance_type: "{{ solr_instance_size }}"
-#
-#- debug: var=jump_host_sg.group_id
-#
+- name: Create Harvester Launch Configuration
+  ec2_lc:
+    name: "{{ app }}-harvester-lc"
+    state: present
+    region: "{{ region }}"
+    image_id: "{{ harvester_ami_id }}"
+    key_name: "{{ key_name }}"
+    security_groups: "{{ harvester_sg.group_id }}"
+    instance_type: "{{ harvester_instance_size }}"
+    user_data: |
+      #!/bin/sh
+      echo 'export CKAN_DB_SERVER={{ ckan_rds_db.instance.endpoint }}' >> ~/.bashrc
+      echo 'export PYCSW_DB_SERVER={{ pycsw_rds_db.instance.endpoint }}' >> ~/.bashrc
+      echo 'export REDIS_SERVER={{ elasticache_instance.elasticache.data.CacheNodes[0].Endpoint.Address }}' >> ~/.bashrc
+      echo 'export SOLR_SERVER={{ solr_elb.elb.dns_name }}' >> ~/.bashrc 
+      exec ~/.bashrc
+
+- name: Create Solr Launch Configuration
+  ec2_lc:
+    name: "{{ app }}-solr-lc"
+    state: present
+    region: "{{ region }}"
+    image_id: "{{ solr_ami_id }}"
+    key_name: "{{ key_name }}"
+    security_groups: "{{ solr_sg.group_id }}"
+    instance_type: "{{ solr_instance_size }}"
+
+- debug: var=jump_host_sg.group_id
+
 - name: Create Jump Box Launch Configuration
   ec2_lc:
     name: "{{ app }}-jump-box-lc"

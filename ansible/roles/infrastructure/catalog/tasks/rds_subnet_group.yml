@@ -19,8 +19,8 @@
     region: "{{ region }}"
     name: "{{ app }}-rds-subnet-group"
     description: DB Subnet Group
-#    subnets: db_private_subnet_ids
-    subnets: 
-      - subnet-108a6759
-      - subnet-848cb1dc
+    subnets: "{{ db_private_subnet_ids }}"
+#    subnets: 
+#      - subnet-a12719f9
+#      - subnet-8b7c93c2
   register: rds_subnet_group

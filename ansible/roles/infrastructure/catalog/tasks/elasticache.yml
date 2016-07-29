@@ -11,4 +11,4 @@
     cache_port: 6379
 #    cache_security_groups: "{{ app }}-redis-sg"
     zone: "{{ subnets.private_subnet_1.az }}"
-  register: elasticache
+  register: elasticache_instance

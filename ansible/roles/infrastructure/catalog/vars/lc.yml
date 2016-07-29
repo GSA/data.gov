@@ -1,7 +1,7 @@
 ---
 
 # Web Proxy
-web_proxy_ami_id: ami-1279f305
+web_proxy_ami_id: ami-fa980ced
 web_proxy_instance_size: t2.micro
 nginx_config_path: /etc/nginx/sites-available/default.conf
 
