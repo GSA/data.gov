@@ -1,9 +1,9 @@
 ---
-- name: prepare packages needed for harvester
-  action: apt pkg={{item}} state=installed
-  with_items:
-    - default-jdk
-    - tomcat6
+- include: fgdc2iso.yml
+  tags: ['fgdc2iso']
+
+- include: redis.yml
+  tags: ['redis']
 
 - name: install supervisor
   action: pip name=supervisor virtualenv=/usr/lib/ckan/
@@ -16,7 +16,6 @@
     - etc/cron.d/ckan
     - etc/cron.d/supervisor
     - etc/init/supervisor.conf
-    - var/lib/tomcat6/webapps/fgdc2iso.war
 
 - name: create superviserctl symlink
   action: file src=/usr/lib/ckan/bin/supervisorctl dest=/usr/bin/supervisorctl state=link

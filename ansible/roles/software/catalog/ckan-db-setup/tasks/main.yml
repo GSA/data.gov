@@ -1,3 +1,4 @@
+---
 - name: check if psql geo.gov role exists
   shell: sudo -u postgres psql -c "SELECT 1 FROM pg_roles WHERE rolname='{{ catalog_db_user }}';"
   register: check_ckan_db_user
@@ -13,18 +14,6 @@
 - name: create ckan database
   when: check_ckan_database.stdout.find("(0 rows)") != -1
   shell: sudo -u postgres psql -c "CREATE DATABASE ckan OWNER {{ catalog_db_user }};"
-
-- name: check if pycsw database already exists
-  shell: sudo -u postgres psql -c "SELECT 1 FROM pg_database WHERE datname = 'pycsw';"
-  register: check_pycsw_database
-
-- name: create pycsw database
-  when: check_pycsw_database.stdout.find("(0 rows)") != -1
-  shell: sudo -u postgres psql -c "CREATE DATABASE pycsw OWNER {{ catalog_db_user }};"
-
-- name: add postgis to pycsw database
-  when: check_pycsw_database.stdout.find("(0 rows)") != -1
-  shell: sudo -u postgres psql -d pycsw -c "CREATE EXTENSION postgis;"
 
 - name: install postgis script
   shell: "sudo -u postgres psql -d ckan -f /usr/share/postgresql/9.3/contrib/postgis-2.1/postgis.sql"
@@ -48,9 +37,3 @@
 
 - name: create locations table
   shell: gunzip -c /tmp/locations.sql.gz | sudo -u postgres psql -d ckan
-
-- name: Initialize ckan db
-  action: command ckan db init
-
-- name: Initialize ckan report db
-  action: command ckan --plugin=ckanext-report report initdb

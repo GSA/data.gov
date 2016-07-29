@@ -5,11 +5,6 @@
 
 - name: Download solr 4.2.1
   command: creates=~/solr-4.2.1.tgz chdir=~/ wget -T 40  {{ solr_url }}
-  #when: local_solr == "no" or local_solr == "n"
-
-#- name: Copy solr 4.2.1
-#  copy: src=cache/solr-4.2.1.tgz dest=~/solr-4.2.1.tgz
-#  when: local_solr == "yes" or local_solr == "y"
 
 - name: Unpack solr
   shell: "cd ~/ && tar -zxvf solr-4.2.1.tgz && cd solr-4.2.1/dist && cp solr-4.2.1.war /var/lib/tomcat6/webapps/solr.war"
@@ -19,7 +14,7 @@
 
 - name: Create Solr home dir
   file: path=/home/solr state=directory
-  
+
 - name: Copy solr files to home dir
   shell: cp -R ~/solr-4.2.1/example/solr/* /home/solr
 

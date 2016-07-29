@@ -1,0 +1,5 @@
+- name: Initialize ckan db
+  action: command ckan db init
+
+- name: Initialize ckan report db
+  action: command ckan --plugin=ckanext-report report initdb

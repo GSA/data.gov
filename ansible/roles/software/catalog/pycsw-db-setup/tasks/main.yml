@@ -1,0 +1,12 @@
+---
+- name: check if pycsw database already exists
+  shell: sudo -u postgres psql -c "SELECT 1 FROM pg_database WHERE datname = 'pycsw';"
+  register: check_pycsw_database
+
+- name: create pycsw database
+  when: check_pycsw_database.stdout.find("(0 rows)") != -1
+  shell: sudo -u postgres psql -c "CREATE DATABASE pycsw OWNER {{ catalog_db_user }};"
+
+- name: add postgis to pycsw database
+  when: check_pycsw_database.stdout.find("(0 rows)") != -1
+  shell: sudo -u postgres psql -d pycsw -c "CREATE EXTENSION postgis;"

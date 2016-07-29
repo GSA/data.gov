@@ -5,12 +5,20 @@
   #remote_user: ubuntu
 
   roles:
-    - roles/software/ckan/common
-    - roles/software/catalog/apache
-    - roles/software/catalog/postgresql
-    - roles/software/catalog/solr
-    - roles/software/catalog/ckan-app
-    - roles/software/catalog/ckan-db
-    - roles/software/catalog/ckan-harvest
-    - roles/software/catalog/pycsw
-    - roles/software/catalog/saml2
+    - {role: roles/software/ubuntu/common, tags: ['always']}
+    - {role: roles/software/ckan/common, tags: ['frontend', 'harvester']}
+    - {role: roles/software/ckan/apache, tags: ['frontend']}
+    - {role: roles/software/ckan/postgresql, tags: ['frontend', 'harvester', 'db', 'db-install']}
+    - {role: roles/software/ckan/solr, tags: ['frontend', 'harvester', 'solr']}
+
+    - {role: roles/software/catalog/ckan-app, tags: ['frontend', 'harvester']}
+    - {role: roles/software/catalog/ckan-db-setup, tags: ['frontend', 'harvester', 'db', 'db-setup']}
+    - {role: roles/software/catalog/ckan-db-init, tags: ['frontend', 'harvester', 'db', 'db-init']}
+
+    - {role: roles/software/catalog/harvest, tags: ['harvester']}
+
+    - {role: roles/software/catalog/pycsw-app, tags: ['frontend', 'harvester', 'pycsw']}
+    - {role: roles/software/catalog/pycsw-db-setup, tags: ['frontend', 'harvester', 'pycsw','db', 'db-setup']}
+    - {role: roles/software/catalog/pycsw-db-init, tags: ['frontend', 'harvester', 'pycsw','db', 'db-init']}
+
+    - {role: roles/software/catalog/saml2, tags: ['frontend', 'harvester', 'saml2']}

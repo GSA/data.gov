@@ -1,4 +1,10 @@
 ---
+- name: make sure packages are installed
+  action: apt pkg={{item}} state=installed
+  with_items:
+    - apache2
+    - libapache2-mod-wsgi
+
 - name: default apache removed
   action: file path=/etc/apache2/sites-enabled/000-default.conf state=absent
 
