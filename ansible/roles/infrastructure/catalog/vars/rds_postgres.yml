@@ -1,4 +1,5 @@
 ---
+# vars set in main.yml
 
 db_engine: postgres
 db_name: "{{ app }}"

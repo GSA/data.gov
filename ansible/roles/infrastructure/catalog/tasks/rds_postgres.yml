@@ -1,5 +1,5 @@
-- hosts: localhost
-  connection: local
+#- hosts: localhost
+#  connection: local
 
   tasks:
     - name: Create multi-zone Postgres instance for data on RDS
@@ -23,9 +23,13 @@
         username: "{{ db_user }}"
         password: "{{ db_password }}"
         tags:
-          environment: testing
-          application: worldmap
-          owner: ariel
+          application: ckan
+          service:
+            - db
+            - master
+          environment:
+            - production
+            - staging
 
     - name: Create multi-zone Postgres instance for metadata on RDS
       rds:
@@ -48,10 +52,12 @@
         username: "{{ db_user }}"
         password: "{{ db_password }}"
         tags:
-          environment: testing
-          application: worldmap
-          owner: ariel
-
+          application: ckan
+          service:
+            - db
+            - slave
+          environment:
+            - production
 
 
     - name: Get facts about data instance.
@@ -60,7 +66,6 @@
         instance_name: "{{ db_data_instance }}"
         region: "{{ db_region }}"
       register: postgres_facts_data
-
 
 
     - name: Get facts about metadata instance.
