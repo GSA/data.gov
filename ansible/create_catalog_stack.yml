@@ -9,13 +9,16 @@
     - roles/infrastructure/catalog/vars/lc.yml
     - roles/infrastructure/catalog/vars/asg.yml
     - roles/infrastructure/catalog/vars/subnet.yml
+    - roles/infrastructure/catalog/vars/rds.yml
 
   tasks:
     - include: roles/infrastructure/common/tasks/vpc.yml
     - include: roles/infrastructure/catalog/tasks/subnets.yml
     - include: roles/infrastructure/catalog/tasks/route_tables.yml
     - include: roles/infrastructure/catalog/tasks/sg.yml
-#    - include: roles/infrastructure/catalog/tasks/elb.yml
-#    - include: roles/infrastructure/catalog/tasks/lc.yml
-#    - include: roles/infrastructure/catalog/tasks/asg.yml
+    - include: roles/infrastructure/catalog/tasks/rds_subnet_group.yml 
+    - include: roles/infrastructure/catalog/tasks/rds.yml 
+    - include: roles/infrastructure/catalog/tasks/elb.yml
     - include: roles/infrastructure/catalog/tasks/elasticache.yml
+    - include: roles/infrastructure/catalog/tasks/lc.yml
+    - include: roles/infrastructure/catalog/tasks/asg.yml

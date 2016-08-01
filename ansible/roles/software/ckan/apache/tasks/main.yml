@@ -1,0 +1,22 @@
+---
+- name: make sure packages are installed
+  action: apt pkg={{item}} state=installed
+  with_items:
+    - apache2
+    - libapache2-mod-wsgi
+
+- name: default apache removed
+  action: file path=/etc/apache2/sites-enabled/000-default.conf state=absent
+
+- name: wsgi config
+  action: copy src=apache.wsgi dest=/etc/ckan/apache.wsgi
+
+- name: ckan apache config
+  action: copy src=ckan.conf dest=/etc/apache2/sites-enabled/ckan.conf
+
+- name: Apache | Enable some required modules
+  action: command a2enmod rewrite headers 
+  tags: common
+
+- name: restart apache
+  action: service name=apache2 state=restarted

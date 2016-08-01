@@ -1,4 +1,5 @@
 ---
+
 - name: Create Web Proxy Auto Scaling Group
   ec2_asg:
     name: "{{ app }}_web_proxy_asg"
@@ -11,6 +12,7 @@
     health_check_period: "{{ web_proxy.health_check_period }}"
     health_check_type: "{{ web_proxy.health_check_type }}"
     tags:
+      - Name: "{{ app }}_web_proxy"
       - app: "{{ app }}"
       - portofolio: "{{ vpc_name }}"
       - type: asg
@@ -28,6 +30,7 @@
     health_check_period: "{{ web.health_check_period }}"
     health_check_type: "{{ web.health_check_type }}"
     tags:
+      - Name: "{{ app }}_web"
       - app: "{{ app }}"
       - portofolio: "{{ vpc_name }}"
       - type: asg
@@ -44,6 +47,7 @@
     health_check_period: "{{ harvester.health_check_period }}"
     health_check_type: "{{ harvester.health_check_type }}"
     tags:
+      - Name: "{{ app }}_harvester"
       - app: "{{ app }}"
       - portofolio: "{{ vpc_name }}"
       - type: asg
@@ -60,6 +64,7 @@
     health_check_period: "{{ solr.health_check_period }}"
     health_check_type: "{{ solr.health_check_type }}"
     tags:
+      - Name: "{{ app }}_solr"
       - app: "{{ app }}"
       - portofolio: "{{ vpc_name }}"
       - type: asg
@@ -76,6 +81,7 @@
     health_check_period: "{{ jump_box.health_check_period }}"
     health_check_type: "{{ jump_box.health_check_type }}"
     tags:
+      - Name: "{{ app }}_jump_box"
       - app: "{{ app }}"
       - portofolio: "{{ vpc_name }}"
       - type: asg

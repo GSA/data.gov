@@ -82,3 +82,34 @@
         load_balancer_port: 80
         instance_port: 80
   register: internal_elb
+
+- name: Create the SOLR ELB
+  ec2_elb_lb:
+    name: "{{ app }}-solr-elb"
+    state: present
+    scheme: internal
+    connection_draining_timeout: "{{ connection_draining_timeout }}"
+    idle_timeout: "{{ idle_timeout }}"
+    cross_az_load_balancing: yes
+    region: "{{ region }}"
+    security_group_names: "{{ app }}-solr-elb-sg"
+    tags: {
+      "app":"{{ app }}", 
+      "type": "elb",
+      "subtype": "solr-internal",
+      "portofolio":"{{ vpc_name }}"
+    }
+    subnets: "{{ private_subnet_ids }}" 
+    health_check:
+      ping_protocol: "{{ ping_protocol }}"
+      ping_port: "{{ ping_port }}"
+      ping_path: "{{ ping_path }}"
+      response_timeout: "{{ response_timeout }}"
+      interval: "{{ interval }}"
+      unhealthy_threshold: "{{ unhealthy_threshold }}"
+      healthy_threshold: "{{ healthy_threshold }}"
+    listeners:
+      - protocol: http
+        load_balancer_port: 8983
+        instance_port: 8983
+  register: solr_elb

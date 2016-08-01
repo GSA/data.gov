@@ -71,10 +71,6 @@
         from_port: 80
         to_port: 80
         group_id: "{{ web_proxy_sg.group_id }}"
-      - proto: tcp
-        from_port: 443
-        to_port: 443
-        group_id: "{{ web_proxy_sg.group_id }}"
   register: internal_elb_sg
 
 # Web SG
@@ -88,7 +84,7 @@
       - proto: tcp
         from_port: 80
         to_port: 80
-        group_id: "{{ web_proxy_sg.group_id }}"
+        group_id: "{{ internal_elb_sg.group_id }}"
       - proto: tcp
         from_port: 443
         to_port: 443
@@ -112,6 +108,24 @@
         to_port: 22
         group_id: "{{ jump_host_sg.group_id }}" 
   register: harvester_sg
+
+# Solr ELB SG
+- name: Create Solr ELB security group
+  ec2_group:
+    name: "{{ app }}-solr-elb-sg"
+    description: Solr ELB security group
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    rules:
+      - proto: tcp
+        from_port: 8983
+        to_port: 8983
+        group_id: "{{ web_sg.group_id }}"
+      - proto: tcp
+        from_port: 8983
+        to_port: 8983
+        group_id: "{{ harvester_sg.group_id }}"
+  register: solr_elb_sg
 
 # RDS SG
 - name: Create db security group
@@ -162,11 +176,7 @@
     region: "{{ region }}"
     rules:
       - proto: tcp
-        from_port: 8080
-        to_port: 8080
-        group_id: "{{ web_sg.group_id }}"
-      - proto: tcp
-        from_port: 8080
-        to_port: 8080
-        group_id: "{{ harvester_sg.group_id }}"
+        from_port: 8983
+        to_port: 8983
+        group_id: "{{ solr_elb_sg.group_id }}"
   register: solr_sg

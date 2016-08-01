@@ -1,0 +1,11 @@
+---
+- name: prepare packages needed for harvester
+  action: apt pkg={{item}} state=installed
+  with_items:
+    - default-jdk
+    - tomcat6
+
+- name: copy all needed files
+  action: copy src={{item}} dest=/{{item}}
+  with_items:
+    - var/lib/tomcat6/webapps/fgdc2iso.war

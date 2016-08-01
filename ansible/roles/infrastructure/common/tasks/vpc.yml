@@ -1,5 +1,5 @@
 ---
-- name: Create/Delete datagov VPC
+- name: Create datagov VPC
   ec2_vpc:
     cidr_block: "{{ vpc_cidr_block }}" 
     region: "{{ vpc_region }}"

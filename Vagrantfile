@@ -17,14 +17,14 @@ Vagrant.configure(2) do |config|
 
   # Provision vm through ansible
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "ansible/site.yml"
+    ansible.playbook = "ansible/catalog.yml"
     ansible.sudo = true
     ansible.extra_vars = {
       ansible_ssh_user: "vagrant",
       local_ckan: "no",
       local_solr: "no"
     }
-    ansible.inventory_path = "ansible/local"
+    ansible.inventory_path = "ansible/software"
   end
 
   # Configure synced_folders
