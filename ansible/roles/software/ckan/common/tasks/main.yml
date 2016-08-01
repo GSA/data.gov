@@ -6,3 +6,9 @@
   action: copy src={{item}} dest=/{{item}} mode=744
   with_items:
     - usr/bin/ckan
+
+- name: copy all needed files
+  action: copy src={{item}} dest=/{{item}}
+  with_items:
+    - etc/cron.daily/remove_old_sessions
+  tags: ['cron']

@@ -20,5 +20,10 @@
     - etc/ckan/pycsw-all.cfg
     - etc/ckan/pycsw-collection.cfg
     - etc/ckan/pycsw.wsgi
-    - etc/cron.d/pycsw
     - usr/lib/ckan/bin/pycsw-load.sh
+
+- name: copy pycsw configuration files
+  action: copy src={{item}} dest=/{{item}} mode=644
+  with_items:
+    - etc/cron.d/pycsw
+  tags: ['cron']

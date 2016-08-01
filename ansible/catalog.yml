@@ -4,6 +4,11 @@
   sudo: yes
   #remote_user: ubuntu
 
+  ## tags used:
+  ## built-in: always
+  ## frontend, harvester, db, db-install, db-setup, db-init, solr, pycsw
+  ## redis, fgdc2iso, cron
+  ## sample usage: ansible-playbook ansibe/catalog.yml --tags "harvester" --skip-tags "solr, redis"
   roles:
     - {role: roles/software/ubuntu/common, tags: ['always']}
     - {role: roles/software/ckan/common, tags: ['frontend', 'harvester']}

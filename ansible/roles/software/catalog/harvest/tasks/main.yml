@@ -11,11 +11,15 @@
 - name: copy all needed files
   action: copy src={{item}} dest=/{{item}}
   with_items:
-    - etc/cron.daily/remove_old_sessions
     - etc/supervisord.conf
+    - etc/init/supervisor.conf
+
+- name: copy all needed files
+  action: copy src={{item}} dest=/{{item}}
+  with_items:
     - etc/cron.d/ckan
     - etc/cron.d/supervisor
-    - etc/init/supervisor.conf
+  tags: ['cron']
 
 - name: create superviserctl symlink
   action: file src=/usr/lib/ckan/bin/supervisorctl dest=/usr/bin/supervisorctl state=link
