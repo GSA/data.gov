@@ -118,12 +118,12 @@
     region: "{{ region }}"
     rules:
       - proto: tcp
-        from_port: 8983
-        to_port: 8983
+        from_port: 8080
+        to_port: 8080
         group_id: "{{ web_sg.group_id }}"
       - proto: tcp
-        from_port: 8983
-        to_port: 8983
+        from_port: 8080
+        to_port: 8080
         group_id: "{{ harvester_sg.group_id }}"
   register: solr_elb_sg
 
@@ -157,10 +157,6 @@
     vpc_id: "{{ vpc.vpc_id }}"
     region: "{{ region }}"
     rules:
-      - proto: tcp
-        from_port: 8080
-        to_port: 8080
-        group_id: "{{ web_sg.group_id }}"
       - proto: tcp
         from_port: 6380
         to_port: 6380

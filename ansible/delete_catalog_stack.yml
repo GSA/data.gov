@@ -14,6 +14,7 @@
     - include: roles/infrastructure/catalog/tasks/rds_delete.yml
     - include: roles/infrastructure/catalog/tasks/rds_subnet_group_delete.yml
     - include: roles/infrastructure/catalog/tasks/elasticache_delete.yml
+    - include: roles/infrastructure/catalog/tasks/elasticache_subnet_group_delete.yml
     - include: roles/infrastructure/catalog/tasks/asg_delete.yml
     - include: roles/infrastructure/catalog/tasks/lc_delete.yml
     - include: roles/infrastructure/catalog/tasks/elb_delete.yml

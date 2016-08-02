@@ -5,6 +5,7 @@
   sudo: yes
 
   roles:
+  - role: roles/software/catalog/ansible
   - role: roles/software/catalog/nginx
     nginx_http_params:
       - sendfile "on"

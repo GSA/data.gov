@@ -2,3 +2,5 @@ vpc_name: datagov
 vpc_region: us-east-1
 vpc_cidr_block: 172.22.0.0/16
 state: present
+git_repo: https://github.com/GSA/catalog-deploy.git
+ansible_cfg: /etc/ansible/ansible.cfg

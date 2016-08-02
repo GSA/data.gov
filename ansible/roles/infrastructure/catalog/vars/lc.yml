@@ -1,25 +1,25 @@
 ---
 
 # Web Proxy
-web_proxy_ami_id: ami-fa980ced
+web_proxy_ami_id: ami-d566f7c2
 web_proxy_instance_size: t2.micro
 nginx_config_path: /etc/nginx/sites-available/default.conf
 
 # Web
-web_ami_id: ami-367ff521 
+web_ami_id: ami-d566f7c2 
 web_instance_size: t2.micro
 
 # Harvester
-harvester_ami_id: ami-c3f5e7a9
+harvester_ami_id: ami-d566f7c2
 harvester_instance_size: t2.micro
 
 # Solr
-solr_ami_id: ami-c3f5e7a9
+solr_ami_id: ami-b00796a7
 solr_instance_size: t2.micro
 
 # Jump Box
-jump_box_ami_id: ami-c3f5e7a9
+jump_box_ami_id: ami-d566f7c2
 jump_box_instance_size: t2.micro
 
 # Other
-key_name: datagov
+key_name: ckan-csw-aws
