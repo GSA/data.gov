@@ -1,2 +1,0 @@
-[ckan-server] 
-dev-cd.reisys.io ansible_connection=ssh ansible_ssh_user=ubuntu env=develop 

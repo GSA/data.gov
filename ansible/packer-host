@@ -1,2 +1,0 @@
-[ckan-server] 
-packer ansible_ssh_host=localhost env=local

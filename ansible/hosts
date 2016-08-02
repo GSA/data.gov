@@ -1,4 +1,5 @@
-[local]
-localhost
-
-[webserver]
+[ckan-server]
+catalog.dev env=local
+dev-cd.reisys.io ansible_connection=ssh ansible_ssh_user=ubuntu env=develop
+qa-cd.reisys.io ansible_connection=ssh ansible_ssh_user=ubuntu env=qa
+packer ansible_host=localhost env=local

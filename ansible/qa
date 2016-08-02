@@ -1,2 +1,0 @@
-[ckan-server] 
-qa-cd.reisys.io ansible_connection=ssh ansible_ssh_user=ubuntu env=qa 
