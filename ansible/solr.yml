@@ -1,0 +1,8 @@
+---
+
+- name: Install Solr
+  hosts: all
+  sudo: yes
+
+  roles:
+  - role: roles/software/ckan/solr

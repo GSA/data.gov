@@ -1,7 +1,7 @@
-- name: prepare packages needed for solr
-  action: apt pkg={{item}} state=installed
-  with_items:
-    - tomcat6
+---
+
+- name: Update repositories cache and install tomcat6
+  apt: name=tomcat6 update_cache=yes
 
 - name: Download solr 4.2.1
   command: creates=~/solr-4.2.1.tgz chdir=~/ wget -T 40  {{ solr_url }}
