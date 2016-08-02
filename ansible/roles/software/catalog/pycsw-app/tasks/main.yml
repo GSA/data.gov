@@ -17,10 +17,24 @@
 - name: copy pycsw configuration files
   action: copy src={{item}} dest=/{{item}} mode=644
   with_items:
-    - etc/ckan/pycsw-all.cfg
-    - etc/ckan/pycsw-collection.cfg
     - etc/ckan/pycsw.wsgi
     - usr/lib/ckan/bin/pycsw-load.sh
+
+- set_fact:
+    csw_url_path: "{{ csw_url_path_all }}"
+    csw_abstract: "{{ csw_abstract_all }}"
+    csw_filter: "{{ csw_filter_all }}"
+
+- name: config pycsw-all.cfg
+  template: src=pycsw-cfg.j2 dest=/etc/ckan/pycsw-all.cfg
+
+- set_fact:
+    csw_url_path: "{{ csw_url_path_collection }}"
+    csw_abstract: "{{ csw_abstract_collection }}"
+    csw_filter: "{{ csw_filter_collection }}"
+
+- name: config pycsw-collection.cfg
+  template: src=pycsw-cfg.j2 dest=/etc/ckan/pycsw-collection.cfg
 
 - name: copy pycsw configuration files
   action: copy src={{item}} dest=/{{item}} mode=644

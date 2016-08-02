@@ -1,5 +1,5 @@
 [server]
-url=http://catalog.data.gov/csw
+url=http://catalog.data.gov/{{ csw_url_path }}
 mimetype=application/xml; charset=UTF-8
 encoding=UTF-8
 language=en-US
@@ -13,8 +13,7 @@ transactions=false
  
 [metadata:main]
 identification_title=CSW interface for catalog.data.gov
-identification_abstract=This catalog contains metadata for all first-order data, services, and applications harvested from registered metadata collections with data.gov. Data may be referenced from federal, state, local, tribal, academic, commercial, or non-profit organizations.
-identification_keywords=national,catalog,data,information,governmental
+identification_abstract= {{ csw_abstract }}
 identification_keywords_type=theme
 identification_fees=None
 identification_accessconstraints=None
@@ -36,9 +35,10 @@ contact_instructions=Preferred method through email datagov@gsa.gov or contact U
 contact_role=publisher,custodian
  
 [repository]
-database=postgresql://ckan:pass@localhost/pycsw
+db_server = localhost
+database=postgresql://ckan:pass@%(db_server)s/pycsw
 table=records
-filter=ckan_collection = '1'
+filter={{ csw_filter }}
 
 [defaults]
 ckan_url=http://localhost/
