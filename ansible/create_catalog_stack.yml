@@ -14,6 +14,7 @@
   tasks:
     - include: roles/infrastructure/common/tasks/vpc.yml
     - include: roles/infrastructure/catalog/tasks/subnets.yml
+    - include: roles/infrastructure/catalog/tasks/nat.yml
     - include: roles/infrastructure/catalog/tasks/route_tables.yml
     - include: roles/infrastructure/catalog/tasks/sg.yml
 #    - include: roles/infrastructure/catalog/tasks/rds_subnet_group.yml 
