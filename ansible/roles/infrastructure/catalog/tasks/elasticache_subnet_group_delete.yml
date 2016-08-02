@@ -1,0 +1,7 @@
+---
+
+- name: Delete Elasticache subnet group
+  elasticache_subnet_group:
+    state: absent
+    region: "{{ region }}"
+    name: "{{ app }}-elasticache-subnet-group"
