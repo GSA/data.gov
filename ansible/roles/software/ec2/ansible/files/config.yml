@@ -22,7 +22,7 @@
   when: solr_server != ""
 
 - name: Config pycsw_db_server in pycsw config files
-  replace: dest={{ items }} regexp='(\s*db_server\s*=).*$' replace='\1 {{pycsw_db_server}}'
+  replace: dest={{ item }} regexp='(\s*db_server\s*=).*$' replace='\1 {{pycsw_db_server}}'
   when: pycsw_db_server != ""
   with_items:
     - /etc/ckan/pycsw-all.cfg

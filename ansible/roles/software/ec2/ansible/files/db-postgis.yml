@@ -15,7 +15,7 @@
       - db_user != "" and db_pass != "" and db_server != "" and db_database != ""
 
 - name: Check if postgis_version installed
-  shell: PGPASSWORD={{db_pass}} psql -h {{db_server}} -U{{db_user}} -d {{db_database}} -c "SELECT psostgis_version();"
+  shell: PGPASSWORD={{db_pass}} psql -h {{db_server}} -U{{db_user}} -d {{db_database}} -c "SELECT postgis_version();"
   ignore_errors: True
   register: check_postgis
 
