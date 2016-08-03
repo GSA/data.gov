@@ -1,0 +1,23 @@
+---
+## Install Ansible
+- name: Add ansible ppa
+  apt_repository: repo='ppa:ansible/ansible'
+
+- name: apt update
+  apt: update_cache=yes
+
+- name: make sure packages are installed
+  apt: pkg=ansible state=installed
+
+### Add playbooks
+- name: Create ansible directories
+  file: path=/root/ansible state=directory
+
+- name: Add playbook files
+  copy: src={{item}} dest=/root/ansible/{{item}}
+  with_items:
+    - main.yml
+    - config.yml
+    - db-init.yml
+    - db-postgis.yml
+    - postgis.sql

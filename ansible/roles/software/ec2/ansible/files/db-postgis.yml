@@ -1,0 +1,26 @@
+---
+- name: get db credentials
+  vars:
+    production_ini: "/etc/ckan/production.ini"
+    section: "app:main"
+  set_fact: "{{item}}='{{ lookup(\'ini\', \'{{item}} section={{section}} file={{production_ini}}\') }}'"
+  with_items:
+    - db_user
+    - db_pass
+    - db_server
+    - db_database
+
+- assert:
+    that:
+      - db_user != "" and db_pass != "" and db_server != "" and db_database != ""
+
+- name: Check if postgis_version installed
+  shell: PGPASSWORD={{db_pass}} psql -h {{db_server}} -U{{db_user}} -d {{db_database}} -c "SELECT psostgis_version();"
+  ignore_errors: True
+  register: check_postgis
+
+- debug: var=check_postgis.stdout
+
+- name: Install postgis on rds
+  when: check_postgis.stdout.find("postgis_version") == -1
+  shell: PGPASSWORD={{db_pass}} psql -h {{db_server}} -U{{db_user}} -d {{db_database}} -f postgis.sql

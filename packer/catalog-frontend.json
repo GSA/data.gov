@@ -13,7 +13,7 @@
     "source_ami": "ami-2d39803a",
     "instance_type": "m3.medium",
     "ssh_username": "ubuntu",
-    "ami_name": "catalog-ami {{timestamp}}"
+    "ami_name": "catalog-frontend {{timestamp}}"
   }],
 
   "provisioners": [
@@ -35,6 +35,8 @@
         "playbook_file": "ansible/catalog.yml",
         "extra_arguments": [
           "--limit=packer",
+          "--tags 'frontend,ec2'",
+          "--skip-tags 'db,cron,saml2'",
           "--vault-password-file=/tmp/ansible_vault_password.txt"
         ]
   }]

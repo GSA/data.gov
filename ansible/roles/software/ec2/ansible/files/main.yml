@@ -1,0 +1,13 @@
+---
+- name: Tasks for new ec2 instances
+  hosts: localhost
+
+  tasks:
+    - include: config.yml
+      tags: ['config']
+
+    - include: db-postgis.yml
+      tags: ['db','db-postgis']
+
+    - include: db-init.yml
+      tags: ['db','db-init']

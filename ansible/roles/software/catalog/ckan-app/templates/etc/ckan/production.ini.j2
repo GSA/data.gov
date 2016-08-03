@@ -48,7 +48,7 @@ who.log_file = %(cache_dir)s/who_log.ini
 db_user = {{ catalog_db_user }}
 db_pass = {{ catalog_db_pass }}
 db_server = localhost
-db_database = ckan
+db_database = catalog_db
 sqlalchemy.url = postgresql://%(db_user)s:%(db_pass)s@%(db_server)s/%(db_database)s
 
 #ckan.datastore.write_url = postgresql://ckan:pass@localhost/datastore
@@ -185,6 +185,7 @@ smtp.mail_from = no-reply@data.gov
 ckan.tracking_enabled = True
 set debug = False
 ckan.harvest.mq.type = redis
+ckan.harvest.mq.hostname = localhost
 ckanext.harvest.email = on
 ckan.resource_proxy_enabled = 1
 ckan.spatial.validator.profiles = iso19139ngdc

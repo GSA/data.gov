@@ -1,0 +1,13 @@
+---
+- name: Initialize ckan db
+  command: ckan db init
+  ignore_errors: True
+
+- name: Initialize ckan report db
+  command: ckan --plugin=ckanext-report report initdb
+  ignore_errors: True
+
+- name: Initialize pycsw db
+  command: chdir=/usr/lib/ckan/bin/ ./pycsw-ckan.py -c setup_db -f /etc/ckan/pycsw-all.cfg
+  ignore_errors: True
+
