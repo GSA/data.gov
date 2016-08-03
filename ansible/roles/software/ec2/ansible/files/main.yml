@@ -6,6 +6,9 @@
     - include: config.yml
       tags: ['config']
 
+    - include: db-credential.yml
+      tags: ['db']
+
     - include: db-postgis.yml
       tags: ['db','db-postgis']
 

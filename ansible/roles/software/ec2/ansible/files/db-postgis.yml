@@ -1,26 +1,18 @@
 ---
-- name: get db credentials
-  vars:
-    production_ini: "/etc/ckan/production.ini"
-    section: "app:main"
-  set_fact: "{{item}}='{{ lookup(\'ini\', \'{{item}} section={{section}} file={{production_ini}}\') }}'"
-  with_items:
-    - db_user
-    - db_pass
-    - db_server
-    - db_database
-
-- assert:
-    that:
-      - db_user != "" and db_pass != "" and db_server != "" and db_database != ""
+- name: Create a table to indicate postgis install is in process
+  shell: PGPASSWORD={{db_pass}} psql -h {{db_server}} -U{{db_user}} -d {{db_database}} -c "CREATE TABLE ckan_postgis_install (ignore_this_table char(1));"
+  register: postgis_install_reg
+  failed_when: postgis_install_reg.rc != 0 and ("already exists" not in postgis_install_reg.stderr)
+  changed_when: postgis_install_reg.rc == 0
+  ignore_errors: True
 
 - name: Check if postgis_version installed
   shell: PGPASSWORD={{db_pass}} psql -h {{db_server}} -U{{db_user}} -d {{db_database}} -c "SELECT postgis_version();"
+  register: postgis_version_reg
   ignore_errors: True
-  register: check_postgis
-
-- debug: var=check_postgis.stdout
+  failed_when: postgis_version_reg.rc != 0 and ("does not exist" in postgis_version_reg.stderr)
+  when: postgis_install_reg.changed
 
 - name: Install postgis on rds
-  when: check_postgis.stdout.find("postgis_version") == -1
   shell: PGPASSWORD={{db_pass}} psql -h {{db_server}} -U{{db_user}} -d {{db_database}} -f postgis.sql
+  when: postgis_install_reg.changed and postgis_version_reg.failed
