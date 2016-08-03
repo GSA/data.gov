@@ -18,6 +18,7 @@
   ec2_lc:
     name: "{{ app }}-web-proxy-lc"
     state: present
+    assign_public_ip: "{{ assign_public_ip }}"
     region: "{{ region }}"
     image_id: "{{ web_proxy_ami_id }}"
     key_name: "{{ key_name }}"
@@ -26,8 +27,8 @@
     user_data: |
       #!/bin/sh
       set -e
-#      export ANSIBLE_CONFIG="{{ ansible_cfg }}"
-#      ansible-pull -v -U "{{ git_repo }}" ansible/web-proxy.yml -i ansible/hosts
+      export ANSIBLE_CONFIG="{{ ansible_cfg }}"
+      ansible-pull -v -U "{{ git_repo }}" ansible/web-proxy.yml -i ansible/hosts
       sed -i "s\data.gov\{{ internal_elb.elb.dns_name }}\g" "{{ nginx_config_path }}"
       service nginx restart
 

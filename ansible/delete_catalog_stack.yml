@@ -19,5 +19,7 @@
     - include: roles/infrastructure/catalog/tasks/lc_delete.yml
     - include: roles/infrastructure/catalog/tasks/elb_delete.yml
     - include: roles/infrastructure/catalog/tasks/sg_delete.yml
+    - include: roles/infrastructure/catalog/tasks/nat_delete.yml
     - include: roles/infrastructure/catalog/tasks/subnets_delete.yml
     - include: roles/infrastructure/catalog/tasks/route_tables_delete.yml
+
