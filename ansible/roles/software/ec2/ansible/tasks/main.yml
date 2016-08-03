@@ -18,6 +18,7 @@
   with_items:
     - main.yml
     - config.yml
+    - db-credential.yml
     - db-init.yml
     - db-postgis.yml
     - postgis.sql
