@@ -12,7 +12,7 @@ db_license_model: postgresql-license
 
 # ckan db
 ckan_db_instance_name: "{{ app }}-ckan-db"
-ckan_db_name: ckan_db
+ckan_db_name: "{{ catalog_db_name }}"
 ckan_db_size: 50
 
 # pycsw db

@@ -1,5 +1,6 @@
 ---
 virtual_env: /usr/lib/ckan
+catalog_db_name: ckan_db
 
 ##################################
 # Secret vars section
