@@ -18,4 +18,4 @@ ckan_db_size: 50
 # pycsw db
 pycsw_db_instance_name: "{{ app }}-pycsw-db"
 pycsw_db_size: 50
-pycsw_db_name: pycsw_db
+pycsw_db_name: "{{ catalog_pycsw_db_name }}"
