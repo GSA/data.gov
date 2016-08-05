@@ -14,5 +14,5 @@
   when: postgis_install_reg.changed
 
 - name: Install postgis on rds
-  shell: PGPASSWORD={{db_pass}} psql -h {{db_server}} -U{{db_user}} -d {{db_database}} -f postgis.sql
+  shell: PGPASSWORD={{db_pass}} psql -h {{db_server}} -U{{db_user}} -d {{db_database}} -f {{playbook_dir}}/postgis.sql
   when: postgis_install_reg.changed and postgis_version_reg.failed

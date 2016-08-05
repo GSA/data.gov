@@ -4,10 +4,10 @@
 
 - name: get environment vars
   set_fact:
-    ckan_db_server: "{{ lookup('env', 'CKAN_DB_SERVER') }}"
-    redis_server: "{{ lookup('env','REDIS_SERVER') }}"
-    solr_server: "{{ lookup('env','SOLR_SERVER') }}"
-    pycsw_db_server: "{{ lookup('env','PYCSW_DB_SERVER') }}"
+    ckan_db_server: "{{ CKAN_DB_SERVER|default('') }}"
+    redis_server: "{{ REDIS_SERVER|default('') }}"
+    solr_server: "{{ SOLR_SERVER|default('') }}"
+    pycsw_db_server: "{{ PYCSW_DB_SERVER|default('') }}"
 
 - name: Config db_server in production.ini
   replace: dest=/etc/ckan/production.ini regexp='(\s*db_server\s*=).*$' replace='\1 {{ckan_db_server}}'

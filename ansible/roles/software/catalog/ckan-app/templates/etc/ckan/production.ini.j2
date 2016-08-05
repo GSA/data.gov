@@ -48,7 +48,7 @@ who.log_file = %(cache_dir)s/who_log.ini
 db_user = {{ catalog_db_user }}
 db_pass = {{ catalog_db_pass }}
 db_server = localhost
-db_database = catalog_db
+db_database = {{ catalog_db_name }}
 sqlalchemy.url = postgresql://%(db_user)s:%(db_pass)s@%(db_server)s/%(db_database)s
 
 #ckan.datastore.write_url = postgresql://ckan:pass@localhost/datastore

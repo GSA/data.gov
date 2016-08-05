@@ -2,7 +2,7 @@
   "variables": {
     "source_ami": "ami-d566f7c2",
     "instance_type": "m3.medium",
-    "ami_name": "catalog-web-ami {{timestamp}}"
+    "ami_name": "catalog-web-ami {{isotime \"2006-01-02T03-04-05\"}}"
   },
 
   "builders": [{
@@ -36,7 +36,7 @@
         "extra_arguments": [
           "--limit=packer",
           "--tags 'harvester,ec2'",
-          "--skip-tags 'db,saml2'",
+          "--skip-tags 'solr,db,saml2'",
           "--vault-password-file=/tmp/ansible_vault_password.txt"
         ]
   }]
