@@ -36,7 +36,7 @@
         "extra_arguments": [
           "--limit=packer",
           "--tags 'frontend,ec2'",
-          "--skip-tags 'db,cron,saml2'",
+          "--skip-tags 'solr,db,cron,saml2'",
           "--vault-password-file=/tmp/ansible_vault_password.txt"
         ]
   }]
