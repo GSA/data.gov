@@ -13,7 +13,7 @@
     "source_ami": "ami-2d39803a",
     "instance_type": "m3.medium",
     "ssh_username": "ubuntu",
-    "ami_name": "catalog-harvester {{timestamp}}"
+    "ami_name": "catalog-harvester {{isotime \"2006-01-02T03-04-05\"}}"
   }],
 
   "provisioners": [
