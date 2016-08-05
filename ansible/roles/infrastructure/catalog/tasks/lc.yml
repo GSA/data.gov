@@ -1,18 +1,18 @@
 ---
 
-#- name: Get facts about ckan db instance.
-#  rds:
-#    command: facts
-#    instance_name: "{{ ckan_db_instance_name }}"
-#    region: "{{ region }}"
-#  register: ckan_rds_db
-#
-#- name: Get facts about pycsw db instance.
-#  rds:
-#    command: facts
-#    instance_name: "{{ pycsw_db_instance_name }}"
-#    region: "{{ region }}"
-#  register: pycsw_rds_db
+- name: Get facts about ckan db instance.
+  rds:
+    command: facts
+    instance_name: "{{ ckan_db_instance_name }}"
+    region: "{{ region }}"
+  register: ckan_rds_db
+
+- name: Get facts about pycsw db instance.
+  rds:
+    command: facts
+    instance_name: "{{ pycsw_db_instance_name }}"
+    region: "{{ region }}"
+  register: pycsw_rds_db
 
 - name: Create Web Proxy Launch Configuration
   ec2_lc:
@@ -28,56 +28,73 @@
       #!/bin/sh
       set -e
       export ANSIBLE_CONFIG="{{ ansible_cfg }}"
-      ansible-pull -v -U "{{ git_repo }}" ansible/web-proxy.yml -i ansible/hosts
+      ansible-pull -i ansible/local -U "{{ git_repo }}" ansible/web-proxy.yml
       sed -i "s\data.gov\{{ internal_elb.elb.dns_name }}\g" "{{ nginx_config_path }}"
       service nginx restart
 
-#- name: Create Web Launch Configuration
-#  ec2_lc:
-#    name: "{{ app }}-web-lc"
-#    state: present
-#    region: "{{ region }}"
-#    image_id: "{{ web_ami_id }}"
-#    key_name: "{{ key_name }}"
-#    security_groups: "{{ web_sg.group_id }}"
-#    instance_type: "{{ web_instance_size }}"
+- name: Create Web Launch Configuration
+  ec2_lc:
+    name: "{{ app }}-web-lc"
+    state: present
+    region: "{{ region }}"
+    image_id: "{{ web_ami_id }}"
+    key_name: "{{ key_name }}"
+    security_groups: "{{ web_sg.group_id }}"
+    instance_type: "{{ web_instance_size }}"
+
+    user_data: |
+      #!/bin/bash -ex
+      source /etc/profile
+      exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+      echo BEGIN
+      export ANSIBLE_CONFIG={{ ansible_cfg }}
+      ansible-pull -i ansible/local \
+        -U "{{ git_repo }}" \
+        --extra-vars="CKAN_DB_SERVER={{ ckan_rds_db.instance.endpoint }} \ 
+        PYCSW_DB_SERVER={{ pycsw_rds_db.instance.endpoint }} \
+        REDIS_SERVER={{ elasticache_instance.elasticache.data.CacheNodes[0].Endpoint.Address }} \
+        SOLR_SERVER={{ solr_elb.elb.dns_name }}" \
+        ansible/roles/software/ec2/ansible/files/main.yml
+      service apache2 restart
+      echo END
+
+- name: Create Harvester Launch Configuration
+  ec2_lc:
+    name: "{{ app }}-harvester-lc"
+    state: present
+    region: "{{ region }}"
+    image_id: "{{ harvester_ami_id }}"
+    key_name: "{{ key_name }}"
+    security_groups: "{{ harvester_sg.group_id }}"
+    instance_type: "{{ harvester_instance_size }}"
+    user_data: |
+      #!/bin/sh
+      echo 'export CKAN_DB_SERVER={{ ckan_rds_db.instance.endpoint }}' >> ~/.bashrc
+      echo 'export PYCSW_DB_SERVER={{ pycsw_rds_db.instance.endpoint }}' >> ~/.bashrc
+      echo 'export REDIS_SERVER={{ elasticache_instance.elasticache.data.CacheNodes[0].Endpoint.Address }}' >> ~/.bashrc
+      echo 'export SOLR_SERVER={{ solr_elb.elb.dns_name }}' >> ~/.bashrc 
+      exec ~/.bashrc
+      ansible-playbook -i ansible/local -U https://github.com/GSA/catalog-deploy.git ansible/roles/software/ec2/ansible/files/main.yml
+
+- name: Create Solr Launch Configuration
+  ec2_lc:
+    name: "{{ app }}-solr-lc"
+    state: present
+    region: "{{ region }}"
+    image_id: "{{ solr_ami_id }}"
+    key_name: "{{ key_name }}"
+    security_groups: "{{ solr_sg.group_id }}"
+    instance_type: "{{ solr_instance_size }}"
 #    user_data: |
-#      #!/bin/sh
-#      echo 'export CKAN_DB_SERVER={{ ckan_rds_db.instance.endpoint }}' >> ~/.bashrc
-#      echo 'export PYCSW_DB_SERVER={{ pycsw_rds_db.instance.endpoint }}' >> ~/.bashrc
-#      echo 'export REDIS_SERVER={{ elasticache_instance.elasticache.data.CacheNodes[0].Endpoint.Address }}' >> ~/.bashrc
-#      echo 'export SOLR_SERVER={{ solr_elb.elb.dns_name }}' >> ~/.bashrc 
-#      exec ~/.bashrc
-#
-#- name: Create Harvester Launch Configuration
-#  ec2_lc:
-#    name: "{{ app }}-harvester-lc"
-#    state: present
-#    region: "{{ region }}"
-#    image_id: "{{ harvester_ami_id }}"
-#    key_name: "{{ key_name }}"
-#    security_groups: "{{ harvester_sg.group_id }}"
-#    instance_type: "{{ harvester_instance_size }}"
-#    user_data: |
-#      #!/bin/sh
-#      echo 'export CKAN_DB_SERVER={{ ckan_rds_db.instance.endpoint }}' >> ~/.bashrc
-#      echo 'export PYCSW_DB_SERVER={{ pycsw_rds_db.instance.endpoint }}' >> ~/.bashrc
-#      echo 'export REDIS_SERVER={{ elasticache_instance.elasticache.data.CacheNodes[0].Endpoint.Address }}' >> ~/.bashrc
-#      echo 'export SOLR_SERVER={{ solr_elb.elb.dns_name }}' >> ~/.bashrc 
-#      exec ~/.bashrc
-#
-#- name: Create Solr Launch Configuration
-#  ec2_lc:
-#    name: "{{ app }}-solr-lc"
-#    state: present
-#    region: "{{ region }}"
-#    image_id: "{{ solr_ami_id }}"
-#    key_name: "{{ key_name }}"
-#    security_groups: "{{ solr_sg.group_id }}"
-#    instance_type: "{{ solr_instance_size }}"
-#
-#- debug: var=jump_host_sg.group_id
-#
+#      #!/bin/bash -ex
+#      source /etc/profile
+#      exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+#      echo BEGIN #Your code comes here"
+#      export ANSIBLE_CONFIG={{ ansible_cfg }}
+#      ansible-pull -v -i ansible/local -U "{{ git_repo }}" ansible/solr.yml
+#      echo "Test Output"
+#      echo END
+
 - name: Create Jump Box Launch Configuration
   ec2_lc:
     name: "{{ app }}-jump-box-lc"

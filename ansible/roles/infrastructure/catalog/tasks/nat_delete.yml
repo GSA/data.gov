@@ -11,7 +11,7 @@
   ec2_vpc_nat_gateway:
     state: absent
     region: "{{ region }}"
-    release_eip: true
+#    release_eip: true
     nat_gateway_id: "{{ route_table_facts.route_tables[0].tags.nat_gateway_id }}"
     wait: yes
     wait_timeout: 600

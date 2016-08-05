@@ -6,6 +6,7 @@
     instance_name: "{{ ckan_db_instance_name }}"
     region: "{{ region }}"
     db_engine: "{{ db_engine }}"
+    engine_version: "{{ engine_version }}"
     instance_type: "{{ db_instance_type }}"
     multi_zone: "{{ db_multi_zone}}"
     publicly_accessible: "{{ db_publicly_accessible }}"
@@ -33,6 +34,7 @@
     instance_name: "{{ pycsw_db_instance_name }}"
     region: "{{ region }}"
     db_engine: postgres
+    engine_version: "{{ engine_version }}"
     instance_type: "{{ db_instance_type }}"
     multi_zone: "{{ db_multi_zone}}"
     publicly_accessible: "{{ db_publicly_accessible }}"

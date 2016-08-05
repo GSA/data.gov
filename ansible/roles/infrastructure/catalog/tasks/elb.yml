@@ -102,14 +102,14 @@
     subnets: "{{ private_subnet_ids }}" 
     health_check:
       ping_protocol: "{{ ping_protocol }}"
-      ping_port: "{{ ping_port }}"
-      ping_path: "{{ ping_path }}"
+      ping_port: "{{ solr_ping_port }}"
+      ping_path: "{{ solr_ping_path }}"
       response_timeout: "{{ response_timeout }}"
       interval: "{{ interval }}"
       unhealthy_threshold: "{{ unhealthy_threshold }}"
       healthy_threshold: "{{ healthy_threshold }}"
     listeners:
       - protocol: http
-        load_balancer_port: 8983
-        instance_port: 8983
+        load_balancer_port: 8080
+        instance_port: 8080
   register: solr_elb

@@ -2,6 +2,7 @@
 
 # common
 db_engine: postgres
+engine_version: 9.3
 db_instance_type: db.m3.medium
 db_multi_zone: no
 db_publicly_accessible: no

@@ -30,10 +30,6 @@
         from_port: 80
         to_port: 80
         cidr_ip: 0.0.0.0/0
-      - proto: tcp
-        from_port: 443
-        to_port: 443
-        cidr_ip: 0.0.0.0/0
   register: external_elb_sg
 
 
@@ -48,10 +44,6 @@
       - proto: tcp
         from_port: 80
         to_port: 80
-        group_id: "{{ external_elb_sg.group_id }}"
-      - proto: tcp
-        from_port: 443
-        to_port: 443
         group_id: "{{ external_elb_sg.group_id }}"
       - proto: tcp
         from_port: 22
@@ -172,7 +164,11 @@
     region: "{{ region }}"
     rules:
       - proto: tcp
-        from_port: 8983
-        to_port: 8983
+        from_port: 8080
+        to_port: 8080
         group_id: "{{ solr_elb_sg.group_id }}"
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        group_id: "{{ jump_host_sg.group_id }}"
   register: solr_sg

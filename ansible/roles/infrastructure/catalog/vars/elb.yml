@@ -1,11 +1,16 @@
 ---
 
+# common
 ping_protocol: http
 ping_port: 80
-ping_path: "/"
+ping_path: "/dataset"
 response_timeout: 5
 interval: 15
 unhealthy_threshold: 2
 healthy_threshold: 4
 connection_draining_timeout: 60
 idle_timeout: 300
+
+# solr elb
+solr_ping_port: 8080
+solr_ping_path: "/"

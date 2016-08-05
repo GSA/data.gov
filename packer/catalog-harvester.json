@@ -1,8 +1,8 @@
 {
   "variables": {
-    "aws_access_key": null,
-    "aws_secret_key": null,
-    "ansible_vault_password": null
+    "source_ami": "ami-d566f7c2",
+    "instance_type": "m3.medium",
+    "ami_name": "catalog-web-ami {{timestamp}}"
   },
 
   "builders": [{
@@ -10,10 +10,10 @@
     "access_key": "{{user `aws_access_key`}}",
     "secret_key": "{{user `aws_secret_key`}}",
     "region": "us-east-1",
-    "source_ami": "ami-2d39803a",
-    "instance_type": "m3.medium",
+    "source_ami": "{{user `source_ami`}}",
+    "instance_type": "{{user `instance_type`}}",
     "ssh_username": "ubuntu",
-    "ami_name": "catalog-harvester {{timestamp}}"
+    "ami_name": "{{user `ami_name`}}"
   }],
 
   "provisioners": [
