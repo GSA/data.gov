@@ -1,0 +1,4 @@
+---
+- name: Create locations table
+  shell: gunzip -c {{playbook_dir}}/locations.sql.gz | PGPASSWORD={{db_pass}} psql -h {{db_server}} -U{{db_user}} -d {{db_database}} -v ON_ERROR_STOP=1
+  ignore_errors: True
