@@ -21,4 +21,6 @@
     - db-credential.yml
     - db-init.yml
     - db-postgis.yml
+    - db-locations-table.yml
     - postgis.sql
+    - locations.sql.gz
