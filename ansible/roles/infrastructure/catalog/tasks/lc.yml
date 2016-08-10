@@ -41,7 +41,6 @@
     key_name: "{{ key_name }}"
     security_groups: "{{ web_sg.group_id }}"
     instance_type: "{{ web_instance_size }}"
-
     user_data: |
       #!/bin/bash -ex
       source /etc/profile
