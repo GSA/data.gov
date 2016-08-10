@@ -4,6 +4,7 @@
   with_items:
     - apache2
     - libapache2-mod-wsgi
+    - libapache2-mod-security
 
 - name: default apache removed
   action: file path=/etc/apache2/sites-enabled/000-default.conf state=absent
@@ -15,8 +16,13 @@
   action: copy src=ckan.conf dest=/etc/apache2/sites-enabled/ckan.conf
 
 - name: Apache | Enable some required modules
-  action: command a2enmod rewrite headers 
+  action: command a2enmod rewrite headers
   tags: common
 
-- name: restart apache
-  action: service name=apache2 state=restarted
+- name: Apache | Enable Web Application Firewall
+  action: command a2enmod mod-security
+  tags:
+    - web_application_firewall
+    - CM-7
+    - SC-7
+    - SI-10

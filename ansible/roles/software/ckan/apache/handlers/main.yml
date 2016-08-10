@@ -1,0 +1,10 @@
+---
+- name: reload apache config
+  service:
+    name: apache2
+    state: reloaded
+
+- name: restart apache
+  service:
+    name: apache2
+    state: restarted
