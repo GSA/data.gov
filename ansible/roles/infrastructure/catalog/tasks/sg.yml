@@ -11,11 +11,11 @@
       - proto: tcp
         from_port: 22
         to_port: 22
-        cidr_ip: 74.96.208.193/32
+        cidr_ip: 65.242.97.254/32
       - proto: tcp
         from_port: 22
         to_port: 22
-        cidr_ip: 65.242.97.254/32
+        cidr_ip: 173.66.149.6/32
   register: jump_host_sg
 
 # External ELB SG
@@ -77,10 +77,6 @@
         from_port: 80
         to_port: 80
         group_id: "{{ internal_elb_sg.group_id }}"
-      - proto: tcp
-        from_port: 443
-        to_port: 443
-        group_id: "{{ web_proxy_sg.group_id }}"
       - proto: tcp
         from_port: 22
         to_port: 22

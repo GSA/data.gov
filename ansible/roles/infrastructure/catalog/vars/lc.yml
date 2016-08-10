@@ -7,7 +7,7 @@ nginx_config_path: /etc/nginx/sites-available/default.conf
 assign_public_ip: yes
 
 # Web
-web_ami_id: ami-60019377 #ami-d566f7c2 
+web_ami_id: ami-ba44d8ad #ami-d566f7c2 
 web_instance_size: t2.medium
 
 # Harvester
