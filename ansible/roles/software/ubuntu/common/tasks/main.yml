@@ -32,7 +32,7 @@
     - ntp
 
 - name: be sure ntpd is running and enabled
-  service: name=ntpd state=started enabled=yes
+  service: name=ntp state=started enabled=yes
   tags:
     - ntp
     - AU-8
