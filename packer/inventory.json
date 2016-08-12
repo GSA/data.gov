@@ -1,8 +1,11 @@
 {
   "variables": {
+    "aws_access_key": null,
+    "aws_secret_key": null,
+    "ansible_vault_password": null,
     "source_ami": "ami-d566f7c2",
     "instance_type": "m3.medium",
-    "ami_name": "catalog-harvester-ami {{isotime \"2006-01-02T03-04-05\"}}"
+    "ami_name": "inventory {{isotime \"2006-01-02T03-04-05\"}}"
   },
 
   "builders": [{
@@ -32,11 +35,10 @@
         "playbook_dir": "ansible",
         "inventory_file": "ansible/hosts",
         "staging_directory": "/tmp/ansible-local",
-        "playbook_file": "ansible/catalog.yml",
+        "playbook_file": "ansible/inventory.yml",
         "extra_arguments": [
           "--limit=packer",
-          "--tags 'harvester,ec2'",
-          "--skip-tags 'apache,solr,db,saml2'",
+          "--skip-tags 'solr,db,saml2'",
           "--vault-password-file=/tmp/ansible_vault_password.txt"
         ]
   }]

@@ -8,27 +8,27 @@
   shell: sudo -u postgres psql -c "CREATE USER {{ catalog_db_user }} WITH PASSWORD '{{ catalog_db_pass }}' SUPERUSER;"
 
 - name: check if ckan database already exists
-  shell: sudo -u postgres psql -c "SELECT 1 FROM pg_database WHERE datname = 'ckan';"
+  shell: sudo -u postgres psql -c "SELECT 1 FROM pg_database WHERE datname = '{{ catalog_db_name }}';"
   register: check_ckan_database
 
 - name: create ckan database
   when: check_ckan_database.stdout.find("(0 rows)") != -1
-  shell: sudo -u postgres psql -c "CREATE DATABASE ckan OWNER {{ catalog_db_user }};"
+  shell: sudo -u postgres psql -c "CREATE DATABASE {{ catalog_db_name }} OWNER {{ catalog_db_user }};"
 
 - name: install postgis script
-  shell: "sudo -u postgres psql -d ckan -f /usr/share/postgresql/9.3/contrib/postgis-2.1/postgis.sql"
+  shell: "sudo -u postgres psql -d {{ catalog_db_name }} -f /usr/share/postgresql/9.3/contrib/postgis-2.1/postgis.sql"
 
 - name: install postgis script
-  shell: "sudo -u postgres psql -d ckan -f /usr/share/postgresql/9.3/contrib/postgis-2.1/spatial_ref_sys.sql"
+  shell: "sudo -u postgres psql -d {{ catalog_db_name }} -f /usr/share/postgresql/9.3/contrib/postgis-2.1/spatial_ref_sys.sql"
 
 - name: install postgis script
-  shell: "sudo -u postgres psql -d ckan -f /usr/share/postgresql/9.3/contrib/postgis-2.1/rtpostgis.sql"
+  shell: "sudo -u postgres psql -d {{ catalog_db_name }} -f /usr/share/postgresql/9.3/contrib/postgis-2.1/rtpostgis.sql"
 
 - name: install postgis script
-  shell: "sudo -u postgres psql -d ckan -f /usr/share/postgresql/9.3/contrib/postgis-2.1/topology.sql"
+  shell: "sudo -u postgres psql -d {{ catalog_db_name }} -f /usr/share/postgresql/9.3/contrib/postgis-2.1/topology.sql"
 
 - name: install postgis script
-  shell: sudo -u postgres psql -d ckan -c "GRANT SELECT, UPDATE, INSERT, DELETE ON spatial_ref_sys TO {{ catalog_db_user }};"
+  shell: sudo -u postgres psql -d {{ catalog_db_name }} -c "GRANT SELECT, UPDATE, INSERT, DELETE ON spatial_ref_sys TO {{ catalog_db_user }};"
 
 - name: copy locations sql script
   action: copy src={{item}} dest=/{{item}} mode=644
@@ -36,4 +36,4 @@
     - tmp/locations.sql.gz
 
 - name: create locations table
-  shell: gunzip -c /tmp/locations.sql.gz | sudo -u postgres psql -d ckan
+  shell: gunzip -c /tmp/locations.sql.gz | sudo -u postgres psql -d {{ catalog_db_name }}

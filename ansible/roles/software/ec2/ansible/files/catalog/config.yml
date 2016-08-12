@@ -1,8 +1,5 @@
 ---
-- name: get environment vars
-  command: ls
-
-- name: get environment vars
+- name: get external vars
   set_fact:
     ckan_db_server: "{{ CKAN_DB_SERVER|default('') }}"
     redis_server: "{{ REDIS_SERVER|default('') }}"

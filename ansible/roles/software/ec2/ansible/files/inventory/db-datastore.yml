@@ -1,0 +1,11 @@
+---
+- name: Create Datastore readonly user
+  shell: PGPASSWORD={{datastore_pass}} psql -h {{datastore_server}} -U{{datastore_user}} -d {{datastore_database}} -c "CREATE USER {{ datastore_ro_user }} WITH PASSWORD '{{ datastore_ro_pass }}';"
+  register: datastore_ro_reg
+  failed_when: datastore_ro_reg.rc != 0 and ("already exists" not in datastore_ro_reg.stderr)
+  changed_when: datastore_ro_reg.rc == 0
+  ignore_errors: True
+
+- name: Datastore set permissions
+  shell: PGPASSWORD={{datastore_pass}} psql -h {{datastore_server}} -U{{datastore_user}} -d {{datastore_database}} -f {{playbook_dir}}/datastore.sql -v datastoredb="'{{datastore_database}}'" -v wuser="'{{datastore_user}}'" -v rouser="'{{datastore_ro_user}}'"
+  when: datastore_ro_reg.changed

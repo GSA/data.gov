@@ -9,18 +9,9 @@
 - name: make sure packages are installed
   apt: pkg=ansible state=installed
 
-### Add playbooks
-- name: Create ansible directories
-  file: path=/root/ansible state=directory
-
+### Add playbooks for catalog/inventory
 - name: Add playbook files
-  copy: src={{item}} dest=/root/ansible/{{item}}
-  with_items:
-    - main.yml
-    - config.yml
-    - db-credential.yml
-    - db-init.yml
-    - db-postgis.yml
-    - db-locations-table.yml
-    - postgis.sql
-    - locations.sql.gz
+  copy: src={{app_type}}/ dest=/root/ansible
+
+- name: Add common playbook files
+  copy: src=common/ dest=/root/ansible

@@ -1,0 +1,47 @@
+---
+- name: check if psql ckan role exists
+  shell: sudo -u postgres psql -c "SELECT 1 FROM pg_roles WHERE rolname='{{ inventory_db_user }}';"
+  register: check_ckan_db_user
+
+- name: create ckan role
+  when: check_ckan_db_user.stdout.find("(0 rows)") != -1
+  shell: sudo -u postgres psql -c "CREATE USER {{ inventory_db_user }} WITH PASSWORD '{{ inventory_db_pass }}' SUPERUSER;"
+
+- name: create datastore role
+  when: check_ckan_db_user.stdout.find("(0 rows)") != -1
+  shell: sudo -u postgres psql -c "CREATE USER {{ inventory_datastore_user }} WITH PASSWORD '{{ inventory_datastore_pass }}';"
+
+- name: check if ckan database already exists
+  shell: sudo -u postgres psql -c "SELECT 1 FROM pg_database WHERE datname = '{{ inventory_db_name }}';"
+  register: check_ckan_database
+
+- name: create ckan database
+  when: check_ckan_database.stdout.find("(0 rows)") != -1
+  shell: sudo -u postgres psql -c "CREATE DATABASE {{ inventory_db_name }} OWNER {{ inventory_db_user }};"
+
+- name: create datastore database
+  when: check_ckan_database.stdout.find("(0 rows)") != -1
+  shell: sudo -u postgres psql -c "CREATE DATABASE {{ inventory_datastore_name }} OWNER {{ inventory_db_user }};"
+
+- name: install postgis script
+  shell: "sudo -u postgres psql -d {{ inventory_db_name }} -f /usr/share/postgresql/9.3/contrib/postgis-2.1/postgis.sql"
+
+- name: install postgis script
+  shell: "sudo -u postgres psql -d {{ inventory_db_name }} -f /usr/share/postgresql/9.3/contrib/postgis-2.1/spatial_ref_sys.sql"
+
+- name: install postgis script
+  shell: "sudo -u postgres psql -d {{ inventory_db_name }} -f /usr/share/postgresql/9.3/contrib/postgis-2.1/rtpostgis.sql"
+
+- name: install postgis script
+  shell: "sudo -u postgres psql -d {{ inventory_db_name }} -f /usr/share/postgresql/9.3/contrib/postgis-2.1/topology.sql"
+
+- name: install postgis script
+  shell: sudo -u postgres psql -d {{ inventory_db_name }} -c "GRANT SELECT, UPDATE, INSERT, DELETE ON spatial_ref_sys TO {{ inventory_db_user }};"
+
+- name: copy up datastore permissions
+  template: src=templates/{{item}}.j2 dest=/{{item}}
+  with_items:
+    - tmp/set_permissions.sql
+
+- name: set up datastore permissions
+  shell: sudo -u postgres psql -d {{ inventory_db_name }} -f /tmp/set_permissions.sql

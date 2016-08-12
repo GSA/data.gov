@@ -3,6 +3,8 @@
   hosts: ckan-server
   sudo: yes
   #remote_user: ubuntu
+  vars:
+      app_type: catalog
 
   ## tags used:
   ## built-in: always
@@ -12,7 +14,7 @@
   roles:
     - {role: roles/software/ubuntu/common, tags: ['always']}
     - {role: roles/software/ckan/common, tags: ['frontend', 'harvester']}
-    - {role: roles/software/ckan/apache, tags: ['frontend']}
+    - {role: roles/software/ckan/apache, tags: ['frontend', 'apache']}
     - {role: roles/software/ckan/postgresql, tags: ['frontend', 'harvester', 'db', 'db-install']}
     - {role: roles/software/ckan/solr, tags: ['frontend', 'harvester', 'solr']}
 

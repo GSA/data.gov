@@ -1,0 +1,17 @@
+---
+- name: Install CKAN Stack
+  hosts: ckan-server
+  sudo: yes
+  vars:
+    app_type: inventory
+
+  roles:
+    - roles/software/ubuntu/common
+    - roles/software/ckan/common
+    - roles/software/ckan/apache
+    - {role: roles/software/ckan/postgresql, tags: ['db', 'db-install']}
+    - {role: roles/software/ckan/solr, tags: ['solr']}
+    - roles/software/inventory/ckan-app
+    - {role: roles/software/inventory/ckan-db-setup, tags: ['db', 'db-setup']}
+    - {role: roles/software/inventory/ckan-db-init, tags: ['db', 'db-init']}
+    - {role: roles/software/ec2/ansible, tags: ['ec2', 'ansible-task']}

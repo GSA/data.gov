@@ -1,0 +1,46 @@
+---
+# used in  production.ini/ckan_site_url and hosts
+ckan_site_domain: inventory.data.gov
+ckan_virtual_env: "{{virtual_env}}"
+datapusher_virtual_env: /usr/lib/datapusher
+
+# packages to install ckan app
+ckan_pkgs:
+  - {
+      name: "ckan",
+      repo: "https://github.com/GSA/ckan",
+      branch: "inventory",
+      requirements: "requirements.txt"
+    }
+  - {
+      name: "ckanext-harvest",
+      repo: "https://github.com/ckan/ckanext-harvest",
+      branch: "13dbb1e",
+      requirements: "pip-requirements.txt"
+    }
+  - {
+      name: "ckanext-datajson",
+      repo: "https://github.com/GSA/ckanext-datajson",
+      requirements: "pip-requirements.txt"
+    }
+  - {
+      name: "ckanext-usmetadata",
+      repo: "https://github.com/GSA/USMetadata",
+      requirements: "requirements.txt"
+    }
+  - {
+      name: "ckanext-googleanalyticsbasic",
+      repo: "https://github.com/GSA/ckanext-googleanalyticsbasic"
+    }
+  - {
+      name: "ckanext-s3filestore",
+      repo: "https://github.com/okfn/ckanext-s3filestore",
+      requirements: "requirements.txt"
+    }
+
+datapusher_pkgs:
+  - {
+      name: "datapusher",
+      repo: "https://github.com/GSA/datapusher",
+      requirements: "requirements.txt"
+    }

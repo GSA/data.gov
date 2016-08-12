@@ -8,12 +8,20 @@
 - name: Install CKAN app
   command: sh install.sh chdir={{ app_source_path }} 
 
+- name: Copy all needed files
+  action: copy src={{item}} dest=/{{item}}
+  with_items:
+    - etc/ckan/apache.wsgi
+    - etc/apache2/sites-enabled/ckan.conf
+  tags: ['frontend', 'apache']
+
 # Configure CKAN
 - name: Configure production.ini
   template: src=templates/{{item}}.j2 dest=/{{item}}
   with_items:
     - etc/ckan/production.ini
 
+# TODO: Left over stuff. 
 - name: Configure who.ini
   shell: cp -r {{ app_source_path }}/config/environments/{{ env }}/saml2/who.ini /etc/ckan
 
@@ -26,4 +34,4 @@
   when: env == "local"
 
 - name: point site_url in production.ini to localhost
-  action: lineinfile dest=/etc/hosts line="127.0.0.1 catalog.data.gov"
+  action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ckan_site_domain}}"

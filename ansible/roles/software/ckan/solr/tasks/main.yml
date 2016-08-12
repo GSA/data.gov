@@ -1,5 +1,4 @@
 ---
-
 - name: Update repositories cache and install tomcat6
   apt: name=tomcat6 update_cache=yes
 
@@ -27,10 +26,14 @@
 - name: Change default solr collection1 to ckan
   replace: dest=/home/solr/solr.xml regexp='collection1' replace='ckan'
 
-- name: copy solr config files
+- name: copy solr web.xml
   action: copy src={{item}} dest=/{{item}} mode=644 force=yes
   with_items:
     - var/lib/tomcat6/webapps/solr/WEB-INF/web.xml
+
+- name: copy solr schema file
+  action: copy src={{app_type}}/{{item}} dest=/{{item}} mode=644 force=yes
+  with_items:
     - home/solr/ckan/conf/schema.xml
 
 - name: Setup solr permissions

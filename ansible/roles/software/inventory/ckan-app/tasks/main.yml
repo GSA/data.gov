@@ -1,0 +1,47 @@
+---
+- name: make sure packages are installed
+  action: apt pkg={{item}} state=installed update_cache=yes
+  with_items:
+    - python-psycopg2
+
+- name: Remove CKAN virtualenv
+  shell: rm -rf 
+
+- include: build-pkgs.yml 
+  vars:
+    pkg: "{{ ckan_pkgs }}" 
+    virtualenv: "{{ ckan_virtual_env }}"
+
+- include: build-pkgs.yml
+  vars:
+    pkg: "{{ datapusher_pkgs }}"
+    virtualenv: "{{ datapusher_virtual_env }}"
+
+- name: remove psycopg2
+  action: pip name=psycopg2 virtualenv=/usr/lib/ckan/ state=absent
+
+- name: create directories
+  action: file path={{item}} state=directory owner="www-data" group="www-data" mode=0755
+  with_items:
+    - /var/lib/ckan
+
+- name: copy all needed files
+  action: copy src={{item}} dest=/{{item}}
+  with_items:
+    - etc/ckan/who.ini
+    - etc/ckan/apache.wsgi
+    - etc/ckan/datapusher.wsgi
+    - etc/ckan/datapusher_settings.py
+    - etc/apache2/sites-enabled/ckan.conf
+    - etc/apache2/sites-enabled/datapusher.conf
+
+- name: Configure production.ini
+  template: src=templates/{{item}}.j2 dest=/{{item}}
+  with_items:
+    - etc/ckan/production.ini
+
+- name: restart apache
+  action: service name=apache2 state=restarted
+
+- name: point site_url in production.ini to localhost
+  action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ckan_site_domain}}"
