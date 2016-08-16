@@ -1,5 +1,24 @@
 ---
 
+- name: Create Solr Auto Scaling Group
+  ec2_asg:
+    name: "{{ app }}_solr_asg"
+    region: "{{ region }}"
+    load_balancers: "{{ solr_elb.elb.name }}"
+    launch_config_name: "{{ app }}-solr-lc"
+    min_size: "{{ solr.min_size }}"
+    max_size: "{{ solr.max_size }}"
+    vpc_zone_identifier: "{{ private_subnet_ids }}"
+    health_check_period: "{{ solr.health_check_period }}"
+    health_check_type: "{{ solr.health_check_type }}"
+    wait_for_instances: True
+    tags:
+      - Name: "{{ app }}_solr"
+      - app: "{{ app }}"
+      - portofolio: "{{ vpc_name }}"
+      - type: asg
+      - service: solr
+
 - name: Create Web Proxy Auto Scaling Group
   ec2_asg:
     name: "{{ app }}_web_proxy_asg"
@@ -53,24 +72,6 @@
 #      - type: asg
 #      - service: harvester
 #
-- name: Create Solr Auto Scaling Group
-  ec2_asg:
-    name: "{{ app }}_solr_asg"
-    region: "{{ region }}"
-    load_balancers: "{{ solr_elb.elb.name }}"
-    launch_config_name: "{{ app }}-solr-lc"
-    min_size: "{{ solr.min_size }}"
-    max_size: "{{ solr.max_size }}"
-    vpc_zone_identifier: "{{ private_subnet_ids }}"
-    health_check_period: "{{ solr.health_check_period }}"
-    health_check_type: "{{ solr.health_check_type }}"
-    tags:
-      - Name: "{{ app }}_solr"
-      - app: "{{ app }}"
-      - portofolio: "{{ vpc_name }}"
-      - type: asg
-      - service: solr
-
 - name: Create Jump Box Auto Scaling Group
   ec2_asg:
     name: "{{ app }}_jump_box_asg"

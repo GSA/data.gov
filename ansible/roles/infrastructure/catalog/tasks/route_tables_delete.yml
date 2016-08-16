@@ -1,19 +1,28 @@
 ---
 
-- name: Gather facts about route tables
-  ec2_vpc_route_table_facts:
+- name: Gather VPC facts
+  ec2_vpc_net_facts:
     region: "{{ region }}"
-    filters:
-      vpc-id: "{{ vpc_subnet_facts.subnets[0].vpc_id }}"
-  register: route_table_facts
-  when: vpc_subnet_facts.subnets|length > 0
+    filters: {
+      "tag:Name":"{{ vpc_name }}",
+      "tag:portofolio":"{{ vpc_name }}" #, "tag:apps":"{{ apps }}"
+    }
+  register: vpc_facts
 
-- name: Remove route tables
+- name: Remove public route tables
   ec2_vpc_route_table:
     state: absent
     region: "{{ region }}"
-    vpc_id: "{{ vpc_subnet_facts.subnets[0].vpc_id }}"
-    route_table_id: item.id
-    resource_tags: { "Name":"{{ app }}-public-subnet-route-table" }
-  with_items: "{{ route_table_facts.route_tables }}"
-  when: vpc_subnet_facts.subnets|length > 0
+    vpc_id: "{{ vpc_facts.vpcs[0].id }}"
+    tags: { 
+      "Name":"{{ app }}-public-subnet-route-table"
+    }
+
+- name: Remove private route tables
+  ec2_vpc_route_table:
+    state: absent
+    region: "{{ region }}"
+    vpc_id: "{{ vpc_facts.vpcs[0].id }}"
+    tags: { 
+      "Name":"{{ app }}-private-subnet-route-table"
+    }
