@@ -70,13 +70,19 @@
     security_groups: "{{ harvester_sg.group_id }}"
     instance_type: "{{ harvester_instance_size }}"
     user_data: |
-      #!/bin/sh
-      echo 'export CKAN_DB_SERVER={{ ckan_rds_db.instance.endpoint }}' >> ~/.bashrc
-      echo 'export PYCSW_DB_SERVER={{ pycsw_rds_db.instance.endpoint }}' >> ~/.bashrc
-      echo 'export REDIS_SERVER={{ elasticache_instance.elasticache.data.CacheNodes[0].Endpoint.Address }}' >> ~/.bashrc
-      echo 'export SOLR_SERVER={{ solr_elb.elb.dns_name }}' >> ~/.bashrc 
-      exec ~/.bashrc
-      ansible-playbook -i ansible/local -U https://github.com/GSA/catalog-deploy.git ansible/roles/software/ec2/ansible/files/main.yml
+      #!/bin/bash -ex
+      source /etc/profile
+      exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+      echo BEGIN
+      export ANSIBLE_CONFIG={{ ansible_cfg }}
+      ansible-playbook \
+        --extra-vars="CKAN_DB_SERVER={{ ckan_rds_db.instance.endpoint }} \ 
+        PYCSW_DB_SERVER={{ pycsw_rds_db.instance.endpoint }} \
+        REDIS_SERVER={{ elasticache_instance.elasticache.data.CacheNodes[0].Endpoint.Address }} \
+        SOLR_SERVER={{ solr_elb.elb.dns_name }}" \
+        ~/ansible/main.yml
+      service apache2 restart
+      echo END
 
 - name: Create Solr Launch Configuration
   ec2_lc:

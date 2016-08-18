@@ -10,7 +10,7 @@ web_proxy:
 
 # Web Auto Scaling Group
 web: 
-  min_size: 2 
+  min_size: 2
   max_size: 5
   desired_capacity: 2
   health_check_period: 120
@@ -30,7 +30,7 @@ solr:
   max_size: 1
   desired_capacity: 1
   health_check_period: 120
-  health_check_type: EC2
+  health_check_type: ELB
 
 # Jump Box Auto Scaling Group
 jump_box:

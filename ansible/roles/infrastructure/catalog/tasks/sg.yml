@@ -146,8 +146,8 @@
     region: "{{ region }}"
     rules:
       - proto: tcp
-        from_port: 6380
-        to_port: 6380
+        from_port: 6379
+        to_port: 6379
         group_id: "{{ harvester_sg.group_id }}"
   register: redis_sg
 

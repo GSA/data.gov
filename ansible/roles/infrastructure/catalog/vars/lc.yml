@@ -11,7 +11,7 @@ web_ami_id: ami-ba44d8ad #ami-d566f7c2
 web_instance_size: t2.medium
 
 # Harvester
-harvester_ami_id: ami-67a13270 #ami-d566f7c2
+harvester_ami_id: ami-21b6d336 #ami-d566f7c2
 harvester_instance_size: t2.medium
 
 # Solr

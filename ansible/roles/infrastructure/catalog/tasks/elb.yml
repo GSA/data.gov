@@ -21,7 +21,6 @@
 - name: Extrat the ids of the private subnets
   set_fact: private_subnet_ids={{ private_subnets.subnets | map(attribute='id') | list }}
 
-# Create Internal & External ELBs
 - name: Create the external ELB
   ec2_elb_lb:
     name: "{{ app }}-external-elb"

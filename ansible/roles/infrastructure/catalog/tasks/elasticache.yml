@@ -1,5 +1,7 @@
 ---
 
+- debug: var=redis_sg
+
 - name: Create ElastiCache Redis Service
   elasticache:
     name: "{{ app }}-redis"
@@ -10,5 +12,6 @@
     num_nodes: 1
     cache_port: 6379
     cache_subnet_group: "{{ app }}-elasticache-subnet-group"
+    security_group_ids: "{{ redis_sg.group_id }}"
     zone: "{{ subnets.private_subnet_1.az }}"
   register: elasticache_instance
