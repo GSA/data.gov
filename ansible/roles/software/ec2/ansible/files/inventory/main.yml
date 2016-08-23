@@ -17,3 +17,6 @@
 
     - include: db-init.yml
       tags: ['db','db-init']
+
+    - include: db-wait.yml
+      tags: ['db','db-wait']
