@@ -17,3 +17,6 @@
 
     - include: db-locations-table.yml
       tags: ['db','db-tables']
+
+    - include: db-wait.yml
+      tags: ['db','db-wait']

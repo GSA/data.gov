@@ -34,7 +34,7 @@ ckan_pkgs:
     }
   - {
       name: "ckanext-s3filestore",
-      repo: "https://github.com/okfn/ckanext-s3filestore",
+      repo: "https://github.com/GSA/ckanext-s3filestore",
       requirements: "requirements.txt"
     }
 
