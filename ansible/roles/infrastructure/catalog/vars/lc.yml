@@ -7,16 +7,16 @@ nginx_config_path: /etc/nginx/sites-available/default.conf
 assign_public_ip: yes
 
 # Web
-web_ami_id: ami-ba44d8ad #ami-d566f7c2 
-web_instance_size: t2.medium
+web_ami_id: ami-c37919d4 #ami-c76d0dd0 
+web_instance_size: t2.medium #m4.large
 
 # Harvester
 harvester_ami_id: ami-21b6d336 #ami-d566f7c2
-harvester_instance_size: t2.medium
+harvester_instance_size: t2.medium #m4.large
 
 # Solr
 solr_ami_id: ami-b00796a7
-solr_instance_size: t2.micro
+solr_instance_size: t2.medium #m4.xlarge
 
 # Jump Box
 jump_box_ami_id: ami-d566f7c2
