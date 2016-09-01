@@ -1,6 +1,5 @@
 ---
 
-# Gather subnet facts
 - name: Gather private subnet facts
   ec2_vpc_subnet_facts:
     region: "{{ region }}"
@@ -11,8 +10,6 @@
 - name: Extract the ids of the private subnets
   set_fact: db_private_subnet_ids={{ private_subnets.subnets | map(attribute='id') | list }}
 
-- debug: var=db_private_subnet_ids
-
 - name: Create RDS Subnet Group
   rds_subnet_group:
     state: present
@@ -20,7 +17,4 @@
     name: "{{ app }}-rds-subnet-group"
     description: DB Subnet Group
     subnets: "{{ db_private_subnet_ids }}"
-#    subnets: 
-#      - subnet-a12719f9
-#      - subnet-8b7c93c2
   register: rds_subnet_group

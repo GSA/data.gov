@@ -5,7 +5,7 @@
     region: "{{ region }}"
     filters: {
       "tag:Name":"{{ vpc_name }}",
-      "tag:portofolio":"{{ vpc_name }}" #, "tag:apps":"{{ apps }}"
+      "tag:portofolio":"{{ portofolio }}" #, "tag:apps":"{{ apps }}"
     }
   register: vpc_facts
 

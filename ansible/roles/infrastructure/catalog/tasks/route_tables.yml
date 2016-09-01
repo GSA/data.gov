@@ -13,9 +13,6 @@
         gateway_id: "{{ vpc.igw_id }}"
   register: public_route_table
 
-- debug: var=nat_gateway
-- debug: var=nat_gateway.nat_gateway_id
-
 - name: Set up private subnets route table
   ec2_vpc_route_table:
     vpc_id: "{{ vpc.vpc_id }}"

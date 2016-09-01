@@ -6,15 +6,11 @@
     state: present
   register: datagov_zone_facts
 
-- debug: var=datagov_zone_facts
-
 - name: Gather External Elb facts
   ec2_elb_facts:
     region: "{{ region }}"
     names: "{{ app }}-external-elb"
   register: external_elb_facts
-
-- debug: var=external_elb_facts
 
 - name: Add External Elb Alias
   route53:

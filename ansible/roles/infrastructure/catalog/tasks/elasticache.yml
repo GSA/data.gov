@@ -1,7 +1,5 @@
 ---
 
-- debug: var=redis_sg
-
 - name: Create ElastiCache Redis Service
   elasticache:
     name: "{{ app }}-redis"

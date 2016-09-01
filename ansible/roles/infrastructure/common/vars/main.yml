@@ -1,5 +1,6 @@
 env: production
 vpc_name: datagov
+portofolio: datagov
 vpc_region: us-east-1
 vpc_cidr_block: 172.22.0.0/16
 apps: catalog,inventory,wordpress,labs,dashboard,jekyll

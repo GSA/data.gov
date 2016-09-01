@@ -50,6 +50,7 @@
       source /etc/profile
       exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
       echo BEGIN
+      service apache2 stop
       export ANSIBLE_CONFIG={{ ansible_cfg }}
       ansible-playbook \
         --extra-vars="CKAN_DB_SERVER={{ ckan_rds_db.instance.endpoint }} \ 
@@ -57,7 +58,7 @@
         REDIS_SERVER={{ elasticache_instance.elasticache.data.CacheNodes[0].Endpoint.Address }} \
         SOLR_SERVER={{ solr_elb.elb.dns_name }}" \
         ~/ansible/main.yml
-      service apache2 restart
+      service apache2 start
       echo END
 
 - name: Create Harvester Launch Configuration
@@ -74,6 +75,7 @@
       source /etc/profile
       exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
       echo BEGIN
+      service apache2 start
       export ANSIBLE_CONFIG={{ ansible_cfg }}
       ansible-playbook \
         --extra-vars="CKAN_DB_SERVER={{ ckan_rds_db.instance.endpoint }} \ 
@@ -81,7 +83,7 @@
         REDIS_SERVER={{ elasticache_instance.elasticache.data.CacheNodes[0].Endpoint.Address }} \
         SOLR_SERVER={{ solr_elb.elb.dns_name }}" \
         ~/ansible/main.yml
-      service apache2 restart
+      service apache2 stop
       echo END
 
 - name: Create Solr Launch Configuration

@@ -31,8 +31,6 @@
     vpc_zone_identifier: "{{ public_subnet_ids }}"
     health_check_period: "{{ web_proxy.health_check_period }}"
     health_check_type: "{{ web_proxy.health_check_type }}"
-    wait_for_instances: True
-    wait_timeout: 600
     tags:
       - Name: "{{ app }}_web_proxy"
       - app: "{{ app }}"
@@ -51,6 +49,8 @@
     vpc_zone_identifier: "{{ private_subnet_ids }}"
     health_check_period: "{{ web.health_check_period }}"
     health_check_type: "{{ web.health_check_type }}"
+    wait_for_instances: True
+    wait_timeout: 600
     tags:
       - Name: "{{ app }}_web"
       - app: "{{ app }}"
