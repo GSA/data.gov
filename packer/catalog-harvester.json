@@ -36,7 +36,7 @@
         "extra_arguments": [
           "--limit=packer",
           "--tags 'harvester,ec2'",
-          "--skip-tags 'apache,solr,db,saml2'",
+          "--skip-tags 'apache,solr,db,saml2,redis'",
           "--vault-password-file=/tmp/ansible_vault_password.txt"
         ]
   }]
