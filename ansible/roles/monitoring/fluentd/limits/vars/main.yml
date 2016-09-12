@@ -1,0 +1,9 @@
+limits_configs:
+  - regexp: root soft nofile 65536
+    line: root soft nofile 65536
+  - regexp: root hard nofile 65536
+    line: root hard nofile 65536
+  - regexp: '\* soft nofile 65536'
+    line: '* soft nofile 65536'
+  - regexp: '\* hard nofile 65536'
+    line: '* hard nofile 65536'

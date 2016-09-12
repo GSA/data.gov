@@ -1,0 +1,7 @@
+---
+- name: Set {{ item.param }}
+  sysctl: name={{ item.param }}
+          value={{ item.value }}
+          state=present
+  ignore_errors: True
+  with_items: "{{ kernel }}"

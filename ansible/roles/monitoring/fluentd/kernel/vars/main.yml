@@ -1,0 +1,5 @@
+---
+kernel:
+  - { param: 'net.ipv4.tcp_tw_recycle', value: '1' }
+  - { param: 'net.ipv4.tcp_tw_reuse', value: '1' }
+  - { param: 'net.ipv4.ip_local_port_range', value: '"10240 65535"' }

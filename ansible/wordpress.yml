@@ -1,0 +1,46 @@
+--- # WordPress Web AMI
+
+- name: Initial prechecks
+  hosts: webserver
+  remote_user: ubuntu
+
+  roles:
+  - { role: datagov-sudo-0-precheck, tags: [precheck] }
+
+
+- name: Provisioning WordPress Web AMI
+  hosts: webserver
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  roles:
+  - { role: datagov-sudo-1-security, tags: [provision] }
+  - { role: git, tags: [provision] }
+  - { role: sendmail, tags: [provision] }
+  - { role: nginx, tags: [provision] }
+  - { role: php, tags: [php, provision] }
+  - { role: php-mysql, tags: [php, php-mysql, provision] }
+  - { role: php-memcached, tags: [php, php-memcached, provision] }
+  - { role: wp-cli, tags: [php, cli, provision] }
+  - { role: composer, tags: [php, provision] }
+  - { role: vim, tags: [provision, vim] }
+  - { role: datagov-sudo-2-init, tags: [provision, deploy] }
+
+
+- name: Deploying Data.gov
+  hosts: webserver
+  remote_user: ubuntu
+
+  roles:
+  - { role: datagov-deploy, tags: [deploy] }
+
+
+- name: Cleanup
+  hosts: webserver
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  roles:
+  - { role: datagov-sudo-3-cleanup, tags: [deploy, cleanup] }

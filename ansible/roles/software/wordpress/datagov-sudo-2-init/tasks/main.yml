@@ -1,0 +1,30 @@
+--- # Data.gov prerequisites
+
+- name: Copying Data.gov configuration for Nginx
+  template:
+    src: "datagov.nginx.conf.j2"
+    dest: "/etc/nginx/sites-enabled/datagov.nginx.conf"
+  notify:
+      - reload nginx
+
+- name: Temporarily making /var/www/ writeable by all
+  file:
+    path: "/var/www"
+    state: directory
+    mode: 0777
+    owner: "www-data"
+    group: "www-data"
+    recurse: yes
+
+- name: Setup Datagov WP system cron
+  cron:
+    name: "Data.gov WordPress cron"
+    minute: "*/15"
+    user: "www-data"
+    job: "cd {{ project_source_path }} && wp cron event run --due-now"
+    cron_file: "wordpress-datagov"
+
+- name: MariaDB client
+  package:
+    name: mariadb-client-5.5
+    state: present

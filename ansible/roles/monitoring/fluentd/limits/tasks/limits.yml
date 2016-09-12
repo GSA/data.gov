@@ -1,0 +1,10 @@
+---
+- name: Increase Max of File Descriptors
+  lineinfile:
+    dest: /etc/security/limits.conf
+    state: present
+    regexp: "{{item.regexp}}"
+    line: "{{ item.line }}"
+    backrefs: no
+    backup: yes
+  with_items: "{{ limits_configs }}"
