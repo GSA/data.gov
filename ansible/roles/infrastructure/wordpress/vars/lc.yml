@@ -1,0 +1,18 @@
+---
+
+# Web Proxy
+web_proxy_ami_id: ami-d566f7c2
+web_proxy_instance_size: t2.micro
+nginx_config_path: /etc/nginx/sites-available/default.conf
+assign_public_ip: yes
+
+# Web
+web_ami_id: ami-d566f7c2
+web_instance_size: t2.medium #m4.large
+
+# Jump Box
+jump_box_ami_id: ami-d566f7c2
+jump_box_instance_size: t2.micro
+
+# Other
+key_name: ckan-csw-aws

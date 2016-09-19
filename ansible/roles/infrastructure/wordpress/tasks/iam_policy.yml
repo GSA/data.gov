@@ -1,0 +1,11 @@
+---
+
+- name: Create S3 policy from template
+  iam_policy:
+    region: "{{ region }}"
+    iam_type: role
+    policy_name: "{{app}}-s3-policy"
+    iam_name: "{{ iam_role_name }}"
+    state: present
+    policy_json: "{{ lookup('template', 'roles/infrastructure/inventory/templates/s3_policy.json') }}"
+  register: policy_facts

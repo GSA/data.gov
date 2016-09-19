@@ -1,0 +1,6 @@
+---
+
+app: wordpress
+region: us-east-1
+bucket_name: wordpress_files_bucket
+iam_role_name: WordpressRole

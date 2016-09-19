@@ -1,0 +1,22 @@
+---
+
+# Discover subnet facts
+- name: Gather public subnet facts
+  ec2_vpc_subnet_facts:
+    region: "{{ region }}"
+    filters:
+      { "tag:app": "{{ app }}", "tag:portofolio": "{{ vpc_name }}", "tag:type": "public" }
+  register: public_subnets
+
+- name: Extract the ids of the public subnets
+  set_fact: public_subnet_ids={{ public_subnets.subnets | map(attribute='id') | list }}
+
+- name: Create new nat gateway and allocate new eip
+  ec2_vpc_nat_gateway:
+    state: present
+    subnet_id: "{{ public_subnet_ids[0] }}"
+    if_exist_do_not_create: true
+    region: "{{ region }}"
+    wait: yes
+    wait_timeout: 600
+  register: nat_gateway

@@ -1,0 +1,29 @@
+---
+
+- name: Gather public subnet facts
+  ec2_vpc_subnet_facts:
+    region: "{{ region }}"
+    filters:
+      { "tag:app": "{{ app }}", "tag:portofolio": "{{ vpc_name }}", "tag:type": "public" }
+  register: public_subnets
+
+- name: Extract the ids of the public subnets
+  set_fact: public_subnet_ids={{ public_subnets.subnets | map(attribute='id') | list }}
+
+- name: Get all nat gateways with specific filters
+  ec2_vpc_nat_gateway_facts:
+    region: "{{ region }}"
+    filters:
+      subnet-id: "{{ public_subnet_ids[0] }}"
+  register: nat_facts
+  when: public_subnet_ids[0] is defined
+
+- name: Delete nat gateway and wait for deleted status
+  ec2_vpc_nat_gateway:
+    state: absent
+    region: "{{ region }}"
+    release_eip: true
+    nat_gateway_id: "{{ nat_facts.result[0].NatGatewayId }}"
+    wait: yes
+    wait_timeout: 600
+  when: nat_facts.result[0].NatGatewayId is defined

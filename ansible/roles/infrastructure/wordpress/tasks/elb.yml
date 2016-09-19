@@ -1,0 +1,83 @@
+---
+
+# Discover subnet facts
+- name: Gather public subnet facts
+  ec2_vpc_subnet_facts:
+    region: "{{ region }}"
+    filters:
+      { "tag:app": "{{ app }}", "tag:portofolio": "{{ vpc_name }}", "tag:type": "public" }
+  register: public_subnets
+
+- name: Gather private subnet facts
+  ec2_vpc_subnet_facts:
+    region: "{{ region }}"
+    filters:
+      { "tag:app": "{{ app }}", "tag:portofolio": "{{ vpc_name }}", "tag:type": "private" }
+  register: private_subnets
+
+- name: Extract the ids of the public subnets
+  set_fact: public_subnet_ids={{ public_subnets.subnets | map(attribute='id') | list }}
+
+- name: Extrat the ids of the private subnets
+  set_fact: private_subnet_ids={{ private_subnets.subnets | map(attribute='id') | list }}
+
+- name: Create the external ELB
+  ec2_elb_lb:
+    name: "{{ app }}-external-elb"
+    state: present
+    connection_draining_timeout: "{{ connection_draining_timeout }}"
+    idle_timeout: "{{ idle_timeout }}"
+    cross_az_load_balancing: yes
+    region: "{{ region }}"
+    security_group_names: "{{ app }}-external-elb-sg"
+    tags: {
+      "app": "{{ app }}", 
+      "type": "elb",
+      "subtype": "external",
+      "portofolio":"{{ vpc_name }}"
+    }
+    subnets: "{{ public_subnet_ids }}" 
+    health_check:
+      ping_protocol: "{{ ping_protocol }}"
+      ping_port: "{{ ping_port }}"
+      ping_path: "{{ ping_path }}"
+      response_timeout: "{{ response_timeout }}"
+      interval: "{{ interval }}"
+      unhealthy_threshold: "{{ unhealthy_threshold }}"
+      healthy_threshold: "{{ healthy_threshold }}"
+    listeners:
+      - protocol: http
+        load_balancer_port: 80
+        instance_port: 80
+  register: external_elb
+
+- name: Create the internal ELB
+  ec2_elb_lb:
+    name: "{{ app }}-internal-elb"
+    state: present
+    scheme: internal
+    connection_draining_timeout: "{{ connection_draining_timeout }}"
+    idle_timeout: "{{ idle_timeout }}"
+    cross_az_load_balancing: yes
+    region: "{{ region }}"
+    security_group_names: "{{ app }}-internal-elb-sg"
+    tags: {
+      "app":"{{ app }}", 
+      "type": "elb",
+      "subtype": "internal",
+      "portofolio":"{{ vpc_name }}"
+    }
+    subnets: "{{ private_subnet_ids }}" 
+    health_check:
+      ping_protocol: "{{ ping_protocol }}"
+      ping_port: "{{ ping_port }}"
+      ping_path: "{{ ping_path }}"
+      response_timeout: "{{ response_timeout }}"
+      interval: "{{ interval }}"
+      unhealthy_threshold: "{{ unhealthy_threshold }}"
+      healthy_threshold: "{{ healthy_threshold }}"
+    listeners:
+      - protocol: http
+        load_balancer_port: 80
+        instance_port: 80
+  register: internal_elb

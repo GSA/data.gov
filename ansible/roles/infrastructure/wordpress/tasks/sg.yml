@@ -1,0 +1,102 @@
+---
+
+#Jump Host SG
+- name: Create Jump Host security group
+  ec2_group:
+    name: "{{ app }}-jump-host-sg"
+    description: Jump Host security group
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    rules:
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 65.242.97.254/32
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 173.66.149.6/32
+  register: jump_host_sg
+
+# External ELB SG
+- name: Create External ELB security group
+  ec2_group:
+    name: "{{ app }}-external-elb-sg"
+    description: ELB security group
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    rules:
+      - proto: tcp
+        from_port: 80
+        to_port: 80
+        cidr_ip: 0.0.0.0/0
+  register: external_elb_sg
+
+
+# Web Proxy SG
+- name: Create WebProxy security group
+  ec2_group:
+    name: "{{ app }}-web-proxy-sg"
+    description: WebProxy security group
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    rules:
+      - proto: tcp
+        from_port: 80
+        to_port: 80
+        group_id: "{{ external_elb_sg.group_id }}"
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        group_id: "{{ jump_host_sg.group_id }}"
+  register: web_proxy_sg
+
+# Internal ELB SG
+- name: Create Internal ELB security group
+  ec2_group:
+    name: "{{ app }}-internal-elb-sg"
+    description: ELB security group
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    rules:
+      - proto: tcp
+        from_port: 80
+        to_port: 80
+        group_id: "{{ web_proxy_sg.group_id }}"
+  register: internal_elb_sg
+
+# Web SG
+- name: Create Web ec2 security group
+  ec2_group:
+    name: "{{ app }}-web-sg"
+    description: web security group
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    rules:
+      - proto: tcp
+        from_port: 80
+        to_port: 80
+        group_id: "{{ internal_elb_sg.group_id }}"
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        group_id: "{{ jump_host_sg.group_id }}" 
+  register: web_sg
+
+# RDS SG
+- name: Create db security group
+  ec2_group:
+    name: "{{ app }}-db-sg"
+    description: db security group
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    rules:
+      - proto: tcp
+        from_port: 5432
+        to_port: 5432
+        group_id: "{{ web_sg.group_id }}"
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        group_id: "{{ jump_host_sg.group_id }}"
+  register: db_sg

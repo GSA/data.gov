@@ -1,0 +1,21 @@
+---
+
+- name: Retrieve the details for external elb route53 record
+  route53:
+    command: get
+    zone: "{{ datagov_hosted_zone }}"
+    record: "{{ external_elb_record }}"
+    type: A
+  register: route53_facts
+
+- name: Delete the external elb route53 alias
+  route53:
+    command: delete
+    zone: "{{ datagov_hosted_zone }}"
+    record: "{{ route53_facts.set.record }}"
+    ttl: "{{ route53_facts.set.ttl }}"
+    type: "{{ route53_facts.set.type }}"
+    value: "{{ route53_facts.set.value }}"
+    alias: True
+    alias_hosted_zone_id: "{{ route53_facts.set.alias_hosted_zone_id }}"
+  when: route53_facts.set|length > 0

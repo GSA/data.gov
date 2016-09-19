@@ -1,0 +1,27 @@
+---
+
+subnets:
+  public_subnet_1:
+    cidr: 172.22.12.0/24 
+    az: us-east-1b
+    type: public
+  public_subnet_2:
+    cidr: 172.22.13.0/24
+    az: us-east-1c
+    type: public
+  private_subnet_1:
+    cidr: 172.22.14.0/24
+    az: us-east-1b
+    type: private
+  private_subnet_2:
+    cidr: 172.22.15.0/24
+    az: us-east-1c
+    type: private
+  db_private_subnet_1:
+    cidr: 172.22.16.0/24
+    az: us-east-1b
+    type: db-private
+  db_private_subnet_2:
+    cidr: 172.22.17.0/24
+    az: us-east-1c
+    type: db-private

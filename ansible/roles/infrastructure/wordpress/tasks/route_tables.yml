@@ -1,0 +1,32 @@
+---
+
+- name: Set up public subnets route table
+  ec2_vpc_route_table:
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    resource_tags: { "Name":"{{ app }}-public-subnet-route-table" }
+    subnets: 
+      - "{{ subnets.public_subnet_1.cidr }}"
+      - "{{ subnets.public_subnet_2.cidr }}"
+    routes:
+      - dest: 0.0.0.0/0
+        gateway_id: "{{ vpc.igw_id }}"
+  register: public_route_table
+
+- name: Set up private subnets route table
+  ec2_vpc_route_table:
+    vpc_id: "{{ vpc.vpc_id }}"
+    region: "{{ region }}"
+    resource_tags: {
+      "Name":"{{ app }}-private-subnet-route-table",
+      "nat_gateway_id":"{{ nat_gateway.nat_gateway_id }}"
+    }
+    subnets: 
+      - "{{ subnets.private_subnet_1.cidr }}"
+      - "{{ subnets.private_subnet_2.cidr }}"
+      - "{{ subnets.db_private_subnet_1.cidr }}"
+      - "{{ subnets.db_private_subnet_2.cidr }}"
+    routes:
+      - dest: 0.0.0.0/0
+        gateway_id: "{{ nat_gateway.nat_gateway_id }}"
+  register: private_route_table

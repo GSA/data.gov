@@ -1,0 +1,43 @@
+---
+
+- name: Delete the external ELB
+  ec2_elb_lb:
+    name: "{{ app }}-external-elb"
+    state: absent
+    region: "{{ region }}"
+    tags: {
+      "app": "{{ app }}", 
+      "type": "elb",
+      "subtype": "external",
+      "portofolio":"{{ vpc_name }}"
+    }
+    wait: yes
+    wait_timeout: 600
+
+- name: Delete the internal ELB
+  ec2_elb_lb:
+    name: "{{ app }}-internal-elb"
+    state: absent
+    region: "{{ region }}"
+    tags: {
+      "app":"{{ app }}", 
+      "type": "elb",
+      "subtype": "internal",
+      "portofolio":"{{ vpc_name }}"
+    }
+    wait: yes
+    wait_timeout: 600
+
+- name: Delete the solr ELB
+  ec2_elb_lb:
+    name: "{{ app }}-solr-elb"
+    state: absent
+    region: "{{ region }}"
+    tags: {
+      "app":"{{ app }}", 
+      "type": "elb",
+      "subtype": "solr-internal",
+      "portofolio":"{{ vpc_name }}"
+    }
+    wait: yes
+    wait_timeout: 600
