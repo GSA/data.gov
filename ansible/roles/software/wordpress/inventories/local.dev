@@ -1,0 +1,5 @@
+[webserver]
+localhost:2022
+
+[all:vars]
+vars_group=local-dev

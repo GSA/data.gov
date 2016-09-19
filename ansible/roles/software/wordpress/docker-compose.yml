@@ -1,0 +1,27 @@
+version: '2'
+services:
+  wpdb:
+    container_name: datagov_wp_db
+    image: mysql
+    volumes:
+      - "./.data/db:/var/lib/mysql"
+    restart: always
+    ports:
+      - "3333:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: insecure
+      MYSQL_DATABASE: datagov
+      MYSQL_USER: datagov
+      MYSQL_PASSWORD: superpassword
+
+  wordpress:
+    container_name: datagov_wp_web
+    depends_on:
+      - wpdb
+    image: datagov/wp
+    links:
+      - wpdb
+    ports:
+      - "8000:80"
+      - "2022:22"
+    restart: always

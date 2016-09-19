@@ -1,0 +1,17 @@
+---
+
+# WordPress env
+env_wp_env: development
+
+# AWS S3
+aws_s3_media_key: ""
+aws_s3_media_secret: ""
+
+# MySQL credentials
+env_db_host: "wpdb"
+env_db_user: "datagov"
+env_db_pass: "superpassword"
+env_db_name: "datagov"
+
+# We're inside Docker container
+running_in: docker

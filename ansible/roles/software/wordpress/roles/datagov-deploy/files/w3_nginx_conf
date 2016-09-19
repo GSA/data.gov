@@ -1,0 +1,4 @@
+# BEGIN W3TC Browser Cache
+gzip on;
+gzip_types text/css text/x-component application/x-javascript application/javascript text/javascript text/x-js text/richtext image/svg+xml text/plain text/xsd text/xsl text/xml image/x-icon;
+# END W3TC Browser Cache

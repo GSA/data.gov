@@ -1,0 +1,74 @@
+--- # Data.gov repo deployment & composer install
+
+- name: Load inventory specific vault ({{ vars_group }})
+  include_vars: "group_vars/{{ vars_group }}/vault.yml"
+
+- name: Load inventory specific variables ({{ vars_group }})
+  include_vars: "group_vars/{{ vars_group }}/vars.yml"
+
+- name: Clone project files to {{ project_source_path }}
+  git:
+    repo: "{{ project_git_repo }}"
+    dest: "{{ project_source_path }}"
+    version: "{{ project_git_version }}"
+    force: true
+
+- name: Composer install Data.gov Wordpress and plugins to {{ project_source_path }}
+  composer:
+    arguments: "--no-ansi --no-interaction --profile -v"
+    no-scripts: yes
+    no-dev: "{{ 'yes' if env_wp_env != 'development' else 'no' }}"
+    working_dir: "{{ project_source_path }}"
+  environment:
+      COMPOSER_DISCARD_CHANGES: "true"
+  register: composer_output
+
+- name: Composer output
+  debug:
+    msg: "{{ composer_output.stdout_lines }}"
+
+- name: Adding Bedrock .env to {{ project_source_path }}/.env
+  template:
+    src: ".env.j2"
+    dest: "{{ project_source_path }}/.env"
+
+- name: Copy W3 Total Cache files
+  template:
+    src: "w3tc-wp-loader.php.j2"
+    dest: "{{ project_source_path }}/web/app/plugins/w3tc-wp-loader.php"
+
+- name: Copy W3 Total Cache nginx config
+  copy:
+    src: "w3_nginx_conf"
+    dest: "{{ project_source_path }}/web/nginx.conf"
+
+- name: Copy W3 Total Cache files
+  command: "cp plugins/w3-total-cache/wp-content/advanced-cache.php advanced-cache.php"
+  args:
+    chdir: "{{ project_source_path }}/web/app"
+
+#- name: Copy Query-monitor db.php
+#  command: "cp plugins/query-monitor/wp-content/db.php db.php"
+#  args:
+#    chdir: "{{ project_source_path }}/web/app"
+
+- name: Disabling saml on local
+  command: wp plugin deactivate saml-20-single-sign-on
+  args:
+    chdir: "{{ project_source_path }}"
+  when: "'docker' == running_in and 'development' == env_wp_env"
+  ignore_errors: true
+
+- name: Updating admin pass
+  command: wp user update admin --user_pass=password
+  args:
+    chdir: "{{ project_source_path }}"
+  when: "'docker' == running_in and 'development' == env_wp_env"
+  ignore_errors: true
+
+- name: Enabling dev plugins
+  command: wp plugin activate check-email debug-bar log-deprecated-notices query-monitor
+  args:
+    chdir: "{{ project_source_path }}"
+  when: "'development' == env_wp_env"
+  ignore_errors: true
