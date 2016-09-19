@@ -25,3 +25,17 @@ synced_folders/*
 # Intellij
 .idea
 /.project
+
+# NetBeans
+/nbproject/
+
+# Ansible
+vendor
+*.retry
+!.env.j2
+hosts
+
+#SQL
+*.sql
+*.sql.gz
+.data
