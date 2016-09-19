@@ -1,0 +1,9 @@
+---
+
+- name: Delete Inventory S3 policy
+  iam_policy:
+    region: "{{ region }}"
+    iam_type: role
+    policy_name: "{{app}}-s3-policy"
+    iam_name: "{{ iam_role_name }}"
+    state: absent

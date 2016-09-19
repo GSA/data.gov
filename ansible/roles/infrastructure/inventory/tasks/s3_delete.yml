@@ -1,0 +1,8 @@
+---
+
+- name: Delete inventory s3 bucket
+  s3_bucket:
+    region: "{{ region }}"
+    name: "{{ bucket_name }}"
+    force: true
+    state: absent

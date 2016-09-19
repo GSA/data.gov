@@ -1,0 +1,57 @@
+---
+
+- name: Create multi-zone Postgres instance for CKAN on RDS
+  rds:
+    command: create
+    instance_name: "{{ ckan_db_instance_name }}"
+    region: "{{ region }}"
+    db_engine: "{{ db_engine }}"
+    engine_version: "{{ engine_version }}"
+    instance_type: "{{ db_instance_type }}"
+    multi_zone: "{{ db_multi_zone}}"
+    publicly_accessible: "{{ db_publicly_accessible }}"
+    size: "{{ ckan_db_size }}"
+    maint_window: "{{ db_maint_window }}"
+    backup_retention: "{{ db_backup_retention }}"
+    backup_window: "{{ db_backup_window }}"
+    license_model: "{{ db_license_model }}"
+    subnet: "{{ app }}-rds-subnet-group" 
+    vpc_security_groups: "{{ db_sg.group_id }}"
+    wait: yes
+    wait_timeout: 1200  
+    db_name: "{{ ckan_db_name }}"
+    username: "{{ inventory_db_user }}"
+    password: "{{ inventory_db_pass }}"
+    tags:
+      app: "{{ app }}"
+      portofolio: "{{ vpc_name }}"
+      type: db
+  register: ckan_rds
+
+- name: Create multi-zone Postgres instance for datastore on RDS
+  rds:
+    command: create
+    instance_name: "{{ datastore_db_instance_name }}"
+    region: "{{ region }}"
+    db_engine: postgres
+    engine_version: "{{ engine_version }}"
+    instance_type: "{{ db_instance_type }}"
+    multi_zone: "{{ db_multi_zone}}"
+    publicly_accessible: "{{ db_publicly_accessible }}"
+    size: "{{ datastore_db_size }}"
+    maint_window: "{{ db_maint_window }}"
+    backup_retention: "{{ db_backup_retention }}"
+    backup_window: "{{ db_backup_window }}"
+    license_model: "{{ db_license_model }}"
+    subnet: "{{ app }}-rds-subnet-group"
+    vpc_security_groups: "{{ db_sg.group_id }}"
+    wait: yes
+    wait_timeout: 1200  
+    db_name: "{{ datastore_db_name }}"
+    username: "{{ inventory_datastore_user }}"
+    password: "{{ inventory_datastore_pass }}"
+    tags:
+      app: "{{ app }}"
+      portofolio: "{{ vpc_name }}"
+      type: db
+  register: pycsw_rds

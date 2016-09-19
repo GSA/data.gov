@@ -1,0 +1,9 @@
+---
+
+# Create a simple s3 bucket
+- name: Create inventory s3 bucket
+  s3_bucket:
+    region: "{{ region }}"
+    name: "{{ bucket_name }}"
+    state: present
+  register: bucket_facts

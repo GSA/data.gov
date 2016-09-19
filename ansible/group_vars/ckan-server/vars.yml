@@ -3,7 +3,7 @@ virtual_env: /usr/lib/ckan
 catalog_db_name: ckan_db
 catalog_pycsw_db_name: pycsw_db
 inventory_db_name: ckan_db
-inventory_datastore_name: datastore_db
+inventory_datastore_db_name: datastore_db
 
 ##################################
 # Secret vars section
