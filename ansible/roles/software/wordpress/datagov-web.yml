@@ -1,7 +1,7 @@
 --- # WordPress Web AMI
 
 - name: Initial prechecks
-  hosts: webserver
+  hosts: wordpress-web
   remote_user: ubuntu
 
   roles:
@@ -9,13 +9,14 @@
 
 
 - name: Provisioning WordPress Web AMI
-  hosts: webserver
+  hosts: wordpress-web
   remote_user: ubuntu
   become: yes
   become_method: sudo
 
   roles:
   - { role: datagov-sudo-1-security, tags: [provision] }
+  - { role: git-fix, tags: [provision] }
   - { role: git, tags: [provision] }
   - { role: sendmail, tags: [provision] }
   - { role: nginx, tags: [provision] }
@@ -29,7 +30,7 @@
 
 
 - name: Deploying Data.gov
-  hosts: webserver
+  hosts: wordpress-web
   remote_user: ubuntu
 
   roles:
@@ -37,7 +38,7 @@
 
 
 - name: Cleanup
-  hosts: webserver
+  hosts: wordpress-web
   remote_user: ubuntu
   become: yes
   become_method: sudo
