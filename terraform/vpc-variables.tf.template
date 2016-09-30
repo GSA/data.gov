@@ -1,0 +1,34 @@
+
+variable "aws_profile" {
+    description = "AWS Profile to use from ~/.aws/credentials"
+    default =  "AWS_PROFILE"
+
+}
+
+variable "region" {
+    description = "AWS region to work in"
+    default = "AWS_REGION"
+}
+
+variable "vpc_cidr" {
+    description = "AWS VPC CIDR to create."
+    default = "10.0.0.0/24"
+}
+
+variable "subnet_cidrs" {
+    description = "AWS Subnet ID to use"
+    default = {
+        publicA = "10.0.0.0/26"
+        publicB = "10.0.0.64/26"
+        privateA = "10.0.0.128/26"
+        privateB = "10.0.0.192/26"
+    }
+}
+
+variable "vpc_azs" {
+	description = "Match A and B to availability zones"
+	default = {
+		A = "us-east-1a"
+		B = "us-east-1b"
+	}
+}

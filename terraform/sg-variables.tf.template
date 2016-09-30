@@ -1,0 +1,7 @@
+variable "aquilent-ips" {
+	description = "IP CIDRs for Aquilent"
+}
+
+variable "gsa-ips" {
+	description = "IP CIDRs for GSA"
+}

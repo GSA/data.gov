@@ -1,0 +1,41 @@
+variable "environment" {
+	description = "Environment to manage (dev/prod/etc)"
+	default = "dev"
+}
+
+
+variable "rancher_amis" {
+    description = "RancherOS AMIs"
+     default = {
+        us-east-1 = "ami-2504524f"
+        us-west-1 = "ami-0dd6bd6d"
+        us-west-2 = "ami-0a0d136b"
+     }
+}
+
+variable "ubuntu_amis" {
+  description = "Ubuntu AMIs for JumpHost build"
+  default = {
+    us-east-1 = "ami-fce3c696"
+    us-west-1 = "ami-06116566"
+    us-west-2 = "ami-9abea4fb"
+  }
+}
+
+variable "key_name" {
+  description = "Desired name of AWS key pair"
+}
+
+
+variable "rancher_tag" {
+    description = "Version of rancher to install"
+    default = "latest"
+}
+variable "domain" {
+    description = "Base domain to associate with the ELB"
+    default = "domain.com"
+}
+variable "zone_id" {
+    description = "ZoneID from the Route53 console"
+    default = ""
+}

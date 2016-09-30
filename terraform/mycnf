@@ -1,0 +1,7 @@
+sudo docker run -d --restart=always -p 8080:8080 \
+    -e CATTLE_DB_CATTLE_MYSQL_HOST= \
+    -e CATTLE_DB_CATTLE_MYSQL_PORT= \
+    -e CATTLE_DB_CATTLE_MYSQL_NAME= \
+    -e CATTLE_DB_CATTLE_USERNAME= \
+    -e CATTLE_DB_CATTLE_PASSWORD= \
+    rancher/server
