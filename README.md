@@ -21,18 +21,18 @@ Included in this Repository:
 
 ## Project Status
 
-| Milestone | Status |
-| --- | --- |
-| architecture | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> |
-| development  | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> |
-| staging      | <img src="https://img.shields.io/badge/status-On%20Track-blue.svg" /> |
-| production   | <img src="https://img.shields.io/badge/status-On%20Track-blue.svg" /> |
-| System Security Plan | <img src="https://img.shields.io/badge/status-On%20Track-blue.svg" /> |
-| Authority to Operate kick-off meeting | <img src="https://img.shields.io/badge/status-In%20Progress-yellow.svg" /> |
-| Scanning and Penetration Testing | <img src="https://img.shields.io/badge/status-In%20Progress-yellow.svg" /> |
-| *Remediation of scanning/pen test findings* | <img src="https://img.shields.io/badge/status-On%20Track-blue.svg" /> |
-| Authority to Operate Issued | <img src="https://img.shields.io/badge/status-In%20Progress-yellow.svg" /> |
-| Infrastructure Switch Over | <img src="https://img.shields.io/badge/status-In%20Progress-yellow.svg" /> |
+| Milestone | Status | Target Date |
+| --- | --- | --- |
+| Architecture | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> | 8/16/2016 |
+| Development *Environment* | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> | 9/1/2016 |
+| Staging *Environment*     | <img src="https://img.shields.io/badge/status-On%20Track-blue.svg" /> | 10/3/2016 |
+| Production *Environment*  | <img src="https://img.shields.io/badge/status-On%20Track-blue.svg" /> | 10/30/2016 |
+| System Security Plan | <img src="https://img.shields.io/badge/status-On%20Track-blue.svg" /> | 9/1/2016 |
+| Authority to Operate kick-off meeting | <img src="https://img.shields.io/badge/status-In%20Progress-yellow.svg" /> | 10/30/2016 |
+| Scanning and Penetration Testing | <img src="https://img.shields.io/badge/status-In%20Progress-yellow.svg" /> | 11/1/2016 |
+| *Remediation of scanning/pen test findings* | <img src="https://img.shields.io/badge/status-On%20Track-blue.svg" /> | 11/1/2016 - 11/15/2016 |
+| Authority to Operate Issued | <img src="https://img.shields.io/badge/status-In%20Progress-yellow.svg" /> | 11/30/2016 |
+| Infrastructure Switch Over | <img src="https://img.shields.io/badge/status-In%20Progress-yellow.svg" /> | 12/1/2016 - 1/1/2016 |
 
 
 ## Requirements
