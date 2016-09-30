@@ -1,11 +1,12 @@
 # Catalog Deploy
-**...work in progress...**
 
 This main repository for Data.gov's stack deployment onto AWS Infrastructure. The responsitory is broken into the following roles all created/provisioned using [Ansible](http://docs.ansible.com/ansible/intro_installation.html) and :
 
 Included in this Repository:
   - Infrastructure (*for dev environment)
-  - Platform (*for dev environment)
+    - Terraform + Rancher for [Dev/Test Environment](https://github.com/gsa/catalog-app)
+    - Ansible (AWS) Cloud Module (Test/Staging Emulated Production Architecture)
+  - Platform (*for Development Purpose Only*)
   - Host Operating System Hardening (CIS Benchmark for Ubuntu 14.04 LTS)
   - Software
     - Components
@@ -16,6 +17,23 @@ Included in this Repository:
   - Monitoring
     - Components
     - Configuration
+
+
+## Project Status
+
+| Milestone | Status |
+| --- | --- |
+| architecture | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> |
+| development  | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> |
+| staging      | <img src="https://img.shields.io/badge/status-On%20Track-blue.svg" /> |
+| production   | <img src="https://img.shields.io/badge/status-On%20Track-blue.svg" /> |
+| System Security Plan | <img src="https://img.shields.io/badge/status-On%20Track-blue.svg" /> |
+| Authority to Operate kick-off meeting | <img src="https://img.shields.io/badge/status-In%20Progress-yellow.svg" /> |
+| Scanning and Penetration Testing | <img src="https://img.shields.io/badge/status-In%20Progress-yellow.svg" /> |
+| *Remediation of scanning/pen test findings* | <img src="https://img.shields.io/badge/status-On%20Track-blue.svg" /> |
+| Authority to Operate Issued | <img src="https://img.shields.io/badge/status-In%20Progress-yellow.svg" /> |
+| Infrastructure Switch Over | <img src="https://img.shields.io/badge/status-In%20Progress-yellow.svg" /> |
+
 
 ## Requirements
 - [ ] Ansible > 1.10
