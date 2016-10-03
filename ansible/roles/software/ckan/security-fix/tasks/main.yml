@@ -1,0 +1,6 @@
+---
+- name: upgrade pygments
+  action: pip name=pygments version=2.1 virtualenv=/usr/lib/ckan/
+
+- name: upgrade requests
+  action: pip name=requests version=2.6.0 virtualenv=/usr/lib/ckan/

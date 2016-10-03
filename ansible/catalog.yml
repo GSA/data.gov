@@ -30,4 +30,6 @@
 
     - {role: roles/software/catalog/saml2, tags: ['frontend', 'harvester', 'saml2']}
 
+    - {role: roles/software/ckan/security-fix, tags: ['frontend', 'harvester', 'pycsw']}
+
     - {role: roles/software/ec2/ansible, tags: ['ec2', 'ansible-task']}
