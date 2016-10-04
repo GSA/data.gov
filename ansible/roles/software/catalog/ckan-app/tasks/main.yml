@@ -22,16 +22,16 @@
     - etc/ckan/production.ini
 
 # TODO: Left over stuff. 
-- name: Configure who.ini
-  shell: cp -r {{ app_source_path }}/config/environments/{{ env }}/saml2/who.ini /etc/ckan
-
-- name: Configure saml2
-  shell: cp -r {{ app_source_path }}/config/environments/{{ env }}/saml2/* {{ virtual_env }}/src/ckanext-saml2/ckanext/saml2/config
-  when: env != "local"
-
-- name: Upgrade repoze.who to 2.0 for local env
-  pip: name=repoze.who version=2.0 virtualenv={{ virtual_env }}
-  when: env == "local"
+#- name: Configure who.ini
+#  shell: cp -r {{ app_source_path }}/config/environments/{{ env }}/saml2/who.ini /etc/ckan
+#
+#- name: Configure saml2
+#  shell: cp -r {{ app_source_path }}/config/environments/{{ env }}/saml2/* {{ virtual_env }}/src/ckanext-saml2/ckanext/saml2/config
+#  when: env != "local"
+#
+#- name: Upgrade repoze.who to 2.0 for local env
+#  pip: name=repoze.who version=2.0 virtualenv={{ virtual_env }}
+#  when: env == "local"
 
 - name: point site_url in production.ini to localhost
   action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ckan_site_domain}}"
