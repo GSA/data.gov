@@ -92,8 +92,8 @@
     region: "{{ region }}"
     rules:
       - proto: tcp
-        from_port: 5432
-        to_port: 5432
+        from_port: 3306
+        to_port: 3306
         group_id: "{{ web_sg.group_id }}"
       - proto: tcp
         from_port: 22

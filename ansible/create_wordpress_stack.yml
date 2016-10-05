@@ -1,0 +1,31 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  vars_files:
+    - roles/infrastructure/common/vars/main.yml
+    - roles/infrastructure/wordpress/vars/main.yml
+    - roles/infrastructure/wordpress/vars/elb.yml
+    - roles/infrastructure/wordpress/vars/lc.yml
+    - roles/infrastructure/wordpress/vars/asg.yml
+    - roles/infrastructure/wordpress/vars/subnet.yml
+    - roles/infrastructure/wordpress/vars/rds.yml
+    - roles/infrastructure/wordpress/vars/route53.yml
+    - roles/software/wordpress/group_vars/amazon-dev/vars.yml
+    - roles/software/wordpress/group_vars/amazon-dev/vault.yml
+
+  tasks:
+    - include: roles/infrastructure/common/tasks/vpc.yml
+    - include: roles/infrastructure/wordpress/tasks/subnets.yml
+    - include: roles/infrastructure/wordpress/tasks/nat.yml
+    - include: roles/infrastructure/wordpress/tasks/route_tables.yml
+    - include: roles/infrastructure/wordpress/tasks/sg.yml
+    - include: roles/infrastructure/wordpress/tasks/rds_subnet_group.yml 
+    - include: roles/infrastructure/wordpress/tasks/rds.yml 
+    - include: roles/infrastructure/wordpress/tasks/elb.yml
+    - include: roles/infrastructure/wordpress/tasks/s3.yml
+    - include: roles/infrastructure/wordpress/tasks/iam_role.yml
+    - include: roles/infrastructure/wordpress/tasks/iam_policy.yml
+    - include: roles/infrastructure/wordpress/tasks/lc.yml
+    - include: roles/infrastructure/wordpress/tasks/asg.yml
+    - include: roles/infrastructure/wordpress/tasks/route53.yml

@@ -1,6 +1,6 @@
 ---
 - name: Install CKAN Stack
-  hosts: ckan-server
+  hosts: all 
   sudo: yes
   vars:
     app_type: inventory

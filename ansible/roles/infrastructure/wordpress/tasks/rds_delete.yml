@@ -1,17 +1,8 @@
-- name: Delete postgres ckan instance, but create a snapshot before doing so
+- name: Delete wordpress mysql instance, but create a snapshot before doing so
   rds:
     command: delete
-    instance_name: "{{ ckan_db_instance_name }}"
+    instance_name: "{{ wordpress_db_instance_name }}"
     region: "{{ region }}"
     wait: yes
     wait_timeout: 600
 #    snapshot: "{{ ckan_db_instance_name }}_snapshot"
-
-- name: Delete datapusher pycsw instance, but create a snapshot before doing so
-  rds:
-    command: delete
-    instance_name: "{{ datastore_db_instance_name }}"
-    region: "{{ region }}"
-    wait: yes
-    wait_timeout: 600
-#    snapshot: "{{ datapusher_db_instance_name }}_snapshot" 
