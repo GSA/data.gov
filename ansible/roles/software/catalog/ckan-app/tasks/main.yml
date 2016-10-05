@@ -21,6 +21,9 @@
   with_items:
     - etc/ckan/production.ini
 
+- name: Assign /etc/ckan to apache www-data group
+  file: path=/etc/ckan state=directory group=www-data
+
 # TODO: Left over stuff. 
 #- name: Configure who.ini
 #  shell: cp -r {{ app_source_path }}/config/environments/{{ env }}/saml2/who.ini /etc/ckan

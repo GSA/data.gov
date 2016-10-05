@@ -40,6 +40,9 @@
   with_items:
     - etc/ckan/production.ini
 
+- name: Assign /etc/ckan to apache www-data group
+  file: path=/etc/ckan state=directory group=www-data
+
 - name: restart apache
   action: service name=apache2 state=restarted
 
