@@ -21,12 +21,6 @@
   with_items:
     - etc/ckan/production.ini
 
-- name: fix /etc/ckan & /usr/lib/ckan permissions
-  file: path={{ item }} state=directory group=www-data recurse=yes
-  with_items:
-    - /etc/ckan
-    - /usr/lib/ckan
-
 # TODO: Left over stuff. 
 - name: Configure who.ini
   shell: cp -r {{ app_source_path }}/config/environments/{{ env }}/saml2/who.ini /etc/ckan

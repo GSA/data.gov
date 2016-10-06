@@ -40,12 +40,6 @@
   with_items:
     - etc/ckan/production.ini
 
-- name: fix /etc/ckan & /usr/lib/ckan permissions
-  file: path={{ item }} state=directory group=www-data recurse=yes
-  with_items:
-    - /etc/ckan
-    - /usr/lib/ckan
- 
 - name: restart apache
   action: service name=apache2 state=restarted
 
