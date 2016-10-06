@@ -1,4 +1,7 @@
 ---
+
+- include: ../files/catalog/config.yml
+
 ## Install Ansible
 - name: Add ansible ppa
   apt_repository: repo='ppa:ansible/ansible'
