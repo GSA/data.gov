@@ -32,4 +32,4 @@
 
     - {role: roles/software/ckan/security-fix, tags: ['frontend', 'harvester', 'pycsw']}
 
-    - {role: roles/software/ec2/ansible, tags: ['ec2', 'ansible-task']}
+    - ec2-catalog

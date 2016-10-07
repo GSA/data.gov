@@ -15,4 +15,5 @@
     - roles/software/ckan/security-fix
     - {role: roles/software/inventory/ckan-db-setup, tags: ['db', 'db-setup']}
     - {role: roles/software/inventory/ckan-db-init, tags: ['db', 'db-init']}
-    - {role: roles/software/ec2/ansible, tags: ['ec2', 'ansible-task']}
+    - ec2-inventory
+

@@ -1,4 +1,6 @@
 ---
+
+
 - name: get external vars
   set_fact:
     ckan_db_server: "{{ CKAN_DB_SERVER|default('') }}"

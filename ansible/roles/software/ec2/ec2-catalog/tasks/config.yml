@@ -6,8 +6,6 @@
     solr_server: "{{ SOLR_SERVER|default('') }}"
     pycsw_db_server: "{{ PYCSW_DB_SERVER|default('') }}"
 
-- debug: var=REDIS_SERVER
-
 - name: Config db_server in production.ini
   replace: dest=/etc/ckan/production.ini regexp='(\s*db_server\s*=).*$' replace='\1 {{ckan_db_server}}'
   when: ckan_db_server != ""

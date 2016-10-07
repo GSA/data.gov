@@ -1,7 +1,0 @@
----
-- name: Wait and use table ckan_postgis_install an indicator that db init has completed
-  shell: PGPASSWORD={{db_pass}} psql -h {{db_server}} -U{{db_user}} -d {{db_database}} -c "SELECT * FROM ckan_db_ini_done;"
-  register: wait_reg
-  until: wait_reg.rc == 0
-  retries: 30
-  delay: 10
