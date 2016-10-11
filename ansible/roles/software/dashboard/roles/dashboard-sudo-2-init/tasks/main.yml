@@ -15,8 +15,15 @@
     owner: "www-data"
     group: "www-data"
     recurse: yes
+  ignore_errors: yes
 
 - name: MariaDB client
   package:
     name: mariadb-client-5.5
     state: present
+
+- name: PHP mcrypt
+  package:
+    name: php-mcrypt
+    state: present
+

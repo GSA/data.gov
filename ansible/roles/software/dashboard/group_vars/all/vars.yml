@@ -26,6 +26,8 @@ project_index_path: /var/www/dashboard
 # CodeIgniter Session Encryption Key
 env_encryption_key: "{{ vault_codeigniter_encryption_key }}"
 
+saml_private_key: "{{ vault_saml_private_key }}"
+
 # Default vars group
 vars_group: packer-prod
 

@@ -39,7 +39,6 @@
     src: "index.php.j2"
     dest: "{{ project_source_path }}/index.php"
 
-
 - name: Copying index.php
   template:
     src: "archive_to_s3.sh"

@@ -16,9 +16,11 @@ services:
 
   dashboard:
     container_name: dashboard_web
+    image: pod/dashboard
+    volumes:
+      - "./.data/web:/var/www/dashboard"
     depends_on:
       - poddb
-    image: pod/dashboard
     links:
       - poddb
     ports:

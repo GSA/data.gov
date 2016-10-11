@@ -13,6 +13,7 @@
     owner: "ubuntu"
     group: "www-data"
     recurse: yes
+  ignore_errors: yes
 
 - name: Docker specific
   debug:
