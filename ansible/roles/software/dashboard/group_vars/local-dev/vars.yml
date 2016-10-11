@@ -1,0 +1,14 @@
+---
+
+# AWS S3
+aws_s3_archive_key: ""
+aws_s3_archive_secret: ""
+
+# MySQL credentials
+env_db_host: "poddb"
+env_db_user: "dashboard"
+env_db_pass: "superpassword"
+env_db_name: "dashboard"
+
+# We're inside Docker container
+running_in: docker

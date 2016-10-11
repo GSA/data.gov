@@ -1,0 +1,27 @@
+version: '2'
+services:
+  poddb:
+    container_name: dashboard_db
+    image: mysql
+    volumes:
+      - "./.data/db:/var/lib/mysql"
+    restart: always
+    ports:
+      - "3366:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: insecure
+      MYSQL_DATABASE: dashboard
+      MYSQL_USER: dashboard
+      MYSQL_PASSWORD: superpassword
+
+  dashboard:
+    container_name: dashboard_web
+    depends_on:
+      - poddb
+    image: pod/dashboard
+    links:
+      - poddb
+    ports:
+      - "8088:80"
+      - "2222:22"
+    restart: always

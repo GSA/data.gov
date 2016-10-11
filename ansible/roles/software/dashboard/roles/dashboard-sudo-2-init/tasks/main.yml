@@ -1,0 +1,22 @@
+--- # Dashboard prerequisites
+
+- name: Copying Dashboard configuration for Nginx
+  template:
+    src: "dashboard.nginx.conf.j2"
+    dest: "/etc/nginx/sites-enabled/dashboard.nginx.conf"
+  notify:
+      - reload nginx
+
+- name: Temporarily making /var/www/ writeable by all
+  file:
+    path: "/var/www"
+    state: directory
+    mode: 0777
+    owner: "www-data"
+    group: "www-data"
+    recurse: yes
+
+- name: MariaDB client
+  package:
+    name: mariadb-client-5.5
+    state: present

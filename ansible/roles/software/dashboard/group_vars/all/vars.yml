@@ -1,0 +1,33 @@
+---
+
+# Disabling MySQL server
+mysql_enabled_on_startup: false
+
+# Nginx
+nginx_remove_default_vhost: true
+
+# PHP-FPM
+php_enable_php_fpm: true
+php_fpm_listen: /var/run/php/php7.0-fpm.sock
+php_webserver_daemon: nginx
+
+# Composer
+#project_git_repo: https://github.com/project-open-data/project-open-data-dashboard.git
+#project_git_version: master
+project_git_repo: https://github.com/alex-perfilov-reisys/project-open-data-dashboard.git
+project_git_version: ansible
+
+codeigniter_environment: development
+
+# Project path
+project_source_path: /var/www/dashboard
+project_index_path: /var/www/dashboard
+
+# CodeIgniter Session Encryption Key
+env_encryption_key: "{{ vault_codeigniter_encryption_key }}"
+
+# Default vars group
+vars_group: packer-prod
+
+# Default env
+running_in: aws

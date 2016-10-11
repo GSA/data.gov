@@ -1,0 +1,18 @@
+--- # Environment init
+
+- name: Ensure https support for apt is installed
+  apt:
+    name: apt-transport-https
+    state: present
+
+- name: Add repository for PHP 7.0
+  apt_repository:
+    repo: "ppa:ondrej/php"
+
+- name: Update Apt
+  apt: update_cache=yes
+
+- name: Installing unzip (required by composer)
+  apt:
+    name: unzip
+    state: present

@@ -1,0 +1,23 @@
+- name: php
+  src: geerlingguy.php
+
+- name: php-mysql
+  src: geerlingguy.php-mysql
+
+- name: php-memcached
+  src: geerlingguy.php-memcached
+
+- name: composer
+  src: geerlingguy.composer
+
+- name: nginx
+  src: geerlingguy.nginx
+
+- name: git
+  src: geerlingguy.git
+
+- name: sendmail
+  src: hashbangcode.sendmail
+
+- name: vim
+  src: chusiang.vim-and-vi-mode

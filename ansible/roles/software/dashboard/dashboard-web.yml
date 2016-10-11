@@ -1,0 +1,52 @@
+--- # Dashboard Web AMI
+
+- name: Initial prechecks
+  hosts: dashboard-web
+  remote_user: ubuntu
+
+  roles:
+  - { role: dashboard-sudo-0-precheck, tags: [precheck] }
+
+
+- name: Provisioning Web AMI
+  hosts: dashboard-web
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  roles:
+  - { role: dashboard-sudo-1-security, tags: [provision] }
+  - { role: git, tags: [provision] }
+  - { role: sendmail, tags: [provision] }
+  - { role: nginx, tags: [provision] }
+  - { role: php, tags: [php, provision] }
+  - { role: php-mysql, tags: [php, php-mysql, provision] }
+  - { role: php-memcached, tags: [php, php-memcached, provision] }
+  - { role: composer, tags: [php, provision] }
+  - { role: vim, tags: [provision, vim] }
+  - { role: dashboard-sudo-2-init, tags: [provision, deploy] }
+
+
+- name: Deploying Dashboard
+  hosts: dashboard-web
+  remote_user: ubuntu
+
+  roles:
+  - { role: dashboard-deploy, tags: [deploy] }
+
+
+- name: Cleanup
+  hosts: dashboard-web
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  roles:
+  - { role: dashboard-sudo-3-cleanup, tags: [deploy, cleanup] }
+
+- name: Dashboard Migration
+  hosts: dashboard-web
+  remote_user: ubuntu
+
+  roles:
+  - { role: dashboard-migrations, tags: [deploy, migrate] }

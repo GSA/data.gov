@@ -1,0 +1,7 @@
+# Intellij IDE
+.idea
+
+# Ansible
+vendor
+*.retry
+authorized_keys

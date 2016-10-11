@@ -1,0 +1,5 @@
+[dashboard-web]
+54.234.125.220
+
+[all:vars]
+vars_group=amazon-dev

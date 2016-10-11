@@ -1,0 +1,57 @@
+--- # Dashboard repo deployment & composer install
+
+- name: Load inventory specific vault ({{ vars_group }})
+  include_vars: "group_vars/{{ vars_group }}/vault.yml"
+
+- name: Load inventory specific variables ({{ vars_group }})
+  include_vars: "group_vars/{{ vars_group }}/vars.yml"
+
+- name: Clone project files
+  git:
+    repo: "{{ project_git_repo }}"
+    dest: "{{ project_source_path }}"
+    version: "{{ project_git_version }}"
+    force: true
+
+- name: Composer install Dashboard
+  composer:
+    command: install
+    arguments: "--ansi --no-dev --no-interaction --optimize-autoloader --no-scripts"
+    working_dir: "{{ project_source_path }}"
+  environment:
+        COMPOSER_DISCARD_CHANGES: "true"
+
+- name: Ensuring config directory exists
+  file:
+    path: "{{ project_source_path }}/application/config/{{ codeigniter_environment }}"
+    state: directory
+
+- name: Copying config files
+  template:
+    src: "{{ item }}"
+    dest: "{{ project_source_path }}/application/config/{{ codeigniter_environment }}/{{ item | basename }}"
+#    dest: "{{ project_source_path }}/application/config/{{ codeigniter_environment }}/{{ item | basename | regex_replace('\\.j2','') }}"
+  with_fileglob:
+    - ../templates/config/*.php
+
+- name: Copying index.php
+  template:
+    src: "index.php.j2"
+    dest: "{{ project_source_path }}/index.php"
+
+
+- name: Copying index.php
+  template:
+    src: "archive_to_s3.sh"
+    dest: "{{ project_source_path }}/archive_to_s3.sh"
+
+- name: Adding .env
+  template:
+    src: ".env.j2"
+    dest: "{{ project_source_path }}/.env"
+
+- name: Run database migration
+  command: "php index.php migrate"
+  args:
+      chdir: "{{ project_index_path }}"
+  ignore_errors: yes
