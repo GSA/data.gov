@@ -1,11 +1,11 @@
 --- # Dashboard Web AMI
 
-- name: Initial prechecks
-  hosts: dashboard-web
-  remote_user: ubuntu
-
-  roles:
-  - { role: dashboard-sudo-0-precheck, tags: [precheck] }
+#- name: Initial prechecks
+#  hosts: dashboard-web
+#  remote_user: ubuntu
+#
+#  roles:
+#  - { role: dashboard-sudo-0-precheck, tags: [precheck] }
 
 
 - name: Provisioning Web AMI
