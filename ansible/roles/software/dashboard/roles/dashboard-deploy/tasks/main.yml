@@ -12,6 +12,7 @@
     dest: "{{ project_source_path }}"
     version: "{{ project_git_version }}"
     force: true
+    recursive: no
 
 - name: Composer install Dashboard
   composer:
