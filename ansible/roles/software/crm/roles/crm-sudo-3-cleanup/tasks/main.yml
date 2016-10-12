@@ -1,0 +1,43 @@
+# Cleanup after deployment
+
+- name: Reverting /var/www/ permissions
+  file:
+    path: "/var/www"
+    state: directory
+    mode: 0755
+    recurse: yes
+
+- name: Chown www-data /var/www/
+  file:
+    path: "/var/www"
+    owner: "ubuntu"
+    group: "www-data"
+    recurse: yes
+
+- name: Docker specific
+  debug:
+    msg: "Now running docker specific tasks"
+  when: "'docker' == running_in"
+
+- name: Double check php7.0-fpm status
+  command: "service php7.0-fpm status"
+  register: php_fpm_status
+  ignore_errors: true
+  when: "'docker' == running_in"
+
+- name: Starting php7.0-fpm & nginx
+  command: "service php7.0-fpm start && service nginx start"
+  ignore_errors: true
+  when: "'docker' == running_in and 'is not running' in php_fpm_status.stdout"
+
+- name: Service php7.0-fpm status
+  command: "service php7.0-fpm status"
+  register: php_fpm_status
+  when: "'docker' == running_in"
+  failed_when: "'is not running' in php_fpm_status.stdout"
+
+- name: Service nginx status
+  command: "service nginx status"
+  register: nginx_status
+  when: "'docker' == running_in"
+  failed_when: "'is not running' in nginx_status.stdout"

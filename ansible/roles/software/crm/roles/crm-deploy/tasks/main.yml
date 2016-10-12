@@ -1,0 +1,26 @@
+--- # Dashboard repo deployment & composer install
+
+- name: Load inventory specific vault ({{ vars_group }})
+  include_vars: "group_vars/{{ vars_group }}/vault.yml"
+
+- name: Load inventory specific variables ({{ vars_group }})
+  include_vars: "group_vars/{{ vars_group }}/vars.yml"
+
+- name: Clone project files
+  git:
+    repo: "{{ project_git_repo }}"
+    dest: "{{ project_source_path }}"
+    version: "{{ project_git_version }}"
+    force: true
+
+- name: Ensuring config directory exists
+  file:
+    path: "{{ project_source_path }}/application/config/{{ codeigniter_environment }}"
+    state: directory
+
+- name: Copying config files
+  template:
+    src: "{{ item }}"
+    dest: "{{ project_source_path }}/application/config/{{ codeigniter_environment }}/{{ item | basename }}"
+  with_fileglob:
+    - ../templates/config/*.php

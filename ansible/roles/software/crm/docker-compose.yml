@@ -1,0 +1,27 @@
+version: '2'
+services:
+  crmdb:
+    container_name: crm_db
+    image: mysql
+    volumes:
+      - "./.data/db:/var/lib/mysql"
+    restart: always
+    ports:
+      - "3366:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: insecure
+      MYSQL_DATABASE: crm
+      MYSQL_USER: crm
+      MYSQL_PASSWORD: superpassword
+
+  crm:
+    container_name: crm_web
+    depends_on:
+      - crmdb
+    image: crm
+    links:
+      - crmdb
+    ports:
+      - "8888:80"
+      - "2233:22"
+    restart: always
