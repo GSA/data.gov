@@ -58,7 +58,7 @@ datastore_pass = {{ inventory_datastore_pass }}
 datastore_ro_user = {{ inventory_datastore_ro_user }}
 datastore_ro_pass = {{ inventory_datastore_ro_pass }}
 datastore_server = localhost
-datastore_database = {{ inventory_datastore_name }}
+datastore_database = {{ inventory_datastore_db_name }}
 ckan.datastore.write_url = postgresql://%(datastore_user)s:%(datastore_pass)s@%(datastore_server)s/%(datastore_database)s
 ckan.datastore.read_url = postgresql://%(datastore_ro_user)s:%(datastore_ro_pass)s@%(datastore_server)s/%(datastore_database)s
 
