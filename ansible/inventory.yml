@@ -12,6 +12,7 @@
     - {role: roles/software/ckan/postgresql, tags: ['db', 'db-install']}
     - {role: roles/software/ckan/solr, tags: ['solr']}
     - roles/software/inventory/ckan-app
+    - {role: roles/software/ckan/saml2, tags: ['saml2']}
     - roles/software/ckan/security-fix
     - {role: roles/software/inventory/ckan-db-setup, tags: ['db', 'db-setup']}
     - {role: roles/software/inventory/ckan-db-init, tags: ['db', 'db-init']}

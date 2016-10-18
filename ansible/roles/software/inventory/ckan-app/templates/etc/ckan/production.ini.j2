@@ -120,6 +120,24 @@ ckan.locale_order = en pt_BR ja it cs_CZ ca es fr el sv sr sr@latin no sk fi ru 
 ckan.locales_offered =
 ckan.locales_filtered_out = en_GB
 
+## SAML2 Settings
+saml2.site_url = {{ saml2_site_url }}
+saml2.config_path = %(here)s/saml2
+saml2.idp_url = {{ saml2_idp_url }}
+
+saml2.user_mapping =
+    email~maxemail
+    fullname~field_display_name
+    id~maxid
+    name~maxemail
+
+saml2.organization_mapping =
+    name~field_unique_id
+    title~field_organization
+    extras:organization_type~field_organization_type
+
+saml2.max_redirect_slo = 
+
 
 ## Feeds Settings
 

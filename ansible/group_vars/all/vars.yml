@@ -16,3 +16,5 @@ inventory_datastore_user: "{{ vault_inventory_datastore_user }}"
 inventory_datastore_pass: "{{ vault_inventory_datastore_pass }}"
 inventory_datastore_ro_user: "{{ vault_inventory_datastore_ro_user }}"
 inventory_datastore_ro_pass: "{{ vault_inventory_datastore_ro_pass }}"
+
+who_ini_secret: "{{ vault_who_ini_secret }}"
