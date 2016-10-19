@@ -26,7 +26,7 @@
   - { role: wp-cli, tags: [php, cli, provision] }
   - { role: composer, tags: [php, provision] }
   - { role: vim, tags: [provision, vim] }
-  - { role: datagov-sudo-2-init, tags: [provision, deploy] }
+  - { role: datagov-sudo-2-init, tags: [provision, deploy, deploy-rollback] }
 
 
 - name: Deploying Data.gov
@@ -35,6 +35,7 @@
 
   roles:
   - { role: datagov-deploy, tags: [deploy] }
+  - { role: datagov-deploy-rollback, tags: [deploy-rollback] }
 
 
 - name: Cleanup
@@ -44,4 +45,4 @@
   become_method: sudo
 
   roles:
-  - { role: datagov-sudo-3-cleanup, tags: [deploy, cleanup] }
+  - { role: datagov-sudo-3-cleanup, tags: [deploy, cleanup, deploy-rollback] }

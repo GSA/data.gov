@@ -28,8 +28,10 @@ project_git_version: master
 env_wp_env: production
 
 # Project path
-project_source_path: /var/www/datagov
-project_index_path: /var/www/datagov/web
+project_source_rollback_path: /var/www/datagov/rollback
+project_source_new_code_path: /var/www/datagov/new
+project_source_path: /var/www/datagov/current
+project_index_path: /var/www/datagov/current/web
 
 # Generate your keys here: https://roots.io/salts.html
 auth_key: "{{ vault_auth_key }}"

@@ -7,17 +7,14 @@
   include_vars: "group_vars/{{ vars_group }}/vars.yml"
 
 - name: Remove old rollback code
-  file: path= "{{ project_source_rollback_path }}" state=absent
+  file: path="{{ project_source_rollback_path }}" state=absent
 
 - name: Check weather new code dir exists
-  stat: path= "{{ project_source_new_code_path }}"
+  stat: path="{{ project_source_new_code_path }}"
   register: p
 
 - name: Create rollback code
-  copy: 
-    remote_src: True 
-    src: "{{ project_source_new_code_path }}"
-    dest: "{{ project_source_rollback_path }}"
+  command: cp -r "{{ project_source_new_code_path }}" "{{ project_source_rollback_path }}"
   when: p.stat.isdir is defined and p.stat.isdir
 
 - name: Symlink current dir with rollback code
