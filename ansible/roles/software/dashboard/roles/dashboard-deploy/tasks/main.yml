@@ -6,10 +6,34 @@
 - name: Load inventory specific variables ({{ vars_group }})
   include_vars: "group_vars/{{ vars_group }}/vars.yml"
 
-- name: Clone project files
+- name: Load inventory specific vault ({{ vars_group }})
+  include_vars: "group_vars/{{ vars_group }}/vault.yml"
+
+- name: Load inventory specific variables ({{ vars_group }})
+  include_vars: "group_vars/{{ vars_group }}/vars.yml"
+
+- name: Remove old rollback code
+  file: path="{{ project_source_rollback_path }}" state=absent
+
+- name: Check weather new code dir exists
+  stat: path="{{ project_source_new_code_path }}"
+  register: p
+
+- name: Create rollback code
+  command: cp -r "{{ project_source_new_code_path }}" "{{ project_source_rollback_path }}"
+  when: p.stat.isdir is defined and p.stat.isdir
+
+- name: Symlink current dir with rollback code
+  file:
+    src: "{{ project_source_rollback_path }}"
+    path: "{{ project_source_path }}"
+    state: link
+  when: new_code_dir.stat.isdir is defined and new_code_dir.stat.isdir
+
+- name: Clone project files to {{ project_source_new_code_path }}
   git:
     repo: "{{ project_git_repo }}"
-    dest: "{{ project_source_path }}"
+    dest: "{{ project_source_new_code_path }}"
     version: "{{ project_git_version }}"
     force: true
     recursive: no
@@ -18,19 +42,19 @@
   composer:
     command: install
     arguments: "--ansi --no-dev --no-interaction --optimize-autoloader --no-scripts"
-    working_dir: "{{ project_source_path }}"
+    working_dir: "{{ project_source_new_code_path }}"
   environment:
         COMPOSER_DISCARD_CHANGES: "true"
 
 - name: Ensuring config directory exists
   file:
-    path: "{{ project_source_path }}/application/config/{{ codeigniter_environment }}"
+    path: "{{ project_source_new_code_path }}/application/config/{{ codeigniter_environment }}"
     state: directory
 
 - name: Copying config files
   template:
     src: "{{ item }}"
-    dest: "{{ project_source_path }}/application/config/{{ codeigniter_environment }}/{{ item | basename }}"
+    dest: "{{ project_source_new_code_path }}/application/config/{{ codeigniter_environment }}/{{ item | basename }}"
 #    dest: "{{ project_source_path }}/application/config/{{ codeigniter_environment }}/{{ item | basename | regex_replace('\\.j2','') }}"
   with_fileglob:
     - ../templates/config/*.php
@@ -38,17 +62,17 @@
 - name: Copying index.php
   template:
     src: "index.php.j2"
-    dest: "{{ project_source_path }}/index.php"
+    dest: "{{ project_source_new_code_path }}/index.php"
 
 - name: Copying index.php
   template:
     src: "archive_to_s3.sh"
-    dest: "{{ project_source_path }}/archive_to_s3.sh"
+    dest: "{{ project_source_new_code_path }}/archive_to_s3.sh"
 
 - name: Adding .env
   template:
     src: ".env.j2"
-    dest: "{{ project_source_path }}/.env"
+    dest: "{{ project_source_new_code_path }}/.env"
 
 - name: Run database migration
   command: "php index.php migrate"

@@ -20,8 +20,10 @@ project_git_version: ansible
 codeigniter_environment: development
 
 # Project path
-project_source_path: /var/www/dashboard
-project_index_path: /var/www/dashboard
+project_source_rollback_path: /var/www/dashboard/rollback
+project_source_new_code_path: /var/www/dashboard/new
+project_source_path: /var/www/dashboard/current
+project_index_path: /var/www/dashboard/current
 
 # CodeIgniter Session Encryption Key
 env_encryption_key: "{{ vault_codeigniter_encryption_key }}"
