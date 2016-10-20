@@ -32,6 +32,8 @@
 - name: Deploying Data.gov
   hosts: wordpress-web
   remote_user: ubuntu
+  become: yes
+  become_method: sudo
 
   roles:
   - { role: datagov-deploy, tags: [deploy] }

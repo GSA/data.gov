@@ -29,6 +29,8 @@
 - name: Deploying crm
   hosts: crm-web
   remote_user: ubuntu
+  become: yes
+  become_method: sudo
 
   roles:
   - { role: crm-deploy, tags: [deploy] }
