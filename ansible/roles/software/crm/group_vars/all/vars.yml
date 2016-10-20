@@ -18,8 +18,10 @@ project_git_version: master
 codeigniter_environment: development
 
 # Project path
-project_source_path: /var/www/crm
-project_index_path: /var/www/crm
+project_source_rollback_path: /var/www/crm/rollback
+project_source_new_code_path: /var/www/crm/new
+project_source_path: /var/www/crm/current
+project_index_path: /var/www/crm/current
 
 # CodeIgniter Session Encryption Key
 env_encryption_key: "{{ vault_codeigniter_encryption_key }}"

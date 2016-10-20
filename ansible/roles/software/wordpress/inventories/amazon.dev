@@ -1,5 +1,5 @@
-[webserver]
-datagov.aws
+[wordpress-web]
+54.165.251.4
 
 [all:vars]
 vars_group=amazon-dev
