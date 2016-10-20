@@ -73,3 +73,9 @@
   args:
       chdir: "{{ project_index_path }}"
   ignore_errors: yes
+
+- name: Symlink current dir with new code
+  file:
+    src: "{{ project_source_new_code_path }}"
+    path: "{{ project_source_path }}"
+    state: link

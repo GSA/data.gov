@@ -31,12 +31,6 @@
     version: "{{ project_git_version }}"
     force: true
 
-- name: Symlink current dir with new code
-  file:
-    src: "{{ project_source_new_code_path }}"
-    path: "{{ project_source_path }}"
-    state: link
-
 - name: Composer install Data.gov Wordpress and plugins to {{ project_source_new_code_path }}
   composer:
     arguments: "--no-ansi --no-interaction --profile -v"
@@ -75,6 +69,12 @@
 #  command: "cp plugins/query-monitor/wp-content/db.php db.php"
 #  args:
 #    chdir: "{{ project_source_path }}/web/app"
+
+- name: Symlink current dir with new code
+  file:
+    src: "{{ project_source_new_code_path }}"
+    path: "{{ project_source_path }}"
+    state: link
 
 - name: Disabling saml on local
   command: wp plugin deactivate saml-20-single-sign-on
