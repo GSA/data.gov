@@ -1,5 +1,12 @@
 ---
-virtual_env: /usr/lib/ckan
+
+# Project path
+project_source_rollback_path: /usr/lib/ckan-rollback
+project_source_new_code_path: /usr/lib/ckan-new
+project_source_path: /usr/lib/ckan
+project_index_path: /usr/lib/ckan
+
+# Other
 catalog_db_name: ckan_db
 catalog_pycsw_db_name: pycsw_db
 inventory_db_name: ckan_db

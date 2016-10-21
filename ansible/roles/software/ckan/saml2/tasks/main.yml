@@ -14,11 +14,11 @@
     replace: '\1 saml2'
 
 - name: get code
-  git: repo={{item.repo}} dest={{ virtual_env }}/src/{{item.name}} version={{item.branch|default('master')}}
+  git: repo={{item.repo}} dest={{ project_source_new_code_path }}/src/{{item.name}} version={{item.branch|default('master')}}
   with_items: "{{ saml2_pkgs }}"
 
 - name: run setup
-  command: chdir={{ virtual_env }}/src/{{item.name}}/ ../../bin/python setup.py develop
+  command: chdir={{ project_source_new_code_path }}/src/{{item.name}}/ ../../bin/python setup.py develop
   with_items: "{{ saml2_pkgs }}"
 
 - name: create directories

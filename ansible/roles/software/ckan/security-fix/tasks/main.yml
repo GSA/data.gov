@@ -9,4 +9,4 @@
   file: path={{ item }} state=directory group=www-data recurse=yes
   with_items:
     - /etc/ckan
-    - /usr/lib/ckan
+    - "{{ project_source_new_code_path }}"

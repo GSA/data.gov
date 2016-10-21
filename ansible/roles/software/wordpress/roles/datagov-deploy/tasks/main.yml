@@ -22,7 +22,7 @@
     src: "{{ project_source_rollback_path }}"
     path: "{{ project_source_path }}"
     state: link
-  when: new_code_dir.stat.isdir is defined and new_code_dir.stat.isdir
+  when: p.stat.isdir is defined and p.stat.isdir
 
 - name: Clone project files to {{ project_source_new_code_path }}
   git:

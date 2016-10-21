@@ -18,7 +18,7 @@
     - {role: roles/software/ckan/postgresql, tags: ['frontend', 'harvester', 'db', 'db-install']}
     - {role: roles/software/ckan/solr, tags: ['frontend', 'harvester', 'solr']}
 
-    - {role: roles/software/catalog/ckan-app, tags: ['frontend', 'harvester']}
+    - {role: roles/software/catalog/ckan-app, tags: ['frontend', 'harvester', 'deploy']}
     - {role: roles/software/catalog/ckan-db-setup, tags: ['frontend', 'harvester', 'db', 'db-setup']}
     - {role: roles/software/catalog/ckan-db-init, tags: ['frontend', 'harvester', 'db', 'db-init']}
 
@@ -33,3 +33,4 @@
     - {role: roles/software/ckan/security-fix, tags: ['frontend', 'harvester', 'pycsw']}
 
     - {role: ec2-catalog, tags: ['frontend', 'harvester']}
+    - {role: datagov-deploy-rollback, tags: ['deploy-rollback']}
