@@ -15,7 +15,7 @@
 */
 
 $protocol = 'http';
-if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
+if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
     $protocol = 'https';
 }
 
