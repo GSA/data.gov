@@ -44,9 +44,8 @@ $config['pre_approved_admins'] = explode(",", getenv('PRE_APPROVED_ADMINS'));
 |
 */
 $protocol = 'http';
-if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
+if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
     $protocol = 'https';
-}
 
 $default_host = 'labs.data.gov/dashboard';
 if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
