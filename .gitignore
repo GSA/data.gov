@@ -39,3 +39,6 @@ hosts
 *.sql
 *.sql.gz
 .data
+
+# Terraform
+/terraform/terraform.tfvars
