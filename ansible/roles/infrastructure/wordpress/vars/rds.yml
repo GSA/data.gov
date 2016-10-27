@@ -1,17 +1,17 @@
 ---
 
 # common
-db_engine: postgres
-engine_version: 9.3
+db_engine: MySQL
+engine_version: 5.6.27
 db_instance_type: db.m3.medium
 db_multi_zone: no
 db_publicly_accessible: no
 db_maint_window: mon:05:00-mon:06:00
 db_backup_retention: 35
 db_backup_window: 07:00-07:30
-db_license_model: postgresql-license
+db_license_model: general-public-license
 
 # wordpress db
-ckan_db_instance_name: "{{ app }}-db"
-ckan_db_name: "{{ wordpress_db_name }}"
-ckan_db_size: 50
+wordpress_db_instance_name: "{{ app }}-db"
+wordpress_db_name: "{{ wordpress_db_name }}"
+wordpress_db_size: 10

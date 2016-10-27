@@ -13,7 +13,7 @@ ansible-secret.txt
 ansible/*.retry
 
 # Ignoring symlinks
-config/
+#config/
 src/
 
 # Ignore everything in these directories

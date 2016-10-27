@@ -58,7 +58,7 @@ datastore_pass = {{ inventory_datastore_pass }}
 datastore_ro_user = {{ inventory_datastore_ro_user }}
 datastore_ro_pass = {{ inventory_datastore_ro_pass }}
 datastore_server = localhost
-datastore_database = {{ inventory_datastore_name }}
+datastore_database = {{ inventory_datastore_db_name }}
 ckan.datastore.write_url = postgresql://%(datastore_user)s:%(datastore_pass)s@%(datastore_server)s/%(datastore_database)s
 ckan.datastore.read_url = postgresql://%(datastore_ro_user)s:%(datastore_ro_pass)s@%(datastore_server)s/%(datastore_database)s
 
@@ -120,6 +120,24 @@ ckan.locale_order = en pt_BR ja it cs_CZ ca es fr el sv sr sr@latin no sk fi ru 
 ckan.locales_offered =
 ckan.locales_filtered_out = en_GB
 
+## SAML2 Settings
+saml2.site_url = {{ saml2_site_url }}
+saml2.config_path = %(here)s/saml2
+saml2.idp_url = {{ saml2_idp_url }}
+
+saml2.user_mapping =
+    email~maxemail
+    fullname~field_display_name
+    id~maxid
+    name~maxemail
+
+saml2.organization_mapping =
+    name~field_unique_id
+    title~field_organization
+    extras:organization_type~field_organization_type
+
+saml2.max_redirect_slo = 
+saml2.max_security_level = https://max.gov/icam/2015/10/securityLevels/securePlus2
 
 ## Feeds Settings
 
@@ -157,8 +175,8 @@ ckan.storage_path = /var/lib/ckan/files
 ckanext.s3filestore.aws_use_ami_role = true
 ckanext.s3filestore.aws_bucket_name = inventorybucket
 ckanext.s3filestore.aws_storage_path = inventory
-# ckanext.s3filestore.aws_access_key_id =
-# ckanext.s3filestore.aws_secret_access_key =
+ckanext.s3filestore.aws_access_key_id = _placeholder
+ckanext.s3filestore.aws_secret_access_key = _placeholder
 # ckanext.s3filestore.filesystem_download_fallback = true
 
 #ckan.max_resource_size = 650

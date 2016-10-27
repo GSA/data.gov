@@ -1,0 +1,14 @@
+---
+
+# AWS S3
+aws_s3_archive_key: ""
+aws_s3_archive_secret: ""
+
+# MySQL credentials
+env_db_host: "crmdb"
+env_db_user: "crm"
+env_db_pass: "superpassword"
+env_db_name: "crm"
+
+# We're inside Docker container
+running_in: docker

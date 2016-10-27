@@ -1,0 +1,33 @@
+namespace :deploy do
+
+desc "copy config files to application/config/{env} & create index.php from index.php.sample with the corresponding ENVIRONMENT constant"
+  task :config do
+    on roles(:app) do
+
+      deploy_to = fetch(:deploy_to)
+      stage     = fetch(:stage)
+      tmp       = "/tmp/rei-sys-dashboard-deploy"
+      dest      = "#{deploy_to}/current/application/config/#{stage}"
+      src       = "#{tmp}/config/environments/#{stage}/*"
+      
+      # remove rei-sys-dashboard-deploy & clone the REISystems-OG-dashboard-deploy.git that contains config information
+      execute "rm -rf #{tmp}"
+      execute "git clone git@github.com:REI-Systems/REISystems-OG-dashboard-deploy.git #{tmp}"
+   
+      # create config files for the app from REISystems-OG-dashboard-deploy.git repo
+      execute "mkdir -p #{dest}"
+      execute "cp -r #{src} #{dest}"
+
+      # create the app's index.php file by setting the ENVIRONMENT
+      execute "cp #{tmp}/config/index.php.sample #{deploy_to}/current/index.php"
+      execute "sed -i \"s/define(\'ENVIRONMENT\', \'dev\')/define(\'ENVIRONMENT\', \'#{stage}\')/g\" #{deploy_to}/current/index.php"
+
+      # Remove trash
+      execute "rm -rf #{tmp}"
+
+    end
+  end
+
+after :publishing, "deploy:config"
+
+end

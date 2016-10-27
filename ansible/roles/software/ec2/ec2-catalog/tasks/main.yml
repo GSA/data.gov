@@ -1,0 +1,19 @@
+---
+
+- include: config.yml
+  tags: ['config']
+
+#- include: db-credential.yml
+#  tags: ['db']
+
+#- include: db-postgis.yml
+#  tags: ['db','db-postgis']
+
+#- include: db-init.yml
+#  tags: ['db','db-init']
+
+#- include: db-locations-table.yml
+#  tags: ['db','db-tables']
+
+#- include: db-wait.yml
+#  tags: ['db','db-wait']

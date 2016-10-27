@@ -1,0 +1,27 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  vars_files:
+    - roles/infrastructure/common/vars/main.yml
+    - roles/infrastructure/wordpress/vars/main.yml
+    - roles/infrastructure/wordpress/vars/elb.yml
+    - roles/infrastructure/wordpress/vars/lc.yml
+    - roles/infrastructure/wordpress/vars/subnet.yml
+    - roles/infrastructure/wordpress/vars/rds.yml
+    - roles/infrastructure/wordpress/vars/route53.yml
+
+  tasks:
+    - include: roles/infrastructure/wordpress/tasks/route53_delete.yml
+    - include: roles/infrastructure/wordpress/tasks/rds_delete.yml
+    - include: roles/infrastructure/wordpress/tasks/rds_subnet_group_delete.yml
+    - include: roles/infrastructure/wordpress/tasks/asg_delete.yml
+    - include: roles/infrastructure/wordpress/tasks/lc_delete.yml
+    - include: roles/infrastructure/wordpress/tasks/iam_policy_delete.yml
+    - include: roles/infrastructure/wordpress/tasks/iam_role_delete.yml
+    - include: roles/infrastructure/wordpress/tasks/s3_delete.yml
+    - include: roles/infrastructure/wordpress/tasks/elb_delete.yml
+    - include: roles/infrastructure/wordpress/tasks/sg_delete.yml
+    - include: roles/infrastructure/wordpress/tasks/nat_delete.yml
+    - include: roles/infrastructure/wordpress/tasks/subnets_delete.yml
+    - include: roles/infrastructure/wordpress/tasks/route_tables_delete.yml

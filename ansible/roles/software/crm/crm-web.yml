@@ -1,0 +1,47 @@
+--- # crm Web AMI
+
+#- name: Initial prechecks
+#  hosts: crm-web
+#  remote_user: ubuntu
+#
+#  roles:
+#  - { role: crm-sudo-0-precheck, tags: [precheck] }
+
+
+- name: Provisioning Web AMI
+  hosts: crm-web
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  roles:
+  - { role: crm-sudo-1-security, tags: [provision] }
+  - { role: git, tags: [provision] }
+  - { role: sendmail, tags: [provision] }
+  - { role: nginx, tags: [provision] }
+  - { role: php, tags: [php, provision] }
+  - { role: php-mysql, tags: [php, php-mysql, provision] }
+  - { role: php-memcached, tags: [php, php-memcached, provision] }
+  - { role: vim, tags: [provision, vim] }
+  - { role: crm-sudo-2-init, tags: [provision, deploy, deploy-rollback] }
+
+
+- name: Deploying crm
+  hosts: crm-web
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  roles:
+  - { role: crm-deploy, tags: [deploy] }
+  - { role: datagov-deploy-rollback, tags: [deploy-rollback] }
+
+
+- name: Cleanup
+  hosts: crm-web
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  roles:
+  - { role: crm-sudo-3-cleanup, tags: [deploy, cleanup, deploy-rollback] }

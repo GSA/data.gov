@@ -21,7 +21,7 @@
 
 - name: create datastore database
   when: check_ckan_database.stdout.find("(0 rows)") != -1
-  shell: sudo -u postgres psql -c "CREATE DATABASE {{ inventory_datastore_name }} OWNER {{ inventory_db_user }};"
+  shell: sudo -u postgres psql -c "CREATE DATABASE {{ inventory_datastore_db_name }} OWNER {{ inventory_db_user }};"
 
 - name: install postgis script
   shell: "sudo -u postgres psql -d {{ inventory_db_name }} -f /usr/share/postgresql/9.3/contrib/postgis-2.1/postgis.sql"

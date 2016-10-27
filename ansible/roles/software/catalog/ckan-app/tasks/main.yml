@@ -1,12 +1,31 @@
 ---
-- name: Remove CKAN virtualenv
-  shell: rm -rf {{ virtual_env }} 
+
+- name: Remove old rollback code
+  file: path="{{ project_source_rollback_path }}" state=absent
+
+- name: Check weather new code dir exists
+  stat: path="{{ project_source_new_code_path }}"
+  register: p
+
+- name: Create rollback code
+  command: cp -r "{{ project_source_new_code_path }}" "{{ project_source_rollback_path }}"
+  when: p.stat.isdir is defined and p.stat.isdir
+
+- name: Symlink current dir with rollback code
+  file:
+    src: "{{ project_source_rollback_path }}"
+    path: "{{ project_source_path }}"
+    state: link
+  when: p.stat.isdir is defined and p.stat.isdir
+
+- name: Remove new code
+  file: path="{{ project_source_new_code_path }}" state=absent
 
 - name: Clone CKAN app
-  action: git repo={{ app_repo }} dest={{ app_source_path }} 
+  action: git repo="{{ app_repo }}" dest="{{ app_source_path }}"
 
 - name: Install CKAN app
-  command: sh install.sh chdir={{ app_source_path }} 
+  command: sh install.sh "{{ project_source_new_code_path }}" chdir={{ app_source_path }} 
 
 - name: Copy all needed files
   action: copy src={{item}} dest=/{{item}}
@@ -21,17 +40,18 @@
   with_items:
     - etc/ckan/production.ini
 
-# TODO: Left over stuff. 
 - name: Configure who.ini
   shell: cp -r {{ app_source_path }}/config/environments/{{ env }}/saml2/who.ini /etc/ckan
 
-- name: Configure saml2
-  shell: cp -r {{ app_source_path }}/config/environments/{{ env }}/saml2/* {{ virtual_env }}/src/ckanext-saml2/ckanext/saml2/config
-  when: env != "local"
-
 - name: Upgrade repoze.who to 2.0 for local env
-  pip: name=repoze.who version=2.0 virtualenv={{ virtual_env }}
+  pip: name=repoze.who version=2.0 virtualenv="{{project_source_new_code_path }}"
   when: env == "local"
 
 - name: point site_url in production.ini to localhost
   action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ckan_site_domain}}"
+
+- name: Symlink current dir with new code
+  file:
+    src: "{{ project_source_new_code_path }}"
+    path: "{{ project_source_path }}"
+    state: link

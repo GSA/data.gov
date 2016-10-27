@@ -1,0 +1,12 @@
+---
+- name: upgrade pygments
+  action: pip name=pygments version=2.1 virtualenv=/usr/lib/ckan/
+
+- name: upgrade requests
+  action: pip name=requests version=2.6.0 virtualenv=/usr/lib/ckan/
+
+- name: fix /etc/ckan & /usr/lib/ckan permissions
+  file: path={{ item }} state=directory group=www-data recurse=yes
+  with_items:
+    - /etc/ckan
+    - "{{ project_source_new_code_path }}"

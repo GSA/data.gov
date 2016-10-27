@@ -4,13 +4,31 @@
   with_items:
     - python-psycopg2
 
-- name: Remove CKAN virtualenv
-  shell: rm -rf 
+- name: Remove old rollback code
+  file: path="{{ project_source_rollback_path }}" state=absent
+
+- name: Check weather new code dir exists
+  stat: path="{{ project_source_new_code_path }}"
+  register: p
+
+- name: Create rollback code
+  command: cp -r "{{ project_source_new_code_path }}" "{{ project_source_rollback_path }}"
+  when: p.stat.isdir is defined and p.stat.isdir
+
+- name: Symlink current dir with rollback code
+  file:
+    src: "{{ project_source_rollback_path }}"
+    path: "{{ project_source_path }}"
+    state: link
+  when: p.stat.isdir is defined and p.stat.isdir
+
+- name: Remove new code
+  file: path="{{ project_source_new_code_path }}" state=absent
 
 - include: build-pkgs.yml 
   vars:
     pkg: "{{ ckan_pkgs }}" 
-    virtualenv: "{{ ckan_virtual_env }}"
+    virtualenv: "{{ project_source_new_code_path }}"
 
 - include: build-pkgs.yml
   vars:
@@ -18,12 +36,12 @@
     virtualenv: "{{ datapusher_virtual_env }}"
 
 - name: remove psycopg2
-  action: pip name=psycopg2 virtualenv=/usr/lib/ckan/ state=absent
+  action: pip name=psycopg2 virtualenv="{{ project_source_new_code_path }}" state=absent
 
 - name: create directories
   action: file path={{item}} state=directory owner="www-data" group="www-data" mode=0755
   with_items:
-    - /var/lib/ckan
+    - "{{ project_source_new_code_path }}"
 
 - name: copy all needed files
   action: copy src={{item}} dest=/{{item}}
@@ -39,6 +57,12 @@
   template: src=templates/{{item}}.j2 dest=/{{item}}
   with_items:
     - etc/ckan/production.ini
+
+- name: Symlink current dir with new code
+  file:
+    src: "{{ project_source_new_code_path }}"
+    path: "{{ project_source_path }}"
+    state: link
 
 - name: restart apache
   action: service name=apache2 state=restarted

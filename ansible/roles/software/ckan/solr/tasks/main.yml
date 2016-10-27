@@ -8,6 +8,9 @@
 - name: Unpack solr
   shell: "cd ~/ && tar -zxvf solr-4.2.1.tgz && cd solr-4.2.1/dist && cp solr-4.2.1.war /var/lib/tomcat6/webapps/solr.war"
 
+- name: Change solr.war ownership to tomcat6
+  file: path=/var/lib/tomcat6/webapps/solr.war owner=tomcat6 group=tomcat6
+
 - name: wait for the solr directory to be created
   wait_for: path=/var/lib/tomcat6/webapps/solr/WEB-INF/
 

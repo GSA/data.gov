@@ -1,0 +1,17 @@
+---
+# used in  production.ini
+saml2_site_url: https://uat-catalog-fe-data.reisys.com/
+saml2_idp_url: https://login.test.max.gov/idp/shibboleth
+
+# packages to install ckan app
+saml2_pkgs:
+  - {
+      name: "ckanext-saml2",
+      repo: "https://github.com/GSA/ckanext-saml2",
+      branch: "max"
+    }
+  - {
+      name: "pysaml2",
+      repo: "https://github.com/GSA/pysaml2",
+      branch: "max"
+    }

@@ -3,7 +3,7 @@
 - name: Get facts about ckan db instance.
   rds:
     command: facts
-    instance_name: "{{ ckan_db_instance_name }}"
+    instance_name: "{{ wordpress_db_instance_name }}"
     region: "{{ region }}"
   register: ckan_rds_db
 
@@ -43,7 +43,7 @@
 #      service apache2 stop
 #      export ANSIBLE_CONFIG={{ ansible_cfg }}
 #      ansible-playbook \
-#        --extra-vars="WORDPRESS_DB_SERVER={{ ckan_rds_db.instance.endpoint }} \ 
+#        --extra-vars="env_db_host={{ ckan_rds_db.instance.endpoint }} \ 
 #        BUCKET_NAME={{ bucket_name }}" \
 #        ~/ansible/main.yml
 #      service apache2 start
