@@ -1,0 +1,227 @@
+---
+
+  - name: 6.1 Ensure the X Window system is not installed (Scored)
+    apt: name=xserver-xorg-core* purge=yes state=absent
+    when: remove_xserver == True
+    tags:
+      - section6
+      - section6.1
+
+  - name: 6.2.1 Ensure Avahi Server is not enabled (check) (Scored)
+    stat: path='/etc/init/avahi-daemon.conf'
+    register: avahi_stat
+    tags:
+      - section6
+      - section6.2
+
+  - name: 6.2.2 Ensure Avahi Server is not enabled (Scored)
+    lineinfile: >
+        line='#start on (filesystem'
+        state=present
+        regexp='start on \(filesystem'
+        dest=/etc/init/avahi-daemon.conf
+    when: avahi_stat.stat.exists == True
+    tags:
+      - section6
+      - section6.2
+
+  - name: 6.3.1 Ensure print server is not enabled (check) (Not Scored)
+    stat: path='/etc/init/cups.conf'
+    register: cups_stat
+    tags:
+      - section6
+      - section6.3
+
+  - name: 6.3.2 Ensure print server is not enabled (Not Scored)
+    lineinfile: >
+        line='#start on (filesystem'
+        state=present
+        regexp='start on \(filesystem'
+        dest=/etc/init/cups.conf
+    when: cups_stat.stat.exists == True
+    tags:
+      - section6
+      - section6.3
+
+  - name: 6.4.1.1 Ensure DHCP Server is not enabled (check) (Scored)
+    stat: path='/etc/init/isc-dhcp-server.conf'
+    register: dhcp_stat
+    tags:
+      - section6
+      - section6.4
+      - section6.4.1
+
+  - name: 6.4.1.2 Ensure DHCP Server is not enabled (Scored)
+    lineinfile: >
+        line='#start on runlevel [2345]'
+        state=present
+        regexp='start on runlevel'
+        dest=/etc/init/isc-dhcp-server.conf
+    when: dhcp_stat.stat.exists == True
+    tags:
+      - section6
+      - section6.4
+      - section6.4.1
+
+  - name: 6.4.2.1 Ensure DHCP Server is not enabled (check) (Scored)
+    stat: path='/etc/init/isc-dhcp-server6.conf'
+    register: dhcp6_stat
+    tags:
+      - section6
+      - section6.4
+      - section6.4.2
+
+  - name: 6.4.2.2 Ensure DHCP Server is not enabled (Scored)
+    lineinfile: >
+        line='#start on runlevel [2345]'
+        state=present
+        regexp='start on runlevel'
+        dest=/etc/init/isc-dhcp-server6.conf
+    when: dhcp6_stat.stat.exists == True
+    tags:
+      - section6
+      - section6.4
+      - section6.4.2
+
+  - name: 6.5.1.1 Configure Network Time Protocol (install) (NTP) (Scored)
+    apt: name=ntp state=present
+    tags:
+      - section6
+      - section6.5
+      - section6.5.1
+
+  - name: 6.5.1.2 Check if /etc/ntp.conf file exists (stat)
+    stat:
+        path: /etc/ntp.conf
+    register: ntp_conf_file
+    tags:
+      - section6
+      - section6.5
+      - section6.5.1
+
+  - include: section_06_level1_05.yml
+    when: ntp_conf_file.stat.exists == True
+
+  - name: 6.6 Ensure LDAP is not enabled (Not Scored)
+    apt: name=slapd purge=yes state=absent
+    tags:
+      - section6
+      - section6.6
+
+  - name: 6.7.1 Ensure NFS and RPC are not enabled (stat) (Not Scored)
+    stat: path=/etc/init/rpcbind-boot.conf
+    register: nfs_rpc_rc
+    tags:
+      - section6
+      - section6.7
+      - section6.7.1
+
+  - name: 6.7.2.1 Ensure NFS and RPC are not enabled (Not Scored)
+    lineinfile: >
+        dest=/etc/init/rpcbind-boot.conf
+        line='#start on virtual-filesystems and net-device-up IFACE=lo'
+        state=present
+        regexp='start on virtual-filesystems and net'
+    when: nfs_rpc_rc.stat.exists == True
+    tags:
+      - section6
+      - section6.7
+      - section6.7.2
+
+  - name: 6.7.2.2 Ensure NFS and RPC are not enabled (check) (Not Scored)
+    command: dpkg -S nfs-kernel-server
+    changed_when: False
+    failed_when: False
+    always_run: True
+    register: nfs_present
+    tags:
+      - section6
+      - section6.7
+      - section6.7.2
+
+  - name: 6.7.2.3 Ensure NFS and RPC are not enabled (rc.d) (Not Scored)
+    service: >
+        name=nfs-kernel-server
+        enabled=no
+    when: nfs_present is defined and nfs_present.rc == 0
+    register: nfs_service_result
+    failed_when: "nfs_service_result|failed and 'service not found' not in nfs_service_result.msg"
+    tags:
+      - section6
+      - section6.7
+      - section6.7.2
+
+  - name: 6.8-14 Ensure DNS,FTP,HTTP,IMAP,POP,Samba,Proxy,SNMP Servers are not enabled (Not Scored)
+    service: >
+        name={{ item }}
+        enabled=no
+    with_items:
+      - bind9
+      - vsftpd
+      - apache2
+      - dovecot
+      - smbd
+      - squid3
+      - snmpd
+    failed_when: False
+    tags:
+      - section6
+      - section6.8
+      - section6.9
+      - section6.10
+      - section6.11
+      - section6.12
+      - section6.13
+      - section6.14
+
+  - name: 6.15.1 Configure Mail Transfer Agent for Local-Only Mode (check) (Scored)
+    stat: path=/etc/postfix/main.cf
+    register: postfix_main_cf
+    tags:
+      - section6
+      - section6.15
+
+  - name: 6.15.2 Configure Mail Transfer Agent for Local-Only Mode (Scored)
+    lineinfile: >
+        dest=/etc/postfix/main.cf
+        regexp='^inet_interfaces ='
+        line='inet_interfaces = localhost'
+        state=present
+    when: postfix_main_cf.stat.exists == True
+    tags:
+      - section6
+      - section6.15
+
+  - name: 6.15.3 Configure Mail Transfer Agent for Local-Only Mode (Scored)
+    lineinfile: >
+        dest=/etc/postfix/main.cf
+        regexp='^inet_protocols ='
+        line='inet_protocols = ipv4'
+        state=present
+    when: postfix_main_cf.stat.exists == True and disable_ipv6 == True
+    tags:
+      - section6
+      - section6.15
+
+  - name: 6.16.1 Ensure rsync service is not enabled (check) (Scored)
+    stat: path=/etc/default/rsync
+    register: default_rsync
+    tags:
+      - section6
+      - section6.16
+
+  - name: 6.16.2 Ensure rsync service is not enabled (Scored)
+    lineinfile: >
+        dest='/etc/default/rsync'
+        regexp='^RSYNC_ENABLE'
+        line='RSYNC_ENABLE=false'
+    when: default_rsync.stat.exists == True
+    tags:
+      - section6
+      - section6.16
+
+  - name: 6.17 Ensure Biosdevname is not enabled (Scored)
+    apt: name=biosdevname purge=yes state=absent
+    tags:
+      - section6
+      - section6.17

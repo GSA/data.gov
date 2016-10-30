@@ -1,0 +1,45 @@
+---
+
+  - name: 6.5.2 Configure Network Time Protocol (restrict4) (NTP) (Scored)
+    lineinfile: >
+        dest='/etc/ntp.conf'
+        line='restrict -4 default kod nomodify notrap nopeer noquery'
+        regexp='^restrict -4 default'
+        state=present
+    tags:
+      - section6
+      - section6.5
+      - section6.5.2
+
+  - name: 6.5.3 Configure Network Time Protocol (restrict6) (NTP) (Scored)
+    lineinfile: >
+        dest='/etc/ntp.conf'
+        line='restrict -6 default kod nomodify notrap nopeer noquery'
+        regexp='^restrict -6 default'
+        state=present
+    tags:
+      - section6
+      - section6.5
+      - section6.5.3
+
+  - name: 6.5.4.1 Configure Network Time Protocol (server check) (NTP) (Scored)
+    command: 'grep "^server" /etc/ntp.conf'
+    register: ntp_server_rc
+    changed_when: False
+    always_run: True
+    ignore_errors: True
+    tags:
+      - section6
+      - section6.5
+      - section6.5.4
+
+  - name: 6.5.4.2 Configure Network Time Protocol (server add) (NTP) (Scored)
+    lineinfile: >
+        dest='/etc/ntp.conf'
+        line='server {{ ntp_server }}'
+        state=present
+    when: ntp_server_rc.rc == 1
+    tags:
+      - section6
+      - section6.5
+      - section6.5.4

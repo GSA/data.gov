@@ -1,0 +1,17 @@
+# Better coverage with automatic account locking
+lock_shadow_accounts: True
+
+# Set this flag to use AppArmor. It is useful to disable it when the system does not support the kernel module.
+use_apparmor: False
+
+# The execution is faster without packages upgrade.
+apt_upgrade: False
+
+# Modify the kernel behavior to disallow dump of suid binaries
+restrict_core_dumps: False
+
+# Disable all ipv6 interfaces. Suggested if the protocol is not used.
+disable_ipv6: True
+
+# Not loosing coverage.
+set_rsyslog_remote: True

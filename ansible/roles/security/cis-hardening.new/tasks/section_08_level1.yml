@@ -1,0 +1,154 @@
+---
+
+#  - name: 8.2 Configure rsyslog
+#  The rsyslog software is recommended as a replacement for the default syslogd daemon and
+#  provides improvements over syslogd, such as connection-oriented (i.e. TCP) transmission
+#  of logs, the option to log to database formats, and the encryption of log data en route to a
+#  central logging server.
+#  tags:
+#    - section8
+#    - section8.2
+
+
+  - name: 8.2.1 Install the rsyslog package (Scored)
+    apt: name=rsyslog state=present
+    tags:
+      - section8
+      - section8.2
+      - section8.2.1
+
+  - name: 8.2.2 Ensure the rsyslog Service is activated (Scored)
+    command: grep 'start on filesystem' /etc/rsyslog.conf
+    register: startonfilesystem
+    changed_when: False
+    failed_when: False
+    always_run: True
+    tags:
+      - section8
+      - section8.2
+      - section8.2.5
+
+  - name: 8.2.5.2 Configure rsyslog to Send Logs to a Remote Log Host (start rsyslog) (Scored)
+    lineinfile:
+       dest=/etc/rsyslog.conf
+       line='start on filesystem'
+       insertafter=EOF
+       state=present
+    when: startonfilesystem.rc == 1
+    tags:
+      - section8
+      - section8.2
+      - section8.2.5
+
+  - name: 8.2.3 Configure /etc/rsyslog.conf (Not Scored)
+    lineinfile:
+        dest: /etc/rsyslog.conf
+        line: "{{ item }}"
+        insertafter: EOF
+    with_items:
+      - '*.emerg :omusrmsg:*'
+      - 'mail.* -/var/log/mail'
+      - 'mail.info -/var/log/mail.info'
+      - 'mail.warning -/var/log/mail.warn'
+      - 'mail.err /var/log/mail.err'
+      - 'news.crit -/var/log/news/news.crit'
+      - 'news.err -/var/log/news/news.err'
+      - 'news.notice -/var/log/news/news.notice'
+      - '*.=warning;*.=err -/var/log/warn'
+      - '*.crit /var/log/warn'
+      - '*.*;mail.none;news.none -/var/log/messages'
+      - 'local0,local1.* -/var/log/localmessages'
+      - 'local2,local3.* -/var/log/localmessages'
+      - 'local4,local5.* -/var/log/localmessages'
+      - 'local6,local7.* -/var/log/localmessages'
+    changed_when: False
+    notify: restart rsyslog
+    tags:
+      - section8
+      - section8.2
+      - section8.2.3
+
+  - name: 8.2.4.1 Create and Set Permissions on rsyslog Log Files (check) (Scored)
+    shell: awk '{ print $NF }' /etc/rsyslog.d/* /etc/rsyslog.conf | grep -oiP "/var/log/[\w\.-]+"
+    register: result
+    changed_when: False
+    always_run: True
+    tags:
+      - section8
+      - section8.2
+      - section8.2.4
+
+  - name: 8.2.4.2 Create and Set Permissions on rsyslog Log Files (Scored)
+    shell: 'mkdir -p -- "$(dirname -- {{ item }})"; touch -- {{ item }}' 
+    with_items: "{{result.stdout_lines}}"
+    changed_when: False
+    register: rsyslog_files_created
+    tags:
+      - section8
+      - section8.2
+      - section8.2.4
+
+  - name: 8.2.4.3 Create and Set Permissions on rsyslog Log Files (Scored)
+    file:
+        path: "{{ item }}"
+        owner: root 
+        group: "{{ rsyslog_log_files_group }}"
+        mode: "{{ rsyslog_log_files_permissions }}"
+    when: "(rsyslog_files_created.results|length > 0) and ('skipped' not in rsyslog_files_created.results[0])"
+    with_items: "{{result.stdout_lines}}"
+    notify: restart rsyslog
+    tags:
+      - section8
+      - section8.2
+      - section8.2.4
+
+  - name: 8.2.5.1 Configure rsyslog to Send Logs to a Remote Log Host (Scored)
+    command: grep "^*.*[^I][^I]*@" /etc/rsyslog.conf
+    register: remoteloghost 
+    changed_when: False
+    failed_when: False
+    always_run: True
+    tags:
+      - section8
+      - section8.2
+      - section8.2.5
+
+  - name: 8.2.5.2 Configure rsyslog to Send Logs to a Remote Log Host (Scored)
+    lineinfile:
+        dest: /etc/rsyslog.conf
+        line: "*.* @@{{remote_logs_host_address}}"
+        insertafter: EOF
+        state: present
+    when: set_rsyslog_remote == True and remoteloghost.rc == 1
+    tags:
+      - section8
+      - section8.2
+      - section8.2.5
+
+  - name: 8.2.6.1 Accept Remote rsyslog Messages Only on Designated Log Hosts (check) (Not Scored)
+    command: grep '^$ModLoad imtcp' /etc/rsyslog.conf
+    register: moadloadpresent
+    changed_when: False
+    failed_when: False
+    always_run: True
+    tags:
+      - section8
+      - section8.2
+      - section8.2.6
+
+  - name: 8.2.6.2 Accept Remote rsyslog Messages Only on Designated Log Hosts (Not Scored)
+    lineinfile:
+        dest: /etc/rsyslog.conf
+        regexp: "^#({{ item }})"
+        line: "{{ item }}"
+        state: present
+    with_items:
+        - '$ModLoad imtcp'
+        - '$InputTCPServerRun 514'
+    when: set_rsyslog_remote == True and moadloadpresent.rc == 1
+    changed_when: False
+    notify: restart rsyslog
+    tags:
+      - section8
+      - section8.2
+      - section8.2.6

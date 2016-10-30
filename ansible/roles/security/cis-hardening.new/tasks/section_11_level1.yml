@@ -1,0 +1,37 @@
+---
+
+  - name: 11.1 Set Warning Banner for Standard Login Services (Scored)
+    lineinfile: >
+        dest={{ item }}
+        create=yes
+        line='Authorized uses only. All activity may be monitored and reported.'
+        state=present
+        mode=644
+        owner=root
+        group=root
+    with_items:
+        - /etc/motd
+        - /etc/issue
+        - /etc/issue.net
+    tags:
+      - section11
+      - section11.1
+
+  - name: 11.2 Remove OS Information from Login Warning Banners (Scored)
+    shell: egrep '(\\v|\\r|\\m|\\s)' {{ item }}
+    register: egrep_os_infos
+    failed_when: egrep_os_infos.rc == 0
+    changed_when: False
+    with_items:
+        - /etc/motd
+        - /etc/issue
+        - /etc/issue.net
+    tags:
+      - section11
+      - section11.2
+
+  - name: 11.3 Set Graphical Warning Banner (Not Scored)
+    debug: msg="*** Set a banner for the display manager ***"
+    tags:
+      - section11
+      - section11.3
