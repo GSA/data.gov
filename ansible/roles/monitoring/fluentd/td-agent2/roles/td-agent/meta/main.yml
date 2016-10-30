@@ -1,0 +1,22 @@
+---
+galaxy_info:
+  author: Toshiya Kawasaki
+  description: Install td-agent, the distribution of fluentd.
+  license: BSD
+  min_ansible_version: 1.4
+  platforms:
+    - name: Ubuntu
+      versions:
+        - trusty
+        - precise
+        - lucid
+    - name: Debian
+      versions:
+        - squeeze
+    - name: EL
+      versions:
+        - 5
+        - 6
+  categories:
+    - monitoring
+dependencies: []

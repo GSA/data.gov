@@ -1,0 +1,9 @@
+---
+
+- name: Add rpm repository
+  copy: src=td.repo dest=/etc/yum.repos.d/td.repo
+
+- name: yum install td-agent
+  yum: name=td-agent state=latest
+  notify:
+    - restart td-agent

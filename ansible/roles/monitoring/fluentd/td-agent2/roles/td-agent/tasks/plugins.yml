@@ -1,0 +1,136 @@
+---
+- name: Check if plugins are installed
+  command: "td-agent-gem list -i {{item}}"
+  environment:
+    PATH: /usr/sbin:{{ ansible_env.PATH }}
+  with_items: "{{td_agent_plugins}}"
+  changed_when: False
+  failed_when: False
+  register: td_plugin_status
+
+- name: Install missing plugins
+  command: "td-agent-gem install {{item.item}}"
+  environment:
+    PATH: /usr/sbin:{{ ansible_env.PATH }}
+  with_items: "{{td_plugin_status.results}}"
+  when: (td_plugin_status.results is defined) and
+        (item.stdout_lines[0] == "false")
+ 
+- name: Configure td-agent service
+  lineinfile: dest=/etc/init.d/td-agent line="export AWS_REGION=us-east-1" state=present insertafter="export PATH=/sbin:/usr/sbin:/bin:/usr/bin"
+  with_items: "{{td_agent_plugins}}"
+  when: item == "fluent-plugin-cloudwatch-logs"
+
+#need to change the permissions. Hard-coding version here, but if that's a problem
+#we can use this relatively simple hack http://stackoverflow.com/questions/22476097/how-to-mention-wildcard-in-ansible-commands
+- name: Configure td-agent gem permissions
+  file: path=/opt/td-agent/embedded/lib/ruby/gems/2.1.0/gems/fluent-plugin-cloudwatch-logs-0.3.3 recurse=true state=directory mode=0775
+  with_items: "{{td_agent_plugins}}"
+  when: item == "fluent-plugin-cloudwatch-logs"
+  notify: restart td-agent
+- name: Configure td-agent spec permissions
+  file: path=/opt/td-agent/embedded/lib/ruby/gems/2.1.0/specifications/fluent-plugin-cloudwatch-logs-0.3.3.gemspec mode=0775
+  with_items: "{{td_agent_plugins}}"
+  when: item == "fluent-plugin-cloudwatch-logs"
+  notify: restart td-agent
+
+#update the td-agent config file
+- name: Configure td-agent setup
+  blockinfile: 
+    dest: /etc/td-agent/td-agent.conf
+    marker: "#{mark} CloudWatch matcher"
+    content: |
+      <match test.cloudwatch_logs.out>
+        type cloudwatch_logs
+        log_group_name fluent-plugin-cloudwatch-example
+        log_stream_name "#{Socket.gethostname}"
+        auto_create_stream true
+      </match>
+  with_items: "{{td_agent_plugins}}"
+  notify: restart td-agent
+
+#update the td-agent config file for nginx
+- name: Configure nginx log permissions
+  file: path=/var/log/nginx recurse=true state=directory mode=0775
+  tags: nginx
+  notify: restart td-agent
+
+- name: Configure td-agent nginx source
+  blockinfile: 
+    dest: /etc/td-agent/td-agent.conf
+    marker: "#{mark} nginx input"
+    content: |
+      <source>
+        @type tail
+        format nginx
+        tag nginx.access
+        path /var/log/nginx/access.log
+      </source>
+      <match nginx.*>
+        type cloudwatch_logs
+        log_group_name fluent-plugin-cloudwatch
+        log_stream_name "#{Socket.gethostname}"
+        auto_create_stream true
+      </match>
+  with_items: "{{td_agent_plugins}}"
+  when: item == "fluent-plugin-cloudwatch-logs"
+  tags: nginx
+  notify: restart td-agent
+
+#update the td-agent config file for apache2
+- name: Configure apache2 log permissions
+  file: path=/var/log/apache2 recurse=true state=directory mode=0775
+  tags: apache2
+  notify: restart td-agent
+  
+- name: Configure td-agent apache2 source
+  blockinfile: 
+    dest: /etc/td-agent/td-agent.conf
+    marker: "#{mark} apache2 input"
+    content: |
+      <source>
+        @type tail
+        format nginx
+        tag apache.access
+        path /var/log/apache2/access.log
+        add_tag_prefix
+      </source>
+      <match apache.*>
+        type cloudwatch_logs
+        log_group_name fluent-plugin-cloudwatch
+        log_stream_name "#{Socket.gethostname}"
+        auto_create_stream true
+      </match>
+  with_items: "{{td_agent_plugins}}"
+  when: item == "fluent-plugin-cloudwatch-logs"
+  tags: apache2
+  notify: restart td-agent
+  
+#update the td-agent config file for tomcat7
+- name: Configure tomcat log permissions
+  file: path=/var/log/tomcat7 recurse=true state=directory mode=0775
+  tags: tomcat7
+  notify: restart td-agent
+
+- name: Configure td-agent tomcat7 source
+  blockinfile: 
+    dest: /etc/td-agent/td-agent.conf
+    marker: "#{mark} tomcat7 input"
+    content: |
+      <source>
+        @type tail
+        format none
+        tag catalina.out
+        path /var/log/tomcat7/catalina.out
+        add_tag_prefix
+      </source>
+      <match catalina.out>
+        type cloudwatch_logs
+        log_group_name fluent-plugin-cloudwatch
+        log_stream_name "#{Socket.gethostname}"
+        auto_create_stream true
+      </match>
+  with_items: "{{td_agent_plugins}}"
+  when: item == "fluent-plugin-cloudwatch-logs"
+  tags: tomcat7
+  notify: restart td-agent
