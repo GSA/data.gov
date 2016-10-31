@@ -1,0 +1,7 @@
+stage name: '1st Stage'
+
+node("master"){
+	checkout scm
+	sh "/usr/local/packer validate packer.json"
+	sh "/usr/local/packer build packer.json"
+}

@@ -1,0 +1,8 @@
+# This file contains variables specific to your environment
+# Section 01
+
+# The execution is faster without packages upgrade.
+apt_upgrade: True
+
+# Only update apt cache if older than this value (in seconds)
+apt_cache_valid_time: 3600

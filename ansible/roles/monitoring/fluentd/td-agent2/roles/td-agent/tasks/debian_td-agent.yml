@@ -1,0 +1,16 @@
+---
+
+- name: install td-agent dependencies...
+  apt: name={{ item }} state=installed update_cache=yes
+  with_items:
+    - python-pycurl
+    - libxslt1.1
+    - libyaml-0-2
+
+- name: get Debian Package
+  get_url: url="http://packages.treasure-data.com/debian/pool/contrib/t/td-agent/td-agent_{{ td_agent_version }}_{{ td_agent_architecture }}.deb" dest="{{ ansible_env.PWD }}/td-agent_{{ td_agent_version }}_{{ td_agent_architecture }}.deb"
+
+- name: install td-agent dpkg
+  command: "dpkg -i {{ ansible_env.PWD }}/td-agent_{{ td_agent_version }}_{{ td_agent_architecture }}.deb"
+  notify:
+    - restart td-agent
