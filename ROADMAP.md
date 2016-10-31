@@ -25,6 +25,9 @@ Node
 * package.json
 Python
 * requirements.txt
+Makefile
+Maven
+
 
 ## [Config](http://12factor.net/config)
 All system/service configuration is stored in a separate and secure environment

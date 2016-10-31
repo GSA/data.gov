@@ -1,0 +1,13 @@
+#defaultng to use testshib.org
+shibboleth:
+  sp_entity_id: 'https://myownshibsp.org/shibboleth'
+  idp_entity_id: 'https://idp.testshib.org/idp/shibboleth'
+  idp_metadata_url: 'http://www.testshib.org/metadata/testshib-providers.xml'
+  support_email: 'support@myownshibsp.org'
+  sp_key: |
+    YOU NEED TO GENERATE A REAL KEY HERE USING OPENSSL
+  sp_pem: |
+    THE CORRESPONDING CERTIFICATE PEM GOES HERE
+shibboleth_template_dir: '.'
+shibboleth_metadata_backup_url: "https://idp.stanford.edu/Stanford-metadata.xml"
+shibboleth_download_metadata: true

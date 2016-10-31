@@ -1,0 +1,4 @@
+roles:
+  - fluentd/td-agent
+  - fluentd/limits
+  - fluentd/kernel

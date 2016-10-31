@@ -1,0 +1,36 @@
+---
+- name: Install CKAN Stack
+  hosts: all 
+  sudo: yes
+  #remote_user: ubuntu
+  vars:
+      app_type: catalog
+
+  ## tags used:
+  ## built-in: always
+  ## frontend, harvester, db, db-install, db-setup, db-init, solr, pycsw
+  ## redis, fgdc2iso, cron
+  ## sample usage: ansible-playbook ansibe/catalog.yml --tags "harvester" --skip-tags "solr, redis"
+  roles:
+    - {role: roles/software/ubuntu/common, tags: ['always']}
+    - {role: roles/software/ckan/common, tags: ['frontend', 'harvester']}
+    - {role: roles/software/ckan/apache, tags: ['frontend', 'apache']}
+    - {role: roles/software/ckan/postgresql, tags: ['frontend', 'harvester', 'db', 'db-install']}
+    - {role: roles/software/ckan/solr, tags: ['frontend', 'harvester', 'solr']}
+
+    - {role: roles/software/catalog/ckan-app, tags: ['frontend', 'harvester', 'deploy']}
+    - {role: roles/software/catalog/ckan-db-setup, tags: ['frontend', 'harvester', 'db', 'db-setup']}
+    - {role: roles/software/catalog/ckan-db-init, tags: ['frontend', 'harvester', 'db', 'db-init']}
+
+    - {role: roles/software/catalog/harvest, tags: ['harvester']}
+
+    - {role: roles/software/catalog/pycsw-app, tags: ['frontend', 'harvester', 'pycsw']}
+    - {role: roles/software/catalog/pycsw-db-setup, tags: ['frontend', 'harvester', 'pycsw','db', 'db-setup']}
+    - {role: roles/software/catalog/pycsw-db-init, tags: ['frontend', 'harvester', 'pycsw','db', 'db-init']}
+
+    - {role: roles/software/ckan/saml2, tags: ['frontend', 'harvester', 'saml2']}
+
+    - {role: roles/software/ckan/security-fix, tags: ['frontend', 'harvester', 'pycsw']}
+
+    - {role: ec2-catalog, tags: ['frontend', 'harvester']}
+    - {role: datagov-deploy-rollback, tags: ['deploy-rollback']}
