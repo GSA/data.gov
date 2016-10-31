@@ -32,6 +32,12 @@ beaker.session.key = ckan
 # time it generates a config file.
 beaker.session.secret = ${app_instance_secret}
 
+beaker.session.type=ext:database
+beaker.session.cookie_expires=true
+beaker.session.url=%(sqlalchemy.url)s
+beaker.session.timeout=3000
+beaker.session.lock_dir=/var/tmp/ckan/lock
+
 # `paster make-config` generates a unique value for this each time it generates
 # a config file.
 app_instance_uuid = ${app_instance_uuid}

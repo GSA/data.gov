@@ -33,11 +33,17 @@ ckanext.datajson.url_enabled = False
 # This is the secret token that the beaker library uses to hash the cookie sent
 # to the client. `paster make-config` generates a unique value for this each
 # time it generates a config file.
-beaker.session.secret = SQi3azTKJB9KxWevpPPif8aa+
+beaker.session.secret = ${app_instance_secret}
+
+beaker.session.type=ext:database
+beaker.session.cookie_expires=true
+beaker.session.url=%(sqlalchemy.url)s
+beaker.session.timeout=3000
+beaker.session.lock_dir=/var/tmp/ckan/lock
 
 # `paster make-config` generates a unique value for this each time it generates
 # a config file.
-app_instance_uuid = {73940996-d295-4aaf-88ff-8fe070b65bc5}
+app_instance_uuid = ${app_instance_uuid}
 
 # repoze.who config
 who.config_file = %(here)s/who.ini
