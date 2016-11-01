@@ -8,11 +8,11 @@
   include_vars: "group_vars/{{ vars_group }}/vars.yml"
   ignore_errors: yes
 
-- name: Check weather rollback code dir exists
+- name: Check whether rollback code dir exists
   stat: path="{{ project_source_rollback_path }}"
   register: p
 
-- name: Check weather new code dir exists
+- name: Check whether new code dir exists
   stat: path="{{ project_source_new_code_path }}"
   register: p2
 

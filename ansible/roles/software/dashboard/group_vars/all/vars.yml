@@ -28,10 +28,44 @@ project_index_path: /var/www/dashboard/current
 # CodeIgniter Session Encryption Key
 env_encryption_key: "{{ vault_codeigniter_encryption_key }}"
 
-saml_private_key: "{{ vault_saml_private_key }}"
-
 # Default vars group
 vars_group: packer-prod
 
 # Default env
 running_in: aws
+
+default_host: 'labs.data.gov/dashboard'
+
+# MAX SAML
+saml_idp_host: login.test.max.gov
+saml_sp_private_key_path: /etc/dashboard-saml-sp-private.pem
+saml_sp_cert_path: /etc/dashboard-saml-sp-cert.crt
+
+saml_sp_private_key: "{{ vault_saml_private_key }}"
+saml_admin_pass: "{{ vault_saml_admin_pass }}"
+
+saml_sp_cert: |
+              -----BEGIN CERTIFICATE-----
+              MIIDsTCCApmgAwIBAgIJAKz/FW3rFOJyMA0GCSqGSIb3DQEBCwUAMG8xCzAJBgNV
+              BAYTAlVTMREwDwYDVQQIDAhWaXJnaW5pYTEPMA0GA1UEBwwGUmVzdG9uMQ8wDQYD
+              VQQKDAZSRUlTWVMxEDAOBgNVBAsMB0NhdGFsb2cxGTAXBgNVBAMMEGNhdGFsb2cu
+              ZGF0YS5nb3YwHhcNMTUwOTE3MTQxMzU3WhcNMjUwOTE2MTQxMzU3WjBvMQswCQYD
+              VQQGEwJVUzERMA8GA1UECAwIVmlyZ2luaWExDzANBgNVBAcMBlJlc3RvbjEPMA0G
+              A1UECgwGUkVJU1lTMRAwDgYDVQQLDAdDYXRhbG9nMRkwFwYDVQQDDBBjYXRhbG9n
+              LmRhdGEuZ292MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAq4QPW5Ey
+              JSmYjfTIYhxid1Ysv5pCm0aPKqDmSCZ5UQEzSsNDKDbzpknhFC+7Y2vI1MPnRnXK
+              UM4O2fZ1Vf1VaUilfyejt4PZUQ7+dSmf0L8EBmqjbGt8KH2bJWuTWcBwzdVlWgVR
+              8Ps0JNXSkF5f0n+fChgC3vP63md6TlUGG9gQDcZEraM1/6ZrHkOjxdEu71y2vB2o
+              dOefcULMHgaQC1aUpQYf390RS4uWAVCkVK/a801fHviftbQfPgqnRGr2xL1hTcQ6
+              /cfRBTGGgZRgA+8SOHsoustLHo8/2q7kR4AEuIWCJ14eidOc1dkgeQaa/W3y3Qke
+              y/PBahM1yxhAyQIDAQABo1AwTjAdBgNVHQ4EFgQUTXloliTr0IaGEL/zF0YdZkaM
+              KQ0wHwYDVR0jBBgwFoAUTXloliTr0IaGEL/zF0YdZkaMKQ0wDAYDVR0TBAUwAwEB
+              /zANBgkqhkiG9w0BAQsFAAOCAQEAnyXm30S7BbvR9nNLRnHbjA2DOdEx48wfCthK
+              cZFKSfdy91mlYhXtsSC8jHz/p3RKg/oJBtbvR/dbvVpCO7hC88Wu5GxQOgiyNduh
+              i1hb3ZP3Tn0zsEdQlV80bUIXYC74S1PhcDnWo5JvFDxPEnCntbVwF9K1Qo4LYC5i
+              M+28mJoP55FpNnnR4ixydzCQMkKgCbuWWmpywXmuL59vmfuobH0CNPD7x8uXp8b3
+              TYYBnTWCWG6XzkH77sCvs4PyouQBUV4ftvMhOKqQrLpRTUZvAyJ+QGHn/niQfvkZ
+              iU1LjgHNL1pPU4CqOkFIJtwQVmJcA4cQwlUAKRJf/+gzXIOpcA==
+              -----END CERTIFICATE-----
+
+saml_idp_cert: 'MIIDMzCCAhugAwIBAgIUGZmNOfGrnHuo8FkedfSoNuXGh0swDQYJKoZIhvcNAQEFBQAwHTEbMBkGA1UEAwwSbG9naW4udGVzdC5tYXguZ292MB4XDTE1MDIyNjE4NTgyMloXDTM1MDIyNjE4NTgyMlowHTEbMBkGA1UEAwwSbG9naW4udGVzdC5tYXguZ292MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAl6OO43kdFgZFYNBxBxnWf965G3h0Z1l+CM4rfDoRW7ieIiYnkolsln738hb21M8Q0SXqniKFGaptUNNyTGkB5R8Dk1zljkrh4KdnKhj3gZu2OnjJ8L4ihR0gdiJuXxvVGaI+KcU0b2Ahz4TBi/DZts4c4CJFzmdFL57QjOsBT8jgg3tXQDncl+w0kx+fGFaVTS6tIsN18LscFr0lmHEEE0w3vfOu5CP2G3+MPnJ2ij6urmJdsxyRqHdiHKS3ItpCTWMmt5duvlg3QPK/21C9J7nnuDXPSfhym0gihXvdNt71y4aDI3tqXR3eIaz7ljjEO2PDG6yJwMsE23HhEbW9FwIDAQABo2swaTAdBgNVHQ4EFgQUDBhTOWKufUoHOvgmiZO0gFohONIwSAYDVR0RBEEwP4ISbG9naW4udGVzdC5tYXguZ292hilodHRwczovL2xvZ2luLnRlc3QubWF4Lmdvdi9pZHAvc2hpYmJvbGV0aDANBgkqhkiG9w0BAQUFAAOCAQEABmVizMnSUZ0gAB13t0KdmVqdDh3fp0wsuj9XhUyWlaOyWt8FtcKrr4V3eH281Of1VaG4IAgmHynrCyyDlaU+2rN3X9Mnaz2kgt7fYMiVbU945h4h8X8+DqS4fl+HEP0OpSG0rqTAJ1yNA0nmnYZEeKDwJbTUXaL7w5D+4WNNYDpJ+yVEAno98cLPZtgh0NlpdEl09SK/k0BmaY6ptcDxOa7FfTeQX9GUmulJTErLen/QHoQf6mQN14y1woXwI/kPpAD8C4Wi5N/PZ00nZfcqMpeatQMt91IiI2IRSInyZ8UU0UqdY3XIJFDDoXyK/SsI5NBZksz0MrbGlJsgPWOAxg=='

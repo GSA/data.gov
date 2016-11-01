@@ -44,16 +44,20 @@ $config['pre_approved_admins'] = explode(",", getenv('PRE_APPROVED_ADMINS'));
 |
 */
 $protocol = 'http';
-if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
+if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
     $protocol = 'https';
+}
 
-$default_host = 'labs.data.gov/dashboard';
+if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+    $protocol = 'https';
+}
+
+$default_host = '{{ default_host }}';
 if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
     $default_host = $_SERVER['HTTP_HOST'];
 }
 
 $config['base_url'] = $protocol . '://' . $default_host;
-//$config['base_url'] = 'https://labs.data.gov/dashboard/';
 
 /*
 |--------------------------------------------------------------------------
@@ -121,67 +125,36 @@ $config['saml'] = array(
         'NameIDFormat' => 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
         // Usually x509cert and privateKey of the SP are provided by files placed at
         // the certs folder. But we can also provide them with the following parameters
-        'x509cert' => '-----BEGIN CERTIFICATE-----
-                        MIICPjCCAaegAwIBAgIBADANBgkqhkiG9w0BAQ0FADA8MQswCQYDVQQGEwJ1czER
-                        MA8GA1UECAwIVklSR0lOSUExDDAKBgNVBAoMA0dTQTEMMAoGA1UEAwwDR1NBMB4X
-                        DTE2MTAxMDE5MDUyNloXDTE5MDcwNjE5MDUyNlowPDELMAkGA1UEBhMCdXMxETAP
-                        BgNVBAgMCFZJUkdJTklBMQwwCgYDVQQKDANHU0ExDDAKBgNVBAMMA0dTQTCBnzAN
-                        BgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAtD9Jqb92JQmNgvw5vYk2bMNacTIsogLM
-                        EtT+Ym4EtLq7F/gUlr70CTF95lXWoaBDIjngbuIqyiScVzi4Jo9Sd2w3Wxh4Euxc
-                        JzNVRNhgofQbq1sT2FrjBOekogcrwbF+V60wVVPa5Mhq0g9sWsxjt6YGl8xWO+MC
-                        Vj6fWM844Q8CAwEAAaNQME4wHQYDVR0OBBYEFJnYOxv44mMlkFnam9/U0qtUFENY
-                        MB8GA1UdIwQYMBaAFJnYOxv44mMlkFnam9/U0qtUFENYMAwGA1UdEwQFMAMBAf8w
-                        DQYJKoZIhvcNAQENBQADgYEASkP1kSECk+koipcTrbu7pj9GYtZb9cGWDovrtniY
-                        bHphRM6Ytex4XplQ1dqGNAfqVR383ArKTPF5m8JqrKGGklMeROme6Xs5EfSE+inM
-                        4PVoQR3CK6tyAiwVeDmZIbrGoDOf+msBO/7zLorTtQwqr1j8b0Yvrx7StXayrH9a
-                        2jY=
-                        -----END CERTIFICATE-----',
-        'privateKey' => '{{ saml_private_key }}',
+        'x509cert' => '{{ saml_sp_cert }}',
+        'privateKey' => '{{ saml_sp_private_key }}',
 
     ),
 
     // Identity Provider Data that we want connected with our SP.
     'idp' => array(
         // Identifier of the IdP entity  (must be a URI)
-        'entityId' => 'https://login.test.max.gov/idp/',
+        'entityId' => 'https://{{ saml_idp_host }}/idp/',
         // SSO endpoint info of the IdP. (Authentication Request protocol)
         'singleSignOnService' => array(
             // URL Target of the IdP where the Authentication Request Message
             // will be sent.
-            'url' => 'https://login.test.max.gov/idp/profile/SAML2/POST-SimpleSign/SSO',
+            'url' => 'https://{{ saml_idp_host }}/idp/profile/SAML2/POST/SSO',
             // SAML protocol binding to be used when returning the <Response>
             // message. OneLogin Toolkit supports the HTTP-Redirect binding
             // only for this endpoint.
-            'binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign',
+            'binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
         ),
         // SLO endpoint info of the IdP.
         'singleLogoutService' => array(
             // URL Location of the IdP where SLO Request will be sent.
-            'url' => 'https://login.test.max.gov/idp/profile/SAML2/POST/SLO',
+            'url' => 'https://{{ saml_idp_host }}/idp/profile/SAML2/POST/SLO',
             // SAML protocol binding to be used when returning the <Response>
             // message. OneLogin Toolkit supports the HTTP-Redirect binding
             // only for this endpoint.
             'binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
         ),
         // Public x509 certificate of the IdP
-        'x509cert' => 'MIIDMzCCAhugAwIBAgIUGZmNOfGrnHuo8FkedfSoNuXGh0swDQYJKoZIhvcNAQEF
-                        BQAwHTEbMBkGA1UEAwwSbG9naW4udGVzdC5tYXguZ292MB4XDTE1MDIyNjE4NTgy
-                        MloXDTM1MDIyNjE4NTgyMlowHTEbMBkGA1UEAwwSbG9naW4udGVzdC5tYXguZ292
-                        MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAl6OO43kdFgZFYNBxBxnW
-                        f965G3h0Z1l+CM4rfDoRW7ieIiYnkolsln738hb21M8Q0SXqniKFGaptUNNyTGkB
-                        5R8Dk1zljkrh4KdnKhj3gZu2OnjJ8L4ihR0gdiJuXxvVGaI+KcU0b2Ahz4TBi/DZ
-                        ts4c4CJFzmdFL57QjOsBT8jgg3tXQDncl+w0kx+fGFaVTS6tIsN18LscFr0lmHEE
-                        E0w3vfOu5CP2G3+MPnJ2ij6urmJdsxyRqHdiHKS3ItpCTWMmt5duvlg3QPK/21C9
-                        J7nnuDXPSfhym0gihXvdNt71y4aDI3tqXR3eIaz7ljjEO2PDG6yJwMsE23HhEbW9
-                        FwIDAQABo2swaTAdBgNVHQ4EFgQUDBhTOWKufUoHOvgmiZO0gFohONIwSAYDVR0R
-                        BEEwP4ISbG9naW4udGVzdC5tYXguZ292hilodHRwczovL2xvZ2luLnRlc3QubWF4
-                        Lmdvdi9pZHAvc2hpYmJvbGV0aDANBgkqhkiG9w0BAQUFAAOCAQEABmVizMnSUZ0g
-                        AB13t0KdmVqdDh3fp0wsuj9XhUyWlaOyWt8FtcKrr4V3eH281Of1VaG4IAgmHynr
-                        CyyDlaU+2rN3X9Mnaz2kgt7fYMiVbU945h4h8X8+DqS4fl+HEP0OpSG0rqTAJ1yN
-                        A0nmnYZEeKDwJbTUXaL7w5D+4WNNYDpJ+yVEAno98cLPZtgh0NlpdEl09SK/k0Bm
-                        aY6ptcDxOa7FfTeQX9GUmulJTErLen/QHoQf6mQN14y1woXwI/kPpAD8C4Wi5N/P
-                        Z00nZfcqMpeatQMt91IiI2IRSInyZ8UU0UqdY3XIJFDDoXyK/SsI5NBZksz0MrbG
-                        lJsgPWOAxg==',
+        'x509cert' => '{{ saml_idp_cert }}',
         /*
          *  Instead of use the whole x509cert you can use a fingerprint in order to
          *  validate a SAMLResponse.
@@ -314,11 +287,11 @@ $config['saml'] = array(
 */
 
 // OAuth Settings
-$config['github_oauth_id'] = getenv('GITHUB_OATH_ID');
-$config['github_oauth_secret'] = getenv('GITHUB_OATH_SECRET');
+//$config['github_oauth_id'] = getenv('GITHUB_OATH_ID');
+//$config['github_oauth_secret'] = getenv('GITHUB_OATH_SECRET');
 
 // You shouldn't need to edit this unless you haven't specified a 'base_url'
-$config['github_oauth_redirect'] = $config['base_url'] . '/dashboard/auth/session/github';
+//$config['github_oauth_redirect'] = $config['base_url'] . '/dashboard/auth/session/github';
 
 
 /*

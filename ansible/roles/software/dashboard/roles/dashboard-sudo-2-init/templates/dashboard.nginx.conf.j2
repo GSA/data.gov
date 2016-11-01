@@ -12,6 +12,17 @@ server {
     ## This should be in your http block and if it is, it's not needed here.
     index index.php;
 
+    #listen 80;
+    #listen 443 ssl;
+
+    #ssl_certificate /etc/letsencrypt/live/dashboard.vasili4.com/fullchain.pem;
+    #ssl_certificate_key /etc/letsencrypt/live/dashboard.vasili4.com/privkey.pem;
+
+    # letsencrypt.org
+    location ~ /.well-known {
+        allow all;
+    }
+
     ## Forbidding access to .git .env .etc
     location ~ /\. {
         return 404;
@@ -34,15 +45,28 @@ server {
         try_files $uri $uri/ /index.php?$args;
     }
 
+    location ^~ /simplesaml {
+        alias {{ project_index_path }}/vendor/simplesamlphp/simplesamlphp/www/;
+        location ~ ^(?<prefix>/simplesaml)(?<phpfile>.+?\.php)(?<pathinfo>/.*)?$ {
+            include fastcgi_params;
+            fastcgi_pass php;
+            fastcgi_param SCRIPT_FILENAME $document_root$phpfile;
+            fastcgi_param PATH_INFO       $pathinfo;
+        }
+    }
+
     location ~ \.php$ {
         #NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
         include fastcgi_params;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        set $path_info $fastcgi_path_info;
+        fastcgi_param PATH_INFO $path_info if_not_empty;
         fastcgi_intercept_errors on;
+        fastcgi_index index.php;
         fastcgi_pass php;
     }
 
     location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
         expires max;
-        log_not_found off;
     }
 }

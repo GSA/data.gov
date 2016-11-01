@@ -3,8 +3,8 @@
 - name: Temporarily disabling keeping sessions in DB
   replace:
     dest: "{{ project_source_path }}/application/config/{{ codeigniter_environment }}/config.php"
-    regexp: '(sess_use_database[^=]+)= TRUE(;)'
-    replace: '\1= FALSE\2'
+    regexp: '(sess_use_database[^=]+)= TRUE;'
+    replace: '\1= FALSE;'
 
 - name: Run migrations
   command: php index.php migrate
@@ -19,5 +19,5 @@
 - name: Keeping sessions in DB again
   replace:
     dest: "{{ project_source_path }}/application/config/{{ codeigniter_environment }}/config.php"
-    regexp: '(sess_use_database[^=]+)= FALSE(;)'
-    replace: '\1= TRUE\2'
+    regexp: '(sess_use_database[^=]+)= FALSE;'
+    replace: '\1= TRUE;'

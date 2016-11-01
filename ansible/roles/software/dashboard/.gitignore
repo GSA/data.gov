@@ -5,3 +5,6 @@
 vendor
 *.retry
 authorized_keys
+
+# Docker data
+.data
