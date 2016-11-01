@@ -58,6 +58,9 @@
   with_items:
     - etc/ckan/production.ini
 
+- include: additional-tasks.yml
+  virtualenv: "{{ project_source_new_code_path }}"
+
 - name: Symlink current dir with new code
   file:
     src: "{{ project_source_new_code_path }}"
