@@ -20,9 +20,9 @@ To run the script, execute:
 -- username of the ckan postgres user
 \set ckanuser "{{ inventory_db_user }}"
 -- username of the datastore user that can write
-\set wuser "{{ inventory_db_user }}"
+\set wuser "{{ inventory_datastore_user }}"
 -- username of the datastore user who has only read permissions
-\set rouser "{{ inventory_datastore_user }}"
+\set rouser "{{ inventory_datastore_ro_user }}"
 
 -- revoke permissions for the read-only user
 ---- this step can be ommitted if the datastore not

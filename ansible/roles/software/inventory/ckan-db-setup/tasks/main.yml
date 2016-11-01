@@ -11,6 +11,10 @@
   when: check_ckan_db_user.stdout.find("(0 rows)") != -1
   shell: sudo -u postgres psql -c "CREATE USER {{ inventory_datastore_user }} WITH PASSWORD '{{ inventory_datastore_pass }}';"
 
+- name: create datastore ro  role
+  when: check_ckan_db_user.stdout.find("(0 rows)") != -1
+  shell: sudo -u postgres psql -c "CREATE USER {{ inventory_datastore_ro_user }} WITH PASSWORD '{{ inventory_datastore_ro_pass }}';"
+
 - name: check if ckan database already exists
   shell: sudo -u postgres psql -c "SELECT 1 FROM pg_database WHERE datname = '{{ inventory_db_name }}';"
   register: check_ckan_database
@@ -21,7 +25,7 @@
 
 - name: create datastore database
   when: check_ckan_database.stdout.find("(0 rows)") != -1
-  shell: sudo -u postgres psql -c "CREATE DATABASE {{ inventory_datastore_db_name }} OWNER {{ inventory_db_user }};"
+  shell: sudo -u postgres psql -c "CREATE DATABASE {{ inventory_datastore_db_name }} OWNER {{ inventory_datastore_user }};"
 
 - name: install postgis script
   shell: "sudo -u postgres psql -d {{ inventory_db_name }} -f /usr/share/postgresql/9.3/contrib/postgis-2.1/postgis.sql"
