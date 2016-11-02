@@ -24,6 +24,9 @@
     state: link
   when: p.stat.isdir is defined and p.stat.isdir
 
+- name: Remove new code
+  file: path="{{ project_source_new_code_path }}" state=absent
+
 - name: Clone project files to {{ project_source_new_code_path }}
   git:
     repo: "{{ project_git_repo }}"
