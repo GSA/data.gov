@@ -16,7 +16,24 @@
     group: "www-data"
     recurse: yes
 
+- name: Copying SAML crt
+  template:
+    src: crm-saml-sp-cert.crt
+    dest: "{{ saml_sp_cert_path }}"
+    mode: 0644
+
+- name: Copying SAML pem
+  template:
+    src: crm-saml-sp-private.pem
+    dest: "{{ saml_sp_private_key_path }}"
+    mode: 0644
+
 - name: MariaDB client
   package:
     name: mariadb-client-5.5
+    state: present
+
+- name: PHP mcrypt
+  package:
+    name: php-mcrypt
     state: present

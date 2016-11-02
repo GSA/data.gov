@@ -1,4 +1,4 @@
-[webserver]
+[wordpress-web]
 localhost:2022
 
 [all:vars]

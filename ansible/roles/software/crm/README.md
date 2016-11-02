@@ -19,13 +19,13 @@
         - `packer build packer.json`
     
     - via Ansible Playbook
-        - copy `hosts.example` to `hosts` and modify IP of the target machine (basic AWS Ubuntu AMI will work) 
-        
         - `ansible-playbook crm-web.yml -i inventories/amazon.dev`
+    - or
+        - `ansible-playbook crm-web.yml -i inventories/amazon.vsl4`
          
 - Development with [Docker for Mac](https://www.docker.com/products/docker)
     - `cp ~/.ssh/id_rsa.pub authorized_keys`
-    - `docker build -t pod/crm .`
+    - `docker build -t gsa/crm .`
     - `docker-compose up -d`
     - `ansible-playbook crm-web.yml -i inventories/local.dev`
-    - Open http://localhost:8088/
+    - Open http://localhost:8888/

@@ -1,11 +1,11 @@
 --- # crm Web AMI
 
-#- name: Initial prechecks
-#  hosts: crm-web
-#  remote_user: ubuntu
-#
-#  roles:
-#  - { role: crm-sudo-0-precheck, tags: [precheck] }
+- name: Initial prechecks
+  hosts: crm-web
+  remote_user: ubuntu
+
+  roles:
+  - { role: crm-sudo-0-precheck, tags: [precheck] }
 
 
 - name: Provisioning Web AMI
@@ -22,6 +22,7 @@
   - { role: php, tags: [php, provision] }
   - { role: php-mysql, tags: [php, php-mysql, provision] }
   - { role: php-memcached, tags: [php, php-memcached, provision] }
+  - { role: composer, tags: [php, provision] }
   - { role: vim, tags: [provision, vim] }
   - { role: crm-sudo-2-init, tags: [always] }
 
@@ -29,8 +30,6 @@
 - name: Deploying crm
   hosts: crm-web
   remote_user: ubuntu
-  become: yes
-  become_method: sudo
 
   roles:
   - { role: crm-deploy, tags: [deploy] }
@@ -45,3 +44,10 @@
 
   roles:
   - { role: crm-sudo-3-cleanup, tags: [always] }
+
+- name: CRM Migration
+  hosts: crm-web
+  remote_user: ubuntu
+
+  roles:
+  - { role: crm-migrations, tags: [deploy, migrate] }

@@ -7,7 +7,7 @@ services:
       - "./.data/db:/var/lib/mysql"
     restart: always
     ports:
-      - "3366:3306"
+      - "3377:3306"
     environment:
       MYSQL_ROOT_PASSWORD: insecure
       MYSQL_DATABASE: crm
@@ -16,9 +16,11 @@ services:
 
   crm:
     container_name: crm_web
+    volumes:
+          - "./.data/web:/var/www/crm"
+    image: gsa/crm
     depends_on:
       - crmdb
-    image: crm
     links:
       - crmdb
     ports:

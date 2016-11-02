@@ -1,4 +1,4 @@
-[webserver]
+[dashboard-web]
 localhost:2222
 
 [all:vars]

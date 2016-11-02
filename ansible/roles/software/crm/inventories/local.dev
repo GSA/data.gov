@@ -1,4 +1,4 @@
-[webserver]
+[crm-web]
 localhost:2233
 
 [all:vars]

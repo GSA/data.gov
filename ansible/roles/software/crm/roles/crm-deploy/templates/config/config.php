@@ -15,6 +15,11 @@
 */
 
 $protocol = 'http';
+
+if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
+    $protocol = 'https';
+}
+
 if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
     $protocol = 'https';
 }
@@ -25,7 +30,6 @@ if(isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
 }
 
 $config['base_url'] = $protocol . '://' . $default_host;
-//$config['base_url'] = '';
 
 $config['akismet_key'] = ''; // see https://akismet.com/development/
 $config['akismet_siteurl'] = '';
@@ -35,11 +39,6 @@ date_default_timezone_set('America/New_York');
 
 // if you've explictly set $config['base_url'] to a URL, you can delete the following
 // conditional, which autodetects the URL if it hasn't been set if you want.
-
-if ($config['base_url']=='') {
-  $config['base_url'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
-  $config['base_url'] .= "://".$_SERVER['HTTP_HOST'];
-}
 
 /*
 |--------------------------------------------------------------------------
@@ -83,7 +82,7 @@ $config['index_page'] = "";
 | 'ORIG_PATH_INFO'	Uses the ORIG_PATH_INFO
 |
 */
-$config['uri_protocol'] = "PATH_INFO";
+$config['uri_protocol'] = "AUTO";
 /*
 |--------------------------------------------------------------------------
 | URL suffix
@@ -261,7 +260,7 @@ $config['cache_path'] = '';
 | 'time_to_update'		= how many seconds between CI refreshing Session Information
 |
 */
-$config['sess_cookie_name']		= 'ci_session';
+$config['sess_cookie_name']		= 'ci_session_crm';
 $config['sess_expiration']		= 7200;
 $config['sess_encrypt_cookie']	= FALSE;
 $config['sess_use_database']	= TRUE;

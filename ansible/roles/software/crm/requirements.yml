@@ -7,6 +7,9 @@
 - name: php-memcached
   src: geerlingguy.php-memcached
 
+- name: composer
+  src: geerlingguy.composer
+
 - name: nginx
   src: geerlingguy.nginx
 
