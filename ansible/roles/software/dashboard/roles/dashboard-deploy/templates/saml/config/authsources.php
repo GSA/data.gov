@@ -29,7 +29,7 @@ $config = array(
     /* This is the name of this authentication source, and will be used to access it later. */
     'max' => array(
         'saml:SP',
-        'entityID' => $base_url.'/',
+        'entityID' => $base_url,
         'idp' => 'https://{{ saml_idp_host }}/idp/shibboleth',
         'privatekey' => '{{ saml_sp_private_key_path }}',
         'certificate' => '{{ saml_sp_cert_path }}',
