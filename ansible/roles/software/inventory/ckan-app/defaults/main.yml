@@ -32,11 +32,6 @@ ckan_pkgs:
       name: "ckanext-googleanalyticsbasic",
       repo: "https://github.com/GSA/ckanext-googleanalyticsbasic"
     }
-  - {
-      name: "ckanext-s3filestore",
-      repo: "https://github.com/GSA/ckanext-s3filestore",
-      requirements: "requirements.txt"
-    }
 
 datapusher_pkgs:
   - {

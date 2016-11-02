@@ -7,7 +7,6 @@
           repo: "https://github.com/GSA/ckanext-s3filestore",
           requirements: "requirements.txt"
         }
-    virtualenv: "{{ virtualenv }}"
   tags: ['s3filestore']
 
 - name: add s3filestore to production.ini plugins
