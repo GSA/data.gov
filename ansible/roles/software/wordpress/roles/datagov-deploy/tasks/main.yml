@@ -50,13 +50,40 @@
 
 - name: Adding Bedrock .env to {{ project_source_new_code_path }}/.env
   template:
-    src: ".env.j2"
+    src: ".env"
     dest: "{{ project_source_new_code_path }}/.env"
 
 - name: Copy W3 Total Cache files
   template:
-    src: "w3tc-wp-loader.php.j2"
+    src: "w3tc-wp-loader.php"
     dest: "{{ project_source_new_code_path }}/web/app/plugins/w3tc-wp-loader.php"
+
+- name: Making sure saml config directory exists
+  file:
+    dest: "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc/config"
+    state: directory
+    recurse: yes
+
+- name: Copy saml20-idp-remote ini
+  template:
+    src: "saml20-idp-remote.ini"
+    dest: "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc/config/saml20-idp-remote.ini"
+
+- name: Making sure saml config directory exists
+  file:
+    dest: "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc/certs/1"
+    state: directory
+    recurse: yes
+
+- name: Copy SAML sp cert
+  template:
+    src: saml.cer
+    dest: "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc/certs/1/1.cer"
+
+- name: Copy SAML sp pem
+  template:
+    src: saml.secret.key
+    dest: "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc/certs/1/1.key"
 
 - name: Copy W3 Total Cache nginx config
   copy:
@@ -96,6 +123,6 @@
 - name: Enabling dev plugins
   command: wp plugin activate check-email debug-bar log-deprecated-notices query-monitor
   args:
-    chdir: "{{ project_source__path }}"
+    chdir: "{{ project_source_new_code_path }}"
   when: "'development' == env_wp_env"
   ignore_errors: true

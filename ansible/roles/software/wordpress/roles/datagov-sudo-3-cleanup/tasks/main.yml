@@ -28,6 +28,13 @@
     mode: 0777
     recurse: yes
 
+- name: Making sure saml config directory has correct mode
+  file:
+    dest: "{{ project_source_path }}/web/app/uploads/saml-20-single-sign-on/etc"
+    state: directory
+    mode: 0777
+    recurse: yes
+
 - name: Docker specific
   debug:
     msg: "Now running docker specific tasks"

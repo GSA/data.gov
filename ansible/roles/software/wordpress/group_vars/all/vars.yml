@@ -33,6 +33,15 @@ project_source_new_code_path: /var/www/datagov/new
 project_source_path: /var/www/datagov/current
 project_index_path: /var/www/datagov/current/web
 
+# SAML
+saml_sp_cert: "{{ vault_saml_sp_cert }}"
+saml_sp_key: "{{ vault_saml_sp_key }}"
+
+saml_idp_id: "https://login.test.max.gov/idp/shibboleth"
+saml_idp_sso: "https://login.test.max.gov/idp/profile/SAML2/POST/SSO"
+saml_idp_slo: "https://login.test.max.gov/idp/profile/SAML2/POST/SLO"
+saml_idp_cert_fprint: "7A43DACB95D67FB6A804FD37C8A7DCA5B0384939"
+
 # Generate your keys here: https://roots.io/salts.html
 auth_key: "{{ vault_auth_key }}"
 secure_auth_key: "{{ vault_secure_auth_key }}"

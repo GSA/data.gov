@@ -16,9 +16,11 @@ services:
 
   wordpress:
     container_name: datagov_wp_web
+    image: datagov/wp
+    volumes:
+          - "./.data/web:/var/www/datagov"
     depends_on:
       - wpdb
-    image: datagov/wp
     links:
       - wpdb
     ports:

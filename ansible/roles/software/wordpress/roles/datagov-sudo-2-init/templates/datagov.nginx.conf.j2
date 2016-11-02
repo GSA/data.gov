@@ -12,6 +12,21 @@ server {
     ## This should be in your http block and if it is, it's not needed here.
     index index.php;
 
+    #listen 80;
+    #listen 443 ssl;
+
+    #ssl_certificate /etc/ssl/certs/reisys.crt;
+    #ssl_certificate_key /etc/ssl/private/reisys.pem;
+
+    # letsencrypt.org
+    location ~ /.well-known {
+        allow all;
+    }
+
+    fastcgi_buffers 16 16k;
+    fastcgi_buffer_size 32k;
+
+
     ## Forbidding access to .git .env .etc
     location ~ /\. {
         return 404;
@@ -32,6 +47,15 @@ server {
         # This is cool because no php is touched for static content.
         # include the "?$args" part so non-default permalinks doesn't break when using query string
         try_files $uri $uri/ /index.php?$args;
+    }
+
+     location ^~ /app/plugins/saml-20-single-sign-on {
+        location ~ ^/app/plugins/saml-20-single-sign-on/saml/www/module.php(?<pathinfo>/.*)?$ {
+            include fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $document_root/app/plugins/saml-20-single-sign-on/saml/www/module.php;
+            fastcgi_param PATH_INFO       $pathinfo;
+            fastcgi_pass php;
+        }
     }
 
     location ~ \.php$ {

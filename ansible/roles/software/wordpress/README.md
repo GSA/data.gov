@@ -23,8 +23,9 @@ and check that your github ssh key is ready for AgentForwarding
         - `packer build packer.json`
     
     - via Ansible Playbook to Amazon Dev instance
-        
-        `ansible-playbook datagov-web.yml -i inventories/amazon.dev` 
+        - `ansible-playbook datagov-web.yml -i inventories/amazon.dev`
+    - or
+        - `ansible-playbook datagov-web.yml -i inventories/amazon.vsl4`
 
 - Development with [Docker for Mac](https://www.docker.com/products/docker)
     - `cp ~/.ssh/id_rsa.pub authorized_keys`
