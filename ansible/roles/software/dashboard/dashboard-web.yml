@@ -33,7 +33,7 @@
 
   roles:
   - { role: dashboard-deploy, tags: [deploy] }
-  - { role: datagov-deploy-rollback, tags: [deploy-rollback] }
+#  - { role: datagov-deploy-rollback, tags: [deploy-rollback] }
 
 
 

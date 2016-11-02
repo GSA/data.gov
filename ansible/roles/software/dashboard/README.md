@@ -20,6 +20,8 @@
     
     - via Ansible Playbook
         - `ansible-playbook dashboard-web.yml -i inventories/amazon.dev`
+    - or
+        - `ansible-playbook dashboard-web.yml -i inventories/amazon.vsl4`
          
 - Development with [Docker for Mac](https://www.docker.com/products/docker)
     - `cp ~/.ssh/id_rsa.pub authorized_keys`
