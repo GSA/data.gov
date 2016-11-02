@@ -24,7 +24,7 @@
   - { role: php-memcached, tags: [php, php-memcached, provision] }
   - { role: composer, tags: [php, provision] }
   - { role: vim, tags: [provision, vim] }
-  - { role: dashboard-sudo-2-init }
+  - { role: dashboard-sudo-2-init, tags: [always] }
 
 
 - name: Deploying Dashboard
@@ -44,7 +44,7 @@
   become_method: sudo
 
   roles:
-  - { role: dashboard-sudo-3-cleanup }
+  - { role: dashboard-sudo-3-cleanup, tags: [always] }
 
 - name: Dashboard Migration
   hosts: dashboard-web

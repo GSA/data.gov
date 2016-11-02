@@ -23,7 +23,7 @@
   - { role: php-mysql, tags: [php, php-mysql, provision] }
   - { role: php-memcached, tags: [php, php-memcached, provision] }
   - { role: vim, tags: [provision, vim] }
-  - { role: crm-sudo-2-init }
+  - { role: crm-sudo-2-init, tags: [always] }
 
 
 - name: Deploying crm
@@ -44,4 +44,4 @@
   become_method: sudo
 
   roles:
-  - { role: crm-sudo-3-cleanup }
+  - { role: crm-sudo-3-cleanup, tags: [always] }
