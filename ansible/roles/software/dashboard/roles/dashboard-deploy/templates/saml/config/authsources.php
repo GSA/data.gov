@@ -6,6 +6,10 @@ if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
     $protocol = 'https';
 }
 
+if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+    $protocol = 'https';
+}
+
 $default_host = '{{ default_host }} ';
 if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
     $default_host = $_SERVER['HTTP_HOST'];

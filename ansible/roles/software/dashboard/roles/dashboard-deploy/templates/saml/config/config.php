@@ -14,6 +14,10 @@ if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
     $default_host = $_SERVER['HTTP_HOST'];
 }
 
+if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+    $protocol = 'https';
+}
+
 $base_url = $protocol . '://' . $default_host;
 
 $config = array(
