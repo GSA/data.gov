@@ -85,6 +85,11 @@
     src: saml.secret.key
     dest: "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc/certs/1/1.key"
 
+- name: Copy saml_authentication_options json
+  copy:
+    src: "{{ env_wp_env }}-saml.json"
+    dest: "{{ project_source_new_code_path }}/{{ env_wp_env }}-saml.json"
+
 - name: Copy W3 Total Cache nginx config
   copy:
     src: "w3_nginx_conf"
@@ -111,6 +116,12 @@
   args:
     chdir: "{{ project_source_new_code_path }}"
   when: "'docker' == running_in and 'development' == env_wp_env"
+  ignore_errors: true
+
+- name: Update saml saml_authentication_options
+  shell: cat {{ env_wp_env }}-saml.json | xargs -0 wp option update saml_authentication_options --format=json
+  args:
+    chdir: "{{ project_source_new_code_path }}"
   ignore_errors: true
 
 - name: Updating admin pass
