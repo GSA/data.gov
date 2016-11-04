@@ -4,14 +4,17 @@
  * 
  */
 
-$protocol = 'http';
-if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
-    $protocol = 'https';
-}
+$protocol = 'https';
+//if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
+//    $protocol = 'https';
+//}
+//
+//if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+//    $protocol = 'https';
+//}
 
-if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
-    $protocol = 'https';
-}
+$_SERVER['HTTPS'] = 'on';
+$_SERVER['SERVER_PORT'] = '443';
 
 $default_host = '{{ default_host }} ';
 if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
@@ -167,7 +170,7 @@ $config = array(
      * through https. If the user can access the service through
      * both http and https, this must be set to FALSE.
      */
-    'session.cookie.secure' => true,
+    'session.cookie.secure' => false,
 
     /*
      * Enable secure POST from HTTPS to HTTP.
