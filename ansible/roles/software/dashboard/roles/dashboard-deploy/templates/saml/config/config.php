@@ -98,8 +98,7 @@ $config = array(
     'logging.level' => SimpleSAML_Logger::NOTICE,
     'logging.handler' => 'syslog',
 
-
-    /**
+    /*
      * Kepping sessions in DB
      */
     'store.type' => 'sql',

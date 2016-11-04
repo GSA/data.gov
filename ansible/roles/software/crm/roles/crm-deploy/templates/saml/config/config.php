@@ -98,6 +98,15 @@ $config = array(
     'logging.handler' => 'syslog',
 
     /*
+     * Kepping sessions in DB
+     */
+    'store.type' => 'sql',
+    'store.sql.dsn' => 'mysql:host={{ env_db_host }};dbname={{ env_db_name }}',
+    'store.sql.username' => '{{ env_db_user }}',
+    'store.sql.password' => '{{ env_db_pass }}',
+    'store.sql.prefix' => 'SAML',
+
+    /*
      * This value is the duration of the session in seconds. Make sure that the time duration of
      * cookies both at the SP and the IdP exceeds this duration.
      */
