@@ -81,11 +81,11 @@
     regexp: '\$msgStr = base64_encode\(\$msgStr\);'
     replace: '$msgStr = base64_encode(str_replace("simplesaml/module.php/saml/sp/saml2-acs.php/max","user/acs",$msgStr));'
 
-- name: Fixing SAML (allowing missing url)
-  replace:
-    dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/simplesamlphp/lib/SimpleSAML/Auth/State.php"
-    regexp: '\$allowMissing = FALSE'
-    replace: '$allowMissing = TRUE'
+#- name: Fixing SAML (allowing missing url)
+#  replace:
+#    dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/simplesamlphp/lib/SimpleSAML/Auth/State.php"
+#    regexp: '\$allowMissing = FALSE'
+#    replace: '$allowMissing = TRUE'
 
 - name: Copying index.php
   template:
