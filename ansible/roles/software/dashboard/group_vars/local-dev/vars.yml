@@ -1,8 +1,8 @@
 ---
 
 # AWS S3
-aws_s3_archive_key: ""
-aws_s3_archive_secret: ""
+aws_s3_archive_key: "{{ vault_aws_s3_archive_key }}"
+aws_s3_archive_secret: "{{ vault_aws_s3_archive_secret }}"
 
 # MySQL credentials
 env_db_host: "poddb"
