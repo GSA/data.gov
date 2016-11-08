@@ -22,7 +22,7 @@ php_webserver_daemon: nginx
 
 # Composer
 project_git_repo: https://github.com/GSA/datagov-wp-boilerplate.git
-project_git_version: master
+project_git_version: no-map
 
 # WordPress .env
 env_wp_env: production
