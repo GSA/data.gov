@@ -1,5 +1,7 @@
 --- # Initial precheck
 
+- debug: var={{ env_db_host }}
+
 - name: Ensure github.com is a known host
   lineinfile:
     dest: "/home/ubuntu/.ssh/known_hosts"
