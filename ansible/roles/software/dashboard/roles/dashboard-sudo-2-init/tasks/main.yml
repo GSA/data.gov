@@ -2,7 +2,7 @@
 
 - name: Copying Dashboard configuration for Nginx
   template:
-    src: "dashboard.nginx.conf.j2"
+    src: "dashboard.nginx.conf"
     dest: "/etc/nginx/sites-enabled/dashboard.nginx.conf"
   notify:
       - reload nginx

@@ -89,7 +89,7 @@
 
 - name: Copying index.php
   template:
-    src: "index.php.j2"
+    src: "index.php"
     dest: "{{ project_source_new_code_path }}/index.php"
 
 - name: Copying index.php
@@ -99,7 +99,7 @@
 
 - name: Adding .env
   template:
-    src: ".env.j2"
+    src: ".env"
     dest: "{{ project_source_new_code_path }}/.env"
 
 - name: Symlink current dir with new code

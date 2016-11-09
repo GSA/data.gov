@@ -21,7 +21,6 @@ php_fpm_listen: /var/run/php/php7.0-fpm.sock
 php_webserver_daemon: nginx
 
 # Composer
-project_git_repo: https://github.com/GSA/datagov-wp-boilerplate.git
 #project_git_version: master
 project_git_version: no-map
 
