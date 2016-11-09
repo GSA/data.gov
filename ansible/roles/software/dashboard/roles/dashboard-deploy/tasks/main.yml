@@ -1,11 +1,5 @@
 --- # Dashboard repo deployment & composer install
 
-- name: Load inventory specific vault ({{ vars_group }})
-  include_vars: "group_vars/{{ vars_group }}/vault.yml"
-
-- name: Load inventory specific variables ({{ vars_group }})
-  include_vars: "group_vars/{{ vars_group }}/vars.yml"
-
 - name: Remove old rollback code
   file: path="{{ project_source_rollback_path }}" state=absent
 

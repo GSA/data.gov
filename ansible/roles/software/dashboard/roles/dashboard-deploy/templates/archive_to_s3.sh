@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-S3KEY="{{ aws_s3_archive_key }}"
-S3SECRET="{{ aws_s3_archive_secret }}"
-
 function putS3
 {
   path=$1

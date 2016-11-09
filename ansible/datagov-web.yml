@@ -1,11 +1,11 @@
 --- # WordPress Web AMI
 
-- name: Initial prechecks
-  hosts: wordpress-web
-  remote_user: ubuntu
-
-  roles:
-  - { role: datagov-sudo-0-precheck, tags: [precheck] }
+#- name: Initial prechecks
+#  hosts: wordpress-web
+#  remote_user: ubuntu
+#
+#  roles:
+#  - { role: datagov-sudo-0-precheck, tags: [precheck] }
 
 
 - name: Provisioning WordPress Web AMI

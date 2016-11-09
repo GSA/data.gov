@@ -1,11 +1,11 @@
 --- # crm Web AMI
 
-- name: Initial prechecks
-  hosts: crm-web
-  remote_user: ubuntu
-
-  roles:
-  - { role: crm-sudo-0-precheck, tags: [precheck] }
+#- name: Initial prechecks
+#  hosts: crm-web
+#  remote_user: ubuntu
+#
+#  roles:
+#  - { role: crm-sudo-0-precheck, tags: [precheck] }
 
 
 - name: Provisioning Web AMI

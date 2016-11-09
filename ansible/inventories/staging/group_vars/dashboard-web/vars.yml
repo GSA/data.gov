@@ -1,0 +1,7 @@
+---
+
+# MySQL credentials
+env_db_host: "{{ vault_env_db_host }}"
+env_db_user: "{{ vault_env_db_user }}"
+env_db_pass: "{{ vault_env_db_pass }}"
+env_db_name: "{{ vault_env_db_name }}"

@@ -1,12 +1,5 @@
 --- # CRM repo deployment & composer install
 
-- name: Load inventory specific vault ({{ vars_group }})
-  include_vars: "group_vars/{{ vars_group }}/vault.yml"
-
-- name: Load inventory specific variables ({{ vars_group }})
-  include_vars: "group_vars/{{ vars_group }}/vars.yml"
-
-
 - name: Check whether new code dir exists
   stat: path="{{ project_source_new_code_path }}"
   register: p
