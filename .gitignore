@@ -33,7 +33,6 @@ synced_folders/*
 vendor
 *.retry
 !.env.j2
-hosts
 
 #SQL
 *.sql
