@@ -22,6 +22,10 @@ env_db_user: "{{ vault_env_db_user }}"
 env_db_pass: "{{ vault_env_db_pass }}"
 env_db_name: "{{ vault_env_db_name }}"
 
+# s3
+s3_bucket: bsp-ocsit-dev-east-appdata
+s3_prefix: datagov/wordpress
+
 # SAML
 saml_sp_cert: "{{ vault_saml_sp_cert }}"
 saml_sp_key: "{{ vault_saml_sp_key }}"
