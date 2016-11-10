@@ -14,7 +14,8 @@ inventory[1:2]d.dev-ocsit.bsp.gsa.gov
 solrinventory1d.dev-ocsit.bsp.gsa.gov
 
 [crm-web]
-crm-web[1:2]d.dev-ocsit.bsp.gsa.gov
+#crm-web[1:2]d.dev-ocsit.bsp.gsa.gov
+54.234.223.157
 
 [dashboard-web]
 dashboard-web[1:2]d.dev-ocsit.bsp.gsa.gov

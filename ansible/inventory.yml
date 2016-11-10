@@ -1,6 +1,7 @@
 ---
 - name: Install CKAN Stack
-  hosts: all 
+  hosts: all
+  remote_user: ubuntu
   sudo: yes
   vars:
     app_type: inventory
