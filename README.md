@@ -90,17 +90,23 @@ Set Shell Variable for Ansible Vault
 ## Wordpress:
 
 **provision vm:** `ansible-playbook datagov-web.yml -i {{ inventory }} --skip-tags="deploy-rollback" --limit wordpress-web`
+
 **deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy" --limit wordpress-web`
+
 **deploy rollback:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy-rollback" --limit wordpress-web`
 ## Dashboard
 
 **provision vm:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --skip-tags="deploy-rollback" --limit dashboard-web`
+
 **deploy app:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="deploy" --limit dashboard-web`
+
 **deploy rollback:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="deploy-rollback" --limit dashboard-web`
 ## CRM
 
 **provision vm:** `ansible-playbook crm-web.yml -i {{ inventory }} --skip-tags="deploy-rollback" --limit crm-web`
+
 **deploy app:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="deploy" --limit crm-web`
+
 **deploy rollback:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="deploy-rollback" --limit crm-web" --limit crm-web`
 ## Catalog:
 
@@ -112,5 +118,7 @@ Set Shell Variable for Ansible Vault
 ## Inventory
 
 **provision vm - web:** `ansible-playbook inventory.yml -i {{ inventory }} --skip-tags="solr,db" --limit inventory-web`
+
 **deploy app:** `ansible-playbook inventory.yml -i {{ inventory }} --tags="deploy" --skip-tags="solr,db" --limit inventory-web`
+
 **provision vm - solr:** `ansible-playbook inventory.yml -i {{ inventory }} --tags="solr" --limit inventory-solr`
