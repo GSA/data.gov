@@ -21,3 +21,6 @@ dashboard-web[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [wordpress-web]
 wordpress-web[1:2]d.dev-ocsit.bsp.gsa.gov
+
+[jekyll-web]
+static-web1d.dev-ocsit.bsp.gsa.gov

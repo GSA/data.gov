@@ -1,0 +1,16 @@
+---
+- name: install supervisor
+  action: pip name=supervisor
+
+- name: copy all needed files
+  action: copy src={{item}} dest=/{{item}}
+  with_items:
+    - etc/init/supervisor.conf
+
+- name: copy template files
+  template: src=templates/{{item}}.j2 dest=/{{item}}
+  with_items:
+    - etc/supervisord.conf
+
+- name: start supervisor
+  service: name=supervisor state=started

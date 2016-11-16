@@ -1,0 +1,29 @@
+---
+- name: install gemset
+  shell: bash -lc "{{ item }}"
+  with_items:
+    - rvm use 2.3.0@{{gemset}} --create
+    - rvm use 2.3.0@{{gemset}} && gem install jekyll specific_install
+    - rvm use 2.3.0@{{gemset}} && gem specific_install https://github.com/FuhuXia/jekyll-rebuilder
+
+- name: build jekyll apps
+  include: build-apps.yml app={{ _app }}
+  with_items: jekyll_apps
+  loop_control:
+    loop_var: _app
+
+- include: supervisor.yml
+
+- name: copy all needed files
+  action: copy src={{item}} dest=/{{item}}
+  with_items:
+    - etc/apache2/sites-enabled/jekyll.conf
+
+- name: enable modules
+  apache2_module: name={{item}} state=present
+  with_items:
+    - proxy
+    - proxy_http
+
+- name: restart apache
+  service: name=apache2 state=restarted
