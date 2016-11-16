@@ -1,0 +1,33 @@
+---
+- name: Install Jekyll Apps
+  hosts: jekyll-web
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  vars:
+    ruby_version: "2.3.0"
+    gemset: "jekyll"
+    jekyll_apps:
+      - {
+          name: "sdg",
+          repo: "https://github.com/GSA/sdg-indicators/",
+          config: "_config_prod.yml",
+          branch: "master"
+        }
+      - {
+          name: "federation",
+          repo: "https://github.com/GSA/us-data-federation",
+          config: "_config_prod.yml",
+          branch: "master"
+        }
+
+  roles:
+    - roles/software/ubuntu/common
+    - roles/software/ckan/apache
+    - { role: rvm_io.rvm1-ruby,
+        rvm1_rvm_check_for_updates: False,
+        rvm1_rubies: ['ruby-{{ruby_version}}'],
+      }
+    - roles/software/jekyll
+
