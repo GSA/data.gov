@@ -45,6 +45,11 @@
   with_items: "{{td_plugin_status.results}}"
   when: item == "fluent-plugin-aws-elasticsearch-service"
   notify: restart td-agent
+- name: Configure excon plugin spec permissions
+  file: path=/opt/td-agent/embedded/lib/ruby/gems/2.1.0/specifications/excon-0.54.0.gemspec mode=0775
+  with_items: "{{td_plugin_status.results}}"
+  when: item == "fluent-plugin-aws-elasticsearch-service"
+  notify: restart td-agent
 - name: Configure nginx log permissions
   file: path=/var/log/nginx recurse=true state=directory mode=0775
   tags: nginx
