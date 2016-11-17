@@ -29,12 +29,8 @@
     dest: "{{ saml_sp_private_key_path }}"
     mode: 0644
 
-- name: MariaDB client
-  package:
-    name: mariadb-client-5.5
-    state: present
-
-- name: PHP mcrypt
-  package:
-    name: php-mcrypt
-    state: present
+- name: Installing required packages
+  package: name={{ item }} state=installed
+  with_items:
+    - mariadb-client-5.5
+    - php-mcrypt

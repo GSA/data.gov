@@ -37,10 +37,12 @@
   environment:
         COMPOSER_DISCARD_CHANGES: "true"
 
-- name: Ensuring config directory exists
+- name: Ensuring required directories exist
   file:
-    path: "{{ project_source_new_code_path }}/application/config/{{ codeigniter_environment }}"
+    path: "{{ item }}"
     state: directory
+  with_items:
+    - "{{ project_source_new_code_path }}/application/config/{{ codeigniter_environment }}"
 
 - name: Copying config files
   template:

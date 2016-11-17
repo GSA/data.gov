@@ -1,5 +1,0 @@
-[dashboard-web]
-localhost:2222
-
-[all:vars]
-vars_group=local-dev

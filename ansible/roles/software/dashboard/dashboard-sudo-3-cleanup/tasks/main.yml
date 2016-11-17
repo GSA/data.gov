@@ -7,6 +7,15 @@
     mode: 0755
     recurse: yes
 
+- name: Ensuring required directories exist and have write permissions
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0775
+  with_items:
+    - "{{ project_source_path }}/shared/downloads"
+    - "{{ project_source_path }}/shared/archive"
+
 - name: Chown www-data /var/www/
   file:
     path: "/var/www"

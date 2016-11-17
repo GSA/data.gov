@@ -1,5 +1,0 @@
-[dashboard-web]
-dashboard.aws
-
-[all:vars]
-vars_group=amazon-vsl4

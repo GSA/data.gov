@@ -16,7 +16,6 @@
 
   roles:
   - { role: datagov-sudo-1-security, tags: [provision] }
-  - { role: git-fix, tags: [provision] }
   - { role: git, tags: [provision] }
   - { role: sendmail, tags: [provision] }
   - { role: nginx, tags: [provision] }
