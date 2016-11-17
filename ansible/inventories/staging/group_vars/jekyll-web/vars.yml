@@ -1,0 +1,4 @@
+---
+
+# secrets
+jekyll_webhook_secret: "{{ vault_jekyll_webhook_secret }}"
