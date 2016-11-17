@@ -101,7 +101,6 @@
         path "/var/log/apache2/access.log"
         tag "es.apache.access"
       </source>
-  when: item == "fluent-plugin-cloudwatch-logs"
   tags: apache2
   notify: restart td-agent
 
@@ -124,8 +123,6 @@
         add_tag_prefix
         tag "es.nginx.access"
       </source>
-  with_items: "{{td_agent_plugins}}"
-  when: item == "fluent-plugin-cloudwatch-logs"
   tags: tomcat7
   notify: restart td-agent
 
