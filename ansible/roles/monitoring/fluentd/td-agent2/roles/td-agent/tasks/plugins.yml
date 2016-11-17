@@ -139,6 +139,7 @@
         log_stream_name "#{Socket.gethostname}"
         auto_create_stream true
       </match>
+  with_items: "{{td_plugin_status.results}}"
   when: item == "fluent-plugin-cloudwatch-logs"
   notify: restart td-agent
   
@@ -153,6 +154,7 @@
         log_stream_name "#{Socket.gethostname}"
         auto_create_stream true
       </match>
+  with_items: "{{td_plugin_status.results}}"
   when: item == "fluent-plugin-cloudwatch-logs"
   notify: restart td-agent
 
@@ -173,5 +175,6 @@
           region us-east-1
         </endpoint>
       </match>
+  with_items: "{{td_plugin_status.results}}"
   when: item == "fluent-plugin-aws-elasticsearch-service"
   notify: restart td-agent
