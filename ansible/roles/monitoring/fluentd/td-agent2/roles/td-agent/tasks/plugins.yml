@@ -32,7 +32,7 @@
   file: path=/opt/td-agent/embedded/lib/ruby/gems/2.1.0/specifications recurse=true mode=0775
   notify: restart td-agent
 - name: Configure nginx log permissions
-  file: path=/var/log/nginx recurse=true state=directory mode=0775
+  file: path=/var/log/nginx/*.log mode=0775
   tags: nginx
   notify: restart td-agent
 - name: Configure tomcat log permissions
