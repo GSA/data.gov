@@ -3,5 +3,5 @@
 td_agent_version: '1.1.18-1'
 # td_agent_architecture: 'i386'
 td_agent_architecture: 'amd64'
-td_agent_plugins: [ 'fluent-plugin-cloudwatch-logs' ]
+td_agent_plugins: [ 'fluent-plugin-cloudwatch-logs', 'fluent-plugin-aws-elasticsearch-service' ]
 ansible_distribution_version: '14.04'
