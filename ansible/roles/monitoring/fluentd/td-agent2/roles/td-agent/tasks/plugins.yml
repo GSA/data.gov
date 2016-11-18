@@ -29,7 +29,7 @@
   file: path=/opt/td-agent/embedded/lib/ruby/gems/2.1.0/gems recurse=true state=directory mode=0775
   notify: restart td-agent
 - name: Configure gemspec permissions
-  file: path=/opt/td-agent/embedded/lib/ruby/gems/2.1.0/specifications recurse=true mode=0664
+  file: path=/opt/td-agent/embedded/lib/ruby/gems/2.1.0/specifications recurse=true mode=0775
   notify: restart td-agent
 - name: Configure nginx log permissions
   file: path=/var/log/nginx recurse=true state=directory mode=0775
