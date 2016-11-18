@@ -13,13 +13,17 @@
           name: "sdg",
           repo: "https://github.com/GSA/sdg-indicators/",
           config: "_config_prod.yml",
-          branch: "master"
+          branch: "master",
+          port: 8000,
+          s3_bucket: "{{ s3_bucket_sdg }}"
         }
       - {
           name: "federation",
           repo: "https://github.com/GSA/us-data-federation",
           config: "_config_prod.yml",
-          branch: "master"
+          branch: "master",
+          port: 8001,
+          s3_bucket: "{{ s3_bucket_federation }}"
         }
 
   roles:

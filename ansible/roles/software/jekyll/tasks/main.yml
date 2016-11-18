@@ -9,11 +9,10 @@
     - rvm use 2.3.0@{{gemset}} && gem uninstall jekyll-rebuilder
     - rvm use 2.3.0@{{gemset}} && gem specific_install https://github.com/FuhuXia/jekyll-rebuilder
 
-- name: build jekyll apps
-  include: build-apps.yml app={{ _app }}
+
+- name: get code
+  git: repo={{item.repo}} dest=/root/{{item.name}} version={{item.branch|default('master')}}
   with_items: jekyll_apps
-  loop_control:
-    loop_var: _app
 
 - include: supervisor.yml
 

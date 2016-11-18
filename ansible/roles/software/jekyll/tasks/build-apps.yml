@@ -1,8 +1,0 @@
----
-- name: get code
-  git: repo={{app.repo}} dest=/root/{{app.name}} version={{app.branch|default('master')}}
-
-- name: generate jekyll files for {{app.name}}
-  shell: bash -lc "{{ item }}"
-  with_items:
-    - rvm use 2.3.0@{{gemset}} && cd /root/{{app.name}} && jekyll build --config {{app.config}}
