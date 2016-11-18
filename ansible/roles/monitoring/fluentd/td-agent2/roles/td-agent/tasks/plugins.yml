@@ -28,27 +28,27 @@
 - name: Configure cloudwatch-log plugin gem permissions
   file: path=/opt/td-agent/embedded/lib/ruby/gems/2.1.0/gems/fluent-plugin-cloudwatch-logs-0.3.4 recurse=true state=directory mode=0775
   with_items: "{{td_plugin_status.results}}"
-  when: item == "fluent-plugin-cloudwatch-logs"
+#  when: item == "fluent-plugin-cloudwatch-logs"
   notify: restart td-agent
 - name: Configure cloudwatch-log plugin spec permissions
   file: path=/opt/td-agent/embedded/lib/ruby/gems/2.1.0/specifications/fluent-plugin-cloudwatch-logs-0.3.4.gemspec mode=0775
   with_items: "{{td_plugin_status.results}}"
-  when: item == "fluent-plugin-cloudwatch-logs"
+#  when: item == "fluent-plugin-cloudwatch-logs"
   notify: restart td-agent
 - name: Configure AWS ES plugin gem permissions
   file: path=/opt/td-agent/embedded/lib/ruby/gems/2.1.0/gems/fluent-plugin-aws-elasticsearch-service-0.1.6 recurse=true state=directory mode=0775
   with_items: "{{td_plugin_status.results}}"
-  when: item == "fluent-plugin-aws-elasticsearch-service"
+#  when: item == "fluent-plugin-aws-elasticsearch-service"
   notify: restart td-agent
 - name: Configure cloudwatch-log plugin spec permissions
   file: path=/opt/td-agent/embedded/lib/ruby/gems/2.1.0/specifications/fluent-plugin-aws-elasticsearch-service-0.1.6.gemspec mode=0775
   with_items: "{{td_plugin_status.results}}"
-  when: item == "fluent-plugin-aws-elasticsearch-service"
+#  when: item == "fluent-plugin-aws-elasticsearch-service"
   notify: restart td-agent
 - name: Configure excon plugin spec permissions
   file: path=/opt/td-agent/embedded/lib/ruby/gems/2.1.0/specifications/excon-0.54.0.gemspec mode=0775
   with_items: "{{td_plugin_status.results}}"
-  when: item == "fluent-plugin-aws-elasticsearch-service"
+#  when: item == "fluent-plugin-aws-elasticsearch-service"
   notify: restart td-agent
 - name: Configure nginx log permissions
   file: path=/var/log/nginx recurse=true state=directory mode=0775
