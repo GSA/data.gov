@@ -1,4 +1,6 @@
 ---
+- pip: name=s3cmd state=present
+
 - name: install gemset
   shell: bash -lc "{{ item }}"
   with_items:
@@ -19,6 +21,7 @@
   action: copy src={{item}} dest=/{{item}}
   with_items:
     - etc/apache2/sites-enabled/jekyll.conf
+    - root/.s3cfg
 
 - name: enable modules
   apache2_module: name={{item}} state=present
