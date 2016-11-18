@@ -12,5 +12,9 @@
   with_items:
     - etc/supervisord.conf
 
+- name: update supervisor if necessary
+  shell: supervisorctl reread && supervisorctl update
+  ignore_errors: yes
+
 - name: start supervisor
-  service: name=supervisor state=started
+  service: name=supervisor state=restarted
