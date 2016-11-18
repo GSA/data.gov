@@ -1,4 +1,7 @@
 ---
+# s3
+jekyll_sdg_s3_bucket: 
+jekyll_federation_s3_bucket: 
 
 # secrets
 jekyll_webhook_secret: "{{ vault_jekyll_webhook_secret }}"

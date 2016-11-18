@@ -27,7 +27,7 @@ supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
 
 
 [program:jekyll-sdg]
-command=/usr/local/rvm/gems/ruby-2.3.0@jekyll/wrappers/jekyll-rebuilder --port 8000 --secret {{ jekyll_webhook_secret }} --config _config_prod.yml --branch master
+command=/usr/local/rvm/gems/ruby-2.3.0@jekyll/wrappers/jekyll-rebuilder --port 8000 --secret {{ jekyll_webhook_secret }} --config _config_prod.yml --branch master --s3bucket {{jekyll_sdg_s3_bucket}}
 directory=/root/sdg
 startretries=10000             ; max # of serial start failures (default 3)
 stdout_logfile=/var/log/jekyll-sdg].log
@@ -35,7 +35,7 @@ redirect_stderr=true
 autostart=true
 
 [program:jekyll-federation]
-command=/usr/local/rvm/gems/ruby-2.3.0@jekyll/wrappers/jekyll-rebuilder --port 8001 --secret {{ jekyll_webhook_secret }} --config _config_prod.yml --branch master
+command=/usr/local/rvm/gems/ruby-2.3.0@jekyll/wrappers/jekyll-rebuilder --port 8001 --secret {{ jekyll_webhook_secret }} --config _config_prod.yml --branch master --s3bucket {{jekyll_federation_s3_bucket}}
 directory=/root/federation
 startretries=10000             ; max # of serial start failures (default 3)
 stdout_logfile=/var/log/jekyll-federation.log
