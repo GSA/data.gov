@@ -10,20 +10,22 @@
     gemset: "jekyll"
     jekyll_apps:
       - {
-          name: "sdg",
+          name: "sdg-indicators",
           repo: "https://github.com/GSA/sdg-indicators/",
           config: "_config_prod.yml",
           branch: "master",
           port: 8000,
-          s3_bucket: "{{ s3_bucket_sdg }}"
+          s3_bucket: "{{ s3_bucket_sdg }}",
+          secret_key: "{{ jekyll_webhook_secret }}"
         }
       - {
-          name: "federation",
+          name: "data-federation",
           repo: "https://github.com/GSA/us-data-federation",
           config: "_config_prod.yml",
           branch: "master",
           port: 8001,
-          s3_bucket: "{{ s3_bucket_federation }}"
+          s3_bucket: "{{ s3_bucket_federation }}",
+          secret_key: "{{ jekyll_webhook_secret }}"
         }
 
   roles:

@@ -19,8 +19,12 @@
 - name: copy all needed files
   action: copy src={{item}} dest=/{{item}}
   with_items:
-    - etc/apache2/sites-enabled/jekyll.conf
     - root/.s3cfg
+
+- name: copy template files
+  template: src=templates/{{item}}.j2 dest=/{{item}}
+  with_items:
+    - etc/apache2/sites-enabled/jekyll.conf
 
 - name: enable modules
   apache2_module: name={{item}} state=present
