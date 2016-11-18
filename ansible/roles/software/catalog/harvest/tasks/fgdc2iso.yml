@@ -9,3 +9,4 @@
   action: copy src={{item}} dest=/{{item}}
   with_items:
     - var/lib/tomcat6/webapps/fgdc2iso.war
+    - etc/saxon-license.lic
