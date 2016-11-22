@@ -1,0 +1,11 @@
+---
+# main.yml used by Ansible-Container to run roles in development within Docker Containers  
+- hosts: django
+  roles:
+    - django-gunicorn
+- hosts: gulp
+  roles:
+    - gulp-static
+- hosts: nginx
+  roles:
+    - role: j00bar.nginx-container

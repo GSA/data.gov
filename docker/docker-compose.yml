@@ -1,0 +1,19 @@
+version: 2
+services:
+  jumpbox:
+    image: datagov/ansible-base:latest
+    container_name: jumpbox
+    expose:
+      - "22"
+    volumes:
+      - ~/.ssh/id_rsa.pub:/home/ubuntu/.ssh/authorized_keys
+    privileged: true
+
+  catalog:
+    image: datagov/ansible-base:latest
+    links:
+      - jumpbox
+    volumes:
+      - ~/.ssh/id_rsa:/root/.ssh/id_rsa
+      - ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub
+      - .:/ansible/playbooks
