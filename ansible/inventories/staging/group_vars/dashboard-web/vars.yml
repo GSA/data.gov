@@ -26,7 +26,7 @@ php_webserver_daemon: nginx
 project_git_repo: https://github.com/alex-perfilov-reisys/project-open-data-dashboard.git
 project_git_version: ansible
 
-codeigniter_environment: development
+codeigniter_environment: production
 
 # Project path
 project_source_rollback_path: /var/www/dashboard/rollback
