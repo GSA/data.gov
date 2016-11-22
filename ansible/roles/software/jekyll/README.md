@@ -25,6 +25,6 @@ To add/config apps, edit jekyll_apps in `ansible/jekyll.yml`, for example:
 - `secret_key` is the secret for the webhook url.
 
 
-A call to the http://remote-machine-ip/webhook/[name]/[secret_key] will trigger the jekyll rebuild.
+A call to the http://remote-machine-ip/webhook/[name]/[secret_key] will trigger the jekyll rebuild. HTTPS protocol is recommended to protect the secret_key.
 
 By default, the app is reading EC2 IAM role info to be authenticated to push code to s3. Or, optionally, the aws key and cert pair can been added into /root/.s3cfg.
