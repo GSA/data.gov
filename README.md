@@ -34,34 +34,8 @@ Included in this Repository:
 | Infrastructure Switch Over | <img src="https://img.shields.io/badge/status-On%20Track-blue.svg" /> | 12/1/2016 - 1/1/2016 |
 
 # Requirements for Infrastructure and Software Provisioning
-- [ ] Ansible > 1.10
-- [ ] SSH access (via keypair) to remote instances
-- [ ] [Static Inventory of Instances](http://docs.ansible.com/ansible/intro_inventory.html) OR using [Ansible AWS Cloud Module for a dynamic inventory](http://docs.ansible.com/ansible/intro_dynamic_inventory.html)
-
-## Requirements for Infrastructure Provisioning (Dev/Test)
-- [ ] Install Boto3 (AWS API SDK) Python library on ssh host
-`sudo pip install boto3`
-- [ ] Add a ansible-secret.txt
-`nano ansible-secret.txt`
-Copy/Paste
-
-Set Shell Variable for Ansible Vault
-`export ANSIBLE_VAULT_PASSWORD_FILE=~/ansible-secret.txt`
-
-## Create Development Environment
-
-**Create a Virtual Private Cloud (VPC):**
-`ansible-playbook create_datagov_vpc.yml -e "vpc_name=datagov"`
-
-**Delete VPC:**
-`ansible-playbook delete_datagov_vpc.yml -e "vpc_name=datagov"`
-
-**Create stack within VPC:**
-`ansible-playbook create_catalog_stack.yml "vpc_name=datagov"`
-
-**Delete stack within VPC:**
-`ansible-playbook delete_catalog_# Requirements:
-
+- Ansible > 1.10
+- SSH access (via keypair) to remote instances
 - boto3 (for infrastructure provisioning only): https://github.com/boto/boto3
 - ansible-secret.txt: `export ANSIBLE_VAULT_PASSWORD_FILE=~/ansible-secret.txt`
 - run all provisioning/app deployment commands from repo's `ansible` folder 
@@ -89,25 +63,25 @@ Set Shell Variable for Ansible Vault
 # Provision apps
 ## Wordpress:
 
-**provision vm:** `ansible-playbook datagov-web.yml -i {{ inventory }} --skip-tags="deploy-rollback" --limit wordpress-web`
+**provision vm:** `ansible-playbook datagov-web.yml -i {{ inventory }} --skip-tags="deploy-rollback"`
 
-**deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy" --limit wordpress-web`
+**deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy"`
 
-**deploy rollback:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy-rollback" --limit wordpress-web`
+**deploy rollback:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy-rollback"`
 ## Dashboard
 
-**provision vm:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --skip-tags="deploy-rollback" --limit dashboard-web`
+**provision vm:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --skip-tags="deploy-rollback"`
 
-**deploy app:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="deploy" --limit dashboard-web`
+**deploy app:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="deploy"`
 
-**deploy rollback:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="deploy-rollback" --limit dashboard-web`
+**deploy rollback:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="deploy-rollback"`
 ## CRM
 
-**provision vm:** `ansible-playbook crm-web.yml -i {{ inventory }} --skip-tags="deploy-rollback" --limit crm-web`
+**provision vm:** `ansible-playbook crm-web.yml -i {{ inventory }} --skip-tags="deploy-rollback"`
 
-**deploy app:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="deploy" --limit crm-web`
+**deploy app:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="deploy"`
 
-**deploy rollback:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="deploy-rollback" --limit crm-web" --limit crm-web`
+**deploy rollback:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="deploy-rollback"`
 ## Catalog:
 
 **provision vm - web:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="frontend,ec2" --skip-tags="solr,db,cron" --limit catalog-web`
