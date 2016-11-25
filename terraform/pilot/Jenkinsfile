@@ -17,7 +17,8 @@ node("master"){
 		//docker.image('hashicorp/terraform:light').run("plan")//("","TF_VAR_environment=Dev TF_VAR_gitbranch="+"master"+" terraform plan")
 			//sh "docker run -i -t hashicorp/terraform \"plan\""
 		docker.image('hashicorp/terraform:light').inside{
-			sh "plan"
+			sh "ls"
+			sh "terraform plan"
 		}
 		
 	}
