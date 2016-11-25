@@ -18,8 +18,9 @@ node("master"){
 			//sh "docker run -i -t hashicorp/terraform \"plan\""
 		docker.image('hashicorp/terraform:light').inside{
 			sh "ls"
-			sh "terraform plan"
+			//sh "terraform plan"
 		}
+		sh "terraform plan"
 		
 	}
 }
