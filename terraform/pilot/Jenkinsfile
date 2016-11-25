@@ -4,15 +4,15 @@ stage 'Validate DEV AWS Stack'
 node("master"){
 	checkout scm
 	dir("terraform/pilot/"){
-	sh "rm -rf terraform.tfstate"
-	docker.image('hashicorp/terraform').inside {
+		sh "rm -rf terraform.tfstate"
 		try{
-				sh "aws s3 cp s3://"+env.BUCKET_NAME+"/terraform-env/"+"master"+"/terraform-dev.tfstate terraform.tfstate"
-				//sh "aws s3 cp s3://data-gov/terraform-env/master/terraform-dev.tfstate terraform.tfstate"
-			} catch (Exception e) {
-				//if terraform.tfstate isn't found in S3, we can catch this exception and assume it's a new environment
-				echo "terraform.tfstate doesn't exist in S3 branch, this is a new terraform environment"
-			}
+			sh "aws s3 cp s3://"+env.BUCKET_NAME+"/terraform-env/"+"master"+"/terraform-dev.tfstate terraform.tfstate"
+			//sh "aws s3 cp s3://data-gov/terraform-env/master/terraform-dev.tfstate terraform.tfstate"
+		} catch (Exception e) {
+			//if terraform.tfstate isn't found in S3, we can catch this exception and assume it's a new environment
+			echo "terraform.tfstate doesn't exist in S3 branch, this is a new terraform environment"
+		}
+		docker.image('hashicorp/terraform').inside {
 			sh "TF_VAR_environment=Dev TF_VAR_gitbranch="+"master"+" terraform plan"
 		}
 	}
