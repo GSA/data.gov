@@ -1,5 +1,19 @@
-provider "aws" {
-    region = "${var.region}"
+variable "region" {
+    description = "AWS region to work in"
+    default = "us-east-1"
+}
+
+variable "key_name" {
+  description = "Desired name of AWS key pair"
+  default = "datagov-nhunt"
+}
+
+variable "ubuntu_amis" {
+  description = "Ubuntu AMIs"
+  default = {
+    us-east-1-hardened = "ami-fce3c696"
+    us-east-1-not-hardened = "ami-857f5392"
+  }
 }
 
 # CREATE JUMP HOST
