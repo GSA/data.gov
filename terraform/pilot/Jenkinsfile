@@ -14,8 +14,11 @@ node("master"){
 				echo "terraform.tfstate doesn't exist in S3 branch, this is a new terraform environment"
 			}
 		//}
-		docker.image('hashicorp/terraform:light').withRun("plan")//("","TF_VAR_environment=Dev TF_VAR_gitbranch="+"master"+" terraform plan")
+		//docker.image('hashicorp/terraform:light').run("plan")//("","TF_VAR_environment=Dev TF_VAR_gitbranch="+"master"+" terraform plan")
 			//sh "docker run -i -t hashicorp/terraform \"plan\""
+		docker.image('hashicorp/terraform:light').inside{
+			sh "plan"
+		}
 		
 	}
 }
