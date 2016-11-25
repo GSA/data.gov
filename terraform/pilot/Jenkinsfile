@@ -15,7 +15,7 @@ node("master"){
 			}
 		//}
 		//docker.image('hashicorp/terraform:light').run("","TF_VAR_environment=Dev TF_VAR_gitbranch="+"master"+" terraform plan")
-			sh "docker run -i -t hashicorp/terraform 'TFAA_VAR_environment=Dev TF_VAR_gitbranch="+"master"+" terraform plan'"
+			sh "docker run -i -t hashicorp/terraform \"plan\""
 		
 	}
 }
