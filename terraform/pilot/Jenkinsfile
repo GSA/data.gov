@@ -6,12 +6,12 @@ node("master"){
 	dir("terraform/pilot/"){
 	sh "rm -rf terraform.tfstate"
 	try{
-			sh "aws s3 cp s3://"+env.BUCKET_NAME+"/terraform-env/"+env.BRANCH_NAME+"/terraform-dev.tfstate terraform.tfstate"
+			sh "aws s3 cp s3://"+env.BUCKET_NAME+"/terraform-env/"+"master"+"/terraform-dev.tfstate terraform.tfstate"
 		} catch (Exception e) {
 			//if terraform.tfstate isn't found in S3, we can catch this exception and assume it's a new environment
 			echo "terraform.tfstate doesn't exist in S3 branch, this is a new terraform environment"
 		}
-		sh "TF_VAR_environment=Dev TF_VAR_gitbranch="+env.BRANCH_NAME+" terraform plan"
+		sh "TF_VAR_environment=Dev TF_VAR_gitbranch="+"master"+" terraform plan"
 	}
 }
 input "Proceed with Dev provisioning?"
@@ -19,8 +19,8 @@ input "Proceed with Dev provisioning?"
 stage 'Provision DEV AWS Stack'
 node("master"){
 	dir("terraform/pilot"){
-		sh "TF_VAR_environment=Dev TF_VAR_gitbranch="+env.BRANCH_NAME+" terraform apply"
-		sh "aws s3 cp terraform/pilot/terraform.tfstate s3://"+env.BUCKET_NAME+"/terraform-env/"+env.BRANCH_NAME+"/terraform-dev.tfstate"
+		sh "TF_VAR_environment=Dev TF_VAR_gitbranch="+"master"+" terraform apply"
+		sh "aws s3 cp terraform/pilot/terraform.tfstate s3://"+env.BUCKET_NAME+"/terraform-env/"+"master"+"/terraform-dev.tfstate"
 		sh "rm -rf terraform.tfstate"
 	}
 }
