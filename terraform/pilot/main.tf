@@ -23,7 +23,7 @@ resource "aws_instance" "datagov_jump" {
     instance_type = "t2.micro"
     key_name = "${var.key_name}"
     vpc_security_group_ids = ["sg-ba1b05c1"]
-    
+    associate_public_ip_address = true
     subnet_id = "subnet-29c04203"
     root_block_device = {
         volume_type = "gp2"
