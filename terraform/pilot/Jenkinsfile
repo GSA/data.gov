@@ -6,7 +6,7 @@ node("master"){
 	dir("terraform/pilot/"){
 	sh "rm -rf terraform.tfstate"
 	try{
-			sh "aws s3 cp s3://+"env.BUCKET_NAME"+/terraform-env/"+env.BRANCH_NAME+"/terraform-dev.tfstate terraform.tfstate"
+			sh "aws s3 cp s3://"+env.BUCKET_NAME+"/terraform-env/"+env.BRANCH_NAME+"/terraform-dev.tfstate terraform.tfstate"
 		} catch (Exception e) {
 			//if terraform.tfstate isn't found in S3, we can catch this exception and assume it's a new environment
 			echo "terraform.tfstate doesn't exist in S3 branch, this is a new terraform environment"
@@ -20,7 +20,7 @@ stage 'Provision DEV AWS Stack'
 node("master"){
 	dir("terraform/pilot"){
 		sh "TF_VAR_environment=Dev TF_VAR_gitbranch="+env.BRANCH_NAME+" terraform apply"
-		sh "aws s3 cp terraform/pilot/terraform.tfstate s3://+"env.BUCKET_NAME"+/terraform-env/"+env.BRANCH_NAME+"/terraform-dev.tfstate"
+		sh "aws s3 cp terraform/pilot/terraform.tfstate s3://"+env.BUCKET_NAME+"/terraform-env/"+env.BRANCH_NAME+"/terraform-dev.tfstate"
 		sh "rm -rf terraform.tfstate"
 	}
 }
@@ -32,7 +32,7 @@ if(env.BRANCH_NAME=="master"){
 		checkout scm
 		sh "rm -rf terraform.tfstate"
 		try{
-			sh "aws s3 cp s3://+"env.BUCKET_NAME"+/terraform-env/"+env.BRANCH_NAME+"/terraform-prod.tfstate terraform.tfstate"
+			sh "aws s3 cp s3://"+env.BUCKET_NAME+"/terraform-env/"+env.BRANCH_NAME+"/terraform-prod.tfstate terraform.tfstate"
 		} catch (Exception e) {
 			echo "terraform.tfstate doesn't exist in S3 branch, this is a new terraform environment"
 		}
@@ -43,7 +43,7 @@ if(env.BRANCH_NAME=="master"){
 	stage 'Provision PROD AWS Stack'
 	node("master"){
 		sh "TF_VAR_environment=Prod TF_VAR_gitbranch="+env.BRANCH_NAME+" terraform apply"
-		sh "aws s3 cp terraform.tfstate s3://+"env.BUCKET_NAME"+/terraform-env/"+env.BRANCH_NAME+"/terraform-prod.tfstate"
+		sh "aws s3 cp terraform.tfstate s3://"+env.BUCKET_NAME+"/terraform-env/"+env.BRANCH_NAME+"/terraform-prod.tfstate"
 		sh "rm -rf terraform.tfstate"
 		if(env.BRANCH_NAME=="master"){
 			sh('git -c "user.name=Jenkins" -c "user.email=Jenkins@aquilent.com" tag -a Jenkins-'+env.BUILD_ID+' -m "Jenkins"')
