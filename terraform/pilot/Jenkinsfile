@@ -4,10 +4,10 @@ stage 'Validate DEV AWS Stack'
 node("master"){
 	checkout scm
 	dir("terraform/pilot/"){
-	sh "rm -rf tffff.tfstate"
+	sh "rm -rf terraform.tfstate"
 	try{
 			//sh "aws s3 cp s3://"+env.BUCKET_NAME+"/terraform-env/"+"master"+"/terraform-dev.tfstate terraform.tfstate"
-			sh "aws s3 cp s3data-gov/terraform-env/master/terraform-dev.tfstate terraform.tfstate"
+			sh "aws s3 cp s3://data-gov/terraform-env/master/terraform-dev.tfstate terraform.tfstate"
 		} catch (Exception e) {
 			//if terraform.tfstate isn't found in S3, we can catch this exception and assume it's a new environment
 			echo "terraform.tfstate doesn't exist in S3 branch, this is a new terraform environment"
