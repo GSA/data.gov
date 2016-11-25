@@ -17,7 +17,7 @@ resource "aws_instance" "datagov_jump" {
     tags = {
         Name = "datagov_jumphost"
         client = "datagov"
-        "Terraform Group" = "Neil terraform pilot"
+        TerraformGroup = "Neil terraform pilot"
     }
 
 }
