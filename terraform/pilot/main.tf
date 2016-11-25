@@ -20,7 +20,7 @@ variable "ubuntu_amis" {
 resource "aws_instance" "datagov_jump" {
     #ami = "${lookup(var.ubuntu_amis, ${var.region}-hardened)}"
     ami = "ami-fce3c696"
-    instance_type = "t2.micro"
+    instance_type = "t2.nano"
     key_name = "${var.key_name}"
     vpc_security_group_ids = ["sg-ba1b05c1"]
     associate_public_ip_address = true
