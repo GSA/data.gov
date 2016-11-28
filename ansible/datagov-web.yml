@@ -26,6 +26,7 @@
   - { role: composer, tags: [php, provision] }
   - { role: vim, tags: [provision, vim] }
   - { role: datagov-sudo-2-init, tags: [always] }
+  - { role: secops-ssh, tags: [provision, secops] }
 
 
 - name: Deploying Data.gov
