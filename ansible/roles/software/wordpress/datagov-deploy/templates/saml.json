@@ -1,7 +1,7 @@
 {
     "option_version": "0.9.2",
     "enabled": true,
-    "idp": "{{ saml_idp_id | regex_escape() }}",
+    "idp": "{{ saml_idp_id }}",
     "nameidpolicy": "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress",
     "attributes": {
         "username": "maxEmail",
