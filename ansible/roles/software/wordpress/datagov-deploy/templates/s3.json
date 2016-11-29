@@ -1,1 +1,15 @@
-{"post_meta_version":5,"bucket":"{{ s3_bucket }}","region":"","domain":"path","cloudfront":"","object-prefix":"{{ s3_prefix | regex_escape() }}","copy-to-s3":"1","serve-from-s3":"1","remove-local-file":"0","force-https":"0","object-versioning":"0","use-yearmonth-folders":"1","enable-object-prefix":"1"}
+{
+	"post_meta_version": 5,
+	"bucket": "{{ s3_bucket }}",
+	"region": "",
+	"domain": "path",
+	"cloudfront": "",
+	"object-prefix": "{{ s3_prefix | regex_escape() }}",
+	"copy-to-s3": "1",
+	"serve-from-s3": "1",
+	"remove-local-file": "1",
+	"force-https": "0",
+	"object-versioning": "0",
+	"use-yearmonth-folders": "1",
+	"enable-object-prefix": "1"
+}
