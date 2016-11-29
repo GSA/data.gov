@@ -35,6 +35,14 @@
     mode: 0777
     recurse: yes
 
+- name: Make uploads folder writable by nginx 
+  file:
+    dest: "{{ project_source_path }}/web/app/uploads"
+    state: directory
+    owner: "ubuntu"
+    group: "www-data"
+    recurse: yes
+
 - name: Docker specific
   debug:
     msg: "Now running docker specific tasks"
