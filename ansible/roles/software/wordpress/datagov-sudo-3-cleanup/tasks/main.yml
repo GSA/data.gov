@@ -39,7 +39,7 @@
   file:
     dest: "{{ project_source_path }}/web/app/uploads"
     state: directory
-    owner: "ubuntu"
+    owner: "www-data"
     group: "www-data"
     recurse: yes
 

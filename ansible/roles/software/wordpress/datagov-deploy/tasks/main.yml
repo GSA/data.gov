@@ -118,18 +118,21 @@
   args:
     chdir: "{{ project_source_new_code_path }}"
   when: "'docker' == running_in and 'development' == env_wp_env"
+  run_once: true
   ignore_errors: true
 
 - name: update s3 options
   shell: cat s3.json | xargs -0 wp option update tantan_wordpress_s3 --format=json
   args:
     chdir: "{{ project_source_new_code_path }}"
+  run_once: true
   ignore_errors: true
 
 - name: Update saml saml_authentication_options
   shell: cat saml.json | xargs -0 wp option update saml_authentication_options --format=json
   args:
     chdir: "{{ project_source_new_code_path }}"
+  run_once: true
   ignore_errors: true
 
 - name: Updating admin pass
@@ -137,6 +140,7 @@
   args:
     chdir: "{{ project_source_new_code_path }}"
   when: "'docker' == running_in and 'development' == env_wp_env"
+  run_once: true
   ignore_errors: true
 
 - name: Enabling dev plugins
@@ -144,4 +148,5 @@
   args:
     chdir: "{{ project_source_new_code_path }}"
   when: "'development' == env_wp_env"
+  run_once: true
   ignore_errors: true
