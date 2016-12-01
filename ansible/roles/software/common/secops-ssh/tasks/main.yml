@@ -26,3 +26,9 @@
 - name: Update the newly created GSA scan accounts to remove password expiration
   command: passwd -x -1 "{{ secops_user }}" 
   become: true
+
+- name: make updates to the /etc/ssh/sshd_config file
+  replace: 
+    dest: "/etc/ssh/sshd_config" 
+    regexp: "AllowUsers\ ubuntu" 
+    replace: "AllowUsers ubuntu {{ secops_user }}"
