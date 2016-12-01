@@ -18,16 +18,13 @@
   file: path=/home/solr state=directory
 
 - name: Copy solr files to home dir
-  shell: cp -R ~/solr-4.2.1/example/solr/* /home/solr
+  shell: cp -R -n ~/solr-4.2.1/example/solr/* /home/solr
 
 - name: remove old /home/solr/ckan if exists
-  shell: rm -r /home/solr/ckan removes=/home/solr/ckan 
+  shell: rm -r /home/solr/{{app_type}} removes=/home/solr/{{app_type}}
 
-- name: move collection1 files to home dir
-  shell: mv /home/solr/collection1 /home/solr/ckan creates=/home/solr/ckan
-
-- name: Change default solr collection1 to ckan
-  replace: dest=/home/solr/solr.xml regexp='collection1' replace='ckan'
+- name: copy sample collection1 files to home dir
+  shell: cp -R ~/solr-4.2.1/example/solr/collection1 /home/solr/{{app_type}}
 
 - name: copy solr web.xml
   action: copy src={{item}} dest=/{{item}} mode=644 force=yes
@@ -35,12 +32,13 @@
     - var/lib/tomcat6/webapps/solr/WEB-INF/web.xml
 
 - name: copy solr schema file
-  action: copy src={{app_type}}/{{item}} dest=/{{item}} mode=644 force=yes
-  with_items:
-    - home/solr/ckan/conf/schema.xml
+  action: copy src={{app_type}}/home/solr/ckan/conf/schema.xml dest=/home/solr/{{app_type}}/conf/schema.xml mode=644 force=yes
 
 - name: Setup solr permissions
   shell: "chown -R tomcat6 /home/solr"
 
 - name: restarting tomcat service
   action: service name=tomcat6 state=restarted
+
+- name: Add the new core
+  shell: "curl 'http://127.0.0.1:8080/solr/admin/cores?action=CREATE&name={{app_type}}&instanceDir=/home/solr/{{app_type}}&config=/home/solr/{{app_type}}/conf/solrconfig.xml&schema=/home/solr/{{app_type}}/conf/schema.xml&dataDir=/home/solr/{{app_type}}'"
