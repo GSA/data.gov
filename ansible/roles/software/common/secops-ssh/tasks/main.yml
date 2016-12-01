@@ -32,3 +32,9 @@
     dest: "/etc/ssh/sshd_config" 
     regexp: "AllowUsers\ ubuntu" 
     replace: "AllowUsers ubuntu {{ secops_user }}"
+
+- name: make updates to the /etc/ssh/sshd_config file #2
+  replace: 
+    dest: "/etc/ssh/sshd_config" 
+    regexp: "AllowGroups\ ubuntu" 
+    replace: "AllowGroups ubuntu {{ secops_user }}"
