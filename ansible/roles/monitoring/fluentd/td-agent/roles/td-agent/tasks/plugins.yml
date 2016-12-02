@@ -46,6 +46,40 @@
 
 #Configure Sources
 
+- name: Configure system sources
+  blockinfile: 
+    dest: /etc/td-agent/td-agent.conf
+    marker: "#{mark} nginx source"
+    content: |
+      <source>
+        @type tail
+        format nginx
+        path /var/log/auth.log
+        tag cloudwatch.authlog
+      </source>
+      <source>
+        @type tail
+        format nginx
+        path /var/log/syslog
+        tag cloudwatch.syslog
+      </source>
+      <source>
+        type tail
+        format apache
+        time_format "%d/%b/%Y:%T %z"
+        path "/var/log/auth.log"
+        tag "es.authlog"
+      </source>
+      <source>
+        type tail
+        format apache
+        time_format "%d/%b/%Y:%T %z"
+        path "/var/log/syslog"
+        tag "es.syslog"
+      </source>
+  tags: nginx
+  notify: restart td-agent
+
 - name: Configure nginx source
   blockinfile: 
     dest: /etc/td-agent/td-agent.conf
