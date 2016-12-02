@@ -43,6 +43,12 @@
   file: path=/var/log/apache2 recurse=true state=directory mode=0755
   tags: apache2
   notify: restart td-agent
+- name: Configure syslog log permissions
+  file: path=/var/log/syslog mode=0755
+  notify: restart td-agent
+- name: Configure apache2 log permissions
+  file: path=/var/log/auth.log mode=0755
+  notify: restart td-agent
 
 #Configure Sources
 
