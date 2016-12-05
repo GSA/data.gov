@@ -5,13 +5,13 @@ catalog-web[1:2]d.dev-ocsit.bsp.gsa.gov
 catalog-harvester[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [catalog-solr]
-solrcatalog1d.dev-ocsit.bsp.gsa.gov
+datagovsolr1d.dev-ocsit.bsp.gsa.gov
 
 [inventory-web]
 inventory[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [inventory-solr]
-solrinventory1d.dev-ocsit.bsp.gsa.gov
+datagovsolr1d.dev-ocsit.bsp.gsa.gov
 
 [crm-web]
 crm-web[1:2]d.dev-ocsit.bsp.gsa.gov
