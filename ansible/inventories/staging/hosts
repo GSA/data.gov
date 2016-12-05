@@ -4,8 +4,8 @@ catalog-web[1:2]d.dev-ocsit.bsp.gsa.gov
 [catalog-harvester]
 catalog-harvester[1:2]d.dev-ocsit.bsp.gsa.gov
 
-[catalog-solr]
-datagovsolr1d.dev-ocsit.bsp.gsa.gov
+[solr]
+datagovsolr[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [inventory-web]
 inventory[1:2]d.dev-ocsit.bsp.gsa.gov
