@@ -958,7 +958,7 @@
   <requestHandler name="/replication" class="solr.ReplicationHandler" >
       <lst name="slave">
           <!--fully qualified url for the replication handler of master-->
-          <str name="masterUrl">http://{{ solr_server }}:8080/solr/{{ app_type }}/</str>
+          <str name="masterUrl">http://{{ solr_master_server }}:8080/solr/{{ app_type }}/</str>
   
           <!--Interval in which the slave should poll master. Format is HH:mm:ss-->
           <str name="pollInterval">00:00:20</str>

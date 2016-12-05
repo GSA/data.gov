@@ -3,3 +3,4 @@
 # SecOps user
 secops_user: "{{ vault_secops_user }}"
 secops_user_public_key: "{{ vault_secops_user_public_key }}"
+solr_master_server: "{{ vault_solr_master_server }}"
