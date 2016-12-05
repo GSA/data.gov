@@ -14,6 +14,9 @@
 - name: wait for the solr directory to be created
   wait_for: path=/var/lib/tomcat6/webapps/solr/WEB-INF/
 
+- name: stop tomcat service
+  action: service name=tomcat6 state=stopped
+
 - name: Create Solr home dir
   file: path=/home/solr state=directory
 
