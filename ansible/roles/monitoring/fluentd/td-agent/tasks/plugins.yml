@@ -43,8 +43,47 @@
   file: path=/var/log/apache2 recurse=true state=directory mode=0755
   tags: apache2
   notify: restart td-agent
+- name: Configure syslog log permissions
+  file: path=/var/log/syslog mode=0755
+  notify: restart td-agent
+- name: Configure apache2 log permissions
+  file: path=/var/log/auth.log mode=0755
+  notify: restart td-agent
 
 #Configure Sources
+
+- name: Configure system sources
+  blockinfile: 
+    dest: /etc/td-agent/td-agent.conf
+    marker: "#{mark} syslog source"
+    content: |
+      <source>
+        @type tail
+        format none
+        path /var/log/auth.log
+        tag cloudwatch.authlog
+      </source>
+      <source>
+        format none
+        @type tail
+        path /var/log/syslog
+        tag cloudwatch.syslog
+      </source>
+      <source>
+        type tail
+        format none
+        time_format "%d/%b/%Y:%T %z"
+        path "/var/log/auth.log"
+        tag "es.authlog"
+      </source>
+      <source>
+        type tail
+        format none
+        time_format "%d/%b/%Y:%T %z"
+        path "/var/log/syslog"
+        tag "es.syslog"
+      </source>
+  notify: restart td-agent
 
 - name: Configure nginx source
   blockinfile: 

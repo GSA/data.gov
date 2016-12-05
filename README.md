@@ -84,11 +84,11 @@ Included in this Repository:
 **deploy rollback:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="deploy-rollback"`
 ## Catalog:
 
-**provision vm - web:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="frontend,ec2" --skip-tags="solr,db,cron" --limit catalog-web`
+**provision vm - web:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="frontend,ec2,secops" --skip-tags="solr,db,cron" --limit catalog-web`
 
-**provision vm - harvester:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="harvester,ec2" --skip-tags="apache,solr,db,saml2,redis" --limit catalog-harvester`
+**provision vm - harvester:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="harvester,ec2,secops" --skip-tags="apache,solr,db,saml2,redis" --limit catalog-harvester`
 
-**provision vm - solr:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="solr" --limit catalog-solr`
+**provision vm - solr:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="solr,secops" --limit catalog-solr`
 ## Inventory
 
 **provision vm - web:** `ansible-playbook inventory.yml -i {{ inventory }} --skip-tags="solr,db" --limit inventory-web`
