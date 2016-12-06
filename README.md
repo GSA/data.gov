@@ -63,39 +63,39 @@ Included in this Repository:
 # Provision apps
 ## Wordpress:
 
-**provision vm:** `ansible-playbook datagov-web.yml -i {{ inventory }} --skip-tags="deploy-rollback"`
+**provision vm & deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="provision"`
 
 **deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy"`
 
 **deploy rollback:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy-rollback"`
 ## Dashboard
 
-**provision vm:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --skip-tags="deploy-rollback"`
+**provision vm & deploy app:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="provision"`
 
 **deploy app:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="deploy"`
 
 **deploy rollback:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="deploy-rollback"`
 ## CRM
 
-**provision vm:** `ansible-playbook crm-web.yml -i {{ inventory }} --skip-tags="deploy-rollback"`
+**provision vm & deploy app:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="provision"`
 
 **deploy app:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="deploy"`
 
 **deploy rollback:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="deploy-rollback"`
 ## Catalog:
 
-**provision vm - web:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="frontend,ec2,secops" --skip-tags="solr,db,cron" --limit catalog-web`
+**provision vm - web:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="frontend,ec2" --skip-tags="solr,db,cron" --limit catalog-web`
 
-**provision vm - harvester:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="harvester,ec2,secops" --skip-tags="apache,solr,db,saml2,redis" --limit catalog-harvester`
+**provision vm - harvester:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="harvester,ec2" --skip-tags="apache,solr,db,saml2,redis" --limit catalog-harvester`
 
-**provision vm - solr:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="solr,secops" --limit catalog-solr`
+**provision vm - solr:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="solr,secops,trendmicro" --limit catalog-solr`
 ## Inventory
 
-**provision vm - web:** `ansible-playbook inventory.yml -i {{ inventory }} --skip-tags="solr,db" --limit inventory-web`
+**provision vm - web:** `ansible-playbook inventory.yml -i {{ inventory }} --skip-tags="solr,db,deploy-rollback" --limit inventory-web`
 
-**deploy app:** `ansible-playbook inventory.yml -i {{ inventory }} --tags="deploy" --skip-tags="solr,db" --limit inventory-web`
+**deploy app:** `ansible-playbook inventory.yml -i {{ inventory }} --tags="deploy" --skip-tags="solr,db,deploy-rollback" --limit inventory-web`
 
-**provision vm - solr:** `ansible-playbook inventory.yml -i {{ inventory }} --tags="solr" --limit inventory-solr`
+**provision vm - solr:** `ansible-playbook inventory.yml -i {{ inventory }} --tags="solr,secops,trendmicro" --limit inventory-solr`
 
 ## Common:
 **install the trendmicro agent:** `ansible-playbook trendmicro.yml -i {{ inventory }}`
