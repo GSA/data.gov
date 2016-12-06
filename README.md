@@ -102,7 +102,21 @@ Included in this Repository:
 
 ## Upgrade ubuntu VMs:
 `ansible all -m shell -a "apt-get update && apt-get dist-upgrade" --sudo`
+
 `ansible all -m shell -a "service tomcat6 restart" --sudo`
+
 `ansible all -m shell -a "service ntp restart" --sudo`
+
 `ansible all -m shell -a "/usr/bin/killall dhclient && dhclient -1 -v -pf /run/dhclient.eth0.pid -lf /var/lib/dhcp/dhclient.eth0.leases eth0" --sudo`
+
+## Troubleshooting:
+**dpkg errors**:
+
+`sed -i '/postdrop/d' /var/lib/dpkg/statoverride`
+
+`sed -i '/ssl-cert/d' /var/lib/dpkg/statoverride`
+
+**ntpd issues**: `apt-get remove ntp && apt-get purge ntp && apt-get autoclean && apt-get autoremove`
+
+**Unable to resolve host IP**: `echo 127.0.0.1 $(hostname) >> /etc/hosts`
 
