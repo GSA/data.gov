@@ -3,7 +3,7 @@
 - name: get agent.rpm
   get_url:
     url: https://dsm.sec.helix.gsa.gov:443/software/agent/Ubuntu_14.04/x86_64/
-    dest: /tmp/agent.rpm
+    dest: /tmp/agent.deb
     validate_certs: no
 
 - name: install trendmicro rpm
