@@ -2,12 +2,12 @@
 
 - name: get agent.rpm
   get_url:
-    url: https://dsm.sec.helix.gsa.gov:443/software/agent/RedHat_EL6/x86_64/
+    url: https://dsm.sec.helix.gsa.gov:443/software/agent/Ubuntu_14.04/x86_64/
     dest: /tmp/agent.rpm
     validate_certs: no
 
 - name: install trendmicro rpm
-  shell: rpm -ihv /tmp/agent.rpm
+  shell: dpkg -i /tmp/agent.deb
 
 - name: sleep 10 seconds
   shell: sleep 10
