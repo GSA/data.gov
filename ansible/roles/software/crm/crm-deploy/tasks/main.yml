@@ -35,11 +35,9 @@
 
 - name: Set the environment in index.php
   replace: 
-    dest: {{ project_source_new_code_path }}/index.php 
-    regexp: "define\(\'ENVIRONMENT\'\,\ \'development\'\)\;" 
-    replace: "define(\'ENVIRONMENT\', \'{{ codeigniter_environment }}\');"
-
-# define('ENVIRONMENT', 'development');
+    dest: "{{ project_source_new_code_path }}/index.php"
+    regexp: "define('ENVIRONMENT', 'development');"
+    replace: "define('ENVIRONMENT', '{{ codeigniter_environment }}');"
 
 - name: Ensuring config directory exists
   file:

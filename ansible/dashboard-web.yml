@@ -24,8 +24,12 @@
   - { role: php-memcached, tags: [php, php-memcached, provision] }
   - { role: composer, tags: [php, provision] }
   - { role: vim, tags: [provision, vim] }
-  - { role: dashboard-sudo-2-init, tags: [always] }
+  - { role: dashboard-sudo-2-init, tags: [provision, deploy, deploy-rollback] }
   - { role: secops-ssh, tags: [provision, secops] }
+  - { role: trendmicro, tags: [provision, trendmicro] }
+
+
+
 
 
 - name: Deploying Dashboard
@@ -33,7 +37,7 @@
   remote_user: ubuntu
 
   roles:
-  - { role: dashboard-deploy, tags: [deploy] }
+  - { role: dashboard-deploy, tags: [deploy, provision] }
   - { role: datagov-deploy-rollback, tags: [deploy-rollback] }
 
 
@@ -45,7 +49,7 @@
   become_method: sudo
 
   roles:
-  - { role: dashboard-sudo-3-cleanup, tags: [always] }
+  - { role: dashboard-sudo-3-cleanup, tags: [provision, deploy, deploy-rollback] }
 
 - name: Dashboard Migration
   hosts: dashboard-web

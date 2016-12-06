@@ -30,7 +30,8 @@
 
   roles:
     - roles/software/ubuntu/common
-    - {role: secops-ssh, tags: [secops] }
+    - {role: secops-ssh, tags: ['secops'] }
+    - {role: trendmicro, tags: ['secops'] }
     - roles/software/ckan/apache
     - { role: rvm1-ruby,
         rvm1_rvm_check_for_updates: False,

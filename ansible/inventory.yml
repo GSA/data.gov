@@ -9,14 +9,15 @@
   roles:
     - roles/software/ubuntu/common
     - {role: secops-ssh, tags: ['secops'] }
+    - {role: trendmicro, tags: ['trendmicro'] }
     - roles/software/ckan/common
     - roles/software/ckan/apache
     - {role: roles/software/ckan/postgresql, tags: ['db', 'db-install']}
     - {role: roles/software/ckan/solr, tags: ['solr']}
-    - roles/software/inventory/ckan-app
+    - {role: roles/software/inventory/ckan-app, tags: ['deploy']}
     - {role: roles/software/ckan/saml2, tags: ['saml2']}
     - roles/software/ckan/security-fix
     - {role: roles/software/inventory/ckan-db-setup, tags: ['db', 'db-setup']}
     - {role: roles/software/inventory/ckan-db-init, tags: ['db', 'db-init']}
     - ec2-inventory
-
+    - {role: datagov-deploy-rollback, tags: ['deploy-rollback']}
