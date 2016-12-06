@@ -1,0 +1,23 @@
+--- # Install the trendmicro agent
+
+- name: get agent.rpm
+  get_url:
+    url: https://dsm.sec.helix.gsa.gov:443/software/agent/RedHat_EL6/x86_64/
+    dest: /tmp/agent.rpm
+    validate_certs: no
+
+- name: install trendmicro rpm
+  shell: rpm -ihv /tmp/agent.rpm
+
+- name: sleep 10 seconds
+  shell: sleep 10
+
+- name: start trendmicro agent @ web tier
+  shell: /opt/ds_agent/dsa_control -a dsm://dsm.sec.helix.gsa.gov:4120/policyid:{{ trendmicro_policy_id_web }}
+  when: (not inventory_hostname in groups["solr"]) and ( not inventory_hostname in groups["catalog-harvester"])
+
+- name: start trendmicro agent @ app tier
+  shell: /opt/ds_agent/dsa_control -a dsm://dsm.sec.helix.gsa.gov:4120/policyid:{{ trendmicro_policy_id_app }}
+  when: (inventory_hostname in groups["solr"]) or (inventory_hostname in groups["catalog-harvester"])
+
+
