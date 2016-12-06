@@ -96,3 +96,6 @@ Included in this Repository:
 **deploy app:** `ansible-playbook inventory.yml -i {{ inventory }} --tags="deploy" --skip-tags="solr,db" --limit inventory-web`
 
 **provision vm - solr:** `ansible-playbook inventory.yml -i {{ inventory }} --tags="solr" --limit inventory-solr`
+
+## Common:
+**install the trendmicro agent:** `ansible-playbook trendmicro.yml -i {{ inventory }}`
