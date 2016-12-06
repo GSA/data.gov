@@ -99,3 +99,10 @@ Included in this Repository:
 
 ## Common:
 **install the trendmicro agent:** `ansible-playbook trendmicro.yml -i {{ inventory }}`
+
+## Upgrade ubuntu VMs:
+`ansible all -m shell -a "apt-get update && apt-get dist-upgrade" --sudo`
+`ansible all -m shell -a "service tomcat6 restart" --sudo`
+`ansible all -m shell -a "service ntp restart" --sudo`
+`ansible all -m shell -a "/usr/bin/killall dhclient && dhclient -1 -v -pf /run/dhclient.eth0.pid -lf /var/lib/dhcp/dhclient.eth0.leases eth0" --sudo`
+
