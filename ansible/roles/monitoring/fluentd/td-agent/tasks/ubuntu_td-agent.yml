@@ -28,5 +28,5 @@
 - name: copy BSP certificate
   copy:
     src: roles/monitoring/fluentd/td-agent/files/cacert.pem
-    dest: /etc/td-agent/bspcacert.pem
+    dest: /etc/td-agent/bspcert.pem
     mode: 0400
