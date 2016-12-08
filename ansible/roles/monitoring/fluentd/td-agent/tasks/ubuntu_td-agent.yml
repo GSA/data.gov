@@ -24,3 +24,9 @@
   apt: name=td-agent update_cache=yes force=yes
   notify:
     - restart td-agent
+    
+- name: copy BSP certificate
+  copy:
+    src: td-agent/files/cacert.pem
+    dest: /etc/td-agent/ssl/cacert.pem
+    mode: 0400

@@ -173,7 +173,7 @@
     dest: /etc/td-agent/td-agent.conf
     marker: "#{mark} CloudWatch Logs matcher"
     content: |
-      <match cloudwatch.**>
+      <match cw.**>
         type cloudwatch_logs
         log_group_name fluent-plugin-cloudwatch
         log_stream_name "#{Socket.gethostname}"
@@ -199,6 +199,26 @@
           url https://search-data-gov-dev-afdj5lytu3in5bqljx6zfhv55m.us-east-1.es.amazonaws.com
           region us-east-1
         </endpoint>
+      </match>
+  with_items: "{{td_agent_plugins}}"
+  when: item == "fluent-plugin-aws-elasticsearch-service"
+  notify: restart td-agent
+
+- name: Configure BSP forwarder
+  blockinfile: 
+    dest: /etc/td-agent/td-agent.conf
+    marker: "#{mark} BSP forwarder"
+    content: |
+      <match cloudwatch.**>
+        @type secure_forward
+        shared_key 6BM346448N7J56F4VXK3
+        self_hostname ELK-PROD-F01
+        secure true
+        ca_cert_path /etc/td-agent/ssl/cacert.pem
+        <server>
+          host prod-fluentd.sec.helix.gsa.gov
+          port 1514
+        </server>
       </match>
   with_items: "{{td_agent_plugins}}"
   when: item == "fluent-plugin-aws-elasticsearch-service"
