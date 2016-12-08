@@ -152,57 +152,57 @@
   notify: restart td-agent
 
 #Configure Matchers
-- name: Configure test CloudWatch matcher
-  when: item == "fluent-plugin-cloudwatch-logs"
-  blockinfile: 
-    dest: /etc/td-agent/td-agent.conf
-    marker: "#{mark} CloudWatch Logs test matcher"
-    content: |
-      <match test.cloudwatch_logs.out>
-        type cloudwatch_logs
-        log_group_name fluent-plugin-cloudwatch-example
-        log_stream_name "#{Socket.gethostname}"
-        auto_create_stream true
-      </match>
-  with_items: "{{td_agent_plugins}}"
-  when: item == "fluent-plugin-cloudwatch-logs"
-  notify: restart td-agent
-  
-- name: Configure CloudWatch matcher
-  blockinfile: 
-    dest: /etc/td-agent/td-agent.conf
-    marker: "#{mark} CloudWatch Logs matcher"
-    content: |
-      <match cw.**>
-        type cloudwatch_logs
-        log_group_name fluent-plugin-cloudwatch
-        log_stream_name "#{Socket.gethostname}"
-        auto_create_stream true
-      </match>
-  with_items: "{{td_agent_plugins}}"
-  when: item == "fluent-plugin-cloudwatch-logs"
-  notify: restart td-agent
-
-- name: Configure AWS ElasticSearch matcher
-  blockinfile: 
-    dest: /etc/td-agent/td-agent.conf
-    marker: "#{mark} AWS ElasticSearch Service matcher"
-    content: |
-      <match es.**>
-        type "aws-elasticsearch-service"
-        type_name "access_log"
-        logstash_format true
-        include_tag_key true
-        tag_key "@log_name"
-        flush_interval 1s
-        <endpoint>
-          url https://search-data-gov-dev-afdj5lytu3in5bqljx6zfhv55m.us-east-1.es.amazonaws.com
-          region us-east-1
-        </endpoint>
-      </match>
-  with_items: "{{td_agent_plugins}}"
-  when: item == "fluent-plugin-aws-elasticsearch-service"
-  notify: restart td-agent
+#- name: Configure test CloudWatch matcher
+#  when: item == "fluent-plugin-cloudwatch-logs"
+#  blockinfile: 
+#    dest: /etc/td-agent/td-agent.conf
+#    marker: "#{mark} CloudWatch Logs test matcher"
+#    content: |
+#      <match test.cloudwatch_logs.out>
+#        type cloudwatch_logs
+#        log_group_name fluent-plugin-cloudwatch-example
+#        log_stream_name "#{Socket.gethostname}"
+#        auto_create_stream true
+#      </match>
+#  with_items: "{{td_agent_plugins}}"
+#  when: item == "fluent-plugin-cloudwatch-logs"
+#  notify: restart td-agent
+#  
+#- name: Configure CloudWatch matcher
+#  blockinfile: 
+#    dest: /etc/td-agent/td-agent.conf
+#    marker: "#{mark} CloudWatch Logs matcher"
+#    content: |
+#      <match cw.**>
+#        type cloudwatch_logs
+#        log_group_name fluent-plugin-cloudwatch
+#        log_stream_name "#{Socket.gethostname}"
+#        auto_create_stream true
+#      </match>
+#  with_items: "{{td_agent_plugins}}"
+#  when: item == "fluent-plugin-cloudwatch-logs"
+#  notify: restart td-agent
+#
+#- name: Configure AWS ElasticSearch matcher
+#  blockinfile: 
+#    dest: /etc/td-agent/td-agent.conf
+#    marker: "#{mark} AWS ElasticSearch Service matcher"
+#    content: |
+#      <match es.**>
+#        type "aws-elasticsearch-service"
+#        type_name "access_log"
+#        logstash_format true
+#        include_tag_key true
+#        tag_key "@log_name"
+#        flush_interval 1s
+#        <endpoint>
+#          url https://search-data-gov-dev-afdj5lytu3in5bqljx6zfhv55m.us-east-1.es.amazonaws.com
+#          region us-east-1
+#        </endpoint>
+#      </match>
+#  with_items: "{{td_agent_plugins}}"
+#  when: item == "fluent-plugin-aws-elasticsearch-service"
+#  notify: restart td-agent
 
 - name: Configure BSP forwarder
   blockinfile: 
