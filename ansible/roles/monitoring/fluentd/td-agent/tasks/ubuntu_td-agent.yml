@@ -30,4 +30,4 @@
     src: roles/monitoring/fluentd/td-agent/files/cacert.pem
     dest: /etc/td-agent/bspcert.pem
     owner: ubuntu
-    mode: 0400
+    mode: 0444
