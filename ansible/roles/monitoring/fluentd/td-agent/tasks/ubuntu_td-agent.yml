@@ -29,4 +29,5 @@
   copy:
     src: roles/monitoring/fluentd/td-agent/files/cacert.pem
     dest: /etc/td-agent/bspcert.pem
-    mode: 0444
+    owner: ubuntu
+    mode: 0400
