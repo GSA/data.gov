@@ -196,6 +196,8 @@
 #        tag_key "@log_name"
 #        flush_interval 1s
 #        <endpoint>
+#          access_key_id "secret"
+#          secret_access_key "seekret"
 #          url https://search-data-gov-dev-afdj5lytu3in5bqljx6zfhv55m.us-east-1.es.amazonaws.com
 #          region us-east-1
 #        </endpoint>
