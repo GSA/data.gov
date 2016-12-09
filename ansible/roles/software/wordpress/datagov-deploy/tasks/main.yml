@@ -1,8 +1,5 @@
 --- # Data.gov repo deployment & composer install
 
-#- name: Load inventory specific vault ({{ vars_group }})
-#  include_vars: "group_vars/{{ vars_group }}/vault.yml"
-
 - name: Remove old rollback code
   file: path="{{ project_source_rollback_path }}" state=absent
 

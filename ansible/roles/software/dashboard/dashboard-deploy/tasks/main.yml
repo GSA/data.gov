@@ -88,11 +88,6 @@
     src: "index.php"
     dest: "{{ project_source_new_code_path }}/index.php"
 
-- name: Copying index.php
-  template:
-    src: "archive_to_s3.sh"
-    dest: "{{ project_source_new_code_path }}/archive_to_s3.sh"
-
 - name: Adding .env
   template:
     src: ".env"

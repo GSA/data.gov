@@ -13,15 +13,18 @@
     state: directory
     mode: 0775
   with_items:
-    - "{{ project_source_path }}/shared/downloads"
-    - "{{ project_source_path }}/shared/archive"
+    - "{{ project_shared_path }}"
+    - "{{ project_shared_path }}/uploads"
+    - "{{ project_shared_path }}/downloads"
+    - "{{ project_shared_path }}/archive"
 
-- name: Chown www-data /var/www/
+- name: Chown www-data "{{project_source_new_code_path}}"
   file:
-    path: "/var/www"
+    path: "{{project_source_new_code_path}}"
     owner: "ubuntu"
     group: "www-data"
     recurse: yes
+    follow: yes
   ignore_errors: yes
 
 - name: Docker specific

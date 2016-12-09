@@ -25,7 +25,4 @@ project_git_repo: https://github.com/GSA/datagov-wp-boilerplate.git
 project_git_version: master
 
 # WordPress .env
-env_wp_env: development 
-
-# Default vars group
-vars_group: packer-prod
+env_wp_env: development

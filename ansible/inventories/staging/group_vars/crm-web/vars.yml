@@ -32,9 +32,6 @@ project_index_path: /var/www/crm/current
 # CodeIgniter Session Encryption Key
 env_encryption_key: "{{ vault_codeigniter_encryption_key }}"
 
-# Default vars group
-vars_group: packer-prod
-
 # Default env
 running_in: aws
 

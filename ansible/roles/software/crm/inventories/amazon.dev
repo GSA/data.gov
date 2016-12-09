@@ -1,5 +1,0 @@
-[crm-web]
-52.91.1.44
-
-[all:vars]
-vars_group=amazon-dev

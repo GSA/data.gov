@@ -23,7 +23,7 @@
   - { role: php-mysql, tags: [php, php-mysql, provision] }
   - { role: php-memcached, tags: [php, php-memcached, provision] }
   - { role: composer, tags: [php, provision] }
-  - { role: vim, tags: [provision, vim] }
+  - { role: vim, tags: [vim, provision] }
   - { role: dashboard-sudo-2-init, tags: [provision, deploy, deploy-rollback] }
   - { role: secops-ssh, tags: [provision, secops] }
   - { role: trendmicro, tags: [provision, trendmicro] }
@@ -51,9 +51,11 @@
   roles:
   - { role: dashboard-sudo-3-cleanup, tags: [provision, deploy, deploy-rollback] }
 
-- name: Dashboard Migration
+
+
+- name: Dashboard DB Migration
   hosts: dashboard-web
   remote_user: ubuntu
 
   roles:
-  - { role: dashboard-migrations, tags: [deploy, migrate] }
+  - { role: dashboard-db-migrations, tags: [deploy, migrate] }

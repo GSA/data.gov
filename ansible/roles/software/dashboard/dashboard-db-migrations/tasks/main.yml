@@ -1,4 +1,4 @@
---- # Dashboard migration
+--- # Dashboard DB   migration
 
 - name: Temporarily disabling keeping sessions in DB
   replace:
