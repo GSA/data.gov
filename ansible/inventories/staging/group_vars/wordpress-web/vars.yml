@@ -1,7 +1,8 @@
 ---
 
 # WordPress env
-env_wp_env: development
+#env_wp_env: development
+env_wp_env: production
 
 # Default env
 running_in: aws
