@@ -3,6 +3,8 @@
 # WordPress env
 #env_wp_env: development
 env_wp_env: production
+#content protocol (js/css)
+env_content_protocol: https
 
 # Default env
 running_in: aws
