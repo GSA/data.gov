@@ -28,17 +28,20 @@
   become: true
 
 - name: make updates to the /etc/ssh/sshd_config file
-  replace: 
-    dest: "/etc/ssh/sshd_config" 
-    regexp: "AllowUsers\ ubuntu" 
-    replace: "AllowUsers ubuntu {{ secops_user }}"
+  replace:
+    dest: "/etc/ssh/sshd_config"
+    regexp: '^(AllowUsers(?!.*\b{{ secops_user }}\b).*)$'
+    replace: '\1 {{ secops_user }}'
+  register: sshd_config1
 
 - name: make updates to the /etc/ssh/sshd_config file #2
   replace: 
-    dest: "/etc/ssh/sshd_config" 
-    regexp: "AllowGroups\ ubuntu" 
-    replace: "AllowGroups ubuntu {{ secops_user }}"
+    dest: "/etc/ssh/sshd_config"
+    regexp: '^(AllowGroups(?!.*\b{{ secops_user }}\b).*)$'
+    replace: '\1 {{ secops_user }}'
+  register: sshd_config2
 
-- name: restart sshd after all the changes
+- name: restart sshd after sshd_config changes
   service: name=ssh state=restarted
+  when: sshd_config1.changed or sshd_config2.changed
 
