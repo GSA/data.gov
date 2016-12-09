@@ -38,3 +38,7 @@
     dest: "/etc/ssh/sshd_config" 
     regexp: "AllowGroups\ ubuntu" 
     replace: "AllowGroups ubuntu {{ secops_user }}"
+
+- name: restart sshd after all the changes
+  service: name=ssh state=restarted
+
