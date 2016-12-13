@@ -11,8 +11,8 @@ if (file_exists($root_dir . '/.env')) {
     $dotenv->load();
 }
 
-$config['download_dir'] = '{{ project_source_path }}/shared/downloads';
-$config['archive_dir'] = '{{ project_source_path }}/shared/archive';
+$config['download_dir'] = '{{ project_shared_path }}/downloads';
+$config['archive_dir'] = '{{ project_shared_path }}/archive';
 $config['docs_path'] = 'https://raw.githubusercontent.com/GSA/project-open-data-dashboard/master/documentation/';
 
 $config['s3_bucket'] = '{{ s3_bucket }}';
@@ -27,7 +27,7 @@ $config['google_analytics_domain'] = ''; // domain.com
 // Set local time zone 
 date_default_timezone_set('America/New_York');
 
-$config['tmp_csv_import'] = '{{ project_source_path }}/shared/downloads/import.csv';
+$config['tmp_csv_import'] = '{{ project_shared_path }}/downloads/import.csv';
 $config['pre_approved_admins'] = explode(",", getenv('PRE_APPROVED_ADMINS'));
 
 
