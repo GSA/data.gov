@@ -1,0 +1,7 @@
+---
+# s3
+s3_bucket_sdg: "{{ vault_s3_bucket_sdg }}"
+s3_bucket_federation: "{{ vault_s3_bucket_federation }}"
+
+# secrets
+jekyll_webhook_secret: "{{ vault_jekyll_webhook_secret }}"
