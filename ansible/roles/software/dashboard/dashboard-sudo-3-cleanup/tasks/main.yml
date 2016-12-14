@@ -21,6 +21,7 @@
     - "{{ project_shared_path }}/downloads"
     - "{{ project_shared_path }}/archive"
     - "{{ project_shared_path }}/archive/digitalstrategy"
+    - "{{ project_shared_path }}/archive/datajson"
 
 - name: Chown www-data "{{project_source_new_code_path}}"
   file:
