@@ -16,6 +16,7 @@ $config['archive_dir'] = '{{ project_shared_path }}/archive';
 $config['docs_path'] = 'https://raw.githubusercontent.com/GSA/project-open-data-dashboard/master/documentation/';
 
 $config['s3_bucket'] = '{{ s3_bucket }}';
+$config['s3_prefix'] = '{{ s3_prefix }}';
 
 $config['import_active'] = true;
 $config['show_all_offices'] = false;
