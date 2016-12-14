@@ -12,11 +12,15 @@
     path: "{{ item }}"
     state: directory
     mode: 0775
+    owner: "ubuntu"
+    group: "www-data"
+    recurse: yes
   with_items:
     - "{{ project_shared_path }}"
     - "{{ project_shared_path }}/uploads"
     - "{{ project_shared_path }}/downloads"
     - "{{ project_shared_path }}/archive"
+    - "{{ project_shared_path }}/archive/digitalstrategy"
 
 - name: Chown www-data "{{project_source_new_code_path}}"
   file:
