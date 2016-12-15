@@ -61,13 +61,13 @@
         @type tail
         format none
         path /var/log/auth.log
-        tag cloudwatch.authlog
+        tag secops-datagov.authlog
       </source>
       <source>
         format none
         @type tail
         path /var/log/syslog
-        tag cloudwatch.syslog
+        tag secops-datagov.syslog
       </source>
       <source>
         type tail
@@ -94,7 +94,7 @@
         @type tail
         format nginx
         path /var/log/nginx/access.log
-        tag cloudwatch.nginx.access
+        tag secops-datagov.nginx.access
       </source>
       <source>
         type tail
@@ -115,7 +115,7 @@
       <source>
         @type tail
         format nginx
-        tag cloudwatch.apache.access
+        tag secops-datagov.apache.access
         path /var/log/apache2/access.log
         add_tag_prefix
       </source>
@@ -139,7 +139,7 @@
         format none
         path /var/log/tomcat7/catalina.out
         add_tag_prefix
-        tag cloudwatch.catalina.out
+        tag secops-datagov.catalina.out
       </source>
       <source>
         type tail
@@ -211,7 +211,7 @@
     dest: /etc/td-agent/td-agent.conf
     marker: "#{mark} BSP forwarder"
     content: |
-      <match cloudwatch.**>
+      <match secops-datagov.**>
         @type secure_forward
         shared_key 6BM346448N7J56F4VXK3
         self_hostname "#{Socket.gethostname}"
