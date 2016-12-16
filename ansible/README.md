@@ -1,9 +1,10 @@
 # What's here?
 
-## Ansible Roles
+## Ansible Roles <img src="https://img.shields.io/badge/Implementation%20Status-Production-blue.svg" />
 **See Main README**
 
-## Ansible Container
+## Ansible Container <img src="https://img.shields.io/badge/Implementation%20Status-WIP-red.svg" /> 
+
 [Ansible Container](https://github.com/ansible/ansible-container) provides a convenient way to develop and test playbooks using Docker:
 
 * ansible-container build - initiates the build process. It uses an Ansible Container Builder container and also runs instances of your base container images as specified in container.yml. The Builder container runs the playbook main.yml against them, committing the results as new images. Ansible communicates with the other containers through the container engine, not through SSH.
