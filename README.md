@@ -92,9 +92,7 @@ Included in this Repository:
 **provision vm - solr:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="solr,secops,trendmicro" --limit catalog-solr`
 ## Inventory
 
-**provision vm - web:** `ansible-playbook inventory.yml -i {{ inventory }} --skip-tags="solr,db,deploy-rollback" --limit inventory-web`
-
-**deploy app:** `ansible-playbook inventory.yml -i {{ inventory }} --tags="deploy" --skip-tags="solr,db,deploy-rollback" --limit inventory-web`
+**provision vm && deploy app - web:** `ansible-playbook inventory.yml -i {{ inventory }} --skip-tags="solr,db,deploy-rollback" --limit inventory-web`
 
 **provision vm - solr:** `ansible-playbook inventory.yml -i {{ inventory }} --tags="solr,secops,trendmicro" --limit inventory-solr`
 

@@ -1,6 +1,6 @@
 --- # fix "Unable to resolve host IP" issue
 
-- name: check weather hostname has been added already
+- name: check whether hostname has been added already
   shell: cat /etc/hosts | grep $(hostname)
   register: hostname_grep
   ignore_errors: true
