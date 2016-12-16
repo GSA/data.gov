@@ -2,7 +2,7 @@
 
 ## Ansible Roles <img src="https://img.shields.io/badge/Implementation%20Status-Prod-blue.svg" />
 
-**See Main README**
+**See Main [README](https://github.com/gsa/catalog-deploy)**
 
 ## Ansible Container <img src="https://img.shields.io/badge/Implementation%20Status-WIP-red.svg" /> 
 
