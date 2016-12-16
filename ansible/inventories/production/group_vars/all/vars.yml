@@ -8,3 +8,7 @@ solr_master_server: "{{ vault_solr_master_server }}"
 # TrendMicro
 trendmicro_policy_id_app: "{{ vault_trendmicro_policy_id_app }}"
 trendmicro_policy_id_web: "{{ vault_trendmicro_policy_id_web }}"
+
+
+# CodeIgniter pre-approved admin emails
+codeigniter_pre_approved_admins: "{{ vault_codeigniter_pre_approved_admins }}"

@@ -31,6 +31,8 @@ if(isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
 
 $config['base_url'] = $protocol . '://' . $default_host;
 
+$config['pre_approved_admins'] = '{{ codeigniter_pre_approved_admins }}';
+
 $config['akismet_key'] = ''; // see https://akismet.com/development/
 $config['akismet_siteurl'] = '';
 
