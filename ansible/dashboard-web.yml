@@ -27,6 +27,7 @@
   - { role: dashboard-sudo-2-init, tags: [provision, deploy, deploy-rollback] }
   - { role: secops-ssh, tags: [provision, secops] }
   - { role: trendmicro, tags: [provision, trendmicro] }
+  - { role: misc, tags: [provision, misc] }
 
 
 

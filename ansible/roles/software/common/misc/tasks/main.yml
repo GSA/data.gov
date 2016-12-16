@@ -1,0 +1,10 @@
+--- # fix "Unable to resolve host IP" issue
+
+- name: check weather hostname has been added already
+  shell: cat /etc/hosts | grep $(hostname)
+  register: hostname_grep
+  ignore_errors: true
+
+- name: add hostname to /etc/hosts
+  shell: echo 127.0.0.1 $(hostname) >> /etc/hosts
+  when: hostname_grep.stdout == ""
