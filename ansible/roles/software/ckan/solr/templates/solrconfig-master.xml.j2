@@ -954,26 +954,6 @@
      </arr>
   </requestHandler>
 
-  <!-- Solr Master Replication Handler -->
-	<requestHandler name="/replication" class="solr.ReplicationHandler">
-			<lst name="master">
-					<str name="replicateAfter">commit</str>
-					<str name="replicateAfter">startup</str>
-
-					<str name="backupAfter">optimize</str>
-					<str name="confFiles">schema.xml,stopwords.txt,elevate.xml</str>
-					<str name="commitReserveDuration">00:00:10</str>
-			</lst>
-
-			</lst>
-				 <int name="maxNumberOfBackups">2</int>
-				 <lst name="invariants">
-						<str name="maxWriteMBPerSec">16</str>
-				 </lst>
-			</lst>
-	</requestHandler> 
-
-
   <!-- Update Request Handler.  
        
        http://wiki.apache.org/solr/UpdateXmlMessages
@@ -1159,27 +1139,24 @@
 
        https://wiki.apache.org/solr/SolrCloud/
     -->
-  <requestHandler name="/replication" class="solr.ReplicationHandler" > 
-    <!--
-       To enable simple master/slave replication, uncomment one of the 
-       sections below, depending on whether this solr instance should be
-       the "master" or a "slave".  If this instance is a "slave" you will 
-       also need to fill in the masterUrl to point to a real machine.
-    -->
-    <!--
-       <lst name="master">
-         <str name="replicateAfter">commit</str>
-         <str name="replicateAfter">startup</str>
-         <str name="confFiles">schema.xml,stopwords.txt</str>
-       </lst>
-    -->
-    <!--
-       <lst name="slave">
-         <str name="masterUrl">http://your-master-hostname:8983/solr</str>
-         <str name="pollInterval">00:00:60</str>
-       </lst>
-    -->
-  </requestHandler>
+  <requestHandler name="/replication" class="solr.ReplicationHandler">
+    <lst name="master">
+      <str name="replicateAfter">commit</str>
+      <str name="replicateAfter">startup</str>
+					
+      <str name="backupAfter">optimize</str>
+      <str name="confFiles">schema.xml,stopwords.txt,elevate.xml</str>
+      <str name="commitReserveDuration">00:00:10</str>
+    </lst>
+
+    <lst>
+      <int name="maxNumberOfBackups">2</int>
+      <lst name="invariants">
+        <str name="maxWriteMBPerSec">16</str>
+      </lst>
+    </lst>
+
+  </requestHandler> 
 
   <!-- Search Components
 
