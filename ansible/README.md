@@ -1,6 +1,7 @@
 # What's here?
 
-## Ansible Roles <img src="https://img.shields.io/badge/Implementation%20Status-Production-blue.svg" />
+## Ansible Roles <img src="https://img.shields.io/badge/Implementation%20Status-Prod-blue.svg" />
+
 **See Main README**
 
 ## Ansible Container <img src="https://img.shields.io/badge/Implementation%20Status-WIP-red.svg" /> 
