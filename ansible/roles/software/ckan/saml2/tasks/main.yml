@@ -22,20 +22,10 @@
   with_items: "{{ saml2_pkgs }}"
 
 - name: create directories
-  action: file path={{item}} state=directory mode=0755
-  with_items:
-    - /etc/ckan/saml2/
-    - /etc/ckan/saml2/attributemaps
-    - /etc/ckan/saml2/pki
+  action: file path=/etc/ckan/saml2/ state=directory mode=0755
 
 - name: copy all needed files
-  action: copy src={{item}} dest=/{{item}}
-  with_items:
-    - etc/ckan/saml2/idp.xml
-    - etc/ckan/saml2/attributemaps/basic.py
-    - etc/ckan/saml2/attributemaps/saml_uri.py
-    - etc/ckan/saml2/pki/mycert.pem
-    - etc/ckan/saml2/pki/mykey.pem
+  action: copy src=etc/ckan/saml2/{{saml2_idp_entry}}/ dest=/etc/ckan/saml2/
 
 - name: copy template files
   template: src=templates/{{item}}.j2 dest=/{{item}}
