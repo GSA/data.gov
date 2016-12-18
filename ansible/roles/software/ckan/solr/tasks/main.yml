@@ -49,7 +49,7 @@
     src: solrconfig-slave.xml.j2
     dest: /home/solr/{{app_type}}/conf/solrconfig.xml
     force: yes
-  when: inventory_hostname == groups["solr"][1]
+  when: inventory_hostname != groups["solr"][0]
 
 - name: Setup solr permissions
   shell: "chown -R tomcat6 /home/solr"
