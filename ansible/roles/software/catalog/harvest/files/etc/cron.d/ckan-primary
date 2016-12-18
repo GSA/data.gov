@@ -1,1 +1,1 @@
-*/3 * * * * root ckan --plugin=ckanext-harvest harvester run >> /var/log/harvester_run.log 2>&1
+*/3 * * * * root supervisorctl start harvest-run
