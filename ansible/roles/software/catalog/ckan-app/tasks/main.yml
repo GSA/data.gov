@@ -27,13 +27,6 @@
 - name: Install CKAN app
   command: sh install.sh "{{ project_source_new_code_path }}" chdir={{ app_source_path }} 
 
-- name: Copy all needed files
-  action: copy src={{item}} dest=/{{item}}
-  with_items:
-    - etc/ckan/apache.wsgi
-    - etc/apache2/sites-enabled/ckan.conf
-  tags: ['frontend', 'apache']
-
 # Configure CKAN
 - name: Configure production.ini
   template: src=templates/{{item}}.j2 dest=/{{item}}
@@ -55,3 +48,14 @@
     src: "{{ project_source_new_code_path }}"
     path: "{{ project_source_path }}"
     state: link
+
+- name: Copy all needed files
+  action: copy src={{item}} dest=/{{item}}
+  with_items:
+    - etc/ckan/apache.wsgi
+    - etc/apache2/sites-enabled/ckan.conf
+  tags: ['frontend', 'apache']
+
+- name: Restart apache
+  service: name=apache2 state=restarted
+  tags: ['frontend', 'apache']
