@@ -89,12 +89,12 @@ Included in this Repository:
 
 **provision vm - harvester:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="harvester,ec2" --skip-tags="apache,solr,db,saml2,redis" --limit catalog-harvester`
 
-**provision vm - solr:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="solr,secops,trendmicro" --limit catalog-solr`
+**provision vm - solr:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="solr,secops,trendmicro,misc" --limit solr`
 ## Inventory
 
 **provision vm && deploy app - web:** `ansible-playbook inventory.yml -i {{ inventory }} --skip-tags="solr,db,deploy-rollback" --limit inventory-web`
 
-**provision vm - solr:** `ansible-playbook inventory.yml -i {{ inventory }} --tags="solr,secops,trendmicro" --limit inventory-solr`
+**provision vm - solr:** `ansible-playbook inventory.yml -i {{ inventory }} --tags="solr,secops,trendmicro,misc" --limit solr`
 
 ## Common:
 **install the trendmicro agent:** `ansible-playbook trendmicro.yml -i {{ inventory }}`
