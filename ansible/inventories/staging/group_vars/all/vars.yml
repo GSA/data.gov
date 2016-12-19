@@ -8,3 +8,6 @@ solr_master_server: "{{ vault_solr_master_server }}"
 # TrendMicro
 trendmicro_policy_id_app: "{{ vault_trendmicro_policy_id_app }}"
 trendmicro_policy_id_web: "{{ vault_trendmicro_policy_id_web }}"
+
+# Nginx
+nginx_remove_default_vhost: true

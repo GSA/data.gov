@@ -13,9 +13,6 @@ s3_prefix: datagov/dashboard/
 # Disabling MySQL server
 mysql_enabled_on_startup: false
 
-# Nginx
-nginx_remove_default_vhost: true
-
 # PHP-FPM
 php_enable_php_fpm: true
 php_fpm_listen: /var/run/php/php7.0-fpm.sock

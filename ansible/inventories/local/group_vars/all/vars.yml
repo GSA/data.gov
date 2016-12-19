@@ -2,3 +2,6 @@
 
 # CodeIgniter pre-approved admin emails
 codeigniter_pre_approved_admins: "{{ vault_codeigniter_pre_approved_admins }}"
+
+# Nginx
+nginx_remove_default_vhost: true

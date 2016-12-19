@@ -17,7 +17,6 @@
   roles:
   - { role: datagov-sudo-1-security, tags: [provision] }
   - { role: git, tags: [provision] }
-  - { role: sendmail, tags: [provision] }
   - { role: nginx, tags: [provision] }
   - { role: php, tags: [php, provision] }
   - { role: php-mysql, tags: [php, php-mysql, provision] }
