@@ -41,6 +41,7 @@
     state: directory
     owner: "www-data"
     group: "www-data"
+    mode: 0777
     recurse: yes
 
 - name: Docker specific
