@@ -11,3 +11,9 @@ trendmicro_policy_id_web: "{{ vault_trendmicro_policy_id_web }}"
 
 # Nginx
 nginx_remove_default_vhost: true
+
+# SES
+postfix_relayhost: email-smtp.us-east-1.amazonaws.com
+postfix_relaytls: true
+postfix_sasl_user: postfix_sasl_user
+postfix_sasl_password: postfix_sasl_password

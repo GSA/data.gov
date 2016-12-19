@@ -11,6 +11,7 @@
     - roles/software/ubuntu/common
     - {role: secops-ssh, tags: ['secops']}
     - {role: trendmicro, tags: ['trendmicro']}
+    - {role: ansible-postfix, tags: ['postfix']}
     - roles/software/ckan/common
     - roles/software/ckan/apache
     - {role: roles/software/ckan/postgresql, tags: ['db', 'db-install']}
