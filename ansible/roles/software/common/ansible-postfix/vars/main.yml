@@ -1,0 +1,7 @@
+# vars file for postfix
+---
+postfix_debconf_selections:
+ - name: postfix
+   question: postfix/main_mailer_type
+   value: No configuration
+   vtype: select

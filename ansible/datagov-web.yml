@@ -15,9 +15,9 @@
   become_method: sudo
 
   roles:
+  - { role: misc, tags: [provision, misc] }
   - { role: datagov-sudo-1-security, tags: [provision] }
   - { role: git, tags: [provision] }
-  - { role: sendmail, tags: [provision] }
   - { role: nginx, tags: [provision] }
   - { role: php, tags: [php, provision] }
   - { role: php-mysql, tags: [php, php-mysql, provision] }
@@ -28,7 +28,7 @@
   - { role: datagov-sudo-2-init, tags: [provision, deploy, deploy-rollback] }
   - { role: secops-ssh, tags: [provision, secops] }
   - { role: trendmicro, tags: [provision, trendmicro] }
-  - { role: misc, tags: [provision, misc] }
+  - { role: ansible-postfix, tags: [provision, postfix] }
 
 
 - name: Deploying Data.gov
