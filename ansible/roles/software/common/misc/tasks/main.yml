@@ -11,8 +11,8 @@
 
 # temporary fix for ntpd issues
 - name: fix ntpd issues
-  shell: rm -rf /var/lib/dpkg/info/ntp* && apt-get remove ntp -y && apt-get purge ntp -y #&& apt-get autoclean -y && apt-get autoremove -y
+  shell: rm -rf /var/lib/dpkg/info/ntp* && apt-get remove ntp -y && apt-get purge ntp -y && apt-get autoclean -y && apt-get autoremove -y
 
 # temporary fix for postfix issues
 - name: fix postfix issues
-  shell: rm -rf /var/lib/dpkg/info/postfix* && apt-get remove postfix -y && apt-get purge postfix -y #&& apt-get autoclean -y && apt-get autoremove -y
+  shell: rm -rf /var/lib/dpkg/info/postfix* && apt-get remove postfix -y && apt-get purge postfix -y && apt-get autoclean -y && apt-get autoremove -y
