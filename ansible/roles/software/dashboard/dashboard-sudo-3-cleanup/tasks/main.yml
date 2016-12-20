@@ -32,30 +32,14 @@
     follow: yes
   ignore_errors: yes
 
-- name: Docker specific
-  debug:
-    msg: "Now running docker specific tasks"
-  when: "'docker' == running_in"
+- name: Start nginx
+  service: name=nginx state=started
 
-- name: Double check php7.0-fpm status
-  command: "service php7.0-fpm status"
-  register: php_fpm_status
-  ignore_errors: true
-  when: "'docker' == running_in"
+- name: Restart nginx
+  service: name=nginx state=restarted
 
-- name: Starting php7.0-fpm & nginx
-  command: "service php7.0-fpm start && service nginx start"
-  ignore_errors: true
-  when: "'docker' == running_in and 'is not running' in php_fpm_status.stdout"
+- name: Start php7.0-fpm
+  service: name=php7.0-fpm state=started
 
-- name: Service php7.0-fpm status
-  command: "service php7.0-fpm status"
-  register: php_fpm_status
-  when: "'docker' == running_in"
-  failed_when: "'is not running' in php_fpm_status.stdout"
-
-- name: Service nginx status
-  command: "service nginx status"
-  register: nginx_status
-  when: "'docker' == running_in"
-  failed_when: "'is not running' in nginx_status.stdout"
+- name: Restart php7.0-fpm
+  service: name=php7.0-fpm state=restarted

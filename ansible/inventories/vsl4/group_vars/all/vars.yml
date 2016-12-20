@@ -3,8 +3,9 @@
 # CodeIgniter pre-approved admin emails
 codeigniter_pre_approved_admins: "{{ vault_codeigniter_pre_approved_admins }}"
 
-# CodeIgniter index
+# App environment
 codeigniter_environment: development
+env_wp_env: development
 
 # Nginx
 nginx_remove_default_vhost: true

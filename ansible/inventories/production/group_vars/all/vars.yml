@@ -13,8 +13,9 @@ trendmicro_policy_id_web: "{{ vault_trendmicro_policy_id_web }}"
 # CodeIgniter pre-approved admin emails
 codeigniter_pre_approved_admins: "{{ vault_codeigniter_pre_approved_admins }}"
 
-# CodeIgniter index
+# App environment
 codeigniter_environment: production
+env_wp_env: production
 
 # Nginx
 nginx_remove_default_vhost: true

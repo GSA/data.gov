@@ -6,9 +6,6 @@ env_wp_env: production
 #content protocol (js/css)
 env_content_protocol: https
 
-# Default env
-running_in: aws
-
 # wordpress app code
 project_git_repo: https://github.com/GSA/datagov-wp-boilerplate.git
 project_git_version: no-map

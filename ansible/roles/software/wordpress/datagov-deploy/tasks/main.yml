@@ -114,7 +114,7 @@
   command: wp plugin deactivate saml-20-single-sign-on
   args:
     chdir: "{{ project_source_new_code_path }}"
-  when: "'docker' == running_in and 'development' == env_wp_env"
+  when: "'development' == env_wp_env"
   run_once: true
   ignore_errors: true
 
@@ -136,7 +136,7 @@
   command: wp user update admin --user_pass=password
   args:
     chdir: "{{ project_source_new_code_path }}"
-  when: "'docker' == running_in and 'development' == env_wp_env"
+  when: "'development' == env_wp_env"
   run_once: true
   ignore_errors: true
 

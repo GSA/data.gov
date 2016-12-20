@@ -34,9 +34,6 @@ project_shared_path: /var/www/dashboard/shared
 # CodeIgniter Session Encryption Key
 env_encryption_key: "{{ vault_codeigniter_encryption_key }}"
 
-# Default env
-running_in: aws
-
 default_host: 'labs.data.gov/dashboard'
 
 # MAX SAML
