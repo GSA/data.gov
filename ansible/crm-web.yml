@@ -35,7 +35,7 @@
   remote_user: ubuntu
 
   roles:
-  - { role: crm-deploy, tags: [deploy, provision] }
+  - { role: crm-deploy, tags: [provision, deploy] }
   - { role: datagov-deploy-rollback, tags: [deploy-rollback] }
 
 
@@ -53,4 +53,4 @@
   remote_user: ubuntu
 
   roles:
-  - { role: crm-migrations, tags: [deploy, migrate] }
+  - { role: crm-migrations, tags: [provision, deploy, migrate] }

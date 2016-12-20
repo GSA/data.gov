@@ -59,4 +59,4 @@
   remote_user: ubuntu
 
   roles:
-  - { role: dashboard-db-migrations, tags: [deploy, migrate] }
+  - { role: dashboard-db-migrations, tags: [provision, deploy, migrate] }
