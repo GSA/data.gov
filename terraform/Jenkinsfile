@@ -5,6 +5,7 @@ node("master") {
     checkout scm
     dir("terraform/") {
         sh "ls -al"
+        sh "ls -al ./bin"
         sh "chmod 700 ./bin/create-stack.sh"
         sh "./bin/create-stack.sh --destroy -v pilot '${env.BRANCH_NAME}'"
     }
