@@ -1,4 +1,3 @@
-
 #!/bin/sh
 
 SCRIPT_NAME=$(basename $0)
