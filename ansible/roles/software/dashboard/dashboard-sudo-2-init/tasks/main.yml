@@ -7,15 +7,12 @@
   notify:
       - reload nginx
 
-#- name: Temporarily making /var/www/ writeable by all
-#  file:
-#    path: "/var/www"
-#    state: directory
-#    mode: 0777
-#    owner: "www-data"
-#    group: "www-data"
-#    recurse: yes
-#  ignore_errors: yes
+- name: Mkdir /var/www/
+  file:
+    path: "/var/www"
+    state: directory
+    owner: "www-data"
+    group: "www-data"
 
 - name: Copying SAML crt
   template:
