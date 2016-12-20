@@ -3,7 +3,7 @@
 - name: Remove old rollback code
   file: path="{{ project_source_rollback_path }}" state=absent
 
-- name: Check whether new code dir exists
+- name: Check whether "{{ project_source_new_code_path }}" exists
   stat: path="{{ project_source_new_code_path }}"
   register: p
 
