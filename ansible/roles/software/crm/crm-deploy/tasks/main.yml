@@ -33,11 +33,10 @@
   environment:
         COMPOSER_DISCARD_CHANGES: "true"
 
-- name: Set the environment in index.php
-  replace: 
+- name: Copying index.php
+  template:
+    src: "index.php"
     dest: "{{ project_source_new_code_path }}/index.php"
-    regexp: "define('ENVIRONMENT', 'development');"
-    replace: "define('ENVIRONMENT', '{{ codeigniter_environment }}');"
 
 - name: Ensuring config directory exists
   file:

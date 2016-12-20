@@ -3,5 +3,8 @@
 # CodeIgniter pre-approved admin emails
 codeigniter_pre_approved_admins: "{{ vault_codeigniter_pre_approved_admins }}"
 
+# CodeIgniter index
+codeigniter_environment: development
+
 # Nginx
 nginx_remove_default_vhost: true

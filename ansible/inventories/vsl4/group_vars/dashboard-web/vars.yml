@@ -23,8 +23,6 @@ project_git_repo: https://github.com/project-open-data/project-open-data-dashboa
 #project_git_version: master
 project_git_version: ansible
 
-codeigniter_environment: development
-
 # Project path
 project_source_rollback_path: /var/www/dashboard/rollback
 project_source_new_code_path: /var/www/dashboard/new
