@@ -1,4 +1,7 @@
 ---
+# role url
+url_readonly = https://catalog-bsp.data.gov
+url_writable = https://admin-catalog-bsp.data.gov
 
 # project path
 project_source_rollback_path: /usr/lib/ckan-rollback
@@ -6,17 +9,8 @@ project_source_new_code_path: /usr/lib/ckan-new
 project_source_path: /usr/lib/ckan
 project_index_path: /usr/lib/ckan
 
-# db credentials
-CKAN_DB_SERVER: "{{ vault_ckan_db_server }}"
-PYCSW_DB_SERVER: "{{ vault_pycsw_db_server }}"
-catalog_db_user: "{{ vault_catalog_db_user }}"
-catalog_db_pass: "{{ vault_catalog_db_pass }}"
-catalog_db_name: "{{ vault_catalog_db_name }}"
-catalog_pycsw_db_name: "{{ vault_catalog_pycsw_db_name }}"
-
 # other
 REDIS_SERVER: "{{ vault_redis_server  }}"
-SOLR_SERVER: "{{ vault_solr_server }}"
 env: local
 
 # max login

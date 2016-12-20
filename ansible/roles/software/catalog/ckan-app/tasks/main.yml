@@ -53,7 +53,10 @@
   action: copy src={{item}} dest=/{{item}}
   with_items:
     - etc/ckan/apache.wsgi
-    - etc/apache2/sites-enabled/ckan.conf
+  tags: ['frontend', 'apache']
+
+- name: Configure ckan.conf
+  template: src=templates/etc/apache2/sites-enabled/ckan.{{readwrite_type|default('default')}}.conf.j2 dest=/etc/apache2/sites-enabled/ckan.conf
   tags: ['frontend', 'apache']
 
 - name: Restart apache
