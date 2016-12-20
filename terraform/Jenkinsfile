@@ -4,7 +4,8 @@ stage 'Create Stack'
 node("master") {
     checkout scm
     dir("terraform/") {
-        sh "chmod 700 bin/create-stack.sh"
-        sh "bin/create-stack.sh --destroy -v pilot '${env.BRANCH_NAME}'"
+        sh "ls -al"
+        sh "chmod 700 ./bin/create-stack.sh"
+        sh "./bin/create-stack.sh --destroy -v pilot '${env.BRANCH_NAME}'"
     }
 }
