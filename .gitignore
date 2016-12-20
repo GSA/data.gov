@@ -45,3 +45,4 @@ ansible/inventories/ocsit
 .terraform
 /terraform/pilot/terraform.tfstate.backup
 /terraform/pilot/terraform.tfstate
+/terraform/target
