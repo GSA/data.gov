@@ -1,0 +1,8 @@
+---
+- name: Add SecOps user
+  hosts: all
+  sudo: yes
+  remote_user: ubuntu
+
+  roles:
+    - {role: roles/software/common/secops-ssh}
