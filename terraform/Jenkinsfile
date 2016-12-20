@@ -1,0 +1,9 @@
+
+stage 'Create Stack'
+
+node("master") {
+    checkout scm
+    dir("terraform/") {
+        sh "bin/create-stack.sh --destroy -v pilot 'terraform-pilot'"
+    }
+}
