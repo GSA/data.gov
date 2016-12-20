@@ -1,7 +1,7 @@
 ---
 # role url
-url_readonly = https://catalog-bsp.data.gov
-url_writable = https://admin-catalog-bsp.data.gov
+url_readonly: https://catalog-bsp.data.gov
+url_writable: https://admin-catalog-bsp.data.gov
 
 # project path
 project_source_rollback_path: /usr/lib/ckan-rollback
