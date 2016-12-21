@@ -8,7 +8,7 @@ node("master") {
         sh """
             chmod 777 '${script}'
             ls -al '${script}'
-            '${script}' --destroy -v pilot '${params.BRANCH}'
+            '${script}' --destroy -v -v -v -v pilot '${params.BRANCH}'
         """
     }
 }
