@@ -266,34 +266,45 @@ function put_state {
 function create_stack {
     local extra_args
     writeln "Creating terraform stack '${STACK_NAME}'"
-    pushd "${TARGET_DIR}" 1> /dev/null
     if [ "${DESTROY}" != "" ]; then
         writeln "Destroying old terraform stack '${STACK_NAME}'"
-        terraform destroy -force
+        terraform destroy -force || return 1
     fi
     # Always remove modules to ensure proper update
     # See https://github.com/hashicorp/terraform/issues/3070
     rm -rf ./.terraform
     writeln "Update '${STACK_NAME}' modules"
-    terraform get -update "${SOURCE_DIR}"
+    terraform get -update "${SOURCE_DIR}" || return 2
     writeln "Apply '${STACK_NAME}'"
     if [ -f "${SOURCE_DIR}/terraform.tfvars" ]; then
         extra_args="-var-file ${SOURCE_DIR}/terraform.tfvars"
     fi
     terraform apply -var "branch=${BRANCH_NAME}" -var "stack=${STACK_NAME}" -input=false \
-        -state "${TARGET_DIR}/${STACK_NAME}.tfstate" $extra_args "${SOURCE_DIR}"
+        -state "${TARGET_DIR}/${STACK_NAME}.tfstate" $extra_args "${SOURCE_DIR}" || return 3
     writeln "Generate '${STACK_NAME}' output"
     terraform output -state "${TARGET_DIR}/${STACK_NAME}.tfstate" > \
-        "${TARGET_DIR}/${STACK_NAME}-output.tvar"
+        "${TARGET_DIR}/${STACK_NAME}-output.tvar" || return 4
+}
+
+function create_stack_in {
+    # Ensure that directory stack is popped regardless of the success
+    # (or failure) of create_stack function
+    local dir="$1"
+    local status=0
+    pushd "${dir}" 1> /dev/null
+    create_stack
+    status=$?
     popd 1> /dev/null
+    return $status
 }
 
 
 #------------------------------------------------------------------------------
 #  Main body
 #------------------------------------------------------------------------------
+STACK_STATUS=0
 initialize "$@" || exit 1
 get_state || exit 2
-create_stack || exit 3
+create_stack_in "${TARGET_DIR}" || exit 3
 put_state || exit 4
 
