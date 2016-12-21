@@ -272,6 +272,7 @@ function create_stack {
     fi
     # Always remove modules to ensure proper update
     # See https://github.com/hashicorp/terraform/issues/3070
+    extra_verbose "Removing 'downloaded' terraform modules"
     rm -rf ./.terraform
     writeln "Update '${STACK_NAME}' modules"
     terraform get -update "${SOURCE_DIR}" || return 2
