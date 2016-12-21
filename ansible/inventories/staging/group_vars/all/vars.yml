@@ -24,6 +24,7 @@ postfix_relayhost: email-smtp.us-east-1.amazonaws.com
 postfix_relaytls: true
 postfix_sasl_user: postfix_sasl_user
 postfix_sasl_password: postfix_sasl_password
+postfix_relayhost_port: 25
 
 # SAML
 saml2_idp_entry: login.test.max.gov
