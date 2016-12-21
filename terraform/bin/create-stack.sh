@@ -88,11 +88,6 @@ function trace {
 
 function get_aws_profile {
     local profile="${AWS_PROFILE}"
-    # if [ "${profile}" == "" ];  then
-    #     #profile="default"
-    #     # Make next call faster
-    #     #AWS_PROFILE="${profile}"
-    # fi
     echo "${profile}"
 }
 
@@ -102,7 +97,8 @@ function get_aws_region {
         profile=$(get_aws_profile)
         if [ "${profile}" != "" ]; then
             region=$(aws configure get region --profile "${profile}")
-        else 
+        fi 
+        if [ "${region}" == "" ];  then
             region="us-east-1"
         fi
         # Make subsequent calls faster
@@ -169,14 +165,14 @@ function get_parameters {
     while test $# -gt 0; do
         trace "Checking $1 (next: $2)"
         case $1 in
-          -b|--bucket)          shift; set BUCKET_NAME="$1" ;;
-          -c|--bucket-path)     shift; set BUCKET_PATH="$1" ;;
-          -d|--destroy)         shift; set DESTROY="$1" ;;
-          -p|--profile)         shift; set AWS_PROFILE="$1" ;;
-          -r|--region)          shift; set AWS_REGION="$1" ;;
+          -b|--bucket)          shift; BUCKET_NAME="$1" ;;
+          -c|--bucket-path)     shift; BUCKET_PATH="$1" ;;
+          -d|--destroy)         shift; DESTROY="$1" ;;
+          -p|--profile)         shift; AWS_PROFILE="$1" ;;
+          -r|--region)          shift; AWS_REGION="$1" ;;
           -q|--quiet)           set_quiet ;;
-          -s|--source-dir)      shift; set SOURCE_DIR="$1" ;;
-          -t|--target_dir)      shift; set TARGET_DIR="$1" ;;
+          -s|--source-dir)      shift; SOURCE_DIR="$1" ;;
+          -t|--target_dir)      shift; TARGET_DIR="$1" ;;
           -v|--verbose)         set_verbose ;;
           *)                    get_argument "$1" || return 1 ;;
         esac
@@ -211,6 +207,8 @@ function initialize {
     fi
     BUCKET_URL="s3://${BUCKET_NAME}/${BUCKET_PATH}${STACK_NAME}"
     mkdir -p "${TARGET_DIR}"
+    export AWS_REGION
+    export AWS_PROFILE
 }
 
 # =============================================================================
@@ -249,7 +247,6 @@ function create_stack {
         "${TARGET_DIR}/${STACK_NAME}-output.tvar"
     popd 1> /dev/null
 }
-
 
 initialize "$@" || exit 1
 get_state || exit 2
