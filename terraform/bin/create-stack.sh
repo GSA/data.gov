@@ -107,26 +107,33 @@ function get_aws_region {
     echo "${region}"
 }
 
+#------------------------------------------------------------------------------
+#  Run aws cli command, adding a profile and regions as needed
+#------------------------------------------------------------------------------
 function do_aws {
-    #local profile=$(get_aws_profile)
     local region=$(get_aws_region)
-    # local aws_args=""
-    # if [ "${profile}" != "" ]; then
-    #     aws_args="--profile ${profile}"
-    # fi
     local aws_command="aws $* --region ${region}"
     trace "About to do [${aws_command}]"
     $aws_command
 }
 
+#------------------------------------------------------------------------------
+#  Run aws cli s3 sub-command
+#------------------------------------------------------------------------------
 function s3 {
    do_aws s3 $*
 }
 
+#------------------------------------------------------------------------------
+#  Run aws cli s3api sub-command
+#------------------------------------------------------------------------------
 function s3api {
    do_aws s3api $*
 }
 
+#------------------------------------------------------------------------------
+#  Check is given S3 bucket exists
+#------------------------------------------------------------------------------
 function s3_bucket_exists {
     local name="$1"
     local exists=$(s3api head-bucket --bucket "${name}" 2>&1)
@@ -150,6 +157,9 @@ TARGET_DIR=""
 STACK_NAME=""
 BRANCH_NAME=""
 
+#------------------------------------------------------------------------------
+#  Get unnamed argument, either stack or branch name (if not set yet)
+#------------------------------------------------------------------------------
 function get_argument {
     if [ "${STACK_NAME}" == "" ]; then
         STACK_NAME="$1"
@@ -161,6 +171,9 @@ function get_argument {
     fi
 }
 
+#------------------------------------------------------------------------------
+#  Get script parameters
+#------------------------------------------------------------------------------
 function get_parameters {
     while test $# -gt 0; do
         trace "Checking $1 (next: $2)"
@@ -180,12 +193,21 @@ function get_parameters {
     done
 }
 
+#------------------------------------------------------------------------------
+#  Initialize script by getting and validating parameters, as well 
+#  as setting defaults as appropriate
+#   - bucket:  Check that the given bucket name exists (default: data-gov)
+#   - stack name: Ensure stack set (default: pilot)
+#   - source-dir: Check that 'local' source directory exists 
+#         (default: ./stack_name)
+#   - target-dir: Create directory if not exists 
+#          (default: ./target/stack/branch)
+#------------------------------------------------------------------------------
 function initialize {
     get_parameters "$@" || return 1
     if [ "${BUCKET_NAME}" == "" ]; then
         BUCKET_NAME="data-gov"
     fi
-    s3api head-bucket --bucket "${BUCKET_NAME}"
     if ! s3_bucket_exists "${BUCKET_NAME}" ; then
         error "Bucket '${BUCKET_NAME}' does not exist"
         return 1
@@ -215,16 +237,26 @@ function initialize {
 #  Main
 # =============================================================================
 
+#------------------------------------------------------------------------------
+#  Get any (existing) stack-branch specific state from S3 bucket 
+#------------------------------------------------------------------------------
 function get_state {
     writeln "Get '${STACK_NAME}' state"
     s3 sync "${BUCKET_URL}/${BRANCH_NAME}" "${TARGET_DIR}" || return 1
 }
 
+#------------------------------------------------------------------------------
+#  Put any (existing) stack-branch specific state from S3 bucket 
+#------------------------------------------------------------------------------
 function put_state {
     writeln "Preserve '${STACK_NAME}' state"
     s3 sync "${TARGET_DIR}" "${BUCKET_URL}/${BRANCH_NAME}" || return 1
 }
 
+#------------------------------------------------------------------------------
+#  Create a stack from the given source directory to the given target 
+#  directory
+#------------------------------------------------------------------------------
 function create_stack {
     local extra_args
     writeln "Creating terraform stack '${STACK_NAME}'"
@@ -248,6 +280,10 @@ function create_stack {
     popd 1> /dev/null
 }
 
+
+#------------------------------------------------------------------------------
+#  Main body
+#------------------------------------------------------------------------------
 initialize "$@" || exit 1
 get_state || exit 2
 create_stack || exit 3

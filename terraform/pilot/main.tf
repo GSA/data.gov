@@ -5,7 +5,7 @@
 
 variable "system" {
     description = "Name of the system (used to name and tag resources)"
-    default = "datadotgov"
+    default = "datagov"
 }
 variable "stack" {
     description = "Name of the system (used to name and tag resources)"

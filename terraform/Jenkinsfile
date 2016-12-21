@@ -4,6 +4,6 @@ node("master") {
     dir("terraform/") {
         def script = "${pwd()}/bin/create-stack.sh"
         sh "chmod 700 '${script}'"
-        sh "'${script}' --destroy -v -v pilot 'master'"
+        sh "'${script}' --destroy -v -v pilot '${env.BRANCH_NAME}'"
     }
 }
