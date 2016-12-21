@@ -1,8 +1,8 @@
 <?php
 
 
-$metadata['https://{{ saml_idp_host }}/idp/shibboleth'] = array (
-    'entityid' => 'https://{{ saml_idp_host }}/idp/shibboleth',
+$metadata['https://{{ saml2_idp_entry }}/idp/shibboleth'] = array (
+    'entityid' => 'https://{{ saml2_idp_entry }}/idp/shibboleth',
     'contacts' =>
         array (
         ),
@@ -12,22 +12,22 @@ $metadata['https://{{ saml_idp_host }}/idp/shibboleth'] = array (
             0 =>
                 array (
                     'Binding' => 'urn:mace:shibboleth:1.0:profiles:AuthnRequest',
-                    'Location' => 'https://{{ saml_idp_host }}/idp/profile/Shibboleth/SSO',
+                    'Location' => 'https://{{ saml2_idp_entry }}/idp/profile/Shibboleth/SSO',
                 ),
             1 =>
                 array (
                     'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
-                    'Location' => 'https://{{ saml_idp_host }}/idp/profile/SAML2/POST/SSO',
+                    'Location' => 'https://{{ saml2_idp_entry }}/idp/profile/SAML2/POST/SSO',
                 ),
             2 =>
                 array (
                     'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign',
-                    'Location' => 'https://{{ saml_idp_host }}/idp/profile/SAML2/POST-SimpleSign/SSO',
+                    'Location' => 'https://{{ saml2_idp_entry }}/idp/profile/SAML2/POST-SimpleSign/SSO',
                 ),
             3 =>
                 array (
                     'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
-                    'Location' => 'https://{{ saml_idp_host }}/idp/profile/SAML2/Redirect/SSO',
+                    'Location' => 'https://{{ saml2_idp_entry }}/idp/profile/SAML2/Redirect/SSO',
                 ),
         ),
     'SingleLogoutService' =>
@@ -35,17 +35,17 @@ $metadata['https://{{ saml_idp_host }}/idp/shibboleth'] = array (
             0 =>
                 array (
                     'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
-                    'Location' => 'https://{{ saml_idp_host }}/idp/profile/SAML2/Redirect/SLO',
+                    'Location' => 'https://{{ saml2_idp_entry }}/idp/profile/SAML2/Redirect/SLO',
                 ),
             1 =>
                 array (
                     'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
-                    'Location' => 'https://{{ saml_idp_host }}/idp/profile/SAML2/POST/SLO',
+                    'Location' => 'https://{{ saml2_idp_entry }}/idp/profile/SAML2/POST/SLO',
                 ),
             2 =>
                 array (
                     'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:SOAP',
-                    'Location' => 'https://{{ saml_idp_host }}/idp/profile/SAML2/SOAP/SLO',
+                    'Location' => 'https://{{ saml2_idp_entry }}/idp/profile/SAML2/SOAP/SLO',
                 ),
         ),
     'ArtifactResolutionService' =>
@@ -53,13 +53,13 @@ $metadata['https://{{ saml_idp_host }}/idp/shibboleth'] = array (
             0 =>
                 array (
                     'Binding' => 'urn:oasis:names:tc:SAML:1.0:bindings:SOAP-binding',
-                    'Location' => 'https://{{ saml_idp_host }}/idp/profile/SAML1/SOAP/ArtifactResolution',
+                    'Location' => 'https://{{ saml2_idp_entry }}/idp/profile/SAML1/SOAP/ArtifactResolution',
                     'index' => 1,
                 ),
             1 =>
                 array (
                     'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:SOAP',
-                    'Location' => 'https://{{ saml_idp_host }}/idp/profile/SAML2/SOAP/ArtifactResolution',
+                    'Location' => 'https://{{ saml2_idp_entry }}/idp/profile/SAML2/SOAP/ArtifactResolution',
                     'index' => 2,
                 ),
         ),

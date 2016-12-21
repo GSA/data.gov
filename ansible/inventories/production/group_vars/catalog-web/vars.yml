@@ -15,8 +15,6 @@ env: local
 
 # max login
 saml2_site_url: https://admin-catalog-bsp.data.gov
-saml2_idp_entry: login.max.gov
-saml2_idp_url: https://{{saml2_idp_entry}}/idp/shibboleth
 
 # secrets
 who_ini_secret: "{{ vault_who_ini_secret }}"

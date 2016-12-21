@@ -25,3 +25,7 @@ postfix_relayhost: email-smtp.us-east-1.amazonaws.com
 postfix_relaytls: true
 postfix_sasl_user: postfix_sasl_user
 postfix_sasl_password: postfix_sasl_password
+
+# SAML
+saml2_idp_entry: login.max.gov
+saml2_idp_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"

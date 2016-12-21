@@ -9,3 +9,7 @@ env_wp_env: development
 
 # Nginx
 nginx_remove_default_vhost: true
+
+# SAML
+saml2_idp_entry: login.test.max.gov
+saml2_idp_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"

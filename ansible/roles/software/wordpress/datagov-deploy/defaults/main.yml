@@ -1,8 +1,5 @@
 ---
 
-# Nginx: skip creating default virtual host
-nginx_remove_default_vhost: true
-
 # Nginx: https://www.scalescale.com/tips/nginx/how-to-configure-nginx-gzip-compression/
 nginx_extra_http_options: |
   gzip on;  # Turns on/off the gzip compression.

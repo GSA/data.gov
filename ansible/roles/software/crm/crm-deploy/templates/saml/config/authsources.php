@@ -30,7 +30,7 @@ $config = array(
     'max' => array(
         'saml:SP',
         'entityID' => $base_url,
-        'idp' => 'https://{{ saml_idp_host }}/idp/shibboleth',
+        'idp' => 'https://{{ saml2_idp_entry }}/idp/shibboleth',
         'privatekey' => '{{ saml_sp_private_key_path }}',
         'certificate' => '{{ saml_sp_cert_path }}',
         'NameIDFormat' => 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',

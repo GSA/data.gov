@@ -68,7 +68,7 @@ $config['base_url'] = $protocol . '://' . $default_host;
 |--------------------------------------------------------------------------
 | https://max.gov/maxportal/home.action
 |
-| https://login.test.max.gov/idp/shibboleth
+| https://{{ saml2_idp_entry }}/idp/shibboleth
 |
 */
 
@@ -136,12 +136,12 @@ $config['saml'] = array(
     // Identity Provider Data that we want connected with our SP.
     'idp' => array(
         // Identifier of the IdP entity  (must be a URI)
-        'entityId' => 'https://{{ saml_idp_host }}/idp/',
+        'entityId' => 'https://{{ saml2_idp_entry }}/idp/',
         // SSO endpoint info of the IdP. (Authentication Request protocol)
         'singleSignOnService' => array(
             // URL Target of the IdP where the Authentication Request Message
             // will be sent.
-            'url' => 'https://{{ saml_idp_host }}/idp/profile/SAML2/POST/SSO',
+            'url' => 'https://{{ saml2_idp_entry }}/idp/profile/SAML2/POST/SSO',
             // SAML protocol binding to be used when returning the <Response>
             // message. OneLogin Toolkit supports the HTTP-Redirect binding
             // only for this endpoint.
@@ -150,7 +150,7 @@ $config['saml'] = array(
         // SLO endpoint info of the IdP.
         'singleLogoutService' => array(
             // URL Location of the IdP where SLO Request will be sent.
-            'url' => 'https://{{ saml_idp_host }}/idp/profile/SAML2/POST/SLO',
+            'url' => 'https://{{ saml2_idp_entry }}/idp/profile/SAML2/POST/SLO',
             // SAML protocol binding to be used when returning the <Response>
             // message. OneLogin Toolkit supports the HTTP-Redirect binding
             // only for this endpoint.

@@ -30,7 +30,6 @@ env_encryption_key: "{{ vault_codeigniter_encryption_key }}"
 default_host: 'labs.data.gov/crm'
 
 # MAX SAML
-saml_idp_host: login.test.max.gov
 saml_sp_private_key_path: /etc/crm-saml-sp-private.pem
 saml_sp_cert_path: /etc/crm-saml-sp-cert.crt
 
