@@ -88,11 +88,11 @@ function trace {
 
 function get_aws_profile {
     local profile="${AWS_PROFILE}"
-    if [ "${profile}" == "" ];  then
-        #profile="default"
-        # Make next call faster
-        #AWS_PROFILE="${profile}"
-    fi
+    # if [ "${profile}" == "" ];  then
+    #     #profile="default"
+    #     # Make next call faster
+    #     #AWS_PROFILE="${profile}"
+    # fi
     echo "${profile}"
 }
 
@@ -112,13 +112,13 @@ function get_aws_region {
 }
 
 function do_aws {
-    local profile=$(get_aws_profile)
+    #local profile=$(get_aws_profile)
     local region=$(get_aws_region)
-    local aws_args=""
-    if [ "${profile}" != "" ]; then
-        aws_args="--profile ${profile}"
-    fi
-    local aws_command="aws $* $aws_args --region ${region}"
+    # local aws_args=""
+    # if [ "${profile}" != "" ]; then
+    #     aws_args="--profile ${profile}"
+    # fi
+    local aws_command="aws $* --region ${region}"
     trace "About to do [${aws_command}]"
     $aws_command
 }
