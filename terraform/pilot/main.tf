@@ -56,6 +56,21 @@ module "bastion" {
     subnet_id = "${var.bastion_subnet_id}"
 }
 
+# -----------------------------------------------------------------------------
+#  Monitoring server
+# -----------------------------------------------------------------------------
+module "monitor" {
+    source = "./monitor"
+    system = "${var.system}"
+    branch = "${var.branch}"
+    stack = "${var.stack}"
+    ami = "${lookup(var.amis, format("%s-%s", var.aws_region, var.ami_type))}"
+    instance_type = "${var.bastion_instance_type}"
+    keypair_name = "${var.bastion_key_name}"
+    securitygroup_id = "${var.bastion_security_group_id}"
+    subnet_id = "${var.bastion_subnet_id}"
+}
+
 
 # -----------------------------------------------------------------------------
 #  Output Variables
@@ -67,4 +82,13 @@ output "bastion_instance_id" {
 
 output "bastion_public_ip" {
     value = "${module.bastion.public_ip}"
+}
+
+
+output "monitor_instance_id" {
+    value = "${module.monitor.instance_id}"
+}
+
+output "monitor_public_ip" {
+    value = "${module.monitor.public_ip}"
 }
