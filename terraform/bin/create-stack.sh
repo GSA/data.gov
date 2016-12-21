@@ -185,6 +185,7 @@ function initialize {
     if [ "${BUCKET_NAME}" == "" ]; then
         BUCKET_NAME="data-gov"
     fi
+    s3api head-bucket --bucket "${BUCKET_NAME}"
     if ! s3_bucket_exists "${BUCKET_NAME}" ; then
         error "Bucket '${BUCKET_NAME}' does not exist"
         return 1
