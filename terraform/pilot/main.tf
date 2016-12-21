@@ -16,6 +16,7 @@ variable "branch" {}
 variable "aws_region" { default = "us-east-1" }
 variable "ami_type" { default = "hardened" }
 
+variable "security_context" { default = "dev" }
 variable "bastion_key_name" {}
 variable "bastion_subnet_id" {}
 variable "bastion_security_group_id" {}
@@ -49,9 +50,9 @@ module "bastion" {
     system = "${var.system}"
     branch = "${var.branch}"
     stack = "${var.stack}"
+    security_context = "${var.security_context}"
     ami = "${lookup(var.amis, format("%s-%s", var.aws_region, var.ami_type))}"
     instance_type = "${var.bastion_instance_type}"
-    keypair_name = "${var.bastion_key_name}"
     securitygroup_id = "${var.bastion_security_group_id}"
     subnet_id = "${var.bastion_subnet_id}"
 }
@@ -64,13 +65,12 @@ module "monitor" {
     system = "${var.system}"
     branch = "${var.branch}"
     stack = "${var.stack}"
+    security_context = "${var.security_context}"
     ami = "${lookup(var.amis, format("%s-%s", var.aws_region, var.ami_type))}"
     instance_type = "${var.bastion_instance_type}"
-    keypair_name = "${var.bastion_key_name}"
     securitygroup_id = "${var.bastion_security_group_id}"
     subnet_id = "${var.bastion_subnet_id}"
 }
-
 
 # -----------------------------------------------------------------------------
 #  Output Variables

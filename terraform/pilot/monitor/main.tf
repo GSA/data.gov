@@ -7,10 +7,10 @@ variable "system" {}
 variable "branch" {}
 variable "stack" {}
 variable "ami" {}
-variable "instance_type" { default = "m3.medium" }
-variable "keypair_name" {}
+variable "security_context" {}
 variable "securitygroup_id" {}
 variable "subnet_id" {}
+variable "instance_type" { default = "m3.medium" }
 
 variable "volume_type" { default = "gp2" }
 variable "volume_size" { default = "8" }
@@ -23,7 +23,7 @@ variable "volume_size" { default = "8" }
 resource "aws_instance" "monitor" {
     ami = "${var.ami}"
     instance_type = "${var.instance_type}"
-    key_name = "${var.keypair_name}"
+    key_name = "${var.system}_${var.security_context}_${var.stack}_monitor"
     vpc_security_group_ids = ["${var.securitygroup_id}"]
     associate_public_ip_address = true
     subnet_id = "${var.subnet_id}"
