@@ -212,22 +212,28 @@ function initialize {
         error "Bucket '${BUCKET_NAME}' does not exist"
         return 1
     fi
+    verbose "Using bucket ${BUCKET_NAME}"
     if [ "${STACK_NAME}" == "" ]; then
         STACK_NAME="pilot"
     fi
+    verbose "Using stack ${STACK_NAME}"
     if [ "${SOURCE_DIR}" == "" ]; then
         SOURCE_DIR="${WORKING_DIR}/${STACK_NAME}"
     elif [ ! -d "${SOURCE_DIR}" ]; then
         error "Source directory '${SOURCE_DIR}' does not exist"
         return 2
     fi
+    verbose "Using source directory ${SOURCE_DIR}"
     if [ "${BRANCH_NAME}" == "" ]; then
         BRANCH_NAME="master"
     fi
+    verbose "Using branch ${BRANCH_NAME}"
     if [ "${TARGET_DIR}" == "" ]; then
         TARGET_DIR="${WORKING_DIR}/target/${STACK_NAME}/${BRANCH_NAME}"
     fi
+    verbose "Using target directory ${TARGET_DIR}"
     BUCKET_URL="s3://${BUCKET_NAME}/${BUCKET_PATH}${STACK_NAME}"
+    verbose "Using S3 location ${BUCKET_URL}"
     mkdir -p "${TARGET_DIR}"
     export AWS_REGION
     export AWS_PROFILE
