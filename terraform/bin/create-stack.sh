@@ -270,8 +270,10 @@ function create_stack {
     if [ "${DESTROY}" != "" ]; then
         writeln "Destroying old terraform stack '${STACK_NAME}'"
         terraform destroy -force
-        rm -rf ./.terraform
     fi
+    # Always remove modules to ensure proper update
+    # See https://github.com/hashicorp/terraform/issues/3070
+    rm -rf ./.terraform
     writeln "Update '${STACK_NAME}' modules"
     terraform get -update "${SOURCE_DIR}"
     writeln "Apply '${STACK_NAME}'"
