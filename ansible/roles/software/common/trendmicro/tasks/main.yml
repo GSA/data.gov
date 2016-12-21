@@ -13,11 +13,9 @@
   shell: sleep 10
 
 - name: start trendmicro agent @ web tier
-  shell: /opt/ds_agent/dsa_control -a dsm://dsm.sec.helix.gsa.gov:4120/policyid:{{ trendmicro_policy_id_web }}
+  shell: /opt/ds_agent/dsa_control -a dsm://dsm.sec.helix.gsa.gov:4120/ "policyid:{{ trendmicro_policy_id_web }}"
   when: (not inventory_hostname in groups["solr"]) and ( not inventory_hostname in groups["catalog-harvester"])
 
 - name: start trendmicro agent @ app tier
-  shell: /opt/ds_agent/dsa_control -a dsm://dsm.sec.helix.gsa.gov:4120/policyid:{{ trendmicro_policy_id_app }}
+  shell: /opt/ds_agent/dsa_control -a dsm://dsm.sec.helix.gsa.gov:4120/ "policyid:{{ trendmicro_policy_id_app }}"
   when: (inventory_hostname in groups["solr"]) or (inventory_hostname in groups["catalog-harvester"])
-
-
