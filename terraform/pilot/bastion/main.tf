@@ -23,7 +23,7 @@ variable "volume_size" { default = "8" }
 resource "aws_instance" "bastion" {
     ami = "${var.ami}"
     instance_type = "${var.instance_type}"
-    key_name = "${var.system}_${var.security_context}_${var.stack}_bastion"
+    key_name = "${var.system}_${var.security_context}_bastion"
     vpc_security_group_ids = ["${var.securitygroup_id}"]
     associate_public_ip_address = true
     subnet_id = "${var.subnet_id}"
@@ -32,7 +32,7 @@ resource "aws_instance" "bastion" {
         volume_size = "${var.volume_size}"
     }
     tags = {
-        Name = "${var.system}_${var.stack}_${var.branch}_bastion"
+        Name = "${var.system}_${var.branch}_bastion"
         System = "${var.system}"
         Stack = "${var.stack}"
         Branch = "${var.branch}"

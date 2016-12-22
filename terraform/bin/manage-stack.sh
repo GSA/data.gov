@@ -149,7 +149,8 @@ function s3_bucket_exists {
 #  Initialization functions
 # =============================================================================
 
-BUCKET_NAME="data-gov"
+ACTION=""
+BUCKET_NAME=""
 BUCKET_PATH="terraform/"
 BUCKET_URL=""
 SOURCE_DIR=""
@@ -162,13 +163,26 @@ BRANCH_NAME=""
 #------------------------------------------------------------------------------
 function get_argument {
     if [ "${STACK_NAME}" == "" ]; then
+        debug "STACK_NAME=$1"
         STACK_NAME="$1"
     elif [ "${BRANCH_NAME}" == "" ]; then
+        debug "BRANCH_NAME=$1"
         BRANCH_NAME="$1"
     else 
         error "Unknown argument '$1'"
         return 1
     fi
+}
+
+#------------------------------------------------------------------------------
+#  Get action
+#------------------------------------------------------------------------------
+function get_action {
+    local action="$1"
+    case $action in
+      create|delete)    ACTION="${action}" ;;
+      *)                error "Unknown action '$action'"; return 1 ;;
+    esac
 }
 
 #------------------------------------------------------------------------------
@@ -178,9 +192,9 @@ function get_parameters {
     while test $# -gt 0; do
         trace "Checking $1 (next: $2)"
         case $1 in
+          -a|--action)          shift; get_action "$1" ;;
           -b|--bucket)          shift; BUCKET_NAME="$1" ;;
           -c|--bucket-path)     shift; BUCKET_PATH="$1" ;;
-          -d|--destroy)         shift; DESTROY="$1" ;;
           -p|--profile)         shift; AWS_PROFILE="$1" ;;
           -r|--region)          shift; AWS_REGION="$1" ;;
           -q|--quiet)           set_quiet ;;
@@ -205,8 +219,12 @@ function get_parameters {
 #------------------------------------------------------------------------------
 function initialize {
     get_parameters "$@" || return 1
+    if [ "${ACTION}" == "" ]; then
+        ACTION="create"
+    fi
+    verbose "Using action ${ACTION}"
     if [ "${BUCKET_NAME}" == "" ]; then
-        BUCKET_NAME="data-gov"
+        BUCKET_NAME="datagov-provisioning"
     fi
     if ! s3_bucket_exists "${BUCKET_NAME}" ; then
         error "Bucket '${BUCKET_NAME}' does not exist"
@@ -248,6 +266,7 @@ function initialize {
 #------------------------------------------------------------------------------
 function get_state {
     writeln "Get '${STACK_NAME}' state"
+    rm -rf "${TARGET_DIR}"
     s3 sync "${BUCKET_URL}/${BRANCH_NAME}" "${TARGET_DIR}" || return 1
 }
 
@@ -259,41 +278,71 @@ function put_state {
     s3 sync "${TARGET_DIR}" "${BUCKET_URL}/${BRANCH_NAME}" || return 1
 }
 
-#------------------------------------------------------------------------------
-#  Create a stack from the given source directory to the given target 
-#  directory
-#------------------------------------------------------------------------------
-function create_stack {
-    local extra_args
-    writeln "Creating terraform stack '${STACK_NAME}'"
-    if [ "${DESTROY}" != "" ]; then
-        writeln "Destroying old terraform stack '${STACK_NAME}'"
-        terraform destroy -force || return 1
-    fi
+function get_modules {
     # Always remove modules to ensure proper update
     # See https://github.com/hashicorp/terraform/issues/3070
     extra_verbose "Removing 'downloaded' terraform modules"
     rm -rf ./.terraform
     writeln "Update '${STACK_NAME}' modules"
-    terraform get -update "${SOURCE_DIR}" || return 2
-    writeln "Apply '${STACK_NAME}'"
-    if [ -f "${SOURCE_DIR}/terraform.tfvars" ]; then
-        extra_args="-var-file ${SOURCE_DIR}/terraform.tfvars"
-    fi
-    terraform apply -var "branch=${BRANCH_NAME}" -var "stack=${STACK_NAME}" -input=false \
-        -state "${TARGET_DIR}/${STACK_NAME}.tfstate" $extra_args "${SOURCE_DIR}" || return 3
-    writeln "Generate '${STACK_NAME}' output"
-    terraform output -state "${TARGET_DIR}/${STACK_NAME}.tfstate" > \
-        "${TARGET_DIR}/${STACK_NAME}-output.tvar" || return 4
+    terraform get "${SOURCE_DIR}" || return 1
+    pushd ./.terraform
+    extra_verbose "Replace .terraform symbolic links with actual targets"
+    # Symbolic links seem to cause the originals to get updated/reverted to
+    # a previous (cached?) version when running this script
+    find -type l -exec \
+        sh -c 'TARGET=$(realpath -- "$1") && rm -- "$1" && cp -ar -- "$TARGET" "$1"' \
+        resolver {} \;
+    popd
 }
 
-function create_stack_in {
+#------------------------------------------------------------------------------
+#  Create a stack from the given source directory to the given target 
+#  directory
+#------------------------------------------------------------------------------
+function create_stack {
+    writeln "Creating terraform stack '${STACK_NAME}'"
+    get_modules || return 2
+    writeln "Apply '${STACK_NAME}'"
+    terraform apply $@ || return 3
+    writeln "Generate '${STACK_NAME}' output"
+    terraform output -state "${STACK_NAME}.tfstate" > "${STACK_NAME}-output.tvar" || return 4
+}
+
+#------------------------------------------------------------------------------
+#  Delete a stack from the given source directory to the given target 
+#  directory
+#------------------------------------------------------------------------------
+
+function delete_stack {
+    if [ -f "${STACK_NAME}.tfstate" ]; then
+        writeln "Deleting stack '${STACK_NAME}'"
+        terraform destroy -force $@ || return 1
+        rm -f "${STACK_NAME}.tfstate*" "${STACK_NAME}-output.tvar" 
+        rm -rf "./terraform"
+    else
+        writeln "Terrform stack '${STACK_NAME}' does not exist. Nothing to delete."
+    fi
+}
+
+function do_stack {
     # Ensure that directory stack is popped regardless of the success
     # (or failure) of create_stack function
-    local dir="$1"
+    local action="$1"
+    local stack_args=()
+    writeln "${action} stack '${STACK_NAME}' in ${TARGET_DIR}"
+    stack_args+=("-var branch=${BRANCH_NAME}")
+    stack_args+=("-var stack=${STACK_NAME}")
+    stack_args+=("-input=false")
+    if [ -f "${SOURCE_DIR}/terraform.tfvars" ]; then
+        extra_verbose "Found ${SOURCE_DIR}/terraform.tfvars"
+        stack_args+=("-var-file ${SOURCE_DIR}/terraform.tfvars")
+    fi
+    stack_args+=("-state ${STACK_NAME}.tfstate")
+    stack_args+=("${SOURCE_DIR}")
     local status=0
-    pushd "${dir}" 1> /dev/null
-    create_stack
+    pushd "${TARGET_DIR}" 1> /dev/null
+    verbose "About to [${action}_stack ${stack_args[@]}]"
+    "${action}_stack" ${stack_args[@]}
     status=$?
     popd 1> /dev/null
     return $status
@@ -306,6 +355,6 @@ function create_stack_in {
 STACK_STATUS=0
 initialize "$@" || exit 1
 get_state || exit 2
-create_stack_in "${TARGET_DIR}" || exit 3
+do_stack "${ACTION}" || exit 3
 put_state || exit 4
 
