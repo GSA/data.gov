@@ -24,7 +24,7 @@ env_db_name: "{{ vault_env_db_name }}"
 
 # s3
 s3_bucket: bsp-ocsit-prod-east-appdata
-s3_prefix: datagov/wordpress
+s3_prefix: datagov/wordpress/
 
 # SAML
 saml_idp_id: "https://{{ saml2_idp_entry }}/idp/shibboleth"
