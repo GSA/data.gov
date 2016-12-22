@@ -17,6 +17,10 @@ if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
 
 $base_url = $protocol . '://' . $default_host;
 
+if (0 === stripos($_SERVER['REQUEST_URI'], '/dashboard')){
+    $base_url .= '/dashboard';
+}
+
 $config = array(
     // This is a authentication source which handles admin authentication.
     'admin' => array(
