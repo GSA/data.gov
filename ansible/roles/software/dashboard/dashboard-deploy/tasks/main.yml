@@ -73,7 +73,11 @@
   replace:
     dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/saml2/src/SAML2/HTTPPost.php"
     regexp: '\$msgStr = base64_encode\(\$msgStr\);'
-    replace: '$msgStr = base64_encode(str_replace("simplesaml/module.php/saml/sp/saml2-acs.php/max","user/acs",$msgStr));'
+    replace: '
+      if (0 === stripos($_SERVER["REQUEST_URI"], "/dashboard")){
+        $msgStr = str_replace(".gov/simple",".gov/dashboard/simple", $msgStr);
+      }
+      $msgStr = base64_encode(str_replace("simplesaml/module.php/saml/sp/saml2-acs.php/max","user/acs",$msgStr));'
 
 #- name: Fixing SAML (allowing missing url)
 #  replace:
