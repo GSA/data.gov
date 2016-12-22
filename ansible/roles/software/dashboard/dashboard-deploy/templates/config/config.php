@@ -62,6 +62,9 @@ if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
 
 $config['base_url'] = $protocol . '://' . $default_host;
 
+if (0 === stripos($_SERVER['REQUEST_URI'], '/dashboard')){
+    $config['base_url'] .= '/dashboard';
+}
 
 /*
 |--------------------------------------------------------------------------
