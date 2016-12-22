@@ -1,5 +1,8 @@
+[crm-web]
+crm.aws
+
 [dashboard-web]
 dashboard.aws
 
-[crm-web]
-crm.aws
+[wordpress-web]
+datagov.aws
