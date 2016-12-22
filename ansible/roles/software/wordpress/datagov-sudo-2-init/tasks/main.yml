@@ -4,8 +4,8 @@
   template:
     src: "datagov.nginx.conf"
     dest: "/etc/nginx/sites-enabled/datagov.nginx.conf"
-  notify:
-      - reload nginx
+#  notify:
+#      - reload nginx
 
 - name: Mkdir /var/www/
   file:
