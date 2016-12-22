@@ -18,7 +18,7 @@
 - name: Copy SAML crt
   copy:
     src: "{{ saml2_idp_entry }}/mycert.pem"
-    dest: "{{ saml_sp_private_key_path }}"
+    dest: "{{ saml_sp_cert_path }}"
     mode: 0644
 
 - name: Copy SAML key

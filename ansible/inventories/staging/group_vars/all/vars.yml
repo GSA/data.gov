@@ -11,6 +11,7 @@ trendmicro_policy_id_web: "{{ vault_trendmicro_policy_id_web }}"
 
 # Nginx
 nginx_remove_default_vhost: true
+letsencrypt: false
 
 # CodeIgniter pre-approved admin emails
 codeigniter_pre_approved_admins: "{{ vault_codeigniter_pre_approved_admins }}"

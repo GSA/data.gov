@@ -19,6 +19,7 @@ env_wp_env: production
 
 # Nginx
 nginx_remove_default_vhost: true
+letsencrypt: false
 
 # SES
 postfix_relayhost: email-smtp.us-east-1.amazonaws.com
