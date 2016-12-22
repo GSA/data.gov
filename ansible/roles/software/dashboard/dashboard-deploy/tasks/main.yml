@@ -60,10 +60,8 @@
 
 - name: Copying SAML metadata files
   template:
-    src: "{{ item }}"
-    dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/simplesamlphp/metadata/{{ item | basename }}"
-  with_fileglob:
-    - ../templates/saml/metadata/*.php
+    src: "saml/metadata/{{ saml2_idp_entry }}/saml20-idp-remote.php"
+    dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/simplesamlphp/metadata/saml20-idp-remote.php"
 
 - name: Fixing SAML (removing nameIdPolicy)
   replace:

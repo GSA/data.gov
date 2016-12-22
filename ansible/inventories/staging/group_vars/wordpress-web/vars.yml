@@ -33,7 +33,6 @@ saml_sp_key: "{{ vault_saml_sp_key }}"
 saml_idp_id: "https://{{ saml2_idp_entry }}/idp/shibboleth"
 saml_idp_sso: "https://{{ saml2_idp_entry }}/idp/profile/SAML2/POST/SSO"
 saml_idp_slo: "https://{{ saml2_idp_entry }}/idp/profile/SAML2/POST/SLO"
-saml_idp_cert_fprint: "7A43DACB95D67FB6A804FD37C8A7DCA5B0384939"
 
 # Generate your keys here: https://roots.io/salts.html
 auth_key: "{{ vault_auth_key }}"

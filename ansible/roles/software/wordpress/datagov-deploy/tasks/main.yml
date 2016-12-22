@@ -69,15 +69,17 @@
     state: directory
     recurse: yes
 
-- name: Copy SAML sp cert
-  template:
-    src: saml.cer
+- name: Copy SAML crt
+  copy:
+    src: "{{ saml2_idp_entry }}/mycert.pem"
     dest: "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc/certs/1/1.cer"
+    mode: 0644
 
-- name: Copy SAML sp pem
-  template:
-    src: saml.secret.key
+- name: Copy SAML key
+  copy:
+    src: "{{ saml2_idp_entry }}/mykey.pem"
     dest: "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc/certs/1/1.key"
+    mode: 0644
 
 - name: Copy saml_authentication_options json
   template:

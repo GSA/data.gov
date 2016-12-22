@@ -157,7 +157,7 @@ $config['saml'] = array(
             'binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
         ),
         // Public x509 certificate of the IdP
-        'x509cert' => '{{ saml_idp_cert }}',
+//        'x509cert' => '{{ saml_idp_cert_fprint }}',
         /*
          *  Instead of use the whole x509cert you can use a fingerprint in order to
          *  validate a SAMLResponse.
@@ -171,8 +171,8 @@ $config['saml'] = array(
          *  Notice that if you want to validate any SAML Message sent by the HTTP-Redirect binding, you
          *  will need to provide the whole x509cert.
          */
-        // 'certFingerprint' => '',
-        // 'certFingerprintAlgorithm' => 'sha1',
+         'certFingerprint' => '{{ saml_idp_cert_fprint }}',
+         'certFingerprintAlgorithm' => 'sha1',
     ),
 // Compression settings
     'compress' => array (

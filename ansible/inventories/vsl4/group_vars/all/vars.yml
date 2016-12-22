@@ -13,3 +13,4 @@ nginx_remove_default_vhost: true
 # SAML
 saml2_idp_entry: login.test.max.gov
 saml2_idp_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
+saml_idp_cert_fprint: "7A43DACB95D67FB6A804FD37C8A7DCA5B0384939"

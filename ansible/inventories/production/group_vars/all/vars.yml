@@ -30,3 +30,4 @@ postfix_relayhost_port: 25
 # SAML
 saml2_idp_entry: login.max.gov
 saml2_idp_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
+saml_idp_cert_fprint: "67:76:BB:87:FE:76:D6:4A:BE:19:3F:E2:B6:1A:49:06:AE:56:06:B8"

@@ -42,10 +42,3 @@ saml_sp_cert_path: /etc/dashboard-saml-sp-cert.crt
 
 saml_sp_private_key: "{{ vault_saml_private_key }}"
 saml_admin_pass: "{{ vault_saml_admin_pass }}"
-
-saml_sp_cert: |
-              -----BEGIN CERTIFICATE-----
-              12345
-              -----END CERTIFICATE-----
-
-saml_idp_cert: '12345'

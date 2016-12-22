@@ -15,15 +15,15 @@
     group: "www-data"
     mode: 0777
 
-- name: Copying SAML crt
-  template:
-    src: dashboard-saml-sp-cert.crt
-    dest: "{{ saml_sp_cert_path }}"
+- name: Copy SAML crt
+  copy:
+    src: "{{ saml2_idp_entry }}/mycert.pem"
+    dest: "{{ saml_sp_private_key_path }}"
     mode: 0644
 
-- name: Copying SAML pem
-  template:
-    src: dashboard-saml-sp-private.pem
+- name: Copy SAML key
+  copy:
+    src: "{{ saml2_idp_entry }}/mykey.pem"
     dest: "{{ saml_sp_private_key_path }}"
     mode: 0644
 

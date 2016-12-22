@@ -1,2 +1,5 @@
 [dashboard-web]
 dashboard.aws
+
+[crm-web]
+crm.aws
