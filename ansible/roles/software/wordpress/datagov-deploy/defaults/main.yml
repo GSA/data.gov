@@ -12,11 +12,6 @@ nginx_extra_http_options: |
 # Disabling MySQL server (we need only client on this machine)
 mysql_enabled_on_startup: false
 
-# PHP-FPM
-php_enable_php_fpm: true
-php_fpm_listen: /var/run/php/php7.0-fpm.sock
-php_webserver_daemon: nginx
-
 # Composer
 project_git_repo: https://github.com/GSA/datagov-wp-boilerplate.git
 project_git_version: master

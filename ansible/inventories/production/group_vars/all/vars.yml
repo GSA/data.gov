@@ -31,3 +31,8 @@ postfix_relayhost_port: 25
 saml2_idp_entry: login.max.gov
 saml2_idp_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
 saml_idp_cert_fprint: "67:76:BB:87:FE:76:D6:4A:BE:19:3F:E2:B6:1A:49:06:AE:56:06:B8"
+
+# PHP-FPM
+php_enable_php_fpm: true
+php_fpm_listen: /var/run/php/php7.0-fpm.sock
+php_webserver_daemon: nginx
