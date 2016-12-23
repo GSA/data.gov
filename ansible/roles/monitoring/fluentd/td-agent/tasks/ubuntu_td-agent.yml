@@ -31,11 +31,3 @@
     dest: /etc/td-agent/bspcert.pem
     owner: ubuntu
     mode: 0444
-    
-- name: grant read access to td-agent
-  file:
-    path: "/var/log/syslog"
-    state: directory
-    mode: 0644
-    recurse: yes
-    become: yes
