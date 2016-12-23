@@ -2,8 +2,8 @@ stage 'Create pilot stack'
 node("master") {
     checkout scm
     dir("terraform/") {
-        def script = "${pwd()}/bin/create-stack.sh"
+        def script = "${pwd()}/bin/manage-stack.sh"
         sh "chmod 700 '${script}'"
-        sh "'${script}' -v -v pilot '${env.BRANCH_NAME}'"
+        sh "'${script}' -v -v --action create pilot '${env.BRANCH_NAME}'"
     }
 }
