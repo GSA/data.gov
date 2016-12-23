@@ -1,7 +1,8 @@
 {
 	"post_meta_version": 5,
 	"bucket": "{{ s3_bucket }}",
-	"region": "",
+	"region": "us-east-1",
+	"version": "latest",
 	"domain": "path",
 	"cloudfront": "",
 	"object-prefix": "{{ s3_prefix | regex_escape() }}",

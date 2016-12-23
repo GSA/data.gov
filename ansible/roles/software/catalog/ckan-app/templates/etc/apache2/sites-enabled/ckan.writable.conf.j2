@@ -1,0 +1,48 @@
+<VirtualHost 0.0.0.0:80>
+    ServerName ckan 
+
+    # CSW endpoint provided by pycsw
+    # use one wsgi script and set configuration
+    # based on request URI
+
+    # default CSW, collection level metadata
+    WSGIScriptAlias /csw /etc/ckan/pycsw.wsgi
+    SetEnvIf Request_URI "/csw" PYCSW_CONFIG=/etc/ckan/pycsw-collection.cfg
+
+    # full CSW, all metadata
+    WSGIScriptAlias /csw-all /etc/ckan/pycsw.wsgi
+    SetEnvIf Request_URI "/csw-all" PYCSW_CONFIG=/etc/ckan/pycsw-all.cfg
+
+
+    WSGIScriptAlias / /etc/ckan/apache.wsgi
+
+    # Pass authorization info on (needed for rest api).
+    WSGIPassAuthorization On
+
+    # Deploy as a daemon (avoids conflicts between CKAN instances).
+    WSGIDaemonProcess ckan display-name=ckan processes=2 threads=15
+
+    WSGIProcessGroup ckan
+
+    <Directory /etc/ckan>
+      Options All
+      AllowOverride All
+      Require all granted
+    </Directory>
+
+    ErrorLog /var/log/apache2/ckan.error.log
+    CustomLog /var/log/apache2/ckan.custom.log combined
+
+    # fix Cross-Frame Scripting (XFS) vulnerability
+    Header add X-Frame-Options "SAMEORIGIN"
+
+    Header add Access-Control-Allow-Origin "{{ url_readonly }}"
+
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI}     !^/user/(login|logged_in|_logout|logged_out|logged_out_redirect)
+    RewriteCond %{REQUEST_URI}     !^/login_generic
+    RewriteCond %{REQUEST_URI}     !^/_tracking
+    RewriteCond %{HTTP_REFERER}    !{{saml2_idp_entry}} [NC]
+    RewriteCond %{HTTP_COOKIE}     !auth_tkt
+    RewriteRule ^(.*)$ {{ url_readonly }}$1 [R,L]
+</VirtualHost>

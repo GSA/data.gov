@@ -1,6 +1,6 @@
 - Create `~/.datagov_vault_pass.txt` file, containing vault secret.
 
-- Add your AWS credentials (https://www.packer.io/docs/builders/amazon.html)
+- Add your AWS credentials
 
     For example, `~/.aws/credentials` can contain: 
 
@@ -18,10 +18,6 @@ and check that your github ssh key is ready for AgentForwarding
      `ansible-galaxy install -r requirements.yml`
 
 - Run playbook
-    - via Packer 
-        - Define PACKER_BASE_AMI (ex. export PACKER_BASE_AMI=ami-2d39803a)
-        - `packer build packer.json`
-    
     - via Ansible Playbook to Amazon Dev instance
         - `ansible-playbook datagov-web.yml -i inventories/amazon.dev`
     - or

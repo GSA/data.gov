@@ -3,7 +3,7 @@
 - name: Remove old rollback code
   file: path="{{ project_source_rollback_path }}" state=absent
 
-- name: Check whether new code dir exists
+- name: Check whether "{{ project_source_new_code_path }}" exists
   stat: path="{{ project_source_new_code_path }}"
   register: p
 
@@ -60,10 +60,8 @@
 
 - name: Copying SAML metadata files
   template:
-    src: "{{ item }}"
-    dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/simplesamlphp/metadata/{{ item | basename }}"
-  with_fileglob:
-    - ../templates/saml/metadata/*.php
+    src: "saml/metadata/{{ saml2_idp_entry }}/saml20-idp-remote.php"
+    dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/simplesamlphp/metadata/saml20-idp-remote.php"
 
 - name: Fixing SAML (removing nameIdPolicy)
   replace:
@@ -75,7 +73,11 @@
   replace:
     dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/saml2/src/SAML2/HTTPPost.php"
     regexp: '\$msgStr = base64_encode\(\$msgStr\);'
-    replace: '$msgStr = base64_encode(str_replace("simplesaml/module.php/saml/sp/saml2-acs.php/max","user/acs",$msgStr));'
+    replace: '
+      if (0 === stripos($_SERVER["REQUEST_URI"], "/dashboard")){
+        $msgStr = str_replace(".gov/simple",".gov/dashboard/simple", $msgStr);
+      }
+      $msgStr = base64_encode(str_replace("simplesaml/module.php/saml/sp/saml2-acs.php/max","user/acs",$msgStr));'
 
 #- name: Fixing SAML (allowing missing url)
 #  replace:

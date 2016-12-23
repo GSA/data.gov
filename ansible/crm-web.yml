@@ -15,9 +15,9 @@
   become_method: sudo
 
   roles:
+  - { role: misc, tags: [provision, misc] }
   - { role: crm-sudo-1-security, tags: [provision] }
   - { role: git, tags: [provision] }
-  - { role: sendmail, tags: [provision] }
   - { role: nginx, tags: [provision] }
   - { role: php, tags: [php, provision] }
   - { role: php-mysql, tags: [php, php-mysql, provision] }
@@ -27,7 +27,7 @@
   - { role: crm-sudo-2-init, tags: [provision, deploy, deploy-rollback] }
   - { role: secops-ssh, tags: [provision, secops] }
   - { role: trendmicro, tags: [provision, trendmicro] }
-  - { role: misc, tags: [provision, misc] }
+  - { role: ansible-postfix, tags: [provision, postfix] }
 
 
 - name: Deploying crm
@@ -35,7 +35,7 @@
   remote_user: ubuntu
 
   roles:
-  - { role: crm-deploy, tags: [deploy, provision] }
+  - { role: crm-deploy, tags: [provision, deploy] }
   - { role: datagov-deploy-rollback, tags: [deploy-rollback] }
 
 
@@ -53,4 +53,4 @@
   remote_user: ubuntu
 
   roles:
-  - { role: crm-migrations, tags: [deploy, migrate] }
+  - { role: crm-migrations, tags: [provision, deploy, migrate] }

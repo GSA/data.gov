@@ -33,11 +33,10 @@
   environment:
         COMPOSER_DISCARD_CHANGES: "true"
 
-- name: Set the environment in index.php
-  replace: 
+- name: Copying index.php
+  template:
+    src: "index.php"
     dest: "{{ project_source_new_code_path }}/index.php"
-    regexp: "define('ENVIRONMENT', 'development');"
-    replace: "define('ENVIRONMENT', '{{ codeigniter_environment }}');"
 
 - name: Ensuring config directory exists
   file:
@@ -60,10 +59,8 @@
 
 - name: Copying SAML metadata files
   template:
-    src: "{{ item }}"
-    dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/simplesamlphp/metadata/{{ item | basename }}"
-  with_fileglob:
-    - ../templates/saml/metadata/*.php
+    src: "saml/metadata/{{ saml2_idp_entry }}/saml20-idp-remote.php"
+    dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/simplesamlphp/metadata/saml20-idp-remote.php"
 
 - name: Fixing SAML (removing nameIdPolicy)
   replace:
@@ -75,7 +72,11 @@
   replace:
     dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/saml2/src/SAML2/HTTPPost.php"
     regexp: '\$msgStr = base64_encode\(\$msgStr\);'
-    replace: '$msgStr = base64_encode(str_replace("simplesaml/module.php/saml/sp/saml2-acs.php/max","auth/acs",$msgStr));'
+    replace: '
+        if (0 === stripos($_SERVER["REQUEST_URI"], "/crm")){
+                $msgStr = str_replace(".gov/simple",".gov/crm/simple", $msgStr);
+        }
+        $msgStr = base64_encode(str_replace("simplesaml/module.php/saml/sp/saml2-acs.php/max","auth/acs",$msgStr));'
 
 - name: Symlink current dir with new code
   file:

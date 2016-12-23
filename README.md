@@ -99,6 +99,8 @@ Included in this Repository:
 ## Common:
 **install the trendmicro agent:** `ansible-playbook trendmicro.yml -i {{ inventory }}`
 
+**Add SecOps user:** `ansible-playbook secops.yml -i {{ inventory }}`
+
 ## Upgrade ubuntu VMs:
 `ansible all -m shell -a "apt-get update && apt-get dist-upgrade" --sudo`
 

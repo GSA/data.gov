@@ -8,3 +8,31 @@ solr_master_server: "{{ vault_solr_master_server }}"
 # TrendMicro
 trendmicro_policy_id_app: "{{ vault_trendmicro_policy_id_app }}"
 trendmicro_policy_id_web: "{{ vault_trendmicro_policy_id_web }}"
+
+# Nginx
+nginx_remove_default_vhost: true
+letsencrypt: false
+
+# CodeIgniter pre-approved admin emails
+codeigniter_pre_approved_admins: "{{ vault_codeigniter_pre_approved_admins }}"
+
+# App environment
+codeigniter_environment: production
+env_wp_env: production
+
+# SES
+postfix_relayhost: email-smtp.us-east-1.amazonaws.com
+postfix_relaytls: true
+postfix_sasl_user: postfix_sasl_user
+postfix_sasl_password: postfix_sasl_password
+postfix_relayhost_port: 25
+
+# SAML
+saml2_idp_entry: login.test.max.gov
+saml2_idp_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
+saml_idp_cert_fprint: "7A43DACB95D67FB6A804FD37C8A7DCA5B0384939"
+
+# PHP-FPM
+php_enable_php_fpm: true
+php_fpm_listen: /var/run/php/php7.0-fpm.sock
+php_webserver_daemon: nginx

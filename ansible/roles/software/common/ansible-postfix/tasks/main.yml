@@ -1,0 +1,86 @@
+# tasks file for postfix
+---
+- name: configure debconf
+  debconf:
+    name: "{{ item.name }}"
+    question: "{{ item.question }}"
+    value: "{{ item.value }}"
+    vtype: "{{ item.vtype }}"
+  with_items: "{{ postfix_debconf_selections }}"
+  tags:
+    - configuration
+    - postfix
+    - postfix-install
+
+- name: install package
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: true
+    cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
+  with_items: "{{ postfix_install }}"
+  tags:
+    - configuration
+    - postfix
+    - postfix-install
+
+- name: configure mailname
+  template:
+    src: etc/mailname.j2
+    dest: /etc/mailname
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart postfix
+  tags:
+    - configuration
+    - postfix
+    - postfix-mailname
+
+- name: update configuration file
+  template:
+    src: etc/postfix/main.cf.j2
+    dest: /etc/postfix/main.cf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart postfix
+  tags:
+    - configuration
+    - postfix
+    - postfix-configuration
+
+- name: configure sasl username/password
+  template:
+    src: etc/postfix/sasl_passwd.j2
+    dest: /etc/postfix/sasl_passwd
+    owner: root
+    group: root
+    mode: 0600
+  when: postfix_relayhost != false
+  notify:
+    - postmap sasl_passwd
+    - restart postfix
+  tags:
+    - configuration
+    - postfix
+    - postfix-sasl-passwd
+
+- name: create a hashmap database file containing AWS SES smtp credentials
+  shell: postmap hash:/etc/postfix/sasl_passwd
+  notify:
+    - restart postfix
+  tags:
+    - configuration
+    - postfix
+    - postfix-hashmap
+
+- name: start and enable service
+  service:
+    name: postfix
+    state: started
+    enabled: true
+  tags:
+    - configuration
+    - postfix
+    - postfix-start-enable-service

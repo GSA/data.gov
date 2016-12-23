@@ -12,11 +12,12 @@
   ## redis, fgdc2iso, cron
   ## sample usage: ansible-playbook ansibe/catalog.yml --tags "harvester" --skip-tags "solr,apache"
   roles:
+    - {role: roles/software/common/misc, tags: ['frontend', 'harvester', 'misc'] }
     - {role: roles/software/ubuntu/common, tags: ['always']}
     - {role: roles/software/ckan/common, tags: ['frontend', 'harvester']}
     - {role: roles/software/common/secops-ssh, tags: ['frontend', 'harvester', 'secops'] }
     - {role: roles/software/common/trendmicro, tags: ['frontend', 'harvester', 'trendmicro'] }
-    - {role: roles/software/common/misc, tags: ['frontend', 'harvester', 'misc'] }
+    - {role: roles/software/common/ansible-postfix, tags: ['frontend', 'harvester', 'postfix'] }
     - {role: roles/software/ckan/apache, tags: ['frontend', 'apache']}
     - {role: roles/software/ckan/postgresql, tags: ['frontend', 'harvester', 'db', 'db-install']}
     - {role: roles/software/ckan/solr, tags: ['frontend', 'harvester', 'solr']}

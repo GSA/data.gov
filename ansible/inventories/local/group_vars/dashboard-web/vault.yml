@@ -14,8 +14,3 @@ MYSQL_PASSWORD: superpassword
 vault_codeigniter_encryption_key: 12345
 
 vault_saml_admin_pass: superpassword
-
-vault_saml_private_key: |
-                        -----BEGIN RSA PRIVATE KEY-----
-                        12345
-                        -----END RSA PRIVATE KEY-----
