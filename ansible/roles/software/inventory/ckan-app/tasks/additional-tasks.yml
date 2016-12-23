@@ -16,3 +16,8 @@
     replace: '\1 s3filestore'
   tags: ['s3filestore']
 
+- name: copy datajson export map
+  copy:
+    src: "{{ virtualenv }}/src/ckanext-datajson/ckanext/datajson/export_map/export.inventory.map.sample.json"
+    dest: "{{ virtualenv }}/src/ckanext-datajson/ckanext/datajson/export_map/export.map.json"
+    remote_src: true
