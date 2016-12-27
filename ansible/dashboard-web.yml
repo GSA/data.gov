@@ -30,9 +30,6 @@
   - { role: ansible-postfix, tags: [provision, postfix] }
 
 
-
-
-
 - name: Deploying Dashboard
   hosts: dashboard-web
   remote_user: ubuntu
