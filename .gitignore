@@ -31,6 +31,10 @@ synced_folders/*
 
 # Ansible
 vendor
+!ansible/roles/software/wordpress/vendor
+!ansible/roles/software/crm/vendor
+!ansible/roles/software/dashboard/vendor
+authorized_keys
 *.retry
 !.env.j2
 ansible/inventories/ocsit

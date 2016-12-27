@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  author: heskethm
+  description: Install WP-CLI, a command line interface for WordPress.
+  license: MIT
+  min_ansible_version: 1.2
+  platforms:
+  - name: Ubuntu
+    versions:
+    - all
+  - name: Debian
+    versions:
+    - all
+  categories:
+  - development
+  - packaging
+  - web
+dependencies: []

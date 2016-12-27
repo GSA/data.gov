@@ -1,0 +1,29 @@
+#!/usr/bin/env ansible-playbook
+# vim:ft=ansible :
+
+---
+
+# Install Vim.
+- name: install vim on debian base system
+  become: yes
+  apt: name=vim state=present
+
+# Switch default editor with update-alternatives
+- name: switch default editor to vim
+  become: yes
+  alternatives:
+    name: editor
+    path: /usr/bin/vim.basic
+
+- name: use vi-mode in bash
+  become: yes
+  lineinfile: dest=/etc/bash.bashrc line="set -o vi"
+
+- name: setting $EDITOR
+  become: yes
+  lineinfile: dest=/etc/bash.bashrc line="export EDITOR=vim"
+
+- name: use dark background in vim
+  become: yes
+  lineinfile: dest=/etc/vim/vimrc line="set background=dark"
+
