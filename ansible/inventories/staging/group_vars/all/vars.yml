@@ -20,12 +20,12 @@ codeigniter_pre_approved_admins: "{{ vault_codeigniter_pre_approved_admins }}"
 codeigniter_environment: production
 env_wp_env: production
 
-# SES
-postfix_relayhost: email-smtp.us-east-1.amazonaws.com
-postfix_relaytls: true
-postfix_sasl_user: postfix_sasl_user
-postfix_sasl_password: postfix_sasl_password
+# postfix
+postfix_relayhost: smtp.gsa.gov 
 postfix_relayhost_port: 25
+postfix_sasl_auth_enable: false
+postfix_relaytls: false
+postfix_relaytls: true
 
 # SAML
 saml2_idp_entry: login.test.max.gov

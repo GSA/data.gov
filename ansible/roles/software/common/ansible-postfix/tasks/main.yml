@@ -66,14 +66,14 @@
     - postfix
     - postfix-sasl-passwd
 
-- name: create a hashmap database file containing AWS SES smtp credentials
-  shell: postmap hash:/etc/postfix/sasl_passwd
-  notify:
-    - restart postfix
-  tags:
-    - configuration
-    - postfix
-    - postfix-hashmap
+#- name: create a hashmap database file containing AWS SES smtp credentials
+#  shell: postmap hash:/etc/postfix/sasl_passwd
+#  notify:
+#    - restart postfix
+#  tags:
+#    - configuration
+#    - postfix
+#    - postfix-hashmap
 
 - name: start and enable service
   service:
