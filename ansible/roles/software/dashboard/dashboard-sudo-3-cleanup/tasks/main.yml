@@ -23,6 +23,14 @@
     - "{{ project_shared_path }}/archive/digitalstrategy"
     - "{{ project_shared_path }}/archive/datajson"
 
+- name: Check if cron log file is accessible
+  file:
+    path: "{{ item }}"
+    state: touch
+    mode: 0666
+  with_items:
+    - "/var/log/dashboard-cron.log"
+
 - name: Chown www-data "{{project_source_new_code_path}}"
   file:
     path: "{{project_source_new_code_path}}"

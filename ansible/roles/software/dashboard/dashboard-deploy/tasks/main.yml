@@ -101,11 +101,10 @@
     path: "{{ project_source_path }}"
     state: link
 
-- name: Set up campaign status cfo-act datajosn cron job to run @ 2300 nightly
+- name: Set up campaign status cfo-act datajson cron job to run @ 2300 nightly
   cron: 
-    name: "campaign status cfo-act datajosn cron job"
+    name: "campaign status cfo-act datajson cron job"
     minute: 0
     hour: 23
-    job: /usr/bin/php "{{ project_source_path }}"/index.php campaign status cfo-act datajson >> /var/log/dashboard-cron.log #todo: Use SES to send this to a recipient list
-#  when: inventory_hostname == dashboard-web[0]
+    job: "/usr/bin/php {{ project_source_path }}/index.php campaign status all all >> /var/log/dashboard-cron.log" #todo: Use SES to send this to a recipient list
   run_once: true

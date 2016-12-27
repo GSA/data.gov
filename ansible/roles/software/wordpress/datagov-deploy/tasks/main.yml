@@ -149,3 +149,10 @@
   when: "'development' == env_wp_env"
   run_once: true
   ignore_errors: true
+
+- name: Set up main wp cronjob
+  cron:
+    name: "Set up main wp cronjob"
+    minute: "*/10"
+    job: "/usr/bin/php {{ project_source_path }}/web/wp/wp-cron.php >> /var/log/wp-cron.log 2>&1" #todo: Use SES to send this to a recipient list
+  run_once: true
