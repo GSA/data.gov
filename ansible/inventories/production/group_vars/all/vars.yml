@@ -25,7 +25,6 @@ letsencrypt: false
 postfix_relayhost: smtp.gsa.gov 
 postfix_relayhost_port: 25
 postfix_sasl_auth_enable: false
-postfix_relaytls: false
 postfix_relaytls: true
 
 # SAML
