@@ -26,6 +26,7 @@ postfix_relayhost: smtp.gsa.gov
 postfix_relayhost_port: 25
 postfix_sasl_auth_enable: false
 postfix_relaytls: true
+default_email_from: "{{ vault_default_email_from }}"
 
 # SAML
 saml2_idp_entry: login.test.max.gov

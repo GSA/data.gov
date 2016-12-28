@@ -101,10 +101,10 @@
     path: "{{ project_source_path }}"
     state: link
 
-- name: Set up campaign status cfo-act datajson cron job to run @ 2300 nightly
+- name: Set up campaign status cfo-act datajson cron job to run @ 11pm EST nightly
   cron: 
     name: "campaign status cfo-act datajson cron job"
     minute: 0
-    hour: 23
+    hour: 4
     job: "/usr/bin/php {{ project_source_path }}/index.php campaign status all all | tee /var/log/dashboard-cron.log | mail -s 'LabsData - Dashboard Cron Job - {{ real_ansible_env }}' -a 'From: datagov-bsp@gsa.gov' {{ cron_to_emails }}"
   run_once: true

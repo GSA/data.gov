@@ -8,6 +8,8 @@ codeigniter_environment: development
 env_wp_env: development
 real_ansible_env: vsl4
 
+default_email_from: "{{ vault_default_email_from }}"
+
 # Nginx
 nginx_remove_default_vhost: true
 letsencrypt: true
