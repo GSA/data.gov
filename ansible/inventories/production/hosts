@@ -1,5 +1,5 @@
 [catalog-web]
-catalog-web1p.prod-ocsit.bsp.gsa.gov
+catalog-web[1:2]p.prod-ocsit.bsp.gsa.gov
 catalogb-web[1:2]p.prod-ocsit.bsp.gsa.gov
 catalogpub-web1p.prod-ocsit.bsp.gsa.gov
 
@@ -12,9 +12,6 @@ datagovsolr[1:2]p.prod-ocsit.bsp.gsa.gov
 
 [inventory-web]
 inventory[1:2]p.prod-ocsit.bsp.gsa.gov
-
-[inventory-solr]
-datagovsolr1p.prod-ocsit.bsp.gsa.gov
 
 [crm-web]
 crm-web[1:2]p.prod-ocsit.bsp.gsa.gov
