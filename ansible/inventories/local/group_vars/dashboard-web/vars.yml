@@ -26,6 +26,9 @@ project_index_path: /var/www/dashboard/current
 # Temp uploads
 project_shared_path: /var/www/dashboard/shared
 
+# Send cron output to these emails (space is the separator)
+cron_to_emails: "{{ vault_cron_to_emails }}"
+
 # CodeIgniter Session Encryption Key
 env_encryption_key: "{{ vault_codeigniter_encryption_key }}"
 

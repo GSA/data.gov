@@ -31,15 +31,6 @@
   with_items:
     - "/var/log/dashboard-cron.log"
 
-- name: Chown www-data "{{project_source_new_code_path}}"
-  file:
-    path: "{{project_source_new_code_path}}"
-    owner: "ubuntu"
-    group: "www-data"
-    recurse: yes
-    follow: yes
-  ignore_errors: yes
-
 - name: Start nginx
   service: name=nginx state=started
 

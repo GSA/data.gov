@@ -6,6 +6,7 @@ codeigniter_pre_approved_admins: "{{ vault_codeigniter_pre_approved_admins }}"
 # App environment
 codeigniter_environment: development
 env_wp_env: development
+real_ansible_env: local
 
 # Nginx
 nginx_remove_default_vhost: true
