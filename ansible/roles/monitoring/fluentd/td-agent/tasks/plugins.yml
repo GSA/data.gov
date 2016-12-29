@@ -219,5 +219,5 @@
       </match>
   with_items: "{{td_agent_plugins}}"
   when: item == "fluent-plugin-aws-elasticsearch-service"
-  tag: "bsp"
+  tags: "bsp"
   notify: restart td-agent
