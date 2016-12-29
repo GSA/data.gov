@@ -67,21 +67,17 @@
       <source>
         format none
         type syslog
-        path /var/log/syslog
         tag secops-datagov.syslog
       </source>
       <source>
         type tail
         format none
-        time_format "%d/%b/%Y:%T %z"
         path "/var/log/auth.log"
         tag "es.authlog"
       </source>
       <source>
         type syslog
         format none
-        time_format "%d/%b/%Y:%T %z"
-        path "/var/log/syslog"
         tag "es.syslog"
       </source>
       <filter **>
@@ -124,7 +120,6 @@
         format nginx
         tag secops-datagov.apache.access
         path /var/log/apache2/access.log
-        add_tag_prefix
       </source>
       <source>
         type tail
@@ -145,14 +140,12 @@
         @type tail
         format none
         path /var/log/tomcat7/catalina.out
-        add_tag_prefix
         tag secops-datagov.catalina.out
       </source>
       <source>
         type tail
         format none
         path /var/log/tomcat7/catalina.out
-        add_tag_prefix
         tag "es.nginx.access"
       </source>
   tags: tomcat7
