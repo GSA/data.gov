@@ -1,7 +1,4 @@
 ---
-- vars_files:
-   - inventories/staging/group_vars/all/vault.yml
-   
 - hosts: all
   roles:
     - monitoring/fluentd/td-agent
