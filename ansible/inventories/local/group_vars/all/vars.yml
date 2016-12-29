@@ -14,10 +14,6 @@ default_email_from: "{{ vault_default_email_from }}"
 nginx_remove_default_vhost: true
 letsencrypt: false
 
-#FluentD
-fluentd_aws_access_key_id: "{{ vault_fluentd_aws_access_key_id }}"
-fluentd_aws_secret_access_key: "{{ vault_fluentd_aws_secret_access_key }}"
-
 # SAML
 saml2_idp_entry: login.test.max.gov
 saml2_idp_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
