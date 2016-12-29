@@ -67,13 +67,32 @@
       <source>
         type tail
         format none
+        path /var/log/syslog
+        tag secops-datagov.syslog
+      </source>
+      <source>
+        type tail
+        format none
+        path /var/log/td-agent/td-agent.log
+        tag secops-datagov.td-agentlog
+      </source>
+      <source>
+        type tail
+        format none
         path "/var/log/auth.log"
         tag "es.authlog"
       </source>
       <source>
-        type syslog
+        type tail
+        path /var/log/syslog
         format none
         tag "es.syslog"
+      </source>
+      <source>
+        type tail
+        path /var/log/td-agent/td-agent.log
+        format none
+        tag "es.td-agentlog"
       </source>
       <filter **>
         @type record_transformer
