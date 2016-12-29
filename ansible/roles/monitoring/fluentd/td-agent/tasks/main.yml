@@ -1,5 +1,17 @@
 ---
 
+- name: Debug fluentd_aws_access_key_id
+  debug:
+    msg: "fluentd_aws_access_key_id: {{ fluentd_aws_access_key_id }}"
+
+- name: Debug fluentd_aws_secret_access_key
+  debug:
+    msg: "fluentd_aws_secret_access_key: {{ fluentd_aws_secret_access_key }}"
+
+- pause:
+
+
+
 - name: Check td_agent_architecture is defined if os is Debian
   fail: msg="define 'td_agent_architecture', i386 or amd64.\nDetail for http://docs.fluentd.org/articles/install-by-deb"
   when: ansible_distribution == "Debian" and ansible_distribution_version[0] == '6' and td_agent_architecture not in ['i386', 'amd64']
