@@ -59,14 +59,14 @@
     marker: "#{mark} syslog source"
     content: |
       <source>
-        @type tail
+        type tail
         format none
         path /var/log/auth.log
         tag secops-datagov.authlog
       </source>
       <source>
         format none
-        @type tail
+        type syslog
         path /var/log/syslog
         tag secops-datagov.syslog
       </source>
@@ -78,12 +78,18 @@
         tag "es.authlog"
       </source>
       <source>
-        type tail
+        type syslog
         format none
         time_format "%d/%b/%Y:%T %z"
         path "/var/log/syslog"
         tag "es.syslog"
       </source>
+      <filter **>
+        @type record_transformer
+        <record>
+          hostname ${hostname}
+        </record>
+      </filter>
   notify: restart td-agent
 
 - name: Configure nginx source
