@@ -65,11 +65,6 @@
         tag secops-datagov.authlog
       </source>
       <source>
-        format none
-        type syslog
-        tag secops-datagov.syslog
-      </source>
-      <source>
         type tail
         format none
         path "/var/log/auth.log"
@@ -224,4 +219,5 @@
       </match>
   with_items: "{{td_agent_plugins}}"
   when: item == "fluent-plugin-aws-elasticsearch-service"
+  tag: "bsp"
   notify: restart td-agent
