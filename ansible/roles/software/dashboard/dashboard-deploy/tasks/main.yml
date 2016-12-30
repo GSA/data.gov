@@ -106,5 +106,5 @@
     name: "campaign status cfo-act datajson cron job"
     minute: 0
     hour: 4
-    job: "/usr/bin/php {{ project_source_path }}/index.php campaign status all all | tee /var/log/dashboard-cron.log | mail -s 'LabsData - Dashboard Cron Job - {{ real_ansible_env }}' -a 'From: datagov-bsp@gsa.gov' {{ cron_to_emails }}"
+    job: "/usr/bin/php {{ project_source_path }}/index.php campaign status all all | tee /var/log/dashboard-cron.log | mail -s 'LabsData - Dashboard Cron Job - {{ real_ansible_env }}' -a 'From: {{ default_email_from }}' {{ cron_to_emails }}"
   run_once: true
