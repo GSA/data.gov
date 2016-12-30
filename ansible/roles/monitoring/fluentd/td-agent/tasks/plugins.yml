@@ -59,31 +59,47 @@
     marker: "#{mark} syslog source"
     content: |
       <source>
-        @type tail
+        type tail
         format none
         path /var/log/auth.log
         tag secops-datagov.authlog
       </source>
       <source>
+        type tail
         format none
-        @type tail
         path /var/log/syslog
         tag secops-datagov.syslog
       </source>
       <source>
         type tail
         format none
-        time_format "%d/%b/%Y:%T %z"
+        path /var/log/td-agent/td-agent.log
+        tag secops-datagov.td-agentlog
+      </source>
+      <source>
+        type tail
+        format none
         path "/var/log/auth.log"
         tag "es.authlog"
       </source>
       <source>
         type tail
+        path /var/log/syslog
         format none
-        time_format "%d/%b/%Y:%T %z"
-        path "/var/log/syslog"
         tag "es.syslog"
       </source>
+      <source>
+        type tail
+        path /var/log/td-agent/td-agent.log
+        format none
+        tag "es.td-agentlog"
+      </source>
+      <filter **>
+        @type record_transformer
+        <record>
+          hostname ${hostname}
+        </record>
+      </filter>
   notify: restart td-agent
 
 - name: Configure nginx source
@@ -118,7 +134,6 @@
         format nginx
         tag secops-datagov.apache.access
         path /var/log/apache2/access.log
-        add_tag_prefix
       </source>
       <source>
         type tail
@@ -139,14 +154,12 @@
         @type tail
         format none
         path /var/log/tomcat7/catalina.out
-        add_tag_prefix
         tag secops-datagov.catalina.out
       </source>
       <source>
         type tail
         format none
         path /var/log/tomcat7/catalina.out
-        add_tag_prefix
         tag "es.nginx.access"
       </source>
   tags: tomcat7
@@ -225,4 +238,5 @@
       </match>
   with_items: "{{td_agent_plugins}}"
   when: item == "fluent-plugin-aws-elasticsearch-service"
+  tags: "bsp"
   notify: restart td-agent
