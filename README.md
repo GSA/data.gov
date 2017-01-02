@@ -47,7 +47,10 @@ Included in this Repository:
   - inventories/local/hosts
 
 # Provision Infrastructure
-## VPC:
+*Terraform folder for latest - Ansible provisioning deprecated in favor*
+
+
+## VPC **(Deprecated - See Terraform directory)**:
 
 **create vpc:**
 `ansible-playbook create_datagov_vpc.yml -e "vpc_name=datagov"`
@@ -61,7 +64,10 @@ Included in this Repository:
 
 **delete stack:**
 `ansible-playbook delete_catalog_stack.yml "vpc_name=datagov"`
+
 # Provision apps
+cd /catalog-deploy/ansible and us -i "inventory/../hosts" flag to run playbooks w/ `ansible-playbook --help` or as` ansible all -a "cmd"` to run a one-off command on all hosts (only suggested for `-m ping` for query/stats/services all installation and configuration is done using playbooks)
+
 ## Wordpress:
 
 **provision vm & deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="provision"`
@@ -69,6 +75,7 @@ Included in this Repository:
 **deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy"`
 
 **deploy rollback:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy-rollback"`
+
 ## Dashboard
 
 **provision vm & deploy app:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="provision"`
@@ -76,6 +83,7 @@ Included in this Repository:
 **deploy app:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="deploy"`
 
 **deploy rollback:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="deploy-rollback"`
+
 ## CRM
 
 **provision vm & deploy app:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="provision"`
@@ -83,6 +91,7 @@ Included in this Repository:
 **deploy app:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="deploy"`
 
 **deploy rollback:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="deploy-rollback"`
+
 ## Catalog:
 
 **provision vm - web:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="frontend,ec2" --skip-tags="solr,db,cron" --limit catalog-web`
@@ -90,6 +99,7 @@ Included in this Repository:
 **provision vm - harvester:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="harvester,ec2" --skip-tags="apache,solr,db,saml2,redis" --limit catalog-harvester`
 
 **provision vm - solr:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="solr,secops,trendmicro,misc" --limit solr`
+
 ## Inventory
 
 **provision vm && deploy app - web:** `ansible-playbook inventory.yml -i {{ inventory }} --skip-tags="solr,db,deploy-rollback" --limit inventory-web`
