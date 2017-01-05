@@ -32,3 +32,4 @@
   with_items:
     - mariadb-client-5.5
     - php-mcrypt
+    - php7.0-zip

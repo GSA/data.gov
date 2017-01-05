@@ -11,6 +11,9 @@ MYSQL_DATABASE: dashboard
 MYSQL_USER: dashboard
 MYSQL_PASSWORD: superpassword
 
+# Send cron output to these emails (space is the separator)
+vault_cron_to_emails: ""
+
 vault_codeigniter_encryption_key: 12345
 
 vault_saml_admin_pass: superpassword

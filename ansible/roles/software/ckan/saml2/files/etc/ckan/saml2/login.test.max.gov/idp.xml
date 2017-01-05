@@ -11,7 +11,6 @@
             <ds:KeyInfo>
                 <ds:X509Data>
                     <ds:X509Certificate>
-                        -----BEGIN CERTIFICATE-----
                         MIIDMzCCAhugAwIBAgIUGZmNOfGrnHuo8FkedfSoNuXGh0swDQYJKoZIhvcNAQEF
                         BQAwHTEbMBkGA1UEAwwSbG9naW4udGVzdC5tYXguZ292MB4XDTE1MDIyNjE4NTgy
                         MloXDTM1MDIyNjE4NTgyMlowHTEbMBkGA1UEAwwSbG9naW4udGVzdC5tYXguZ292
@@ -30,7 +29,6 @@
                         aY6ptcDxOa7FfTeQX9GUmulJTErLen/QHoQf6mQN14y1woXwI/kPpAD8C4Wi5N/P
                         Z00nZfcqMpeatQMt91IiI2IRSInyZ8UU0UqdY3XIJFDDoXyK/SsI5NBZksz0MrbG
                         lJsgPWOAxg==
-                        -----END CERTIFICATE-----
                     </ds:X509Certificate>
                 </ds:X509Data>
             </ds:KeyInfo>
@@ -68,7 +66,6 @@
             <ds:KeyInfo>
                 <ds:X509Data>
                     <ds:X509Certificate>
-                        -----BEGIN CERTIFICATE-----
                         MIIDMzCCAhugAwIBAgIUGZmNOfGrnHuo8FkedfSoNuXGh0swDQYJKoZIhvcNAQEF
                         BQAwHTEbMBkGA1UEAwwSbG9naW4udGVzdC5tYXguZ292MB4XDTE1MDIyNjE4NTgy
                         MloXDTM1MDIyNjE4NTgyMlowHTEbMBkGA1UEAwwSbG9naW4udGVzdC5tYXguZ292
@@ -87,7 +84,6 @@
                         aY6ptcDxOa7FfTeQX9GUmulJTErLen/QHoQf6mQN14y1woXwI/kPpAD8C4Wi5N/P
                         Z00nZfcqMpeatQMt91IiI2IRSInyZ8UU0UqdY3XIJFDDoXyK/SsI5NBZksz0MrbG
                         lJsgPWOAxg==
-                        -----END CERTIFICATE-----
                     </ds:X509Certificate>
                 </ds:X509Data>
             </ds:KeyInfo>

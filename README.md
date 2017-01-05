@@ -26,12 +26,12 @@ Included in this Repository:
 | Development *Environment* | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> | 10/1/2016 |
 | Staging *Environment*     | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> | 10/30/2016 |
 | Production *Environment*  | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> | 12/15/2016 |
-| System Security Plan | <img src="https://img.shields.io/badge/status-In%20Progress-yellow.svg" /> | 9/1/2016 |
+| System Security Plan | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> &  <img src="https://img.shields.io/badge/status-On%20Track-blue.svg" />| 12/8/2016 (90 Day) & 12/8/2016 (1 Year ATO) |
 | Authority to Operate kick-off meeting | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> | 12/8/2016 |
 | Scanning and Penetration Testing | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> | 12/1/2016 |
 | *Remediation of scanning/pen test findings* | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" />  | 12/5/2016 |
 | Authority to Operate Issued 90-day | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" />  | 12/8/2016 |
-| Infrastructure Switch Over | <img src="https://img.shields.io/badge/status-On%20Track-blue.svg" /> | 12/22/2016 |
+| Infrastructure Switch Over | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" />| 12/29/2016 |
 | Start of 1 year Authority to Operate | <img src="https://img.shields.io/badge/status-On%20Track-blue.svg" />  | 1/2/2017 |
 
 # Requirements for Infrastructure and Software Provisioning
@@ -47,7 +47,10 @@ Included in this Repository:
   - inventories/local/hosts
 
 # Provision Infrastructure
-## VPC:
+*Terraform folder for latest - Ansible provisioning deprecated in favor*
+
+
+## VPC **(Deprecated - See Terraform directory)**:
 
 **create vpc:**
 `ansible-playbook create_datagov_vpc.yml -e "vpc_name=datagov"`
@@ -61,7 +64,10 @@ Included in this Repository:
 
 **delete stack:**
 `ansible-playbook delete_catalog_stack.yml "vpc_name=datagov"`
+
 # Provision apps
+cd /catalog-deploy/ansible and us -i "inventory/../hosts" flag to run playbooks w/ `ansible-playbook --help` or as` ansible all -a "cmd"` to run a one-off command on all hosts (only suggested for `-m ping` for query/stats/services all installation and configuration is done using playbooks)
+
 ## Wordpress:
 
 **provision vm & deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="provision"`
@@ -69,6 +75,7 @@ Included in this Repository:
 **deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy"`
 
 **deploy rollback:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy-rollback"`
+
 ## Dashboard
 
 **provision vm & deploy app:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="provision"`
@@ -76,6 +83,7 @@ Included in this Repository:
 **deploy app:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="deploy"`
 
 **deploy rollback:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="deploy-rollback"`
+
 ## CRM
 
 **provision vm & deploy app:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="provision"`
@@ -83,6 +91,7 @@ Included in this Repository:
 **deploy app:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="deploy"`
 
 **deploy rollback:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="deploy-rollback"`
+
 ## Catalog:
 
 **provision vm - web:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="frontend,ec2" --skip-tags="solr,db,cron" --limit catalog-web`
@@ -90,6 +99,7 @@ Included in this Repository:
 **provision vm - harvester:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="harvester,ec2" --skip-tags="apache,solr,db,saml2,redis" --limit catalog-harvester`
 
 **provision vm - solr:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="solr,secops,trendmicro,misc" --limit solr`
+
 ## Inventory
 
 **provision vm && deploy app - web:** `ansible-playbook inventory.yml -i {{ inventory }} --skip-tags="solr,db,deploy-rollback" --limit inventory-web`

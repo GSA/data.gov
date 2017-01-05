@@ -7,42 +7,25 @@
     mode: 0755
     recurse: yes
 
-- name: Chown www-data /var/www/
+- name: Ensuring required directories exist and have write permissions
   file:
-    path: "/var/www"
-    owner: "ubuntu"
-    group: "www-data"
-    recurse: yes
-
-- name: W3 Total Cache permissions
-  file:
-    path: "{{ project_source_path }}/web/app/cache"
+    path: "{{ item }}"
     state: directory
     mode: 0777
     recurse: yes
+  with_items:
+    - "{{ project_source_path }}/web/app/uploads/saml-20-single-sign-on/etc"
+    - "{{ project_source_path }}/web/app/w3tc-config"
+    - "{{ project_source_path }}/web/app/cache"
+    - "{{ project_source_path }}/web/app/uploads"
 
-- name: W3 Total Cache Config permissions
+- name: Check if cron log file is accessible
   file:
-    path: "{{ project_source_path }}/web/app/w3tc-config"
-    state: directory
-    mode: 0777
-    recurse: yes
-
-- name: Making sure saml config directory has correct mode
-  file:
-    dest: "{{ project_source_path }}/web/app/uploads/saml-20-single-sign-on/etc"
-    state: directory
-    mode: 0777
-    recurse: yes
-
-- name: Make uploads folder writable by nginx 
-  file:
-    dest: "{{ project_source_path }}/web/app/uploads"
-    state: directory
-    owner: "www-data"
-    group: "www-data"
-    mode: 0777
-    recurse: yes
+    path: "{{ item }}"
+    state: touch
+    mode: 0666
+  with_items:
+    - "/var/log/wp-cron.log"
 
 - name: Start nginx
   service: name=nginx state=started

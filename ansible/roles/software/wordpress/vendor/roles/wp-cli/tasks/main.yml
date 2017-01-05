@@ -1,0 +1,7 @@
+---
+
+- name: Ensure WP-CLI is installed
+  get_url:
+    url: "{{ wp_cli_phar_url }}"
+    dest: "{{ wp_cli_bin_path }}"
+    mode: 0755

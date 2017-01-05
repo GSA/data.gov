@@ -27,3 +27,8 @@
   package:
     name: mariadb-client-5.5
     state: present
+
+- name: PHP Zip for metrics xmlx
+  package:
+    name: php7.0-zip
+    state: present

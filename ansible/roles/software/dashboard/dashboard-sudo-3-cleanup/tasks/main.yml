@@ -23,14 +23,13 @@
     - "{{ project_shared_path }}/archive/digitalstrategy"
     - "{{ project_shared_path }}/archive/datajson"
 
-- name: Chown www-data "{{project_source_new_code_path}}"
+- name: Check if cron log file is accessible
   file:
-    path: "{{project_source_new_code_path}}"
-    owner: "ubuntu"
-    group: "www-data"
-    recurse: yes
-    follow: yes
-  ignore_errors: yes
+    path: "{{ item }}"
+    state: touch
+    mode: 0666
+  with_items:
+    - "/var/log/dashboard-cron.log"
 
 - name: Start nginx
   service: name=nginx state=started

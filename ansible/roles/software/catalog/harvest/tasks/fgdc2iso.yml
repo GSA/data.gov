@@ -6,7 +6,7 @@
     - tomcat6
 
 - name: copy all needed files
-  action: copy src={{item}} dest=/{{item}}
+  action: copy src={{item}} dest=/{{item}} mode=0644
   with_items:
     - var/lib/tomcat6/webapps/fgdc2iso.war
     - etc/saxon-license.lic

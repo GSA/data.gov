@@ -1,0 +1,23 @@
+#!/usr/bin/env ansible-playbook
+# vim:ft=ansible :
+
+---
+- hosts: all
+  vars_files:
+    - defaults/main.yml
+
+  tasks:
+    - name: include main tasks
+      include: tasks/main.yml
+
+    - name: check vim version
+      shell: vim --version
+      register: vim_version
+
+    - name: print vim version
+      debug:
+        msg: "{{ vim_version.stdout_lines }}"
+
+#  handlers:
+#    - include: handlers/main.yml
+

@@ -15,12 +15,13 @@
   with_items: "{{td_plugin_status.results}}"
   when: (td_plugin_status.results is defined) and
         (item.stdout_lines[0] == "false")
- 
+
 - name: Configure td-agent service
   lineinfile: dest=/etc/init.d/td-agent line="export AWS_REGION=us-east-1" state=present insertafter="export PATH=/sbin:/usr/sbin:/bin:/usr/bin"
 
 #- name: Configure aws-elasticsearch-service gem
-  
+
+
 #Configure permissions
 
 #need to change the permissions. Hard-coding version here, but if that's a problem
@@ -53,40 +54,56 @@
 #Configure Sources
 
 - name: Configure system sources
-  blockinfile: 
+  blockinfile:
     dest: /etc/td-agent/td-agent.conf
     marker: "#{mark} syslog source"
     content: |
       <source>
-        @type tail
+        type tail
         format none
         path /var/log/auth.log
         tag secops-datagov.authlog
       </source>
       <source>
+        type tail
         format none
-        @type tail
         path /var/log/syslog
         tag secops-datagov.syslog
       </source>
       <source>
         type tail
         format none
-        time_format "%d/%b/%Y:%T %z"
+        path /var/log/td-agent/td-agent.log
+        tag secops-datagov.td-agentlog
+      </source>
+      <source>
+        type tail
+        format none
         path "/var/log/auth.log"
         tag "es.authlog"
       </source>
       <source>
         type tail
+        path /var/log/syslog
         format none
-        time_format "%d/%b/%Y:%T %z"
-        path "/var/log/syslog"
         tag "es.syslog"
       </source>
+      <source>
+        type tail
+        path /var/log/td-agent/td-agent.log
+        format none
+        tag "es.td-agentlog"
+      </source>
+      <filter **>
+        @type record_transformer
+        <record>
+          hostname ${hostname}
+        </record>
+      </filter>
   notify: restart td-agent
 
 - name: Configure nginx source
-  blockinfile: 
+  blockinfile:
     dest: /etc/td-agent/td-agent.conf
     marker: "#{mark} nginx source"
     content: |
@@ -106,9 +123,9 @@
       </source>
   tags: nginx
   notify: restart td-agent
-  
+
 - name: Configure td-agent apache2 source
-  blockinfile: 
+  blockinfile:
     dest: /etc/td-agent/td-agent.conf
     marker: "#{mark} apache2 source"
     content: |
@@ -117,7 +134,6 @@
         format nginx
         tag secops-datagov.apache.access
         path /var/log/apache2/access.log
-        add_tag_prefix
       </source>
       <source>
         type tail
@@ -130,7 +146,7 @@
   notify: restart td-agent
 
 - name: Configure td-agent tomcat7 source
-  blockinfile: 
+  blockinfile:
     dest: /etc/td-agent/td-agent.conf
     marker: "#{mark} tomcat7 source"
     content: |
@@ -138,14 +154,12 @@
         @type tail
         format none
         path /var/log/tomcat7/catalina.out
-        add_tag_prefix
         tag secops-datagov.catalina.out
       </source>
       <source>
         type tail
         format none
         path /var/log/tomcat7/catalina.out
-        add_tag_prefix
         tag "es.nginx.access"
       </source>
   tags: tomcat7
@@ -154,7 +168,7 @@
 #Configure Matchers
 #- name: Configure test CloudWatch matcher
 #  when: item == "fluent-plugin-cloudwatch-logs"
-#  blockinfile: 
+#  blockinfile:
 #    dest: /etc/td-agent/td-agent.conf
 #    marker: "#{mark} CloudWatch Logs test matcher"
 #    content: |
@@ -167,9 +181,9 @@
 #  with_items: "{{td_agent_plugins}}"
 #  when: item == "fluent-plugin-cloudwatch-logs"
 #  notify: restart td-agent
-#  
+#
 #- name: Configure CloudWatch matcher
-#  blockinfile: 
+#  blockinfile:
 #    dest: /etc/td-agent/td-agent.conf
 #    marker: "#{mark} CloudWatch Logs matcher"
 #    content: |
@@ -183,31 +197,31 @@
 #  when: item == "fluent-plugin-cloudwatch-logs"
 #  notify: restart td-agent
 #
-#- name: Configure AWS ElasticSearch matcher
-#  blockinfile: 
-#    dest: /etc/td-agent/td-agent.conf
-#    marker: "#{mark} AWS ElasticSearch Service matcher"
-#    content: |
-#      <match es.**>
-#        type "aws-elasticsearch-service"
-#        type_name "access_log"
-#        logstash_format true
-#        include_tag_key true
-#        tag_key "@log_name"
-#        flush_interval 1s
-#        <endpoint>
-#          access_key_id "secret"
-#          secret_access_key "seekret"
-#          url https://search-data-gov-dev-afdj5lytu3in5bqljx6zfhv55m.us-east-1.es.amazonaws.com
-#          region us-east-1
-#        </endpoint>
-#      </match>
-#  with_items: "{{td_agent_plugins}}"
-#  when: item == "fluent-plugin-aws-elasticsearch-service"
-#  notify: restart td-agent
+- name: Configure AWS ElasticSearch matcher
+  blockinfile:
+    dest: /etc/td-agent/td-agent.conf
+    marker: "#{mark} AWS ElasticSearch Service matcher"
+    content: |
+      <match es.**>
+        type "aws-elasticsearch-service"
+        type_name "access_log"
+        logstash_format true
+        include_tag_key true
+        tag_key "@log_name"
+        flush_interval 1s
+        <endpoint>
+          access_key_id "{{ fluentd_aws_access_key_id }}"
+          secret_access_key "{{ fluentd_aws_secret_access_key }}"
+          url https://search-data-gov-dev-afdj5lytu3in5bqljx6zfhv55m.us-east-1.es.amazonaws.com
+          region us-east-1
+        </endpoint>
+      </match>
+  with_items: "{{td_agent_plugins}}"
+  when: item == "fluent-plugin-aws-elasticsearch-service"
+  notify: restart td-agent
 
 - name: Configure BSP forwarder
-  blockinfile: 
+  blockinfile:
     dest: /etc/td-agent/td-agent.conf
     marker: "#{mark} BSP forwarder"
     content: |
@@ -224,4 +238,5 @@
       </match>
   with_items: "{{td_agent_plugins}}"
   when: item == "fluent-plugin-aws-elasticsearch-service"
+  tags: "bsp"
   notify: restart td-agent
