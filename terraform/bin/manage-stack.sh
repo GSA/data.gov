@@ -346,9 +346,7 @@ function get_filename {
 
 function get_s3_input {
     local url="$1"
-    local file_name=$(echo "${url}" | awk -F "/" \
-        -v TARGET_DIR="${TARGET_DIR}" \
-        '{printf("%s/%s", TARGET_DIR, $NF);}')
+    local file_name="$2"
     extra_verbose "Copying ${url} to ${file_name}"
     if ! s3 cp --only-show-errors "${url}" "${file_name}" ; then
         error "Failed to copy ${url} to ${file_name}"
@@ -359,9 +357,7 @@ function get_s3_input {
 
 function get_http_input {
     local url="$1"
-    local file_name=$(echo "${url}" | awk -F "/" \
-        -v TARGET_DIR="${TARGET_DIR}" \
-        '{printf("%s/%s", TARGET_DIR, $NF);}')
+    local file_name="$2"
     extra_verbose "Copying ${url} to ${file_name}"
     if ! curl --max-redirs 100 -s -K -L "${url}" -o "${file_name}" ; then
         error "Failed to copy ${url} to ${file_name}"
@@ -372,20 +368,25 @@ function get_http_input {
 
 function get_input {
     local input="$1" 
-    local input_file=$(to_input_url "${input}") 
-    local local_file
-    case $input_file in
-        s3://*)
-            local_file=$(get_s3_input "${input_file}"); 
-            if [ ! $? -eq 0 ]; then return 1; fi ;;
-        http://*|https://*)
-            local_file=$(get_http_input "${input_file}"); 
-            if [ ! $? -eq 0 ]; then return 1; fi ;;
-        *)  local_file="${input_file}" ;;
-    esac
+    local action="$2"
+    local input_file=$(to_input_url "${input}")
+    local local_file=$(echo "${input_file}" | awk -F "/" \
+            -v TARGET_DIR="${TARGET_DIR}" \
+            '{printf("%s/%s", TARGET_DIR, $NF);}')
+    extra_verbose "get input ${input_file} into ${local_file}"
+    if [ "${action}" == "create" ]; then
+        case $input_file in
+            s3://*)
+                get_s3_input "${input_file}" "${local_file}" || return 1 ;;
+            http://*|https://*)
+                get_http_input "${input_file}" "${local_file}" || return 2 ;;
+        esac
+    fi
     if [ ! -f "${local_file}" ]; then
         error "Input ${local_file} does not exist"
         return 2
+    else 
+        extra_verbose "LOcal input file ${local_file} exists"
     fi
     echo "${local_file}"
 }
@@ -466,8 +467,9 @@ function do_stack {
     extra_verbose "Adding provided inputs"
     for input in ${INPUTS[@]} ; do
         verbose "Adding input from ${input}"
-        variables_file=$(get_input "${input}")
+        variables_file=$(get_input "${input}" "${action}")
         if [ ! $? -eq 0 ]; then return 1; fi
+        extra_verbose "Adding ${variables_file}"
         stack_args+=("-var-file ${variables_file}")
     done
     stack_args+=("-state ${STACK_NAME}.tfstate")
