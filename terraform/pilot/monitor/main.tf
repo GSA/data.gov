@@ -8,7 +8,7 @@ variable "branch" {}
 variable "stack" {}
 variable "ami" {}
 variable "security_context" {}
-variable "securitygroup_id" {}
+variable "security_group_id" {}
 variable "subnet_id" {}
 variable "instance_type" { default = "m3.medium" }
 
@@ -17,14 +17,14 @@ variable "volume_size" { default = "8" }
 
 
 # -----------------------------------------------------------------------------
-#  Bastion server
+#  Monitor server
 # -----------------------------------------------------------------------------
 
 resource "aws_instance" "monitor" {
     ami = "${var.ami}"
     instance_type = "${var.instance_type}"
     key_name = "${var.system}_${var.security_context}_monitor"
-    vpc_security_group_ids = ["${var.securitygroup_id}"]
+    vpc_security_group_ids = ["${var.security_group_id}"]
     associate_public_ip_address = true
     subnet_id = "${var.subnet_id}"
     root_block_device = {

@@ -103,7 +103,13 @@ module "monitor_subnet" {
 output "bastion_subnet_id" {
     value = "${module.bastion_subnet.subnet_id}"
 }
+output "bastion_security_group_id" {
+    value = "${module.bastion_subnet.security_group_id}"
+}
 
 output "monitor_subnet_id" {
     value = "${module.monitor_subnet.subnet_id}"
+}
+output "monitor_security_group_id" {
+    value = "${module.monitor_subnet.security_group_id}"
 }

@@ -157,6 +157,8 @@ SOURCE_DIR=""
 TARGET_DIR=""
 STACK_NAME=""
 BRANCH_NAME=""
+INPUTS=()
+OUTPUT_TYPE="tfvars" # DO NOT change
 
 #------------------------------------------------------------------------------
 #  Get unnamed argument, either stack or branch name (if not set yet)
@@ -195,6 +197,7 @@ function get_parameters {
           -a|--action)          shift; get_action "$1" ;;
           -b|--bucket)          shift; BUCKET_NAME="$1" ;;
           -c|--bucket-path)     shift; BUCKET_PATH="$1" ;;
+          -i|--input)           shift; INPUTS+=("$1") ;;
           -p|--profile)         shift; AWS_PROFILE="$1" ;;
           -r|--region)          shift; AWS_REGION="$1" ;;
           -q|--quiet)           set_quiet ;;
@@ -274,9 +277,20 @@ function get_state {
 #  Put any (existing) stack-branch specific state from S3 bucket 
 #------------------------------------------------------------------------------
 function put_state {
-    writeln "Preserve '${STACK_NAME}' state"
-    s3 sync "${TARGET_DIR}" "${BUCKET_URL}/${BRANCH_NAME}" || return 1
+    local action="$1" s3uri="${BUCKET_URL}/${BRANCH_NAME}"
+    if [ "${ACTION}" == "delete" ]; then
+        writeln "Remove '${STACK_NAME}' state"
+        s3 rm --recursive "${s3uri}" || return 1
+    else
+        writeln "Preserve '${STACK_NAME}' state"
+        s3 sync "${TARGET_DIR}" "${s3uri}" || return 2
+    fi
 }
+
+
+#------------------------------------------------------------------------------
+#  Input handling
+#------------------------------------------------------------------------------
 
 function get_modules {
     # Always remove modules to ensure proper update
@@ -295,17 +309,108 @@ function get_modules {
     popd
 }
 
+function to_input_url {
+    local url="$1"
+    local mapped_url=$(echo "${url}" | awk \
+        -v BUCKET_NAME="${BUCKET_NAME}" \
+        -v BUCKET_PATH="${BUCKET_PATH}" \
+        -v OUTPUT_TYPE="${OUTPUT_TYPE}" '
+        /^stack-output:\/\// {
+            split(substr($0, length("stack-output://") + 1), parts, "/");
+            bucket_name = (parts[1] != "") ? parts[1] : BUCKET_NAME;
+            stack_name = parts[2];
+            branch_name = parts[3];
+            printf("s3://%s/%s%s/%s/%s-output.%s", bucket_name, BUCKET_PATH,
+                stack_name, branch_name, stack_name, OUTPUT_TYPE);
+            exit;
+        }
+        {
+            gsub(/^file:\/\//, $0);
+            printf("%s", $0);
+            exit;
+        }
+        ')
+    if [ ! $? -eq 0 ]; then
+        return 1
+    elif [ "${url}" != "${mapped_url}" ] ; then
+        verbose "    => ${mapped_url}"
+    fi
+    echo "${mapped_url}"
+}
+
+function get_filename {
+    local file_name=
+    writeln "FILENAME=[${file_name}]"
+    echo "${file_name}"
+}
+
+function get_input_from_s3 {
+    local url="$1"
+    local file_name=$(echo "${url}" | awk -F "/" \
+        -v TARGET_DIR="${TARGET_DIR}" \
+        '{printf("%s/%s", TARGET_DIR, $NF);}')
+    extra_verbose "Copying ${url} to ${file_name}"
+    if ! s3 cp --only-show-errors "${url}" "${file_name}" ; then
+        error "Failed to copy ${url} to ${file_name}"
+        return 1
+    fi
+    echo "${file_name}"
+}
+
+function get_input {
+    local input="$1" 
+    local input_file=$(to_input_url "${input}") 
+    local local_file
+    case $input_file in
+        s3://*)    local_file=$(get_input_from_s3 "${input_file}"); 
+                   if [ ! $? -eq 0 ]; then return 1; fi ;;
+        *)         local_file="${input_file}" ;;
+    esac
+    if [ ! -f "${local_file}" ]; then
+        error "Input ${local_file} does not exist"
+        return 2
+    fi
+    echo "${local_file}"
+}
+
+#------------------------------------------------------------------------------
+#  Apply stack
+#------------------------------------------------------------------------------
+
+function apply_stack {
+    writeln "Apply '${STACK_NAME}'"
+    terraform apply $@ || return 1
+}
+
+#------------------------------------------------------------------------------
+#  Output handling
+#------------------------------------------------------------------------------
+
+function convert_to_hcl {
+    awk '
+        / = / { 
+            split($0, parts, " = ");
+            # quote variables
+            printf("%s = \"%s\"\n", parts[1], parts[2]);
+        }
+        '
+}
+
+function create_output {
+    writeln "Generate '${STACK_NAME}' output"
+    terraform output -state "${STACK_NAME}.tfstate" | convert_to_hcl \
+        > "${STACK_NAME}-output.${OUTPUT_TYPE}" || return 1
+}
+
 #------------------------------------------------------------------------------
 #  Create a stack from the given source directory to the given target 
 #  directory
 #------------------------------------------------------------------------------
 function create_stack {
     writeln "Creating terraform stack '${STACK_NAME}'"
-    get_modules || return 2
-    writeln "Apply '${STACK_NAME}'"
-    terraform apply $@ || return 3
-    writeln "Generate '${STACK_NAME}' output"
-    terraform output -state "${STACK_NAME}.tfstate" > "${STACK_NAME}-output.tvar" || return 4
+    get_modules || return 1
+    apply_stack $@ || return 2
+    create_output || return 3
 }
 
 #------------------------------------------------------------------------------
@@ -317,10 +422,11 @@ function delete_stack {
     if [ -f "${STACK_NAME}.tfstate" ]; then
         writeln "Deleting stack '${STACK_NAME}'"
         terraform destroy -force $@ || return 1
-        rm -f "${STACK_NAME}.tfstate*" "${STACK_NAME}-output.tvar" 
+        rm -f "${STACK_NAME}.tfstate*" "${STACK_NAME}-output.*"
         rm -rf "./terraform"
     else
-        writeln "Terrform stack '${STACK_NAME}' does not exist. Nothing to delete."
+        writeln "Terraform stack '${STACK_NAME}' does not exist." \
+            "Nothing to delete."
     fi
 }
 
@@ -328,20 +434,30 @@ function do_stack {
     # Ensure that directory stack is popped regardless of the success
     # (or failure) of create_stack function
     local action="$1"
-    local stack_args=()
+    local stack_args=() input_files variables_file input 
     writeln "${action} stack '${STACK_NAME}' in ${TARGET_DIR}"
     stack_args+=("-var branch=${BRANCH_NAME}")
     stack_args+=("-var stack=${STACK_NAME}")
     stack_args+=("-input=false")
-    if [ -f "${SOURCE_DIR}/terraform.tfvars" ]; then
-        extra_verbose "Found ${SOURCE_DIR}/terraform.tfvars"
-        stack_args+=("-var-file ${SOURCE_DIR}/terraform.tfvars")
-    fi
+    extra_verbose "Checking for inputs in ${SOURCE_DIR}"
+    # Allow json and tfvar files as input
+    input_files=$(find "${SOURCE_DIR}" -iregex ".*\.\(tfvars\|json\)" -printf "%f")
+    for variables_file in $input_files ; do
+        verbose "Adding input from ${variables_file}"
+        stack_args+=("-var-file ${SOURCE_DIR}/${variables_file}")
+    done
+    extra_verbose "Adding provided inputs"
+    for input in ${INPUTS[@]} ; do
+        verbose "Adding input from ${input}"
+        variables_file=$(get_input "${input}")
+        if [ ! $? -eq 0 ]; then return 1; fi
+        stack_args+=("-var-file ${variables_file}")
+    done
     stack_args+=("-state ${STACK_NAME}.tfstate")
     stack_args+=("${SOURCE_DIR}")
     local status=0
     pushd "${TARGET_DIR}" 1> /dev/null
-    verbose "About to [${action}_stack ${stack_args[@]}]"
+    extra_verbose "About to [${action}_stack ${stack_args[@]}]"
     "${action}_stack" ${stack_args[@]}
     status=$?
     popd 1> /dev/null
@@ -356,5 +472,5 @@ STACK_STATUS=0
 initialize "$@" || exit 1
 get_state || exit 2
 do_stack "${ACTION}" || exit 3
-put_state || exit 4
+put_state "${ACTION}" || exit 4
 
