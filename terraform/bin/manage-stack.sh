@@ -344,7 +344,7 @@ function get_filename {
     echo "${file_name}"
 }
 
-function get_input_from_s3 {
+function get_s3_input {
     local url="$1"
     local file_name=$(echo "${url}" | awk -F "/" \
         -v TARGET_DIR="${TARGET_DIR}" \
@@ -357,14 +357,31 @@ function get_input_from_s3 {
     echo "${file_name}"
 }
 
+function get_http_input {
+    local url="$1"
+    local file_name=$(echo "${url}" | awk -F "/" \
+        -v TARGET_DIR="${TARGET_DIR}" \
+        '{printf("%s/%s", TARGET_DIR, $NF);}')
+    extra_verbose "Copying ${url} to ${file_name}"
+    if ! curl --max-redirs 100 -s -K -L "${url}" -o "${file_name}" ; then
+        error "Failed to copy ${url} to ${file_name}"
+        return 1
+    fi
+    echo "${file_name}"
+}
+
 function get_input {
     local input="$1" 
     local input_file=$(to_input_url "${input}") 
     local local_file
     case $input_file in
-        s3://*)    local_file=$(get_input_from_s3 "${input_file}"); 
-                   if [ ! $? -eq 0 ]; then return 1; fi ;;
-        *)         local_file="${input_file}" ;;
+        s3://*)
+            local_file=$(get_s3_input "${input_file}"); 
+            if [ ! $? -eq 0 ]; then return 1; fi ;;
+        http://*|https://*)
+            local_file=$(get_http_input "${input_file}"); 
+            if [ ! $? -eq 0 ]; then return 1; fi ;;
+        *)  local_file="${input_file}" ;;
     esac
     if [ ! -f "${local_file}" ]; then
         error "Input ${local_file} does not exist"
