@@ -293,20 +293,22 @@ function put_state {
 #------------------------------------------------------------------------------
 
 function get_modules {
+    local status=0
     # Always remove modules to ensure proper update
     # See https://github.com/hashicorp/terraform/issues/3070
     extra_verbose "Removing 'downloaded' terraform modules"
     rm -rf ./.terraform
     writeln "Update '${STACK_NAME}' modules"
     terraform get "${SOURCE_DIR}" || return 1
-    pushd ./.terraform
+    pushd ./.terraform 1> /dev/null
     extra_verbose "Replace .terraform symbolic links with actual targets"
     # Symbolic links seem to cause the originals to get updated/reverted to
     # a previous (cached?) version when running this script
     find -type l -exec \
         sh -c 'TARGET=$(realpath -- "$1") && rm -- "$1" && cp -ar -- "$TARGET" "$1"' \
-        resolver {} \;
-    popd
+        resolver {} \; || status=$?
+    popd 1> /dev/null
+    return $status
 }
 
 function to_input_url {
@@ -352,7 +354,6 @@ function get_s3_input {
         error "Failed to copy ${url} to ${file_name}"
         return 1
     fi
-    echo "${file_name}"
 }
 
 function get_http_input {
@@ -363,7 +364,6 @@ function get_http_input {
         error "Failed to copy ${url} to ${file_name}"
         return 1
     fi
-    echo "${file_name}"
 }
 
 function get_input {
@@ -425,10 +425,13 @@ function create_output {
 #  directory
 #------------------------------------------------------------------------------
 function create_stack {
+    local status=0
     writeln "Creating terraform stack '${STACK_NAME}'"
-    get_modules || return 1
-    apply_stack $@ || return 2
-    create_output || return 3
+    pushd "${TARGET_DIR}" 1> /dev/null
+    get_modules && apply_stack $@ && create_output
+    status=$?
+    popd 1> /dev/null
+    return $status
 }
 
 #------------------------------------------------------------------------------
@@ -437,47 +440,61 @@ function create_stack {
 #------------------------------------------------------------------------------
 
 function delete_stack {
-    if [ -f "${STACK_NAME}.tfstate" ]; then
-        writeln "Deleting stack '${STACK_NAME}'"
-        terraform destroy -force $@ || return 1
-        rm -f "${STACK_NAME}.tfstate*" "${STACK_NAME}-output.*"
-        rm -rf "./terraform"
+    local status=0
+
+    writeln "Deleting stack '${STACK_NAME}'"
+    pushd "${TARGET_DIR}" 1> /dev/null
+    if [ -f "${TARGET_DIR}/${STACK_NAME}.tfstate" ]; then
+        terraform destroy -force $@ || status=1
     else
-        writeln "Terraform stack '${STACK_NAME}' does not exist." \
-            "Nothing to delete."
+        writeln "No state found. Nothing to delete"
     fi
+    if [ $status -eq 0 ]; then
+        verbose "Delete stack '${STACK_NAME}' target directory ${TARGET_DIR}"
+        if rm -rf "${TARGET_DIR}" ; then
+            extra_verbose "Stack '${STACK_NAME}' target directory ${TARGET_DIR} deleted"
+        else 
+            status=2
+        fi
+    fi
+    popd 1> /dev/null
+    return $status
 }
 
 function do_stack {
     # Ensure that directory stack is popped regardless of the success
     # (or failure) of create_stack function
-    local action="$1"
+    local action="$1" wd=$(pwd) status=0
     local stack_args=() input_files variables_file input 
     writeln "${action} stack '${STACK_NAME}' in ${TARGET_DIR}"
-    stack_args+=("-var branch=${BRANCH_NAME}")
-    stack_args+=("-var stack=${STACK_NAME}")
-    stack_args+=("-input=false")
-    extra_verbose "Checking for inputs in ${SOURCE_DIR}"
-    # Allow json and tfvar files as input
-    input_files=$(find "${SOURCE_DIR}" -iregex ".*\.\(tfvars\|json\)" -printf "%f")
-    for variables_file in $input_files ; do
-        verbose "Adding input from ${variables_file}"
-        stack_args+=("-var-file ${SOURCE_DIR}/${variables_file}")
-    done
-    extra_verbose "Adding provided inputs"
-    for input in ${INPUTS[@]} ; do
-        verbose "Adding input from ${input}"
-        variables_file=$(get_input "${input}" "${action}")
-        if [ ! $? -eq 0 ]; then return 1; fi
-        extra_verbose "Adding ${variables_file}"
-        stack_args+=("-var-file ${variables_file}")
-    done
-    stack_args+=("-state ${STACK_NAME}.tfstate")
-    stack_args+=("${SOURCE_DIR}")
-    local status=0
-    pushd "${TARGET_DIR}" 1> /dev/null
+    if [ "${action}" != "delete" ] ||
+       [ -f "${TARGET_DIR}/${STACK_NAME}.tfstate" ]
+    then
+        stack_args+=("-var branch=${BRANCH_NAME}")
+        stack_args+=("-var stack=${STACK_NAME}")
+        stack_args+=("-input=false")
+        extra_verbose "Checking for inputs in ${SOURCE_DIR}"
+        # Allow json and tfvar files as input
+        input_files=$(find "${SOURCE_DIR}" -iregex ".*\.\(tfvars\|json\)" -printf "%f")
+        for variables_file in $input_files ; do
+            verbose "Adding input from ${variables_file}"
+            stack_args+=("-var-file ${SOURCE_DIR}/${variables_file}")
+        done
+        extra_verbose "Adding provided inputs"
+        for input in ${INPUTS[@]} ; do
+            verbose "Adding input from ${input}"
+            variables_file=$(get_input "${input}" "${action}")
+            if [ ! $? -eq 0 ]; then return 1; fi
+            extra_verbose "Adding ${variables_file}"
+            stack_args+=("-var-file ${variables_file}")
+        done
+        stack_args+=("-state ${STACK_NAME}.tfstate")
+        stack_args+=("${SOURCE_DIR}")
+    #else: Nothing to delete 
+    fi
     extra_verbose "About to [${action}_stack ${stack_args[@]}]"
-    "${action}_stack" ${stack_args[@]}
+    pushd $(pwd) 1> /dev/null
+    "${action}_stack" ${stack_args[@]} 
     status=$?
     popd 1> /dev/null
     return $status
