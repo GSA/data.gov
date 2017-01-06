@@ -21,6 +21,10 @@ variable "bastion_subnet_id" {}
 variable "bastion_security_group_id" {}
 variable "bastion_instance_type" {}
 
+variable "monitor_subnet_id" {}
+variable "monitor_security_group_id" {}
+variable "monitor_instance_type" {}
+
 
 # -----------------------------------------------------------------------------
 #  Local Variables
@@ -52,7 +56,7 @@ module "bastion" {
     security_context = "${var.security_context}"
     ami = "${lookup(var.amis, format("%s-%s", var.aws_region, var.ami_type))}"
     instance_type = "${var.bastion_instance_type}"
-    securitygroup_id = "${var.bastion_security_group_id}"
+    security_group_id = "${var.bastion_security_group_id}"
     subnet_id = "${var.bastion_subnet_id}"
 }
 
@@ -66,9 +70,9 @@ module "monitor" {
     stack = "${var.stack}"
     security_context = "${var.security_context}"
     ami = "${lookup(var.amis, format("%s-%s", var.aws_region, var.ami_type))}"
-    instance_type = "${var.bastion_instance_type}"
-    securitygroup_id = "${var.bastion_security_group_id}"
-    subnet_id = "${var.bastion_subnet_id}"
+    instance_type = "${var.monitor_instance_type}"
+    security_group_id = "${var.monitor_security_group_id}"
+    subnet_id = "${var.monitor_subnet_id}"
 }
 
 # -----------------------------------------------------------------------------
@@ -78,7 +82,6 @@ module "monitor" {
 output "bastion_instance_id" {
     value = "${module.bastion.instance_id}"
 }
-
 output "bastion_public_ip" {
     value = "${module.bastion.public_ip}"
 }
@@ -87,7 +90,6 @@ output "bastion_public_ip" {
 output "monitor_instance_id" {
     value = "${module.monitor.instance_id}"
 }
-
 output "monitor_public_ip" {
     value = "${module.monitor.public_ip}"
 }
