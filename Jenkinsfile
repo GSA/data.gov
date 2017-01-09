@@ -1,3 +1,6 @@
+import com.cloudbees.groovy.cps.NonCPS
+
+
 stage 'Initialize'
 node("master") {
     checkout scm
