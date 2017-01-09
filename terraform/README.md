@@ -83,7 +83,7 @@ A stack management script is used to manage the following stack aspects:
   the persisted state.
   A consistent naming convention of persisted state also enables the use of
   fine-grained AWS policies (if so desired).
-- __Stack Input/Output __- Terraform allows for input and output. Input and
+- __Stack Input/Output__- Terraform allows for input and output. Input and
   output must be defined in the root module of the stack. The stack management
   script handles discovery of input variables defined with the stack in source
   code, as well as allows for designating externally defined variable files.
