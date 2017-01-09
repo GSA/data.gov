@@ -21,7 +21,7 @@ variable "nat" { type = "map" }
 
 resource "aws_subnet" "nat_subnet" {
     vpc_id = "${var.vpc_id}"
-    availability_zone = "${az}"
+    availability_zone = "${var.az}"
     cidr_block = "${var.cidr_prefix}.${var.index}.0/24"
     tags = {
         Name = "${var.system}_${var.branch}_az${var.index}_nat"
