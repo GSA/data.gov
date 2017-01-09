@@ -53,7 +53,7 @@ def newInventoryFile(fileName = "./hosts") {
 
 def appendInventoryEntry(fileName, resourceName, stackName, branchName = null) {
     def resourceIP = discoverResourcePublicIp(stackName,
-        (branchName) ? branchName : ENV.BRANCH_NAME,
+        (branchName) ? branchName : env.BRANCH_NAME,
         resourceName)
     writeFile encoding: 'ascii', file: fileName, 
          text: "${resourceName} ansible_host=${resourceIP}\n"
