@@ -1,5 +1,3 @@
-import com.cloudbees.groovy.cps.NonCPS
-
 
 stage 'Initialize'
 node("master") {
@@ -31,8 +29,6 @@ node('master') {
 }
 
 
-
-@NonCPS
 def manageStack(stack_name, branchName, dependsOnStack = null) {
     dir("terraform/") {
         def script = "${pwd()}/bin/manage-stack.sh"
@@ -48,7 +44,6 @@ def manageStack(stack_name, branchName, dependsOnStack = null) {
     }
 }
 
-@NonCPS
 def newInventoryFile(inventory, fileName = "./inventory") {
     sh "rm -f ${fileName}"
     sh "echo '' > ${fileName}"
@@ -56,7 +51,6 @@ def newInventoryFile(inventory, fileName = "./inventory") {
 }
 
 
-@NonCPS
 def appendInventoryEntry(fileName, resourceName, stackName, branchName = null) {
     def resourceIP = discoverResourcePublicIp(stackName,
         (branchName) ? branchName : ENV.BRANCH_NAME,
@@ -65,7 +59,6 @@ def appendInventoryEntry(fileName, resourceName, stackName, branchName = null) {
          text: "${resourceName} ansible_host=${resourceIP}\n"
 }
 
-@NonCPS
 def discoverResourcePublicIp(stackName, branchName, resourceName) {
     return sh (
         script: """aws ec2 describe-instances \
