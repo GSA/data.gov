@@ -32,7 +32,7 @@ node('master') {
 
 
 
-@NonCSP
+@NonCPS
 def manageStack(stack_name, branchName, dependsOnStack = null) {
     dir("terraform/") {
         def script = "${pwd()}/bin/manage-stack.sh"
@@ -48,7 +48,7 @@ def manageStack(stack_name, branchName, dependsOnStack = null) {
     }
 }
 
-@NonCSP
+@NonCPS
 def newInventoryFile(inventory, fileName = "./inventory") {
     sh "rm -f ${fileName}"
     sh "echo '' > ${fileName}"
@@ -56,7 +56,7 @@ def newInventoryFile(inventory, fileName = "./inventory") {
 }
 
 
-@NonCSP
+@NonCPS
 def appendInventoryEntry(fileName, resourceName, stackName, branchName = null) {
     def resourceIP = discoverResourcePublicIp(stackName,
         (branchName) ? branchName : ENV.BRANCH_NAME,
@@ -65,7 +65,7 @@ def appendInventoryEntry(fileName, resourceName, stackName, branchName = null) {
          text: "${resourceName} ansible_host=${resourceIP}\n"
 }
 
-@NonCSP
+@NonCPS
 def discoverResourcePublicIp(stackName, branchName, resourceName) {
     return sh (
         script: """aws ec2 describe-instances \
