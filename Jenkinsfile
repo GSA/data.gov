@@ -18,7 +18,7 @@ node("master") {
 stage 'Provision Bastion Server'
 node('master') {
     def bastionResourceName = 'bastion'
-    def fileName = newInventoryFile(inventory)
+    def fileName = newInventoryFile()
     appendInventoryEntry(fileName, bastionResourceName, "pilot")
     ansiblePlaybook playbook: './ansible/jumpbox.yml',
         sudoUser: "ubuntu",
@@ -44,7 +44,7 @@ def manageStack(stack_name, branchName, dependsOnStack = null) {
     }
 }
 
-def newInventoryFile(inventory, fileName = "./inventory") {
+def newInventoryFile(fileName = "./hosts") {
     sh "rm -f ${fileName}"
     sh "echo '' > ${fileName}"
     return fileName
