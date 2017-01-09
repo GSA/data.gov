@@ -41,7 +41,7 @@
 - name: create directories
   action: file path={{item}} state=directory owner="www-data" group="www-data" mode=0755
   with_items:
-    - "{{ project_source_new_code_path }}"
+    - /var/lib/ckan
 
 - name: copy all needed files
   action: copy src={{item}} dest=/{{item}}
