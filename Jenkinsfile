@@ -18,7 +18,7 @@ stage 'Provision Bastion Server'
 node('master') {
     def bastion_resource = 'bastion'
     def inventory = []
-    inventory << [ resource: resource, stack: 'pilot' ]
+    inventory << [ resource: bastion_resource, stack: 'pilot' ]
     def file_name = createInventoryFile(inventory)
     ansiblePlaybook playbook: './ansible/jumpbox.yml', 
         sudoUser: "ubuntu",  credentialsId: "datagov_dev_${bastion_resource}",
