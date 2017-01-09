@@ -16,7 +16,7 @@ variable "branch" {}
 variable "security_context" { default = "dev" }
 
 variable "aws_region" { default = "us-east-1" }
-variable "ami_type" { default = "not-hardened" }
+variable "ami_type" { default = "hardened" }
 variable "bastion_subnet_id" {}
 variable "bastion_security_group_id" {}
 variable "bastion_instance_type" {}
