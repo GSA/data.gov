@@ -1,6 +1,6 @@
 ---
 - name: Install
-  hosts: {{ bastion_hostnames | default('localhost') }}
+  hosts: "{{ bastion_hostnames | default('localhost') }}"
   sudo: yes
   vars:
       app_type: jumpbox
