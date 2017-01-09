@@ -68,22 +68,13 @@ resource "aws_security_group" "server_security_group" {
     }
 }
 
-resource "aws_security_group_rule" "allow_ephemeral_tcp_ingress" {
+resource "aws_security_group_rule" "allow_ssh_ingress" {
     security_group_id = "${aws_security_group.server_security_group.id}"
     type = "ingress"
-    from_port = 1025
-    to_port = 65535
+    from_port = 22
+    to_port = 22
     protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-}
-
-resource "aws_security_group_rule" "allow_ephemeral_udp_ingress" {
-    security_group_id = "${aws_security_group.server_security_group.id}"
-    type = "ingress"
-    from_port = 1025
-    to_port = 65535
-    protocol = "udp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["${var.network["privileged_access_cidr"]}"]
 }
 
 # -----------------------------------------------------------------------------

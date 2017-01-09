@@ -23,6 +23,7 @@ variable "network" {
         az1 = "us-east-1b"
         az2 = "us-east-1c"
         cidr_prefix = "172.27"
+        privileged_access_cidr = "0.0.0.0/0"
     }
 }
 
