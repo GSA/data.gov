@@ -95,10 +95,10 @@
     path: "{{ current_source_symlink }}"
     state: link
 
-- name: Set up campaign status cfo-act datajson cron job to run @ 11pm EST nightly
+- name: Set up campaign status cfo-act all cron job to run @ 11pm EST nightly
   cron: 
-    name: "campaign status cfo-act datajson cron job"
+    name: "campaign status cfo-act all cron job"
     minute: 0
     hour: 4
-    job: "/usr/bin/php {{ current_source_symlink }}/index.php campaign status all all | tee /var/log/dashboard-cron.log | mail -s 'LabsData - Dashboard Cron Job - {{ real_ansible_env }}' -a 'From: {{ default_email_from }}' {{ cron_to_emails }}"
-  run_once: true
+    job: "/usr/bin/php {{ current_source_symlink }}/index.php campaign status cfo-act all | tee /var/log/dashboard-cron.log | mail -s 'LabsData - Dashboard Cron Job - {{ real_ansible_env }}' -a 'From: {{ default_email_from }}' {{ cron_to_emails }}"
+  when: crons_enabled
