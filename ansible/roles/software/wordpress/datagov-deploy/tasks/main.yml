@@ -142,15 +142,6 @@
   run_once: true
   ignore_errors: true
 
-- name: Setup Datagov WP system cron
-  cron:
-    name: "Data.gov WordPress cron"
-    minute: "*/15"
-    user: "www-data"
-    job: "cd {{ current_source_symlink }} && wp cron event run --due-now >> /var/log/wp-cron.log 2>&1"
-    cron_file: "wordpress-datagov"
-  run_once: true
-
 #- name: Set up main wp cronjob
 #  cron:
 #    name: "Set up main wp cronjob"

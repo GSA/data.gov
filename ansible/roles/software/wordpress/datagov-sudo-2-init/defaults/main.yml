@@ -1,0 +1,4 @@
+---
+
+# Enable crons only on specific hosts
+crons_enabled: false
