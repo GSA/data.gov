@@ -7,7 +7,7 @@
     mode: 0755
     recurse: yes
 
-- name: Ensuring required directories exist and have write permissions
+- name: Check "{{ project_shared_path }}" permissions
   file:
     path: "{{ item }}"
     state: directory
@@ -23,22 +23,17 @@
     - "{{ project_shared_path }}/archive/digitalstrategy"
     - "{{ project_shared_path }}/archive/datajson"
 
-- name: Check if cron log file is accessible
+- name: Check files permissions
   file:
     path: "{{ item }}"
     state: touch
     mode: 0666
   with_items:
     - "/var/log/dashboard-cron.log"
+    - "{{ project_shared_path }}/archive/curl_header"
 
-- name: Start nginx
-  service: name=nginx state=started
+- name: Reload php7.0-fpm
+  service: name=php7.0-fpm state=reloaded
 
-- name: Restart nginx
-  service: name=nginx state=restarted
-
-- name: Start php7.0-fpm
-  service: name=php7.0-fpm state=started
-
-- name: Restart php7.0-fpm
-  service: name=php7.0-fpm state=restarted
+- name: Reload nginx
+  service: name=nginx state=reloaded
