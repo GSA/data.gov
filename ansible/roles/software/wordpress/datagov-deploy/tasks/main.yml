@@ -1,6 +1,6 @@
 --- # Data.gov repo deployment & composer install
 
-- name: Remove old rollback code
+- name: Remove previous deployment rollback folder
   file: path="{{ project_source_rollback_path }}" state=absent
 
 - name: Check whether new code dir exists
@@ -8,18 +8,15 @@
   register: p
 
 - name: Create rollback code
-  command: cp -r "{{ project_source_new_code_path }}" "{{ project_source_rollback_path }}"
+  command: mv "{{ project_source_new_code_path }}" "{{ project_source_rollback_path }}"
   when: p.stat.isdir is defined and p.stat.isdir
 
 - name: Symlink current dir with rollback code
   file:
     src: "{{ project_source_rollback_path }}"
-    path: "{{ project_source_path }}"
+    path: "{{ current_source_symlink }}"
     state: link
   when: p.stat.isdir is defined and p.stat.isdir
-
-- name: Remove new code
-  file: path="{{ project_source_new_code_path }}" state=absent
 
 - name: Clone project files to {{ project_source_new_code_path }}
   git:
@@ -101,15 +98,10 @@
   args:
     chdir: "{{ project_source_new_code_path }}/web/app"
 
-#- name: Copy Query-monitor db.php
-#  command: "cp plugins/query-monitor/wp-content/db.php db.php"
-#  args:
-#    chdir: "{{ project_source_path }}/web/app"
-
 - name: Symlink current dir with new code
   file:
     src: "{{ project_source_new_code_path }}"
-    path: "{{ project_source_path }}"
+    path: "{{ current_source_symlink }}"
     state: link
 
 - name: Disabling saml on local
@@ -134,7 +126,7 @@
   run_once: true
   ignore_errors: true
 
-- name: Updating admin pass
+- name: Updating admin pass if env=Dev
   command: wp user update admin --user_pass=password
   args:
     chdir: "{{ project_source_new_code_path }}"
@@ -142,7 +134,7 @@
   run_once: true
   ignore_errors: true
 
-- name: Enabling dev plugins
+- name: Enabling dev plugins if env=Dev
   command: wp plugin activate check-email debug-bar log-deprecated-notices query-monitor
   args:
     chdir: "{{ project_source_new_code_path }}"
@@ -150,9 +142,18 @@
   run_once: true
   ignore_errors: true
 
-- name: Set up main wp cronjob
+- name: Setup Datagov WP system cron
   cron:
-    name: "Set up main wp cronjob"
-    minute: "*/10"
-    job: "/usr/bin/php {{ project_source_path }}/web/wp/wp-cron.php >> /var/log/wp-cron.log 2>&1" #todo: Use SES to send this to a recipient list
+    name: "Data.gov WordPress cron"
+    minute: "*/15"
+    user: "www-data"
+    job: "cd {{ current_source_symlink }} && wp cron event run --due-now >> /var/log/wp-cron.log 2>&1"
+    cron_file: "wordpress-datagov"
   run_once: true
+
+#- name: Set up main wp cronjob
+#  cron:
+#    name: "Set up main wp cronjob"
+#    minute: "*/10"
+#    job: "/usr/bin/php {{ current_source_symlink }}/web/wp/wp-cron.php >> /var/log/wp-cron.log 2>&1" #todo: Use SES to send this to a recipient list
+#  run_once: true

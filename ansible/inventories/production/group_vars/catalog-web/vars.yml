@@ -6,7 +6,7 @@ url_writable: https://admin-catalog-bsp.data.gov
 # project path
 project_source_rollback_path: /usr/lib/ckan-rollback
 project_source_new_code_path: /usr/lib/ckan-new
-project_source_path: /usr/lib/ckan
+current_source_symlink: /usr/lib/ckan
 project_index_path: /usr/lib/ckan
 
 # other

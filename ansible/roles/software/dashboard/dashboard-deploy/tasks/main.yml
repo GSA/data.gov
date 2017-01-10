@@ -21,7 +21,7 @@
 - name: Symlink current dir with rollback code
   file:
     src: "{{ project_source_rollback_path }}"
-    path: "{{ project_source_path }}"
+    path: "{{ current_source_symlink }}"
     state: link
   when: p.stat.isdir is defined and p.stat.isdir
 
@@ -105,7 +105,7 @@
 - name: Symlink current dir with new code
   file:
     src: "{{ project_source_new_code_path }}"
-    path: "{{ project_source_path }}"
+    path: "{{ current_source_symlink }}"
     state: link
 
 - name: Set up campaign status cfo-act datajson cron job to run @ 11pm EST nightly
@@ -113,5 +113,5 @@
     name: "campaign status cfo-act datajson cron job"
     minute: 0
     hour: 4
-    job: "/usr/bin/php {{ project_source_path }}/index.php campaign status all all | tee /var/log/dashboard-cron.log | mail -s 'LabsData - Dashboard Cron Job - {{ real_ansible_env }}' -a 'From: {{ default_email_from }}' {{ cron_to_emails }}"
+    job: "/usr/bin/php {{ current_source_symlink }}/index.php campaign status all all | tee /var/log/dashboard-cron.log | mail -s 'LabsData - Dashboard Cron Job - {{ real_ansible_env }}' -a 'From: {{ default_email_from }}' {{ cron_to_emails }}"
   run_once: true

@@ -15,14 +15,6 @@
     group: "www-data"
     mode: 0777
 
-- name: Setup Datagov WP system cron
-  cron:
-    name: "Data.gov WordPress cron"
-    minute: "*/15"
-    user: "www-data"
-    job: "cd {{ project_source_path }} && wp cron event run --due-now"
-    cron_file: "wordpress-datagov"
-
 - name: MariaDB client
   package:
     name: mariadb-client-5.5
