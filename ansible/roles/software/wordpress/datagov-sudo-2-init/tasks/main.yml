@@ -33,3 +33,6 @@
   package:
     name: php7.0-zip
     state: present
+
+- name: Remove previous deployment rollback folder
+  file: path="{{ project_source_rollback_path }}" state=absent

@@ -1,8 +1,5 @@
 --- # Data.gov repo deployment & composer install
 
-- name: Remove previous deployment rollback folder
-  file: path="{{ project_source_rollback_path }}" state=absent
-
 - name: Check whether new code dir exists
   stat: path="{{ project_source_new_code_path }}"
   register: p

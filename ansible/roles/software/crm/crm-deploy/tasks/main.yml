@@ -5,7 +5,7 @@
   register: p
 
 - name: Create rollback code
-  command: cp -r "{{ project_source_new_code_path }}" "{{ project_source_rollback_path }}"
+  command: mv "{{ project_source_new_code_path }}" "{{ project_source_rollback_path }}"
   when: p.stat.isdir is defined and p.stat.isdir
 
 - name: Symlink current dir with rollback code
