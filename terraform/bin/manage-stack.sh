@@ -464,7 +464,7 @@ function delete_stack {
 function do_stack {
     # Ensure that directory stack is popped regardless of the success
     # (or failure) of create_stack function
-    local action="$1" wd=$(pwd) status=0
+    local action="$1" work_dir=$(pwd) status=0
     local stack_args=() input_files variables_file input 
     writeln "${action} stack '${STACK_NAME}' in ${TARGET_DIR}"
     if [ "${action}" != "delete" ] ||
@@ -493,7 +493,7 @@ function do_stack {
     #else: Nothing to delete 
     fi
     extra_verbose "About to [${action}_stack ${stack_args[@]}]"
-    pushd $(pwd) 1> /dev/null
+    pushd "${work_dir}" 1> /dev/null
     "${action}_stack" ${stack_args[@]} 
     status=$?
     popd 1> /dev/null
