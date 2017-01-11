@@ -1,3 +1,4 @@
+env.AWS_REGION = "us-east-2"
 
 stage('Initialize') {
     node("master") {
