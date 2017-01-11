@@ -46,12 +46,6 @@ resource "aws_route_table_association" "server_subnet_routing" {
 resource "aws_security_group" "server_security_group" {
     name = "${var.system}_${var.branch}_az${var.index}_${var.name}"
     vpc_id = "${var.vpc_id}"
-    egress = {
-        from_port = 0
-        to_port = 0
-        protocol = "-1"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
     tags = {
         Name = "${var.system}_${var.branch}_az${var.index}_${var.name}"
         System = "${var.system}"
@@ -99,6 +93,15 @@ resource "aws_security_group_rule" "allow_local_ingress" {
     to_port = 0
     protocol = -1
     cidr_blocks = ["${var.network["cidr_prefix"]}.0.0/0"]
+}
+
+resource "aws_security_group_rule" "allow_all_egress" {
+    security_group_id = "${aws_security_group.server_security_group.id}"
+    type = "egress"
+    from_port = 0
+    to_port = 0
+    protocol = -1
+    cidr_blocks = ["0.0.0.0/0"]
 }
 
 
