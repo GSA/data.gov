@@ -1,4 +1,7 @@
 ---
 - hosts: tag_Name_ubuntuhard
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
   roles:
     - monitoring/fluentd/td-agent
