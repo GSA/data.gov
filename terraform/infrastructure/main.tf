@@ -13,17 +13,19 @@ variable "stack" {
 }
 variable "branch" {}
 
-variable "aws_region" { default = "us-east-1" }
 variable "ami_type" { default = "hardened" }
 variable "security_context" { default = "dev" }
 
 variable "network" { 
     type = "map"
     default = {
+        region = "us-east-1"
         az1 = "us-east-1b"
         az2 = "us-east-1c"
         cidr_prefix = "172.27"
-        privileged_access_cidr = "0.0.0.0/0"
+        # Maps in input/output variales require homogeneous types,
+        # so you cannot use a list type here
+        privileged_access_cidr = "54.197.42.13/32, 12.153.61.2/32"
     }
 }
 
@@ -36,24 +38,12 @@ variable "nat" {
     }
 }
 
-
-# -----------------------------------------------------------------------------
-#  Local Variables
-# -----------------------------------------------------------------------------
-
-variable "amis" {
-    default = {
-        us-east-1-hardened = "ami-fce3c696"
-        us-east-1-not-hardened = "ami-857f5392"
-    }
-}
-
 # -----------------------------------------------------------------------------
 #  Provider
 # -----------------------------------------------------------------------------
 
 provider "aws" {
-    region  = "${var.aws_region}"
+    region  = "${var.network["region"]}"
 }
 
 # -----------------------------------------------------------------------------
@@ -83,9 +73,9 @@ module "bastion_subnet" {
     route_table_id = "${module.vpc.public_route_table_id}"
 }
 
-module "monitor_subnet" {
+module "wordpress_web_subnet" {
     source = "./server-subnet"
-    name = "monitor"
+    name = "wordpress_web"
     index = "1"
     system = "${var.system}"
     stack = "${var.stack}"
@@ -93,7 +83,9 @@ module "monitor_subnet" {
     vpc_id = "${module.vpc.vpc_id}"
     network = "${var.network}"
     network_segment = "11"
-    route_table_id = "${module.vpc.az1_private_route_table_id}"
+    #route_table_id = "${module.vpc.az1_private_route_table_id}"
+    route_table_id = "${module.vpc.public_route_table_id}"
+    http_server_count = "1"
 }
 
 
@@ -108,9 +100,9 @@ output "bastion_security_group_id" {
     value = "${module.bastion_subnet.security_group_id}"
 }
 
-output "monitor_subnet_id" {
-    value = "${module.monitor_subnet.subnet_id}"
+output "wordpress_web_subnet_id" {
+    value = "${module.wordpress_web_subnet.subnet_id}"
 }
-output "monitor_security_group_id" {
-    value = "${module.monitor_subnet.security_group_id}"
+output "wordpress_web_security_group_id" {
+    value = "${module.wordpress_web_subnet.security_group_id}"
 }

@@ -15,15 +15,20 @@ variable "branch" {}
 
 variable "security_context" { default = "dev" }
 
-variable "aws_region" { default = "us-east-1" }
-variable "ami_type" { default = "hardened" }
+variable "network" { 
+    type = "map"
+    default = {
+        region = "us-east-1" 
+    }
+}
+variable "ami_type" { default = "not-hardened" }
 variable "bastion_subnet_id" {}
 variable "bastion_security_group_id" {}
-variable "bastion_instance_type" {}
+variable "bastion_instance_type" { default = "m3.medium" }
 
-variable "monitor_subnet_id" {}
-variable "monitor_security_group_id" {}
-variable "monitor_instance_type" {}
+variable "wordpress_web_subnet_id" {}
+variable "wordpress_web_security_group_id" {}
+variable "wordpress_web_instance_type" { default = "m3.medium" }
 
 
 # -----------------------------------------------------------------------------
@@ -32,17 +37,22 @@ variable "monitor_instance_type" {}
 
 variable "amis" {
     default = {
-        us-east-1-hardened = "ami-fce3c696"
-        us-east-1-not-hardened = "ami-857f5392"
+        # ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-20160114.5
+        us-east-1-not-hardened = "ami-fce3c696"
+        us-east-2-not-hardened = "ami-0becb76e"
+        # Ubuntu 14.04 pre-CIS
+        us-east-1-hardened = "ami-857f5392"
+        us-east-2-hardened = "ami-3c6d4859"
     }
 }
+
 
 # -----------------------------------------------------------------------------
 #  Bastion server
 # -----------------------------------------------------------------------------
 
 provider "aws" {
-    region  = "${var.aws_region}"
+    region  = "${var.network["region"]}"
 }
 
 # -----------------------------------------------------------------------------
@@ -54,7 +64,7 @@ module "bastion" {
     branch = "${var.branch}"
     stack = "${var.stack}"
     security_context = "${var.security_context}"
-    ami = "${lookup(var.amis, format("%s-%s", var.aws_region, var.ami_type))}"
+    ami = "${lookup(var.amis, format("%s-%s", var.network["region"], var.ami_type))}"
     instance_type = "${var.bastion_instance_type}"
     security_group_id = "${var.bastion_security_group_id}"
     subnet_id = "${var.bastion_subnet_id}"
@@ -63,16 +73,16 @@ module "bastion" {
 # -----------------------------------------------------------------------------
 #  Monitoring server
 # -----------------------------------------------------------------------------
-module "monitor" {
-    source = "./monitor"
+module "wordpress_web" {
+    source = "./wordpress-web"
     system = "${var.system}"
     branch = "${var.branch}"
     stack = "${var.stack}"
     security_context = "${var.security_context}"
-    ami = "${lookup(var.amis, format("%s-%s", var.aws_region, var.ami_type))}"
-    instance_type = "${var.monitor_instance_type}"
-    security_group_id = "${var.monitor_security_group_id}"
-    subnet_id = "${var.monitor_subnet_id}"
+    ami = "${lookup(var.amis, format("%s-%s", var.network["region"], var.ami_type))}"
+    instance_type = "${var.wordpress_web_instance_type}"
+    security_group_id = "${var.wordpress_web_security_group_id}"
+    subnet_id = "${var.wordpress_web_subnet_id}"
 }
 
 # -----------------------------------------------------------------------------
@@ -87,9 +97,9 @@ output "bastion_public_ip" {
 }
 
 
-output "monitor_instance_id" {
-    value = "${module.monitor.instance_id}"
+output "wordpress_web_instance_id" {
+    value = "${module.wordpress_web.instance_id}"
 }
-output "monitor_public_ip" {
-    value = "${module.monitor.public_ip}"
+output "wordpress_web_public_ip" {
+    value = "${module.wordpress_web.public_ip}"
 }

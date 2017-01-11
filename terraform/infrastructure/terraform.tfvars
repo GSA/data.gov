@@ -1,10 +1,9 @@
-aws_region = "us-east-1"
-
 network = {
+    region = "us-east-2"
+    az1 = "us-east-2b"
+    az2 = "us-east-2c"
     cidr_prefix = "172.27"
-    az1 = "us-east-1b"
-    az2 = "us-east-1c"
-    privileged_access_cidr = "0.0.0.0/0"
+    privileged_access_cidr = "54.197.42.13/32,12.153.61.2/32"
 }
 
 nat = {
