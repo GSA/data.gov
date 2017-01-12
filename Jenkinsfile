@@ -29,7 +29,7 @@ stage('Provision jumpbox') {
 stage('Provision datagov-web') {
     node('master') {
         runPlaybook("datagov-web", "pilot", null,
-            "trendmicro,vim,deploy,deploy-rollback,secops",
+            "trendmicro,vim,deploy,deploy-rollback,secops,postfix",
             "wordpress-web", "wordpress-web")
     }
 }
