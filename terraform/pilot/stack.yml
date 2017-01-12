@@ -1,0 +1,7 @@
+stack:
+  wait:
+    conditions:
+      bastion: aws-healthcheck
+      wordpress-web: aws-healthcheck
+    delay: 10
+    max-iterations: 60

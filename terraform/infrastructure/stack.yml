@@ -1,0 +1,6 @@
+stack:
+  wait:
+    conditions:
+      az1_nat: aws-healthcheck
+    delay: 10
+    max-iterations: 30
