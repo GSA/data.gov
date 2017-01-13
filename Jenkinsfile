@@ -45,7 +45,7 @@ def provision(environment) {
 }
 
 def isMaster() {
-    return (['master', 'master-demo'].find(env.BRANCH_NAME));
+    return (env.BRANCH_NAME == 'master') || (env.BRANCH_NAME == 'master-demo');
 }
 
 def devEnvironmentName() {
