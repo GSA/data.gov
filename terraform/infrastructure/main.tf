@@ -2,7 +2,6 @@
 #  Input Variables
 # -----------------------------------------------------------------------------
 
-
 variable "system" {
     description = "Name of the system (used to name and tag resources)"
     default = "datagov"
@@ -11,7 +10,7 @@ variable "stack" {
     description = "Name of the system (used to name and tag resources)"
     default = "pilot"
 }
-variable "branch" {}
+variable "environment" {}
 
 variable "ami_type" { default = "hardened" }
 variable "security_context" { default = "dev" }
@@ -53,7 +52,7 @@ provider "aws" {
 module "vpc" {
     source = "./vpc"
     system = "${var.system}"
-    branch = "${var.branch}"
+    environment = "${var.environment}"
     stack = "${var.stack}"
     security_context = "${var.security_context}"
     network = "${var.network}"
@@ -66,7 +65,7 @@ module "bastion_subnet" {
     index = "1"
     system = "${var.system}"
     stack = "${var.stack}"
-    branch = "${var.branch}"
+    environment = "${var.environment}"
     vpc_id = "${module.vpc.vpc_id}"
     network = "${var.network}"
     network_segment = "10"
@@ -79,7 +78,7 @@ module "wordpress_web_subnet" {
     index = "1"
     system = "${var.system}"
     stack = "${var.stack}"
-    branch = "${var.branch}"
+    environment = "${var.environment}"
     vpc_id = "${module.vpc.vpc_id}"
     network = "${var.network}"
     network_segment = "11"

@@ -11,7 +11,7 @@ variable "stack" {
     description = "Name of the system (used to name and tag resources)"
     default = "pilot"
 }
-variable "branch" {}
+variable "environment" {}
 
 variable "security_context" { default = "dev" }
 
@@ -61,7 +61,7 @@ provider "aws" {
 module "bastion" {
     source = "./bastion"
     system = "${var.system}"
-    branch = "${var.branch}"
+    environment = "${var.environment}"
     stack = "${var.stack}"
     security_context = "${var.security_context}"
     ami = "${lookup(var.amis, format("%s-%s", var.network["region"], var.ami_type))}"
@@ -76,7 +76,7 @@ module "bastion" {
 module "wordpress_web" {
     source = "./wordpress-web"
     system = "${var.system}"
-    branch = "${var.branch}"
+    environment = "${var.environment}"
     stack = "${var.stack}"
     security_context = "${var.security_context}"
     ami = "${lookup(var.amis, format("%s-%s", var.network["region"], var.ami_type))}"

@@ -9,7 +9,7 @@
 # -----------------------------------------------------------------------------
 
 variable "system" {}
-variable "branch" {}
+variable "environment" {}
 variable "stack" {}
 variable "security_context" {}
 variable "vpc_id" {}
@@ -20,7 +20,7 @@ variable "network_prefix" {}
 # -----------------------------------------------------------------------------
 
 resource "aws_security_group" "nat_security_group" {
-    name = "${var.system}_${var.branch}_nat"
+    name = "${var.system}_${var.environment}_nat"
     vpc_id = "${var.vpc_id}"
     ingress = {
         from_port = 0
@@ -35,10 +35,10 @@ resource "aws_security_group" "nat_security_group" {
         cidr_blocks = ["0.0.0.0/0"]
     }
     tags = {
-        Name = "${var.system}_${var.branch}_nat"
+        Name = "${var.system}_${var.environment}_nat"
         System = "${var.system}"
         Stack = "${var.stack}"
-        Branch = "${var.branch}"
+        Environment = "${var.environment}"
         Resource = "nat_security_group"
     }
 }
