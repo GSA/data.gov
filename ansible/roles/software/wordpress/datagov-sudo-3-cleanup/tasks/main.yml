@@ -14,10 +14,10 @@
     mode: 0777
     recurse: yes
   with_items:
-    - "{{ project_source_path }}/web/app/uploads/saml-20-single-sign-on/etc"
-    - "{{ project_source_path }}/web/app/w3tc-config"
-    - "{{ project_source_path }}/web/app/cache"
-    - "{{ project_source_path }}/web/app/uploads"
+    - "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc"
+    - "{{ project_source_new_code_path }}/web/app/w3tc-config"
+    - "{{ project_source_new_code_path }}/web/app/cache"
+    - "{{ project_source_new_code_path }}/web/app/uploads"
 
 - name: Check if cron log file is accessible
   file:
@@ -27,14 +27,8 @@
   with_items:
     - "/var/log/wp-cron.log"
 
-- name: Start nginx
-  service: name=nginx state=started
+- name: Reload php7.0-fpm
+  service: name=php7.0-fpm state=reloaded
 
-- name: Restart nginx
-  service: name=nginx state=restarted
-
-- name: Start php7.0-fpm
-  service: name=php7.0-fpm state=started
-
-- name: Restart php7.0-fpm
-  service: name=php7.0-fpm state=restarted
+- name: Reload nginx
+  service: name=nginx state=reloaded

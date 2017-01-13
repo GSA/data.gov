@@ -20,8 +20,9 @@
     name: "Data.gov WordPress cron"
     minute: "*/15"
     user: "www-data"
-    job: "cd {{ project_source_path }} && wp cron event run --due-now"
+    job: "cd {{ current_source_symlink }} && wp cron event run --due-now >> /var/log/wp-cron.log 2>&1"
     cron_file: "wordpress-datagov"
+  when: crons_enabled
 
 - name: MariaDB client
   package:
@@ -32,3 +33,6 @@
   package:
     name: php7.0-zip
     state: present
+
+- name: Remove previous deployment rollback folder
+  file: path="{{ project_source_rollback_path }}" state=absent

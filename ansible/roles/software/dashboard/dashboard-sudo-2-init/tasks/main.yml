@@ -33,3 +33,13 @@
     - mariadb-client-5.5
     - php-mcrypt
     - php7.0-zip
+
+- name: Remove old rollback code
+  file: path="{{ project_source_rollback_path }}" state=absent
+
+- name: Empty shared folder to free up space
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "{{ project_shared_path }}"

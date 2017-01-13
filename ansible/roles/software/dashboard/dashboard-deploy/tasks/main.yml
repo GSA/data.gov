@@ -1,32 +1,19 @@
 --- # Dashboard repo deployment & composer install
 
-- name: Remove old rollback code
-  file: path="{{ project_source_rollback_path }}" state=absent
-
 - name: Check whether "{{ project_source_new_code_path }}" exists
   stat: path="{{ project_source_new_code_path }}"
   register: p
 
-- name: Empty shared folder to free up space
-  file:
-    path: "{{ item }}"
-    state: absent
-  with_items:
-    - "{{ project_shared_path }}"
-
 - name: Create rollback code
-  command: cp -r "{{ project_source_new_code_path }}" "{{ project_source_rollback_path }}"
+  command: mv "{{ project_source_new_code_path }}" "{{ project_source_rollback_path }}"
   when: p.stat.isdir is defined and p.stat.isdir
 
 - name: Symlink current dir with rollback code
   file:
     src: "{{ project_source_rollback_path }}"
-    path: "{{ project_source_path }}"
+    path: "{{ current_source_symlink }}"
     state: link
   when: p.stat.isdir is defined and p.stat.isdir
-
-- name: We should deploy to an empty folder
-  file: path="{{ project_source_new_code_path }}" state=absent
 
 - name: Clone project files to {{ project_source_new_code_path }}
   git:
@@ -105,13 +92,13 @@
 - name: Symlink current dir with new code
   file:
     src: "{{ project_source_new_code_path }}"
-    path: "{{ project_source_path }}"
+    path: "{{ current_source_symlink }}"
     state: link
 
-- name: Set up campaign status cfo-act datajson cron job to run @ 11pm EST nightly
+- name: Set up campaign status cfo-act all cron job to run @ 11pm EST nightly
   cron: 
-    name: "campaign status cfo-act datajson cron job"
+    name: "campaign status cfo-act all cron job"
     minute: 0
     hour: 4
-    job: "/usr/bin/php {{ project_source_path }}/index.php campaign status all all | tee /var/log/dashboard-cron.log | mail -s 'LabsData - Dashboard Cron Job - {{ real_ansible_env }}' -a 'From: {{ default_email_from }}' {{ cron_to_emails }}"
-  run_once: true
+    job: "/usr/bin/php {{ current_source_symlink }}/index.php campaign status cfo-act all | tee /var/log/dashboard-cron.log | mail -s 'LabsData - Dashboard Cron Job - {{ real_ansible_env }}' -a 'From: {{ default_email_from }}' {{ cron_to_emails }}"
+  when: crons_enabled

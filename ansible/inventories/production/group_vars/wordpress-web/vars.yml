@@ -12,7 +12,7 @@ project_git_version: no-map
 # Project path
 project_source_rollback_path: /var/www/datagov/rollback
 project_source_new_code_path: /var/www/datagov/new
-project_source_path: /var/www/datagov/current
+current_source_symlink: /var/www/datagov/current
 project_index_path: /var/www/datagov/current/web
 
 # MySQL credentials
