@@ -43,7 +43,6 @@ def provision(environment) {
         }
     }
 }
-
 def isMaster() {
     return (env.BRANCH_NAME == 'master') || (env.BRANCH_NAME == 'master-demo');
 }
@@ -74,7 +73,7 @@ def runPlaybook(playbook, stack, environment, tags = null,
     dir('./ansible') {
         resource = (resource != null) ? resource : playbook
         def inventoryName = newInventory(playbook, stack, environment, resource, hostname)
-        def extras = "-vvv -i ${inventoryName} --extra-vars \"${playbook}_hostname=${playbook}\""
+        def extras = "-i ${inventoryName} --extra-vars \"${playbook}_hostname=${playbook}\""
         if (tags != null) {
             ansiblePlaybook playbook: "./${playbook}.yml",
                 sudoUser: "ubuntu",
