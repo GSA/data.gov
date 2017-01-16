@@ -41,7 +41,13 @@
   when: env == "local"
 
 - name: point site_url in production.ini to localhost
-  action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ckan_site_domain}}"
+  action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ ckan_site_domain }}"
+
+- name: Remove protocols in /etc/hosts
+  replace:
+    dest: /etc/hosts
+    regexp: 'https?://'
+    replace: ''
 
 - name: Symlink current dir with new code
   file:

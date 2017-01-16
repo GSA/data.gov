@@ -42,6 +42,7 @@
   action: file path={{item}} state=directory owner="www-data" group="www-data" mode=0755
   with_items:
     - /var/lib/ckan
+    - /var/lib/datapusher
 
 - name: copy all needed files
   action: copy src={{item}} dest=/{{item}}
