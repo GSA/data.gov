@@ -12,7 +12,7 @@
   register: p
 
 - name: Create rollback code
-  command: cp -r "{{ project_source_new_code_path }}" "{{ project_source_rollback_path }}"
+  command: "mv {{ project_source_new_code_path }} {{ project_source_rollback_path }}"
   when: p.stat.isdir is defined and p.stat.isdir
 
 - name: Symlink current dir with rollback code
@@ -30,10 +30,18 @@
     pkg: "{{ ckan_pkgs }}" 
     virtualenv: "{{ project_source_new_code_path }}"
 
+- name: Remove old datapusher code
+  file: path="{{ datapusher_virtual_env }}" state=absent
+
 - include: build-pkgs.yml
   vars:
     pkg: "{{ datapusher_pkgs }}"
     virtualenv: "{{ datapusher_virtual_env }}"
+
+- name: fix "{{ datapusher_virtual_env }}" permissions
+  file: path={{ item }} state=directory group=www-data recurse=yes
+  with_items:
+    - "{{ datapusher_virtual_env }}"
 
 - name: remove psycopg2
   action: pip name=psycopg2 virtualenv="{{ project_source_new_code_path }}" state=absent
@@ -42,7 +50,6 @@
   action: file path={{item}} state=directory owner="www-data" group="www-data" mode=0755
   with_items:
     - /var/lib/ckan
-    - /var/lib/datapusher
 
 - name: copy all needed files
   action: copy src={{item}} dest=/{{item}}
