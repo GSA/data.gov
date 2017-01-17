@@ -29,7 +29,7 @@ $config['google_analytics_domain'] = ''; // domain.com
 date_default_timezone_set('America/New_York');
 
 $config['tmp_csv_import'] = '{{ project_shared_path }}/downloads/import.csv';
-$config['pre_approved_admins'] = explode(",", getenv('PRE_APPROVED_ADMINS'));
+$config['pre_approved_admins'] = explode(",", strtolower(getenv('PRE_APPROVED_ADMINS')));
 
 
 /*
