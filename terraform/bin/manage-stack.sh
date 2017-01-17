@@ -118,6 +118,13 @@ function do_aws {
 }
 
 #------------------------------------------------------------------------------
+#  Run aws cli ec2 sub-command
+#------------------------------------------------------------------------------
+function ec2 {
+   do_aws ec2 $*
+}
+
+#------------------------------------------------------------------------------
 #  Run aws cli s3 sub-command
 #------------------------------------------------------------------------------
 function s3 {
@@ -144,6 +151,107 @@ function s3_bucket_exists {
     return 1
 }
 
+# =============================================================================
+#  Utility functions
+# =============================================================================
+
+function join_by { 
+    local separator="$1" joined="" index=1 e=""
+    shift
+    for e in $*; do
+        if [ "${index}" -gt 1 ]; then
+            joined="${joined}${separator}"
+        fi
+        joined="${joined}${e}"
+        ((++index))
+    done
+    echo -e "${joined}"
+}
+
+# =============================================================================
+#  Configuration functions
+# =============================================================================
+
+PROPERTIES_FS="."
+
+#-------------------------------------------------------------------------------
+# Converts yaml to a properties file, so configuration information can be read 
+# by using properties (simpler with bash only, see get_property)
+#-------------------------------------------------------------------------------
+function parse_yaml {
+    local file_name=$1
+    local prefix=$2
+    if  [ ! -f "${file_name}" ]; then
+       echo "File '${file_name}' does not exist" >&2
+       exit 1
+    fi
+    debug "config-data(file):\n$(cat $file_name)\n"
+    cat $file_name | parse_yaml_from_string
+}
+
+function parse_yaml_from_string {
+    local s='[[:space:]]*'
+    local w='[.a-zA-Z0-9_\-]*'
+    local fs=$(echo @|tr @ '\034')
+    sed -ne "s|^\($s\):\$|\1|" \
+        -e "/^\($s\)\#/d" \
+        -e "s|^\($s\)\(- \)\?\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\3$fs\4|p" \
+        -e "s|^\($s\)\(- \)\?\($w\)$s:$s\(.*\)$s\$|\1$fs\3$fs\4|p" \
+        -e "s|^\($s\)\(- \)\($w\)$s\$|\1$fs\3$fs\3|p" \
+        $file_name | \
+        awk -F$fs -vprefix="${prefix}" -vyamlToPropertiesFS="${PROPERTIES_FS}" '{
+            if (NR == 1) {
+                indent_size=2;
+            } else if (NR == 2) {
+                indent_size=length($1);
+            }
+            # print $1"::"$2"::"$3 >> "/dev/stderr";
+            indent = length($1)/indent_size;
+            vname[indent] = $2;
+            for (i in vname) { if (i > indent) { delete vname[i]; } }
+            if (length($3) > 0) {
+                vn="";
+                for (i=0; i<indent; i++) { vn=(vn)(vname[i])(yamlToPropertiesFS);}
+                printf("%s%s%s%s%s\n", prefix, vn, $2, (($3 == "") ? "" : "="), $3);
+            }
+        }'
+}
+
+function get_property {
+    local propertyRE="^$1="
+    local config="${2}"
+    local default_value="$3"
+    if [ "${config}" == "" ]; then
+        error "No configuration data given"
+        return 1
+    else
+        debug "config=[${config}]"
+    fi
+    local value=$(echo -e "${config}" | \
+        awk -F "=" -v propertyRE="${propertyRE}" '$0 ~ propertyRE {print $2;}')
+    if [ "${value}" == "" ]; then
+        value="${default_value}"
+    fi
+    debug "get_property $1 = [${value}]"
+    echo -e "${value}"
+}
+
+
+function get_property_names {
+    local name="$1"
+    local config="${2}"
+    local elements=$(echo -e "${config}" | awk -vNAME="${name}" \
+         -F"${PROPERTIES_FS}" '
+      /^'"${name}"'/ {
+        name = "";
+        for (i = 1; i <= NF; i++) {
+          if (name == NAME) { p = $i; gsub(/[=](.*)$/, "", p); print p; break; }
+          if (i > 1) { name = name FS; }
+          name = name $i
+        }
+    }' | uniq)
+    join_by " " $elements
+}
 
 # =============================================================================
 #  Initialization functions
@@ -156,20 +264,23 @@ BUCKET_URL=""
 SOURCE_DIR=""
 TARGET_DIR=""
 STACK_NAME=""
-BRANCH_NAME=""
+ENVIRONMENT_NAME=""
 INPUTS=()
 OUTPUT_TYPE="tfvars" # DO NOT change
+STACK_CONFIG=""
+NO_WAIT=""
+RESOURCES_READY=""
 
 #------------------------------------------------------------------------------
-#  Get unnamed argument, either stack or branch name (if not set yet)
+#  Get unnamed argument, either stack or environment name (if not set yet)
 #------------------------------------------------------------------------------
 function get_argument {
     if [ "${STACK_NAME}" == "" ]; then
         debug "STACK_NAME=$1"
         STACK_NAME="$1"
-    elif [ "${BRANCH_NAME}" == "" ]; then
-        debug "BRANCH_NAME=$1"
-        BRANCH_NAME="$1"
+    elif [ "${ENVIRONMENT_NAME}" == "" ]; then
+        debug "ENVIRONMENT_NAME=$1"
+        ENVIRONMENT_NAME="$1"
     else 
         error "Unknown argument '$1'"
         return 1
@@ -186,6 +297,12 @@ function get_action {
       *)                error "Unknown action '$action'"; return 1 ;;
     esac
 }
+
+
+function set_nowait {
+    NO_WAIT="yes"
+}
+
 
 #------------------------------------------------------------------------------
 #  Get script parameters
@@ -204,6 +321,7 @@ function get_parameters {
           -s|--source-dir)      shift; SOURCE_DIR="$1" ;;
           -t|--target_dir)      shift; TARGET_DIR="$1" ;;
           -v|--verbose)         set_verbose ;;
+          -n|--no-wait)         set_nowait ;;
           *)                    get_argument "$1" || return 1 ;;
         esac
         shift
@@ -218,9 +336,10 @@ function get_parameters {
 #   - source-dir: Check that 'local' source directory exists 
 #         (default: ./stack_name)
 #   - target-dir: Create directory if not exists 
-#          (default: ./target/stack/branch)
+#          (default: ./target/stack/environment)
 #------------------------------------------------------------------------------
 function initialize {
+    local config_data
     get_parameters "$@" || return 1
     if [ "${ACTION}" == "" ]; then
         ACTION="create"
@@ -245,39 +364,46 @@ function initialize {
         return 2
     fi
     verbose "Using source directory ${SOURCE_DIR}"
-    if [ "${BRANCH_NAME}" == "" ]; then
-        BRANCH_NAME="master"
+    if [ "${ENVIRONMENT_NAME}" == "" ]; then
+        ENVIRONMENT_NAME="prod"
     fi
-    verbose "Using branch ${BRANCH_NAME}"
+    verbose "Using environment ${ENVIRONMENT_NAME}"
     if [ "${TARGET_DIR}" == "" ]; then
-        TARGET_DIR="${WORKING_DIR}/target/${STACK_NAME}/${BRANCH_NAME}"
+        TARGET_DIR="${WORKING_DIR}/target/${STACK_NAME}/${ENVIRONMENT_NAME}"
     fi
     verbose "Using target directory ${TARGET_DIR}"
     BUCKET_URL="s3://${BUCKET_NAME}/${BUCKET_PATH}${STACK_NAME}"
     verbose "Using S3 location ${BUCKET_URL}"
+
+    if [ "${NO_WAIT}" == "" ] && [ "${ACTION}" == "create" ]; then
+        STACK_CONFIG=$(parse_yaml "${SOURCE_DIR}/stack.yml")
+    fi
+    debug "STACK_CONFIG=[\n${STACK_CONFIG}\n]"
+
     mkdir -p "${TARGET_DIR}"
     export AWS_REGION
     export AWS_PROFILE
 }
+
 
 # =============================================================================
 #  Main
 # =============================================================================
 
 #------------------------------------------------------------------------------
-#  Get any (existing) stack-branch specific state from S3 bucket 
+#  Get any (existing) stack-environment specific state from S3 bucket 
 #------------------------------------------------------------------------------
 function get_state {
     writeln "Get '${STACK_NAME}' state"
     rm -rf "${TARGET_DIR}"
-    s3 sync "${BUCKET_URL}/${BRANCH_NAME}" "${TARGET_DIR}" || return 1
+    s3 sync "${BUCKET_URL}/${ENVIRONMENT_NAME}" "${TARGET_DIR}" || return 1
 }
 
 #------------------------------------------------------------------------------
-#  Put any (existing) stack-branch specific state from S3 bucket 
+#  Put any (existing) stack-environment specific state from S3 bucket 
 #------------------------------------------------------------------------------
 function put_state {
-    local action="$1" s3uri="${BUCKET_URL}/${BRANCH_NAME}"
+    local action="$1" s3uri="${BUCKET_URL}/${ENVIRONMENT_NAME}"
     if [ "${ACTION}" == "delete" ]; then
         writeln "Remove '${STACK_NAME}' state"
         s3 rm --recursive "${s3uri}" || return 1
@@ -321,9 +447,9 @@ function to_input_url {
             split(substr($0, length("stack-output://") + 1), parts, "/");
             bucket_name = (parts[1] != "") ? parts[1] : BUCKET_NAME;
             stack_name = parts[2];
-            branch_name = parts[3];
+            environment_name = parts[3];
             printf("s3://%s/%s%s/%s/%s-output.%s", bucket_name, BUCKET_PATH,
-                stack_name, branch_name, stack_name, OUTPUT_TYPE);
+                stack_name, environment_name, stack_name, OUTPUT_TYPE);
             exit;
         }
         {
@@ -464,13 +590,13 @@ function delete_stack {
 function do_stack {
     # Ensure that directory stack is popped regardless of the success
     # (or failure) of create_stack function
-    local action="$1" wd=$(pwd) status=0
+    local action="$1" work_dir=$(pwd) status=0
     local stack_args=() input_files variables_file input 
     writeln "${action} stack '${STACK_NAME}' in ${TARGET_DIR}"
     if [ "${action}" != "delete" ] ||
        [ -f "${TARGET_DIR}/${STACK_NAME}.tfstate" ]
     then
-        stack_args+=("-var branch=${BRANCH_NAME}")
+        stack_args+=("-var environment=${ENVIRONMENT_NAME}")
         stack_args+=("-var stack=${STACK_NAME}")
         stack_args+=("-input=false")
         extra_verbose "Checking for inputs in ${SOURCE_DIR}"
@@ -493,7 +619,7 @@ function do_stack {
     #else: Nothing to delete 
     fi
     extra_verbose "About to [${action}_stack ${stack_args[@]}]"
-    pushd $(pwd) 1> /dev/null
+    pushd "${work_dir}" 1> /dev/null
     "${action}_stack" ${stack_args[@]} 
     status=$?
     popd 1> /dev/null
@@ -501,12 +627,105 @@ function do_stack {
 }
 
 
+function instance_passes_healthcheck {
+    local resource="$1" status
+    # Find the instance
+    local instanceID=$(ec2 describe-instances \
+            --filter "Name=tag:System,Values=datagov" \
+                     "Name=tag:Stack,Values=${STACK_NAME}" \
+                     "Name=tag:Environment,Values=${ENVIRONMENT_NAME}" \
+                     "Name=tag:Resource,Values=${resource}" \
+                     "Name=instance-state-name,Values=running" \
+            --query "Reservations[].Instances[].{Id:InstanceId}" \
+            --output text)
+    if [ "${instanceID}" == "" ]; then
+        debug "Resource ${resource} not found"
+        return 1
+    fi
+    # Check the health-check status
+    status=$(ec2 describe-instance-status \
+        --instance-ids "${instanceID}" \
+        --filter "Name=instance-state-name,Values=running" \
+                 "Name=instance-status.reachability,Values=passed" \
+                 "Name=system-status.reachability,Values=passed" \
+        --query "InstanceStatuses[].{Id:InstanceId}" \
+        --output text)
+    if [ "${status}" == "" ]; then
+        debug "Resource ${resource} health checks not passed"
+        return 1
+    fi
+    debug "Resource ${resource} health checks passed"
+    return 0
+}
+
+function all_resources_completed {
+    local elapsed="$1"
+    local conditions="$2"
+    local n_failures=0 name condition reported
+    for name in $conditions ; do
+        condition=$(get_property "stack.wait.conditions.${name}" \
+            "${STACK_CONFIG}")
+        debug "Checking ${condition} on ${name}"
+        case $condition in
+            aws-healthcheck)
+                if ! instance_passes_healthcheck "${name}" ; then
+                    writeln "Resource ${name} not ready (${condition}) " \
+                        "(${elapsed}s elapsed)"
+                    (( n_failures += 1 ))
+                else 
+                    reported=$(echo "${RESOURCES_READY}" | grep "${name}")
+                    if [ "${reported}" == "" ]; then
+                       RESOURCES_READY="${RESOURCES_READY} ${name}"
+                        writeln "Resource ${name} is ready (${condition})"
+                    fi
+                fi
+                ;;
+            *)  
+                error "Unknown wait condition ${condition}"
+                return 1
+                ;;
+        esac
+    done
+    return $n_failures
+}
+
+function wait_for_completion {
+    local delay max_iterations i=0 resources
+    local default_delay=15 default_iterations elapsed=0
+    if [ "${STACK_CONFIG}" == "" ]; then
+        return 0
+    fi
+    resources=$(get_property_names "stack.wait.conditions" "${STACK_CONFIG}")
+    if [ "${resources}" == "" ]; then
+        writeln "No resources to wait for found in stack.yml"
+        return 0
+    fi
+    extra_verbose "Waiting for [${resources}] to complete"
+    # delay in seconds
+    delay=$(get_property "stack.wait.delay" "${STACK_CONFIG}" "30")
+    # default is 2 hours 
+    (( default_iterations = 2 * 60 * 60 / $delay ))
+    max_iterations=$(get_property "stack.wait.max-iterations" \
+       "${STACK_CONFIG}" "${default_iterations}")
+    debug "i=$i; max_iterations=$max_iterations"
+    while [ "${i}" -lt "${max_iterations}" ] &&
+          ! all_resources_completed "${elapsed}" "${resources}";
+    do
+        sleep "${delay}"
+        (( i += 1 ))
+        (( elapsed = i * delay ))
+    done
+}
+
+function do_terraform {
+    get_state || return 1
+    do_stack "${ACTION}" || return 2
+    put_state "${ACTION}" || return 3
+}
+
 #------------------------------------------------------------------------------
 #  Main body
 #------------------------------------------------------------------------------
-STACK_STATUS=0
 initialize "$@" || exit 1
-get_state || exit 2
-do_stack "${ACTION}" || exit 3
-put_state "${ACTION}" || exit 4
-
+do_terraform || exit 2
+wait_for_completion || exit 3
