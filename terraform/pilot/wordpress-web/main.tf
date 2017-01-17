@@ -4,7 +4,7 @@
 # -----------------------------------------------------------------------------
 
 variable "system" {}
-variable "branch" {}
+variable "environment" {}
 variable "stack" {}
 variable "ami" {}
 variable "security_context" {}
@@ -32,10 +32,10 @@ resource "aws_instance" "wordpress_web" {
         volume_size = "${var.volume_size}"
     }
     tags = {
-        Name = "${var.system}_${var.branch}_wordpress-web"
+        Name = "${var.system}_${var.environment}_wordpress-web"
         System = "${var.system}"
         Stack = "${var.stack}"
-        Branch = "${var.branch}"
+        Environment = "${var.environment}"
         Resource = "wordpress-web"
     }
 }

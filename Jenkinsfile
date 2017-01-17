@@ -7,38 +7,51 @@ stage('Initialize') {
     }
 }
 
-stage('Provision Infrastructure Stack') {
-    node("master") {
-        runTerraform('infrastructure', env.BRANCH_NAME)
-    }
+provision(devEnvironmentName())
+if (isMaster()) {
+    input 'Deploy to Production'
+    provision("prod")
 }
 
-stage('Provision Pilot Stack') {
-    node("master") {
-        runTerraform('pilot', env.BRANCH_NAME, "infrastructure")
+def provision(environment) {
+    stage('Provision Infrastructure Stack') {
+        node("master") {
+            runTerraform('infrastructure', environment)
+        }
+    }
+
+    stage('Provision Pilot Stack') {
+        node("master") {
+            runTerraform('pilot', environment, "infrastructure")
+        }
+    }
+
+    stage('Provision jumpbox') {
+        node('master') {
+            runPlaybook("jumpbox", "pilot", environment, 
+                "always,jumpbox,apache", "shibboleth", 
+                "bastion")
+        }
+    }
+
+    stage('Provision datagov-web') {
+        node('master') {
+            runPlaybook("datagov-web", "pilot", environment, null,
+                "trendmicro,vim,deploy,deploy-rollback,secops,postfix",
+                "wordpress-web",
+                "wordpress-web")
+        }
     }
 }
-
-stage('Provision jumpbox') {
-    node('master') {
-        runPlaybook("jumpbox", "pilot", "always,jumpbox,apache", 
-            "shibboleth", "bastion")
-    }
+def isMaster() {
+    return (env.BRANCH_NAME == 'master') || (env.BRANCH_NAME == 'master-demo');
 }
 
-stage('Provision datagov-web') {
-    node('master') {
-        runPlaybook("datagov-web", "pilot", null,
-            "trendmicro,vim,deploy,deploy-rollback,secops,postfix",
-            "wordpress-web", "wordpress-web")
-    }
+def devEnvironmentName() {
+    return (isMaster()) ? "dev" : "dev-${env.BRANCH_NAME}"
 }
 
-
-
-
-
-def runTerraform(stack_name, branchName, dependsOnStack = null) {
+def runTerraform(stack_name, environment, dependsOnStack = null) {
     dir("terraform/") {
         def script = "${pwd()}/bin/manage-stack.sh"
         def args = []
@@ -47,20 +60,20 @@ def runTerraform(stack_name, branchName, dependsOnStack = null) {
         args << "-v"
         args << "--action create"
         if (dependsOnStack) {
-            args << "--input stack-output:///${dependsOnStack}/${branchName}"
+            args << "--input stack-output:///${dependsOnStack}/${environment}"
         }
-        sh "'${script}' ${args.join(' ')} '${stack_name}' '${branchName}'"
+        sh "'${script}' ${args.join(' ')} '${stack_name}' '${environment}'"
     }
 }
 
 
-def runPlaybook(playbook, stack, tags = null, skippedTags = null, 
-    resource = null, hostname = null)
+def runPlaybook(playbook, stack, environment, tags = null, 
+    skippedTags = null,  resource = null, hostname = null)
 {
     dir('./ansible') {
         resource = (resource != null) ? resource : playbook
-        def inventoryName = newInventory(playbook, stack, resource, hostname)
-        def extras = "-vvv -i ${inventoryName} --extra-vars \"${playbook}_hostname=${playbook}\""
+        def inventoryName = newInventory(playbook, stack, environment, resource, hostname)
+        def extras = "-i ${inventoryName} --extra-vars \"${playbook}_hostname=${playbook}\""
         if (tags != null) {
             ansiblePlaybook playbook: "./${playbook}.yml",
                 sudoUser: "ubuntu",
@@ -84,20 +97,20 @@ def runPlaybook(playbook, stack, tags = null, skippedTags = null,
 
 // The following function are no longer necessary when 
 // changing to Ansible dynamic inventory
-def newInventory(playbook, stack, resource = null, hostname = null,
-    branchName = null, fileName = null)
+def newInventory(playbook, stack, environment, resource = null, hostname = null,
+    fileName = null)
 {
     if (fileName == null) {
         fileName = "./${playbook}.hosts"
     }
     sh "rm -f ${fileName}"
     sh "echo '' > ${fileName}"
-    branchName = (branchName) ? branchName : env.BRANCH_NAME
     resource = (resource != null) ? resource : playbook
     hostname = (hostname != null) ? hostname : playbook
     echo "hostname=${hostname}"
-    def ip = discoverResourcePublicIp(stack, branchName, resource)
-    assert ip != "" : "No IP address found for ${env.AWS_REGION}:${stack}:${branchName}:${resource}"
+    def ip = discoverResourcePublicIp(stack, environment, resource)
+    assert ip != "" :
+        "No IP address found for ${env.AWS_REGION}:${stack}:${environment}:${resource}"
     echo "${stack}::${playbook} found at '${ip}'"
     writeFile encoding: 'ascii', file: fileName, 
         text: "${hostname} ansible_host=${ip}\n"
@@ -105,13 +118,13 @@ def newInventory(playbook, stack, resource = null, hostname = null,
     return fileName
 }
 
-def discoverResourcePublicIp(stack, branchName, resource) {
+def discoverResourcePublicIp(stack, environment, resource) {
     return sh (
         script: """aws ec2 describe-instances \
             --region ${env.AWS_REGION} \
             --filter "Name=tag:System,Values=datagov" \
                      \"Name=tag:Stack,Values=${stack}\" \
-                     \"Name=tag:Branch,Values=${branchName}\" \
+                     \"Name=tag:Environment,Values=${environment}\" \
                      \"Name=tag:Resource,Values=${resource}\" \
                      \"Name=instance-state-name,Values=running\" \
             --query \"Reservations[].Instances[].{Ip:PublicIpAddress}\" \

@@ -4,7 +4,7 @@
 
 variable "system" {}
 variable "stack" {}
-variable "branch" {}
+variable "environment" {}
 variable "security_context" {}
 variable "network" { type = "map" }
 variable "nat" { type = "map" }
@@ -25,10 +25,10 @@ resource "aws_vpc" "main_vpc" {
     cidr_block = "${var.network["cidr_prefix"]}.0.0/16"
     instance_tenancy = "default"
     tags = {
-        Name = "${var.system}_${var.branch}_main_vpc"
+        Name = "${var.system}_${var.environment}_main_vpc"
         System = "${var.system}"
         Stack = "${var.stack}"
-        Branch = "${var.branch}"
+        Environment = "${var.environment}"
         Resource = "main_vpc"
     }
 }
@@ -36,10 +36,10 @@ resource "aws_vpc" "main_vpc" {
 resource "aws_internet_gateway" "igw" {
     vpc_id = "${aws_vpc.main_vpc.id}"
     tags = {
-        Name = "${var.system}_${var.branch}_igw"
+        Name = "${var.system}_${var.environment}_igw"
         System = "${var.system}"
         Stack = "${var.stack}"
-        Branch = "${var.branch}"
+        Environment = "${var.environment}"
         Resource = "igw"
     }
 }
@@ -52,10 +52,10 @@ resource "aws_route_table" "public_route_table" {
          gateway_id = "${aws_internet_gateway.igw.id}"
     }
     tags {
-        Name = "${var.system}_${var.branch}_public"
+        Name = "${var.system}_${var.environment}_public"
         System = "${var.system}"
         Stack = "${var.stack}"
-        Branch = "${var.branch}"
+        Environment = "${var.environment}"
         Resource = "public_route_table"
     }
 }
@@ -64,7 +64,7 @@ module "nat_security" {
     source = "./nat-security"
     system = "${var.system}"
     stack = "${var.stack}"
-    branch = "${var.branch}"
+    environment = "${var.environment}"
     security_context = "${var.security_context}"
     vpc_id = "${aws_vpc.main_vpc.id}"
     network_prefix = "${var.network["cidr_prefix"]}"
@@ -75,7 +75,7 @@ module "nat_az1" {
     index = "1"
     system = "${var.system}"
     stack = "${var.stack}"
-    branch = "${var.branch}"
+    environment = "${var.environment}"
     security_context = "${var.security_context}"
     vpc_id = "${aws_vpc.main_vpc.id}"
     route_table_id = "${aws_route_table.public_route_table.id}"
@@ -90,7 +90,7 @@ module "nat_az1" {
 #     index = "2"
 #     system = "${var.system}"
 #     stack = "${var.stack}"
-#     branch = "${var.branch}"
+#     Environment = "${var.environment}"
 #     security_context = "${var.security_context}"
 #     vpc_id = "${aws_vpc.main_vpc.id}"
 #     route_table_id = "${aws_route_table.public_route_table.id}"
@@ -108,10 +108,10 @@ module "nat_az1" {
 #         "${module.nat_az2.subnet_id}" 
 #     ]
 #     tags {
-#         Name = "${var.system}_${var.branch}_nat"
+#         Name = "${var.system}_${var.environment}_nat"
 #         System = "${var.system}"
 #         Stack = "${var.stack}"
-#         Branch = "${var.branch}"
+#         Environment = "${var.environment}"
 #         Resource = "nat_security_group"
 #     }
 # }

@@ -264,7 +264,7 @@ BUCKET_URL=""
 SOURCE_DIR=""
 TARGET_DIR=""
 STACK_NAME=""
-BRANCH_NAME=""
+ENVIRONMENT_NAME=""
 INPUTS=()
 OUTPUT_TYPE="tfvars" # DO NOT change
 STACK_CONFIG=""
@@ -272,15 +272,15 @@ NO_WAIT=""
 RESOURCES_READY=""
 
 #------------------------------------------------------------------------------
-#  Get unnamed argument, either stack or branch name (if not set yet)
+#  Get unnamed argument, either stack or environment name (if not set yet)
 #------------------------------------------------------------------------------
 function get_argument {
     if [ "${STACK_NAME}" == "" ]; then
         debug "STACK_NAME=$1"
         STACK_NAME="$1"
-    elif [ "${BRANCH_NAME}" == "" ]; then
-        debug "BRANCH_NAME=$1"
-        BRANCH_NAME="$1"
+    elif [ "${ENVIRONMENT_NAME}" == "" ]; then
+        debug "ENVIRONMENT_NAME=$1"
+        ENVIRONMENT_NAME="$1"
     else 
         error "Unknown argument '$1'"
         return 1
@@ -336,7 +336,7 @@ function get_parameters {
 #   - source-dir: Check that 'local' source directory exists 
 #         (default: ./stack_name)
 #   - target-dir: Create directory if not exists 
-#          (default: ./target/stack/branch)
+#          (default: ./target/stack/environment)
 #------------------------------------------------------------------------------
 function initialize {
     local config_data
@@ -364,12 +364,12 @@ function initialize {
         return 2
     fi
     verbose "Using source directory ${SOURCE_DIR}"
-    if [ "${BRANCH_NAME}" == "" ]; then
-        BRANCH_NAME="master"
+    if [ "${ENVIRONMENT_NAME}" == "" ]; then
+        ENVIRONMENT_NAME="prod"
     fi
-    verbose "Using branch ${BRANCH_NAME}"
+    verbose "Using environment ${ENVIRONMENT_NAME}"
     if [ "${TARGET_DIR}" == "" ]; then
-        TARGET_DIR="${WORKING_DIR}/target/${STACK_NAME}/${BRANCH_NAME}"
+        TARGET_DIR="${WORKING_DIR}/target/${STACK_NAME}/${ENVIRONMENT_NAME}"
     fi
     verbose "Using target directory ${TARGET_DIR}"
     BUCKET_URL="s3://${BUCKET_NAME}/${BUCKET_PATH}${STACK_NAME}"
@@ -391,19 +391,19 @@ function initialize {
 # =============================================================================
 
 #------------------------------------------------------------------------------
-#  Get any (existing) stack-branch specific state from S3 bucket 
+#  Get any (existing) stack-environment specific state from S3 bucket 
 #------------------------------------------------------------------------------
 function get_state {
     writeln "Get '${STACK_NAME}' state"
     rm -rf "${TARGET_DIR}"
-    s3 sync "${BUCKET_URL}/${BRANCH_NAME}" "${TARGET_DIR}" || return 1
+    s3 sync "${BUCKET_URL}/${ENVIRONMENT_NAME}" "${TARGET_DIR}" || return 1
 }
 
 #------------------------------------------------------------------------------
-#  Put any (existing) stack-branch specific state from S3 bucket 
+#  Put any (existing) stack-environment specific state from S3 bucket 
 #------------------------------------------------------------------------------
 function put_state {
-    local action="$1" s3uri="${BUCKET_URL}/${BRANCH_NAME}"
+    local action="$1" s3uri="${BUCKET_URL}/${ENVIRONMENT_NAME}"
     if [ "${ACTION}" == "delete" ]; then
         writeln "Remove '${STACK_NAME}' state"
         s3 rm --recursive "${s3uri}" || return 1
@@ -447,9 +447,9 @@ function to_input_url {
             split(substr($0, length("stack-output://") + 1), parts, "/");
             bucket_name = (parts[1] != "") ? parts[1] : BUCKET_NAME;
             stack_name = parts[2];
-            branch_name = parts[3];
+            environment_name = parts[3];
             printf("s3://%s/%s%s/%s/%s-output.%s", bucket_name, BUCKET_PATH,
-                stack_name, branch_name, stack_name, OUTPUT_TYPE);
+                stack_name, environment_name, stack_name, OUTPUT_TYPE);
             exit;
         }
         {
@@ -596,7 +596,7 @@ function do_stack {
     if [ "${action}" != "delete" ] ||
        [ -f "${TARGET_DIR}/${STACK_NAME}.tfstate" ]
     then
-        stack_args+=("-var branch=${BRANCH_NAME}")
+        stack_args+=("-var environment=${ENVIRONMENT_NAME}")
         stack_args+=("-var stack=${STACK_NAME}")
         stack_args+=("-input=false")
         extra_verbose "Checking for inputs in ${SOURCE_DIR}"
@@ -627,14 +627,13 @@ function do_stack {
 }
 
 
-
 function instance_passes_healthcheck {
     local resource="$1" status
     # Find the instance
     local instanceID=$(ec2 describe-instances \
             --filter "Name=tag:System,Values=datagov" \
                      "Name=tag:Stack,Values=${STACK_NAME}" \
-                     "Name=tag:Branch,Values=${BRANCH_NAME}" \
+                     "Name=tag:Environment,Values=${ENVIRONMENT_NAME}" \
                      "Name=tag:Resource,Values=${resource}" \
                      "Name=instance-state-name,Values=running" \
             --query "Reservations[].Instances[].{Id:InstanceId}" \
@@ -718,13 +717,15 @@ function wait_for_completion {
     done
 }
 
+function do_terraform {
+    get_state || return 1
+    do_stack "${ACTION}" || return 2
+    put_state "${ACTION}" || return 3
+}
+
 #------------------------------------------------------------------------------
 #  Main body
 #------------------------------------------------------------------------------
-STACK_STATUS=0
 initialize "$@" || exit 1
-get_state || exit 2
-do_stack "${ACTION}" || exit 3
-put_state "${ACTION}" || exit 4
-wait_for_completion || exit 5
-
+do_terraform || exit 2
+wait_for_completion || exit 3

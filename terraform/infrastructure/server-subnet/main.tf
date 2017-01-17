@@ -4,7 +4,7 @@
 
 variable "system" {}
 variable "stack" {}
-variable "branch" {}
+variable "environment" {}
 variable "index" {}
 variable "name" {}
 variable "network" { type = "map" }
@@ -24,10 +24,10 @@ resource "aws_subnet" "server_subnet" {
     availability_zone = "${lookup(var.network, format("az%s", var.index))}"
     cidr_block = "${var.network["cidr_prefix"]}.${var.network_segment}.0/24"
     tags = {
-        Name = "${var.system}_${var.branch}_az${var.index}_${var.name}"
+        Name = "${var.system}_${var.environment}_az${var.index}_${var.name}"
         System = "${var.system}"
         Stack = "${var.stack}"
-        Branch = "${var.branch}"
+        Environment = "${var.environment}"
         Resource = "az${var.index}_${var.name}"
     }
 }
@@ -44,13 +44,13 @@ resource "aws_route_table_association" "server_subnet_routing" {
 #  SecurityGroup
 # -----------------------------------------------------------------------------
 resource "aws_security_group" "server_security_group" {
-    #name = "${var.system}_${var.branch}_az${var.index}_${var.name}"
+    #name = "${var.system}_${var.environment}_az${var.index}_${var.name}"
     vpc_id = "${var.vpc_id}"
     tags = {
-        Name = "${var.system}_${var.branch}_az${var.index}_${var.name}"
+        Name = "${var.system}_${var.environment}_az${var.index}_${var.name}"
         System = "${var.system}"
         Stack = "${var.stack}"
-        Branch = "${var.branch}"
+        Environment = "${var.environment}"
         Resource = "az${var.index}_${var.name}"
     }
 }
