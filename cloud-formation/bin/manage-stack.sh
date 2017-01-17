@@ -13,9 +13,9 @@ BUCKET_NAME=
 MASTER_TEMPLATE=
 STACK_POLICY=
 STACK_NAME=
+STACK_ID=
 STACK_TEMPLATES=
 STACK_PARAMETERS=
-STACK_PATTERNS=
 STACK_INITIALIZERS=
 SOURCE_DIRS=""
 TARGET_DIR=""
@@ -315,6 +315,11 @@ function get_property_names {
     join_by " " $elements
 }
 
+function get_property_name_without_context {
+    local name="$1"
+    echo "${name}" | awk -F"${PROPERTIES_FS}" '{print $NF;}'
+}
+
 function get_parameter {
     local property="$1"
     local text="$2"
@@ -553,6 +558,10 @@ function cloudformation {
       do_aws cloudformation $*
 }
 
+function ec2 {
+      do_aws ec2 $*
+}
+
 function create_resource_tag {
     local key="$1"
     local value="$2"
@@ -675,6 +684,14 @@ function validate_cf_template {
     return 0
 }
 
+function get_cf_stackid {
+    local name="$1" stack_id result=1
+    local filter="[?StackName=='${name}'&&StackStatus!='DELETE_COMPLETE']"
+    trace "cf_stack_exists.filter=${filter}"
+    cloudformation list-stacks --query "StackSummaries${filter}.{StackId:StackId}" \
+        --output text
+}
+
 function cf_stack_exists {
     local name="$1" stack_id result=1
     local filter="[?StackName=='${name}'&&StackStatus!='DELETE_COMPLETE']"
@@ -687,7 +704,7 @@ function cf_stack_exists {
 }
 
 function delete_cf_stack {
-    local stack="$1" wait_for_completion="$2" deleted wait_secs=30
+    local stack="$1" wait_for_completion="$2"
     writeln "Deleting stack ${stack}"
     cloudformation delete-stack --stack "${stack}"
     if [ "${wait_for_completion}" != "" ]; then
@@ -695,25 +712,37 @@ function delete_cf_stack {
     fi
 }
 
-
-function create_cf_stack {
+function apply_cf_stack {
     local stack bucket region template policy="default-stack-policy.json" parameters
-    local template_path template_url policy_url
+    local template_path template_url policy_url allow_update stack_args
+    local action="create" status
+
     while test $# -gt 0; do
         case $1 in
-          -b|--bucket)      shift; bucket="$1" ;;
-          -l|--policy)      shift; policy="$1" ;;
-          -p|--parameters)  shift; parameters="$1" ;;
-          -r|--region)      shift; region="$1";;
-          -t|--template)    shift; template="$1" ;;
-          -s|--stack)       shift; stack="$1" ;;
-          *)                error "create_cf_stack: Unknown argument '$1'"; return 1 ;;
+          -b|--bucket)        shift; bucket="$1" ;;
+          -l|--policy)        shift; policy="$1" ;;
+          -p|--parameters)    shift; parameters="$1" ;;
+          -r|--region)        shift; region="$1";;
+          -t|--template)      shift; template="$1" ;;
+          -s|--stack)         shift; stack="$1" ;;
+          -a|--allow-update)  shift; allow_update="true" ;;
+          *)                  error "create_cf_stack: Unknown argument '$1'"; return 1 ;;
         esac
         shift
     done
-    if [ "${stack}" == "" ]; then error "No stack name provided (--stack)"; return 2; fi
-    if [ "${bucket}" == "" ]; then error "No bucket provided (--bucket)"; return 3; fi
-    if [ "${template}" == "" ]; then error "No template provided (--template)"; return 4; fi
+    if cf_stack_exists "${STACK_NAME}"; then
+        if [ "${allow_update}" == "" ]; then
+            error "Stack ${stack} already exists, but not alowed to update"
+            return 2;
+        fi
+        action="update"
+    else 
+        stack_args="--disable-rollback"
+    fi
+
+    if [ "${stack}" == "" ]; then error "No stack name provided (--stack)"; return 3; fi
+    if [ "${bucket}" == "" ]; then error "No bucket provided (--bucket)"; return 4; fi
+    if [ "${template}" == "" ]; then error "No template provided (--template)"; return 5; fi
     if [ "${region}" == "" ]; then region=`get_aws_region`; fi
     base_url=`create_s3_url --bucket "${bucket}" --region "${region}"`
     template_path="${template}"
@@ -722,44 +751,33 @@ function create_cf_stack {
     writeln "About to create stack ${stack} with url '${template_url}' and policy '${policy_url}'"
     trace "stack-paramaters=|${parameters}|"
     validate_cf_template --bucket "${bucket}" --template "cloud-formation/${template_path}" || \
-        return 2
-    local stack_id=`cloudformation create-stack --stack-name "${stack}" \
-        --template-url "${template_url}" --disable-rollback  --capabilities "CAPABILITY_IAM" \
-        --stack-policy-url "${policy_url}" --parameters "${parameters}" || return 1`
-    writeln "Created stack '${stack_id}'"
+        return 5
+    STACK_ID=`cloudformation ${action}-stack --stack-name "${stack}" \
+        --template-url "${template_url}" ${stack_args} --capabilities "CAPABILITY_IAM" \
+        --stack-policy-url "${policy_url}" --parameters "${parameters}" \
+        --output text || return 3`
+    status=$(echo -e "${STACK_ID}" | grep "ValidationError")
+    if [ "${status}" != "" ]; then
+        status=$(echo -e "${STACK_ID}" | grep "No updates are to be performed.")
+        STACK_ID=""
+        if [ "${status}" == "" ]; then
+            error "${STACK_ID}"
+            return 6
+        else
+            # Not an error, but have to lookup the stack id
+            STACK_ID=$(get_cf_stackid "${STACK_NAME}")
+            writeln "There were no updates to perform"
+        fi
+    fi
+    writeln "${action}d stack '${STACK_ID}'"
 }
 
 function update_cf_stack {
-    local stack bucket region template policy="default-stack-policy" parameters
-    local template_path template_url policy_url
-    while test $# -gt 0; do
-        case $1 in
-          -b|--bucket)      shift; bucket="$1" ;;
-          -l|--policy)      shift; policy="$1" ;;
-          -p|--parameters)  shift; parameters="$1" ;;
-          -r|--region)      shift; region="$1";;
-          -t|--template)    shift; template="$1" ;;
-          -s|--stack)       shift; stack="$1" ;;
-          *)                error "create_cf_stack: Unknown argument '$1'"; return 1 ;;
-        esac
-        shift
-    done
-    if [ "${stack}" == "" ]; then error "No stack name provided (--stack)"; return 2; fi
-    if [ "${bucket}" == "" ]; then error "No bucket provided (--bucket)"; return 3; fi
-    if [ "${template}" == "" ]; then error "No template provided (--template)"; return 4; fi
-    if [ "${region}" == "" ]; then region=`get_aws_region`; fi
-    base_url=`create_s3_url --bucket "${bucket}"  --region "${region}"`
-    template_path="templates/${template}"
-    template_url="${base_url}/cloud-formation/${template_path}"
-    policy_url="${base_url}/cloud-formGation/${policy}"
-    writeln "About to create stack ${stack} with url '${template_url}' and policy '${policy_url}'"
-    trace "stack-paramaters=|${parameters}|"
-    validate_cf_template --bucket "${bucket}" --template "cloud-formation/${template_path}" || \
-        return 2
-    local stack_id=`cloudformation update-stack --stack-name "${stack}" \
-        --template-url "${template_url}" --capabilities "CAPABILITY_IAM" \
-        --stack-policy-url "${policy_url}" --parameters "${parameters}"`
-    writeln "Updated stack '${stack_id}'"
+    apply_cf_stack $@
+}
+
+function create_cf_stack {
+    apply_cf_stack $@
 }
 
 function cf_stack_action_completed {
@@ -779,33 +797,31 @@ function wait_cf_stack {
     local name="$1"
     local action="$2"
     local max_wait_mins="${3:-60}"
-    local polling_secs="${4:-60}"
+    local polling_secs="${4:-10}"
     local max_wait_secs=$((max_wait_mins * 60))
     local n=$((max_wait_secs / polling_secs))
     local r=$((max_wait_secs % polling_secs))
-    local status i=0
+    local status i=0 elapsed=0
     trace "max_wait_mins=${max_wait_mins}; max_wait_secs=${max_wait_secs}; n=${n}; r=${r};" \
         "polling_secs=${polling_secs}"
     if [ "${r}" -gt 0 ]; then
         n=$((n+1))
     fi
     until [ "${i}" -eq "${n}" ]; do
-        i=$((i+1))
-        writeln "Wait for ${action} stack ${name} to complete ... (${i} of ${n})"
+        writeln "Wait for ${action} stack ${name} to complete ... (${elapsed}s elapsed)"
         if cf_stack_action_completed "${name}" "${action}"; then
             show_cf_stack_status "${name}" "${action}" || return 1
             return 0
         fi
-        if [ "${n}" -eq 0 ]; then
-            extra_verbose "${action} stack ${name} did not complete yet, but wait timed out"
-        else
-            extra_verbose "${action} stack ${name} did not complete yet, " \
-                "wait ${polling_secs} seconds"
-            sleep $polling_secs
-        fi
+        trace "${action} stack ${name} did not complete yet, " \
+            "wait ${polling_secs} seconds"
+        sleep $polling_secs
+        (( i = i + 1 ))
+        (( elapsed = i * polling_secs ))
     done
+    writeln "${action} stack ${name} did not complete yet, " \
+        "but wait timed out (${elapsed}s elapsed)"
     return 1
-
 }
 
 
@@ -916,7 +932,7 @@ function get_stack_templates {
         templates+=("${name}")
         extra_verbose "Using template ${name}"
     done
-    extra_verbose "Using master template ${name}"
+    extra_verbose "Using master template ${MASTER_TEMPLATE}"
     templates+=("${MASTER_TEMPLATE}")
     echo -e "${templates[@]}"
 }
@@ -924,6 +940,7 @@ function get_stack_templates {
 function get_stack_parameters {
     local prefix="stack${PROPERTIES_FS}parameters"
     local parameters=() value variable input inputs="${INPUTS[@]}"
+    local name names userfriendly_name
     for input in $inputs ; do
         verbose "Adding input from '${input}'"
         if [ -f ${input} ]; then
@@ -949,37 +966,34 @@ function get_stack_parameters {
             value=$(echo "${value}" | sed "s|__${variable}__|${!variable}|g")
         fi
         parameters+=("${name}=${value}")
-        extra_verbose "Using parameter ${name}=[${value}]"
+        extra_verbose "Using stack parameter" \
+            $(get_property_name_without_context ${name}) \
+            "= ${value}"
     done
     echo -e "${parameters[@]}"
-}
-
-function get_stack_patterns {
-    local prefix="stack${PROPERTIES_FS}variables"
-    local names=$(get_property_names "${prefix}" "${CONFIG_DATA}") value
-    local variables=() pattern
-    for name in $names ; do
-        value=$(get_property "${prefix}${PROPERTIES_FS}${name}" "${CONFIG_DATA}")
-        pattern="s|__$(toupper "${name}")__|${value}|g"
-        variables+=("${pattern}")
-        extra_verbose "Using pattern [${pattern}]"
-    done
-    variables+=("${DEFAULT_PATTERN}")
-    extra_verbose "Using default pattern ["${DEFAULT_PATTERN}"]"
-    echo -e "${variables[@]}"
 }
 
 function get_stack_property {
     local name="stack${PROPERTIES_FS}$1"
     local override_value="$2"
-    local value
+    local default_value="$3"
+    local value value_source
     if [ "${override_value}" != "" ]; then
-        extra_verbose "Using ${name}=[${value}] (command-line override)"
         value="${override_value}"
+        value_source="command-line"
     else
-        extra_verbose "Using ${name}=[${value}]"
         value=$(get_property "${name}" "${CONFIG_DATA}")
+        value_source="config-file"
     fi
+    if [ "${value}" == "" ]; then
+        value="${default_value}"
+        if [ "${value}" != "" ]; then
+            value_source="default"
+        fi
+    fi
+    extra_verbose "Using property" \
+        $(get_property_name_without_context ${name}) \
+        "= ${value} (source: ${value_source})"
     echo -e "${value}"
 }
 
@@ -1003,15 +1017,13 @@ function get_stack_initializer_source {
 }
 
 function get_stack_security_context {
-    set -x
     if [ "${SECURITY_CONTEXT}" == "" ]; then 
         case $ENVIRONMENT in
             dev-*)      SECURITY_CONTEXT="dev" ;;
             *)          SECURITY_CONTEXT="${ENVIRONMENT}" ;;
         esac
     fi
-    set +x
-    verbose "Using SecurityContext=${SECURITY_CONTEXT}"
+    trace "Using SecurityContext=${SECURITY_CONTEXT}"
 }
 
 function initialize {
@@ -1022,7 +1034,7 @@ function initialize {
         error "No environment provided."
         return 1
     fi
-    verbose "Using Environment=${ENVIRONMENT}"
+    trace "Using Environment=${ENVIRONMENT}"
     get_stack_security_context
     if [ "${CONFIG_FILE}" == "" ]; then
         error "No configuration file provided."
@@ -1032,37 +1044,33 @@ function initialize {
         region_arg="--region ${AWS_REGION}"
     fi
     CONFIG_DATA=`get_config_data $region_arg "${CONFIG_FILE}"`
-    AWS_PROFILE=$(get_stack_property aws_profile "${AWS_PROFILE}")
+    AWS_PROFILE=$(get_stack_property aws_profile "${AWS_PROFILE}" "${DEFAULT_AWS_REGION}")
     AWS_REGION=$(get_stack_property aws_region "${AWS_REGION}")
     BUCKET_NAME=$(get_stack_property bucket_name "${BUCKET_NAME}")
     STACK_NAME=$(get_stack_property name)
-    MASTER_TEMPLATE=$(get_stack_property master_template "main.json")
-    STACK_POLICY=$(get_stack_property policy)
+    MASTER_TEMPLATE=$(get_stack_property "master_template" "" "${DEFAULT_MASTER_TEMPLATE}")
+    STACK_POLICY=$(get_stack_property policy "" "${DEFAULT_STACK_POLICY}")
     STACK_TEMPLATES=$(get_stack_templates)
     STACK_PARAMETERS=$(get_stack_parameters)
-    STACK_PATTERNS=$(get_stack_patterns)
     STACK_INITIALIZERS=$(get_stack_initializers)
 
     if [ "${STACK_NAME}" == "" ]; then
         error "No stack name provided."
         return 3
     fi
-    verbose "STACK_NAME=${STACK_NAME}"
     if [ "${BUCKET_NAME}" == "" ]; then
         error "No bucket name provided."
         return 4
     fi
-    verbose "BUCKET_NAME=${BUCKET_NAME}"
-    if [ "${AWS_REGION}" == "" ]; then AWS_REGION="${DEFAULT_AWS_REGION}"; fi
-    verbose "Using AWS_REGION=${AWS_REGION}"
-    if [ "${MASTER_TEMPLATE}" == "" ]; then MASTER_TEMPLATE="${DEFAULT_MASTER_TEMPLATE}"; fi
-    verbose "Using MASTER_TEMPLATE=${MASTER_TEMPLATE}"
-    if [ "${STACK_POLICY}" == "" ]; then STACK_POLICY="${DEFAULT_STACK_POLICY}"; fi
-    verbose "Using STACK_POLICY=${STACK_POLICY}"
     if [ "${SOURCE_DIRS}" == "" ]; then SOURCE_DIRS="${DEFAULT_SOURCE_DIRS}"; fi
-    verbose "Using SOURCE_DIRS=${SOURCE_DIRS}"
     if [ "${TARGET_DIR}" == "" ]; then TARGET_DIR="${DEFAULT_TARGET_DIR}"; fi
-    verbose "Using TARGET_DIR=${TARGET_DIR}"
+
+    verbose "Using:"
+    verbose "\tStack=${STACK_NAME}"
+    verbose "\tBucket=${BUCKET_NAME}"
+    verbose "\tSources=${SOURCE_DIRS}"
+    verbose "\tInputs=${INPUTS[@]}"
+    verbose "\tTarget=${TARGET_DIR}"
 }
 
 
@@ -1203,15 +1211,9 @@ function create_stack_parameters {
 
 function create_stack {
     local parameters=$(create_stack_parameters)
-    if cf_stack_exists "${STACK_NAME}"; then
-        update_cf_stack --stack "${STACK_NAME}" --bucket "${BUCKET_NAME}" \
-            --template ${MASTER_TEMPLATE} --policy "${STACK_POLICY}" \
-            --parameters "${parameters}" || return 1
-    else
-        create_cf_stack --stack "${STACK_NAME}" --bucket "${BUCKET_NAME}" \
-            --template ${MASTER_TEMPLATE} --policy "${STACK_POLICY}" \
-            --parameters "${parameters}" || return 2
-    fi
+    apply_cf_stack --stack "${STACK_NAME}" --bucket "${BUCKET_NAME}" \
+        --template ${MASTER_TEMPLATE} --policy "${STACK_POLICY}" \
+        --parameters "${parameters}" --allow-update || return 1
 }
 
 function delete_stack {
@@ -1222,10 +1224,103 @@ function delete_stack {
     fi
 }
 
+function instance_passes_healthcheck {
+    local resource="$1" status
+    # Find the instance
+    local instanceID=$(ec2 describe-instances \
+            --filter "Name=tag:aws:cloudformation:stack-id,Values=${STACK_ID}" \
+                     "Name=tag:aws:cloudformation:logical-id,Values=${resource}" \
+                     "Name=instance-state-name,Values=running" \
+            --query "Reservations[].Instances[].{Id:InstanceId}" \
+            --output text)
+    if [ "${instanceID}" == "" ]; then
+        debug "Resource ${resource} not found"
+        return 1
+    fi
+    # Check the health-check status
+    status=$(ec2 describe-instance-status \
+        --instance-ids "${instanceID}" \
+        --filter "Name=instance-state-name,Values=running" \
+                 "Name=instance-status.reachability,Values=passed" \
+                 "Name=system-status.reachability,Values=passed" \
+        --query "InstanceStatuses[].{Id:InstanceId}" \
+        --output text)
+    if [ "${status}" == "" ]; then
+        debug "Resource ${resource} health checks not passed"
+        return 1
+    fi
+    debug "Resource ${resource} health checks passed"
+    return 0
+}
+
+function all_resources_completed {
+    local elapsed="$1"
+    local conditions="$2"
+    local n_failures=0 name condition reported
+    local prefix="stack${PROPERTIES_FS}wait${PROPERTIES_FS}conditions"
+    for name in $conditions ; do
+        condition=$(get_property "${prefix}${PROPERTIES_FS}${name}" \
+            "${CONFIG_DATA}")
+        debug "Checking ${condition} on ${name}"
+        case $condition in
+            aws-healthcheck)
+                if ! instance_passes_healthcheck "${name}" ; then
+                    writeln "Resource ${name} not ready (${condition}) " \
+                        "(${elapsed}s elapsed)"
+                    (( n_failures += 1 ))
+                else 
+                    reported=$(echo "${RESOURCES_READY}" | grep "${name}")
+                    if [ "${reported}" == "" ]; then
+                       RESOURCES_READY="${RESOURCES_READY} ${name}"
+                        writeln "Resource ${name} is ready (${condition})"
+                    fi
+                fi
+                ;;
+            *)  
+                error "Unknown wait condition ${condition}"
+                return 1
+                ;;
+        esac
+    done
+    return $n_failures
+}
+
+function wait_for_resources_completion {
+    local delay max_iterations i=0 resources
+    local default_delay=15 default_iterations elapsed=0
+    local prefix="stack${PROPERTIES_FS}wait"
+    if [ "${CONFIG_DATA}" == "" ]; then
+        return 0
+    fi
+    resources=$(get_property_names "${prefix}${PROPERTIES_FS}conditions" \
+        "${CONFIG_DATA}")
+    if [ "${resources}" == "" ]; then
+        writeln "No resources to wait for found in stack.yml"
+        return 0
+    fi
+    extra_verbose "Waiting for [${resources}] to complete"
+    # delay in seconds
+    delay=$(get_property "${prefix}${PROPERTIES_FS}delay" "${CONFIG_DATA}" "30")
+    # default is 2 hours 
+    (( default_iterations = 2 * 60 * 60 / $delay ))
+    max_iterations=$(get_property "${prefix}${PROPERTIES_FS}max-iterations" \
+       "${CONFIG_DATA}" "${default_iterations}")
+    debug "i=$i; max_iterations=$max_iterations"
+    while [ "${i}" -lt "${max_iterations}" ] &&
+          ! all_resources_completed "${elapsed}" "${resources}";
+    do
+        sleep "${delay}"
+        (( i += 1 ))
+        (( elapsed = i * delay ))
+    done
+}
+
 function wait_for_completion {
     local status
     if [ "${WAIT_FOR_COMPLETION}" != "" ]; then
-        wait_cf_stack "${STACK_NAME}" "${ACTION}" "${WAIT_FOR_COMPLETION}" || return 1
+        wait_cf_stack "${STACK_NAME}" "${ACTION}" "${WAIT_FOR_COMPLETION}" \
+            || return 1
+        wait_for_resources_completion || return 2
     fi
 }
 
@@ -1244,7 +1339,7 @@ if [ "${ACTION}" == "${ACTION_CREATE}" ]; then
 elif [ "${ACTION}" == "${ACTION_DELETE}" ]; then
     delete_stack || exit 5
 fi
-if [ "${ACTION}" != "${ACTION_VERIFY}" ]; then
+if [ "${ACTION}" == "${ACTION_CREATE}" ]; then
     wait_for_completion || exit 6
 fi
 cleanup
