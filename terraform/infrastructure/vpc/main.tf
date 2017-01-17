@@ -9,6 +9,14 @@ variable "security_context" {}
 variable "network" { type = "map" }
 variable "nat" { type = "map" }
 
+variable "nat_amis" {
+    default = {
+        # amzn-ami-vpc-nat-hvm-2016.09.0.20161028-x86_64-ebs
+        us-east-1 = "ami-863b6391"
+        us-east-2 = "ami-8d5a00e8"
+    }
+}
+
 # -----------------------------------------------------------------------------
 #  Resources
 # -----------------------------------------------------------------------------
@@ -73,23 +81,25 @@ module "nat_az1" {
     route_table_id = "${aws_route_table.public_route_table.id}"
     cidr_prefix = "${var.network["cidr_prefix"]}"
     az = "${var.network["az1"]}"
+    ami = "${var.nat_amis[var.network["region"]]}"
     security_group_id = "${module.nat_security.security_group_id}"
     nat = "${var.nat}"
 }
-module "nat_az2" {
-    source = "./nat"
-    index = "2"
-    system = "${var.system}"
-    stack = "${var.stack}"
-    branch = "${var.branch}"
-    security_context = "${var.security_context}"
-    vpc_id = "${aws_vpc.main_vpc.id}"
-    route_table_id = "${aws_route_table.public_route_table.id}"
-    cidr_prefix = "${var.network["cidr_prefix"]}"
-    az = "${var.network["az2"]}"
-    security_group_id = "${module.nat_security.security_group_id}"
-    nat = "${var.nat}"
-}
+# module "nat_az2" {
+#     source = "./nat"
+#     index = "2"
+#     system = "${var.system}"
+#     stack = "${var.stack}"
+#     branch = "${var.branch}"
+#     security_context = "${var.security_context}"
+#     vpc_id = "${aws_vpc.main_vpc.id}"
+#     route_table_id = "${aws_route_table.public_route_table.id}"
+#     cidr_prefix = "${var.network["cidr_prefix"]}"
+#     az = "${var.network["az2"]}"
+#     ami = "${var.nat_amis[var.network["region"]]}"
+#     security_group_id = "${module.nat_security.security_group_id}"
+#     nat = "${var.nat}"
+# }
 
 # resource "aws_network_acl" "nat" {
 #     vpc_id = "${aws_vpc.main_vpc.id}"
@@ -124,7 +134,7 @@ output "az1_private_route_table_id" {
     value = "${module.nat_az1.route_table_id}"
 }
 
-output "az2_private_route_table_id" {
-    # Route table to be used by private subnets to AZ2 NAT
-    value = "${module.nat_az2.route_table_id}"
-}
+# output "az2_private_route_table_id" {
+#     # Route table to be used by private subnets to AZ2 NAT
+#     value = "${module.nat_az2.route_table_id}"
+# }
