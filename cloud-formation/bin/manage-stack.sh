@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 SCRIPT_NAME=$(basename $0)
 SCRIPT_DIR=$(dirname $0)
@@ -16,7 +16,8 @@ STACK_NAME=
 STACK_ID=
 STACK_TEMPLATES=
 STACK_PARAMETERS=
-STACK_INITIALIZERS=
+STACK_SCRIPTS=
+STACK_PATH=""
 SOURCE_DIRS=""
 TARGET_DIR=""
 ENVIRONMENT=""
@@ -213,15 +214,14 @@ function parse_yaml_from_string {
         -e "/^\($s\)\#/d" \
         -e "s|^\($s\)\(- \)\?\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\3$fs\4|p" \
         -e "s|^\($s\)\(- \)\?\($w\)$s:$s\(.*\)$s\$|\1$fs\3$fs\4|p" \
-        -e "s|^\($s\)\(- \)\($w\)$s\$|\1$fs\3$fs\3|p" \
-        $file_name | \
+        -e "s|^\($s\)\(- \)\($w\)$s\$|\1$fs\3$fs\3|p" | \
         awk -F$fs -vprefix="${prefix}" -vyamlToPropertiesFS="${PROPERTIES_FS}" '{
             if (NR == 1) {
                 indent_size=2;
             } else if (NR == 2) {
                 indent_size=length($1);
             }
-            # print $1"::"$2"::"$3 >> "/dev/stderr";
+            #print $1"::"$2"::"$3 >> "/dev/stderr";
             indent = length($1)/indent_size;
             vname[indent] = $2;
             for (i in vname) { if (i > indent) { delete vname[i]; } }
@@ -582,7 +582,7 @@ function s3_bucket_exists {
     if [ "${exists}" != "${name}" ]; then
         return 0
     fi
-    extra_verbose "=====> head-bucket: ${exists} <======="
+    trace "head-bucket: ${exists}"
     return 1
 }
 
@@ -722,8 +722,8 @@ function delete_cf_stack {
 function apply_cf_stack {
     local stack bucket region template policy="default-stack-policy.json" parameters
     local template_path template_url policy_url allow_update stack_args
-    local action="create" status
-
+    local status
+    STACK_ACTION=="create" 
     while test $# -gt 0; do
         case $1 in
           -b|--bucket)        shift; bucket="$1" ;;
@@ -742,7 +742,7 @@ function apply_cf_stack {
             error "Stack ${stack} already exists, but not alowed to update"
             return 2;
         fi
-        action="update"
+        STACK_ACTION="update"
     else 
         stack_args="--disable-rollback"
     fi
@@ -753,31 +753,33 @@ function apply_cf_stack {
     if [ "${region}" == "" ]; then region=`get_aws_region`; fi
     base_url=`create_s3_url --bucket "${bucket}" --region "${region}"`
     template_path="${template}"
-    template_url="${base_url}/cloud-formation/${template_path}"
-    policy_url="${base_url}/cloud-formation/${policy}"
-    writeln "About to ${action} stack ${stack} with url '${template_url}'" \
+    template_url="${base_url}/${STACK_PATH}/${template_path}"
+    policy_url="${base_url}/${STACK_PATH}/${policy}"
+    writeln "About to ${STACK_ACTION} stack ${stack} with url '${template_url}'" \
         " and policy '${policy_url}'"
     trace "stack-paramaters=|${parameters}|"
-    validate_cf_template --bucket "${bucket}" --template "cloud-formation/${template_path}" || \
+    validate_cf_template --bucket "${bucket}" --template "${STACK_PATH}/${template_path}" || \
         ( error "Validation failed"; return 6)
-    STACK_ID=`cloudformation ${action}-stack --stack-name "${stack}" \
+    status=`cloudformation ${STACK_ACTION}-stack --stack-name "${stack}" \
         --template-url "${template_url}" ${stack_args} --capabilities "CAPABILITY_IAM" \
         --stack-policy-url "${policy_url}" --parameters "${parameters}" \
         --output text || return 6`
-    status=$(echo -e "${STACK_ID}" | grep "ValidationError")
+    trace "status=${status}"
+    status=$(echo -e "${status}" | grep "ValidationError")
     if [ "${status}" != "" ]; then
-        status=$(echo -e "${STACK_ID}" | grep "No updates are to be performed.")
-        STACK_ID=""
+        status=$(echo -e "${status}" | grep "No updates are to be performed.")
         if [ "${status}" == "" ]; then
-            error "${STACK_ID}"
+            error "${status}"
             return 7
         else
             # Not an error, but have to lookup the stack id
             STACK_ID=$(get_cf_stackid "${STACK_NAME}")
             writeln "There were no updates to perform"
         fi
+    else 
+        STACK_ID="${status}"
     fi
-    writeln "${action}d stack '${STACK_ID}'"
+    extra_verbose "Completed ${STACK_ACTION} stack ${STACK_NAME} (StackID: ${STACK_ID})"
 }
 
 function update_cf_stack {
@@ -791,13 +793,23 @@ function create_cf_stack {
 function cf_stack_action_completed {
     local name="$1"
     local action=$(toupper "$2")
-    local stack_id result=1
-    local filter="[?StackName=='${name}'&&StackStatus=='${action}_IN_PROGRESS']"
-    debug "wait_cf_create_stack.filter=${filter}"
-    stack_id=`cloudformation list-stacks --query "StackSummaries${filter}.{StackId:StackId}" \
+    local status result=1
+    local filters=()
+    local filter
+
+    filters+=("StackName=='${name}'")
+    filters+=("starts_with(StackStatus,'${ACTION}')")
+    filters+=("ends_with(StackStatus,'IN_PROGRESS')")
+    filter="[?"$(join_by "&&" ${filters[@]})"]"
+    trace "cf_stack_action_completed .filter=${filter}"
+    status=`cloudformation list-stacks --query "StackSummaries${filter}.{Status:StackStatus}" \
         --output text`
-    if [ "${stack_id}" == "" ]; then result=0; fi
-    debug "wait_cf_create_stack[$name]=${stack_id} yields ${result}"
+    if [ "${status}" == "" ]; then 
+        result=0
+    else 
+        extra_verbose "${action} stack ${name} status is ${status}"
+    fi
+    trace "cf_stack_action_completed.result=${result}"
     return $result
 }
 
@@ -854,12 +866,12 @@ function show_cf_stack_status {
     details=`cloudformation describe-stacks --query "${query}" | flatten | tail -1`
     debug "get_cf_stack_status[${name}] yields ${details}"
     status=$(echo "${details}" | get_field "Status")
-    debug "Action=${action_upper} Status = ${status}"
+    trace "Action=${action_upper} Status = ${status}"
     if [ "${status}" == "${action_upper}_COMPLETE" ]; then
         writeln "${action} ${name} completed"
     else
         reason=$(echo "${details}" | get_field "Reason")
-        writeln "${action} ${name} failed, because ${reason}:"
+        writeln "${action} ${name} (${status}) failed, because ${reason}:"
         attributes="ResourceId:LogicalResourceId"
         attributes="${attributes},ResourceType:ResourceType"
         attributes="${attributes},Reason:ResourceStatusReason"
@@ -973,6 +985,7 @@ function get_stack_parameters {
             # the value of "variable" environment variable
             # E.g. if value is __BUKCET_NAME__, it is replaced 
             # with the value of the BUCKET_NAME environment variable
+            trace "Replace __${variable}__ with ${!variable}"
             value=$(echo "${value}" | sed "s|__${variable}__|${!variable}|g")
         fi
         parameters+=("${name}=${value}")
@@ -1007,21 +1020,21 @@ function get_stack_property {
     echo -e "${value}"
 }
 
-function get_stack_initializers {
-    local prefix=$(create_property_name "stack" "initializers")
+function get_stack_scripts {
+    local prefix=$(create_property_name "stack" "scripts")
     local names=$(get_property_names "${prefix}" "${CONFIG_DATA}")
-    local initializers=() value
-    trace "Checking initializers ${names}"
+    local scripts=() value
+    trace "Checking scripts ${names} (${prefix})"
     for name in $names ; do
         parameters+=("${name}")
-        extra_verbose "Using initializer ${name}"
+        extra_verbose "Using script ${name}"
     done
     echo -e "${parameters[@]}"
 }
 
-function get_stack_initializer_source {
+function get_stack_script_source {
     local name="$1"
-    local prefix=$(create_property_name "stack" "initializers" \
+    local prefix=$(create_property_name "stack" "scripts" \
         "${name}" "source")
     get_property "${prefix}" "${CONFIG_DATA}"
 }
@@ -1042,49 +1055,77 @@ function create_stack_name {
             -e 's|[!@#\$%&*+()?<>]||g'
 }
 
-function initialize {
-    local region_arg variables p
-    SOURCE_DIRS="${SOURCE_DIRS} ${SCRIPT_DIR}"
-    get_parameters "$@" || return 1
-    if [ "${ENVIRONMENT}" == "" ]; then
-        error "No environment provided."
-        return 1
+function add_default_inputs {
+    local source_dir
+    for source_dir in $SOURCE_DIRS; do
+        if [ -f "${source_dir}/input.tfvars" ]; then
+            verbose "Adding input file '${source_dir}/input.tfvars'"
+            inputs+=("${source_dir}/input.tfvars")
+        fi
+    done
+}
+
+function set_config_data {
+    local source_dir region_arg
+    if [ "${CONFIG_FILE}" == "" ]; then
+        for source_dir in $SOURCE_DIRS; do
+            if [ -f "${source_dir}/stack.yml" ]; then
+                CONFIG_FILE="${source_dir}/stack.yml"
+                verbose "Using config file '${CONFIG_FILE}'"
+                break
+            fi
+        done
     fi
-    trace "Using Environment=${ENVIRONMENT}"
-    get_stack_security_context
     if [ "${CONFIG_FILE}" == "" ]; then
         error "No configuration file provided."
-        return 2
+        return 1
     fi
-    if [[ $file_name == s3://* ]]; then
+    if [[ $CONFIG_FILE == s3://* ]]; then
         region_arg="--region ${AWS_REGION}"
     fi
-    CONFIG_DATA=`get_config_data $region_arg "${CONFIG_FILE}"`
+    CONFIG_DATA=$(get_config_data $region_arg "${CONFIG_FILE}")
+}
+
+function verify_variable {
+    local name="$1"
+    local description="${2:-$$name}"
+    if [ "$$name" == "" ]; then
+        error "No ${description} provided."
+        return 1 
+    fi
+    trace "Using ${name}=$${name}"
+}
+
+function initialize {
+    SOURCE_DIRS="${SOURCE_DIRS} ${SCRIPT_DIR}"
+    get_parameters "$@" || return 1
+    if [ "${SOURCE_DIRS}" == "" ]; then SOURCE_DIRS="${DEFAULT_SOURCE_DIRS}"; fi
+    if [ "${TARGET_DIR}" == "" ]; then TARGET_DIR="${DEFAULT_TARGET_DIR}"; fi
+    verify_variable "ENVIRONMENT" "environment" || return 1
+    get_stack_security_context
+    add_default_inputs || return 2
+    set_config_data || return 3
+    trace "CONFIG_DATA=[\n${CONFIG_DATA}\n]"
     AWS_PROFILE=$(get_stack_property aws_profile "${AWS_PROFILE}" "${DEFAULT_AWS_REGION}")
     AWS_REGION=$(get_stack_property aws_region "${AWS_REGION}")
     BUCKET_NAME=$(get_stack_property bucket_name "${BUCKET_NAME}")
-    STACK_NAME=$(get_stack_property name )
+    STACK_NAME=$(get_stack_property name)
     SYSTEM_NAME=$(get_stack_property $(create_property_name "parameters" "System") "datagov")
+    STACK_PATH="cloud-formation/${SYSTEM_NAME}/${ENVIRONMENT}/${STACK_NAME}"
     MASTER_TEMPLATE=$(get_stack_property "master_template" "" "${DEFAULT_MASTER_TEMPLATE}")
     STACK_POLICY=$(get_stack_property policy "" "${DEFAULT_STACK_POLICY}")
     STACK_TEMPLATES=$(get_stack_templates)
     STACK_PARAMETERS=$(get_stack_parameters)
-    STACK_INITIALIZERS=$(get_stack_initializers)
-    if [ "${STACK_NAME}" == "" ]; then
-        error "No stack name provided."
-        return 3
-    fi
+    STACK_SCRIPTS=$(get_stack_scripts)
+
+    if [ "${STACK_NAME}" == "" ]; then error "No stack name provided."; return 4; fi
+    if [ "${BUCKET_NAME}" == "" ]; then error "No bucket name provided."; return 5; fi
     STACK_NAME=$(create_stack_name)
-    if [ "${BUCKET_NAME}" == "" ]; then
-        error "No bucket name provided."
-        return 4
-    fi
-    if [ "${SOURCE_DIRS}" == "" ]; then SOURCE_DIRS="${DEFAULT_SOURCE_DIRS}"; fi
-    if [ "${TARGET_DIR}" == "" ]; then TARGET_DIR="${DEFAULT_TARGET_DIR}"; fi
 
     verbose "Using:"
     verbose "\tStack=${STACK_NAME}"
     verbose "\tBucket=${BUCKET_NAME}"
+    verbose "\tPath=${STACK_PATH}"
     verbose "\tSources=${SOURCE_DIRS}"
     verbose "\tInputs=${INPUTS[@]}"
     verbose "\tTarget=${TARGET_DIR}"
@@ -1095,7 +1136,7 @@ function initialize {
 
 TEMPLATES_PATH="templates"
 POLICIES_PATH="policies"
-INITIALIZERS_PATH="cloud-init"
+SCRIPTS_PATH="scripts"
 
 function cleanup {
     local override="$1"
@@ -1116,7 +1157,7 @@ function compile_templates {
                 template="${source_dir}/${path}"
                 if [ -f "${template}" ]; then
                     writeln "Using template ${template}"
-                    template_target="${TARGET_DIR}/cloud-formation/${path}"
+                    template_target="${TARGET_DIR}/${STACK_PATH}/${path}"
                     mkdir -p $(dirname "${template_target}")
                     cp -f "${template}" "${template_target}"
                     validate_cf_template "${template_target}" || return 2
@@ -1142,9 +1183,9 @@ function compile_policy {
             policy="${source_dir}/${path}"
             if [ -f "${policy}" ]; then
                 policy_path="${path}"
-                mkdir -p $(dirname "${TARGET_DIR}/cloud-formation/${path}")
+                mkdir -p $(dirname "${TARGET_DIR}/${STACK_PATH}/${path}")
                 writeln "Using policy ${policy}"
-                cp -f "${policy}" "${TARGET_DIR}/cloud-formation/${path}"
+                cp -f "${policy}" "${TARGET_DIR}/${STACK_PATH}/${path}"
                 break 2
             else
                 policy=""
@@ -1160,27 +1201,28 @@ function compile_policy {
     STACK_POLICY="${policy_path}"
 }
 
-function compile_initializers {
-    local i initializer path source_dir
-    extra_verbose "Compiling initializers: ${STACK_INITIALIZERS}"
-    for i in $STACK_INITIALIZERS; do
-        initializer=""
-        for path in "${i}" "${INITIALIZERS_PATH}/${i}"; do
+function compile_scripts {
+    local i script path source_dir
+    extra_verbose "Compiling scripts: ${STACK_SCRIPTS}"
+    for i in $STACK_SCRIPTS; do
+        script=""
+        for path in "${i}" "${SCRIPTS_PATH}/${i}"; do
             for source_dir in $SOURCE_DIRS; do
-                initializer="${source_dir}/${path}"
-                if [ -f "${initializer}" ]; then
-                    writeln "Using initializer ${initializer}"
-                    mkdir -p $(dirname "${TARGET_DIR}/cloud-formation/${path}")
-                    cp -f "${initializer}" "${TARGET_DIR}/cloud-formation/${path}"
+                script="${source_dir}/${path}"
+                debug "Checking if script ${i} exists in ${script}"
+                if [ -f "${script}" ]; then
+                    writeln "Using script ${script}"
+                    mkdir -p $(dirname "${TARGET_DIR}/${STACK_PATH}/${path}")
+                    cp -f "${script}" "${TARGET_DIR}/${STACK_PATH}/${path}"
                     break 2
                 else
-                    initializer=""
-                    extra_verbose "Initializer ${path} not found in ${src_dir}/"
+                    script=""
+                    debug "Script ${path} not found in ${src_dir}/"
                 fi
             done
         done
-        if [ "${initializer}" == "" ]; then
-            error "Could not find initializer '${path} anywhere in ${SOURCE_DIRS}"
+        if [ "${script}" == "" ]; then
+            error "Could not find script '${path} anywhere in ${SOURCE_DIRS}"
             return 2
         fi
     done
@@ -1190,17 +1232,17 @@ function compile_stack {
     cleanup "true" || return 1
     compile_templates || return 2
     compile_policy || return 3
-    compile_initializers  || return 4
+    compile_scripts  || return 4
 }
 
-function create_bucket {
-    local grantees="AuthenticatedUsers"
-    local permissions="read write read-acp write-acp"
-    if ! $(s3_bucket_exists "${BUCKET_NAME}"); then
-        create_s3_bucket "${BUCKET_NAME}" || return 1
-        set_s3_bucket_acl "${BUCKET_NAME}" "${grantees}" "${permissions}" | return 2
-    fi
-}
+# function create_bucket {
+#     local grantees="AuthenticatedUsers"
+#     local permissions="read write read-acp write-acp"
+#     if ! $(s3_bucket_exists "${BUCKET_NAME}"); then
+#         create_s3_bucket "${BUCKET_NAME}" || return 1
+#         set_s3_bucket_acl "${BUCKET_NAME}" "${grantees}" "${permissions}" | return 2
+#     fi
+# }
 
 function sync_bucket {
     sync_s3_bucket "${BUCKET_NAME}" "${TARGET_DIR}" || (error "Sync failed"; return 3 )
@@ -1219,6 +1261,7 @@ function create_stack_parameters {
         cf_parameters="${cf_parameters}ParameterKey=${name}"
         cf_parameters="${cf_parameters},ParameterValue=${value}"
         cf_parameters="${cf_parameters},UsePreviousValue=false"
+        trace "Using stack parameter ${name}=[${value}]"
         ((i++))
     done
     cf_parameters="${cf_parameters}"
@@ -1334,9 +1377,8 @@ function wait_for_resources_completion {
 }
 
 function wait_for_completion {
-    local status
     if [ "${WAIT_FOR_COMPLETION}" != "" ]; then
-        wait_cf_stack "${STACK_NAME}" "${ACTION}" "${WAIT_FOR_COMPLETION}" \
+        wait_cf_stack "${STACK_NAME}" "${STACK_ACTION}" "${WAIT_FOR_COMPLETION}" \
             || return 1
         wait_for_resources_completion || return 2
     fi

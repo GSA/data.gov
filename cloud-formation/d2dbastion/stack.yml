@@ -1,0 +1,13 @@
+stack:
+    name: D2DBastion
+    parameters:
+        System: d2d
+        Environment: __ENVIRONMENT__
+    scripts:
+        - bastion_bootstrap.sh
+    wait:
+        conditions:
+            # Use logical instance ID (i.e. resource name in CloudFormation script)
+            LinuxBastion1: aws-healthcheck
+        delay: 10
+        max-iterations: 30
