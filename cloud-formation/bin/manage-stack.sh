@@ -289,13 +289,18 @@ function get_properties {
 }
 
 function create_property_name {
-    local name=""
+    local name="" postfix=""
+    if [ "$1" == "--prefix" ]; then
+        postfix="${PROPERTIES_FS}"
+        shift;
+    fi
     for segment in $@; do
         if [ "${name}" != "" ]; then 
             name="${name}${PROPERTIES_FS}"
         fi
         name="${name}${segment}"
     done
+    name="${name}${postfix}"
     echo "${name}"
 }
 
@@ -680,6 +685,8 @@ function validate_cf_template {
     if [ "${error}" != "" ]; then
         error "The following problem occurred in template ${template}:[${result}]"
         return 2
+    else 
+        extra_verbose "Template ${template} is valid"
     fi
     return 0
 }
@@ -748,21 +755,22 @@ function apply_cf_stack {
     template_path="${template}"
     template_url="${base_url}/cloud-formation/${template_path}"
     policy_url="${base_url}/cloud-formation/${policy}"
-    writeln "About to create stack ${stack} with url '${template_url}' and policy '${policy_url}'"
+    writeln "About to ${action} stack ${stack} with url '${template_url}'" \
+        " and policy '${policy_url}'"
     trace "stack-paramaters=|${parameters}|"
     validate_cf_template --bucket "${bucket}" --template "cloud-formation/${template_path}" || \
-        return 5
+        ( error "Validation failed"; return 6)
     STACK_ID=`cloudformation ${action}-stack --stack-name "${stack}" \
         --template-url "${template_url}" ${stack_args} --capabilities "CAPABILITY_IAM" \
         --stack-policy-url "${policy_url}" --parameters "${parameters}" \
-        --output text || return 3`
+        --output text || return 6`
     status=$(echo -e "${STACK_ID}" | grep "ValidationError")
     if [ "${status}" != "" ]; then
         status=$(echo -e "${STACK_ID}" | grep "No updates are to be performed.")
         STACK_ID=""
         if [ "${status}" == "" ]; then
             error "${STACK_ID}"
-            return 6
+            return 7
         else
             # Not an error, but have to lookup the stack id
             STACK_ID=$(get_cf_stackid "${STACK_NAME}")
@@ -924,7 +932,7 @@ function get_parameters {
 }
 
 function get_stack_templates {
-    local prefix="stack${PROPERTIES_FS}templates"
+    local prefix=$(create_property_name "stack" "templates")
     local names=$(get_property_names "${prefix}" "${CONFIG_DATA}")
     local templates=()
     trace "Checking ${prefix} ${names}"
@@ -938,14 +946,15 @@ function get_stack_templates {
 }
 
 function get_stack_parameters {
-    local prefix="stack${PROPERTIES_FS}parameters"
+    local prefix=$(create_property_name "stack" "parameters")
     local parameters=() value variable input inputs="${INPUTS[@]}"
-    local name names userfriendly_name
+    local name names
+    local property=$(create_property_name --prefix "${prefix}")
     for input in $inputs ; do
         verbose "Adding input from '${input}'"
         if [ -f ${input} ]; then
             input=$(cat "${input}" | sed -e "/^#/d" -e 's| = |=|g' \
-                -e 's|"||g' -e "s|^|${prefix}${PROPERTIES_FS}|g" )
+                -e 's|"||g' -e "s|^|${property}|g" )
             trace "Adding [\n${input}\n] to [\n${CONFIG_DATA}\n]"
             CONFIG_DATA=$(echo -e "${CONFIG_DATA}\n${input}")
         else
@@ -956,7 +965,8 @@ function get_stack_parameters {
     names=$(get_property_names "${prefix}" "${CONFIG_DATA}")
     trace "Checking parameters: ${names}"
     for name in $names ; do
-        value=$(get_property "${prefix}${PROPERTIES_FS}${name}" "${CONFIG_DATA}")
+        property=$(create_property_name "${prefix}" "${name}")
+        value=$(get_property "${property}" "${CONFIG_DATA}")
         variable=$(echo "${value}" | sed "s|__\(.*\)__|\1|g")
         if [ "${variable}" != "" ]; then
             # Replace occurrences of __variable__ with
@@ -974,7 +984,7 @@ function get_stack_parameters {
 }
 
 function get_stack_property {
-    local name="stack${PROPERTIES_FS}$1"
+    local name=$(create_property_name "stack" "$1")
     local override_value="$2"
     local default_value="$3"
     local value value_source
@@ -998,7 +1008,7 @@ function get_stack_property {
 }
 
 function get_stack_initializers {
-    local prefix="stack${PROPERTIES_FS}initializers"
+    local prefix=$(create_property_name "stack" "initializers")
     local names=$(get_property_names "${prefix}" "${CONFIG_DATA}")
     local initializers=() value
     trace "Checking initializers ${names}"
@@ -1011,8 +1021,8 @@ function get_stack_initializers {
 
 function get_stack_initializer_source {
     local name="$1"
-    local FS="${PROPERTIES_FS}"
-    local prefix="stack${FS}initializers${FS}${name}${FS}source"
+    local prefix=$(create_property_name "stack" "initializers" \
+        "${name}" "source")
     get_property "${prefix}" "${CONFIG_DATA}"
 }
 
@@ -1024,6 +1034,12 @@ function get_stack_security_context {
         esac
     fi
     trace "Using SecurityContext=${SECURITY_CONTEXT}"
+}
+
+function create_stack_name {
+    echo "${SYSTEM_NAME}-${ENVIRONMENT}-${STACK_NAME}" |\
+        sed -e 's|[_/.]|-|g' \
+            -e 's|[!@#\$%&*+()?<>]||g'
 }
 
 function initialize {
@@ -1047,17 +1063,18 @@ function initialize {
     AWS_PROFILE=$(get_stack_property aws_profile "${AWS_PROFILE}" "${DEFAULT_AWS_REGION}")
     AWS_REGION=$(get_stack_property aws_region "${AWS_REGION}")
     BUCKET_NAME=$(get_stack_property bucket_name "${BUCKET_NAME}")
-    STACK_NAME=$(get_stack_property name)
+    STACK_NAME=$(get_stack_property name )
+    SYSTEM_NAME=$(get_stack_property $(create_property_name "parameters" "System") "datagov")
     MASTER_TEMPLATE=$(get_stack_property "master_template" "" "${DEFAULT_MASTER_TEMPLATE}")
     STACK_POLICY=$(get_stack_property policy "" "${DEFAULT_STACK_POLICY}")
     STACK_TEMPLATES=$(get_stack_templates)
     STACK_PARAMETERS=$(get_stack_parameters)
     STACK_INITIALIZERS=$(get_stack_initializers)
-
     if [ "${STACK_NAME}" == "" ]; then
         error "No stack name provided."
         return 3
     fi
+    STACK_NAME=$(create_stack_name)
     if [ "${BUCKET_NAME}" == "" ]; then
         error "No bucket name provided."
         return 4
@@ -1257,10 +1274,10 @@ function all_resources_completed {
     local elapsed="$1"
     local conditions="$2"
     local n_failures=0 name condition reported
-    local prefix="stack${PROPERTIES_FS}wait${PROPERTIES_FS}conditions"
+    local prefix=$(create_property_name "stack" "wait" "conditions")
     for name in $conditions ; do
-        condition=$(get_property "${prefix}${PROPERTIES_FS}${name}" \
-            "${CONFIG_DATA}")
+        condition=$(get_property $(create_property_name "${prefix}" \
+            "${name}") "${CONFIG_DATA}")
         debug "Checking ${condition} on ${name}"
         case $condition in
             aws-healthcheck)
@@ -1288,23 +1305,24 @@ function all_resources_completed {
 function wait_for_resources_completion {
     local delay max_iterations i=0 resources
     local default_delay=15 default_iterations elapsed=0
-    local prefix="stack${PROPERTIES_FS}wait"
+    local prefix=$(create_property_name "stack" "wait")
     if [ "${CONFIG_DATA}" == "" ]; then
         return 0
     fi
-    resources=$(get_property_names "${prefix}${PROPERTIES_FS}conditions" \
-        "${CONFIG_DATA}")
+    resources=$(get_property_names $(create_property_name "${prefix}" \
+        "conditions") "${CONFIG_DATA}")
     if [ "${resources}" == "" ]; then
         writeln "No resources to wait for found in stack.yml"
         return 0
     fi
     extra_verbose "Waiting for [${resources}] to complete"
     # delay in seconds
-    delay=$(get_property "${prefix}${PROPERTIES_FS}delay" "${CONFIG_DATA}" "30")
+    delay=$(get_property $(create_property_name "${prefix}" "delay") \
+        "${CONFIG_DATA}" "30")
     # default is 2 hours 
     (( default_iterations = 2 * 60 * 60 / $delay ))
-    max_iterations=$(get_property "${prefix}${PROPERTIES_FS}max-iterations" \
-       "${CONFIG_DATA}" "${default_iterations}")
+    max_iterations=$(get_property $(create_property_name "${prefix}" \
+        "max-iterations") "${CONFIG_DATA}" "${default_iterations}")
     debug "i=$i; max_iterations=$max_iterations"
     while [ "${i}" -lt "${max_iterations}" ] &&
           ! all_resources_completed "${elapsed}" "${resources}";
