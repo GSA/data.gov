@@ -1,6 +1,10 @@
 ---
 - name: get code
-  git: repo={{item.repo}} dest={{ virtualenv }}/src/{{item.name}} version={{item.branch|default('master')}}
+  git:
+    repo: "{{ item.repo }}"
+    dest: "{{ virtualenv }}/src/{{item.name}}"
+    version: "{{ item.branch | default('master') }}"
+    force: yes
   with_items: "{{ pkg }}"
 
 - name: install requirements

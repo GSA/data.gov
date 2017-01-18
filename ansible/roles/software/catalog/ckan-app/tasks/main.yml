@@ -40,8 +40,8 @@
   pip: name=repoze.who version=2.0 virtualenv="{{project_source_new_code_path }}"
   when: env == "local"
 
-- name: point site_url in production.ini to localhost
-  action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ckan_site_domain}}"
+- name: point site_url in /etc/hosts to localhost
+  action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ ckan_site_domain | regex_replace('https?\://','') }}"
 
 - name: Symlink current dir with new code
   file:
