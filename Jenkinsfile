@@ -17,7 +17,7 @@ def provision(environment) {
         toUpperCase();
 
     if (label != "DEV") {
-        stage("master") {
+        stage("Proceed to ${label}") {
             timeout(time:5, unit:'DAYS') {
                 input "Deploy to ${label}?"
             }
