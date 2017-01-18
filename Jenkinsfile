@@ -18,19 +18,19 @@ if (isMaster()) {
 }
 
 def provision(environment) {
-    stage(environment ': Provision Infrastructure') {
+    stage("${environment}: Provision Infrastructure") {
         node("master") {
             runTerraform('infrastructure', environment)
         }
     }
 
-    stage(environment ': Provision Pilot') {
+    stage("${environment}: Provision Pilo") {
         node("master") {
             runTerraform('pilot', environment, "infrastructure")
         }
     }
 
-    stage(environment ': Provision Jumpbox') {
+    stage("${environment}: Provision Jumpbox") {
         node('master') {
             runPlaybook("jumpbox", "pilot", environment, 
                 "always,jumpbox,apache", "shibboleth", 
@@ -38,7 +38,7 @@ def provision(environment) {
         }
     }
 
-    stage(environment ': Provision Datagov-web') {
+    stage("${environment}: Provision Datagov-web") {
         node('master') {
             runPlaybook("datagov-web", "pilot", environment, null,
                 "trendmicro,vim,deploy,deploy-rollback,secops,postfix",
