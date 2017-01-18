@@ -1,0 +1,11 @@
+<match secops-datagov.**>
+  @type secure_forward
+  shared_key 6BM346448N7J56F4VXK3
+  self_hostname "#{Socket.gethostname}"
+  secure true
+  ca_cert_path /etc/td-agent/bspcert.pem
+  <server>
+    host prod-fluentd.sec.helix.gsa.gov
+    port 1514
+  </server>
+</match>

@@ -1,0 +1,38 @@
+<source>
+  type tail
+  format apache
+  time_format "%d/%b/%Y:%T %z"
+  path "/var/log/apache2/access.log"
+  tag "{{ system }}.apache.access"
+</source>
+<source>
+  type tail
+  format apache
+  time_format "%d/%b/%Y:%T %z"
+  path "/var/log/apache2/error.log"
+  tag "{{ system }}.apache.error"
+</source>
+<source>
+  type tail
+  format json
+  path "/root/data-federation/jekyll-rebuilder.log"
+  tag "{{ system }}.jekyll.datafederation.jekyll-rebuilder"
+</source>
+<source>
+  type tail
+  format json
+  path "/root/sdg-indicators/jekyll-rebuilder.log"
+  tag "{{ system }}.jekyll.sdg-indicators.jekyll-rebuilder"
+</source>
+<source>
+  type tail
+  format json
+  path "/var/log/jekyll-sdg-indicators.log"
+  tag "{{ system }}.jekyll.jekyll-sdg-indicators"
+</source>
+<source>
+  type tail
+  format json
+  path "/var/log/jekyll-data-federation.log"
+  tag "{{ system }}.jekyll.jekyll-data-federation"
+</source>

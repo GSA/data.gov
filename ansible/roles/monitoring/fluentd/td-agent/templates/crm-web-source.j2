@@ -1,0 +1,16 @@
+<source>
+  type tail
+  format nginx
+  time_format "%d/%b/%Y:%T %z"
+  path "/var/log/nginx/access.log"
+  pos_file "/var/log/td-agent/nginx.access.pos"
+  tag "{{ system }}.nginx.access"
+</source>
+<source>
+  type tail
+  format nginx
+  time_format "%d/%b/%Y:%T %z"
+  path "/var/log/nginx/error.log"
+  pos_file "/var/log/td-agent/nginx.error.pos"
+  tag "{{ system }}.nginx.error"
+</source>

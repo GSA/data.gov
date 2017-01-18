@@ -1,0 +1,21 @@
+<source>
+  type tail
+  format syslog
+  path /var/log/auth.log
+  pos_file /var/log/td-agent/auth.log
+  tag "{{ system }}.authlog"
+</source>
+<source>
+  type tail
+  format syslog
+  path /var/log/syslog
+  pos_file /var/log/td-agent/syslog
+  tag "{{ system }}.syslog"
+</source>
+<source>
+  type tail
+  format syslog
+  path /var/log/td-agent/td-agent.log
+  pos_file /var/log/td-agent/td-agent.log
+  tag "{{ system }}.td-agentlog"
+</source>

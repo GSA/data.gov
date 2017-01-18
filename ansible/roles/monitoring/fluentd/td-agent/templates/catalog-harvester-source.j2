@@ -1,0 +1,102 @@
+<source>
+  type tail
+  format json
+  path "/var/log/supervisord.log"
+  tag "{{ system }}.harvester.supervisord"
+</source>
+<source>
+  type tail
+  format json
+  path "/var/log/harvester_run.log"
+  tag "{{ system }}.harvester.harvester_run"
+</source>
+<source>
+  type tail
+  format json
+  path "/var/log/fetch-consumer.log"
+  tag "{{ system }}.harvester.fetch-consumer"
+</source>
+<source>
+  type tail
+  format json
+  path "/var/log/gather-consumer.log"
+  tag "{{ system }}.harvester.gather-consumer"
+</source>
+<source>
+  type tail
+  format none
+  path "/var/log/tomcat6/catalina.out"
+  tag "{{ system }}.tomcat.access"
+</source>
+<source>
+  type tail
+  format json
+  path "/var/log/clean_deleted.log"
+  tag "{{ system }}.harvester.clean_deleted"
+</source>
+<source>
+  type tail
+  format json
+  path "/var/log/ckan_tracking.log"
+  tag "{{ system }}.harvester.ckan_tracking"
+</source>
+<source>
+  type tail
+  format json
+  path "/var/log/ckan_report.log"
+  tag "{{ system }}.harvester.ckan_report"
+</source>
+<source>
+  type tail
+  format json
+  path "/var/log/db_solr_sync.log"
+  tag "{{ system }}.harvester.db_solr_sync"
+</source>
+<source>
+  type tail
+  format json
+  path "/var/log/harvest_job_cleanup.log"
+  tag "{{ system }}.harvester.harvest_job_cleanup"
+</source>
+<source>
+  type tail
+  format json
+  path "/var/log/ckan-combine-feeds.log"
+  tag "{{ system }}.harvester.ckan-combine-feeds"
+</source>
+<source>
+  type tail
+  format json
+  path "/var/log/ckan-export-csv.log"
+  tag "{{ system }}.harvester.ckan-export-csv"
+</source>
+<source>
+  type tail
+  format json
+  path "/var/log/ckan_qa.log"
+  tag "{{ system }}.harvester.ckan_qa"
+</source>
+<source>
+  type tail
+  format json
+  path "/var/log/qa-update.log"
+  tag "{{ system }}.harvester.qa-update"
+</source>
+<source>
+  type tail
+  format json
+  path "/var/log/pycsw_load.log"
+  tag "{{ system }}.harvester.pycsw_load"
+</source>
+<source>
+  type tail
+  format json
+  path "/var/log/pycsw_keywords.log"
+  tag "{{ system }}.harvester.pycsw_keywords"
+</source>
+<source>
+  type tail
+  format json
+  path "/var/log/pycsw_fts.log"
+  tag "{{ system }}.harvester.pycsw_fts"
+</source>
