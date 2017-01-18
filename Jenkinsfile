@@ -9,17 +9,21 @@ stage('Initialize') {
 
 provision(devEnvironmentName())
 if (isMaster()) {
-    node("master") {
-        timeout(time:5, unit:'DAYS') {
-            input 'Deploy to Production'
-        }
-    }
     provision("prod")
 }
 
 def provision(environment) {
     def label = ((environment.startsWith("dev")) ? "dev" : environment).
         toUpperCase();
+
+    if (label != "DEV") {
+        stage("master") {
+            timeout(time:5, unit:'DAYS') {
+                input "Deploy to ${label}?"
+            }
+        }
+    }
+
     stage("${label}: Provision Infrastructure") {
         node("master") {
             runTerraform('infrastructure', environment)
