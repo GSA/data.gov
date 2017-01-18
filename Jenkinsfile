@@ -9,24 +9,34 @@ stage('Initialize') {
 
 provision(devEnvironmentName())
 if (isMaster()) {
-    input 'Deploy to Production'
     provision("prod")
 }
 
 def provision(environment) {
-    stage('Provision Infrastructure Stack') {
+    def label = ((environment.startsWith("dev")) ? "dev" : environment).
+        toUpperCase();
+
+    if (label != "DEV") {
+        stage("Proceed to ${label}") {
+            timeout(time:5, unit:'DAYS') {
+                input "Deploy to ${label}?"
+            }
+        }
+    }
+
+    stage("${label}: Provision Infrastructure") {
         node("master") {
             runTerraform('infrastructure', environment)
         }
     }
 
-    stage('Provision Pilot Stack') {
+    stage("${label}: Provision Pilot") {
         node("master") {
             runTerraform('pilot', environment, "infrastructure")
         }
     }
 
-    stage('Provision jumpbox') {
+    stage("${label}: Provision Jumpbox") {
         node('master') {
             runPlaybook("jumpbox", "pilot", environment, 
                 "always,jumpbox,apache", "shibboleth", 
@@ -34,7 +44,7 @@ def provision(environment) {
         }
     }
 
-    stage('Provision datagov-web') {
+    stage("${label}: Provision Datagov-web") {
         node('master') {
             runPlaybook("datagov-web", "pilot", environment, null,
                 "trendmicro,vim,deploy,deploy-rollback,secops,postfix",
