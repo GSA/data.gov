@@ -20,6 +20,6 @@ def provision(environment) {
         "wordpress-web", "wordpress-web")
 }
 
-def test(environment() {
+def test(environment) {
     // Nothing here yet
 }
