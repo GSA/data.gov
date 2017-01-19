@@ -15,7 +15,9 @@ stage('Initialize') {
 // has functions named
 //   1. provision(environment) - that provisions the environment
 //   2. test() - that tests the provisioined servers, not used yet
-//   3. other, once implemented
+//   3. other, e.g. setUp/initialize (at start of pipeline) and 
+//      tearDown/finalize (at end of pipeline) once implemented
+// This script will invoke those scripts in the order given above
 
 // Logic is to be added to select the correct pipeline script based 
 // on phrases inthe name of the job name (env.JOB_NAME)
@@ -29,15 +31,15 @@ def runPipeline() {
 }
 
 
-def runStages(environment, isMaster) {
-    def isDev = (environment == "dev")
-    if (isDev(environment) || isMaster) {
+def runStages(environment) {
+    if (isDev(environment) || isMaster()) {
+        initialize(environment)
         provision(environment)
         test(environment)
         // do other stages here
     } else {
-        // Do not process stages beyond dev, 
-        // unless master branch
+        // Do not process stages beyond dev for non-master 
+        // (i.e. feature) branches
     }
     
 }

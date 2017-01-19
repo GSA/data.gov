@@ -1,5 +1,9 @@
 #!groovy
 
+
+def initialize(environment) {
+}
+
 def provision(environment) {
     def terraform = load "./jenkins/terraform.groovy"
     def playbook = load "./jenkins/playbook.groovy"
