@@ -30,6 +30,7 @@
     mode: 0666
   with_items:
     - "/var/log/dashboard-cron.log"
+    - "/var/log/dashboard-cron-cfo.log"
     - "{{ project_shared_path }}/archive/curl_header"
 
 - name: Reload php7.0-fpm
