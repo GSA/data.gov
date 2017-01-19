@@ -10,8 +10,8 @@ def run(stack_name, environment, inputs = null, waitForCompletion = 30) {
         args << "--region us-east-2"
         args << "--bucket datagov-provisioning"
         args << "--bucket-region us-east-1"
-        args << "--source-dir ${pwd}/cloud-formation/${stack_name}"
-        args << "--input ${pwd}/cloud-formation//${stack_name}/input.tfvars"
+        args << "--source-dir ${pwd()}/cloud-formation/${stack_name}"
+        args << "--input ${pwd()}/cloud-formation//${stack_name}/input.tfvars"
         if (waitForCompletion != null) {
             args << "--wait-for-completion ${waitForCompletion}"
         }
