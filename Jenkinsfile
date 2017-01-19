@@ -1,7 +1,7 @@
 #!groovy
 
 env.AWS_REGION = "us-east-2"
-env.PIPELINE_SCRIPT = "./jenkins/full-pipeline.groovy"
+env.PIPELINE_SCRIPT = "jenkins/full-pipeline.groovy"
 
 stage('Initialize') {
     node("master") {
@@ -79,5 +79,5 @@ def getLabel(environment) {
 }
 
 def getPipeline() {
-    return load(env.PIPELINE_SCRIPT)
+    return load("${pwd()}/${env.PIPELINE_SCRIPT}")
 }
