@@ -13,3 +13,5 @@ def run(stack_name, environment, dependsOnStack = null) {
         sh "'${script}' ${args.join(' ')} '${stack_name}' '${environment}'"
     }
 }
+
+return this

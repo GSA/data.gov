@@ -64,3 +64,5 @@ def discoverResourcePublicIp(stack, environment, resource) {
     )
 }
 
+
+return this

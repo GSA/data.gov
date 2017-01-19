@@ -22,3 +22,5 @@ def provision(environment) {
 def test(environment) {
     // Nothing here yet
 }
+
+return this
