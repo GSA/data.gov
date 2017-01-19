@@ -1130,7 +1130,7 @@ function initialize {
     AWS_PROFILE=$(get_stack_property aws_profile "${AWS_PROFILE}" "${DEFAULT_AWS_REGION}")
     AWS_REGION=$(get_stack_property aws_region "${AWS_REGION}")
     BUCKET_NAME=$(get_stack_property bucket_name "${BUCKET_NAME}")
-    STACK_NAME=$(get_stack_property name)
+    STACK_NAME=$(get_stack_property name "${STACK_NAME}")
     SYSTEM_NAME=$(get_stack_property $(create_property_name "parameters" "System") "datagov")
     STACK_PATH="cloud-formation/${SYSTEM_NAME}/${ENVIRONMENT}/${STACK_NAME}"
     MASTER_TEMPLATE=$(get_stack_property "master_template" "" "${DEFAULT_MASTER_TEMPLATE}")
