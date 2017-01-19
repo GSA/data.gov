@@ -33,7 +33,7 @@ def runPipeline() {
 
 def runStages(environment) {
     if (isDev(environment) || isMaster()) {
-        initialize(environment)
+        //initialize(environment)
         provision(environment)
         test(environment)
         // do other stages here
