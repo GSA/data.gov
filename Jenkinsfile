@@ -46,7 +46,7 @@ def runStages(environment) {
 
 
 def provision(environment) {
-    stage("${labelEnvironment}: Provision") {
+    stage("${labelEnvironment()}: Provision") {
         node('master') {
             getPipeline().provision(nameEnvironment(environment))
         }
@@ -54,7 +54,7 @@ def provision(environment) {
 }
 
 def test(environment) {
-    stage("${labelEnvironment}: Test") {
+    stage("${labelEnvironment()}: Test") {
         node('master') {
             getPipeline().test(nameEnvironment(environment))
         }
