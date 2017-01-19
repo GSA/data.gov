@@ -5,7 +5,7 @@ def run(stack_name, environment, inputs = null, waitForCompletion = 30) {
         def args = []
         sh "chmod 700 '${script}'"
         args << "-v"
-        args << "-v"
+        args << "-v -v -v"
         args << "'${stack_name}' '${environment}'"
         args << "--action create"
         args << "--region us-east-2"
