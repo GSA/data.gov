@@ -79,7 +79,5 @@ def getLabel(environment) {
 }
 
 def getPipeline() {
-    def pipeline = libraryResource("${pwd()}/${env.PIPELINE_SCRIPT}")
-    assert pipeline != null :
-        "failed to load '${env.PIPELINE_SCRIPT}' pipeline script"
+    return load "${pwd()}/${env.PIPELINE_SCRIPT}"
 }
