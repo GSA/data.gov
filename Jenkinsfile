@@ -9,6 +9,6 @@ stage('Initialize') {
     }
 }
 
-(load "./jenkins/full-pipeline.groovy").run()
+(load("./jenkins/full-pipeline.groovy").run()
 
 
