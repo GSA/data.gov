@@ -6,6 +6,7 @@ def run(stack_name, environment, inputs = null, waitForCompletion = 30) {
         sh "chmod 700 '${script}'"
         args << "-v"
         args << "-v"
+        args << "'${stack_name}' '${environment}'"
         args << "--action create"
         args << "--region us-east-2"
         args << "--bucket datagov-provisioning"
@@ -18,7 +19,7 @@ def run(stack_name, environment, inputs = null, waitForCompletion = 30) {
         for (input in inputs) {
              args << "--input ${input}}"
         }
-        sh "'${script}' ${args.join(' ')} '${stack_name}' '${environment}'"
+        sh "'${script}' ${args.join(' ')}"
     }
 }
 
