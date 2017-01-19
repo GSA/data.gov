@@ -46,7 +46,7 @@ def runStages(environment) {
 
 
 def provision(environment) {
-    stage("${labelEnvironment()}: Provision") {
+    stage("${getLabel(environment)}: Provision") {
         node('master') {
             getPipeline().provision(nameEnvironment(environment))
         }
@@ -54,7 +54,7 @@ def provision(environment) {
 }
 
 def test(environment) {
-    stage("${labelEnvironment()}: Test") {
+    stage("${getLabel(environment)}: Test") {
         node('master') {
             getPipeline().test(nameEnvironment(environment))
         }
@@ -74,7 +74,7 @@ def nameEnvironment(environment) {
     return (isDev(environment) && !isMaster()) ? "-${env.BRANCH_NAME}" : ""
 }
 
-def labelEnvironment(environment) {
+def getLabel(environment) {
     return environment.toUpperCase()
 }
 
