@@ -1,4 +1,3 @@
-#!groovy
 
 def run(playbook, stack, environment, tags = null, 
     skippedTags = null,  resource = null, hostname = null)

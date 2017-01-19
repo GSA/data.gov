@@ -1,4 +1,3 @@
-#!groovy
 
 def run(stack_name, environment, dependsOnStack = null) {
     dir("terraform/") {
