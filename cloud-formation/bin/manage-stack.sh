@@ -10,6 +10,7 @@ ACTION="${ACTION_CREATE}"
 CONFIG_DATA=
 CLEANUP="true"
 BUCKET_NAME=
+BUCKET_REGION=
 MASTER_TEMPLATE=
 STACK_POLICY=
 STACK_NAME=
@@ -433,7 +434,7 @@ function get_file {
         fi
         trace "get_file: S3 from ${region}"
         local_file_name=`mktemp $tmpdir`
-        if ! aws s3 cp "${file_name}" "${local_file_name}"  --quiet --region "${region}"; then
+        if ! s3 cp "${file_name}" "${local_file_name}"  --quiet --region "${region}"; then
             error "get_file: Unable to retrieve ${file_name} using $region"
             return 3
         fi
@@ -546,21 +547,35 @@ function get_aws_region {
 function do_aws {
     local profile=$(get_aws_profile)
     local region=$(get_aws_region)
-    local aws_command="aws $* --profile ${profile} --region ${region}"
+    local aws_command args=""
+    while test $# -gt 0; do
+        case $1 in
+          -r|--region)   shift; region="$1" ;;
+          *)             args="${args} $1"
+        esac
+        shift
+    done
+    if [ "${profile}" != "" ]; then
+        args="${args} --profile ${profile}"
+    fi
+    if [ "${region}" != "" ]; then
+        args="${args} --region ${region}"
+    fi
+    aws_command="aws ${args}"
     trace "About to do [${aws_command}]"
     $aws_command 2>&1
 }
 
 function s3 {
-   do_aws s3 $*
+    do_aws s3 $*
 }
 
 function s3api {
-   do_aws s3api $*
+    do_aws s3api $* $region_arg
 }
 
 function cloudformation {
-      do_aws cloudformation $*
+    do_aws cloudformation $*
 }
 
 function ec2 {
@@ -611,16 +626,21 @@ function set_s3_bucket_acl {
 function sync_s3_bucket {
     local name="$1"
     local source_dir="$2"
-    # if ! $(s3_bucket_exists "${name}"); then
-    #     error "Cannot sync bucket ${name} from source directory ${source_dir},"\
-    #         "because bucket does not exist"
-    #     return 1
-    # elif [ ! -d "${source_dir}" ]; then
-    #     error "Cannot sync bucket ${name} from source directory ${source_dir},"\
-    #         "because directory does not exist"
-    #     return 2
-    # fi
-    s3 sync "${source_dir}" "s3://${BUCKET_NAME}"
+    local region_arg=""
+    if ! $(s3_bucket_exists "${name}"); then
+        error "Cannot sync bucket ${name} from source directory ${source_dir},"\
+            "because bucket does not exist"
+        return 1
+    elif [ ! -d "${source_dir}" ]; then
+        error "Cannot sync bucket ${name} from source directory ${source_dir},"\
+            "because directory does not exist"
+        return 2
+    fi
+    if [ "${BUCKET_REGION}" != "" ]; then
+        region_arg="--region ${BUCKET_REGION}"
+    fi
+
+    s3 sync "${source_dir}" "s3://${BUCKET_NAME}" ${region_arg} || return 3
 }
 
 
@@ -927,6 +947,7 @@ function get_parameters {
           -h|--help)                   usage; exit 0 ;;
           -a|--action)                 shift; set_action "$1" ;;
           -b|--bucket)                 shift; BUCKET_NAME=$1 ;;
+          -br|--bucket-region)         shift; BUCKET_REGION=$1 ;;
           -c|--security-context)       shift; SECURITY_CONTEXT=$1 ;;
           -f|--config-file)            shift; CONFIG_FILE=$1 ;;
           -i|--input)                  shift; INPUTS+=("$1") ;;
@@ -1245,7 +1266,7 @@ function compile_stack {
 # }
 
 function sync_bucket {
-    sync_s3_bucket "${BUCKET_NAME}" "${TARGET_DIR}" || (error "Sync failed"; return 3 )
+    sync_s3_bucket "${BUCKET_NAME}" "${TARGET_DIR}" || (error "Sync failed"; return 1 )
 }
 
 function create_stack_parameters {
