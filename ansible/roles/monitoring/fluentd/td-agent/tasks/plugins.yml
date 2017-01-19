@@ -26,51 +26,48 @@
 # we can use this relatively simple hack http://stackoverflow.com/questions/22476097/how-to-mention-wildcard-in-ansible-commands
 - name: Configure AWS ES plugin gem permissions
   file: path=/opt/td-agent/embedded/lib/ruby/gems/2.1.0/gems recurse=true state=directory mode=0775
-  notify: restart td-agent
 
 - name: Configure gemspec permissions
   file: path=/opt/td-agent/embedded/lib/ruby/gems/2.1.0/specifications recurse=true mode=0775
-  notify: restart td-agent
 
 # figure out a more secure way for log file permissions in prod
 - name: Configure log permissions
   file: path=/var/log recurse=true state=directory mode=0755
+
+- name: Remove config.d folder
+  file: path=/etc/td-agent/config.d state=absent
   notify: restart td-agent
+
+- name: Create config.d folder
+  file: path=/etc/td-agent/config.d state=directory
 
 - name: Configure td-agent.conf
   template:
     src: td-agent.j2
     dest: /etc/td-agent/td-agent.conf
-  notify: restart td-agent
-
-- name: Create config.d folder
-  file: path=/etc/td-agent/config.d state=directory mode=0755
 
 - name: Configure system sources
   template:
     src: system-source.j2
     dest: /etc/td-agent/config.d/1-system-source.conf
-  notify: restart td-agent
   tags: system
 
 - name: Configure app sources
   template:
     src: "{{ group_names[0] }}-source.j2"
     dest: /etc/td-agent/config.d/1-{{ group_names[0] }}-source.conf
-  notify: restart td-agent
   tags: app
 
 - name: Configure host filters
   template:
     src: host-filter.j2
     dest: /etc/td-agent/config.d/2-host-filter.conf
-  notify: restart td-agent
+  tags: filters
 
 - name: Configure ElasticSearch matcher
   template:
     src: elasticsearch-match.j2
     dest: /etc/td-agent/config.d/3-elasticsearch-match.conf
-  notify: restart td-agent
   tags: elasticsearch
 
 - name: Configure BSP matcher
@@ -78,11 +75,9 @@
     src: bsp-match.j2
     dest: /etc/td-agent/config.d/4-bsp-match.conf
   tags: bsp
-  notify: restart td-agent
 
 - name: Configure debug  matcher
   template:
     src: debug-match.j2
     dest: /etc/td-agent/config.d/5-debug-match.conf
-  notify: restart td-agent
   tags: debug
