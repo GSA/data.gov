@@ -1127,8 +1127,8 @@ function initialize {
     add_default_inputs || return 2
     set_config_data || return 3
     trace "CONFIG_DATA=[\n${CONFIG_DATA}\n]"
-    AWS_PROFILE=$(get_stack_property aws_profile "${AWS_PROFILE}" "${DEFAULT_AWS_REGION}")
-    AWS_REGION=$(get_stack_property aws_region "${AWS_REGION}")
+    AWS_PROFILE=$(get_stack_property aws_profile "${AWS_PROFILE}")
+    AWS_REGION=$(get_stack_property aws_region "${AWS_REGION}"  "${DEFAULT_AWS_REGION}")
     BUCKET_NAME=$(get_stack_property bucket_name "${BUCKET_NAME}")
     STACK_NAME=$(get_stack_property name "${STACK_NAME}")
     SYSTEM_NAME=$(get_stack_property $(create_property_name "parameters" "System") "datagov")
