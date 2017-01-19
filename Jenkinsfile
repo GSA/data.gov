@@ -79,5 +79,6 @@ def getLabel(environment) {
 }
 
 def getPipeline() {
-    return load "${pwd()}/${env.PIPELINE_SCRIPT}"
+   def pipeline = load "${pwd()}/${env.PIPELINE_SCRIPT}"
+   return pipeline
 }
