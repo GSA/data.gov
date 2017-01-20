@@ -1,6 +1,6 @@
 ---
 - name: Install
-  hosts: "{{ jumpbox_hostname | default('localhost') }}"
+  hosts: "{{ hosts | default('localhost') }}"
   sudo: yes
   vars:
       app_type: jumpbox
