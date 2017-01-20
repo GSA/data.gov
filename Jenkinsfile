@@ -75,7 +75,7 @@ def getLabel(environment) {
 def setPipelineScript() {
 	def name = getPipelineName()
 	def script = "full"
-	switch(name) {
+	switch (name) {
 		case ~/d2d.*/:                 script = "d2d"; break;
 		case ~/datagov.*terraform.*/:  script = "datagov-terraform"; break;
 		case ~/datagov.*ansible.*/:    script = "datagov-ansible"; break;
@@ -85,7 +85,7 @@ def setPipelineScript() {
 
 def getPipelineName() {
 	def names = env.JOB_NAME.split("/")
-	def name = name[0]
+	def name = names[0]
 	echo "JOB_NAME=${env.JOB_NAME}"
 	echo" Pipeline Name=${name}"
 	return name
