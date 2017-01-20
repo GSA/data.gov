@@ -73,14 +73,29 @@ def getLabel(environment) {
 }
 
 def setPipelineScript() {
+	def selector = getPipelineSelector()
 	def name = getPipelineName()
 	def script = env.PIPELINE_SCRIPT
+	def pattern = null
 	echo "Select pipeline (default: ${env.PIPELINE_SCRIPT})"
-	switch (name) {
-		case ~/d2d.*/:                 script = "d2d"; break;
-		case ~/datagov.*terraform.*/:  script = "datagov-terraform"; break;
-		case ~/datagov.*ansible.*/:    script = "datagov-ansible"; break;
+	for ( e in selector ) {
+		// Using ~ causes Jenkins to fail, citing that
+		// the bitwise negate operator is not allowed
+		// Therefore using the Pattern object explicitly
+		pattern = java.util.regex.Pattern(e.key)
+		if (pattern.matcher("name").matches()) {
+			script = e.value
+			// NOTE that this could be change to return a list
+			// of all matching pattern and then run all those pipelines
+			// per environment
+			break
+		}
 	}
+	// switch (name) {
+	// 	case ~/d2d.*/:                 script = "d2d"; break;
+	// 	case ~/datagov.*terraform.*/:  script = "datagov-terraform"; break;
+	// 	case ~/datagov.*ansible.*/:    script = "datagov-ansible"; break;
+	// }
 	echo "Selected Pipeline=${env.PIPELINE_SCRIPT}"
 	env.PIPELINE_SCRIPT = script
 }
@@ -91,6 +106,14 @@ def getPipelineName() {
 	echo "JOB_NAME=${env.JOB_NAME}"
 	echo" Pipeline Name=${name}"
 	return name
+}
+
+def getPipelineSelector() {
+	def selector = [:]
+	selector["d2d.*"] = "d2d"
+	selector["datagov.*terraform.*"] = "datagov-terraform"
+	selector["datagov.*ansible.*"] = "datagov-ansible"
+	return selector
 }
 
 def getPipeline() {
