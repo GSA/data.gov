@@ -2,6 +2,7 @@
 def run(stack_name, environment, inputs = null, waitForCompletion = 60) {
     dir("cloud-formation/") {
         def script = "${pwd()}/bin/manage-stack.sh"
+        def bucketName = "datagov-provisioning"
         def args = []
         sh "chmod 700 '${script}'"
         args << "-v"
@@ -9,7 +10,7 @@ def run(stack_name, environment, inputs = null, waitForCompletion = 60) {
         args << "'${stack_name}' '${environment}'"
         args << "--action create"
         args << "--region us-east-2"
-        args << "--bucket datagov-provisioning"
+        args << "--bucket ${bucketName}"
         args << "--bucket-region us-east-1"
         args << "--source-dir ${pwd()}/${stack_name}"
         args << "--input ${pwd()}/${stack_name}/input.tfvars"
@@ -17,10 +18,15 @@ def run(stack_name, environment, inputs = null, waitForCompletion = 60) {
             args << "--wait-for-completion ${waitForCompletion}"
         }
         for (input in inputs) {
-             args << "--input ${input}}"
+             args << "--input ${getTerraformOutputURI(input, bucketName)}}"
         }
         sh "'${script}' ${args.join(' ')}"
     }
+}
+
+def getTerraformOutputURI(input, bucketName) {
+    return "s3://${bucketName}/terraform/${input.stackName}" +
+        "/${input.environment}/${input.stackName}-output.tfvars"
 }
 
 return this

@@ -13,7 +13,8 @@ def initialize(environment) {
 
 def provision(environment) {
     def cloudFormation = load "./jenkins/provisioner/cloud-formation.groovy"
-    cloudFormation.run('d2dbastion', environment)
+    def inputs = [[stackName: "infrastructure", environment: environment]]
+    cloudFormation.run('d2dbastion', environment, inputs)
 }
 
 def test(environment) {
