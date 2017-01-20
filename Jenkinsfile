@@ -109,9 +109,9 @@ def getPipelineName() {
 
 def getPipelineSelectors() {
 	def selectors = []
-	selectors << [selector:/$d2d.*/,                 pipeline: "d2d" ]
-	selectors << [selector:/$datagov.*terraform.*/,  pipeline: "datagov-terraform" ]
-	selectors << [selector:/$datagov.*ansible.*/,    pipeline: "datagov-ansible" ]
+	selectors << [selector:/d2d/,                 pipeline: "d2d" ]
+	selectors << [selector:/datagov.*terraform/,  pipeline: "datagov-terraform" ]
+	selectors << [selector:/datagov.*ansible/,    pipeline: "datagov-ansible" ]
 	return selectors
 }
 
