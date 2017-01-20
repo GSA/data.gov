@@ -544,7 +544,7 @@ function get_aws_region {
     echo "${region}"
 }
 
-function do_aws {ResourceType
+function do_aws {
     local profile=$(get_aws_profile)
     local region=$(get_aws_region)
     local aws_command args=""
