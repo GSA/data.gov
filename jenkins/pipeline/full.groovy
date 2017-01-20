@@ -6,24 +6,19 @@ def initialize(environment) {
 }
 
 def provision(environment) {
-    getDatagovTerraform().run(environment)
-    getDatagovAnsible().run(environment)
-    getD2D.run(environment)
+    runPipeline('datagov-terraform', environment)
+    runPipeline('datagov-ansible', environment)
+    runPipeline('d2d', environment)
 }
 
 def test(environment) {
 }
 
-def getDatagovTerraform() {
-    return (load "./datagov-terraform.groovy")
-}
-
-def getDatagovAnsible() {
-    return (load "./datagov-ansible.groovy")
-}
-
-def getD2D() {
-    return (load "./d2d.groovy")
+def runPipeline(name, environment) {
+    def pipeline = load "./${name}.groovy"
+    def separator ="===================="
+    echo "${separator} ${name} :: ${environment} ${separator}"
+    pipeline.run(environment)
 }
 
 
