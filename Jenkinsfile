@@ -12,18 +12,18 @@
 // ============================================================================
 
 env.AWS_REGION = "us-east-2"
-env.PIPELINE_SCRIPT = "full"
+env.PIPELINE_SCRIPT = getPipelineScript("full")
 
 stage('Initialize') {
     node("master") {
-    	setPipelineScript()
         checkout scm
         sh "touch ~/ansible-secret.txt"
     }
 }
 
-
 runPipeline(env.PIPELINE_SCRIPT)
+
+
 
 
 def runPipeline(pipeline) {
@@ -39,7 +39,7 @@ def runStages(pipeline, environment) {
         test(pipeline, environment)
         // do other stages here
     } else {
-    echo "Skipping ${environment}, because feature branch (${env.BRANCH_NAME})"
+    	echo "Skipping ${environment}, because feature branch (${env.BRANCH_NAME})"
     }
 }
 
@@ -71,10 +71,10 @@ def getLabel(environment) {
     return environment.toUpperCase()
 }
 
-def setPipelineScript() {
+def getPipelineScript(defaultScript) {
 	def selectors = getPipelineSelectors()
 	def name = getPipelineName().toLowerCase()
-	def script = env.PIPELINE_SCRIPT
+	def script = defaultScript
 	echo "Select pipeline (default: ${env.PIPELINE_SCRIPT})"
 	for (s in selectors) {
 		// Using ~ causes Jenkins to fail, citing that
@@ -91,7 +91,7 @@ def setPipelineScript() {
 		}
 	}
 	echo "Selected Pipeline=${script}"
-	env.PIPELINE_SCRIPT = script
+	return script
 }
 
 def getPipelineName() {
