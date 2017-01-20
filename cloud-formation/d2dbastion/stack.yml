@@ -3,6 +3,11 @@ stack:
     input-mapping:
         vpc_id: VPCID
         bastion_subnet_id: PublicSubnet1ID
+    ignored-input:
+        - bastion_subnet_prefix
+        - bastion_security_group_id
+        - wordpress_web_security_group_id
+        - wordpress_web_subnet_id
     parameters:
         System: d2d
         Environment: __ENVIRONMENT__

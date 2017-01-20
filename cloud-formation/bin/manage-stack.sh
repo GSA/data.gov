@@ -23,7 +23,7 @@ SOURCE_DIRS=""
 TARGET_DIR=""
 ENVIRONMENT=""
 SECURITY_CONTEXT=""
-INPUTS=()
+STACK_INPUTS=()
 
 function usage {
     cat "${SCRIPT_DIR}/usage.txt"
@@ -742,7 +742,7 @@ function delete_cf_stack {
 function apply_cf_stack {
     local stack bucket region template policy="default-stack-policy.json" parameters
     local template_path template_url policy_url allow_update stack_args
-    local status
+    local output status errorStatus
     STACK_ACTION="create" 
     while test $# -gt 0; do
         case $1 in
@@ -780,16 +780,16 @@ function apply_cf_stack {
     trace "stack-paramaters=|${parameters}|"
     validate_cf_template --bucket "${bucket}" --template "${STACK_PATH}/${template_path}" || \
         ( error "Validation failed"; return 6)
-    status=`cloudformation ${STACK_ACTION}-stack --stack-name "${stack}" \
+    output=`cloudformation ${STACK_ACTION}-stack --stack-name "${stack}" \
         --template-url "${template_url}" ${stack_args} --capabilities "CAPABILITY_IAM" \
         --stack-policy-url "${policy_url}" --parameters "${parameters}" \
         --output text || return 6`
-    trace "status=${status}"
-    status=$(echo -e "${status}" | grep "ValidationError")
+    trace "output=${output}"
+    status=$(echo -e "${output}" | grep "ValidationError")
     if [ "${status}" != "" ]; then
-        status=$(echo -e "${status}" | grep "No updates are to be performed.")
-        if [ "${status}" == "" ]; then
-            error "${status}"
+        errorStatus=$(echo -e "${status}" | grep "No updates are to be performed.")
+        if [ "${errorStatus}" == "" ]; then
+            error "${output}"
             return 7
         else
             # Not an error, but have to lookup the stack id
@@ -797,7 +797,7 @@ function apply_cf_stack {
             writeln "There were no updates to perform"
         fi
     else 
-        STACK_ID="${status}"
+        STACK_ID="${output}"
     fi
     extra_verbose "Completed ${STACK_ACTION} stack ${STACK_NAME} (StackID: ${STACK_ID})"
 }
@@ -950,7 +950,7 @@ function get_parameters {
           -br|--bucket-region)         shift; BUCKET_REGION=$1 ;;
           -c|--security-context)       shift; SECURITY_CONTEXT=$1 ;;
           -f|--config-file)            shift; CONFIG_FILE=$1 ;;
-          -i|--input)                  shift; INPUTS+=("$1") ;;
+          -i|--input)                  shift; STACK_INPUTS+=("$1") ;;
           -n|--no-cleanup)             CLEANUP="" ;;
           -p|--profile)                shift; AWS_PROFILE=$1 ;;
           -r|--region)                 shift; AWS_REGION=$1 ;;
@@ -979,7 +979,7 @@ function get_stack_templates {
 }
 
 # -----------------------------------------------------------------------------
-# Renames properties in input files to the proper stack parameter name,
+# Renames properties in input files to the correct stack parameter name,
 # as it may not always ebe possible to match these (exactly)
 # -----------------------------------------------------------------------------
 function apply_input_parameter_mapping {
@@ -994,6 +994,29 @@ function apply_input_parameter_mapping {
         extra_verbose "Renaming input property '${input_property}'" \
             "to stack parameter '${stack_parameter}'"
         patterns+=("-e s|^${input_property}|${stack_parameter}|g")
+    done
+    if [ "${#patterns[@]}" == "0" ]; then
+        # No properties to map
+        echo -e "${input}"
+    else
+        trace "Apply patterns: ${patterns[@]}"
+        echo -e "${input}" | sed ${patterns[@]}
+    fi
+}
+
+# -----------------------------------------------------------------------------
+# Renames properties in input files to the correct stack parameter name,
+# as it may not always ebe possible to match these (exactly)
+# -----------------------------------------------------------------------------
+function remove_ignored_nput_parameters {
+    local input="$1"
+    local property=$(create_property_name "stack" "ignored-input")
+    local ignored=$(get_property_names "${property}" "${CONFIG_DATA}")
+    local patterns=() ignored_property
+    trace "ignored=${ignored}"
+    for ignored_property in $ignored ; do
+        extra_verbose "Ignoring input property '${ignored_property}'"
+        patterns+=("-e /^${ignored_property}=.*$/d")
     done
     if [ "${#patterns[@]}" == "0" ]; then
         # No properties to map
@@ -1046,20 +1069,28 @@ function convert_input_parameters {
     local input
     trace "Convert from Terraform output to properties file"
     input=$(cat "${input_file}" | sed -e "/^#/d" -e 's| = |=|g' -e 's|"||g')
+    trace "Remove ignored input properties as parameters"
+    input=$(remove_ignored_nput_parameters "${input}")
     trace "Map input property names to expected parameter stack names"
     input=$(apply_input_parameter_mapping "${input}")
     trace "Insert parameter property prefix (${property})"
     echo -e "${input}" | sed -e "s|^|${property}|g"
 }
 
-
 function get_stack_parameters {
     local prefix=$(create_property_name "stack" "parameters")
-    local parameters=() value variable input_file input_files="${INPUTS[@]}"
-    local name names
+    local parameters=() value variable input_file input_files="${STACK_INPUTS[@]}"
+    local name names region_arg
     local property=$(create_property_name --prefix "${prefix}")
+    local region_arg
+    if [ "${BUCKET_REGION}" != "" ]; then
+        region_arg="--region ${BUCKET_REGION}"; 
+    fi
     for input_file in $input_files ; do
         verbose "Adding input from '${input_file}'"
+        if ! input_file=$(get_file "${input_file}" $region_arg); then
+            return 1
+        fi
         if [ -f ${input_file} ]; then
             input=$(convert_input_parameters "${input_file}" "${prefix}")
             # input=$(cat "${input}" | sed -e "/^#/d" -e 's| = |=|g' \
@@ -1194,6 +1225,18 @@ function verify_variable {
     trace "Using ${name}=$${name}"
 }
 
+function add_default_stack_inputs {
+    local source_dir input_file input_files
+    for source_dir in $SOURCE_DIRS; do
+        extra_verbose "Checking for default inputs in ${source_dir}"
+        input_files=$(find "${source_dir}" -iregex ".*\.\(tfvars\)" -printf "%f")
+        for input_file in $input_files; do
+            extra_verbose "Adding stack input ${source_dir}/${input_file}"
+            STACK_INPUTS+=("${source_dir}/${input_file}")
+        done
+    done
+}
+
 function initialize {
     SOURCE_DIRS="${SOURCE_DIRS} ${SCRIPT_DIR}"
     get_parameters "$@" || return 1
@@ -1213,7 +1256,8 @@ function initialize {
     MASTER_TEMPLATE=$(get_stack_property "master_template" "" "${DEFAULT_MASTER_TEMPLATE}")
     STACK_POLICY=$(get_stack_property policy "" "${DEFAULT_STACK_POLICY}")
     STACK_TEMPLATES=$(get_stack_templates)
-    STACK_PARAMETERS=$(get_stack_parameters)
+    add_default_stack_inputs
+    STACK_PARAMETERS=`get_stack_parameters || return 10`
     STACK_SCRIPTS=$(get_stack_scripts)
 
     if [ "${STACK_NAME}" == "" ]; then error "No stack name provided."; return 4; fi
@@ -1225,7 +1269,7 @@ function initialize {
     verbose "\tBucket=${BUCKET_NAME}"
     verbose "\tPath=${STACK_PATH}"
     verbose "\tSources=${SOURCE_DIRS}"
-    verbose "\tInputs=${INPUTS[@]}"
+    verbose "\tInputs=${STACK_INPUTS[@]}"
     verbose "\tTarget=${TARGET_DIR}"
 }
 
