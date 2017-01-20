@@ -78,12 +78,13 @@ def setPipelineScript() {
 	def script = env.PIPELINE_SCRIPT
 	def pattern = null
 	echo "Select pipeline (default: ${env.PIPELINE_SCRIPT})"
-	for ( e in selector ) {
+	for (e in selector) {
 		// Using ~ causes Jenkins to fail, citing that
 		// the bitwise negate operator is not allowed
 		// Therefore using the Pattern object explicitly
 		pattern = java.util.regex.Pattern(e.key)
-		if (pattern.matcher("name").matches()) {
+		echo "Checking ${e.name} against ${name}"
+		if (pattern.matcher(name).matches()) {
 			script = e.value
 			// NOTE that this could be change to return a list
 			// of all matching pattern and then run all those pipelines
