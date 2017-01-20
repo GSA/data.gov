@@ -523,11 +523,11 @@ function convert_dos2unix {
 
 function get_aws_profile {
     local profile="${AWS_PROFILE}"
-    if [ "${profile}" == "" ];  then
-        profile="default"
-        # Make next call faster
-        AWS_PROFILE="${profile}"
-    fi
+    # if [ "${profile}" == "" ];  then
+    #     profile="default"
+    #     # Make next call faster
+    #     AWS_PROFILE="${profile}"
+    # fi
     echo "${profile}"
 }
 
