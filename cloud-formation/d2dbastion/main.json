@@ -379,9 +379,6 @@
                         "SubnetId": {
                             "Ref": "PublicSubnet1ID"
                         },
-                        "PrivateIpAddress": {
-                            "Ref": "Bastion1PrivateIP"
-                        },
                         "GroupSet": [
                             {
                                 "Ref": "BastionSecurityGroup"
