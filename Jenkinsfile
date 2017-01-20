@@ -73,7 +73,7 @@ def getLabel(environment) {
 
 def setPipelineScript() {
 	def selectors = getPipelineSelectors()
-	def name = getPipelineName()
+	def name = getPipelineName().toLowerCase()
 	def script = env.PIPELINE_SCRIPT
 	echo "Select pipeline (default: ${env.PIPELINE_SCRIPT})"
 	for (s in selectors) {
@@ -90,11 +90,6 @@ def setPipelineScript() {
 			break
 		}
 	}
-	// switch (name) {
-	// 	case /d2d.*/:                 script = "d2d"; break;
-	// 	case /datagov.*terraform.*/:  script = "datagov-terraform"; break;
-	// 	case /datagov.*ansible.*/:    script = "datagov-ansible"; break;
-	// }
 	echo "Selected Pipeline=${script}"
 	env.PIPELINE_SCRIPT = script
 }

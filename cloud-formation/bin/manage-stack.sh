@@ -818,7 +818,7 @@ function cf_stack_action_completed {
     local filter
 
     filters+=("StackName=='${name}'")
-    filters+=("starts_with(StackStatus,'${ACTION}')")
+    filters+=("starts_with(StackStatus,'${action}')")
     filters+=("ends_with(StackStatus,'IN_PROGRESS')")
     filter="[?"$(join_by "&&" ${filters[@]})"]"
     trace "cf_stack_action_completed .filter=${filter}"
@@ -827,7 +827,7 @@ function cf_stack_action_completed {
     if [ "${status}" == "" ]; then 
         result=0
     else 
-        extra_verbose "${action} stack ${name} status is ${status}"
+        debug "${action} stack ${name} status is ${status}"
     fi
     trace "cf_stack_action_completed.result=${result}"
     return $result
@@ -978,20 +978,96 @@ function get_stack_templates {
     echo -e "${templates[@]}"
 }
 
+# -----------------------------------------------------------------------------
+# Renames properties in input files to the proper stack parameter name,
+# as it may not always ebe possible to match these (exactly)
+# -----------------------------------------------------------------------------
+function apply_input_parameter_mapping {
+    local input="$1"
+    local property=$(create_property_name "stack" "input-mapping")
+    local mapping=$(get_property_names "${property}" "${CONFIG_DATA}")
+    local patterns=() input_property stack_parameter
+    trace "Mapping=${mapping}"
+    for input_property in $mapping ; do
+        stack_parameter=$(get_property $(create_property_name "${property}" \
+            "${input_property}")  "${CONFIG_DATA}")
+        extra_verbose "Renaming input property '${input_property}'" \
+            "to stack parameter '${stack_parameter}'"
+        patterns+=("-e s|^${input_property}|${stack_parameter}|g")
+    done
+    if [ "${#patterns[@]}" == "0" ]; then
+        # No properties to map
+        echo -e "${input}"
+    else
+        trace "Apply patterns: ${patterns[@]}"
+        echo -e "${input}" | sed ${patterns[@]}
+    fi
+}
+
+# -----------------------------------------------------------------------------
+# Replace occurrences of __variable__ with the value of the "variable" 
+# environment variable.
+# E.g. if value is __BUKCET_NAME__, it is replaced with the value of the
+# BUCKET_NAME environment variable
+# -----------------------------------------------------------------------------
+function apply_environment_variables_mapping {
+    local value="$1"
+    local variable=$(echo "${value}" | sed "s|__\(.*\)__|\1|g")
+    local has_variable
+    if [ "${variable}" != "" ]; then
+        has_variable=$(echo "${value}" | grep "__${variable}__")
+        if [ "${has_variable}" != "" ]; then
+            extra_verbose "Replace __${variable}__ with ${!variable}"
+            value=$(echo "${value}" | sed "s|__${variable}__|${!variable}|g")
+        else
+            trace "Variable ${variable} not found in ${value}"
+        fi
+    fi
+    echo "${value}"
+}
+
+
+# -----------------------------------------------------------------------------
+# Converts properties in input files:
+#    1. Converts tfvars files to properties file format
+#    2. Map input property names to stack parameters as specified
+#       in the configuration file (default: stack.yml) property
+#       'stack.input-mapping'. E.g. 
+#           stack:
+#              input-mapping:
+#                   my-vpc-id: VPCID
+#       The above example maps the 'my-vpc-id' property to 
+#       the 'VPCID' stackj parameter
+# -----------------------------------------------------------------------------
+function convert_input_parameters {
+    local input_file="$1"
+    local prefix="$2"
+    local property=$(create_property_name --prefix "${prefix}")
+    local input
+    trace "Convert from Terraform output to properties file"
+    input=$(cat "${input_file}" | sed -e "/^#/d" -e 's| = |=|g' -e 's|"||g')
+    trace "Map input property names to expected parameter stack names"
+    input=$(apply_input_parameter_mapping "${input}")
+    trace "Insert parameter property prefix (${property})"
+    echo -e "${input}" | sed -e "s|^|${property}|g"
+}
+
+
 function get_stack_parameters {
     local prefix=$(create_property_name "stack" "parameters")
-    local parameters=() value variable input inputs="${INPUTS[@]}"
+    local parameters=() value variable input_file input_files="${INPUTS[@]}"
     local name names
     local property=$(create_property_name --prefix "${prefix}")
-    for input in $inputs ; do
-        verbose "Adding input from '${input}'"
-        if [ -f ${input} ]; then
-            input=$(cat "${input}" | sed -e "/^#/d" -e 's| = |=|g' \
-                -e 's|"||g' -e "s|^|${property}|g" )
-            trace "Adding [\n${input}\n] to [\n${CONFIG_DATA}\n]"
+    for input_file in $input_files ; do
+        verbose "Adding input from '${input_file}'"
+        if [ -f ${input_file} ]; then
+            input=$(convert_input_parameters "${input_file}" "${prefix}")
+            # input=$(cat "${input}" | sed -e "/^#/d" -e 's| = |=|g' \
+            #     -e 's|"||g' -e "s|^|${property}|g" )
+            trace "Adding [\n${input}\n] to CONFIG_DATA]"
             CONFIG_DATA=$(echo -e "${CONFIG_DATA}\n${input}")
         else
-            warning "Input ${input} not found"
+            warning "Input file ${input} not found"
         fi
     done
     trace "CONFIG_DATA=${CONFIG_DATA}"
@@ -999,16 +1075,17 @@ function get_stack_parameters {
     trace "Checking parameters: ${names}"
     for name in $names ; do
         property=$(create_property_name "${prefix}" "${name}")
-        value=$(get_property "${property}" "${CONFIG_DATA}")
-        variable=$(echo "${value}" | sed "s|__\(.*\)__|\1|g")
-        if [ "${variable}" != "" ]; then
-            # Replace occurrences of __variable__ with
-            # the value of "variable" environment variable
-            # E.g. if value is __BUKCET_NAME__, it is replaced 
-            # with the value of the BUCKET_NAME environment variable
-            trace "Replace __${variable}__ with ${!variable}"
-            value=$(echo "${value}" | sed "s|__${variable}__|${!variable}|g")
-        fi
+        value=$(apply_environment_variables_mapping \
+            $(get_property "${property}" "${CONFIG_DATA}"))
+        # variable=$(echo "${value}" | sed "s|__\(.*\)__|\1|g")
+        # if [ "${variable}" != "" ]; then
+        #     # Replace occurrences of __variable__ with
+        #     # the value of "variable" environment variable
+        #     # E.g. if value is __BUKCET_NAME__, it is replaced 
+        #     # with the value of the BUCKET_NAME environment variable
+        #     trace "Replace __${variable}__ with ${!variable}"
+        #     value=$(echo "${value}" | sed "s|__${variable}__|${!variable}|g")
+        # fi
         parameters+=("${name}=${value}")
         extra_verbose "Using stack parameter" \
             $(get_property_name_without_context ${name}) \

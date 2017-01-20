@@ -1,5 +1,5 @@
 
-def run(stack_name, environment, inputs = null, waitForCompletion = 30) {
+def run(stack_name, environment, inputs = null, waitForCompletion = 60) {
     dir("cloud-formation/") {
         def script = "${pwd()}/bin/manage-stack.sh"
         def args = []

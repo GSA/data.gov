@@ -1,9 +1,8 @@
 stack:
     name: D2DBastion
-    #map-input:
-        #bastion_subnet_id: PublicSubnet1ID
-        #bastion_subnet_prefix: xx
-        #vpc_id: VPCID
+    input-mapping:
+        vpc_id: VPCID
+        bastion_subnet_id: PublicSubnet1ID
     parameters:
         System: d2d
         Environment: __ENVIRONMENT__
