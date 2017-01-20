@@ -62,7 +62,7 @@ def test(environment) {
 }
 
 def nameEnvironment(environment) {
-	if ((isDev(environment) && !isMaster()) {
+	if (isDev(environment) && !isMaster()) {
 		environment = "${environment}-${env.BRANCH_NAME}"
 	}
     return environment
