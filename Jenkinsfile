@@ -72,18 +72,19 @@ def getLabel(environment) {
 }
 
 def setPipelineScript() {
-	def selector = getPipelineSelector()
+	def selectors = getPipelineSelectors()
 	def name = getPipelineName()
 	def script = env.PIPELINE_SCRIPT
 	echo "Select pipeline (default: ${env.PIPELINE_SCRIPT})"
-	for (e in selector) {
+	for (s in selectors) {
 		// Using ~ causes Jenkins to fail, citing that
 		// the bitwise negate operator is not allowed
 		// Therefore using the Pattern object explicitly
-		echo "Checking ${name} against ${e.value}"
-		if (name ==~ e.value) {
-			script = e.key
-			// NOTE that this could be change to return a list
+		echo "Checking ${name} against ${s.selector}"
+		if (name ==~ s.selector) {
+			echo "Selecting pipeline ${s.pipeline}"
+			script = s.pipeline
+			// NOTE that script could be change to return a list
 			// of all matching pattern and then run all those pipelines
 			// per environment
 			break
@@ -106,12 +107,12 @@ def getPipelineName() {
 	return name
 }
 
-def getPipelineSelector() {
-	def selector = [:]
-	selector["d2d"] =  /$d2d.*/
-	selector["datagov-terraform"] = /$datagov.*terraform.*/
-	selector["datagov-ansible"] = /$datagov.*ansible.*/
-	return selector
+def getPipelineSelectors() {
+	def selectors = []
+	selectors << [selector:/$d2d.*/,                 pipeline: "d2d" ]
+	selectors << [selector:/$datagov.*terraform.*/,  pipeline: "datagov-terraform" ]
+	selectors << [selector:/$datagov.*ansible.*/,    pipeline: "datagov-ansible" ]
+	return selectors
 }
 
 def getPipeline() {
