@@ -11,6 +11,7 @@
 // on phrases inthe name of the job name (env.JOB_NAME)
 // ============================================================================
 
+import java.util.regex.Pattern
 
 env.AWS_REGION = "us-east-2"
 env.PIPELINE_SCRIPT = "full"
@@ -82,7 +83,7 @@ def setPipelineScript() {
 		// Using ~ causes Jenkins to fail, citing that
 		// the bitwise negate operator is not allowed
 		// Therefore using the Pattern object explicitly
-		pattern = java.util.regex.Pattern(e.key)
+		pattern = Pattern(e.key)
 		echo "Checking ${e.name} against ${name}"
 		if (pattern.matcher(name).matches()) {
 			script = e.value
