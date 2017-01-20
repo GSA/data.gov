@@ -42,6 +42,7 @@
   action: file path={{item}} state=directory owner="www-data" group="www-data" mode=0755
   with_items:
     - /var/lib/ckan
+    - /var/lib/datapusher
 
 - name: copy all needed files
   action: copy src={{item}} dest=/{{item}}
@@ -70,5 +71,5 @@
 - name: restart apache
   action: service name=apache2 state=restarted
 
-- name: point site_url in production.ini to localhost
-  action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ckan_site_domain}}"
+- name: point site_url in /etc/hosts to localhost
+  action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ ckan_site_domain | regex_replace('https?\://','') }}"

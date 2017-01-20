@@ -1,0 +1,19 @@
+stack:
+    name: Infrastructure
+    parameters:
+        # BucketName: __BUCKET_NAME__
+        System: datagov
+        # Environment: __ENVIRONMENT__
+        # SecurityContext: __SECURITY_CONTEXT__
+        # AZ1: us-east-2b
+        # AZ2: us-east-2c
+        # # us-east-2
+        # NATAMI: ami-8d5a00e8 
+        # # us-east-1 
+        # #NATAMI: ami-863b6391
+    wait:
+        conditions:
+            # Use logical instance ID (i.e. resource name in CloudFormation script)
+            instanceNAT1: aws-healthcheck
+        delay: 10
+        max-iterations: 30

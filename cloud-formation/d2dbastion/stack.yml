@@ -1,0 +1,21 @@
+stack:
+    name: D2DBastion
+    input-mapping:
+        vpc_id: VPCID
+        bastion_subnet_id: PublicSubnet1ID
+    ignored-input:
+        - bastion_subnet_prefix
+        - bastion_security_group_id
+        - wordpress_web_security_group_id
+        - wordpress_web_subnet_id
+    parameters:
+        System: d2d
+        Environment: __ENVIRONMENT__
+    scripts:
+        - bastion_bootstrap.sh
+    wait:
+        conditions:
+            # Use logical instance ID (i.e. resource name in CloudFormation script)
+            LinuxBastion1: aws-healthcheck
+        delay: 10
+        max-iterations: 30
