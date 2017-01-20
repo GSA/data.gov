@@ -1339,6 +1339,7 @@ function all_resources_completed {
     local conditions="$2"
     local n_failures=0 name condition reported
     local prefix=$(create_property_name "stack" "wait" "conditions")
+    RESOURCES_READY=""
     for name in $conditions ; do
         condition=$(get_property $(create_property_name "${prefix}" \
             "${name}") "${CONFIG_DATA}")
@@ -1353,7 +1354,7 @@ function all_resources_completed {
                     reported=$(echo "${RESOURCES_READY}" | grep "${name}")
                     if [ "${reported}" == "" ]; then
                        RESOURCES_READY="${RESOURCES_READY} ${name}"
-                        writeln "Resource ${name} is ready (${condition})"
+                       writeln "Resource ${name} is ready (${condition})"
                     fi
                 fi
                 ;;
