@@ -18,7 +18,7 @@ def run(stack_name, environment, inputs = null, waitForCompletion = 60) {
             args << "--wait-for-completion ${waitForCompletion}"
         }
         for (input in inputs) {
-             args << "--input ${getTerraformOutputURI(input, bucketName)}}"
+             args << "--input ${getTerraformOutputURI(input, bucketName)}"
         }
         sh "'${script}' ${args.join(' ')}"
     }
