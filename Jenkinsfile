@@ -95,7 +95,7 @@ def setPipelineScript() {
 	// 	case /datagov.*terraform.*/:  script = "datagov-terraform"; break;
 	// 	case /datagov.*ansible.*/:    script = "datagov-ansible"; break;
 	// }
-	echo "Selected Pipeline=${env.PIPELINE_SCRIPT}"
+	echo "Selected Pipeline=${script}"
 	env.PIPELINE_SCRIPT = script
 }
 
