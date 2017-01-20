@@ -71,7 +71,7 @@ def isDev(environment) {
 }
 
 def nameEnvironment(environment) {
-    return environment + (isDev(environment) && !isMaster()) ? "-${env.BRANCH_NAME}" : ""
+    return environment + ((isDev(environment) && !isMaster()) ? "-${env.BRANCH_NAME}" : "")
 }
 
 def getLabel(environment) {

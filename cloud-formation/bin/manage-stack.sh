@@ -544,7 +544,7 @@ function get_aws_region {
     echo "${region}"
 }
 
-function do_aws {
+function do_aws {ResourceType
     local profile=$(get_aws_profile)
     local region=$(get_aws_region)
     local aws_command args=""
@@ -743,7 +743,7 @@ function apply_cf_stack {
     local stack bucket region template policy="default-stack-policy.json" parameters
     local template_path template_url policy_url allow_update stack_args
     local status
-    STACK_ACTION=="create" 
+    STACK_ACTION="create" 
     while test $# -gt 0; do
         case $1 in
           -b|--bucket)        shift; bucket="$1" ;;
