@@ -5,8 +5,7 @@ def run(stack_name, environment, inputs = null, waitForCompletion = 60) {
         def bucketName = "datagov-provisioning"
         def args = []
         sh "chmod 700 '${script}'"
-        args << "-v"
-        args << "-v -v -v"
+        args << "-v -v"
         args << "'${stack_name}' '${environment}'"
         args << "--action create"
         args << "--region us-east-2"
