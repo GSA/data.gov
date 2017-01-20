@@ -23,20 +23,20 @@ stage('Initialize') {
 }
 
 
-runPipeline()
+runPipeline(env.PIPELINE_SCRIPT)
 
 
-def runPipeline() {
-    runStages("dev")
-    runStages("prod")
+def runPipeline(pipeline) {
+    runStages(pipeline, "dev")
+    runStages(pipeline, "prod")
 }
 
 
-def runStages(environment) {
+def runStages(pipeline, environment) {
     if (isDev(environment) || isMaster()) {
         //initialize(environment)
-        provision(environment)
-        test(environment)
+        provision(pipeline, environment)
+        test(pipeline, environment)
         // do other stages here
     } else {
     echo "Skipping ${environment}, because feature branch (${env.BRANCH_NAME})"
@@ -44,16 +44,16 @@ def runStages(environment) {
 }
 
 
-def provision(environment) {
-    stage("${getLabel(environment)}: Provision") {
+def provision(pipeline, environment) {
+    stage("${getLabel(environment)} - ${pipeline}: Provision") {
         node('master') {
             getPipeline().provision(nameEnvironment(environment))
         }
     }
 }
 
-def test(environment) {
-    stage("${getLabel(environment)}: Test") {
+def test(pipeline, environment) {
+    stage("${getLabel(environment)} - ${pipeline}: Test") {
         node('master') {
             getPipeline().test(nameEnvironment(environment))
         }
