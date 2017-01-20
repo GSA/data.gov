@@ -1,7 +1,10 @@
-#!groovy
-
 env.AWS_REGION = "us-east-2"
 env.PIPELINE_SCRIPT = "jenkins/full-pipeline.groovy"
+
+echo "env.JOB_NAME=${env.JOB_NAME}"
+echo "env.JOB_BASE_NAME=${env.JOB_BASE_NAME}"
+echo "env.BUILD_DISPLAY_NAME=${env.BUILD_DISPLAY_NAME}"
+echo "env.JOB_URL=${JOB_URL}"
 
 stage('Initialize') {
     node("master") {
