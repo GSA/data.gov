@@ -15,7 +15,7 @@ def test(environment) {
 }
 
 def runPipeline(name, environment) {
-    def pipeline = load "./${name}.groovy"
+    def pipeline = load "./jenkins/pipeline/${name}.groovy"
     def separator ="===================="
     echo "${separator} ${name} :: ${environment} ${separator}"
     pipeline.run(environment)
