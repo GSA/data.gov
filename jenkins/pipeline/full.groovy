@@ -19,6 +19,7 @@ def runPipeline(name, environment) {
     def separator ="===================="
     echo "${separator} ${name} :: ${environment} ${separator}"
     pipeline.run(environment)
+    echo "${separator} ${name} :: ${environment} [Done] ${separator}"
 }
 
 

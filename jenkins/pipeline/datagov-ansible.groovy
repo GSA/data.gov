@@ -1,4 +1,10 @@
 
+def run(environment) {
+    initialize(environment)
+    provision(environment)
+    test(environment)
+}
+
 def initialize(environment) {
 }
 
