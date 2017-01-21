@@ -8,7 +8,7 @@
 #  - { role: datagov-sudo-0-precheck, tags: [precheck] }
 
 - name: Provisioning WordPress Web AMI
-  hosts: {{ playbook_hosts | default('wordpress_web') }}
+  hosts:  "{{ playbook_hosts | default('wordpress-web') }}"
   remote_user: ubuntu
   become: yes
   become_method: sudo
