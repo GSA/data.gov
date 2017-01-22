@@ -92,11 +92,18 @@ module "wordpress_web_subnet" {
 #  Output Variables
 # -----------------------------------------------------------------------------
 
+output "vpc_id" {
+    value = "${module.vpc.vpc_id}"
+}
+
 output "bastion_subnet_id" {
     value = "${module.bastion_subnet.subnet_id}"
 }
 output "bastion_security_group_id" {
     value = "${module.bastion_subnet.security_group_id}"
+}
+output "bastion_subnet_prefix" {
+    value = "${module.bastion_subnet.subnet_prefix}"
 }
 
 output "wordpress_web_subnet_id" {

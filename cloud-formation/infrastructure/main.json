@@ -1,0 +1,755 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Multi-AZ Infrastructure",
+  "Parameters": {
+    "System": {"Type": "String"},
+    "Environment": {"Type": "String"},
+    "SecurityContext": {"Type": "String", "Default": "dev"},
+    "BucketName": {"Type": "String"},
+    "AZ1": {
+      "Type": "String", 
+      "Description": "Availability Zone 1 Designation",
+      "AllowedValues": ["us-east-1a", "us-east-1b", "us-east-1c", "us-east-1d", "us-east-1e", 
+          "us-east-2a", "us-east-2b", "us-east-2c",
+          "us-gov-west-1a", "us-gov-west-1b", 
+          "us-west-1a", "us-west-1b", "us-west-1c",
+          "us-west-2a", "us-west-2b", "us-west-2c"
+      ]
+    },
+    "AZ2": {
+      "Type": "String", 
+      "Description": "Availability Zone 2 Designation",
+      "AllowedValues": ["us-east-1a", "us-east-1b", "us-east-1c", "us-east-1d", "us-east-1e", 
+          "us-east-2a", "us-east-2b", "us-east-2c",
+          "us-gov-west-1a", "us-gov-west-1b", 
+          "us-west-1a", "us-west-1b", "us-west-1c",
+          "us-west-2a", "us-west-2b", "us-west-2c"
+      ]
+    },
+    "NATAMI": {"Type":"String", "Default": "ami-f244d0c2"},
+    "PrivateAccessCIDR1" : {"Type": "String", "Default": "184.72.100.147/32"},
+    "IpPrefix": { "Type": "String",  "Default": "172.28"}
+  },
+  "Mappings": {
+    "RegionMap": {
+      "us-east-1a": {"Region": "us-east-1"},
+      "us-east-1b": {"Region": "us-east-1"}, 
+      "us-east-1c": {"Region": "us-east-1"}, 
+      "us-east-1d": {"Region": "us-east-1"}, 
+      "us-east-1e": {"Region": "us-east-1"}, 
+      "us-gov-west-1a": {"Region": "us-gov-west-1"}, 
+      "us-gov-west-1b": {"Region": "us-gov-west-1"},  
+      "us-west-1a": {"Region": "us-west-1"}, 
+      "us-west-1b": {"Region": "us-west-1"},
+      "us-west-1c": {"Region": "us-west-1"},
+      "us-west-2a": {"Region": "us-west-2"}, 
+      "us-west-2b": {"Region": "us-west-2"},
+      "us-west-2c": {"Region": "us-west-2"}
+    }
+  }, 
+  "Resources": {
+    "logGroup": {
+        "Type": "AWS::Logs::LogGroup",
+        "DeletionPolicy": "Delete",
+        "Properties": { "RetentionInDays": "14" }
+    },
+    "VPC": {
+      "Type": "AWS::EC2::VPC",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": {"Fn::Join": [".", [{"Ref": "IpPrefix"},"0.0/16"]]},
+        "InstanceTenancy": "default",
+        "EnableDnsSupport": "true",
+        "EnableDnsHostnames": "true",
+        "Tags": [
+          {"Key": "System", "Value": {"Ref": "System"}},
+          {"Key": "Environment", "Value": {"Ref": "Environment"}},
+          {"Key": "Name", "Value": {"Fn::Join": ["-", [{"Ref": "System"}, 
+              {"Ref": "Environment"}]]}}
+        ]
+      }
+    },
+    "subnetNAT1": {
+      "Type": "AWS::EC2::Subnet",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": {"Fn::Join": [".", [{"Ref": "IpPrefix"}, "0.0/24"]]},
+        "AvailabilityZone": {"Ref": "AZ1"},
+        "VpcId": {"Ref": "VPC"},
+        "Tags": [
+          {"Key": "System", "Value": {"Ref": "System"}},
+          {"Key": "Environment", "Value": {"Ref": "Environment"}},
+          {"Key": "Name", "Value": {"Fn::Join": ["-", [ {"Ref": "System"}, 
+              {"Ref": "Environment"}, "az1", "nat"]]}}
+        ]
+      }
+    },
+    "subnetNAT2": {
+      "Type": "AWS::EC2::Subnet",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": {"Fn::Join": [".", [{"Ref": "IpPrefix"}, "1.0/24"]]},
+        "AvailabilityZone": {"Ref": "AZ2"},
+        "VpcId": {"Ref": "VPC"},
+        "Tags": [
+          {"Key": "System", "Value": {"Ref": "System"}},
+          {"Key": "Environment", "Value": {"Ref": "Environment"}},
+          {"Key": "Name", "Value": {"Fn::Join": ["-", [{"Ref": "System"}, 
+              {"Ref": "Environment"}, "az2", "nat"]]}}
+        ]
+      }
+    },
+    "IGW": {
+      "Type": "AWS::EC2::InternetGateway",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "Tags": [
+          {"Key": "System", "Value": {"Ref": "System"}},
+          {"Key": "Environment", "Value": {"Ref": "Environment"}},
+          {"Key": "Name", "Value": {"Fn::Join": ["-", [{"Ref": "System"}, 
+              {"Ref": "Environment"}]]}}
+        ]
+      }
+    },
+    "aclNAT": {
+      "Type": "AWS::EC2::NetworkAcl",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "VpcId": {"Ref": "VPC"},
+        "Tags": [
+          {"Key": "System", "Value": {"Ref": "System"}},
+          {"Key": "Environment", "Value": {"Ref": "Environment"}},
+          {"Key": "Name", "Value": {"Fn::Join": ["-", [{"Ref": "System"}, 
+              {"Ref": "Environment"}, "nat"]]}}
+        ]
+      }
+    },
+    "aclNATIn1TCP": {
+      "Type": "AWS::EC2::NetworkAclEntry",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": "0.0.0.0/0",
+        "Protocol": "6",
+        "PortRange": {"From": "0", "To": "65535"},
+        "RuleAction": "allow",
+        "RuleNumber": "100",
+        "NetworkAclId": { "Ref": "aclNAT" }
+      }
+    },
+    "aclNATIn1UDP": {
+      "Type": "AWS::EC2::NetworkAclEntry",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": "0.0.0.0/0",
+        "Protocol": "17",
+        "PortRange": {"From": "0", "To": "65535"},
+        "RuleAction": "allow",
+        "RuleNumber": "200",
+        "NetworkAclId": { "Ref": "aclNAT" }
+      }
+    },
+    "aclNATOutTCP": {
+      "Type": "AWS::EC2::NetworkAclEntry",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": "0.0.0.0/0",
+        "Egress": true,
+        "Protocol": "6",
+        "PortRange": {"From": "0", "To": "65535"},
+        "RuleAction": "allow",
+        "RuleNumber": "100",
+        "NetworkAclId": { "Ref": "aclNAT" }
+      }
+    },
+    "aclNATOutUDP": {
+      "Type": "AWS::EC2::NetworkAclEntry",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": "0.0.0.0/0",
+        "Egress": true,
+        "Protocol": "17",
+        "PortRange": {"From": "0", "To": "65535"},
+        "RuleAction": "allow",
+        "RuleNumber": "200",
+        "NetworkAclId": { "Ref": "aclNAT" }
+      }
+    },
+    "subnetacl17": {
+      "Type": "AWS::EC2::SubnetNetworkAclAssociation",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "NetworkAclId": {"Ref": "aclNAT"},
+        "SubnetId": {"Ref": "subnetNAT1"}
+      }
+    },
+    "subnetacl18": {
+      "Type": "AWS::EC2::SubnetNetworkAclAssociation",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "NetworkAclId": {"Ref": "aclNAT"},
+        "SubnetId": {"Ref": "subnetNAT2"}
+      }
+    },
+    "sgNATGatewaySG": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "GroupDescription": "NAT Gateway Security Group",
+        "VpcId": {"Ref": "VPC"},
+        "SecurityGroupIngress": [
+          {"IpProtocol": "tcp", "FromPort": "80", "ToPort": "80", "CidrIp": {"Fn::Join": [".", 
+            [{"Ref": "IpPrefix"}, "0.0/16"]]}},
+          {"IpProtocol": "tcp", "FromPort": "443", "ToPort": "443", "CidrIp": {"Fn::Join": [".", 
+            [{"Ref": "IpPrefix"}, "0.0/16"]]}},
+          {"IpProtocol": "udp", "FromPort": "123", "ToPort": "123", "CidrIp": {"Fn::Join": [".", 
+            [{"Ref": "IpPrefix"}, "0.0/16"]]}}
+        ],
+        "SecurityGroupEgress": [
+          {"IpProtocol": "tcp", "FromPort": "80", "ToPort": "80", "CidrIp": "0.0.0.0/0"},
+          {"IpProtocol": "tcp", "FromPort": "443", "ToPort": "443", "CidrIp": "0.0.0.0/0"},
+          {"IpProtocol": "udp", "FromPort": "123", "ToPort": "123", "CidrIp": "0.0.0.0/0"}
+        ],
+        "Tags": [
+          {"Key": "System", "Value": {"Ref": "System"}},
+          {"Key": "Environment", "Value": {"Ref": "Environment"}},
+          {"Key": "Name", "Value": {"Fn::Join": ["-", [{"Ref": "System"}, 
+              {"Ref": "Environment"}, "nat"]]}}
+        ]
+      }
+    },
+    "gw1": {
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "VpcId": {"Ref": "VPC"},
+        "InternetGatewayId": {"Ref": "IGW"}
+      }
+    },
+     "rtbPublicAll": {
+      "Type": "AWS::EC2::RouteTable",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "VpcId": {"Ref": "VPC"},
+        "Tags": [
+          {"Key": "System", "Value": {"Ref": "System"}},
+          {"Key": "Environment", "Value": {"Ref": "Environment"}},
+          {"Key": "Name", "Value": {"Fn::Join": ["-", [{"Ref": "System"}, 
+              {"Ref": "Environment"}, "public"]]}}
+        ]
+      }
+    },
+    "rtbSubnet2": {
+      "Type": "AWS::EC2::RouteTable",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "VpcId": {"Ref": "VPC"},
+        "Tags": [
+          {"Key": "System", "Value": {"Ref": "System"}},
+          {"Key": "Environment", "Value": {"Ref": "Environment"}},
+          {"Key": "Name", "Value": {"Fn::Join": ["-", [{"Ref": "System"}, 
+              {"Ref": "Environment"}, "az2", "private"]]}}
+        ]
+      }
+    },
+    "rtbSubnet1": {
+      "Type": "AWS::EC2::RouteTable",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "VpcId": {"Ref": "VPC"},
+        "Tags": [
+          {"Key": "System", "Value": {"Ref": "System"}},
+          {"Key": "Environment", "Value": {"Ref": "Environment"}},
+          {"Key": "Name", "Value": {"Fn::Join": ["-", [{"Ref": "System"}, 
+              {"Ref": "Environment"}, "az1", "private"]]}}
+        ]
+      }
+    },
+    "subnetroute4": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "RouteTableId": {"Ref": "rtbPublicAll"},
+        "SubnetId": {"Ref": "subnetNAT1"}
+      }
+    },
+    "subnetroute16": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "RouteTableId": {"Ref": "rtbPublicAll"},
+        "SubnetId": {"Ref": "subnetNAT2"}
+      }
+    },
+    "sharedNatServerRole": {
+      "Type": "AWS::IAM::Role",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version" : "2012-10-17",
+          "Statement": [ 
+            {
+              "Effect": "Allow",
+              "Principal": { "Service": [ "ec2.amazonaws.com" ] },
+              "Action": [ "sts:AssumeRole" ]
+            } 
+          ]
+        },
+        "Path": "/shared/",
+        "Policies": [ 
+          {
+            "PolicyName": "shared-s3-bucket-access",
+            "PolicyDocument": {
+              "Version" : "2012-10-17",
+              "Statement": [ {
+                  "Effect": "Allow",
+                  "Action": "s3:*",
+                  "Resource": {"Fn::Join": [ "", [ "arn:aws:s3:::", 
+                      {"Ref": "BucketName" }, "/*" ]]}
+                }
+              ]
+            }
+          } 
+        ]
+      }
+    },
+    "sharedNatServerInstanceProfile": {
+      "Type": "AWS::IAM::InstanceProfile",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "Path": "/shared/",
+        "Roles": [ {"Ref": "sharedNatServerRole"} ]
+      }
+    },
+    "instanceNAT1": {
+      "Type": "AWS::EC2::Instance",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "DisableApiTermination": "FALSE",
+        "SourceDestCheck": "false",
+        "IamInstanceProfile": {"Ref": "sharedNatServerInstanceProfile"},
+        "ImageId": {"Ref": "NATAMI"},
+        "InstanceType": "t2.nano",
+        "KeyName": {"Fn::Join": ["_", [{"Ref": "System"}, {"Ref": "SecurityContext"}, "nat"]]},
+        "Monitoring": "true",
+        "Tags": [
+          {"Key": "System", "Value": {"Ref": "System"}},
+          {"Key": "Environment", "Value": {"Ref": "Environment"}},
+          {"Key": "Name", "Value": {"Fn::Join": ["-", [{"Ref": "System"}, 
+              {"Ref": "Environment"}, "az1", "nat"]]}}
+        ],
+        "NetworkInterfaces": [
+          {
+            "AssociatePublicIpAddress": "true",
+            "DeleteOnTermination": "true",
+            "Description": "Primary network interface",
+            "DeviceIndex": 0,
+            "SubnetId": {"Ref": "subnetNAT1"},
+            "PrivateIpAddresses": [ {"PrivateIpAddress": {"Fn::Join": [".", [{"Ref": "IpPrefix"}, 
+              "0.5"]]}, "Primary": "true" } ],
+            "GroupSet": [ {"Ref": "sgNATGatewaySG" } ]
+          }
+        ]
+      }
+    },
+    "routePublicRegion": {
+      "Type": "AWS::EC2::Route",
+      "DeletionPolicy": "Delete",
+      "DependsOn": "gw1",
+      "Properties": {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "RouteTableId": {"Ref": "rtbPublicAll"},
+        "GatewayId": {"Ref": "IGW"}
+      }
+    },
+    "routeNatAZ1": {
+      "Type": "AWS::EC2::Route",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "RouteTableId": {"Ref": "rtbSubnet1"},
+        "InstanceId": {"Ref": "instanceNAT1"}
+      }
+    },    
+    "subnetSharedPublicAZ1": {
+      "Type": "AWS::EC2::Subnet",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": {"Fn::Join": [".", [{"Ref": "IpPrefix"}, "10.0/24"]]},
+        "AvailabilityZone": {"Ref": "AZ1"},
+        "VpcId": {"Ref": "VPC"},
+        "Tags": [
+          {"Key": "System", "Value": {"Ref": "System"}},
+          {"Key": "Environment", "Value": {"Ref": "Environment"}},
+          {"Key": "Name", "Value": { "Fn::Join": ["-", [{"Ref": "System"}, 
+              {"Ref": "Environment"}, "az1", "public"]]}}
+        ]
+      }
+    },
+    "subnetSharedPrivateAZ1": {
+      "Type": "AWS::EC2::Subnet",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": {"Fn::Join": [".", [{"Ref": "IpPrefix"}, "11.0/24"]]},
+        "AvailabilityZone": {"Ref": "AZ1"},
+        "VpcId": {"Ref": "VPC"},
+        "Tags": [
+          {"Key": "System", "Value": {"Ref": "System"}},
+          {"Key": "Environment", "Value": {"Ref": "Environment"}},
+          {"Key": "Name", "Value": { "Fn::Join": ["-", [{"Ref": "System"}, 
+              {"Ref": "Environment"}, "az1", "private"]]}}
+        ]
+      }
+    },
+    "subnetSharedPrivateAZ2": {
+      "Type": "AWS::EC2::Subnet",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": {"Fn::Join": [".", [{"Ref": "IpPrefix"}, "111.0/24"]]},
+        "AvailabilityZone": {"Ref": "AZ2"},
+        "VpcId": {"Ref": "VPC"},
+        "Tags": [
+          {"Key": "System", "Value": {"Ref": "System"}},
+          {"Key": "Environment", "Value": {"Ref": "Environment"}},
+          {"Key": "Name", "Value": { "Fn::Join": ["-", [{"Ref": "System"}, 
+              {"Ref": "Environment"}, "az2", "private"]]}}
+        ]
+      }
+    },
+    "subnetrouteSharedPublicAZ1": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "RouteTableId": { "Ref": "rtbPublicAll" },
+        "SubnetId": { "Ref": "subnetSharedPublicAZ1" }
+      }
+    },
+    "subnetrouteSharedPrivateAZ1": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "RouteTableId": { "Ref": "rtbSubnet1" },
+        "SubnetId": { "Ref": "subnetSharedPrivateAZ1" }
+      }
+    },
+    "subnetrouteSharedPrivateAZ2": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "RouteTableId": { "Ref": "rtbSubnet2" },
+        "SubnetId": { "Ref": "subnetSharedPrivateAZ2" }
+      }
+    },
+    "aclSharedPublic": {
+      "Type": "AWS::EC2::NetworkAcl",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "VpcId": {"Ref": "VPC"},
+        "Tags": [
+          {"Key": "System", "Value": {"Ref": "System"}},
+          {"Key": "Environment", "Value": {"Ref": "Environment"}},
+          {"Key": "Name", "Value": { "Fn::Join": ["-", [{"Ref": "System"}, 
+              {"Ref": "Environment"}, "public"]]}}
+        ]
+      }
+    },
+    "aclSharedPrivate": {
+      "Type": "AWS::EC2::NetworkAcl",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "VpcId": {"Ref": "VPC"},
+        "Tags": [
+          {"Key": "System", "Value": {"Ref": "System"}},
+          {"Key": "Environment", "Value": {"Ref": "Environment"}},
+          {"Key": "Name", "Value": { "Fn::Join": ["-", [{"Ref": "System"}, 
+              {"Ref": "Environment"}, "private"]]}}
+        ]
+      }
+    },
+    "subnetaclSharedPublicAZ1": {
+      "Type": "AWS::EC2::SubnetNetworkAclAssociation",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "NetworkAclId": { "Ref": "aclSharedPublic" },
+        "SubnetId": { "Ref": "subnetSharedPublicAZ1"}
+      }
+    },
+    "subnetaclSharedAZ1": {
+      "Type": "AWS::EC2::SubnetNetworkAclAssociation",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "NetworkAclId": { "Ref": "aclSharedPrivate" },
+        "SubnetId": { "Ref": "subnetSharedPrivateAZ1"}
+      }
+    },
+    "subnetaclSharedAZ2": {
+      "Type": "AWS::EC2::SubnetNetworkAclAssociation",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "NetworkAclId": { "Ref": "aclSharedPrivate" },
+        "SubnetId": { "Ref": "subnetSharedPrivateAZ2" }
+      }
+    },
+    "aclSharedPublicInSsh": {
+      "Type": "AWS::EC2::NetworkAclEntry",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": "0.0.0.0/0",
+        "Protocol": "6",
+        "PortRange": {"From": "22","To": "22"},
+        "RuleAction": "allow",
+        "RuleNumber": "10",
+        "NetworkAclId": { "Ref": "aclSharedPublic" }
+      }
+    },
+    "aclSharedPublicIn1EphemeralTCP": {
+      "Type": "AWS::EC2::NetworkAclEntry",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": "0.0.0.0/0",
+        "Protocol": "6",
+        "PortRange": {"From": "32768","To": "65535"},
+        "RuleAction": "allow",
+        "RuleNumber": "100",
+        "NetworkAclId": { "Ref": "aclSharedPublic" }
+      }
+    },
+    "aclSharedPublicIn1EphemeralUDP": {
+      "Type": "AWS::EC2::NetworkAclEntry",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": "0.0.0.0/0",
+        "Protocol": "17",
+        "PortRange": {"From": "32768","To": "65535"},
+        "RuleAction": "allow",
+        "RuleNumber": "110",
+        "NetworkAclId": { "Ref": "aclSharedPublic" }
+      }
+    },
+    "aclSharedPublicIn1Http": {
+      "Type": "AWS::EC2::NetworkAclEntry",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": "0.0.0.0/0",
+        "Protocol": "6",
+        "PortRange": {"From": "80","To": "80"},
+        "RuleAction": "allow",
+        "RuleNumber": "200",
+        "NetworkAclId": { "Ref": "aclSharedPublic" }
+      }
+    },
+    "aclSharedPublicIn1Https": {
+      "Type": "AWS::EC2::NetworkAclEntry",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": "0.0.0.0/0",
+        "Protocol": "6",
+        "PortRange": {"From": "443","To": "443"},
+        "RuleAction": "allow",
+        "RuleNumber": "210",
+        "NetworkAclId": { "Ref": "aclSharedPublic" }
+      }
+    },
+    "aclSharedPublicOut1EphemeralTCP": {
+      "Type": "AWS::EC2::NetworkAclEntry",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": "0.0.0.0/0",
+        "Egress": true,
+        "Protocol": "6",
+        "PortRange": {"From": "32768","To": "65535"},
+        "RuleAction": "allow",
+        "RuleNumber": "50",
+        "NetworkAclId": { "Ref": "aclSharedPublic" }
+      }
+    },
+    "aclSharedPublicOut1Ssh": {
+      "Type": "AWS::EC2::NetworkAclEntry",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": {"Fn::Join": [".", [ {"Ref": "IpPrefix"}, "0.0/16"]]},
+        "Egress": true,
+        "Protocol": "6",
+        "PortRange": {"From": "22","To": "22"},
+        "RuleAction": "allow",
+        "RuleNumber": "100",
+        "NetworkAclId": { "Ref": "aclSharedPublic" }
+      }
+    },
+    "aclSharedPublicOut1Http": {
+      "Type": "AWS::EC2::NetworkAclEntry",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": "0.0.0.0/0",
+        "Egress": true,
+        "Protocol": "6",
+        "PortRange": {"From": "80","To": "80"},
+        "RuleAction": "allow",
+        "RuleNumber": "200",
+        "NetworkAclId": { "Ref": "aclSharedPublic" }
+      }
+    },
+    "aclSharedPublicOut1Https": {
+      "Type": "AWS::EC2::NetworkAclEntry",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": "0.0.0.0/0",
+        "Egress": true,
+        "Protocol": "6",
+        "PortRange": {"From": "443","To": "443"},
+        "RuleAction": "allow",
+        "RuleNumber": "300",
+        "NetworkAclId": { "Ref": "aclSharedPublic" }
+      }
+    },
+    "aclSharedPublicOut1Ntp": {
+      "Type": "AWS::EC2::NetworkAclEntry",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": "0.0.0.0/0",
+        "Egress": true,
+        "Protocol": "17",
+        "PortRange": {"From": "123","To": "123"},
+        "RuleAction": "allow",
+        "RuleNumber": "400",
+        "NetworkAclId": { "Ref": "aclSharedPublic" }
+      }
+    },
+    "aclSharedPrivateIn1Ssh": {
+      "Type": "AWS::EC2::NetworkAclEntry",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": {"Fn::Join": [".", [ {"Ref": "IpPrefix"}, "0.0/16"]]},
+        "Protocol": "6",
+        "PortRange": {"From": "22","To": "22"},
+        "RuleAction": "allow",
+        "RuleNumber": "10",
+        "NetworkAclId": { "Ref": "aclSharedPrivate" }
+      }
+    },
+    "aclSharedPrivateIn1EphemeralTCP": {
+      "Type": "AWS::EC2::NetworkAclEntry",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": "0.0.0.0/0",
+        "Protocol": "6",
+        "PortRange": {"From": "32768","To": "65535"},
+        "RuleAction": "allow",
+        "RuleNumber": "100",
+        "NetworkAclId": { "Ref": "aclSharedPrivate" }
+      }
+    },
+    "aclSharedPrivateIn1EphemeralUDP": {
+      "Type": "AWS::EC2::NetworkAclEntry",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": "0.0.0.0/0",
+        "Protocol": "17",
+        "PortRange": {"From": "32768","To": "65535"},
+        "RuleAction": "allow",
+        "RuleNumber": "110",
+        "NetworkAclId": { "Ref": "aclSharedPrivate" }
+      }
+    },
+    "aclSharedPrivateIn1Http": {
+      "Type": "AWS::EC2::NetworkAclEntry",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": {"Fn::Join": [".", [ {"Ref": "IpPrefix"}, "10.12/16"]]},
+        "Protocol": "6",
+        "PortRange": {"From": "80","To": "80"},
+        "RuleAction": "allow",
+        "RuleNumber": "200",
+        "NetworkAclId": { "Ref": "aclSharedPrivate" }
+      }
+    },
+    "aclSharedPrivateOut1EphemeralTCP": {
+      "Type": "AWS::EC2::NetworkAclEntry",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": "0.0.0.0/0",
+        "Egress": true,
+        "Protocol": "6",
+        "PortRange": {"From": "32768","To": "65535"},
+        "RuleAction": "allow",
+        "RuleNumber": "100",
+        "NetworkAclId": { "Ref": "aclSharedPrivate" }
+      }
+    },
+    "aclSharedPrivateOut1Http": {
+      "Type": "AWS::EC2::NetworkAclEntry",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": "0.0.0.0/0",
+        "Egress": true,
+        "Protocol": "6",
+        "PortRange": {"From": "80","To": "80"},
+        "RuleAction": "allow",
+        "RuleNumber": "200",
+        "NetworkAclId": { "Ref": "aclSharedPrivate" }
+      }
+    },
+    "aclSharedPrivateOut1Https": {
+      "Type": "AWS::EC2::NetworkAclEntry",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": "0.0.0.0/0",
+        "Egress": true,
+        "Protocol": "6",
+        "PortRange": {"From": "443","To": "443"},
+        "RuleAction": "allow",
+        "RuleNumber": "300",
+        "NetworkAclId": { "Ref": "aclSharedPrivate" }
+      }
+    },
+    "aclSharedPrivateOut1Ntp": {
+      "Type": "AWS::EC2::NetworkAclEntry",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "CidrBlock": "0.0.0.0/0",
+        "Egress": true,
+        "Protocol": "17",
+        "PortRange": {"From": "123","To": "123"},
+        "RuleAction": "allow",
+        "RuleNumber": "400",
+        "NetworkAclId": { "Ref": "aclSharedPrivate" }
+      }
+    },
+    "sgSharedBastion": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "GroupDescription": "Shared Bastion Box Services Security Group",
+        "VpcId": {"Ref": "VPC"},
+        "SecurityGroupIngress": [
+          {"IpProtocol": "tcp", "FromPort": "22", "ToPort": "22", "CidrIp": 
+              {"Ref": "PrivateAccessCIDR1"}},
+          {"IpProtocol": "tcp", "FromPort": "80", "ToPort": "80", "CidrIp": 
+              {"Ref": "PrivateAccessCIDR1"}},
+          {"IpProtocol": "tcp", "FromPort": "443", "ToPort": "443", "CidrIp": 
+              {"Ref": "PrivateAccessCIDR1"}}
+        ],
+        "SecurityGroupEgress": [
+          { "IpProtocol": "tcp", "FromPort": "22", "ToPort": "22", "CidrIp": {"Fn::Join": [".", 
+            [ {"Ref": "IpPrefix"}, "0.0/16"]]}},
+          { "IpProtocol": "tcp", "FromPort": "80", "ToPort": "80", "CidrIp": "0.0.0.0/0"},
+          { "IpProtocol": "tcp", "FromPort": "443", "ToPort": "443", "CidrIp": "0.0.0.0/0"},
+          { "IpProtocol": "udp", "FromPort": "123", "ToPort": "123", "CidrIp": "0.0.0.0/0"}
+        ],
+        "Tags": [
+          {"Key": "System","Value": {"Ref": "System"}},
+          {"Key": "Environment", "Value": {"Ref": "Environment"}},
+          {"Key": "Name", "Value": {"Fn::Join": ["-", [{"Ref": "System"}, 
+              {"Ref": "Environment"}, "bastion"]]}}
+        ]
+      }
+    }
+  },
+  "Outputs": {
+    "VpcId": {"Value": {"Ref": "VPC"}},
+    "RouteTablePublic": {"Value": {"Ref": "rtbPublicAll"}},
+    "PrivateRouteTableAZ1": {"Value": {"Ref": "rtbSubnet1"}},
+    "PrivateRouteTableAZ2": {"Value": {"Ref": "rtbSubnet2"}},
+    "SecurityGroupNAT": {"Value": {"Ref": "sgNATGatewaySG"}},
+    "SecurityGroupBastion": {"Value": {"Ref": "sgSharedBastion"}}
+  }
+}

@@ -1,0 +1,527 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Bastion Host Template",
+    "Metadata": {
+        "AWS::CloudFormation::Interface": {
+            "ParameterGroups": [
+                {
+                    "Label": {
+                        "default": "Network Configuration"
+                    },
+                    "Parameters": [
+                        "VPCID",
+                        "PublicSubnet1ID",
+                        "RemoteAccessCIDR1",
+                        "RemoteAccessCIDR2"
+                    ]
+                },
+                {
+                    "Label": {
+                        "default": "Amazon EC2 Configuration"
+                    },
+                    "Parameters": [
+                        "BastionAMIOS",
+                        "BastionInstanceType",
+                        "Bastion1PrivateIP"
+                    ]
+                },
+                {
+                    "Label": {
+                        "default": "Linux Bastion Configuration"
+                    },
+                    "Parameters": [
+                        "EnableBanner",
+                        "BastionBanner"
+                    ]
+                },
+                {
+                    "Label": {
+                        "default": "BastionConfiguration"
+                    },
+                    "Parameters": [
+                        "QSS3BucketName",
+                        "QSS3KeyPrefix"
+                    ]
+                }
+            ],
+            "ParameterLabels": {
+                "BastionInstanceType": {
+                    "default": "Bastion 1 Instance Type"
+                },
+                "Bastion1PrivateIP": {
+                    "default": "Bastion 1 Private IP Address"
+                },
+                "BastionAMIOS": {
+                    "default": "Bastion AMI Operating System"
+                },
+                "BastionBanner": {
+                    "default": "Bastion Banner"
+                },
+                "EnableBanner": {
+                    "default": "Enable Banner"
+                },
+                "PublicSubnet1ID": {
+                    "default": "Public Subnet 1 ID"
+                },
+                "QSS3BucketName": {
+                    "default": "Quick Start S3 Bucket Name"
+                },
+                "QSS3KeyPrefix": {
+                    "default": "Quick Start S3 Key Prefix"
+                },
+                "RemoteAccessCIDR1": {
+                    "default": "Allowed Bastion External Access CIDR 1"
+                },
+                "RemoteAccessCIDR2": {
+                    "default": "Allowed Bastion External Access CIDR 2"
+                },
+                "VPCID": {
+                    "default": "VPC ID"
+                }
+            }
+        }
+    },
+    "Parameters": {
+        "System": {"Type": "String"},
+        "Environment": {"Type": "String"},
+        "SecurityContext": {"Type": "String", "Default": "dev"},
+        "BastionInstanceType": {
+            "AllowedValues": [
+                "t2.nano",
+                "t2.micro",
+                "t2.small",
+                "t2.medium",
+                "t2.large",
+                "m3.large",
+                "m3.xlarge",
+                "m3.2xlarge",
+                "m4.large",
+                "m4.xlarge",
+                "m4.2xlarge",
+                "m4.4xlarge"
+            ],
+            "Default": "t2.micro",
+            "Description": "Amazon EC2 instance type for the first bastion instance",
+            "Type": "String"
+        },
+        "Bastion1PrivateIP": {
+            "AllowedPattern": "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$",
+            "ConstraintDescription": "IP address parameter must be in the form x.x.x.x",
+            "Default": "10.0.128.5",
+            "Description": "Fixed private IP for the first bastion located in Availability Zone 1",
+            "Type": "String"
+        },
+        "BastionAMIOS": {
+            "AllowedValues": [
+                "AmazonLinuxHVM",
+                "CentOS7HVM",
+                "UbuntuServer1404LTSHVM"
+            ],
+            "Default": "AmazonLinuxHVM",
+            "Description": "The Linux distribution for the AMI to be used for the bastion instances",
+            "Type": "String"
+        },
+        "BastionBanner": {
+            "Default": "Bastion",
+            "Description": "D2D BastionHost",
+            "Type": "String"
+        },
+        "EnableBanner": {
+            "AllowedValues": [
+                "true",
+                "false"
+            ],
+            "Default": "false",
+            "Description": "To include a banner to be displayed when connecting via SSH to the bastion, set this parameter to true",
+            "Type": "String"
+        },
+        "PublicSubnet1ID": {
+            "Description": "ID of the public subnet 1 that you want to provision the first bastion into (e.g., subnet-a0246dcd)",
+            "Type": "AWS::EC2::Subnet::Id"
+        },
+        "QSS3BucketName": {
+            "AllowedPattern": "^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$",
+            "ConstraintDescription": "Quick Start bucket name can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).",
+            "Default": "datagov-provisioning",
+            "Description": "S3 bucket name for the Quick Start assets. Quick Start bucket name can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).",
+            "Type": "String"
+        },
+        "QSS3KeyPrefix": {
+            "AllowedPattern": "^[0-9a-zA-Z-]+(/[0-9a-zA-Z-]+)*$",
+            "ConstraintDescription": "Quick Start key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/). It cannot start or end with forward slash (/) because they are automatically appended.",
+            "Default": "cloud-formation",
+            "Description": "S3 key ",
+            "Type": "String"
+        },
+        "RemoteAccessCIDR1": {
+            "AllowedPattern": "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\/([0-9]|[1-2][0-9]|3[0-2]))$",
+            "ConstraintDescription": "CIDR block parameter must be in the form x.x.x.x/x",
+            "Description": "Allowed CIDR block for external SSH access to the bastions",
+            "Type": "String"
+        },
+        "RemoteAccessCIDR2": {
+            "ConstraintDescription": "CIDR block parameter must be in the form x.x.x.x/x",
+            "Description": "Allowed CIDR block for external SSH access to the bastions",
+            "Type": "String",
+            "Default": ""
+        },
+        "VPCID": {
+            "Description": "ID of the VPC (e.g., vpc-0343606e)",
+            "Type": "AWS::EC2::VPC::Id"
+        }
+    },
+    "Rules": {
+        "SubnetsInVPC": {
+            "Assertions": [
+                {
+                    "Assert": {
+                        "Fn::EachMemberIn": [
+                            {
+                                "Fn::ValueOfAll": [
+                                    "AWS::EC2::Subnet::Id",
+                                    "VpcId"
+                                ]
+                            },
+                            {
+                                "Fn::RefAll": "AWS::EC2::VPC::Id"
+                            }
+                        ]
+                    },
+                    "AssertDescription": "All subnets must in the VPC"
+                }
+            ]
+        }
+    },
+    "Mappings": {
+        "AWSAMIRegionMap": {
+            "AMI": {
+                "AMZNLINUXHVM": "amzn-ami-hvm-2016.03.3.x86_64-gp2",
+                "CENTOS7HVM": "CentOS Linux 7 x86_64 HVM EBS 1602-b7ee8a69-ee97-4a49-9e68-afaee216db2e-ami-d7e1d2bd.3",
+                "US1404HVM": "ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-20161205"
+            },
+            "ap-northeast-1": {
+                "AMZNLINUXHVM": "ami-374db956",
+                "CENTOS7HVM": "ami-eec1c380",
+                "US1404HVM": "ami-db06b4ba"
+            },
+            "ap-northeast-2": {
+                "AMZNLINUXHVM": "ami-2b408b45",
+                "CENTOS7HVM": "ami-c74789a9",
+                "US1404HVM": "ami-1f2ef971"
+            },
+            "ap-south-1": {
+                "AMZNLINUXHVM": "ami-ffbdd790",
+                "CENTOS7HVM": "ami-95cda6fa",
+                "US1404HVM": "ami-93b3c4fc"
+            },
+            "ap-southeast-1": {
+                "AMZNLINUXHVM": "ami-a59b49c6",
+                "CENTOS7HVM": "ami-f068a193",
+                "US1404HVM": "ami-f0a90593"
+            },
+            "ap-southeast-2": {
+                "AMZNLINUXHVM": "ami-dc361ebf",
+                "CENTOS7HVM": "ami-fedafc9d",
+                "US1404HVM": "ami-33724a50"
+            },
+            "ca-central-1": {
+                "AMZNLINUXHVM": "ami-730ebd17",
+                "CENTOS7HVM": "ami-af62d0cb",
+                "US1404HVM": "ami-374dff53"
+            },
+            "eu-central-1": {
+                "AMZNLINUXHVM": "ami-ea26ce85",
+                "CENTOS7HVM": "ami-9bf712f4",
+                "US1404HVM": "ami-51db1d3e"
+            },
+            "eu-west-1": {
+                "AMZNLINUXHVM": "ami-f9dd458a",
+                "CENTOS7HVM": "ami-7abd0209",
+                "US1404HVM": "ami-3cbae14f"
+            },
+            "eu-west-2": {
+                "AMZNLINUXHVM": "ami-886369ec",
+                "CENTOS7HVM": "ami-bb373ddf",
+                "US1404HVM": "ami-f8d1db9c"
+            },
+            "sa-east-1": {
+                "AMZNLINUXHVM": "ami-6dd04501",
+                "CENTOS7HVM": "ami-26b93b4a",
+                "US1404HVM": "ami-9a851cf6"
+            },
+            "us-east-1": {
+                "AMZNLINUXHVM": "ami-6869aa05",
+                "CENTOS7HVM": "ami-6d1c2007",
+                "US1404HVM": "ami-72343365"
+            },
+            "us-east-2": {
+                "AMZNLINUXHVM": "ami-f6035893",
+                "CENTOS7HVM": "ami-6a2d760f",
+                "US1404HVM": "ami-88b6eced"
+            },
+            "us-west-1": {
+                "AMZNLINUXHVM": "ami-31490d51",
+                "CENTOS7HVM": "ami-af4333cf",
+                "US1404HVM": "ami-27bdea47"
+            },
+            "us-west-2": {
+                "AMZNLINUXHVM": "ami-7172b611",
+                "CENTOS7HVM": "ami-d2c924b2",
+                "US1404HVM": "ami-5156fe31"
+            }
+        },
+        "AWSInfoRegionMap": {
+            "ap-northeast-1": {
+                "Partition": "aws",
+                "URL": "https://s3.amazonaws.com"
+            },
+            "ap-northeast-2": {
+                "Partition": "aws",
+                "URL": "https://s3.amazonaws.com"
+            },
+            "ap-south-1": {
+                "Partition": "aws",
+                "URL": "https://s3.amazonaws.com"
+            },
+            "ap-southeast-1": {
+                "Partition": "aws",
+                "URL": "https://s3.amazonaws.com"
+            },
+            "ap-southeast-2": {
+                "Partition": "aws",
+                "URL": "https://s3.amazonaws.com"
+            },
+            "ca-central-1": {
+                "Partition": "aws",
+                "URL": "https://s3.amazonaws.com"
+            },
+            "eu-central-1": {
+                "Partition": "aws",
+                "QuickStartS3URL": "https://s3.amazonaws.com"
+            },
+            "eu-west-1": {
+                "Partition": "aws",
+                "URL": "https://s3.amazonaws.com"
+            },
+            "eu-west-2": {
+                "Partition": "aws",
+                "QuickStartS3URL": "https://s3.amazonaws.com"
+            },
+            "sa-east-1": {
+                "Partition": "aws",
+                "URL": "https://s3.amazonaws.com"
+            },
+            "us-east-1": {
+                "Partition": "aws",
+                "URL": "https://s3.amazonaws.com"
+            },
+            "us-east-2": {
+                "Partition": "aws",
+                "QuickStartS3URL": "https://s3.amazonaws.com"
+            },
+            "us-gov-west-1": {
+                "Partition": "aws-us-gov",
+                "URL": "https://s3-us-gov-west-1.amazonaws.com"
+            },
+            "us-west-1": {
+                "Partition": "aws",
+                "URL": "https://s3.amazonaws.com"
+            },
+            "us-west-2": {
+                "Partition": "aws",
+                "URL": "https://s3.amazonaws.com"
+            }
+        },
+        "LinuxAMINameMap": {
+            "AmazonLinuxHVM": {
+                "Code": "AMZNLINUXHVM"
+            },
+            "CentOS7HVM": {
+                "Code": "CENTOS7HVM"
+            },
+            "UbuntuServer1404LTSHVM": {
+                "Code": "US1404HVM"
+            }
+        }
+    },
+    "Conditions": {
+        "HasSecondaryRemoteAccess": {"Fn::Not": [
+                {"Fn::Equals": [{"Ref": "RemoteAccessCIDR2"}, ""]}
+            ]
+        }
+    },
+    "Resources": {
+        "LinuxBastion1EIP": {
+            "Type": "AWS::EC2::EIP",
+            "Properties": {
+                "Domain": "vpc",
+                "InstanceId": {
+                    "Ref": "LinuxBastion1"
+                }
+            }
+        },
+        "LinuxBastion1": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "ImageId": {
+                    "Fn::FindInMap": ["AWSAMIRegionMap", {"Ref": "AWS::Region"},
+                        {"Fn::FindInMap": [
+                            "LinuxAMINameMap",{"Ref": "BastionAMIOS"},"Code"
+                        ]}
+                    ]
+                },
+                "InstanceType": {"Ref": "BastionInstanceType"},
+                "NetworkInterfaces": [
+                    {
+                        "AssociatePublicIpAddress": true,
+                        "DeleteOnTermination": "true",
+                        "DeviceIndex": 0,
+                        "SubnetId": {
+                            "Ref": "PublicSubnet1ID"
+                        },
+                        "GroupSet": [
+                            {
+                                "Ref": "BastionSecurityGroup"
+                            }
+                        ]
+                    }
+                ],
+                "Tags": [
+                    {"Key": "System", "Value": {"Ref": "System"}},
+                    {"Key": "Environment", "Value": {"Ref": "Environment"}},
+                    {"Key": "Resource", "Value": "LinuxBastion1"},
+                    {"Key": "Name", "Value": {"Fn::Join": ["_", [{"Ref": "System"}, 
+                            {"Ref": "SecurityContext"}, "LinuxBastion1"]]}}
+                ],
+                "KeyName": {"Fn::Join": ["_", [{"Ref": "System"}, 
+                    {"Ref": "SecurityContext"}, "bastion"]]
+                },
+                "UserData": {
+                    "Fn::Base64": {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "#!/usr/bin/env bash\n",
+                                "BASTION_BOOTSTRAP_FILE=bastion_bootstrap.sh\n",
+                                "BASTION_BOOTSTRAP=",
+                                {
+                                    "Fn::FindInMap": [
+                                        "AWSInfoRegionMap",
+                                        {
+                                            "Ref": "AWS::Region"
+                                        },
+                                        "QuickStartS3URL"
+                                    ]
+                                },
+                                "/",
+                                {
+                                    "Ref": "QSS3BucketName"
+                                },
+                                "/",
+                                {
+                                    "Ref": "QSS3KeyPrefix"
+                                },
+                                "/scripts/",
+                                "${BASTION_BOOTSTRAP_FILE}",
+                                "\n",
+                                "echo ${BASTION_BOOTSTRAP}",
+                                "\n",
+                                "curl -s ${BASTION_BOOTSTRAP} > ${BASTION_BOOTSTRAP_FILE} ",
+                                "\n",
+                                "chmod +x ${BASTION_BOOTSTRAP_FILE}\n",
+                                "./${BASTION_BOOTSTRAP_FILE} ",
+                                " --banner ",
+                                {
+                                    "Ref": "BastionBanner"
+                                },
+                                " --enable ",
+                                {
+                                    "Ref": "EnableBanner"
+                                },
+                                "\n"
+                            ]
+                        ]
+                    }
+                }
+            }
+        },
+        "BastionSecurityGroup": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Enables SSH Access",
+                "VpcId": {
+                    "Ref": "VPCID"
+                },
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "22",
+                        "ToPort": "22",
+                        "CidrIp": {
+                            "Ref": "RemoteAccessCIDR1"
+                        }
+                    },
+                    {
+                        "IpProtocol": "icmp",
+                        "FromPort": "-1",
+                        "ToPort": "-1",
+                        "CidrIp": {
+                            "Ref": "RemoteAccessCIDR1"
+                        }
+                    }
+                ],
+                "Tags": [
+                    {"Key": "System", "Value": {"Ref": "System"}},
+                    {"Key": "Environment", "Value": {"Ref": "Environment"}},
+                    {"Key": "Name", "Value": {"Fn::Join": ["_", [{"Ref": "System"}, 
+                        {"Ref": "SecurityContext"}, "bastion"]]}}
+                ]
+            }
+        },
+        "BastionSecurityGroupRemoteSSH2": {
+            "Type": "AWS::EC2::SecurityGroupIngress",
+            "Condition": "HasSecondaryRemoteAccess",
+            "Properties": {
+                "GroupId": {"Ref": "BastionSecurityGroup"},
+                "IpProtocol": "tcp",
+                "FromPort": "22",
+                "ToPort": "22",
+                "CidrIp": {"Ref": "RemoteAccessCIDR2"}
+            }
+        },
+        "BastionSecurityGroupRemoteICMP": {
+            "Type": "AWS::EC2::SecurityGroupIngress",
+            "Condition": "HasSecondaryRemoteAccess",
+            "Properties": {
+                "GroupId": {"Ref": "BastionSecurityGroup"},
+                "IpProtocol": "icmp",
+                "FromPort": "-1",
+                "ToPort": "-1",
+                "CidrIp": {"Ref": "RemoteAccessCIDR2"}
+            }
+        }
+    },
+    "Outputs": {
+        "LinuxBastion1PublicDNSName": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "LinuxBastion1",
+                    "PublicDnsName"
+                ]
+            },
+            "Description": "Public DNS name of the Linux Bastion 1 in Avalability Zone 1"
+        },
+        "LinuxBastion1ElasticIP": {
+            "Value": {
+                "Ref": "LinuxBastion1EIP"
+            },
+            "Description": "Elastic IP address of the Linux Bastion 1 in Avalability Zone 1"
+        },
+        "BastionSecurityGroupID": {
+            "Value": {
+                "Ref": "BastionSecurityGroup"
+            },
+            "Description": "Bastion Security Group ID"
+        }
+    }
+}

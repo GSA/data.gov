@@ -1,146 +1,124 @@
+// ============================================================================
+// Assumes the script referenced in env.PIPELINE_SCRIPT
+// has functions named
+//   1. provision(environment) - that provisions the environment
+//   2. test() - that tests the provisioined servers, not used yet
+//   3. other, e.g. setUp/initialize (at start of pipeline) and 
+//      tearDown/finalize (at end of pipeline) once implemented
+// This script will invoke those scripts in the order given above
+
+// Logic is to be added to select the correct pipeline script based 
+// on phrases inthe name of the job name (env.JOB_NAME)
+// ============================================================================
+
 env.AWS_REGION = "us-east-2"
+env.PIPELINE_SCRIPT = "full"
 
 stage('Initialize') {
     node("master") {
+    	setPipelineScript()
         checkout scm
         sh "touch ~/ansible-secret.txt"
     }
 }
 
-provision(devEnvironmentName())
-if (isMaster()) {
-    provision("prod")
+
+runPipeline(env.PIPELINE_SCRIPT)
+
+
+def runPipeline(pipeline) {
+    runStages(pipeline, "dev")
+    runStages(pipeline, "prod")
 }
 
-def provision(environment) {
-    def label = ((environment.startsWith("dev")) ? "dev" : environment).
-        toUpperCase();
 
-    if (label != "DEV") {
-        stage("Proceed to ${label}") {
-            timeout(time:5, unit:'DAYS') {
-                input "Deploy to ${label}?"
-            }
-        }
+def runStages(pipeline, environment) {
+    if (isDev(environment) || isMaster()) {
+        //initialize(environment)
+        provision(pipeline, environment)
+        test(pipeline, environment)
+        // do other stages here
+    } else {
+    echo "Skipping ${environment}, because feature branch (${env.BRANCH_NAME})"
     }
+}
 
-    stage("${label}: Provision Infrastructure") {
-        node("master") {
-            runTerraform('infrastructure', environment)
-        }
-    }
 
-    stage("${label}: Provision Pilot") {
-        node("master") {
-            runTerraform('pilot', environment, "infrastructure")
-        }
-    }
-
-    stage("${label}: Provision Jumpbox") {
+def provision(pipeline, environment) {
+    stage("${getLabel(environment)} - ${pipeline}: Provision") {
         node('master') {
-            runPlaybook("jumpbox", "pilot", environment, 
-                "always,jumpbox,apache", "shibboleth", 
-                "bastion")
-        }
-    }
-
-    stage("${label}: Provision Datagov-web") {
-        node('master') {
-            runPlaybook("datagov-web", "pilot", environment, null,
-                "trendmicro,vim,deploy,deploy-rollback,secops,postfix",
-                "wordpress-web",
-                "wordpress-web")
+            getPipeline().provision(nameEnvironment(environment))
         }
     }
 }
+
+def test(pipeline, environment) {
+    stage("${getLabel(environment)} - ${pipeline}: Test") {
+        node('master') {
+            getPipeline().test(nameEnvironment(environment))
+        }
+    }
+}
+
+def nameEnvironment(environment) {
+	if (isDev(environment) && !isMaster()) {
+		environment = "${environment}-${env.BRANCH_NAME}"
+	}
+    return environment
+}
+
+def getLabel(environment) {
+    return environment.toUpperCase()
+}
+
+def setPipelineScript() {
+	def selectors = getPipelineSelectors()
+	def name = getPipelineName().toLowerCase()
+	def script = env.PIPELINE_SCRIPT
+	echo "Select pipeline (default: ${env.PIPELINE_SCRIPT})"
+	for (s in selectors) {
+		// Using ~ causes Jenkins to fail, citing that
+		// the bitwise negate operator is not allowed
+		// Therefore using the Pattern object explicitly
+		echo "Checking ${name} against ${s.selector}"
+		if (name ==~ s.selector) {
+			echo "Selecting pipeline ${s.pipeline}"
+			script = s.pipeline
+			// NOTE that script could be change to return a list
+			// of all matching pattern and then run all those pipelines
+			// per environment
+			break
+		}
+	}
+	echo "Selected Pipeline=${script}"
+	env.PIPELINE_SCRIPT = script
+}
+
+def getPipelineName() {
+	def names = env.JOB_NAME.split("/")
+	def name = names[0]
+	echo "JOB_NAME=${env.JOB_NAME}"
+	echo" Pipeline Name=${name}"
+	return name
+}
+
+def getPipelineSelectors() {
+	def selectors = []
+	selectors << [selector:/.*d2d.*/,                 pipeline: "d2d" ]
+	selectors << [selector:/.*datagov.*terraform.*/,  pipeline: "datagov-terraform" ]
+	selectors << [selector:/.*datagov.*ansible.*/,    pipeline: "datagov-ansible" ]
+	return selectors
+}
+
+def getPipeline() {
+   def pipeline = load "${pwd()}/jenkins/pipeline/${env.PIPELINE_SCRIPT}.groovy"
+   return pipeline
+}
+
 def isMaster() {
-    return (env.BRANCH_NAME == 'master') || (env.BRANCH_NAME == 'master-demo');
+    return (env.BRANCH_NAME.startsWith("master"))
 }
 
-def devEnvironmentName() {
-    return (isMaster()) ? "dev" : "dev-${env.BRANCH_NAME}"
+def isDev(environment) {
+    return  (environment == "dev")
 }
-
-def runTerraform(stack_name, environment, dependsOnStack = null) {
-    dir("terraform/") {
-        def script = "${pwd()}/bin/manage-stack.sh"
-        def args = []
-        sh "chmod 700 '${script}'"
-        args << "-v"
-        args << "-v"
-        args << "--action create"
-        if (dependsOnStack) {
-            args << "--input stack-output:///${dependsOnStack}/${environment}"
-        }
-        sh "'${script}' ${args.join(' ')} '${stack_name}' '${environment}'"
-    }
-}
-
-
-def runPlaybook(playbook, stack, environment, tags = null, 
-    skippedTags = null,  resource = null, hostname = null)
-{
-    dir('./ansible') {
-        resource = (resource != null) ? resource : playbook
-        def inventoryName = newInventory(playbook, stack, environment, resource, hostname)
-        def extras = "-i ${inventoryName} --extra-vars \"${playbook}_hostname=${playbook}\""
-        if (tags != null) {
-            ansiblePlaybook playbook: "./${playbook}.yml",
-                sudoUser: "ubuntu",
-                credentialsId: "${env.AWS_REGION}-datagov_dev_${resource}",
-                tags: "${tags}",
-                skippedTags: "${skippedTags}",
-                forks: 5,
-                extras: extras
-        } else {
-            ansiblePlaybook playbook: "./${playbook}.yml",
-                sudoUser: "ubuntu",
-                credentialsId: "${env.AWS_REGION}-datagov_dev_${resource}",
-                skippedTags: "${skippedTags}",
-                forks: 5,
-                extras: extras
-        }
-    }
-}
-
-
-
-// The following function are no longer necessary when 
-// changing to Ansible dynamic inventory
-def newInventory(playbook, stack, environment, resource = null, hostname = null,
-    fileName = null)
-{
-    if (fileName == null) {
-        fileName = "./${playbook}.hosts"
-    }
-    sh "rm -f ${fileName}"
-    sh "echo '' > ${fileName}"
-    resource = (resource != null) ? resource : playbook
-    hostname = (hostname != null) ? hostname : playbook
-    echo "hostname=${hostname}"
-    def ip = discoverResourcePublicIp(stack, environment, resource)
-    assert ip != "" :
-        "No IP address found for ${env.AWS_REGION}:${stack}:${environment}:${resource}"
-    echo "${stack}::${playbook} found at '${ip}'"
-    writeFile encoding: 'ascii', file: fileName, 
-        text: "${hostname} ansible_host=${ip}\n"
-    sh "cat ${fileName}"
-    return fileName
-}
-
-def discoverResourcePublicIp(stack, environment, resource) {
-    return sh (
-        script: """aws ec2 describe-instances \
-            --region ${env.AWS_REGION} \
-            --filter "Name=tag:System,Values=datagov" \
-                     \"Name=tag:Stack,Values=${stack}\" \
-                     \"Name=tag:Environment,Values=${environment}\" \
-                     \"Name=tag:Resource,Values=${resource}\" \
-                     \"Name=instance-state-name,Values=running\" \
-            --query \"Reservations[].Instances[].{Ip:PublicIpAddress}\" \
-            --output text
-            """,
-        returnStdout: true
-    )
-}
-
