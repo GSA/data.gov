@@ -9,7 +9,6 @@ def initialize(environment) {
 def provision(environment) {
     def terraform = load "./jenkins/provisioner/terraform.groovy"
     terraform.run('infrastructure', environment)   
-    terraform.run('pilot', environment, "infrastructure")   
 }
 
 def test(environment) {

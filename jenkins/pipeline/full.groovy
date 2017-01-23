@@ -6,8 +6,8 @@ def initialize(environment) {
 }
 
 def provision(environment) {
-    runPipeline('datagov-terraform', environment)
-    runPipeline('datagov-ansible', environment)
+    runPipeline('datagov-infrastructure', environment)
+    runPipeline('datagov-pilot', environment)
     runPipeline('d2d', environment)
 }
 
