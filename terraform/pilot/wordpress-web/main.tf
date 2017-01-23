@@ -37,6 +37,7 @@ resource "aws_instance" "wordpress_web" {
         Stack = "${var.stack}"
         Environment = "${var.environment}"
         Resource = "wordpress-web"
+        Office = "403"
     }
 }
 

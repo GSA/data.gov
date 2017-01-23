@@ -42,8 +42,12 @@ def runPipeline(pipeline) {
 
 
 def runStages(pipeline, environment) {
-    if (isDev(environment) || isMaster()) {
+	def isDev = isDev(environment)
+    if (isDev || isMaster()) {
         //initialize(environment)
+        if (!isDev) {
+        	proceed(pipeline, environment)
+        }
         provision(pipeline, environment)
         test(pipeline, environment)
         // do other stages here
@@ -52,9 +56,19 @@ def runStages(pipeline, environment) {
     }
 }
 
+def proceed(pipeline, environment) {
+	def label = getLabel(environment)
+    stage("${pipeline}-${label}: Proceed?") {
+    	node('master') {
+			timeout(time:5, unit:'DAYS') {
+              	input "Do you want to continue to ${label}?"
+            }
+         }
+    }
+}
 
 def provision(pipeline, environment) {
-    stage("${getLabel(environment)} - ${pipeline}: Provision") {
+    stage("${pipeline}-${getLabel(environment)}: Provision") {
         node('master') {
             getPipeline(pipeline).provision(nameEnvironment(environment))
         }
@@ -62,7 +76,7 @@ def provision(pipeline, environment) {
 }
 
 def test(pipeline, environment) {
-    stage("${getLabel(environment)} - ${pipeline}: Test") {
+    stage("${pipeline}-${getLabel(environment)}: Test") {
         node('master') {
             getPipeline(pipeline).test(nameEnvironment(environment))
         }
@@ -113,9 +127,9 @@ def getPipelineName() {
 
 def getPipelineSelectors() {
 	def selectors = []
-	selectors << [selector:/.*d2d.*/,                 pipeline: "d2d" ]
-	selectors << [selector:/.*datagov.*terraform.*/,  pipeline: "datagov-terraform" ]
-	selectors << [selector:/.*datagov.*ansible.*/,    pipeline: "datagov-ansible" ]
+	selectors << [selector:/.*d2d.*/,             pipeline: "d2d" ]
+	selectors << [selector:/.*datagov.*infra.*/,  pipeline: "datagov-infrastructure" ]
+	selectors << [selector:/.*datagov.*pilot.*/,  pipeline: "datagov-pilot" ]
 	return selectors
 }
 
