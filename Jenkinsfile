@@ -43,7 +43,7 @@ def runStages(pipeline, environment) {
         test(pipeline, environment)
         // do other stages here
     } else {
-    echo "Skipping ${environment}, because feature branch (${env.BRANCH_NAME})"
+    	echo "Skipping ${environment}, because feature branch (${env.BRANCH_NAME})"
     }
 }
 
