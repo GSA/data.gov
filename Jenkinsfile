@@ -17,12 +17,21 @@ env.PIPELINE_SCRIPT = getPipelineScript("full")
 stage('Initialize') {
     node("master") {
         checkout scm
-        sh "touch ~/ansible-secret.txt"
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', 
+        	credentialsId: 'ansible-secret-dev', 
+        	usernameVariable: 'UN', 
+        	passwordVariable: 'PASSWORD']]) 
+        {
+            sh """
+            	rm -rf ~/ansible-secret.txt && echo '${env.PASSWORD}' >> \
+            	~/ansible-secret.txt
+            """
+        }
+        //sh "touch ~/ansible-secret.txt"
     }
 }
 
 runPipeline(env.PIPELINE_SCRIPT)
-
 
 
 
@@ -47,7 +56,7 @@ def runStages(pipeline, environment) {
 def provision(pipeline, environment) {
     stage("${getLabel(environment)} - ${pipeline}: Provision") {
         node('master') {
-            getPipeline().provision(nameEnvironment(environment))
+            getPipeline(pipeline).provision(nameEnvironment(environment))
         }
     }
 }
@@ -55,7 +64,7 @@ def provision(pipeline, environment) {
 def test(pipeline, environment) {
     stage("${getLabel(environment)} - ${pipeline}: Test") {
         node('master') {
-            getPipeline().test(nameEnvironment(environment))
+            getPipeline(pipeline).test(nameEnvironment(environment))
         }
     }
 }
@@ -110,8 +119,8 @@ def getPipelineSelectors() {
 	return selectors
 }
 
-def getPipeline() {
-   def pipeline = load "${pwd()}/jenkins/pipeline/${env.PIPELINE_SCRIPT}.groovy"
+def getPipeline(name) {
+   def pipeline = load "${pwd()}/jenkins/pipeline/${name}.groovy"
    return pipeline
 }
 
