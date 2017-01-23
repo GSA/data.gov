@@ -7,7 +7,7 @@ def run(playbook, system, environment, resource, tags = null,
         def credentialsID = getCredentialsId(system, environment, 
                 (resource != null) ? resource : playbook)
         def hosts = getHosts(system, environment, resource)
-        def extras = "-vvvv --extra-vars \"playbook_hosts=${hosts}\""
+        def extras = "-vvvv --extra-vars \"playbook_hosts=${hosts}\" dummy=\"dummy\""
 
         if (tags != null) {
             ansiblePlaybook playbook: "./${playbook}.yml",

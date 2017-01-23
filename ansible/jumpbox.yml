@@ -1,7 +1,6 @@
 ---
 - name: Install
-  hosts: tag_Name_datagov_dev-92-dynamic-inventory_bastion
-  #"{{ playbook_hosts | default('localhost') }}"
+  hosts: "{{ playbook_hosts | default('localhost') }}"
   sudo: yes
   vars:
       app_type: jumpbox
