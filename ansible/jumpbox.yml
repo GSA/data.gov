@@ -1,6 +1,6 @@
 ---
 - name: Install
-  hosts: '{{ playbook_hosts | default('localhost') }}'
+  hosts: '{{ playbook_hosts | default("localhost") }}'
   sudo: yes
   vars:
       app_type: jumpbox
