@@ -36,20 +36,20 @@ def getCredentialsId(system, environment, resource) {
 
 def newInventory(playbook, system, environment, resource) {
     def group_id = "${playbook}_hosts"
-    def host_tag = getHosts(system, environment, resource)
+    def variable = getDynamicVariable(system, environment, resource)
     if (fileName == null) {
         fileName = "./${playbook}.hosts"
     }
     sh "rm -f ${fileName}"
     sh "echo '' > ${fileName}"
-    echo "group_id: ${group_id}; host_tag: ${host_tag}"
+    echo "group_id: ${group_id}; variable: ${variable}"
     writeFile encoding: 'ascii', file: fileName, text: "[${group_id}]\n"
-    writeFile encoding: 'ascii', file: fileName, text: "${host_tag}\n"
+    writeFile encoding: 'ascii', file: fileName, text: "${variable}\n"
     sh "cat ${fileName}"
     return fileName
 }
 
-def getHosts(system, environment, resource) {
+def getDynamicVariable(system, environment, resource) {
     return "tag_Name_${system}_${environment}_${resource}"
 }
 
