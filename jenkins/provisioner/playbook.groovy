@@ -32,6 +32,9 @@ def run(playbook, system, environment, resource, tags = null,
 def getCredentialsId(system, environment, resource) {
     def isDev = (environment.startsWith("dev-"))
     def securityContext = ((isDev) ? "dev" : environment)
+    // FIXME: Requires add other security context keypairs and 
+    // using those key pairs in stacks
+    securityContext = "dev" 
     return "${env.AWS_REGION}-${system}_${securityContext}_${resource}"
 }
 
