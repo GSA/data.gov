@@ -8,8 +8,8 @@ def run(playbook, system, environment, resource, tags = null,
                 (resource != null) ? resource : playbook)
         def mapping = getDynamicMapping(system, environment, resource)
         def variable = "${playbook}_hosts".replaceAll(/-/, "_")
-        def extras = "-i ./inventories/ec2.py"
-        extras="${extras}  --extra-vars \"${variable}=${mapping}\""
+        //def extras = "-i ./inventories/ec2.py"
+        def extras="--extra-vars \"${variable}=${mapping}\""
 
         sh "chmod +x ./inventories/ec2.py"
         // sh "./inventories/ec2.py --list"
