@@ -78,7 +78,11 @@ def provision(pipeline, environment) {
 def test(pipeline, environment) {
     stage("${pipeline}-${getLabel(environment)}: Test") {
         node('master') {
-            getPipeline(pipeline).test(nameEnvironment(environment))
+            def reportsDirectory = "test-reports" 
+            getPipeline(pipeline).test(nameEnvironment(environment),
+                "${pwd}()/${reportsDirectory}")
+            step([$class: 'JUnitResultArchiver',
+                testResults: '**/${reportsDirectory}/TEST-*.xml'])
         }
     }
 }

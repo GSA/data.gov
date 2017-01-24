@@ -13,7 +13,7 @@ def provision(environment) {
     terraform.run('infrastructure', environment)   
 }
 
-def test(environment) {
+def test(environment, outputDirectory) {
     // Nothing here yet
 }
 

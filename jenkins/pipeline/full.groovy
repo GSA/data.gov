@@ -11,7 +11,7 @@ def provision(environment) {
     runPipeline('d2d', environment)
 }
 
-def test(environment) {
+def test(environment, outputDirectory) {
 }
 
 def runPipeline(name, environment) {
