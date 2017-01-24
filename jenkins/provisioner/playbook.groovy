@@ -6,16 +6,13 @@ def run(playbook, system, environment, resource, tags = null,
         def userName = "ubuntu"
         def credentialsID = getCredentialsId(system, environment, 
                 (resource != null) ? resource : playbook)
-        //def inventoryName = newInventory(playbook, system, environment, resource)
-        // def extras = "-i ${inventoryName}"
         def mapping = getDynamicMapping(system, environment, resource)
-        def variable = "${playbook}_hosts"
-        //def extras = "--extra-vars \"${variable}=${mapping}\""
-        def extras = "-i ./inventories/ec2.py --extra-vars \"${variable}=${mapping}\""
-        extras="${extras} -vvvv"
+        def variable = "${playbook}_hosts".replaceAll(/-/, "_")
+        def extras = "-i ./inventories/ec2.py"
+        extras="${extras}  --extra-vars \"${variable}=${mapping}\""
 
-        sh "chmod +x ./inventories/ec2.py"
-        sh "./inventories/ec2.py --list"
+        // sh "chmod +x ./inventories/ec2.py"
+        // sh "./inventories/ec2.py --list"
 
         if (tags != null) {
             ansiblePlaybook playbook: "./${playbook}.yml",
@@ -41,19 +38,6 @@ def getCredentialsId(system, environment, resource) {
     def securityContext = ((isDev) ? "dev" : environment)
     return "${env.AWS_REGION}-${system}_${securityContext}_${resource}"
 }
-
-// def newInventory(playbook, system, environment, resource) {
-//     def group_id = "${playbook}_hosts"
-//     def mapping = getDynamicMapping(system, environment, resource)
-//     def inventoryText = "[${group_id}]\n${mapping}\n"
-//     def fileName = "./${playbook}.hosts"
-//     sh "rm -f ${fileName}"
-//     sh "echo '' > ${fileName}"
-//     echo "group_id: ${group_id}; mapping: ${mapping}; text: ${inventoryText}"
-//     writeFile encoding: 'ascii', file: fileName, text: inventoryText
-//     sh "cat ${fileName}"
-//     return fileName
-// }
 
 def getDynamicMapping(system, environment, resource) {
     return "tag_Name_${system}_${environment}_${resource}".replaceAll(/-/,"_")
