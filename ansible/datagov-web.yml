@@ -7,9 +7,8 @@
 #  roles:
 #  - { role: datagov-sudo-0-precheck, tags: [precheck] }
 
-
 - name: Provisioning WordPress Web AMI
-  hosts: wordpress-web
+  hosts:  "{{ datagov_web_hosts | default('wordpress-web') }}"
   remote_user: ubuntu
   become: yes
   become_method: sudo
