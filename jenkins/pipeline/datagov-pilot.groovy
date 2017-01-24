@@ -31,9 +31,11 @@ def test(environment, outputDirectory) {
     for (ip in ips) {
         echo "Create environment file"
         dir ("./postman/pilot") {
-            sh "cat ./environment-template.json | " + 
+            def command = "cat ./environment-template.json | " + 
                 "sed -e \"s|__WORDPRESS_WEB_HOST__|${ip}|g\"" + 
                 " > ${enviromentFile}"
+            echo "About to run [${command}]"
+            sh command
             def tests = [ "verify-pilot" ]
             echo "Loop tests"
             for (test in tests) {
