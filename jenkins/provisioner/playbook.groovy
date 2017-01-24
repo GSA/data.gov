@@ -11,7 +11,7 @@ def run(playbook, system, environment, resource, tags = null,
         def mapping = getDynamicMapping(system, environment, resource)
         def variable = "${playbook}_hosts"
         //def extras = "--extra-vars \"${variable}=${mapping}\""
-        def extras = "-i ./inventories/ec2.py --host ${mapping}"
+        def extras = "-i ./inventories/ec2.py --extra-vars \"${variable}=${mapping}\""
         extras="${extras} -vvvv"
 
         sh "chmod +x ./inventories/ec2.py"
