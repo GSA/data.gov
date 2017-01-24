@@ -37,12 +37,15 @@ def getCredentialsId(system, environment, resource) {
 def newInventory(playbook, system, environment, resource) {
     def group_id = "${playbook}_hosts"
     def variable = getDynamicVariable(system, environment, resource)
+    def inventoryText = """
+            | [${group_id}]
+            | ${variable}
+        """.trimMargin("| ")
     def fileName = "./${playbook}.hosts"
     sh "rm -f ${fileName}"
     sh "echo '' > ${fileName}"
     echo "group_id: ${group_id}; variable: ${variable}"
-    writeFile encoding: 'ascii', file: fileName, text: "[${group_id}]\n"
-    writeFile encoding: 'ascii', file: fileName, text: "${variable}\n"
+    writeFile encoding: 'ascii', file: fileName, text: invemtoryText
     sh "cat ${fileName}"
     return fileName
 }
