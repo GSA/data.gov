@@ -6,7 +6,7 @@ def initialize(environment) {
 }
 
 def provision(environment) {
-    runPipeline('datagov-infrastructure', environment)
+    runPipeline('shared-infrastructure', environment)
     runPipeline('datagov-pilot', environment)
     runPipeline('d2d', environment)
 }

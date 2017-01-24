@@ -128,7 +128,7 @@ def getPipelineName() {
 def getPipelineSelectors() {
 	def selectors = []
 	selectors << [selector:/.*d2d.*/,             pipeline: "d2d" ]
-	selectors << [selector:/.*datagov.*infra.*/,  pipeline: "datagov-infrastructure" ]
+	selectors << [selector:/.*shared.*infra.*/,  pipeline: "shared-infrastructure" ]
 	selectors << [selector:/.*datagov.*pilot.*/,  pipeline: "datagov-pilot" ]
 	return selectors
 }

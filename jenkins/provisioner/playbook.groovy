@@ -1,19 +1,15 @@
 
 def run(playbook, system, environment, resource, tags = null, 
-    skippedTags = null)
+    skippedTags = null, hostVariable = null)
 {
     dir('./ansible') {
         def userName = "ubuntu"
         def credentialsID = getCredentialsId(system, environment, 
                 (resource != null) ? resource : playbook)
         def mapping = getDynamicMapping(system, environment, resource)
-        def variable = "${playbook}_hosts".replaceAll(/-/, "_")
-        //def extras = "-i ./inventories/ec2.py"
+        def variable = ((hostVariable != null) ? hostVariable :
+                "${playbook}_hosts").replaceAll(/-/, "_")
         def extras="--extra-vars \"${variable}=${mapping}\""
-
-        sh "chmod +x ./inventories/ec2.py"
-        // sh "./inventories/ec2.py --list"
-
         if (tags != null) {
             ansiblePlaybook playbook: "./${playbook}.yml",
                 sudoUser: userName,
