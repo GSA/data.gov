@@ -45,4 +45,15 @@
     RewriteCond %{HTTP_REFERER}    !{{saml2_idp_entry}} [NC]
     RewriteCond %{HTTP_COOKIE}     !auth_tkt
     RewriteRule ^(.*)$ {{ url_readonly }}$1 [R,L]
+
+
+    RewriteRule ^/api/rest/dataset$ api/action/package_search [R]
+    RewriteRule ^/api/1/rest/dataset$ api/3/action/package_search [R]
+    RewriteRule ^/api/2/rest/dataset$ api/3/action/package_search [R]
+
+    RewriteRule ^/api/action/package_list$ api/action/package_search [R]
+    RewriteRule ^/api/3/action/package_list$ api/3/action/package_search [R]
+
+    RewriteRule ^/api/action/current_package_list_with_resources api/action/package_search [R]
+    RewriteRule ^/api/3/action/current_package_list_with_resources api/3/action/package_search [R]
 </VirtualHost>
