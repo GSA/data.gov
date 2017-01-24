@@ -9,7 +9,7 @@ def run(playbook, system, environment, resource, tags = null,
         //def inventoryName = newInventory(playbook, system, environment, resource)
         //def extras = "-i ${inventoryName} -vvvv"
         def mapping = getDynamicMapping(system, environment, resource)
-        def variable = "${playbook}_hosts}"
+        def variable = "${playbook}_hosts"
         def extras = "--extra-vars \"${variable}=${mapping}\" -vvvv"
 
         if (tags != null) {
