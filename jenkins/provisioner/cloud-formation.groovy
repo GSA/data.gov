@@ -24,8 +24,8 @@ def run(stack_name, environment, inputs = null, waitForCompletion = 60) {
 }
 
 def getTerraformOutputURI(input, bucketName) {
-    def environment = input.environment.startsWith("dev-")) "dev" :
-            input.environment
+    def environment = (input.environment.startsWith("dev-")) 
+            ? "dev" : input.environment
     return "s3://${bucketName}/terraform/${input.stackName}" +
         "/${environment}/${input.stackName}-output.tfvars"
 }
