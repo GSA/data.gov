@@ -37,10 +37,7 @@ def getCredentialsId(system, environment, resource) {
 def newInventory(playbook, system, environment, resource) {
     def group_id = "${playbook}_hosts"
     def variable = getDynamicVariable(system, environment, resource)
-    def inventoryText = [
-        "[${group_id}]",
-        variable
-    ]
+    def inventoryText = [ "${group_id}=${variable}" ]
     def fileName = "./${playbook}.hosts"
     sh "rm -f ${fileName}"
     sh "echo '' > ${fileName}"
