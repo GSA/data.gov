@@ -10,6 +10,7 @@ def run(playbook, system, environment, resource, tags = null,
         def variable = ((hostVariable != null) ? hostVariable :
                 "${playbook}_hosts").replaceAll(/-/, "_")
         def extras="--extra-vars \"${variable}=${mapping}\""
+        extras = "${extras} -i ./inventories/ec2.py"
         if (tags != null) {
             ansiblePlaybook playbook: "./${playbook}.yml",
                 sudoUser: userName,
