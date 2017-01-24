@@ -36,12 +36,9 @@ def test(environment, outputDirectory) {
                 " > ${enviromentFile}"
             echo "About to run [${command}]"
             sh command
-            def tests = [ "verify-pilot" ]
-            echo "Loop tests"
-            for (test in tests) {
-                echo "Run test"
-                runTest(test, enviromentFile, outputDirectory)
-            }
+            sh "cat ${enviromentFile}"
+            echo "Run test"
+            runTest("verify-pilot", enviromentFile, outputDirectory)
         }
     }
 }
@@ -53,7 +50,6 @@ def runTest(testName, environmentFile, outputDirectory) {
         " --reports junit",
         " --reporter-junit-export ${outputDirectory}/TEST-${testName}.xml"
     ]
-    sh "cat ${enviromentFile}"
     sh "newman run ${arguments.join(" ")}"
 }
 
