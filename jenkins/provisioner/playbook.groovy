@@ -51,7 +51,7 @@ def newInventory(playbook, system, environment, resource) {
 }
 
 def getDynamicMapping(system, environment, resource) {
-    return "ec2_tag_Name_${system}_${environment}_${resource}"
+    return "tag_Name_${system}_${environment}_${resource}"
 }
 
 return this
