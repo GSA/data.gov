@@ -44,7 +44,7 @@ def newInventory(playbook, system, environment, resource) {
     def fileName = "./${playbook}.hosts"
     sh "rm -f ${fileName}"
     sh "echo '' > ${fileName}"
-    echo "group_id: ${group_id}; variable: ${variable}"
+    echo "group_id: ${group_id}; mapping: ${mapping}; text: ${inventoryText}"
     writeFile encoding: 'ascii', file: fileName, text: inventoryText
     sh "cat ${fileName}"
     return fileName
