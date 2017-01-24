@@ -15,7 +15,7 @@ def run(playbook, system, environment, resource, tags = null,
         extras="${extras} -vvvv"
 
         sh "chmod +x ./inventories/ec2.py"
-        sh "./inventories/ec2.py  --list"
+        sh "./inventories/ec2.py --host ${mapping}"
 
         if (tags != null) {
             ansiblePlaybook playbook: "./${playbook}.yml",
