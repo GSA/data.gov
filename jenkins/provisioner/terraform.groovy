@@ -8,10 +8,15 @@ def run(stack_name, environment, dependsOnStack = null) {
         args << "-v"
         args << "--action create"
         if (dependsOnStack) {
-            args << "--input stack-output:///${dependsOnStack}/${environment}"
+            args << "--input ${getDependentStackURL(dependsOnStack, environment)}"
         }
         sh "'${script}' ${args.join(' ')} '${stack_name}' '${environment}'"
     }
+}
+
+def getDependentStackURL(stack, environment) {
+    environment = (environment.startsWith("dev-")) ? "dev" : environment
+    return "stack-output:///${stack}/${environment}"
 }
 
 return this
