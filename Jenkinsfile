@@ -12,18 +12,27 @@
 // ============================================================================
 
 env.AWS_REGION = "us-east-2"
-env.PIPELINE_SCRIPT = "full"
+env.PIPELINE_SCRIPT = getPipelineScript("full")
 
 stage('Initialize') {
     node("master") {
-    	setPipelineScript()
         checkout scm
-        sh "touch ~/ansible-secret.txt"
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', 
+        	credentialsId: 'ansible-secret-dev', 
+        	usernameVariable: 'UN', 
+        	passwordVariable: 'PASSWORD']]) 
+        {
+            sh """
+            	rm -rf ~/ansible-secret.txt && echo '${env.PASSWORD}' >> \
+            	~/ansible-secret.txt
+            """
+        }
+        //sh "touch ~/ansible-secret.txt"
     }
 }
 
-
 runPipeline(env.PIPELINE_SCRIPT)
+
 
 
 def runPipeline(pipeline) {
@@ -61,7 +70,7 @@ def proceed(pipeline, environment) {
 def provision(pipeline, environment) {
     stage("${pipeline}-${getLabel(environment)}: Provision") {
         node('master') {
-            getPipeline().provision(nameEnvironment(environment))
+            getPipeline(pipeline).provision(nameEnvironment(environment))
         }
     }
 }
@@ -69,7 +78,7 @@ def provision(pipeline, environment) {
 def test(pipeline, environment) {
     stage("${pipeline}-${getLabel(environment)}: Test") {
         node('master') {
-            getPipeline().test(nameEnvironment(environment))
+            getPipeline(pipeline).test(nameEnvironment(environment))
         }
     }
 }
@@ -85,10 +94,10 @@ def getLabel(environment) {
     return environment.toUpperCase()
 }
 
-def setPipelineScript() {
+def getPipelineScript(defaultScript) {
 	def selectors = getPipelineSelectors()
 	def name = getPipelineName().toLowerCase()
-	def script = env.PIPELINE_SCRIPT
+	def script = defaultScript
 	echo "Select pipeline (default: ${env.PIPELINE_SCRIPT})"
 	for (s in selectors) {
 		// Using ~ causes Jenkins to fail, citing that
@@ -105,7 +114,7 @@ def setPipelineScript() {
 		}
 	}
 	echo "Selected Pipeline=${script}"
-	env.PIPELINE_SCRIPT = script
+	return script
 }
 
 def getPipelineName() {
@@ -119,13 +128,13 @@ def getPipelineName() {
 def getPipelineSelectors() {
 	def selectors = []
 	selectors << [selector:/.*d2d.*/,             pipeline: "d2d" ]
-	selectors << [selector:/.*datagov.*infra.*/,  pipeline: "datagov-infrastructure" ]
+	selectors << [selector:/.*shared.*infra.*/,  pipeline: "shared-infrastructure" ]
 	selectors << [selector:/.*datagov.*pilot.*/,  pipeline: "datagov-pilot" ]
 	return selectors
 }
 
-def getPipeline() {
-   def pipeline = load "${pwd()}/jenkins/pipeline/${env.PIPELINE_SCRIPT}.groovy"
+def getPipeline(name) {
+   def pipeline = load "${pwd()}/jenkins/pipeline/${name}.groovy"
    return pipeline
 }
 
