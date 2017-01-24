@@ -30,30 +30,29 @@ def test(environment, outputDirectory) {
     echo "Loop ips"
     for (ip in ips) {
         echo "Create environment file"
-        sh "cat ./environment-template.json | " + 
-            "sed -e \"s|__WORDPRESS_WEB_HOST__|${ip}|g\"" + 
-            " > ${enviromentFile}"
-        def tests = [ "verify-pilot" ]
-        echo "Loop tests"
-        for (test in tests) {
-            echo "Run test"
-            runTest(test, enviromentFile, outputDirectory)
+        dir ("./postman/pilot") {
+            sh "cat ./environment-template.json | " + 
+                "sed -e \"s|__WORDPRESS_WEB_HOST__|${ip}|g\"" + 
+                " > ${enviromentFile}"
+            def tests = [ "verify-pilot" ]
+            echo "Loop tests"
+            for (test in tests) {
+                echo "Run test"
+                runTest(test, enviromentFile, outputDirectory)
+            }
         }
     }
 }
 
 def runTest(testName, environmentFile, outputDirectory) {
     def arguments = [
-        "${testName}.json",
+        "./${testName}.json",
         "-e ${enviromentFile}",
         " --reports junit",
         " --reporter-junit-export ${outputDirectory}/TEST-${testName}.xml"
     ]
-
-    dir ("./postman/pilot") {
-        sh "cat ${enviromentFile}"
-        sh "newman run ${arguments.join(" ")}"
-    }
+    sh "cat ${enviromentFile}"
+    sh "newman run ${arguments.join(" ")}"
 }
 
 def discoverPublicIps(environment, resource) {
