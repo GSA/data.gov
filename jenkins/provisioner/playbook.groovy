@@ -14,7 +14,7 @@ def run(playbook, system, environment, resource, tags = null,
         //def extras = "-i ./inventories/ec2.py --host ${mapping}"
         extras="${extras} -vvvv"
 
-        sh "./inventories/ec2.py --host ${mapping}"
+        //sh "./inventories/ec2.py --host ${mapping}"
 
         if (tags != null) {
             ansiblePlaybook playbook: "./${playbook}.yml",
