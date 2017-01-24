@@ -14,6 +14,7 @@ def run(playbook, system, environment, resource, tags = null,
         def extras = "-i ./inventories/ec2.py --host ${mapping}"
         extras="${extras} -vvvv"
 
+        sh "chmod +x "./inventories/ec2.py"
         sh "./inventories/ec2.py --host ${mapping}"
 
         if (tags != null) {
