@@ -11,6 +11,7 @@ def run(playbook, system, environment, resource, tags = null,
                 "${playbook}_hosts").replaceAll(/-/, "_")
         def extras="--extra-vars \"${variable}=${mapping}\""
         extras = "${extras} -i ./inventories/ec2.py"
+        sh "chmod +x ./inventories/ec2.py"
         if (tags != null) {
             ansiblePlaybook playbook: "./${playbook}.yml",
                 sudoUser: userName,
