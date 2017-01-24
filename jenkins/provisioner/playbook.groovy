@@ -10,11 +10,11 @@ def run(playbook, system, environment, resource, tags = null,
         // def extras = "-i ${inventoryName}"
         def mapping = getDynamicMapping(system, environment, resource)
         def variable = "${playbook}_hosts"
-        def extras = "--extra-vars \"${variable}=${mapping}\" -vvvv"
-        //def extras = "-i ./inventories/ec2.py --host ${mapping}"
+        //def extras = "--extra-vars \"${variable}=${mapping}\""
+        def extras = "-i ./inventories/ec2.py --host ${mapping}"
         extras="${extras} -vvvv"
 
-        //sh "./inventories/ec2.py --host ${mapping}"
+        sh "./inventories/ec2.py --host ${mapping}"
 
         if (tags != null) {
             ansiblePlaybook playbook: "./${playbook}.yml",
