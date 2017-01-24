@@ -21,18 +21,22 @@ def provision(environment) {
 }
 
 def test(environment, outputDirectory) {
-    def tests = ["verify-pilot"]
     // TODO Should get IPs from stack or ansible ec2.py,
     //      rather than have to discovering them
     def ips = discoverPublicIps(environment, 'wordpress-web').
         split("\n")
     def enviromentFile = "${pwd()}/${environment}-input.json"
 
+    echo "Loop ips"
     for (ip in ips) {
+        echo "Create environment file"
         sh "cat ./environment-template.json | " + 
             "sed -e \"s|__WORDPRESS_WEB_HOST__|${ip}|g\"" + 
             " > ${enviromentFile}"
+        def tests = [ "verify-pilot" ]
+        echo "Loop tests"
         for (test in tests) {
+            echo "Run test"
             runTest(test, enviromentFile, outputDirectory)
         }
     }
