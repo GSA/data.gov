@@ -11,7 +11,7 @@ def run(playbook, system, environment, resource, tags = null,
         def extras = "-i ./inventories/ec2.py"
         extras="${extras}  --extra-vars \"${variable}=${mapping}\""
 
-        // sh "chmod +x ./inventories/ec2.py"
+        sh "chmod +x ./inventories/ec2.py"
         // sh "./inventories/ec2.py --list"
 
         if (tags != null) {
