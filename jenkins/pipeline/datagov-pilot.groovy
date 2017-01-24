@@ -24,7 +24,7 @@ def test(environment, outputDirectory) {
     def tests = ["verify-pilot"]
     // TODO Should get IPs from stack or ansible ec2.py,
     //      rather than have to discovering them
-    def ips = discoverPublicIps('pilot', environment, 'wordpress-web').
+    def ips = discoverPublicIps(environment, 'wordpress-web').
         split("\n")
     def enviromentFile = "${pwd()}/${environment}-input.json"
 
