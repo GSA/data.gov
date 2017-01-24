@@ -46,7 +46,7 @@ def newInventory(playbook, system, environment, resource) {
     sh "echo '' > ${fileName}"
     echo "group_id: ${group_id}; variable: ${variable}"
     writeFile encoding: 'ascii', file: fileName, 
-        text: inventoryText.join('\n')
+        text: "${inventoryText.join('\n')\n"
     sh "cat ${fileName}"
     return fileName
 }
