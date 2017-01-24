@@ -76,9 +76,9 @@ A stack management script is used to manage the following stack aspects:
   where calls are made from, as the script relies on the S3 bucket for state,
   as long as the right parameters (indicating stack and branch name) are
   specified .
-- __State Persistence__ - The script (automatically) manage state for a stack
+- __State Persistence__ - The script (automatically) manages state for a stack
   based on stack and branch name. This allows for development on multiple
-  branches at the same time, without inteference between stacks. The script
+  branches at the same time, without interference between stacks. The script
   can also destroy a specific stack, i.e. remove all (AWS) resources and remove
   the persisted state.
   A consistent naming convention of persisted state also enables the use of
