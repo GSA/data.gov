@@ -27,11 +27,13 @@ specifiers:
    This assumes that the user running the script has access rights to this
    S3 object (either the object is publicly accessible, or the used AWS IAM
    Role/AWS-CLI profile has been granted access).
+   
 2. A _HTTP/S URL_
    e.g. `--input https://s3.amazonaws.com/my-bucket/path/to/input.tfvar`.
    This assume that the user running the script has access rights to this S3
    object (either the object is publicly accessible, or the used AWS IAM
    Role/AWS-CLI profile has been granted access).
+
 3. A __stack output URI__,
    e.g. --input `stack-output://my-bucket/a-stack/environment`.
    This allows propagation of variables from one to another stack. The output
