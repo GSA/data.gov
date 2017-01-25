@@ -33,8 +33,8 @@ def test(environment, outputDirectory) {
     for (ip in ips) {
         dir ("./postman/pilot") {
             def host = "${ip}"
-            sh "cat ./environment-template.json"
             sh "ls -al"
+            sh "cat ./environment-template.json"
             def command = "cat ./environment-template.json | "
             command = "${command} sed -e 's|__WORDPRESS_WEB_HOST__|${host}|g' > "
             command = "${command} ${environmentFile}"
