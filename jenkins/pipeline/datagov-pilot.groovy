@@ -34,7 +34,7 @@ def test(environment, outputDirectory) {
             def host = "${ip}"
             def command = """
                 cat ./environment-template.json | \
-                     sed -e \"s|__WORDPRESS_WEB_HOST__|${host}" > \
+                     sed -e 's|__WORDPRESS_WEB_HOST__|${host}|g' > \
                     ${enviromentFile}
             """
             echo "About to run [${command}]"
