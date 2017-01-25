@@ -9,26 +9,22 @@ def initialize(environment) {
 }
 
 def provision(environment) {
-    // def terraform = load "./jenkins/provisioner/terraform.groovy"
-    // terraform.run('pilot', environment, "infrastructure")   
+    def terraform = load "./jenkins/provisioner/terraform.groovy"
+    terraform.run('pilot', environment, "infrastructure")   
 
-    // def playbook = load "./jenkins/provisioner/playbook.groovy"
-    // def system = "datagov"
-    // playbook.run("jumpbox", system, environment, "bastion", 
-    //     "always,jumpbox,apache", "shibboleth")
-    // playbook.run("datagov-web", system, environment, "wordpress-web",
-    // 	null, "trendmicro,vim,deploy,deploy-rollback,secops,postfix")
+    def playbook = load "./jenkins/provisioner/playbook.groovy"
+    def system = "datagov"
+    playbook.run("jumpbox", system, environment, "bastion", 
+        "always,jumpbox,apache", "shibboleth")
+    playbook.run("datagov-web", system, environment, "wordpress-web",
+    	null, "trendmicro,vim,deploy,deploy-rollback,secops,postfix")
 }
 
 def test(environment, outputDirectory) {
     // TODO Should get IPs from stack or ansible ec2.py,
     //      rather than have to discovering them
-    echo "Define environment file in ${pwd()}; write output to ${outputDirectory}"
     def environmentFile = "${pwd()}/${environment}-input.json"
-    echo "Create environment file ${environmentFile} "
     def ips = discoverPublicIps(environment, 'wordpress-web')
-
-    echo "Found ips=${ips}"
     dir ("./postman/pilot") {
         for (ip in ips) {
             def command = "cat ./environment-template.json | " + 
@@ -41,6 +37,7 @@ def test(environment, outputDirectory) {
 }
 
 
+
 def runTest(testName, environmentFile, outputDirectory) {
     def arguments = [
         "./${testName}.json",
@@ -49,11 +46,8 @@ def runTest(testName, environmentFile, outputDirectory) {
         " --reporter-junit-export ${outputDirectory}/TEST-${testName}.xml"
     ]
     def command = "newman run ${arguments.join(' ')}"
-    echo "About to run [${command}]"
-    sh "cat ${environmentFile}"
     sh command
-    echo "Checking ${outputDirectory}"
-    sh "ls -al \"${outputDirectory}\""
+    // sh "ls -al \"${outputDirectory}\""
 }
 
 def discoverPublicIps(environment, resource) {
@@ -79,5 +73,8 @@ def discoverPublicIps(environment, resource) {
     }
     return ips
 }
+
+
+
 
 return this
