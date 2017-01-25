@@ -24,10 +24,6 @@
 				"url": "{{wordpress-web-host}}/",
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"username\": \"{{test-credentials-username}}\",\n    \"password\": \"{{test-credentials-password}}\"\n}"
-				},
 				"description": "Verify landing page"
 			},
 			"response": []
