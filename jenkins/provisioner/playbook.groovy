@@ -20,7 +20,7 @@ def run(playbook, system, environment, resource, tags = null,
                 skippedTags: "${skippedTags}",
                 forks: 5,
                 extras: extras
-        } else {if (skippedTags != null) {
+        } else if (skippedTags != null) {
             ansiblePlaybook playbook: "./${playbook}.yml",
                 sudoUser: userName,
                 credentialsId: credentialsID,
