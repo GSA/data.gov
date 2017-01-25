@@ -74,12 +74,12 @@ def discoverPublicIps(environment, resource) {
                     --query \"Reservations[].Instances[].{Ip:PublicIpAddress}\" \
                     --output text
             """).split('\n')
-    results.each({
-        def line = it.trim()
-        if (line) {
-            ips << line
+    for (String r: results) {
+        r = r.trim()
+        if (r) {
+            ips << r
         }
-    })
+    }
     return ips
 }
 
