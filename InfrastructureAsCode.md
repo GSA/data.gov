@@ -91,4 +91,4 @@ infrastructure-as-code (IaC).
 
 1. [Jenkins](./jenkins/README.md)
 2. [Terraform](./terraform/README.md)
-3. [CloudFormation](./cloudformation/README.md)
+3. [CloudFormation](./cloud-formation/README.md)
