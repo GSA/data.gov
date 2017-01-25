@@ -17,7 +17,7 @@ def provision(environment) {
     cloudFormation.run('d2dbastion', environment, inputs)
 }
 
-def test(environment) {
+def test(environment, outputDirectory) {
     // Nothing here yet
 }
 
