@@ -53,7 +53,7 @@ def runTest(testName, environmentFile, outputDirectory) {
         " --reports junit",
         " --reporter-junit-export ${outputDirectory}/TEST-${testName}.xml"
     ]
-    sh "newman run ${arguments.join(" ")}"
+    sh "newman run ${arguments.join(' ')}"
 }
 
 def discoverPublicIps(environment, resource) {
