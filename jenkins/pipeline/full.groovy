@@ -12,6 +12,7 @@ def provision(environment) {
 }
 
 def test(environment, outputDirectory) {
+	return false
 }
 
 def runPipeline(name, environment) {

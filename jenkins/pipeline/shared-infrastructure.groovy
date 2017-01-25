@@ -15,6 +15,7 @@ def provision(environment) {
 
 def test(environment, outputDirectory) {
     // Nothing here yet
+    return false
 }
 
 

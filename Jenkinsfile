@@ -79,10 +79,12 @@ def test(pipeline, environment) {
     stage("${pipeline}-${getLabel(environment)}: Test") {
         node('master') {
             def reportsDirectory = "test-reports" 
-            getPipeline(pipeline).test(nameEnvironment(environment),
+            def hasTests = getPipeline(pipeline).test(nameEnvironment(environment),
                 "${pwd()}/${reportsDirectory}")
-            step([$class: 'JUnitResultArchiver',
-                testResults: "**/${reportsDirectory}/TEST-*.xml"])
+            if (hasTests) {
+	            step([$class: 'JUnitResultArchiver',
+    	            testResults: "**/${reportsDirectory}/TEST-*.xml"])
+	        }
         }
     }
 }

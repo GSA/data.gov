@@ -33,6 +33,7 @@ def test(environment, outputDirectory) {
             runTest("verify-pilot", environmentFile, outputDirectory)
         }
     }
+    return true
 }
 
 
