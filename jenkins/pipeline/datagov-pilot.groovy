@@ -36,7 +36,7 @@ def test(environment, outputDirectory) {
             sh "cat ./environment-template.json"
             def command = "cat ./environment-template.json | "
             command = "${command} sed -e 's|__WORDPRESS_WEB_HOST__|${ip}|g' > "
-            command = "${command} > ${environmentFile}"
+            command = "${command} ${environmentFile}"
             echo "About to run [${command}]"
             sh command
             sh "cat ${environmentFile}"
@@ -59,21 +59,23 @@ def runTest(testName, environmentFile, outputDirectory) {
 @NonCPS
 def discoverPublicIps(environment, resource) {
     def ips = sh (
-        script: """aws ec2 describe-instances \
-            --region ${env.AWS_REGION} \
-            --filter "Name=tag:System,Values=datagov" \
-                     \"Name=tag:Stack,Values=pilot\" \
-                     \"Name=tag:Environment,Values=${environment}\" \
-                     \"Name=tag:Resource,Values=${resource}\" \
-                     \"Name=instance-state-name,Values=running\" \
-            --query \"Reservations[].Instances[].{Ip:PublicIpAddress}\" \
-            --output text
-            """,
-        returnStdout: true
-    ).split("\n")
+            script: """aws ec2 describe-instances \
+                --region ${env.AWS_REGION} \
+                --filter "Name=tag:System,Values=datagov" \
+                         \"Name=tag:Stack,Values=pilot\" \
+                         \"Name=tag:Environment,Values=${environment}\" \
+                         \"Name=tag:Resource,Values=${resource}\" \
+                         \"Name=instance-state-name,Values=running\" \
+                --query \"Reservations[].Instances[].{Ip:PublicIpAddress}\" \
+                --output text
+                """,
+            returnStdout: true
+        )
+    ips = ips.split("\n")
     def serializableIPs = []
     for (ip in ips) {
-        serializableIPs << "${ip}"
+        echo "adding  ip=[${ip}]"
+        serializableIPs << ip
     }
     return serializableIPs
 }
