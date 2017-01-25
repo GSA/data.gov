@@ -36,7 +36,7 @@ def test(environment, outputDirectory) {
             sh "cat ./environment-template.json"
             def command = "cat ./environment-template.json | "
             command = "${command} sed -e 's|__WORDPRESS_WEB_HOST__|${ip}|g' > "
-            command = "${command} ${environmentFile}"
+            command = "${command} > ${environmentFile}"
             echo "About to run [${command}]"
             sh command
             sh "cat ${environmentFile}"
