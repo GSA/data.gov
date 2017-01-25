@@ -1,3 +1,4 @@
+import com.cloudbees.groovy.cps.NonCPS
 
 def run(environment) {
     initialize(environment)
@@ -27,7 +28,6 @@ def test(environment, outputDirectory) {
     def environmentFile = "${pwd()}/${environment}-input.json"
     echo "Create environment file ${environmentFile} "
     def ips = discoverPublicIps(environment, 'wordpress-web')
-    ips = ips.split("\n")
 
     echo "hosts to test ${ips}]"
     for (ip in ips) {
@@ -56,8 +56,9 @@ def runTest(testName, environmentFile, outputDirectory) {
     sh "newman run ${arguments.join(' ')}"
 }
 
+@NonCPS
 def discoverPublicIps(environment, resource) {
-    return sh (
+    def ips = sh (
         script: """aws ec2 describe-instances \
             --region ${env.AWS_REGION} \
             --filter "Name=tag:System,Values=datagov" \
@@ -69,7 +70,12 @@ def discoverPublicIps(environment, resource) {
             --output text
             """,
         returnStdout: true
-    )
+    ).split("\n")
+    def serializableIPs = []
+    for (ip in ips) {
+        serializableIPs << "${ip}"
+    }
+    return serializableIPs
 }
 
 return this
