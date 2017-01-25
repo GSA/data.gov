@@ -32,11 +32,10 @@ def test(environment, outputDirectory) {
     echo "hosts to test ${ips}]"
     for (ip in ips) {
         dir ("./postman/pilot") {
-            def host = "${ip}"
             sh "ls -al"
             sh "cat ./environment-template.json"
             def command = "cat ./environment-template.json | "
-            command = "${command} sed -e 's|__WORDPRESS_WEB_HOST__|${host}|g' > "
+            command = "${command} sed -e 's|__WORDPRESS_WEB_HOST__|${ip}|g' > "
             command = "${command} ${environmentFile}"
             echo "About to run [${command}]"
             sh command
