@@ -202,8 +202,10 @@ stack:
   automatically by the value of the environment variable.
   By default the following variables are set and can be
   used as placeholders: STACK_NAME, BUCKET_NAME, ENVIRONMENT,
-  AWS_PROFILE (when --profile is provided, or set explicitly),
-  AWS_REGION (when --region is provided, or set explicitly),
+  AWS_PROFILE (when --profile is provided, or set explicitly
+  and exported before calling the script),
+  AWS_REGION (when --region is provided, or set explicitly
+  and exported before calling the script),
   STACK_PATH (location where stack scripts are uploaded),
   MASTER_TEMPLATE, STACK_POLICY
   Note that these values are typically hard-coded values, unless
