@@ -1,4 +1,3 @@
-import com.cloudbees.groovy.cps.NonCPS
 
 def run(environment) {
     initialize(environment)
@@ -60,7 +59,6 @@ def runTest(testName, environmentFile, outputDirectory) {
     sh command
 }
 
-@NonCPS
 def discoverPublicIps(environment, resource) {
     def ips = []
     def results = sh (
