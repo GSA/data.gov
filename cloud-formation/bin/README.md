@@ -36,15 +36,6 @@ using any of the following <a name="input_specifiers"></a>specifiers:
    object (either the object is publicly accessible, or the used AWS IAM
    Role/AWS-CLI profile has been granted access).
 
-3. A __stack output URI__,
-   e.g. --input `stack-output://my-bucket/a-stack/environment`.
-   This allows propagation of variables from one to another stack. The output
-   generated (with manage-stack.sh) for another stack will be downloaded. This
-   allows propagating output from one stack to the next. Note that system-name
-   can be empty, in which case the default "pilot" will be used". It assume the
-   same bucket (as configured for the using stack) holds the generated output
-   file. Generated output files will always be HCL formatted (tfvars) files.
-
 _NOTE_ that while this is a bash/Linux script, on Windows can be run using
 `git-bash`, or [MinGW](http://www.mingw.org/).
 
@@ -237,16 +228,9 @@ stack:
 
 ## <a name="limitations"></a>Limitations
 
--  The current script only handles generation of string variables, not
-   structured (array and map) variables. The Terraform output cli command
-   does not generate valid HCL, so the script converts the output. This
-   should be added at a later time.
-
-- Ideally a dependency between stack could be defined, such that the
-  manage-stack script can manage the relationship between stacks. This
-  could be added as a command-line argument (e.g.
-  `--depends-on stack-name/branch-name`).
-  This should be added at a later time.
+-  The current script only handles string variables, and not
+   structured (array and map) variables, in a tfvars input file.
+   This could be added at a later time.
 
 
 ## References
