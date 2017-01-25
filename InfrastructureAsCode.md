@@ -89,7 +89,6 @@ infrastructure-as-code (IaC).
 
 ## <a id="tools"></a>Tools
 
-
-1. [Jenkins](./jenkins/Readme.md)
-2. [Terraform](./terraform/Readme.md)
-3. [CloudFormation](./cloudformation/Readme.md)
+1. [Jenkins](./jenkins/README.md)
+2. [Terraform](./terraform/README.md)
+3. [CloudFormation](./cloudformation/README.md)

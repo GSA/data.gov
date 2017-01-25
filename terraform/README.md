@@ -10,7 +10,7 @@ With Terraform you are responsible for managing persistence of stack state,
 stack dependencies (sharing of information between stacks), because it is not
 a service like CloudFormation, but rather a command-line tool (only).
 
-A stack management script ([manage-stack.sh](./bin/Readme.md))
+A stack management script ([manage-stack.sh](./bin/README.md))
 is used to manage the following stack aspects:
 
 - __Stack Creation/Update and Deletion__ - The management script can be used
