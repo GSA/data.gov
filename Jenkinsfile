@@ -82,7 +82,7 @@ def test(pipeline, environment) {
             getPipeline(pipeline).test(nameEnvironment(environment),
                 "${pwd()}/${reportsDirectory}")
             step([$class: 'JUnitResultArchiver',
-                testResults: '**/${reportsDirectory}/TEST-*.xml'])
+                testResults: "**/${reportsDirectory}/TEST-*.xml"])
         }
     }
 }
