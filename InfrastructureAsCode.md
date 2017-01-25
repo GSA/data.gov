@@ -53,30 +53,37 @@ infrastructure-as-code (IaC).
 
 +  __Make the code modular__
    1. Avoids the use of long variable names to provide context
-   2. Divide the script in multiple segments, which make easier to track and
-      merge changes
-   3. Reuse of provisioning code (avoid copy-paste and difficult maintenance)
-+  __Ensure generated resources are identifiable__. It is easy to generate a
-  lot of resources (for multiple stacks and code branches) that are not clearly
-  labelled. This makes it harder to identify and manage those resources outside
-  of terraform (if necessary)
-   1. Use tags: System, Stack, Branch, Resource (ID); In AWS tagging enables
+   2. Divide scripts in multiple segments.
+      This makes easier to track and merge changes
+   3. Reuse of provisioning code
+      This helpsto avoid copy-paste erros and difficult maintenance
++  __Ensure generated resources are identifiable__ 
+   It is easy to generate a lot of resources (for multiple stacks and code 
+   branches) that are not clearly labelled. This makes it harder to identify
+   and manage those resources outside of Terraform/CoudFormation (if necessary).
+   Especially viewing resources in the AWS consoles becomes easier when it is
+   possible to select resources from a specific system/environment by using
+   Tag filters.
+   1. Use tags: System, Stack, Environment, Resource (ID); In AWS tagging enables
       the use Resource Groups that can make it easy to review and manage all
-      resources from one central view
+      resources from one central view. Note that when using AWS CloudFormation 
+      a stack tag is provided automatically.
    2. Use naming scheme that combines some of the the above tags
-      <System>_<Branch>_<Resource>
-   3. The Terraform scripts must not hard-code to branch name at a minimum.
+      <System>_<Environment>_<Resource>
+   3. The Terraform/CloudFormation stacks scripts must not hard-code the
+      environment name at a minimum.
       Ideally the other values (except the resource id is shared/passed into
-      main terraform script and passed down into modules.
+      the Terraform root module, or CloudFormation master script and passed
+      down into Terraform modules/CloudFormation substacks.
 + __Enable/automate sharing of information across stacks__
    Avoids hard-coding of information which becomes cumbersome and
    error-prone when using multiple stacks, and multiple branches per
    stack.
 + __Allow for a multi-layer provisioning approach__
    1. (Bootstrap) Manually create S3 bucket(s) used by provisioning tools
-   2. Use terraform (and/or cloudformation) to provision Infrastructure
+   2. Use Terraform (and/or CloudFormation) to provision Infrastructure
       (VPC, subnets, routing, NACLs, ELBs, EIPs, etc.)
-   3. Use terraform (and/or cloudformation) to provision resources
+   3. Use Terraform (and/or CloudFormation) to provision resources
       (EC2 instances, ELBs, security groups, Elastic Cache, RDS instances,
        S3 buckets (not used for provisioing, etc.)
    4. Use Ansible (or Chef/Salt/Puppet) to provision OS and up on
