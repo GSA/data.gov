@@ -27,22 +27,19 @@ def test(environment, outputDirectory) {
     echo "Define environment file in ${pwd()}; write output to ${outputDirectory}"
     def environmentFile = "${pwd()}/${environment}-input.json"
     echo "Create environment file ${environmentFile} "
-    def ips = discoverPublicIps(environment, 'wordpress-web')
+    def ip = discoverPublicIp(environment, 'wordpress-web')
 
-    echo "hosts to test [${ips} ]"
-    for (ip in ips) {
-        dir ("./postman/pilot") {
-            sh "ls -al"
-            sh "cat ./environment-template.json"
-            def command = "cat ./environment-template.json | " + 
-                "sed -e 's|__WORDPRESS_WEB_HOST__|${ip}|g' > " +
-                "${environmentFile}"
-            echo "About to run [${command}]"
-            sh command
-            sh "cat ${environmentFile}"
-            echo "Run test"
-            runTest("verify-pilot", environmentFile, outputDirectory)
-        }
+    dir ("./postman/pilot") {
+        sh "ls -al"
+        sh "cat ./environment-template.json"
+        def command = "cat ./environment-template.json | " + 
+            "sed -e 's|__WORDPRESS_WEB_HOST__|${ip}|g' > " +
+            "${environmentFile}"
+        echo "About to run [${command}]"
+        sh command
+        sh "cat ${environmentFile}"
+        echo "Run test"
+        runTest("verify-pilot", environmentFile, outputDirectory)
     }
 }
 
@@ -58,9 +55,8 @@ def runTest(testName, environmentFile, outputDirectory) {
 }
 
 @NonCPS
-def discoverPublicIps(environment, resource) {
-    def ips = []
-    def result = sh(
+def discoverPublicIp(environment, resource) {
+    return sh(
             returnStdout: true, 
             script: """
                 aws ec2 describe-instances \
@@ -70,18 +66,10 @@ def discoverPublicIps(environment, resource) {
                              \"Name=tag:Environment,Values=${environment}\" \
                              \"Name=tag:Resource,Values=${resource}\" \
                              \"Name=instance-state-name,Values=running\" \
-                    --query \"Reservations[].Instances[].{Ip:PublicIpAddress}\" \
-                    --output text
-                """)
-    result = result.replaceAll(/\n/, ",").split(",")
-    for (r in results) {
-        def ip = r.trim()
-        if (ip) {
-            ips << "${ip}"
-        }
-    }
-    sh "echo ips=[${ips}]"
-    return ips
+                    --query \"Reservations\"].Instances[].{Ip:PublicIpAddress}\" \
+                    --output text |\
+                    sed -e \"s/^$/d\"
+               """).trim()
 }
 
 return this
