@@ -19,16 +19,17 @@ passing output information to dependent stacks.
 It automatically uses any valid Terraform variable file, so either an HCL
 (`tfvars`) or `json` formatted file as input file. Additionally, input files
 may be specified using the `--input` parameter, using any of the following
-specifiers:
+<a name="input_specifiers"></a>specifiers:
 
-<a name="input_specifiers"></a>
+
+
 1. An _S3 URI_,
    e.g. `--input s3://my-bucket/path/to/input.tfvars`.
    This assumes that the user running the script has access rights to this
    S3 object (either the object is publicly accessible, or the used AWS IAM
    Role/AWS-CLI profile has been granted access).
    
-2. A _HTTP/S URL_
+2. A _HTTP/S URL_,
    e.g. `--input https://s3.amazonaws.com/my-bucket/path/to/input.tfvar`.
    This assume that the user running the script has access rights to this S3
    object (either the object is publicly accessible, or the used AWS IAM
@@ -42,6 +43,7 @@ specifiers:
    can be empty, in which case the default "pilot" will be used". It assume the
    same bucket (as configured for the using stack) holds the generated output
    file. Generated output files will always be HCL formatted (tfvars) files.
+
 
 _NOTE_ that while this is a bash/Linux script, on Windows this script works
 when using `git-bash`
