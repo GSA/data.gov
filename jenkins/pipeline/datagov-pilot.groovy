@@ -27,16 +27,16 @@ def test(environment, outputDirectory) {
     def enviromentFile = "${pwd()}/${environment}-input.json"
     ips = ips.split("\n")
 
-    echo "Loop ips [${ips}]"
+    echo "hosts to test ${ips}]"
     for (ip in ips) {
-        echo "Create environment file"
+        echo "Create environment file ${enviromentFile} "
         dir ("./postman/pilot") {
             def host = "${ip}"
-            def command = """
-                cat ./environment-template.json | \
-                     sed -e 's|__WORDPRESS_WEB_HOST__|${host}|g' > \
-                    ${enviromentFile}
-            """
+            sh "cat ./environment-template.json"
+            sh "ls -al"
+            def command = "cat ./environment-template.json | "
+            command = "${command} sed -e 's|__WORDPRESS_WEB_HOST__|${host}|g' > "
+            command = "${command} ${enviromentFile}"
             echo "About to run [${command}]"
             sh command
             sh "cat ${enviromentFile}"
