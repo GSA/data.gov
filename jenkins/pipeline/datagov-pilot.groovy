@@ -62,7 +62,8 @@ def runTest(testName, environmentFile, outputDirectory) {
 
 @NonCPS
 def discoverPublicIps(environment, resource) {
-    def lines = sh (
+    def ips = []
+    def results = sh (
             returnStdout: true, 
             script: """
                 aws ec2 describe-instances \
@@ -74,15 +75,13 @@ def discoverPublicIps(environment, resource) {
                              \"Name=instance-state-name,Values=running\" \
                     --query \"Reservations[].Instances[].{Ip:PublicIpAddress}\" \
                     --output text
-               """).split('\n')
-    def ips = []
-    echo "Found lines=[${lines}]"
-    for (line in lines) {
-        line = line.trim()
+            """).split('\n')
+    results.each({
+        def line = it.trim()
         if (line) {
             ips << line
         }
-    }
+    })
     return ips
 }
 
