@@ -9,39 +9,40 @@ def initialize(environment) {
 }
 
 def provision(environment) {
-    def terraform = load "./jenkins/provisioner/terraform.groovy"
-    terraform.run('pilot', environment, "infrastructure")   
+    // def terraform = load "./jenkins/provisioner/terraform.groovy"
+    // terraform.run('pilot', environment, "infrastructure")   
 
-    def playbook = load "./jenkins/provisioner/playbook.groovy"
-    def system = "datagov"
-    playbook.run("jumpbox", system, environment, "bastion", 
-        "always,jumpbox,apache", "shibboleth")
-    playbook.run("datagov-web", system, environment, "wordpress-web",
-    	null, "trendmicro,vim,deploy,deploy-rollback,secops,postfix")
+    // def playbook = load "./jenkins/provisioner/playbook.groovy"
+    // def system = "datagov"
+    // playbook.run("jumpbox", system, environment, "bastion", 
+    //     "always,jumpbox,apache", "shibboleth")
+    // playbook.run("datagov-web", system, environment, "wordpress-web",
+    // 	null, "trendmicro,vim,deploy,deploy-rollback,secops,postfix")
 }
 
 def test(environment, outputDirectory) {
     // TODO Should get IPs from stack or ansible ec2.py,
     //      rather than have to discovering them
+    echo "Define environment file in ${pwd()}"
+    def environmentFile = "${pwd()}/${environment}-input.json"
+    echo "Create environment file ${environmentFile} "
     def ips = discoverPublicIps(environment, 'wordpress-web')
-    def enviromentFile = "${pwd()}/${environment}-input.json"
     ips = ips.split("\n")
 
     echo "hosts to test ${ips}]"
     for (ip in ips) {
-        echo "Create environment file ${enviromentFile} "
         dir ("./postman/pilot") {
             def host = "${ip}"
             sh "cat ./environment-template.json"
             sh "ls -al"
             def command = "cat ./environment-template.json | "
             command = "${command} sed -e 's|__WORDPRESS_WEB_HOST__|${host}|g' > "
-            command = "${command} ${enviromentFile}"
+            command = "${command} ${environmentFile}"
             echo "About to run [${command}]"
             sh command
-            sh "cat ${enviromentFile}"
+            sh "cat ${environmentFile}"
             echo "Run test"
-            runTest("verify-pilot", enviromentFile, outputDirectory)
+            runTest("verify-pilot", environmentFile, outputDirectory)
         }
     }
 }
@@ -49,7 +50,7 @@ def test(environment, outputDirectory) {
 def runTest(testName, environmentFile, outputDirectory) {
     def arguments = [
         "./${testName}.json",
-        "-e ${enviromentFile}",
+        "-e ${environmentFile}",
         " --reports junit",
         " --reporter-junit-export ${outputDirectory}/TEST-${testName}.xml"
     ]
