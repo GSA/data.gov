@@ -66,7 +66,7 @@ def discoverPublicIp(environment, resource) {
                              \"Name=tag:Environment,Values=${environment}\" \
                              \"Name=tag:Resource,Values=${resource}\" \
                              \"Name=instance-state-name,Values=running\" \
-                    --query \"Reservations\"].Instances[].{Ip:PublicIpAddress}\" \
+                    --query \"Reservations[].Instances[].{Ip:PublicIpAddress}\" \
                     --output text |\
                     sed -e \"s/^$/d\"
                """).trim()
