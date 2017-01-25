@@ -1,16 +1,3 @@
 {
-  "id": "6259ad27-b1f8-6795-34af-0fbeee91a549",
-  "name": "GSA-pilot-verification",
-  "values": [
-    {
-      "key": "wordpress-web-host",
-      "value": "__WORDPRESS_WEB_HOST__",
-      "type": "text",
-      "enabled": true
-    }
-  ],
-  "timestamp": 1485283869478,
-  "_postman_variable_scope": "environment",
-  "_postman_exported_at": "2017-01-24T18:56:13.330Z",
-  "_postman_exported_using": "Postman/4.9.3"
+    "wordpress-web-host": "__WORDPRESS_WEB_HOST__"
 }
