@@ -16,8 +16,7 @@ def provision(environment) {
     def system = "datagov"
     playbook.run("jumpbox", system, environment, "bastion", 
         "always,jumpbox,apache", "shibboleth")
-    playbook.run("datagov-web", system, environment, "wordpress-web",
-    	null, "trendmicro,vim,deploy,deploy-rollback,secops,postfix")
+    playbook.run("datagov-web-demo", system, environment, "wordpress-web")
 }
 
 def test(environment) {
