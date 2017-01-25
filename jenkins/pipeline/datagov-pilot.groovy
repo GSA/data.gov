@@ -46,6 +46,7 @@ def test(environment, outputDirectory) {
     }
 }
 
+
 def runTest(testName, environmentFile, outputDirectory) {
     def arguments = [
         "./${testName}.json",
