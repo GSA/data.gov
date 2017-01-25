@@ -73,8 +73,9 @@ def discoverPublicIps(environment, resource) {
                     --query \"Reservations[].Instances[].{Ip:PublicIpAddress}\" \
                     --output text
                 """)
-    result.eachLine {
-        def ip =  "${it}".trim()
+    result = result.replaceAll(/\n/, ",").split(",")
+    for (r in results) {
+        def ip = r.trim()
         if (ip) {
             ips << "${ip}"
         }
