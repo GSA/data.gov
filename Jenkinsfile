@@ -80,7 +80,7 @@ def test(pipeline, environment) {
         node('master') {
             def reportsDirectory = "test-reports" 
             getPipeline(pipeline).test(nameEnvironment(environment),
-                "${pwd}()/${reportsDirectory}")
+                "${pwd()}/${reportsDirectory}")
             step([$class: 'JUnitResultArchiver',
                 testResults: '**/${reportsDirectory}/TEST-*.xml'])
         }
