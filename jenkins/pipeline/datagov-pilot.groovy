@@ -52,7 +52,7 @@ def runTest(testName, environmentFile, outputDirectory) {
     def arguments = [
         "./${testName}.json",
         "-e ${environmentFile}",
-        " --reports junit",
+        " --reporters junit",
         " --reporter-junit-export ${outputDirectory}/TEST-${testName}.xml"
     ]
     def command = "newman run ${arguments.join(' ')}"
@@ -62,7 +62,7 @@ def runTest(testName, environmentFile, outputDirectory) {
 
 @NonCPS
 def discoverPublicIps(environment, resource) {
-    def lines = sh(
+    def lines = sh 
             returnStdout: true, 
             script: """
                 aws ec2 describe-instances \
@@ -75,8 +75,11 @@ def discoverPublicIps(environment, resource) {
                     --query \"Reservations[].Instances[].{Ip:PublicIpAddress}\" \
                     --output text |\
                     sed -e \"/^[ ]*\$/d\"
-               """).readLines()
+               """
     def ips = []
+    echo "Found lines=[${lines}]"
+    lines = lines.readLines()
+    echo "Found lines=[${lines}]"
     for (line in lines) {
         line = line.trim()
         if (line) {
