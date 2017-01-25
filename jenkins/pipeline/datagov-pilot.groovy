@@ -73,12 +73,9 @@ def discoverPublicIps(environment, resource) {
                              \"Name=tag:Resource,Values=${resource}\" \
                              \"Name=instance-state-name,Values=running\" \
                     --query \"Reservations[].Instances[].{Ip:PublicIpAddress}\" \
-                    --output text |\
-                    sed -e \"/^[ ]*\$/d\"
-               """)
+                    --output text
+               """).split('\n')
     def ips = []
-    echo "Found lines=[${lines}]"
-    lines = lines.readLines()
     echo "Found lines=[${lines}]"
     for (line in lines) {
         line = line.trim()
