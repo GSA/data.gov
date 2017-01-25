@@ -3,7 +3,7 @@
 	"info": {
 		"name": "GSA-pilot-test",
 		"_postman_id": "884aee57-c744-e7e6-0a36-a0eb74376aa2",
-		"description": "Verifies that the pilot stack is provisioined correctly\n\n",
+		"description": "Verifies that the pilot stack is provisioined correctly",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
