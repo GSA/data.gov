@@ -21,7 +21,7 @@
 				}
 			],
 			"request": {
-				"url": "{{wordpress-web-host}}/",
+				"url": "http://{{ wordpress-web-host }}/",
 				"method": "GET",
 				"header": [],
 				"description": "Verify landing page"
