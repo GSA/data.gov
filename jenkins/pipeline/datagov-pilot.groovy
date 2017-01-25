@@ -34,9 +34,9 @@ def test(environment, outputDirectory) {
         dir ("./postman/pilot") {
             sh "ls -al"
             sh "cat ./environment-template.json"
-            def command = "cat ./environment-template.json | "
-            command = "${command} sed -e 's|__WORDPRESS_WEB_HOST__|${ip}|g' > "
-            command = "${command} ${environmentFile}"
+            def command = "cat ./environment-template.json | " + 
+                "sed -e 's|__WORDPRESS_WEB_HOST__|${ip}|g' > " +
+                "${environmentFile}"
             echo "About to run [${command}]"
             sh command
             sh "cat ${environmentFile}"
@@ -58,29 +58,28 @@ def runTest(testName, environmentFile, outputDirectory) {
 
 @NonCPS
 def discoverPublicIps(environment, resource) {
-    def ips = sh (
-            script: """aws ec2 describe-instances \
-                --region ${env.AWS_REGION} \
-                --filter "Name=tag:System,Values=datagov" \
-                         \"Name=tag:Stack,Values=pilot\" \
-                         \"Name=tag:Environment,Values=${environment}\" \
-                         \"Name=tag:Resource,Values=${resource}\" \
-                         \"Name=instance-state-name,Values=running\" \
-                --query \"Reservations[].Instances[].{Ip:PublicIpAddress}\" \
-                --output text
-                """,
-            returnStdout: true
-        )
-    ips = "${ips}".split("\n")
-    def serializableIPs = []
-    for (ip in ips) {
-        echo "adding  ip=[${ip}]"
-        if (!ip?.trim()) {
-            serializableIPs << "${ip}"
+    def ips = []
+    def result = sh(
+            returnStdout: true, 
+            script: """
+                aws ec2 describe-instances \
+                    --region ${env.AWS_REGION} \
+                    --filter "Name=tag:System,Values=datagov" \
+                             \"Name=tag:Stack,Values=pilot\" \
+                             \"Name=tag:Environment,Values=${environment}\" \
+                             \"Name=tag:Resource,Values=${resource}\" \
+                             \"Name=instance-state-name,Values=running\" \
+                    --query \"Reservations[].Instances[].{Ip:PublicIpAddress}\" \
+                    --output text
+                """)
+    result.eachLine {
+        def ip =  "${it}".trim()
+        if (ip) {
+            ips << "${ip}"
         }
     }
-    echo "ips=[${serializableIPs}]"
-    return serializableIPs
+    sh "echo ips=[${ips}]"
+    return ips
 }
 
 return this
