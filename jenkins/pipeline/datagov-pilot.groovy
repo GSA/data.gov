@@ -51,7 +51,7 @@ def runTest(testName, environmentFile, outputDirectory) {
     def arguments = [
         "./${testName}.json",
         "-e ${environmentFile}",
-        " --reporters junit",
+        " --reporters junit,cli",
         " --reporter-junit-export ${outputDirectory}/TEST-${testName}.xml"
     ]
     def command = "newman run ${arguments.join(' ')}"
