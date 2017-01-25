@@ -29,7 +29,7 @@ def test(environment, outputDirectory) {
     echo "Create environment file ${environmentFile} "
     def ips = discoverPublicIps(environment, 'wordpress-web')
 
-    echo "hosts to test ${ips}]"
+    echo "hosts to test [${ips} ]"
     for (ip in ips) {
         dir ("./postman/pilot") {
             sh "ls -al"
@@ -71,12 +71,15 @@ def discoverPublicIps(environment, resource) {
                 """,
             returnStdout: true
         )
-    ips = ips.split("\n")
+    ips = "${ips}".split("\n")
     def serializableIPs = []
     for (ip in ips) {
         echo "adding  ip=[${ip}]"
-        serializableIPs << ip
+        if (!ip?.trim()) {
+            serializableIPs << "${ip}"
+        }
     }
+    echo "ips=[${serializableIPs}]"
     return serializableIPs
 }
 
