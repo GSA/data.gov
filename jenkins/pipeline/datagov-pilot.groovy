@@ -28,19 +28,13 @@ def test(environment, outputDirectory) {
     echo "Create environment file ${environmentFile} "
     def ips = discoverPublicIps(environment, 'wordpress-web')
 
-    echo "Found ips=|${ips}|"
-
+    echo "Found ips=${ips}"
     dir ("./postman/pilot") {
-        sh "ls -al"
-        sh "cat ./environment-template.json"
         for (ip in ips) {
             def command = "cat ./environment-template.json | " + 
                 "sed -e 's|__WORDPRESS_WEB_HOST__|${ip}|g' > " +
                 "${environmentFile}"
-            echo "About to run [${command}]"
             sh command
-            sh "cat ${environmentFile}"
-            echo "Run test"
             runTest("verify-pilot", environmentFile, outputDirectory)
         }
     }
@@ -50,13 +44,16 @@ def test(environment, outputDirectory) {
 def runTest(testName, environmentFile, outputDirectory) {
     def arguments = [
         "./${testName}.json",
-        "-e ${environmentFile}",
+        "--environment ${environmentFile}",
         " --reporters junit,cli",
         " --reporter-junit-export ${outputDirectory}/TEST-${testName}.xml"
     ]
     def command = "newman run ${arguments.join(' ')}"
     echo "About to run [${command}]"
+    sh "cat ${environmentFile}"
     sh command
+    echo "Checking ${outputDirectory}"
+    sh "ls -al \"${outputDirectory}\""
 }
 
 def discoverPublicIps(environment, resource) {
