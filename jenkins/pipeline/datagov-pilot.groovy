@@ -23,7 +23,7 @@ def provision(environment) {
 def test(environment, outputDirectory) {
     // TODO Should get IPs from stack or ansible ec2.py,
     //      rather than have to discovering them
-    echo "Define environment file in ${pwd()}"
+    echo "Define environment file in ${pwd()}; write output to ${outputDirectory}"
     def environmentFile = "${pwd()}/${environment}-input.json"
     echo "Create environment file ${environmentFile} "
     def ips = discoverPublicIps(environment, 'wordpress-web')
