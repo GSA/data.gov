@@ -9,16 +9,17 @@
 ## <a name="description"></a>Description
 
 `manage-stack.sh` provides the capability of managing a set of AWS resources,
-which is referred to as a [_Stack_][AWS CloudFormation Stack], using
-[AWS Cloud Formation][AWS CloudFormation].
+which is referred to as a
+[_Stack_](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-stack.html), using
+[AWS Cloud Formation](https://aws.amazon.com/cloudformation/).
 It allows for creating, updating, or deleting that set of AWS resources.
 
 The script will complie an store the scripts used by a stack in a
 designated S3 bucket.
 
 The script can use Terraform variables file, in the
-[HCL (`tfvars`)][TerraformVariableFiles] or the
-[properties][PropertiesFiles] files format,
+[HCL (`tfvars`)](https://www.terraform.io/intro/getting-started/variables.html)
+or the [properties](https://en.wikipedia.org/wiki/.properties) files format,
 as input file to generate CloudFormation Stack parameters.
 It will discover files in the designated source directories.
 Additionally, input files may be specified using the `--input` parameter,
@@ -231,11 +232,3 @@ stack:
 -  The current script only handles string variables, and not
    structured (array and map) variables, in a tfvars input file.
    This could be added at a later time.
-
-
-## References
-
-- [AWS CloudFormation]: https://aws.amazon.com/cloudformation/
-- [AWS CloudFormation Stack]: http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-stack.html
-- [PropertiesFiles]: https://en.wikipedia.org/wiki/.properties
-- [TerraformVariableFiles]: https://www.terraform.io/intro/getting-started/variables.html
