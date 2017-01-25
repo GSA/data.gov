@@ -62,7 +62,7 @@ def runTest(testName, environmentFile, outputDirectory) {
 
 @NonCPS
 def discoverPublicIps(environment, resource) {
-    def lines = sh 
+    def lines = sh (
             returnStdout: true, 
             script: """
                 aws ec2 describe-instances \
@@ -75,7 +75,7 @@ def discoverPublicIps(environment, resource) {
                     --query \"Reservations[].Instances[].{Ip:PublicIpAddress}\" \
                     --output text |\
                     sed -e \"/^[ ]*\$/d\"
-               """
+               """)
     def ips = []
     echo "Found lines=[${lines}]"
     lines = lines.readLines()
