@@ -22,7 +22,7 @@
   when: datastore_db_server != ""
 
 - name: Config datastore_db_server in production.ini
-  replace: dest=/etc/ckan/production.ini regexp='(\s*datastore_server\s*=).*$' replace='\1 {{datastore_db_server}}'
+  replace: dest=/etc/ckan/production.ini regexp='(\s*datastore_server\s*=).*$' replace='\1 "{{datastore_db_server}}"'
   when: datastore_db_server != ""
 
 - name: Config solr_server in production.ini
