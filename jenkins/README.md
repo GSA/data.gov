@@ -150,7 +150,7 @@ the provisioing of a server by running Postman tests with
 [Newman](https://www.npmjs.com/package/newman).
 
 
-## <a name="provisoners"></a>Provisioner scripts
+## <a name="provisioners"></a>Provisioner scripts
 
 The pipeline make use of common provisioing capabilities, that include:
 
