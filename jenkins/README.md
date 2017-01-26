@@ -117,7 +117,7 @@ Note the `return this` statement at the end. This statement is required.
 
 ### <a name="branching"></a>Using the Branching Strategy
 
-The [Branching Strategy](../Infrastructure-as-Code.md/#impl-workflow)
+The [Branching Strategy](../InfrastructureAsCode.md/#impl-workflow)
 defines the development process as:
 1. Create an issue
 2. Create feature branch for an issue
@@ -157,7 +157,7 @@ The pipeline make use of common provisioing capabilities, that include:
 1. Running [Terraform](provisioner/terraform.groovy) script to manage
    a set of AWS resources (a "stack").
    This script acts as a wrapper around the
-   [Terraform stack management](../terraform/bin/Readme.md) script.
+   [Terraform stack management](../terraform/bin/README.md) script.
    It allows for specifying by name other Terraform stacks created in
    this same manner, that the stack being provisioned depends on.
    This will cause the stack being provisioned to use the generated
@@ -165,7 +165,7 @@ The pipeline make use of common provisioing capabilities, that include:
 2. Running [AWS Cloud Formation](provisioner/cloud-formation.groovy)
    to manage a Cloud Formation stack
    This script acts as a wrapper around the
-   [CloudFormation stack management](../cloud-formation/bin/Readme.md)
+   [CloudFormation stack management](../cloud-formation/bin/README.md)
    script.
    It allows for specifying by name Terraform stacks created with the
    Terraform provisioner, that the Cloud Formation stack being
@@ -174,7 +174,7 @@ The pipeline make use of common provisioing capabilities, that include:
    output of the named terraform stack as input.
 3. Running [Ansible playbooks](provisioner/playbook.groovy) against one
    or more EC2 instances using Ansible EC2 dynamic inventories.
-   This script uses the ansible playbook DSL command built-in to
-   Jenkins Pipeline.
+   This script uses the [ansible playbook DSL](https://github.com/jenkinsci/ansible-plugin)
+   command built-in to Jenkins Pipeline based on the ansible plugin.
    The dynamic inventory will automatically utilize on EC2 instance
    Name tags based on the system, environment and resource name.
