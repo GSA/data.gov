@@ -10,7 +10,12 @@ NAME = 'datapusher'
 
 # database
 
-SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/job_store.db'
+db_user = {{inventory_db_user}}
+db_pass = {{inventory_db_pass}}
+db_server = localhost
+db_database = {{inventory_datapusher_db_name}}
+SQLALCHEMY_DATABASE_URI = "postgresql://" + db_user + ":" + db_pass + "@" + db_server + "/" + db_database
+# SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/job_store.db'
 
 # webserver host and port
 
@@ -19,8 +24,8 @@ PORT = 8800
 
 # logging
 
-#FROM_EMAIL = 'server-error@example.com'
-#ADMINS = ['yourname@example.com']  # where to send emails
+# FROM_EMAIL = 'server-error@example.com'
+# ADMINS = ['yourname@example.com']  # where to send emails
 
-#LOG_FILE = '/tmp/ckan_service.log'
+# LOG_FILE = '/tmp/ckan_service.log'
 STDERR = True
