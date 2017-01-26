@@ -57,14 +57,14 @@
     - etc/ckan/who.ini
     - etc/ckan/apache.wsgi
     - etc/ckan/datapusher.wsgi
+    - etc/ckan/datapusher_settings.py
     - etc/apache2/sites-enabled/ckan.conf
     - etc/apache2/sites-enabled/datapusher.conf
 
 - name: Configure production.ini
-  template: src=templates/{{item}} dest=/{{item}}
+  template: src=templates/{{item}}.j2 dest=/{{item}}
   with_items:
     - etc/ckan/production.ini
-    - etc/ckan/datapusher_settings.py
 
 - include: additional-tasks.yml
   virtualenv: "{{ project_source_new_code_path }}"
