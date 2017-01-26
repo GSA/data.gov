@@ -34,12 +34,12 @@
 - name: Configure log permissions
   file: path=/var/log recurse=true state=directory mode=0755
 
-- name: Remove config.d folder
-  file: path=/etc/td-agent/config.d state=absent
-  notify: restart td-agent
+#- name: Remove config.d folder
+#  file: path=/etc/td-agent/config.d state=absent
+#  notify: restart td-agent
 
 - name: Create config.d folder
-  file: path=/etc/td-agent/config.d state=directory
+  file: path=/etc/td-agent/config.d state=directory mode=0775
 
 - name: Configure td-agent.conf
   template:
