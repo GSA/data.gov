@@ -8,6 +8,9 @@ PASSWORD = str(uuid.uuid4())
 
 NAME = 'datapusher'
 
+# upload limit
+MAX_CONTENT_LENGTH = 650000000
+
 # database
 
 db_user = "{{ inventory_db_user }}"
