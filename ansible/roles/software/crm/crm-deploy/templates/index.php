@@ -196,6 +196,9 @@ else
 /**
  * Loading composer dependencies
  */
+if (!is_file('vendor/autoload.php') || !is_readable('vendor/autoload.php')) {
+    throw new Exception('Can not read \'vendor/autoload.php\'. Try running \'composer install\' first!');
+}
 require_once ('vendor/autoload.php');
 
 /*

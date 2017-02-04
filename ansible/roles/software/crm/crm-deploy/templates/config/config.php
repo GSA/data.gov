@@ -32,11 +32,12 @@ if(isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
 
 $config['base_url'] = $protocol . '://' . $default_host;
 
-if (0 === stripos($_SERVER['REQUEST_URI'], '/crm')){
+if (isset($_SERVER['REQUEST_URI']) && 0 === stripos($_SERVER['REQUEST_URI'], '/crm')){
     $config['base_url'] .= '/crm';
 }
 
 $config['pre_approved_admins'] = '{{ codeigniter_pre_approved_admins }}';
+$config['pre_approved_admins'] = explode(',',$config['pre_approved_admins']);
 
 $config['akismet_key'] = ''; // see https://akismet.com/development/
 $config['akismet_siteurl'] = '';
