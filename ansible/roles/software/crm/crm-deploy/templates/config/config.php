@@ -24,7 +24,7 @@ $protocol = 'https';
 //    $protocol = 'https';
 //}
 //
-//$default_host = 'labs.data.gov:3000/crm/open311/v2/';
+$default_host = 'labs.data.gov/crm/';
 
 if(isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
     $default_host = $_SERVER['HTTP_HOST'];
