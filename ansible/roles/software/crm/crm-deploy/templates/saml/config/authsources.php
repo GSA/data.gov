@@ -1,14 +1,6 @@
 <?php
 
-
-$protocol = 'http';
-if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
-    $protocol = 'https';
-}
-
-if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
-    $protocol = 'https';
-}
+$protocol = 'https';
 
 $default_host = '{{ default_host }} ';
 if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
@@ -16,6 +8,10 @@ if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
 }
 
 $base_url = $protocol . '://' . $default_host;
+
+if (0 === stripos($_SERVER['REQUEST_URI'], '/crm')){
+    $base_url .= '/crm';
+}
 
 $config = array(
     // This is a authentication source which handles admin authentication.
@@ -30,7 +26,7 @@ $config = array(
     'max' => array(
         'saml:SP',
         'entityID' => $base_url,
-        'idp' => 'https://{{ saml_idp_host }}/idp/shibboleth',
+        'idp' => 'https://{{ saml2_idp_entry }}/idp/shibboleth',
         'privatekey' => '{{ saml_sp_private_key_path }}',
         'certificate' => '{{ saml_sp_cert_path }}',
         'NameIDFormat' => 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',

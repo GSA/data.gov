@@ -1,0 +1,24 @@
+# defaults file for postfix
+---
+postfix_install:
+  - postfix
+  - mailutils
+  - libsasl2-2
+  - sasl2-bin
+  - libsasl2-modules
+postfix_hostname: "{{ ansible_fqdn }}"
+postfix_mailname: "{{ ansible_fqdn }}"
+postfix_aliases: []
+postfix_relayhost: false
+postfix_relayhost_port: 587
+postfix_relaytls: false
+postfix_sasl_auth_enable: true
+postfix_sasl_user: "postmaster@{{ ansible_domain }}"
+postfix_sasl_password: 'k8+haga4@#pR'
+postfix_sasl_security_options: noanonymous
+postfix_inet_interfaces: all
+postfix_inet_protocols: all
+postfix_mynetworks:
+  - 127.0.0.0/8
+  - '[::ffff:127.0.0.0]/104'
+  - '[::1]/128'

@@ -14,22 +14,30 @@
 |
 */
 
-$protocol = 'http';
+$protocol = 'https';
 
-if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
-    $protocol = 'https';
-}
+//if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
+//    $protocol = 'https';
+//}
+//
+//if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+//    $protocol = 'https';
+//}
+//
+$default_host = 'labs.data.gov/crm/';
 
-if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
-    $protocol = 'https';
-}
-
-$default_host = 'labs.data.gov:3000/crm/open311/v2/';
 if(isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
     $default_host = $_SERVER['HTTP_HOST'];
 }
 
 $config['base_url'] = $protocol . '://' . $default_host;
+
+if (isset($_SERVER['REQUEST_URI']) && 0 === stripos($_SERVER['REQUEST_URI'], '/crm')){
+    $config['base_url'] .= '/crm';
+}
+
+$config['pre_approved_admins'] = '{{ codeigniter_pre_approved_admins }}';
+$config['pre_approved_admins'] = explode(',',$config['pre_approved_admins']);
 
 $config['akismet_key'] = ''; // see https://akismet.com/development/
 $config['akismet_siteurl'] = '';

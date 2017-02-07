@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-$root_dir = '{{ project_source_path }}';
+$root_dir = '{{ current_source_symlink }}';
 require_once($root_dir . "/vendor/autoload.php");
 
 /**
@@ -11,11 +11,12 @@ if (file_exists($root_dir . '/.env')) {
     $dotenv->load();
 }
 
-$config['download_dir'] = '{{ project_source_path }}/shared/downloads';
-$config['archive_dir'] = '{{ project_source_path }}/shared/archive';
+$config['download_dir'] = '{{ project_shared_path }}/downloads';
+$config['archive_dir'] = '{{ project_shared_path }}/archive';
 $config['docs_path'] = 'https://raw.githubusercontent.com/GSA/project-open-data-dashboard/master/documentation/';
 
 $config['s3_bucket'] = '{{ s3_bucket }}';
+$config['s3_prefix'] = '{{ s3_prefix }}';
 
 $config['import_active'] = true;
 $config['show_all_offices'] = false;
@@ -27,8 +28,8 @@ $config['google_analytics_domain'] = ''; // domain.com
 // Set local time zone 
 date_default_timezone_set('America/New_York');
 
-$config['tmp_csv_import'] = '{{ project_source_path }}/shared/downloads/import.csv';
-$config['pre_approved_admins'] = explode(",", getenv('PRE_APPROVED_ADMINS'));
+$config['tmp_csv_import'] = '{{ project_shared_path }}/downloads/import.csv';
+$config['pre_approved_admins'] = explode(",", strtolower(getenv('PRE_APPROVED_ADMINS')));
 
 
 /*
@@ -61,223 +62,9 @@ if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
 
 $config['base_url'] = $protocol . '://' . $default_host;
 
-/*
-|--------------------------------------------------------------------------
-| SAML Settings
-|--------------------------------------------------------------------------
-| https://max.gov/maxportal/home.action
-|
-| https://login.test.max.gov/idp/shibboleth
-|
-*/
-
-$config['saml'] = array(
-    // If 'strict' is True, then the PHP Toolkit will reject unsigned
-    // or unencrypted messages if it expects them to be signed or encrypted.
-    // Also it will reject the messages if the SAML standard is not strictly
-    // followed: Destination, NameId, Conditions ... are validated too.
-    'strict' => false,
-
-    // Enable debug mode (to print errors).
-    'debug' => true,
-
-    // Service Provider Data that we are deploying.
-    'sp' => array(
-        // Identifier of the SP entity  (must be a URI)
-        'entityId' => $config['base_url'] . '/saml/metadata',
-        // Specifies info about where and how the <AuthnResponse> message MUST be
-        // returned to the requester, in this case our SP.
-        'assertionConsumerService' => array(
-            // URL Location where the <Response> from the IdP will be returned
-            'url' => $config['base_url'] . '/saml/acs',
-            // SAML protocol binding to be used when returning the <Response>
-            // message. OneLogin Toolkit supports this endpoint for the
-            // HTTP-POST binding only.
-            'binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
-        ),
-        // If you need to specify requested attributes, set a
-        // attributeConsumingService. nameFormat, attributeValue and
-        // friendlyName can be omitted
-        "attributeConsumingService" => array(
-            "ServiceName" => "SP test",
-            "serviceDescription" => "Test Service",
-            "requestedAttributes" => array(
-                array(
-                    "name" => "",
-                    "isRequired" => false,
-                    "nameFormat" => "",
-                    "friendlyName" => "",
-                    "attributeValue" => array()
-                )
-            )
-        ),
-        // Specifies info about where and how the <Logout Response> message MUST be
-        // returned to the requester, in this case our SP.
-        'singleLogoutService' => array(
-            // URL Location where the <Response> from the IdP will be returned
-            'url' => $config['base_url'] . '/saml/logout',
-            // SAML protocol binding to be used when returning the <Response>
-            // message. OneLogin Toolkit supports the HTTP-Redirect binding
-            // only for this endpoint.
-            'binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
-        ),
-        // Specifies the constraints on the name identifier to be used to
-        // represent the requested subject.
-        // Take a look on lib/Saml2/Constants.php to see the NameIdFormat supported.
-        'NameIDFormat' => 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
-        // Usually x509cert and privateKey of the SP are provided by files placed at
-        // the certs folder. But we can also provide them with the following parameters
-        'x509cert' => '{{ saml_sp_cert }}',
-        'privateKey' => '{{ saml_sp_private_key }}',
-
-    ),
-
-    // Identity Provider Data that we want connected with our SP.
-    'idp' => array(
-        // Identifier of the IdP entity  (must be a URI)
-        'entityId' => 'https://{{ saml_idp_host }}/idp/',
-        // SSO endpoint info of the IdP. (Authentication Request protocol)
-        'singleSignOnService' => array(
-            // URL Target of the IdP where the Authentication Request Message
-            // will be sent.
-            'url' => 'https://{{ saml_idp_host }}/idp/profile/SAML2/POST/SSO',
-            // SAML protocol binding to be used when returning the <Response>
-            // message. OneLogin Toolkit supports the HTTP-Redirect binding
-            // only for this endpoint.
-            'binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
-        ),
-        // SLO endpoint info of the IdP.
-        'singleLogoutService' => array(
-            // URL Location of the IdP where SLO Request will be sent.
-            'url' => 'https://{{ saml_idp_host }}/idp/profile/SAML2/POST/SLO',
-            // SAML protocol binding to be used when returning the <Response>
-            // message. OneLogin Toolkit supports the HTTP-Redirect binding
-            // only for this endpoint.
-            'binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
-        ),
-        // Public x509 certificate of the IdP
-        'x509cert' => '{{ saml_idp_cert }}',
-        /*
-         *  Instead of use the whole x509cert you can use a fingerprint in order to
-         *  validate a SAMLResponse.
-         *  (openssl x509 -noout -fingerprint -in "idp.crt" to generate it,
-         *   or add for example the -sha256 , -sha384 or -sha512 parameter)
-         *
-         *  If a fingerprint is provided, then the certFingerprintAlgorithm is required in order to
-         *  let the toolkit know which algorithm was used. Possible values: sha1, sha256, sha384 or sha512
-         *  'sha1' is the default value.
-         *
-         *  Notice that if you want to validate any SAML Message sent by the HTTP-Redirect binding, you
-         *  will need to provide the whole x509cert.
-         */
-        // 'certFingerprint' => '',
-        // 'certFingerprintAlgorithm' => 'sha1',
-    ),
-// Compression settings
-    'compress' => array (
-        'requests' => true,
-        'responses' => true
-    ),
-    // Security settings
-    'security' => array (
-
-        /** signatures and encryptions offered */
-
-        // Indicates that the nameID of the <samlp:logoutRequest> sent by this SP
-        // will be encrypted.
-        'nameIdEncrypted' => false,
-
-        // Indicates whether the <samlp:AuthnRequest> messages sent by this SP
-        // will be signed.  [Metadata of the SP will offer this info]
-        'authnRequestsSigned' => false,
-
-        // Indicates whether the <samlp:logoutRequest> messages sent by this SP
-        // will be signed.
-        'logoutRequestSigned' => false,
-
-        // Indicates whether the <samlp:logoutResponse> messages sent by this SP
-        // will be signed.
-        'logoutResponseSigned' => false,
-
-        /* Sign the Metadata
-         False || True (use sp certs) || array (
-                                                    keyFileName => 'metadata.key',
-                                                    certFileName => 'metadata.crt'
-                                                )
-        */
-        'signMetadata' => false,
-
-
-        /** signatures and encryptions required **/
-
-        // Indicates a requirement for the <samlp:Response>, <samlp:LogoutRequest>
-        // and <samlp:LogoutResponse> elements received by this SP to be signed.
-        'wantMessagesSigned' => false,
-
-        // Indicates a requirement for the <saml:Assertion> elements received by
-        // this SP to be encrypted.
-        'wantAssertionsEncrypted' => false,
-
-        // Indicates a requirement for the <saml:Assertion> elements received by
-        // this SP to be signed. [Metadata of the SP will offer this info]
-        'wantAssertionsSigned' => false,
-
-        // Indicates a requirement for the NameID element on the SAMLResponse
-        // received by this SP to be present.
-        'wantNameId' => true,
-
-        // Indicates a requirement for the NameID received by
-        // this SP to be encrypted.
-        'wantNameIdEncrypted' => false,
-
-
-        // Authentication context.
-        // Set to false or don't present this parameter and no AuthContext will be sent in the AuthNRequest,
-        // Set true and you will get an AuthContext 'exact' 'urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport'
-        // Set an array with the possible auth context values: array ('urn:oasis:names:tc:SAML:2.0:ac:classes:Password', 'urn:oasis:names:tc:SAML:2.0:ac:classes:X509'),
-        'requestedAuthnContext' => true,
-
-        // Indicates if the SP will validate all received xmls.
-        // (In order to validate the xml, 'strict' and 'wantXMLValidation' must be true).
-        'wantXMLValidation' => true,
-
-        // Algorithm that the toolkit will use on signing process. Options:
-        //    'http://www.w3.org/2000/09/xmldsig#rsa-sha1'
-        //    'http://www.w3.org/2000/09/xmldsig#dsa-sha1'
-        //    'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256'
-        //    'http://www.w3.org/2001/04/xmldsig-more#rsa-sha384'
-        //    'http://www.w3.org/2001/04/xmldsig-more#rsa-sha512'
-        'signatureAlgorithm' => 'http://www.w3.org/2000/09/xmldsig#rsa-sha1',
-
-        // ADFS URL-Encodes SAML data as lowercase, and the toolkit by default uses
-        // uppercase. Turn it True for ADFS compatibility on signature verification
-        'lowercaseUrlencoding' => false,
-    ),
-
-    // Contact information template, it is recommended to supply a
-    // technical and support contacts.
-    'contactPerson' => array (
-        'technical' => array (
-            'givenName' => 'Alex',
-            'emailAddress' => 'test@example.com'
-        ),
-        'support' => array (
-            'givenName' => 'Alex',
-            'emailAddress' => 'test@example.com'
-        ),
-    ),
-
-    // Organization information template, the info in en_US lang is
-    // recomended, add more if required.
-    'organization' => array (
-        'en-US' => array(
-            'name' => 'GSA',
-            'displayname' => 'GSA',
-            'url' => $config['base_url']
-        ),
-    )
-);
-
+if (0 === stripos($_SERVER['REQUEST_URI'], '/dashboard')){
+    $config['base_url'] .= '/dashboard';
+}
 
 /*
 |--------------------------------------------------------------------------

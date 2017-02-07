@@ -16,3 +16,28 @@
     replace: '\1 s3filestore'
   tags: ['s3filestore']
 
+- name: copy datajson export map
+  copy:
+    src: "{{ virtualenv }}/src/ckanext-datajson/ckanext/datajson/export_map/export.inventory.map.sample.json"
+    dest: "{{ virtualenv }}/src/ckanext-datajson/ckanext/datajson/export_map/export.map.json"
+    remote_src: true
+
+- name: "Datapusher json content-type temp fix (content-type: application/json does not work now)"
+  replace:
+    dest: /usr/lib/datapusher/lib/python2.7/site-packages/ckanserviceprovider/web.py
+    regexp: 'application/json'
+    replace: 'application/x-www-form-urlencoded'
+
+- name: "Datapusher https to http temp fix (local https is unreachable now)"
+  replace:
+    dest: /usr/lib/datapusher/lib/python2.7/site-packages/ckanserviceprovider/web.py
+    regexp: 'result_url,'
+    replace: "result_url.replace('https://','http://'),"
+
+- name: "Remove compiled web.pyc"
+  file:
+    path: /usr/lib/datapusher/lib/python2.7/site-packages/ckanserviceprovider/web.pyc
+    state: absent
+
+- name: Restart apache2 one more time
+  service: name=apache2 state=restarted enabled=yes

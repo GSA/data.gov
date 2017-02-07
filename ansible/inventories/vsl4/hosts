@@ -1,2 +1,8 @@
+[crm-web]
+crm.aws
+
 [dashboard-web]
-52.91.72.162
+dashboard.aws
+
+[wordpress-web]
+datagov.aws

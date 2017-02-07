@@ -1,0 +1,24 @@
+---
+- hosts: localhost
+  remote_user: root
+
+  vars:
+    php_enablerepo: "remi,remi-php70"
+    php_enable_webserver: false
+
+    # Test a global requirement.
+    composer_global_packages:
+      - name: phpunit/phpunit
+        release: "@stable"
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=yes
+      when: ansible_distribution == 'Ubuntu'
+
+  roles:
+    - role: geerlingguy.repo-remi
+      when: ansible_os_family == 'RedHat' and ansible_distribution != 'Fedora'
+    - geerlingguy.git
+    - geerlingguy.php
+    - role_under_test

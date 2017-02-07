@@ -1,0 +1,40 @@
+---
+
+# SecOps user
+secops_user: "{{ vault_secops_user }}"
+secops_user_public_key: "{{ vault_secops_user_public_key }}"
+solr_master_server: "{{ vault_solr_master_server }}"
+
+# TrendMicro
+trendmicro_policy_id_app: "{{ vault_trendmicro_policy_id_app }}"
+trendmicro_policy_id_web: "{{ vault_trendmicro_policy_id_web }}"
+
+
+# CodeIgniter pre-approved admin emails
+codeigniter_pre_approved_admins: "{{ vault_codeigniter_pre_approved_admins }}"
+
+# App environment
+codeigniter_environment: production
+env_wp_env: production
+real_ansible_env: production
+
+# Nginx
+nginx_remove_default_vhost: true
+letsencrypt: false
+
+# postfix
+postfix_relayhost: smtp.gsa.gov 
+postfix_relayhost_port: 25
+postfix_sasl_auth_enable: false
+postfix_relaytls: true
+default_email_from: "{{ vault_default_email_from }}"
+
+# SAML
+saml2_idp_entry: login.max.gov
+saml2_idp_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
+saml_idp_cert_fprint: "67:76:BB:87:FE:76:D6:4A:BE:19:3F:E2:B6:1A:49:06:AE:56:06:B8"
+
+# PHP-FPM
+php_enable_php_fpm: true
+php_fpm_listen: /var/run/php/php7.0-fpm.sock
+php_webserver_daemon: nginx

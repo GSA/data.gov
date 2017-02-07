@@ -1,25 +1,19 @@
 --- # Dashboard repo deployment & composer install
 
-- name: Remove old rollback code
-  file: path="{{ project_source_rollback_path }}" state=absent
-
-- name: Check whether new code dir exists
+- name: Check whether "{{ project_source_new_code_path }}" exists
   stat: path="{{ project_source_new_code_path }}"
   register: p
 
 - name: Create rollback code
-  command: cp -r "{{ project_source_new_code_path }}" "{{ project_source_rollback_path }}"
+  command: mv "{{ project_source_new_code_path }}" "{{ project_source_rollback_path }}"
   when: p.stat.isdir is defined and p.stat.isdir
 
 - name: Symlink current dir with rollback code
   file:
     src: "{{ project_source_rollback_path }}"
-    path: "{{ project_source_path }}"
+    path: "{{ current_source_symlink }}"
     state: link
   when: p.stat.isdir is defined and p.stat.isdir
-
-- name: We should deploy to an empty folder
-  file: path="{{ project_source_new_code_path }}" state=absent
 
 - name: Clone project files to {{ project_source_new_code_path }}
   git:
@@ -60,10 +54,8 @@
 
 - name: Copying SAML metadata files
   template:
-    src: "{{ item }}"
-    dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/simplesamlphp/metadata/{{ item | basename }}"
-  with_fileglob:
-    - ../templates/saml/metadata/*.php
+    src: "saml/metadata/{{ saml2_idp_entry }}/saml20-idp-remote.php"
+    dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/simplesamlphp/metadata/saml20-idp-remote.php"
 
 - name: Fixing SAML (removing nameIdPolicy)
   replace:
@@ -75,7 +67,11 @@
   replace:
     dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/saml2/src/SAML2/HTTPPost.php"
     regexp: '\$msgStr = base64_encode\(\$msgStr\);'
-    replace: '$msgStr = base64_encode(str_replace("simplesaml/module.php/saml/sp/saml2-acs.php/max","user/acs",$msgStr));'
+    replace: '
+      if (0 === stripos($_SERVER["REQUEST_URI"], "/dashboard")){
+        $msgStr = str_replace(".gov/simple",".gov/dashboard/simple", $msgStr);
+      }
+      $msgStr = base64_encode(str_replace("simplesaml/module.php/saml/sp/saml2-acs.php/max","user/acs",$msgStr));'
 
 #- name: Fixing SAML (allowing missing url)
 #  replace:
@@ -88,11 +84,6 @@
     src: "index.php"
     dest: "{{ project_source_new_code_path }}/index.php"
 
-- name: Copying index.php
-  template:
-    src: "archive_to_s3.sh"
-    dest: "{{ project_source_new_code_path }}/archive_to_s3.sh"
-
 - name: Adding .env
   template:
     src: ".env"
@@ -101,5 +92,21 @@
 - name: Symlink current dir with new code
   file:
     src: "{{ project_source_new_code_path }}"
-    path: "{{ project_source_path }}"
+    path: "{{ current_source_symlink }}"
     state: link
+
+- name: Set up campaign status cfo-act all cron job to run @ 11pm EST nightly
+  cron: 
+    name: "campaign status cfo-act all cron job"
+    minute: 0
+    hour: 4
+    job: "/usr/bin/php {{ current_source_symlink }}/index.php campaign status cfo-act all | tee /var/log/dashboard-cron-cfo.log | mail -s 'LabsData - Dashboard Cron Job (cfo-act) - {{ real_ansible_env }}' -a 'From: {{ default_email_from }}' {{ cron_to_emails }}"
+  when: crons_enabled
+
+- name: Set up campaign status all all cron job to run @ 11:30pm EST nightly
+  cron:
+    name: "campaign status all all cron job"
+    minute: 30
+    hour: 4
+    job: "/usr/bin/php {{ current_source_symlink }}/index.php campaign status all all | tee /var/log/dashboard-cron.log | mail -s 'LabsData - Dashboard Cron Job (all) - {{ real_ansible_env }}' -a 'From: {{ default_email_from }}' {{ cron_to_emails }}"
+  when: crons_enabled

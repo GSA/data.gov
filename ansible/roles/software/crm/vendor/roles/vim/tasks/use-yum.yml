@@ -1,0 +1,25 @@
+#!/usr/bin/env ansible-playbook
+# vim:ft=ansible :
+
+---
+
+- name: install vim on rhel base system
+  become: yes
+  yum: name=vim-enhanced state=present
+
+- name: install libselinux-python on rhel base system
+  become: yes
+  yum: name=libselinux-python state=present
+
+- name: use vi-mode in bash
+  become: yes
+  lineinfile: dest=/etc/bashrc line="set -o vi"
+
+- name: setting $EDITOR
+  become: yes
+  lineinfile: dest=/etc/bashrc line="export EDITOR=vim"
+
+- name: use dark background in vim
+  become: yes
+  lineinfile: dest=/etc/vimrc line="set background=dark"
+

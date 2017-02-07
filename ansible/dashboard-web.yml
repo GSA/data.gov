@@ -15,16 +15,19 @@
   become_method: sudo
 
   roles:
+  - { role: misc, tags: [provision, misc] }
   - { role: dashboard-sudo-1-security, tags: [provision] }
   - { role: git, tags: [provision] }
-  - { role: sendmail, tags: [provision] }
   - { role: nginx, tags: [provision] }
   - { role: php, tags: [php, provision] }
   - { role: php-mysql, tags: [php, php-mysql, provision] }
   - { role: php-memcached, tags: [php, php-memcached, provision] }
   - { role: composer, tags: [php, provision] }
-  - { role: vim, tags: [provision, vim] }
-  - { role: dashboard-sudo-2-init, tags: [always] }
+  - { role: vim, tags: [vim, provision] }
+  - { role: dashboard-sudo-2-init, tags: [provision, deploy, deploy-rollback] }
+  - { role: secops-ssh, tags: [provision, secops] }
+  - { role: trendmicro, tags: [provision, trendmicro] }
+  - { role: ansible-postfix, tags: [provision, postfix] }
 
 
 - name: Deploying Dashboard
@@ -32,7 +35,7 @@
   remote_user: ubuntu
 
   roles:
-  - { role: dashboard-deploy, tags: [deploy] }
+  - { role: dashboard-deploy, tags: [deploy, provision] }
   - { role: datagov-deploy-rollback, tags: [deploy-rollback] }
 
 
@@ -44,11 +47,13 @@
   become_method: sudo
 
   roles:
-  - { role: dashboard-sudo-3-cleanup, tags: [always] }
+  - { role: dashboard-sudo-3-cleanup, tags: [provision, deploy, deploy-rollback] }
 
-- name: Dashboard Migration
+
+
+- name: Dashboard DB Migration
   hosts: dashboard-web
   remote_user: ubuntu
 
   roles:
-  - { role: dashboard-migrations, tags: [deploy, migrate] }
+  - { role: dashboard-db-migrations, tags: [provision, deploy, migrate] }

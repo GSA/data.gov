@@ -1,0 +1,42 @@
+---
+
+# MySQL credentials
+env_db_host: "{{ vault_env_db_host }}"
+env_db_user: "{{ vault_env_db_user }}"
+env_db_pass: "{{ vault_env_db_pass }}"
+env_db_name: "{{ vault_env_db_name }}"
+
+# AWS S3 bucket
+s3_bucket: bsp-ocsit-prod-east-appdata
+s3_prefix: datagov/dashboard/
+
+# Disabling MySQL server
+mysql_enabled_on_startup: false
+
+# Composer
+project_git_repo: https://github.com/project-open-data/project-open-data-dashboard.git
+#project_git_version: master
+project_git_version: ansible
+
+# Project path
+project_source_rollback_path: /var/www/dashboard/rollback
+project_source_new_code_path: /var/www/dashboard/new
+current_source_symlink: /var/www/dashboard/current
+project_index_path: /var/www/dashboard/current
+
+# Temp uploads
+project_shared_path: /var/www/dashboard/shared
+
+# Send cron output to these emails (space is the separator)
+cron_to_emails: "{{ vault_cron_to_emails }}"
+
+# CodeIgniter Session Encryption Key
+env_encryption_key: "{{ vault_codeigniter_encryption_key }}"
+
+default_host: 'labs.data.gov/dashboard'
+
+# MAX SAML
+saml_sp_private_key_path: /etc/dashboard-saml-sp-private.pem
+saml_sp_cert_path: /etc/dashboard-saml-sp-cert.crt
+saml_sp_private_key: "{{ vault_saml_private_key }}"
+saml_admin_pass: "{{ vault_saml_admin_pass }}"

@@ -1,0 +1,103 @@
+---
+
+- name: Check if plugins are installed
+  command: "td-agent-gem list -i {{item}}"
+  environment:
+    PATH: /usr/sbin:{{ ansible_env.PATH }}
+  with_items: "{{td_agent_plugins}}"
+  changed_when: False
+  failed_when: False
+  register: td_plugin_status
+
+- name: Install missing plugins
+  command: "td-agent-gem install {{item.item}}"
+  environment:
+    PATH: /usr/sbin:{{ ansible_env.PATH }}
+  with_items: "{{td_plugin_status.results}}"
+  when: (td_plugin_status.results is defined) and
+        (item.stdout_lines[0] == "false")
+
+- name: Configure td-agent service
+  lineinfile: dest=/etc/init.d/td-agent line="export AWS_REGION=us-east-1" state=present insertafter="export PATH=/sbin:/usr/sbin:/bin:/usr/bin"
+
+
+# Configure permissions
+# need to change the permissions. Hard-coding version here, but if that's a problem
+# we can use this relatively simple hack http://stackoverflow.com/questions/22476097/how-to-mention-wildcard-in-ansible-commands
+- name: Configure AWS ES plugin gem permissions
+  file: path=/opt/td-agent/embedded/lib/ruby/gems/2.1.0/gems recurse=true state=directory mode=0775
+
+- name: Configure gemspec permissions
+  file: path=/opt/td-agent/embedded/lib/ruby/gems/2.1.0/specifications recurse=true mode=0775
+
+- name: Remove config.d folder
+  file: path=/etc/td-agent/config.d state=absent
+  notify: restart td-agent
+
+- name: Create config.d folder
+  file: path=/etc/td-agent/config.d state=directory mode=0775
+
+- name: Configure td-agent.conf
+  template:
+    src: td-agent.j2
+    dest: /etc/td-agent/td-agent.conf
+    owner: td-agent
+    group: td-agent
+
+- name: Configure system sources
+  template:
+    src: system-source.j2
+    dest: /etc/td-agent/config.d/1-system-source.conf
+    owner: td-agent
+    group: td-agent
+  tags: system
+
+- name: Configure app sources
+  template:
+    src: "{{ group_names[0] }}-source.j2"
+    dest: /etc/td-agent/config.d/1-{{ group_names[0] }}-source.conf
+    owner: td-agent
+    group: td-agent
+  tags: app
+
+- name: Configure host filters
+  template:
+    src: host-filter.j2
+    dest: /etc/td-agent/config.d/2-host-filter.conf
+    owner: td-agent
+    group: td-agent
+  tags: filters
+
+- name: Configure ElasticSearch matcher
+  template:
+    src: elasticsearch-match.j2
+    dest: /etc/td-agent/config.d/3-elasticsearch-match.conf
+    owner: td-agent
+    group: td-agent
+  tags: elasticsearch
+
+- name: Configure BSP matcher
+  template:
+    src: bsp-match.j2
+    dest: /etc/td-agent/config.d/4-bsp-match.conf
+    owner: td-agent
+    group: td-agent
+  tags: bsp
+
+- name: Get the list of system log files
+  shell: cat /etc/td-agent/config.d/1-system-source.conf | grep -E '\.log$|.out$|\/syslog$' | awk '{print $2}'
+  register: list_of_log_files
+
+- name: Fix system log file permissions
+  file: path={{ item }}  mode=0755
+  with_items: "{{ list_of_log_files.stdout_lines }}"
+  ignore_errors: yes
+
+- name: Get the list of app log files
+  shell: cat /etc/td-agent/config.d/1-{{ group_names[0] }}-source.conf | grep -E '\.log$|.out$|\/syslog$' | awk '{print $2}'
+  register: list_of_log_files
+
+- name: Fix app log file permissions 
+  file: path={{ item }}  mode=0755
+  with_items: "{{ list_of_log_files.stdout_lines }}"
+  ignore_errors: yes

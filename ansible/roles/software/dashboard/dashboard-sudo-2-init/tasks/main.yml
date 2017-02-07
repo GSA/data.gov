@@ -4,28 +4,26 @@
   template:
     src: "dashboard.nginx.conf"
     dest: "/etc/nginx/sites-enabled/dashboard.nginx.conf"
-  notify:
-      - reload nginx
+#  notify:
+#      - reload nginx
 
-- name: Temporarily making /var/www/ writeable by all
+- name: Mkdir /var/www/
   file:
     path: "/var/www"
     state: directory
-    mode: 0777
     owner: "www-data"
     group: "www-data"
-    recurse: yes
-  ignore_errors: yes
+    mode: 0777
 
-- name: Copying SAML crt
-  template:
-    src: dashboard-saml-sp-cert.crt
+- name: Copy SAML crt
+  copy:
+    src: "{{ saml2_idp_entry }}/mycert.pem"
     dest: "{{ saml_sp_cert_path }}"
     mode: 0644
 
-- name: Copying SAML pem
-  template:
-    src: dashboard-saml-sp-private.pem
+- name: Copy SAML key
+  copy:
+    src: "{{ saml2_idp_entry }}/mykey.pem"
     dest: "{{ saml_sp_private_key_path }}"
     mode: 0644
 
@@ -34,3 +32,14 @@
   with_items:
     - mariadb-client-5.5
     - php-mcrypt
+    - php7.0-zip
+
+- name: Remove old rollback code
+  file: path="{{ project_source_rollback_path }}" state=absent
+
+- name: Empty shared folder to free up space
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "{{ project_shared_path }}"

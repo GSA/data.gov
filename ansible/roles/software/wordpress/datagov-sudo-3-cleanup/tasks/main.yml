@@ -7,58 +7,28 @@
     mode: 0755
     recurse: yes
 
-- name: Chown www-data /var/www/
+- name: Ensuring required directories exist and have write permissions
   file:
-    path: "/var/www"
-    owner: "ubuntu"
-    group: "www-data"
-    recurse: yes
-
-- name: W3 Total Cache permissions
-  file:
-    path: "{{ project_source_path }}/web/app/cache"
+    path: "{{ item }}"
     state: directory
     mode: 0777
     recurse: yes
+  with_items:
+    - "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc"
+    - "{{ project_source_new_code_path }}/web/app/w3tc-config"
+    - "{{ project_source_new_code_path }}/web/app/cache"
+    - "{{ project_source_new_code_path }}/web/app/uploads"
 
-- name: W3 Total Cache Config permissions
+- name: Check if cron log file is accessible
   file:
-    path: "{{ project_source_path }}/web/app/w3tc-config"
-    state: directory
-    mode: 0777
-    recurse: yes
+    path: "{{ item }}"
+    state: touch
+    mode: 0666
+  with_items:
+    - "/var/log/wp-cron.log"
 
-- name: Making sure saml config directory has correct mode
-  file:
-    dest: "{{ project_source_path }}/web/app/uploads/saml-20-single-sign-on/etc"
-    state: directory
-    mode: 0777
-    recurse: yes
+- name: Reload php7.0-fpm
+  service: name=php7.0-fpm state=reloaded
 
-- name: Docker specific
-  debug:
-    msg: "Now running docker specific tasks"
-  when: "'docker' == running_in"
-
-- name: Double check php7.0-fpm status
-  command: "service php7.0-fpm status"
-  register: php_fpm_status
-  ignore_errors: true
-  when: "'docker' == running_in"
-
-- name: Starting php7.0-fpm & nginx
-  command: "service php7.0-fpm start && service nginx start"
-  ignore_errors: true
-  when: "'docker' == running_in and 'is not running' in php_fpm_status.stdout"
-
-- name: Service php7.0-fpm status
-  command: "service php7.0-fpm status"
-  register: php_fpm_status
-  when: "'docker' == running_in"
-  failed_when: "'is not running' in php_fpm_status.stdout"
-
-- name: Service nginx status
-  command: "service nginx status"
-  register: nginx_status
-  when: "'docker' == running_in"
-  failed_when: "'is not running' in nginx_status.stdout"
+- name: Reload nginx
+  service: name=nginx state=reloaded

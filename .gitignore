@@ -31,8 +31,13 @@ synced_folders/*
 
 # Ansible
 vendor
+!ansible/roles/software/wordpress/vendor
+!ansible/roles/software/crm/vendor
+!ansible/roles/software/dashboard/vendor
+authorized_keys
 *.retry
 !.env.j2
+ansible/inventories/ocsit
 
 #SQL
 *.sql
@@ -41,3 +46,7 @@ vendor
 
 # Terraform
 /terraform/terraform.tfvars
+.terraform
+/terraform/pilot/terraform.tfstate.backup
+/terraform/pilot/terraform.tfstate
+/terraform/target

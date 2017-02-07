@@ -14,7 +14,7 @@
 - name: Symlink current dir with rollback code
   file:
     src: "{{ project_source_rollback_path }}"
-    path: "{{ project_source_path }}"
+    path: "{{ current_source_symlink }}"
     state: link
   when: p.stat.isdir is defined and p.stat.isdir
 
@@ -26,13 +26,6 @@
 
 - name: Install CKAN app
   command: sh install.sh "{{ project_source_new_code_path }}" chdir={{ app_source_path }} 
-
-- name: Copy all needed files
-  action: copy src={{item}} dest=/{{item}}
-  with_items:
-    - etc/ckan/apache.wsgi
-    - etc/apache2/sites-enabled/ckan.conf
-  tags: ['frontend', 'apache']
 
 # Configure CKAN
 - name: Configure production.ini
@@ -47,11 +40,25 @@
   pip: name=repoze.who version=2.0 virtualenv="{{project_source_new_code_path }}"
   when: env == "local"
 
-- name: point site_url in production.ini to localhost
-  action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ckan_site_domain}}"
+- name: point site_url in /etc/hosts to localhost
+  action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ ckan_site_domain | regex_replace('https?\://','') }}"
 
 - name: Symlink current dir with new code
   file:
     src: "{{ project_source_new_code_path }}"
-    path: "{{ project_source_path }}"
+    path: "{{ current_source_symlink }}"
     state: link
+
+- name: Copy all needed files
+  action: copy src={{item}} dest=/{{item}}
+  with_items:
+    - etc/ckan/apache.wsgi
+  tags: ['frontend', 'apache']
+
+- name: Configure ckan.conf
+  template: src=templates/etc/apache2/sites-enabled/ckan.{{readwrite_type|default('default')}}.conf.j2 dest=/etc/apache2/sites-enabled/ckan.conf
+  tags: ['frontend', 'apache']
+
+- name: Restart apache
+  service: name=apache2 state=restarted
+  tags: ['frontend', 'apache']

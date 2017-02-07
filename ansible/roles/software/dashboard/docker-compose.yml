@@ -9,7 +9,6 @@ services:
     ports:
       - "3366:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: insecure
       MYSQL_DATABASE: dashboard
       MYSQL_USER: dashboard
       MYSQL_PASSWORD: superpassword

@@ -1,0 +1,33 @@
+---
+
+- name: install dependencies...
+  apt: name={{ item }} state=installed update_cache=yes
+  with_items:
+    - python-pycurl
+
+- name: Add the Treasuredata apt key
+  apt_key: url=http://packages.treasuredata.com/GPG-KEY-td-agent state=present
+
+- name: Add apt repository
+  apt_repository: repo='deb [arch={{ td_agent_architecture }}] http://packages.treasuredata.com/2/ubuntu/trusty/ trusty contrib' state=present
+  when: ansible_distribution_version == '14.04'
+
+- name: Add apt repository
+  apt_repository: repo='deb [arch=amd64] http://packages.treasuredata.com/2/ubuntu/precise/ precise contrib' state=present
+  when: ansible_distribution_version == '12.04'
+
+- name: Add apt repository
+  apt_repository: repo='deb [arch={{ td_agent_architecture }}] http://packages.treasuredata.com/2/ubuntu/lucid/ contrib' state=present
+  when: ansible_distribution_version == '10.04'
+
+- name: apt-get td-agent
+  apt: name=td-agent update_cache=yes force=yes
+  notify:
+    - restart td-agent
+    
+- name: copy BSP certificate
+  copy:
+    src: roles/monitoring/fluentd/td-agent/files/cacert.pem
+    dest: /etc/td-agent/bspcert.pem
+    owner: ubuntu
+    mode: 0444

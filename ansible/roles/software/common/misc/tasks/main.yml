@@ -1,0 +1,18 @@
+--- # fix "Unable to resolve host IP" issue
+
+- name: check whether hostname has been added already
+  shell: cat /etc/hosts | grep $(hostname)
+  register: hostname_grep
+  ignore_errors: true
+
+- name: add hostname to /etc/hosts
+  shell: echo 127.0.0.1 $(hostname) >> /etc/hosts
+  when: hostname_grep.stdout == ""
+
+# temporary fix for ntpd issues
+- name: fix ntpd issues
+  shell: rm -rf /var/lib/dpkg/info/ntp* && apt-get remove ntp -y && apt-get purge ntp -y && apt-get autoclean -y && apt-get autoremove -y
+
+# temporary fix for postfix issues
+- name: fix postfix issues
+  shell: rm -rf /var/lib/dpkg/info/postfix* && apt-get remove postfix -y && apt-get purge postfix -y && apt-get autoclean -y && apt-get autoremove -y

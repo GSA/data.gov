@@ -1,5 +1,0 @@
-[wordpress-web]
-52.87.241.228
-
-[all:vars]
-vars_group=amazon-dev

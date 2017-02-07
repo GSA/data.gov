@@ -1,0 +1,19 @@
+vault_env_dbi_aws_access_key_id:
+vault_env_dbi_aws_secret_access_key:
+
+# MySQL credentials
+vault_env_db_host: poddb
+vault_env_db_user: dashboard
+vault_env_db_pass: superpassword
+vault_env_db_name: dashboard
+
+MYSQL_DATABASE: dashboard
+MYSQL_USER: dashboard
+MYSQL_PASSWORD: superpassword
+
+# Send cron output to these emails (space is the separator)
+vault_cron_to_emails: ""
+
+vault_codeigniter_encryption_key: 12345
+
+vault_saml_admin_pass: superpassword

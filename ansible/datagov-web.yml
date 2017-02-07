@@ -15,9 +15,9 @@
   become_method: sudo
 
   roles:
+  - { role: misc, tags: [provision, misc] }
   - { role: datagov-sudo-1-security, tags: [provision] }
   - { role: git, tags: [provision] }
-  - { role: sendmail, tags: [provision] }
   - { role: nginx, tags: [provision] }
   - { role: php, tags: [php, provision] }
   - { role: php-mysql, tags: [php, php-mysql, provision] }
@@ -25,7 +25,10 @@
   - { role: wp-cli, tags: [php, cli, provision] }
   - { role: composer, tags: [php, provision] }
   - { role: vim, tags: [provision, vim] }
-  - { role: datagov-sudo-2-init, tags: [always] }
+  - { role: datagov-sudo-2-init, tags: [provision, deploy, deploy-rollback] }
+  - { role: secops-ssh, tags: [provision, secops] }
+  - { role: trendmicro, tags: [provision, trendmicro] }
+  - { role: ansible-postfix, tags: [provision, postfix] }
 
 
 - name: Deploying Data.gov
@@ -33,7 +36,7 @@
   remote_user: ubuntu
 
   roles:
-  - { role: datagov-deploy, tags: [deploy] }
+  - { role: datagov-deploy, tags: [deploy, provision] }
   - { role: datagov-deploy-rollback, tags: [deploy-rollback] }
 
 
@@ -44,4 +47,4 @@
   become_method: sudo
 
   roles:
-  - { role: datagov-sudo-3-cleanup, tags: [always] }
+  - { role: datagov-sudo-3-cleanup, tags: [provision, deploy, deploy-rollback] }

@@ -12,13 +12,13 @@
   register: p
 
 - name: Create rollback code
-  command: cp -r "{{ project_source_new_code_path }}" "{{ project_source_rollback_path }}"
+  command: "mv {{ project_source_new_code_path }} {{ project_source_rollback_path }}"
   when: p.stat.isdir is defined and p.stat.isdir
 
 - name: Symlink current dir with rollback code
   file:
     src: "{{ project_source_rollback_path }}"
-    path: "{{ project_source_path }}"
+    path: "{{ current_source_symlink }}"
     state: link
   when: p.stat.isdir is defined and p.stat.isdir
 
@@ -30,10 +30,18 @@
     pkg: "{{ ckan_pkgs }}" 
     virtualenv: "{{ project_source_new_code_path }}"
 
+- name: Remove old datapusher code
+  file: path="{{ datapusher_virtual_env }}" state=absent
+
 - include: build-pkgs.yml
   vars:
     pkg: "{{ datapusher_pkgs }}"
     virtualenv: "{{ datapusher_virtual_env }}"
+
+- name: fix "{{ datapusher_virtual_env }}" permissions
+  file: path={{ item }} state=directory group=www-data recurse=yes
+  with_items:
+    - "{{ datapusher_virtual_env }}"
 
 - name: remove psycopg2
   action: pip name=psycopg2 virtualenv="{{ project_source_new_code_path }}" state=absent
@@ -41,7 +49,7 @@
 - name: create directories
   action: file path={{item}} state=directory owner="www-data" group="www-data" mode=0755
   with_items:
-    - "{{ project_source_new_code_path }}"
+    - /var/lib/ckan
 
 - name: copy all needed files
   action: copy src={{item}} dest=/{{item}}
@@ -49,14 +57,14 @@
     - etc/ckan/who.ini
     - etc/ckan/apache.wsgi
     - etc/ckan/datapusher.wsgi
-    - etc/ckan/datapusher_settings.py
     - etc/apache2/sites-enabled/ckan.conf
     - etc/apache2/sites-enabled/datapusher.conf
 
 - name: Configure production.ini
-  template: src=templates/{{item}}.j2 dest=/{{item}}
+  template: src=templates/{{item}} dest=/{{item}}
   with_items:
     - etc/ckan/production.ini
+    - etc/ckan/datapusher_settings.py
 
 - include: additional-tasks.yml
   virtualenv: "{{ project_source_new_code_path }}"
@@ -64,11 +72,11 @@
 - name: Symlink current dir with new code
   file:
     src: "{{ project_source_new_code_path }}"
-    path: "{{ project_source_path }}"
+    path: "{{ current_source_symlink }}"
     state: link
 
 - name: restart apache
   action: service name=apache2 state=restarted
 
-- name: point site_url in production.ini to localhost
-  action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ckan_site_domain}}"
+- name: point site_url in /etc/hosts to localhost
+  action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ ckan_site_domain | regex_replace('https?\://','') }}"

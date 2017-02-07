@@ -8,17 +8,29 @@
 - name: install supervisor
   action: pip name=supervisor virtualenv=/usr/lib/ckan/
 
-- name: copy all needed files
-  action: copy src={{item}} dest=/{{item}}
-  with_items:
-    - etc/supervisord.conf
-    - etc/init/supervisor.conf
+- name: copy supervisor.conf
+  action: copy src=etc/init/supervisor.conf dest=/etc/init/supervisor.conf
 
-- name: copy all needed files
-  action: copy src={{item}} dest=/{{item}}
-  with_items:
-    - etc/cron.d/ckan
-    - etc/cron.d/supervisor
+- name: copy primary supervisord config
+  copy: src=etc/supervisord-primary.conf dest=/etc/supervisord.conf
+  when: groups["catalog-harvester"]|length == 1 or inventory_hostname == groups["catalog-harvester"][0]
+
+- name: copy secondary supervisord config
+  copy: src=etc/supervisord-secondary.conf dest=/etc/supervisord.conf
+  when: groups["catalog-harvester"]|length > 1 and inventory_hostname == groups["catalog-harvester"][1]
+
+- name: copy primary cron job
+  copy: src=etc/cron.d/ckan-primary dest=/etc/cron.d/ckan
+  when: groups["catalog-harvester"]|length == 1 or inventory_hostname == groups["catalog-harvester"][0]
+  tags: ['cron']
+
+- name: copy secondary cron job
+  copy: src=etc/cron.d/ckan-secondary dest=/etc/cron.d/ckan
+  when: groups["catalog-harvester"]|length > 1 and inventory_hostname == groups["catalog-harvester"][1]
+  tags: ['cron']
+
+- name: copy supervisor cron job
+  copy: src=etc/cron.d/supervisor dest=/etc/cron.d/supervisor
   tags: ['cron']
 
 - name: create superviserctl symlink

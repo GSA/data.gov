@@ -44,8 +44,8 @@ if (defined('ENVIRONMENT'))
 		case 'uat':	
         case 'staging':
 		case 'production':
-			error_reporting(0);
-			ini_set('display_errors', 0);
+            error_reporting(E_ALL & ~E_NOTICE);
+            ini_set('display_errors', 0);
 		break;
 
 		default:
@@ -144,7 +144,8 @@ if (defined('ENVIRONMENT'))
 	// Set the current directory correctly for CLI requests
 	if (defined('STDIN'))
 	{
-		chdir(dirname(__FILE__));
+//		chdir(dirname(__FILE__));
+		chdir("{{ current_source_symlink }}");
 	}
 
 	if (realpath($system_path) !== FALSE)
@@ -167,7 +168,8 @@ if (defined('ENVIRONMENT'))
  * -------------------------------------------------------------------
  */
 	// The name of THIS file
-	define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
+//	define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
+	define('SELF', 'index.php');
 
 	// The PHP file extension
 	// this global constant is deprecated.
@@ -177,7 +179,8 @@ if (defined('ENVIRONMENT'))
 	define('BASEPATH', str_replace("\\", "/", $system_path));
 
 	// Path to the front controller (this file)
-	define('FCPATH', str_replace(SELF, '', __FILE__));
+//	define('FCPATH', str_replace(SELF, '', __FILE__));
+	define('FCPATH', "{{ current_source_symlink }}".'/');
 
 	// Name of the "system folder"
 	define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));

@@ -16,8 +16,5 @@
 - name: git
   src: geerlingguy.git
 
-- name: sendmail
-  src: hashbangcode.sendmail
-
 - name: vim
   src: chusiang.vim-and-vi-mode

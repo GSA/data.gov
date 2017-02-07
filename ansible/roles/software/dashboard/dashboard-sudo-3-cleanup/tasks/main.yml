@@ -7,47 +7,34 @@
     mode: 0755
     recurse: yes
 
-- name: Ensuring required directories exist and have write permissions
+- name: Check "{{ project_shared_path }}" permissions
   file:
     path: "{{ item }}"
     state: directory
     mode: 0775
-  with_items:
-    - "{{ project_source_path }}/shared/downloads"
-    - "{{ project_source_path }}/shared/archive"
-
-- name: Chown www-data /var/www/
-  file:
-    path: "/var/www"
     owner: "ubuntu"
     group: "www-data"
     recurse: yes
-  ignore_errors: yes
+  with_items:
+    - "{{ project_shared_path }}"
+    - "{{ project_shared_path }}/uploads"
+    - "{{ project_shared_path }}/downloads"
+    - "{{ project_shared_path }}/archive"
+    - "{{ project_shared_path }}/archive/digitalstrategy"
+    - "{{ project_shared_path }}/archive/datajson"
 
-- name: Docker specific
-  debug:
-    msg: "Now running docker specific tasks"
-  when: "'docker' == running_in"
+- name: Check files permissions
+  file:
+    path: "{{ item }}"
+    state: touch
+    mode: 0666
+  with_items:
+    - "/var/log/dashboard-cron.log"
+    - "/var/log/dashboard-cron-cfo.log"
+    - "{{ project_shared_path }}/archive/curl_header"
 
-- name: Double check php7.0-fpm status
-  command: "service php7.0-fpm status"
-  register: php_fpm_status
-  ignore_errors: true
-  when: "'docker' == running_in"
+- name: Reload php7.0-fpm
+  service: name=php7.0-fpm state=reloaded
 
-- name: Starting php7.0-fpm & nginx
-  command: "service php7.0-fpm start && service nginx start"
-  ignore_errors: true
-  when: "'docker' == running_in and 'is not running' in php_fpm_status.stdout"
-
-- name: Service php7.0-fpm status
-  command: "service php7.0-fpm status"
-  register: php_fpm_status
-  when: "'docker' == running_in"
-  failed_when: "'is not running' in php_fpm_status.stdout"
-
-- name: Service nginx status
-  command: "service nginx status"
-  register: nginx_status
-  when: "'docker' == running_in"
-  failed_when: "'is not running' in nginx_status.stdout"
+- name: Reload nginx
+  service: name=nginx state=reloaded

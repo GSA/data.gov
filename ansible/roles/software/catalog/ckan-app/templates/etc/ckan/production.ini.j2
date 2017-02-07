@@ -30,7 +30,7 @@ beaker.session.key = ckan
 # This is the secret token that the beaker library uses to hash the cookie sent
 # to the client. `paster make-config` generates a unique value for this each
 # time it generates a config file.
-beaker.session.secret = ${app_instance_secret}
+beaker.session.secret = {{ ckan_instance_secret }}
 
 beaker.session.type=ext:database
 beaker.session.cookie_expires=true
@@ -40,7 +40,7 @@ beaker.session.lock_dir=/var/tmp/ckan/lock
 
 # `paster make-config` generates a unique value for this each time it generates
 # a config file.
-app_instance_uuid = ${app_instance_uuid}
+app_instance_uuid = {{ ckan_instance_uuid }}
 
 # repoze.who config
 who.config_file = %(here)s/who.ini
@@ -89,7 +89,7 @@ ckan.auth.roles_that_cascade_to_sub_groups = admin
 ckan.site_id = geo.gov
 
 solr_server = 127.0.0.1
-solr_url = http://%(solr_server)s:8080/solr/ckan
+solr_url = http://%(solr_server)s:8080/solr/{{app_type}}
 
 #ckan.simple_search = 1
 search.facets.default = 5
@@ -196,10 +196,14 @@ ckanext.harvest.email = on
 ckan.resource_proxy_enabled = 1
 ckan.spatial.validator.profiles = iso19139ngdc
 ckanext.spatial.search_backend = solr
+ckanext.spatial.common_map.type = custom
+ckanext.spatial.common_map.custom.url = //{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
+ckanext.spatial.common_map.subdomains = abc
+ckanext.spatial.common_map.attribution = Map tiles &amp; Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY SA</a>.
 ckanext.spatial.harvest.xslt_html_content = ckanext.datagovtheme:templates/xslt/iso-details.xslt
 ckanext.spatial.harvest.xslt_html_content_original = ckanext.datagovtheme:templates/xslt/esri-iso-fgdc-details.xslt
 ckanext.geodatagov.fgdc2iso_service = http://localhost:8080/fgdc2iso/
-ckanext.geodatagov.spatial_preview.url = http://199.26.254.190:8088/viewer/
+ckanext.geodatagov.spatial_preview.url = https://climateathome.org/viewer/
 ckanext.geodatagov.spatial_preview.formats = wms kml kmz
 ckanext.geodatagov.dynamic_menu.url_default = http://www.data.gov/app/plugins/datagov-custom/wp_download_links.php
 ckanext.geodatagov.dynamic_menu.url =
