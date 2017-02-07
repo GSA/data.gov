@@ -18,18 +18,17 @@ registries:
 version: "1"
 services:
   catalog:
-    image: "ubuntu:trusty"
-    dev_overrides:
-      environment:
-        CKAN_SITE_URL: http://catalog.dev
-        CKAN_ADMIN_USER: admin
-        CKAN_ADMIN_PASSWORD: ckan
+    image: ubuntu:14.04
+    environment:
+      CKAN_SITE_URL: {{ CKAN_SITE_URL }}
+      CKAN_ADMIN_USER: {{ CKAN_ADMIN_USER }}
+      CKAN_ADMIN_PASSWORD: {{ CKAN_ADMIN_PASSWORD }}
     links:
       - redis
       - postgres
       - solr
       - fgdc2iso
-    command: app --wait-for-dependencies
+    command: catalog --wait-for-dependencies
     volumes:
       - /var/tmp/ckan/csv:/var/tmp/ckan/csv
   catalog-harvester-fetch:
@@ -40,7 +39,7 @@ services:
       - postgres
       - solr
       - fgdc2iso
-    command: fetch-consumer --wait-for-dependencies
+    command: catalog-harvester-fetch --wait-for-dependencies
   catalog-harvester-gather:
     image: datagov/catalog-app:latest
     links:
@@ -49,18 +48,17 @@ services:
       - postgres
       - solr
       - fgdc2iso
-    command: gather-consumer --wait-for-dependencies
+    command: catalog-harvester-gather --wait-for-dependencies
   redis:
     image: redis
   postgres:
     image: datagov/catalog-db:latest
-    dev_overrides:
-      environment:
-        POSTGRES_USER: {{ POSTGRES_USER }}
-        DB_CKAN_USER: {{ DB_CKAN_USER }}
-        DB_CKAN_PASSWORD: {{ DB_CKAN_PASSWORD }}
-        DB_CKAN_DB: {{ DB_CKAN_DB }}
-        DB_PYCSW_DB: {{ DB_PYCSW_DB }}
+    environment:
+      POSTGRES_USER: {{ POSTGRES_USER }}
+      DB_CKAN_USER: {{ DB_CKAN_USER }}
+      DB_CKAN_PASSWORD: {{ DB_CKAN_PASSWORD }}
+      DB_CKAN_DB: {{ DB_CKAN_DB }}
+      DB_PYCSW_DB: {{ DB_PYCSW_DB }}
   solr:
     image: datagov/catalog-solr:latest
   fgdc2iso:
