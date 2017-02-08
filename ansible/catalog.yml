@@ -18,6 +18,9 @@
     - {role: roles/software/common/secops-ssh, tags: ['frontend', 'harvester', 'secops'] }
     - {role: roles/software/common/trendmicro, tags: ['frontend', 'harvester', 'trendmicro'] }
     - {role: roles/software/common/ansible-postfix, tags: ['frontend', 'harvester', 'postfix'] }
+    - {role: roles/monitoring/fluentd/kernel, tags: ['frontend', 'harvester', 'fluentd'] }
+    - {role: roles/monitoring/fluentd/limits, tags: ['frontend', 'harvester', 'fluentd'] }
+    - {role: roles/monitoring/fluentd/td-agent, tags: ['frontend', 'harvester', 'fluentd'] }
     - {role: roles/software/ckan/apache, tags: ['frontend', 'apache']}
     - {role: roles/software/ckan/postgresql, tags: ['frontend', 'harvester', 'db', 'db-install']}
     - {role: roles/software/ckan/solr, tags: ['frontend', 'harvester', 'solr']}

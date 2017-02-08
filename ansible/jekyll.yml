@@ -32,6 +32,9 @@
     - roles/software/ubuntu/common
     - {role: secops-ssh, tags: ['secops'] }
     - {role: trendmicro, tags: ['trendmicro'] }
+    - {role: roles/monitoring/fluentd/kernel, tags: ['frontend', 'harvester', 'fluentd'] }
+    - {role: roles/monitoring/fluentd/limits, tags: ['frontend', 'harvester', 'fluentd'] }
+    - {role: roles/monitoring/fluentd/td-agent, tags: ['frontend', 'harvester', 'fluentd'] }
     - {role: misc, tags: ['misc'] }
     - roles/software/ckan/apache
     - { role: rvm1-ruby,

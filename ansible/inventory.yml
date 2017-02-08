@@ -12,6 +12,9 @@
     - {role: secops-ssh, tags: ['secops']}
     - {role: trendmicro, tags: ['trendmicro']}
     - {role: ansible-postfix, tags: ['postfix']}
+    - {role: roles/monitoring/fluentd/kernel, tags: ['frontend', 'harvester', 'fluentd'] }
+    - {role: roles/monitoring/fluentd/limits, tags: ['frontend', 'harvester', 'fluentd'] }
+    - {role: roles/monitoring/fluentd/td-agent, tags: ['frontend', 'harvester', 'fluentd'] }
     - roles/software/ckan/common
     - roles/software/ckan/apache
     - {role: roles/software/ckan/postgresql, tags: ['db', 'db-install']}
