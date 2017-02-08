@@ -70,7 +70,7 @@ cd /catalog-deploy/ansible and us -i "inventory/../hosts" flag to run playbooks 
 
 ## Wordpress:
 
-**provision vm & deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="provision"`
+**provision vm & deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="provision" --limit wordpress-web`
 
 **deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy"`
 
@@ -78,7 +78,7 @@ cd /catalog-deploy/ansible and us -i "inventory/../hosts" flag to run playbooks 
 
 ## Dashboard
 
-**provision vm & deploy app:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="provision"`
+**provision vm & deploy app:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="provision" --limit dashboard-web`
 
 **deploy app:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="deploy"`
 
@@ -86,7 +86,7 @@ cd /catalog-deploy/ansible and us -i "inventory/../hosts" flag to run playbooks 
 
 ## CRM
 
-**provision vm & deploy app:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="provision"`
+**provision vm & deploy app:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="provision" --limit crm-web`
 
 **deploy app:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="deploy"`
 
@@ -102,9 +102,13 @@ cd /catalog-deploy/ansible and us -i "inventory/../hosts" flag to run playbooks 
 
 ## Inventory
 
-**provision vm && deploy app - web:** `ansible-playbook inventory.yml -i {{ inventory }} --skip-tags="solr,db,deploy-rollback" --limit inventory-web`
+**provision vm && deploy app:** `ansible-playbook inventory.yml -i {{ inventory }} --skip-tags="solr,db,deploy-rollback" --limit inventory-web`
 
 **provision vm - solr:** `ansible-playbook inventory.yml -i {{ inventory }} --tags="solr,secops,trendmicro,misc" --limit solr`
+
+## Jekyll
+
+**provision vm && deploy app:** `ansible-playbook jekyll.yml -i {{ inventory }} --limit jekyll-web`
 
 ## Common:
 **install the trendmicro agent:** `ansible-playbook trendmicro.yml -i {{ inventory }}`
