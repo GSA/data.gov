@@ -7,7 +7,7 @@ env_content_protocol: https
 
 # wordpress app code
 project_git_repo: https://github.com/GSA/datagov-wp-boilerplate.git
-project_git_version: no-map
+project_git_version: master
 
 # Project path
 project_source_rollback_path: /var/www/datagov/rollback
