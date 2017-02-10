@@ -1,0 +1,8 @@
+---
+- name: Install Kibana
+  hosts: kibana
+  sudo: yes
+  remote_user: ubuntu
+
+  roles:
+    - geerlingguy.kibana
