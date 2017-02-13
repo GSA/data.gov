@@ -26,10 +26,10 @@ wordpress-web[1:2]p.prod-ocsit.bsp.gsa.gov
 static-web1p.prod-ocsit.bsp.gsa.gov
 
 [elasticsearch]
-54.236.216.232
+elastic-search1.mgmt-ocsit.bsp.gsa.gov
 
 [kibana]
-54.167.55.70
+kibana1.mgmt-ocsit.bsp.gsa.gov
 
 [efk_nginx]
-54.211.116.215
+nginx1.mgmt-ocsit.bsp.gsa.gov
