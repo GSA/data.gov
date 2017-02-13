@@ -5,4 +5,5 @@
   remote_user: ubuntu
 
   roles:
-    - geerlingguy.kibana
+    - role: geerlingguy.kibana
+    

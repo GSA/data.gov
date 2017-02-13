@@ -3,3 +3,6 @@
 
 - name: geerlingguy.kibana
   src: geerlingguy.kibana
+
+- name: geerlingguy.nginx
+  src: geerlingguy.nginx
