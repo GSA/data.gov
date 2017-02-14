@@ -21,12 +21,3 @@ wordpress-web[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [jekyll-web]
 static-web1d.dev-ocsit.bsp.gsa.gov
-
-[elasticsearch]
-elastic-search1.mgmt-ocsit.bsp.gsa.gov
-
-[kibana]
-kibana1.mgmt-ocsit.bsp.gsa.gov
-
-[efk_nginx]
-nginx1.mgmt-ocsit.bsp.gsa.gov

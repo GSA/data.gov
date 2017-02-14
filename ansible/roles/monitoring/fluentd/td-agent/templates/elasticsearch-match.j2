@@ -1,6 +1,6 @@
 <match es.**>
   @type elasticsearch
-  host http://{{ groups.elasticsearch.0 }}
+  host {{ elasticsearch_endpoint }}
   port 9200
   index_name fluentd
   type_name fluentd
