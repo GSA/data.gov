@@ -1,14 +1,9 @@
 <match es.**>
-  type "aws-elasticsearch-service"
-  type_name "access_log"
-  logstash_format true
+  @type elasticsearch
+  host http://{{ groups.elasticsearch.0 }}
+  port 9200
+  index_name fluentd
+  type_name fluentd
   include_tag_key true
   tag_key "@log_name"
-  flush_interval 1s
-  <endpoint>
-    access_key_id "{{ fluentd_aws_access_key_id }}"
-    secret_access_key "{{ fluentd_aws_secret_access_key }}"
-    url {{ elasticsearch_endpoint }}
-    region {{ elasticsearch_region }}
-  </endpoint>
 </match>
