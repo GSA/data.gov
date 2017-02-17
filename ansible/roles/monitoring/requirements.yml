@@ -6,3 +6,6 @@
 
 - name: geerlingguy.nginx
   src: geerlingguy.nginx
+
+- name: ANXS.apt
+  src: ANXS.apt
