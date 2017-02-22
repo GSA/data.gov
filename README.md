@@ -3,20 +3,16 @@
 This main repository for Data.gov's stack deployment onto AWS Infrastructure. The responsitory is broken into the following roles all created/provisioned using [Ansible](http://docs.ansible.com/ansible/intro_installation.html) and :
 
 Included in this Repository:
-  - Infrastructure (*for dev environment)
-    - Terraform + Rancher for [Dev/Test Environment](https://github.com/gsa/catalog-app)
-    - Ansible (AWS) Cloud Module (Test/Staging Emulated Production Architecture)
-  - Platform (*for Development Purpose Only*)
-  - Host Operating System Hardening (CIS Benchmark for Ubuntu 14.04 LTS)
   - Software
-    - Components
-    - Configuration
+    - Data.gov (Wordpress)
+    - Catalog.data.gov (CKAN 2.3)
+    - Inventory.data.gov (CKAN 2.5)
+    - Labs.data.gov/CRM (Open311 CRM)
+    - Labs.data.gov/Dashboard (Project Open Data Dashboard)
   - Security
-    - Components
-    - Configuration
-  - Monitoring
-    - Components
-    - Configuration
+    - Baseline Hardening
+    - GSA IT Security Agents
+    - Fluentd (Logging)
 
 ## Project Status
 
@@ -39,7 +35,7 @@ Included in this Repository:
 - SSH access (via keypair) to remote instances
 - boto3 (for infrastructure provisioning only): https://github.com/boto/boto3
 - ansible-secret.txt: `export ANSIBLE_VAULT_PASSWORD_FILE=~/ansible-secret.txt`
-- run all provisioning/app deployment commands from repo's `ansible` folder 
+- run all provisioning/app deployment commands from repo's `ansible` folder
 - for wordpress/dashboard/crm/monitoring/jekyll run the following command within the role's root folder before you provision anything: `ansible-galaxy install -r requirements.yml`
 - {{ inventory }} can be:
   - inventories/staging/hosts
@@ -47,23 +43,7 @@ Included in this Repository:
   - inventories/local/hosts
 
 # Provision Infrastructure
-*Terraform folder for latest - Ansible provisioning deprecated in favor*
-
-
-## VPC **(Deprecated - See Terraform directory)**:
-
-**create vpc:**
-`ansible-playbook create_datagov_vpc.yml -e "vpc_name=datagov"`
-
-**delete vpc:** 
-`ansible-playbook delete_datagov_vpc.yml -e "vpc_name=datagov"`
-## Catalog:
-
-**create stack :**
-`ansible-playbook create_catalog_stack.yml "vpc_name=datagov"`
-
-**delete stack:**
-`ansible-playbook delete_catalog_stack.yml "vpc_name=datagov"`
+Moved to [datagov-infrastructure](https://github.com/gsa/datagov-infrastructure)
 
 # Provision apps
 cd /catalog-deploy/ansible and us -i "inventory/../hosts" flag to run playbooks w/ `ansible-playbook --help` or as` ansible all -a "cmd"` to run a one-off command on all hosts (only suggested for `-m ping` for query/stats/services all installation and configuration is done using playbooks)
@@ -146,4 +126,3 @@ cd /catalog-deploy/ansible and us -i "inventory/../hosts" flag to run playbooks 
 **ntpd issues**: `apt-get remove ntp && apt-get purge ntp && apt-get autoclean && apt-get autoremove`
 
 **Unable to resolve host IP**: `echo 127.0.0.1 $(hostname) >> /etc/hosts`
-
