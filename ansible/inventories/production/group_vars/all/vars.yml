@@ -8,6 +8,8 @@ solr_master_server: "{{ vault_solr_master_server }}"
 # TrendMicro
 trendmicro_policy_id_app: "{{ vault_trendmicro_policy_id_app }}"
 trendmicro_policy_id_web: "{{ vault_trendmicro_policy_id_web }}"
+trendmicro_policy_id_mgmt_app: "{{ vault_trendmicro_policy_id_mgmt_app }}"
+trendmicro_policy_id_mgmt_web: "{{ vault_trendmicro_policy_id_mgmt_web }}"
 
 
 # CodeIgniter pre-approved admin emails
@@ -38,3 +40,8 @@ saml_idp_cert_fprint: "67:76:BB:87:FE:76:D6:4A:BE:19:3F:E2:B6:1A:49:06:AE:56:06:
 php_enable_php_fpm: true
 php_fpm_listen: /var/run/php/php7.0-fpm.sock
 php_webserver_daemon: nginx
+
+# td-agent
+elasticsearch_endpoint: "{{ vault_elasticsearch_endpoint }}"
+elasticsearch_region: "{{ vault_elasticsearch_region }}"
+system: "es"

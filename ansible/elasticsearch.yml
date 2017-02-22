@@ -1,0 +1,10 @@
+---
+- name: Install ElasticSearch 
+  hosts: elasticsearch
+  sudo: yes
+  remote_user: ubuntu
+
+  roles:
+    - ANXS.apt
+    - geerlingguy.java
+    - geerlingguy.elasticsearch

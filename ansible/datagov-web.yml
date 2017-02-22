@@ -28,7 +28,9 @@
   - { role: secops-ssh, tags: [provision, secops] }
   - { role: trendmicro, tags: [provision, trendmicro] }
   - { role: ansible-postfix, tags: [provision, postfix] }
-
+  - {role: roles/monitoring/fluentd/kernel, tags: ['frontend', 'harvester', 'fluentd'] }
+  - {role: roles/monitoring/fluentd/limits, tags: ['frontend', 'harvester', 'fluentd'] }
+  - {role: roles/monitoring/fluentd/td-agent, tags: ['frontend', 'harvester', 'fluentd'] }
 
 - name: Deploying Data.gov
   hosts: wordpress-web

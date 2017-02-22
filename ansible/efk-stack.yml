@@ -1,0 +1,24 @@
+---
+
+- name: Install ElasticSearch
+  hosts: elasticsearch
+  sudo: yes
+  remote_user: ubuntu
+  roles: 
+  - ANXS.apt
+  - geerlingguy.java
+  - geerlingguy.elasticsearch
+
+- name: Install Kibana
+  hosts: kibana
+  sudo: yes
+  remote_user: ubuntu
+  roles: 
+  - geerlingguy.kibana
+
+- name: Install nginx proxy
+  hosts: efk_nginx
+  sudo: yes
+  remote_user: ubuntu
+  roles: 
+  - geerlingguy.nginx

@@ -22,6 +22,7 @@
     - "{{ project_shared_path }}/archive"
     - "{{ project_shared_path }}/archive/digitalstrategy"
     - "{{ project_shared_path }}/archive/datajson"
+    - "{{ project_shared_path }}/archive/error_log"
 
 - name: Check files permissions
   file:

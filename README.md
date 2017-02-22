@@ -40,7 +40,7 @@ Included in this Repository:
 - boto3 (for infrastructure provisioning only): https://github.com/boto/boto3
 - ansible-secret.txt: `export ANSIBLE_VAULT_PASSWORD_FILE=~/ansible-secret.txt`
 - run all provisioning/app deployment commands from repo's `ansible` folder 
-- for wordpress/dashboard/crm run the following command within the role's root folder before you provision anything: `ansible-galaxy install -r requirements.yml`
+- for wordpress/dashboard/crm/monitoring/jekyll run the following command within the role's root folder before you provision anything: `ansible-galaxy install -r requirements.yml`
 - {{ inventory }} can be:
   - inventories/staging/hosts
   - inventories/production/hosts
@@ -70,7 +70,7 @@ cd /catalog-deploy/ansible and us -i "inventory/../hosts" flag to run playbooks 
 
 ## Wordpress:
 
-**provision vm & deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="provision"`
+**provision vm & deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="provision" --limit wordpress-web`
 
 **deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy"`
 
@@ -78,7 +78,7 @@ cd /catalog-deploy/ansible and us -i "inventory/../hosts" flag to run playbooks 
 
 ## Dashboard
 
-**provision vm & deploy app:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="provision"`
+**provision vm & deploy app:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="provision" --limit dashboard-web`
 
 **deploy app:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="deploy"`
 
@@ -86,7 +86,7 @@ cd /catalog-deploy/ansible and us -i "inventory/../hosts" flag to run playbooks 
 
 ## CRM
 
-**provision vm & deploy app:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="provision"`
+**provision vm & deploy app:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="provision" --limit crm-web`
 
 **deploy app:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="deploy"`
 
@@ -102,9 +102,25 @@ cd /catalog-deploy/ansible and us -i "inventory/../hosts" flag to run playbooks 
 
 ## Inventory
 
-**provision vm && deploy app - web:** `ansible-playbook inventory.yml -i {{ inventory }} --skip-tags="solr,db,deploy-rollback" --limit inventory-web`
+**provision vm && deploy app:** `ansible-playbook inventory.yml -i {{ inventory }} --skip-tags="solr,db,deploy-rollback" --limit inventory-web`
 
 **provision vm - solr:** `ansible-playbook inventory.yml -i {{ inventory }} --tags="solr,secops,trendmicro,misc" --limit solr`
+
+## Jekyll
+
+**provision vm && deploy app:** `ansible-playbook jekyll.yml -i {{ inventory }} --limit jekyll-web`
+
+## ElasticSearch
+
+**provision vm && deploy app:** `ansible-playbook elasticsearch.yml -i {{ inventory }}`
+
+## Kibana
+
+**provision vm && deploy app:** `ansible-playbook kibana.yml -i {{ inventory }}`
+
+## EFK nginx
+
+**provision vm && deploy app:** `ansible-playbook efk_nginx.yml -i {{ inventory }}`
 
 ## Common:
 **install the trendmicro agent:** `ansible-playbook trendmicro.yml -i {{ inventory }}`

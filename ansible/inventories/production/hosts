@@ -24,3 +24,12 @@ wordpress-web[1:2]p.prod-ocsit.bsp.gsa.gov
 
 [jekyll-web]
 static-web1p.prod-ocsit.bsp.gsa.gov
+
+[elasticsearch]
+elastic-search1.mgmt-ocsit.bsp.gsa.gov
+
+[kibana]
+kibana1.mgmt-ocsit.bsp.gsa.gov
+
+[efk_nginx]
+nginx1.mgmt-ocsit.bsp.gsa.gov

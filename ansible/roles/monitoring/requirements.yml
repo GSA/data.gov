@@ -1,0 +1,11 @@
+- name: geerlingguy.elasticsearch
+  src: geerlingguy.elasticsearch
+
+- name: geerlingguy.kibana
+  src: geerlingguy.kibana
+
+- name: geerlingguy.nginx
+  src: geerlingguy.nginx
+
+- name: ANXS.apt
+  src: ANXS.apt
