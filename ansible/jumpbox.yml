@@ -1,6 +1,6 @@
 ---
 - name: Install
-  hosts: localhost
+  hosts: "{{ jumpbox_hosts | default('localhost') }}"
   sudo: yes
   vars:
       app_type: jumpbox
@@ -10,4 +10,4 @@
     - {role: roles/software/ckan/apache, tags: ['jumpbox', 'apache']}
 
     - {role: roles/security/shibboleth, tags: ['jumpbox', 'shibboleth']}
-    - {role: roles/security/shibboleth, tags: ['jumpbox', 'shibboleth']}    
+    - {role: roles/security/shibboleth, tags: ['jumpbox', 'shibboleth']}

@@ -3,7 +3,7 @@
 # -----------------------------------------------------------------------------
 
 variable "system" {}
-variable "branch" {}
+variable "environment" {}
 variable "stack" {}
 variable "vpc_id" {}
 variable "az" {}
@@ -24,10 +24,10 @@ resource "aws_subnet" "nat_subnet" {
     availability_zone = "${var.az}"
     cidr_block = "${var.cidr_prefix}.${var.index}.0/24"
     tags = {
-        Name = "${var.system}_${var.branch}_az${var.index}_nat"
+        Name = "${var.system}_${var.environment}_az${var.index}_nat"
         System = "${var.system}"
         Stack = "${var.stack}"
-        Branch = "${var.branch}"
+        Environment = "${var.environment}"
         Resource = "az${var.index}_nat"
     }
 }
@@ -45,10 +45,10 @@ resource "aws_instance" "nat" {
         volume_size = "${var.nat["volume_size"]}"
     }
     tags = {
-        Name = "${var.system}_${var.branch}_az${var.index}_nat"
+        Name = "${var.system}_${var.environment}_az${var.index}_nat"
         System = "${var.system}"
         Stack = "${var.stack}"
-        Branch = "${var.branch}"
+        Environment = "${var.environment}"
         Resource = "az${var.index}_nat"
     }
 }
@@ -67,10 +67,10 @@ resource "aws_route_table" "nat_routing" {
         instance_id = "${aws_instance.nat.id}"
     }
     tags {
-        Name = "${var.system}_${var.branch}_az${var.index}_nat"
+        Name = "${var.system}_${var.environment}_az${var.index}_nat"
         System = "${var.system}"
         Stack = "${var.stack}"
-        Branch = "${var.branch}"
+        Environment = "${var.environment}"
         Resource = "az${var.index}_nat"
     }
 }

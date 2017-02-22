@@ -1,0 +1,20 @@
+--- # WordPress Web AMI
+
+#- name: Initial prechecks
+#  hosts: wordpress-web
+#  remote_user: ubuntu
+#
+#  roles:
+#  - { role: datagov-sudo-0-precheck, tags: [precheck] }
+
+- name: Provisioning WordPress Web AMI
+  hosts:  "{{ datagov_web_demo_hosts | default('wordpress-web') }}"
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  roles:
+  - { role: misc, tags: [provision, misc] }
+  - { role: git, tags: [provision] }
+  - { role: nginx, tags: [provision] }
+

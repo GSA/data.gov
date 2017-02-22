@@ -1,0 +1,16 @@
+{
+  "id": "88c729c5-6bcd-2318-eadb-5ec76454adae",
+  "name": "GSA Verfy Pilot",
+  "values": [
+    {
+      "key": "wordpress_web_host",
+      "value": "__WORDPRESS_WEB_HOST__",
+      "type": "text",
+      "enabled": true
+    }
+  ],
+  "timestamp": 1485314049482,
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2017-01-25T03:14:13.482Z",
+  "_postman_exported_using": "Postman/4.9.3"
+}

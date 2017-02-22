@@ -50,3 +50,4 @@ ansible/inventories/ocsit
 /terraform/pilot/terraform.tfstate.backup
 /terraform/pilot/terraform.tfstate
 /terraform/target
+/cloud-formation/*/target

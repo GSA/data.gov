@@ -6,5 +6,3 @@
     - monitoring/fluentd/kernel
     - monitoring/fluentd/limits
     - monitoring/fluentd/td-agent
-
-
