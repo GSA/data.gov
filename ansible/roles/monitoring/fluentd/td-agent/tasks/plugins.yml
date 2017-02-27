@@ -60,13 +60,13 @@
     group: td-agent
   tags: app
 
-- name: Configure host filters
+- name: Configure host filter
   template:
     src: host-filter.j2
     dest: /etc/td-agent/config.d/2-host-filter.conf
     owner: td-agent
     group: td-agent
-  tags: filters
+  tags: host-filter
 
 - name: Configure ElasticSearch matcher
   template:
@@ -76,10 +76,18 @@
     group: td-agent
   tags: elasticsearch
 
+- name: Configure OCSIT filter
+  template:
+    src: ocsit-filter.j2
+    dest: /etc/td-agent/config.d/4-ocsit-filter.conf
+    owner: td-agent
+    group: td-agent
+  tags: ocsit-filter
+
 - name: Configure BSP matcher
   template:
     src: bsp-match.j2
-    dest: /etc/td-agent/config.d/4-bsp-match.conf
+    dest: /etc/td-agent/config.d/5-bsp-match.conf
     owner: td-agent
     group: td-agent
   tags: bsp
