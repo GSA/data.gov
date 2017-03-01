@@ -12,7 +12,7 @@
   action: pip name=pyproj version=1.9.3 virtualenv=/usr/lib/ckan/
 
 - name: install geolinks
-  action: pip name=geolinks version=0.0.1 virtualenv=/usr/lib/ckan/
+  action: pip name=geolinks version=0.2.0 virtualenv=/usr/lib/ckan/
 
 - name: copy pycsw configuration files
   action: copy src={{item}} dest=/{{item}} mode=644
