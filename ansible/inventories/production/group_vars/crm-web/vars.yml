@@ -9,6 +9,9 @@ env_db_name: "{{ vault_env_db_name }}"
 # Disabling MySQL server
 mysql_enabled_on_startup: false
 
+# PHP
+php_memory_limit: 1G
+
 # Composer
 project_git_repo: https://github.com/GSA/open311-simple-crm.git
 project_git_version: ansible
