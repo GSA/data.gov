@@ -1,9 +1,15 @@
 ---
 
+# public urls
+urls_public:
+  catalog: https://catalog.data.gov
+
+# solr
+solr_master_server: datagovsolrm1p.prod-ocsit.bsp.gsa.gov
+
 # SecOps user
 secops_user: "{{ vault_secops_user }}"
 secops_user_public_key: "{{ vault_secops_user_public_key }}"
-solr_master_server: "{{ vault_solr_master_server }}"
 
 # TrendMicro
 trendmicro_policy_id_app: "{{ vault_trendmicro_policy_id_app }}"

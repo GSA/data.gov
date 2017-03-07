@@ -1,5 +1,5 @@
 # server readonly/writable type
-readwrite_type: writable
+readwrite_type: readonly
 
 # db credentials
 CKAN_DB_SERVER: "{{ vault_ckan_db_server }}"
@@ -10,7 +10,7 @@ catalog_db_name: "{{ vault_catalog_db_name }}"
 catalog_pycsw_db_name: "{{ vault_catalog_pycsw_db_name }}"
 
 # other
-SOLR_SERVER: "{{ solr_master_server }}"
+SOLR_SERVER: datagovsolr1d.dev-ocsit.bsp.gsa.gov
 
 
 
