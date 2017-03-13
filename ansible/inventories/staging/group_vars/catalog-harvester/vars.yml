@@ -1,0 +1,28 @@
+---
+
+# project path
+project_source_rollback_path: /usr/lib/ckan-rollback
+project_source_new_code_path: /usr/lib/ckan-new
+current_source_symlink: /usr/lib/ckan
+project_index_path: /usr/lib/ckan
+
+# db credentials
+CKAN_DB_SERVER: "{{ vault_ckan_db_server }}"
+PYCSW_DB_SERVER: "{{ vault_pycsw_db_server }}"
+catalog_db_user: "{{ vault_catalog_db_user }}"
+catalog_db_pass: "{{ vault_catalog_db_pass }}"
+catalog_db_name: "{{ vault_catalog_db_name }}"
+catalog_pycsw_db_name: "{{ vault_catalog_pycsw_db_name }}"
+
+# other
+REDIS_SERVER: "{{ vault_redis_server  }}"
+SOLR_SERVER: "{{ solr_master_server }}"
+env: local
+
+# max login
+saml2_site_url: https://admin-catalog-datagov.dev-ocsit.bsp.gsa.gov/
+
+# secrets
+who_ini_secret: "{{ vault_who_ini_secret }}"
+ckan_instance_secret: "{{ vault_ckan_instance_secret }}"
+ckan_instance_uuid: "{{ vault_ckan_instance_secret }}"

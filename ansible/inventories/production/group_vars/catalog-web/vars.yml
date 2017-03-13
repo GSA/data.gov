@@ -1,7 +1,7 @@
 ---
 # role url
-url_readonly: https://catalog-bsp.data.gov
-url_writable: https://admin-catalog-bsp.data.gov
+url_readonly: "{{ urls_public.catalog }}"
+url_writable: https://admin-catalog.data.gov
 
 # project path
 project_source_rollback_path: /usr/lib/ckan-rollback
@@ -11,10 +11,11 @@ project_index_path: /usr/lib/ckan
 
 # other
 REDIS_SERVER: "{{ vault_redis_server  }}"
+SOLR_SERVER: "{{ vault_solr_server }}"
 env: local
 
 # max login
-saml2_site_url: https://admin-catalog-bsp.data.gov
+saml2_site_url: https://admin-catalog.data.gov/
 
 # secrets
 who_ini_secret: "{{ vault_who_ini_secret }}"

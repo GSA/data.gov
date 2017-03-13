@@ -1,10 +1,12 @@
 [catalog-web]
 catalog-web[1:2]d.dev-ocsit.bsp.gsa.gov
+catalogpub-web1d.dev-ocsit.bsp.gsa.gov
 
 [catalog-harvester]
 catalog-harvester[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [solr]
+datagovsolrm1d.dev-ocsit.bsp.gsa.gov
 datagovsolr[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [inventory-web]

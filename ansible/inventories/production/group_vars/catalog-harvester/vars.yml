@@ -16,11 +16,11 @@ catalog_pycsw_db_name: "{{ vault_catalog_pycsw_db_name }}"
 
 # other
 REDIS_SERVER: "{{ vault_redis_server  }}"
-SOLR_SERVER: "{{ vault_solr_server }}"
+SOLR_SERVER: "{{ solr_master_server }}"
 env: local
 
 # max login
-saml2_site_url: "{{ vault_saml_site_url }}"
+saml2_site_url: https://admin-catalog.data.gov/
 
 # secrets
 who_ini_secret: "{{ vault_who_ini_secret }}"
