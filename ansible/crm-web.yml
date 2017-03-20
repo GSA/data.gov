@@ -7,7 +7,6 @@
 #  roles:
 #  - { role: crm-sudo-0-precheck, tags: [precheck] }
 
-
 - name: Provisioning Web AMI
   hosts: crm-web
   remote_user: ubuntu
@@ -15,6 +14,7 @@
   become_method: sudo
 
   roles:
+  - die-no-tags
   - { role: misc, tags: [provision, misc] }
   - { role: crm-sudo-1-security, tags: [provision] }
   - { role: git, tags: [provision] }

@@ -15,6 +15,7 @@
   become_method: sudo
 
   roles:
+  - die-no-tags
   - { role: misc, tags: [provision, misc] }
   - { role: dashboard-sudo-1-security, tags: [provision] }
   - { role: git, tags: [provision] }
