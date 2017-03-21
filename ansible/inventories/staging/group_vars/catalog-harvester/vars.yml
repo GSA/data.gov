@@ -15,7 +15,7 @@ catalog_db_name: "{{ vault_catalog_db_name }}"
 catalog_pycsw_db_name: "{{ vault_catalog_pycsw_db_name }}"
 
 # other
-REDIS_SERVER: "{{ vault_redis_server  }}"
+REDIS_SERVER: "localhost"
 SOLR_SERVER: "{{ solr_master_server }}"
 env: local
 
