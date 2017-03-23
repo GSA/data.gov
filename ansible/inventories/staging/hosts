@@ -23,3 +23,9 @@ wordpress-web[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [jekyll-web]
 static-web1d.dev-ocsit.bsp.gsa.gov
+
+[elasticsearch]
+
+[kibana]
+
+[efk_nginx]
