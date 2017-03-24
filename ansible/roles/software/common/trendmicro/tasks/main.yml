@@ -30,10 +30,10 @@
 
 - name: start trendmicro agent @ mgmt web tier
   shell: /opt/ds_agent/dsa_control -a dsm://dsm.sec.helix.gsa.gov:4120/ "policyid:{{ trendmicro_policy_id_mgmt_web }}"
-  when: inventory_hostname in groups["efk_nginx"]
+  when: ("efk_nginx" in groups) and (inventory_hostname in groups["efk_nginx"])
 
 - name: start trendmicro agent @ mgmt app tier
   shell: /opt/ds_agent/dsa_control -a dsm://dsm.sec.helix.gsa.gov:4120/ "policyid:{{ trendmicro_policy_id_mgmt_app }}"
   when: | 
-    (inventory_hostname in groups["kibana"]) or 
-    (inventory_hostname in groups["elasticsearch"])
+    (("kibana" in groups) and (inventory_hostname in groups["kibana"])) or
+    (("elasticsearch" in groups) and (inventory_hostname in groups["elasticsearch"]))
