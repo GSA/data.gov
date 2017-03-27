@@ -1,0 +1,22 @@
+---
+- name: check to python version
+  shell: /{{ python_version_directory }}/bin/python --version
+  register: python_version_check
+  failed_when: '"Python {{ python_version_number }}" not in python_version_check.stderr'
+  ignore_errors: True
+
+- name: get new python
+  unarchive: src={{ python_version_url }} dest=/var/tmp/ remote_src=True
+  when: python_version_check|failed
+
+- name: config new python
+  shell: ./configure --prefix {{ python_version_directory }} --enable-ipv6 --enable-unicode=ucs4
+  args:
+    chdir: /var/tmp/{{ python_version_name }}
+  when: python_version_check|failed
+
+- name: install new python
+  shell: "make && make install"
+  args:
+    chdir: /var/tmp/{{ python_version_name }}
+  when: python_version_check|failed
