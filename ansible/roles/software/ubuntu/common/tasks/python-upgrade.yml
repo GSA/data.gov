@@ -6,7 +6,13 @@
   ignore_errors: True
 
 - name: get new python
-  unarchive: src={{ python_version_url }} dest=/var/tmp/ remote_src=True
+  get_url: url={{ python_version_url }} dest=/var/tmp/
+  when: python_version_check|failed
+
+- name: unpack new python
+  shell: tar zxf /var/tmp/{{ python_version_name }}.tgz
+  args:
+    chdir: /var/tmp/
   when: python_version_check|failed
 
 - name: config new python
