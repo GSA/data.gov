@@ -8,7 +8,7 @@
   with_items: "{{ pkg }}"
 
 - name: install requirements
-  pip: requirements={{ virtualenv }}/src/{{item.name}}/{{item.requirements}} virtualenv={{ virtualenv }} virtualenv_site_packages=yes
+  pip: requirements={{ virtualenv }}/src/{{item.name}}/{{item.requirements}} virtualenv={{ virtualenv }} virtualenv_site_packages=yes virtualenv_python={{ python_version_directory }}/bin/python
   with_items: "{{ pkg }}"
   when: item.requirements is defined
 
