@@ -52,7 +52,7 @@ elasticsearch_endpoint: elastic-search1.mgmt-ocsit.bsp.gsa.gov
 system: "es"
 
 # new python version
-python_version_number: 2.7.13
+python_version_number: 2.7.10
 python_version_name: Python-{{ python_version_number }}
 python_version_url: https://www.python.org/ftp/python/{{ python_version_number}}/{{ python_version_name }}.tgz
 python_version_directory: /usr/local/lib/python{{ python_version_number }}/

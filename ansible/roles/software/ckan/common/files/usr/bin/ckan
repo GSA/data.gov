@@ -1,19 +1,12 @@
-#!/usr/bin/python
+#!/usr/lib/ckan/bin/python
 import os
-import hashlib
-hashlib.md5 = hashlib.sha1
-os.environ['OPENSSL_FORCE_FIPS_MODE']='1'
-activate_this = os.path.join('/usr/lib/ckan/bin/activate_this.py')
-execfile(activate_this, dict(__file__=activate_this))
-
 import sys
 from pkg_resources import load_entry_point
+
 
 paster_commands = ['create', 'help','make-config',
                    'points','post','request',
                    'serve','setup-app']
-
-instance = None
 config = False
 
 
@@ -26,22 +19,15 @@ for num, arg in enumerate(sys.argv):
         config = True
 
 
-if not config and not instance:
+if not config:
     try:
         config_file = '/etc/ckan/production.ini'
         fh = open(config_file)
     except IOError as e:
-        raise Exception('No production.ini in /etc/ckan/. '
+        raise Exception('No production.ini in /etc/ckan/default. '
                         'Either create one from production.ini.temp or use '
                         '-i instance_name or -c config_file')
 
-if not config and instance:
-    try:
-        config_file = '/etc/ckan/{instance}/production.ini'.format(instance=instance)
-        fh = open(config_file)
-    except IOError as e:
-        raise Exception('config file for instance "{instance}" does not exist. '
-                        'It should be located at "{config}"'.format(instance=instance, config=config_file))
 
 if not config and len(sys.argv) > 1:
     if sys.argv[1] not in paster_commands:
@@ -51,7 +37,7 @@ if not config and len(sys.argv) > 1:
     if sys.argv[1] in ['serve', 'setup-app']:
         sys.argv.append(config_file)
 
-               
+
 sys.argv.insert(1, '--plugin=ckan')
 
 if __name__ == '__main__':
