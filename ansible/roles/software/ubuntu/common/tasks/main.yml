@@ -25,7 +25,7 @@
     - libssl-dev
     - ntp
 
-# Upgrade python to 2.7 lastest
+# Upgrade python to 2.7.10
 - include: python-upgrade.yml
 
 # The Network Time Protocol is used to manage the system clock over a network
