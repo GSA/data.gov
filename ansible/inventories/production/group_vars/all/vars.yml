@@ -14,9 +14,6 @@ secops_user_public_key: "{{ vault_secops_user_public_key }}"
 # TrendMicro
 trendmicro_policy_id_app: "{{ vault_trendmicro_policy_id_app }}"
 trendmicro_policy_id_web: "{{ vault_trendmicro_policy_id_web }}"
-trendmicro_policy_id_mgmt_app: "{{ vault_trendmicro_policy_id_mgmt_app }}"
-trendmicro_policy_id_mgmt_web: "{{ vault_trendmicro_policy_id_mgmt_web }}"
-
 
 # CodeIgniter pre-approved admin emails
 codeigniter_pre_approved_admins: "{{ vault_codeigniter_pre_approved_admins }}"
