@@ -1,0 +1,3 @@
+# TrendMicro
+trendmicro_policy_id_mgmt_app: "{{ vault_trendmicro_policy_id_mgmt_app }}"
+trendmicro_policy_id_mgmt_web: "{{ vault_trendmicro_policy_id_mgmt_web }}"
