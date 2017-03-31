@@ -1,3 +1,9 @@
 ---
 
+#elasticsearch
 elasticsearch_network_host: 0.0.0.0
+
+
+#elastalert
+elastalert_version: v0.1.8
+slack_webhook_url: "{{ vault_slack_webhook_url }}" 
