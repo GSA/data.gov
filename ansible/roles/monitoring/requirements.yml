@@ -9,3 +9,9 @@
 
 - name: ANXS.apt
   src: ANXS.apt
+
+- name: ANXS.build-essential
+  src: ANXS.build-essential
+
+- name: teampants.elastalert
+  src: teampants.elastalert
