@@ -1,0 +1,10 @@
+---
+- name: Install Elastalert
+  hosts: elasticsearch 
+  sudo: yes
+  remote_user: ubuntu
+
+  roles:
+    - { role: ANXS.build-essential }
+    - { role: teampants.elastalert }
+    - { role: elastalert }
