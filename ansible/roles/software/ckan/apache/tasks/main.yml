@@ -10,7 +10,7 @@
   action: file path=/etc/apache2/sites-enabled/000-default.conf state=absent
 
 - name: Apache | Enable some required modules
-  action: command a2enmod rewrite headers
+  action: command a2enmod rewrite headers remoteip
   tags: common
 
 - name: Apache | Enable Web Application Firewall
@@ -20,3 +20,6 @@
     - CM-7
     - SC-7
     - SI-10
+
+- name: Configure mod_remoteip
+  template: src=templates/etc/apache2/conf-enabled/mod_remoteip.conf dest=/etc/apache2/conf-enabled/mod_remoteip.conf
