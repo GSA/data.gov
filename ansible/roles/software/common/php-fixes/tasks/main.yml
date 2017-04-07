@@ -1,7 +1,13 @@
 --- # Additinal php configs
 
-- name: Use HTTPOnly cookie for sessionID
+- name: Enable HTTPOnly cookie for sessionID
   lineinfile:
     dest: "/etc/php/7.0/fpm/php.ini"
     regexp: '^session.cookie_httponly'
-    line: 'session.cookie_httponly = 1'
+    line: 'session.cookie_httponly = On'
+
+- name: Enable cookie_secure for sessionID
+  lineinfile:
+    dest: "/etc/php/7.0/fpm/php.ini"
+    regexp: '^session.cookie_secure'
+    line: 'session.cookie_secure = On'
