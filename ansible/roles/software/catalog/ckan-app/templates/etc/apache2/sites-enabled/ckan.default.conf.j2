@@ -31,7 +31,12 @@
     </Directory>
 
     ErrorLog /var/log/apache2/ckan.error.log
-    CustomLog /var/log/apache2/ckan.custom.log combined
+
+    LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+    LogFormat "%{X-Forwarded-For}i %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" proxy
+    SetEnvIf X-Forwarded-For "^.*\..*\..*\..*" forwarded
+    CustomLog /var/log/apache2/ckan.custom.log combined env=!forwarded
+    CustomLog /var/log/apache2/ckan.custom.log proxy env=forwarded
 
     # fix Cross-Frame Scripting (XFS) vulnerability
     Header add X-Frame-Options "SAMEORIGIN"
