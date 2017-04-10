@@ -36,6 +36,15 @@
     # fix Cross-Frame Scripting (XFS) vulnerability
     Header add X-Frame-Options "SAMEORIGIN"
 
+    Header add Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+    Header add Pragma "no-cache"
+    Header add Expires "-1"
+    Header add X-XSS-Protection "1; mode=block"
+    Header add X-Content-Type-Options "nosniff"
+
+    # Header add Content-Security-Policy "default-src 'self'"
+    # Header add X-Content-Security-Policy "default-src 'self'"
+
 
     RewriteEngine on
 
