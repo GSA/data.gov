@@ -18,7 +18,7 @@ services:
     container_name: datagov_wp_web
     image: datagov/wp
     volumes:
-          - "./.data/web:/var/www/datagov/current"
+          - "./.data/web:/var/www/datagov"
     depends_on:
       - wpdb
     links:
