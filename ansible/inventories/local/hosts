@@ -3,3 +3,6 @@ localhost:2222
 
 [wordpress-web]
 localhost:2022
+
+[datagov_web_hosts]
+wordpress-web
