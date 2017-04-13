@@ -30,6 +30,6 @@ and check that your github ssh key is ready for AgentForwarding
     - Get fresh sql dump of Data.gov WordPress
     - `mysql -P 3000 -u datagov -h 127.0.0.1 -psuperpassword datagov < datagov.sql`
     - `cd ../../..`
-    - `ansible-playbook datagov-web.yml -i inventories/local/hosts`
+    - `ansible-playbook datagov-web.yml -i inventories/local/hosts --tags provision --skip secops,trendmicro,postfix`
     - Open [http://localhost:8000/](http://localhost:8000/) 
     , default `admin` password is `password`, SAML is disalbed on local 

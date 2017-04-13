@@ -15,6 +15,14 @@
     group: "www-data"
     mode: 0777
 
+- name: Mkdir /var/www/datagov
+  file:
+    path: "/var/www/datagov"
+    state: directory
+    owner: "www-data"
+    group: "www-data"
+    mode: 0777
+
 - name: Setup Datagov WP system cron
   cron:
     name: "Data.gov WordPress cron"
