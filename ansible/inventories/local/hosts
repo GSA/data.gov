@@ -1,5 +1,4 @@
-[dashboard-web]
-localhost:2222
+
 
 [wordpress-web]
 localhost:2022
