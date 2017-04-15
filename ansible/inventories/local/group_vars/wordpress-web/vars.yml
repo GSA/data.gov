@@ -1,9 +1,8 @@
 ---
 
 # WordPress env
-#env_wp_env: development
-env_wp_env: production
-env_content_protocol: https
+env_wp_env: development
+env_content_protocol: http
 
 # wordpress app code
 project_git_repo: https://github.com/GSA/datagov-wp-boilerplate.git
