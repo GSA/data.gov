@@ -313,6 +313,8 @@ $config['encryption_key'] = getenv('ENCRYPTION_KEY');
 |
 */
 $config['sess_cookie_name'] = 'ci_session_dashboard';
+$config['cookie_secure']	= TRUE;
+$config['cookie_httponly'] 	= TRUE;
 $config['sess_expiration'] = 7200;
 $config['sess_expire_on_close'] = FALSE;
 $config['sess_encrypt_cookie'] = FALSE;
@@ -423,7 +425,7 @@ $config['rewrite_short_tags'] = FALSE;
 | Comma-delimited, e.g. '10.0.1.200,10.0.1.201'
 |
 */
-$config['proxy_ips'] = '';
+$config['proxy_ips'] = '10.0.0.0/8';
 
 
 /* End of file config.php */

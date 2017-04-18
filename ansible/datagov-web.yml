@@ -20,7 +20,6 @@
   - { role: git, tags: [provision] }
   - { role: nginx, tags: [provision] }
   - { role: php, tags: [php, provision] }
-  - { role: php-fixes, tags: [php, provision, deploy] }
   - { role: php-mysql, tags: [php, php-mysql, provision] }
   - { role: php-memcached, tags: [php, php-memcached, provision] }
   - { role: wp-cli, tags: [php, cli, provision] }
@@ -50,4 +49,5 @@
   become_method: sudo
 
   roles:
+  - { role: php-fixes, tags: [php, provision, deploy] }
   - { role: datagov-sudo-3-cleanup, tags: [provision, deploy, deploy-rollback] }
