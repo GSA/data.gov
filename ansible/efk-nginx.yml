@@ -6,3 +6,4 @@
 
   roles: 
   - role: geerlingguy.nginx
+  - role: efk-nginx
