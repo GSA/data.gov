@@ -7,5 +7,7 @@ nginx_vhosts:
     extra_parameters: |
       location / {
         proxy_pass  http://{{ groups.kibana.0 }}:5601;
+        auth_basic "Restricted Content";
+        auth_basic_user_file /etc/nginx/.htpasswd;
       }
- 
+basic_auth_user: basic_auth_user
