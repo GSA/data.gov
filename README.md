@@ -1,8 +1,10 @@
 # Catalog Deploy
 
+[Public Domain CC0](LICENCE)
+
 This main repository for Data.gov's stack deployment onto AWS Infrastructure. The responsitory is broken into the following roles all created/provisioned using [Ansible](http://docs.ansible.com/ansible/intro_installation.html) and :
 
-Included in this Repository:
+Included:
   - Software
     - Data.gov (Wordpress)
     - Catalog.data.gov (CKAN 2.3)
