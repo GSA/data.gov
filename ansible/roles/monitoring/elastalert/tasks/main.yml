@@ -10,6 +10,18 @@
     path: "{{ elastalert_rules_dir }}" 
     state: directory
 
+
+- name: Set elastalert ownership 
+  file:
+    path: "{{ item }}"
+    owner: elastalert
+    group: elastalert
+    state: directory
+    recurse: yes
+  with_items:
+    - /opt/elastalert
+    - /etc/elastalert
+
 - name: Copy elastalert rules
   template:
     src: "{{ item }}"
