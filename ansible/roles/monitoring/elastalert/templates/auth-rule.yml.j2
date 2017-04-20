@@ -1,13 +1,13 @@
-name: SSH auth Invalid user alert
+name: SSH Invalid user ssh connection attempt
 type: frequency
 index: logstash-*
-num_events: 5
+num_events: 1
 timeframe:
     minutes: 15
 filter:
 - query:
     query_string:
-      query: "message: Invalid user AND @log_name: es.authlog"
+      query: 'message: "Invalid user" AND @log_name: es.authlog'
 alert:
 - "slack"
 slack_webhook_url:
