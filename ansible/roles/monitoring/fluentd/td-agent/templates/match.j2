@@ -1,0 +1,24 @@
+<match es.**>
+  @type copy
+  <store>
+    @type secure_forward
+    shared_key {{ bsp_shared_key }}
+    self_hostname "#{Socket.gethostname}"
+    secure true
+    ca_cert_path /etc/td-agent/bspcert.pem
+    <server>
+      host {{ bsp_elasticsearch_endpoint }}
+      port 2003
+    </server>
+  </store>
+  <store>
+    @type elasticsearch
+    host {{ elasticsearch_endpoint }}
+    port 9200
+    index_name fluentd
+    type_name fluentd
+    include_tag_key true
+    tag_key "@log_name"
+    logstash_format true
+  </store>
+</match>
