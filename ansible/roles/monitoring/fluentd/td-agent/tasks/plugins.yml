@@ -82,7 +82,7 @@
     dest: /etc/td-agent/config.d/4-match.conf
     owner: td-agent
     group: td-agent
-  tags: matche
+  tags: match
 
 - name: Get the list of system log files
   shell: cat /etc/td-agent/config.d/1-system-source.conf | grep -E '\.log$|.out$|\/syslog$' | awk '{print $2}'
