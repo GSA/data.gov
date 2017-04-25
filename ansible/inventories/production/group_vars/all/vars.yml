@@ -45,7 +45,9 @@ php_fpm_listen: /var/run/php/php7.0-fpm.sock
 php_webserver_daemon: nginx
 
 # td-agent
-elasticsearch_endpoint: elastic-search1.mgmt-ocsit.bsp.gsa.gov
+elasticsearch_endpoint: "{{ elasticsearch_endpoint }}" 
+bsp_elasticsearch_endpoint: "{{ bsp_elasticsearch_endpoint }}"
+bsp_shared_key: "{{ bsp_shared_key }}"
 system: "es"
 
 # new python version

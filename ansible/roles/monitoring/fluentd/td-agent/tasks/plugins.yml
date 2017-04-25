@@ -68,29 +68,21 @@
     group: td-agent
   tags: host-filter
 
-- name: Configure ElasticSearch matcher
-  template:
-    src: elasticsearch-match.j2
-    dest: /etc/td-agent/config.d/3-elasticsearch-match.conf
-    owner: td-agent
-    group: td-agent
-  tags: elasticsearch
-
 - name: Configure OCSIT filter
   template:
     src: ocsit-filter.j2
-    dest: /etc/td-agent/config.d/4-ocsit-filter.conf
+    dest: /etc/td-agent/config.d/3-ocsit-filter.conf
     owner: td-agent
     group: td-agent
   tags: ocsit-filter
 
-- name: Configure BSP matcher
+- name: Configure datagov & bsp elasticsearch match
   template:
-    src: bsp-match.j2
-    dest: /etc/td-agent/config.d/5-bsp-match.conf
+    src: match.j2
+    dest: /etc/td-agent/config.d/4-match.conf
     owner: td-agent
     group: td-agent
-  tags: bsp
+  tags: match
 
 - name: Get the list of system log files
   shell: cat /etc/td-agent/config.d/1-system-source.conf | grep -E '\.log$|.out$|\/syslog$' | awk '{print $2}'
