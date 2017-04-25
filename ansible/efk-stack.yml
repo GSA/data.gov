@@ -16,9 +16,19 @@
   roles: 
   - geerlingguy.kibana
 
-- name: Install nginx proxy
+- name: Install EFK nginx proxy
   hosts: efk_nginx
   sudo: yes
   remote_user: ubuntu
   roles: 
-  - geerlingguy.nginx
+  - role: geerlingguy.nginx
+  - role: efk-nginx
+
+- name: Install Elastalert
+  hosts: elasticsearch 
+  sudo: yes
+  remote_user: ubuntu
+  roles:
+    - role: ANXS.build-essential
+    - role: teampants.elastalert
+    - role: elastalert
