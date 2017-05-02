@@ -3,6 +3,8 @@
 # public urls
 urls_public:
   catalog: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
+urls_private:
+  catalog: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
 
 # solr
 solr_master_server: datagovsolrm1d.dev-ocsit.bsp.gsa.gov

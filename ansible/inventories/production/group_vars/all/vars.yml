@@ -3,6 +3,8 @@
 # public urls
 urls_public:
   catalog: https://catalog.data.gov
+urls_private:
+  catalog: "{{ vault_urls_private_catalog }}"
 
 # solr
 solr_master_server: datagovsolrm1p.prod-ocsit.bsp.gsa.gov
