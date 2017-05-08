@@ -52,9 +52,13 @@ cd /catalog-deploy/ansible and us -i "inventory/../hosts" flag to run playbooks 
 
 **provision vm & deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="provision" --limit wordpress-web`
 
-**deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy"`
+**deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy" --limit wordpress-web`
 
-**deploy rollback:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy-rollback"`
+**deploy rollback:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy-rollback" --limit wordpress-web`
+
+- You can override branch to be deployed via `-e project_git_version=develop`
+  
+  ***e.g.*** `ansible-playbook datagov-web.yml -i inventories/staging/hosts --tags=deploy --limit wordpress-web -e project_git_version=develop`
 
 ## Dashboard
 
