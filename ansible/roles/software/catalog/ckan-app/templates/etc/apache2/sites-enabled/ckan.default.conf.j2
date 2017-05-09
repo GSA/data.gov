@@ -42,6 +42,8 @@
     Header add X-XSS-Protection "1; mode=block"
     Header add X-Content-Type-Options "nosniff"
 
+    Header add Access-Control-Allow-Methods "GET, POST, HEAD"
+
     # Header add Content-Security-Policy "default-src 'self'"
 
     RewriteEngine on
