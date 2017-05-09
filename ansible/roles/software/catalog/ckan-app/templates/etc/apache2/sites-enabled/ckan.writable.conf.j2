@@ -44,6 +44,8 @@
 
     Header add Access-Control-Allow-Methods "GET, POST, HEAD"
 
+    Header add Referrer-Policy "default"
+
     # Header add Content-Security-Policy "default-src 'self'"
 
     Header add Access-Control-Allow-Origin "{{ url_readonly }}"
