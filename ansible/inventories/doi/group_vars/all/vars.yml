@@ -1,0 +1,34 @@
+---
+
+# public urls
+urls_public:
+  catalog: https://placeholder
+urls_private:
+  catalog: https://placeholder
+
+# solr
+solr_master_server: placeholder
+
+# SecOps user
+secops_user: "{{ vault_secops_user }}"
+secops_user_public_key: "{{ vault_secops_user_public_key }}"
+
+# TrendMicro
+trendmicro_policy_id_app: "{{ vault_trendmicro_policy_id_app }}"
+trendmicro_policy_id_web: "{{ vault_trendmicro_policy_id_web }}"
+
+# CodeIgniter pre-approved admin emails
+codeigniter_pre_approved_admins: "{{ vault_codeigniter_pre_approved_admins }}"
+
+# postfix
+postfix_relayhost: placeholder 
+postfix_relayhost_port: 25
+postfix_sasl_auth_enable: false
+postfix_relaytls: true
+default_email_from: "{{ vault_default_email_from }}"
+
+# new python version
+python_version_number: 2.7.10
+python_version_name: Python-{{ python_version_number }}
+python_version_url: https://www.python.org/ftp/python/{{ python_version_number}}/{{ python_version_name }}.tgz
+python_version_directory: /usr/local/lib/python{{ python_version_number }}/

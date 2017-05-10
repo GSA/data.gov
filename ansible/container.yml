@@ -1,92 +1,14 @@
-defaults:
-  POSTGRES_USER: postgres
-  DB_CKAN_USER: ckan
-  DB_CKAN_PASSWORD: pass
-  DB_CKAN_DB: ckan
-  DB_PYCSW_DB: pycsw
-  CKAN_SITE_URL: http://catalog.dev
-  CKAN_ADMIN_USER: admin
-  CKAN_ADMIN_PASSWORD: ckan
+version: "2"
+settings:
+  conductor_base: ubuntu:trusty
 
-registries:
-  docker:
-    url: https://dockerhub.io
-    namespace: datagov
-
-# WIP to run ansible playbooks to provision Docker Containers. Starting with Catalog using Docker images from
-# from https://github.com/gsa/catalog-app for others in interium
-version: "1"
 services:
   catalog:
-    image: ubuntu:14.04
-    environment:
-      CKAN_SITE_URL: {{ CKAN_SITE_URL }}
-      CKAN_ADMIN_USER: {{ CKAN_ADMIN_USER }}
-      CKAN_ADMIN_PASSWORD: {{ CKAN_ADMIN_PASSWORD }}
-    links:
-      - redis
-      - postgres
-      - solr
-      - fgdc2iso
-    command: catalog --wait-for-dependencies
-    volumes:
-      - /var/tmp/ckan/csv:/var/tmp/ckan/csv
-  catalog-harvester-fetch:
-    image: datagov/catalog-app:latest
-    links:
-      - catalog
-      - redis
-      - postgres
-      - solr
-      - fgdc2iso
-    command: catalog-harvester-fetch --wait-for-dependencies
-  catalog-harvester-gather:
-    image: datagov/catalog-app:latest
-    links:
-      - catalog
-      - redis
-      - postgres
-      - solr
-      - fgdc2iso
-    command: catalog-harvester-gather --wait-for-dependencies
-  redis:
-    image: redis
-  postgres:
-    image: datagov/catalog-db:latest
-    environment:
-      POSTGRES_USER: {{ POSTGRES_USER }}
-      DB_CKAN_USER: {{ DB_CKAN_USER }}
-      DB_CKAN_PASSWORD: {{ DB_CKAN_PASSWORD }}
-      DB_CKAN_DB: {{ DB_CKAN_DB }}
-      DB_PYCSW_DB: {{ DB_PYCSW_DB }}
-  solr:
-    image: datagov/catalog-solr:latest
-  fgdc2iso:
-    image: datagov/catalog-fgdc2iso:latest
-    environment:
-      SIGNATURE:
-  pycsw:
-    image: datagov/catalog-pycsw:latest
-    links:
-      - catalog
-      - postgres
-    command: start-pycsw --wait-for-dependencies
-  nginx:
-    image: datagov/catalog-nginx:latest
+    from: ubuntu:trusty
+    roles: 
+      - roles/software/ubuntu/common
+    dev_overrides:
+      environment:
+        - "DEBUG=1"
     ports:
       - "80:80"
-    links:
-      - catalog
-      - pycsw
-    command: /entrypoint.sh --wait-for-dependencies
-  scheduler:
-    image: datagov/catalog-scheduler:latest
-    links:
-      - catalog
-      - redis
-      - postgres
-      - solr
-      - fgdc2iso
-    volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
-    - ./docker-compose.yml:/docker-compose.yml
