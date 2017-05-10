@@ -1,0 +1,6 @@
+---
+- hosts: test-kitchen
+  remote_user: root
+  roles:
+    - role: nrinfragent
+      nrinfragent_license_key: YOUR_NR_LICENSE_KEY
