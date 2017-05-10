@@ -1,7 +1,3 @@
 
-
 [wordpress-web]
 localhost:2022
-
-[datagov_web_hosts:children]
-wordpress-web

@@ -269,6 +269,8 @@ $config['cache_path'] = '';
 |
 */
 $config['sess_cookie_name']		= 'ci_session_crm';
+$config['cookie_secure']	= TRUE;
+$config['cookie_httponly'] 	= TRUE;
 $config['sess_expiration']		= 7200;
 $config['sess_encrypt_cookie']	= FALSE;
 $config['sess_use_database']	= TRUE;
@@ -359,7 +361,7 @@ $config['rewrite_short_tags'] = FALSE;
 | Comma-delimited, e.g. '10.0.1.200,10.0.1.201'
 |
 */
-$config['proxy_ips'] = '';
+$config['proxy_ips'] = '10.0.0.0/8';
 
 
 /* End of file config.php */

@@ -21,7 +21,6 @@
   - { role: git, tags: [provision] }
   - { role: nginx, tags: [provision] }
   - { role: php, tags: [php, provision] }
-  - { role: php-fixes, tags: [php, provision, deploy] }
   - { role: php-mysql, tags: [php, php-mysql, provision] }
   - { role: php-memcached, tags: [php, php-memcached, provision] }
   - { role: composer, tags: [php, provision] }
@@ -44,7 +43,6 @@
   - { role: datagov-deploy-rollback, tags: [deploy-rollback] }
 
 
-
 - name: Cleanup
   hosts: dashboard-web
   remote_user: ubuntu
@@ -52,6 +50,7 @@
   become_method: sudo
 
   roles:
+  - { role: php-fixes, tags: [php, provision, deploy] }
   - { role: dashboard-sudo-3-cleanup, tags: [provision, deploy, deploy-rollback] }
 
 

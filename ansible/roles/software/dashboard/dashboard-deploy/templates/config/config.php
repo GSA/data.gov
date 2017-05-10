@@ -336,7 +336,8 @@ $config['sess_time_to_update'] = 300;
 $config['cookie_prefix'] = "";
 $config['cookie_domain'] = "";
 $config['cookie_path'] = "/";
-$config['cookie_secure'] = FALSE;
+$config['cookie_secure']	= TRUE;
+$config['cookie_httponly'] 	= TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -423,7 +424,7 @@ $config['rewrite_short_tags'] = FALSE;
 | Comma-delimited, e.g. '10.0.1.200,10.0.1.201'
 |
 */
-$config['proxy_ips'] = '';
+$config['proxy_ips'] = '10.0.0.0/8';
 
 
 /* End of file config.php */
