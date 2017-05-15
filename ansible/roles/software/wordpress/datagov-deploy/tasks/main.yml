@@ -80,7 +80,12 @@
     src: "saml.json"
     dest: "{{ project_source_new_code_path }}/saml.json"
 
-- name: Copy s3 tantan_wordpress_s3 config json 
+- name: Copy saml-20-single-sign-on config
+  template:
+    src: "saml-config.php"
+    dest: "{{ project_source_new_code_path }}/web/app/plugins/saml-20-single-sign-on/saml/config/config.php"
+
+- name: Copy s3 tantan_wordpress_s3 config json
   template:
     src: "s3.json"
     dest: "{{ project_source_new_code_path }}/s3.json"
