@@ -61,9 +61,11 @@ if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
 }
 
 $config['base_url'] = $protocol . '://' . $default_host;
+$cookie_path_prefix = '';
 
 if (0 === stripos($_SERVER['REQUEST_URI'], '/dashboard')){
     $config['base_url'] .= '/dashboard';
+    $cookie_path_prefix = 'dashboard';
 }
 
 /*
@@ -335,7 +337,7 @@ $config['sess_time_to_update'] = 300;
 */
 $config['cookie_prefix'] = "";
 $config['cookie_domain'] = "";
-$config['cookie_path'] = "/";
+$config['cookie_path'] = "/" . $cookie_path_prefix;
 $config['cookie_secure']	= TRUE;
 $config['cookie_httponly'] 	= TRUE;
 

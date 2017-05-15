@@ -31,9 +31,11 @@ if(isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
 }
 
 $config['base_url'] = $protocol . '://' . $default_host;
+$cookie_path_prefix = '';
 
 if (isset($_SERVER['REQUEST_URI']) && 0 === stripos($_SERVER['REQUEST_URI'], '/crm')){
     $config['base_url'] .= '/crm';
+    $cookie_path_prefix = 'crm';
 }
 
 $config['pre_approved_admins'] = '{{ codeigniter_pre_approved_admins }}';
@@ -291,7 +293,7 @@ $config['sess_time_to_update'] 	= 300;
 */
 $config['cookie_prefix']	= "";
 $config['cookie_domain']	= "";
-$config['cookie_path']		= "/";
+$config['cookie_path']		= "/" . $cookie_path_prefix;
 
 /*
 |--------------------------------------------------------------------------
