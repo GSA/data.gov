@@ -1,7 +1,7 @@
 ---
 # role url
 url_readonly: "{{ urls_public.catalog }}"
-url_writable: https://admin-catalog-datagov.dev-ocsit.bsp.gsa.gov
+url_writable: placeholder
 
 # project path
 project_source_rollback_path: /usr/lib/ckan-rollback
@@ -14,10 +14,15 @@ REDIS_SERVER: "localhost"
 SOLR_SERVER: placeholder
 env: local
 
-# max login
-saml2_site_url: https://admin-catalog-datagov.dev-ocsit.bsp.gsa.gov/
-
 # secrets
 who_ini_secret: "{{ vault_who_ini_secret }}"
 ckan_instance_secret: "{{ vault_ckan_instance_secret }}"
 ckan_instance_uuid: "{{ vault_ckan_instance_secret }}"
+
+# db credentials
+CKAN_DB_SERVER: placeholder 
+PYCSW_DB_SERVER: placeholder
+catalog_db_user: placeholder
+catalog_db_pass: placeholder
+catalog_db_name: placeholder
+catalog_pycsw_db_name: placeholder
