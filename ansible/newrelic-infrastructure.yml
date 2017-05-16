@@ -1,0 +1,6 @@
+---
+- hosts: all
+  sudo: yes
+  remote_user: ubuntu
+  roles:
+    - infrastructure-agent-ansible
