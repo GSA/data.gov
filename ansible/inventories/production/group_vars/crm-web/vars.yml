@@ -14,7 +14,7 @@ php_memory_limit: 1G
 
 # Composer
 project_git_repo: https://github.com/GSA/open311-simple-crm.git
-project_git_version: ansible
+project_git_version: master
 
 # Project path
 project_source_rollback_path: /var/www/crm/rollback

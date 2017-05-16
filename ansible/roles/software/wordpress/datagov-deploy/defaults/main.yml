@@ -18,3 +18,6 @@ project_git_version: master
 
 # WordPress .env
 env_wp_env: development
+
+# Saml
+saml_auth_adminpassword: insecure
