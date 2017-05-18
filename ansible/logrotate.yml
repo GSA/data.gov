@@ -1,0 +1,135 @@
+---
+- hosts: all
+  sudo: yes
+  remote_user: ubuntu
+  roles:
+    - role: nickhammond.logrotate
+      logrotate_scripts:
+
+        - name: tomcat-catalina-out
+          path: "/var/log/tomcat6/catalina.out" 
+          options:
+            - daily
+            - missingok
+            - compress
+            - delaycompress
+            - copytruncate
+            - rotate 5
+            - size 250M
+
+        - name: nginx-access-log
+          path: "/var/log/nginx/access.log" 
+          options:
+            - daily
+            - missingok
+            - compress
+            - delaycompress
+            - copytruncate
+            - size 100M
+            - rotate 7
+
+        - name: nginx-error-log
+          path: "/var/log/nginx/error.log"
+          options:
+            - daily
+            - missingok
+            - compress
+            - delaycompress
+            - copytruncate
+            - size 100M
+            - rotate 7
+
+        - name: apache2-access-log
+          path: "/var/log/apache2/access.log"
+          options:
+            - daily
+            - missingok
+            - compress
+            - delaycompress
+            - copytruncate
+            - size 100M
+            - rotate 7
+
+        - name: apache2-error-log
+          path: "/var/log/apache2/error.log" 
+          options:
+            - daily
+            - missingok
+            - compress
+            - delaycompress
+            - copytruncate
+            - size 100M
+            - rotate 7
+
+        - name: apache2-ckan-custom-log
+          path: "/var/log/apache2/ckan.custom.log"
+          options:
+            - daily
+            - missingok
+            - compress
+            - delaycompress
+            - copytruncate
+            - size 100M
+            - rotate 7
+
+        - name: apache2-ckan-error-log
+          path: "/var/log/apache2/ckan.error.log"
+          options:
+            - daily
+            - missingok
+            - compress
+            - delaycompress
+            - copytruncate
+            - size 100M
+            - rotate 7
+
+        - name: apache2-datapusher-custom-log
+          path: "/var/log/apache2/datapusher.custom.log"
+          options:
+            - daily
+            - missingok
+            - compress
+            - delaycompress
+            - copytruncate
+            - size 100M
+            - rotate 7
+
+        - name: apache2-datapusher-error-log
+          path: "/var/log/apache2/datapusher.error.log" 
+          options:
+            - daily
+            - missingok
+            - compress
+            - delaycompress
+            - copytruncate
+            - size 100M
+            - rotate 7
+
+        - name: auth-log
+          path: "/var/log/auth.log"
+          options:
+            - daily
+            - missingok
+            - compress
+            - delaycompress
+            - copytruncate
+            - size 100M
+            - rotate 7
+
+        - name: audit-log
+          path: "/var/log/audit/audit.log"
+          options:
+            - daily
+            - missingok
+            - compress
+            - delaycompress
+            - copytruncate
+            - size 250M
+            - rotate 5
+
+#/var/log/harvester_run.log
+#/var/log/fetch-consumer.log
+#/var/log/gather-consumer.log
+#/var/log/ckan_report.log
+#/var/log/ckan_tracking.log
+#/var/log/wp-cron.log
