@@ -40,6 +40,8 @@
             - copytruncate
             - size 100M
             - rotate 7
+          scripts: 
+            postrotate: "/etc/init.d/apache2 reload > /dev/null"
 
         - name: audit-log
           path: "/var/log/audit/audit.log"
