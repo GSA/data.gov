@@ -42,7 +42,9 @@
     Header add X-XSS-Protection "1; mode=block"
     Header add X-Content-Type-Options "nosniff"
 
-    Header add Access-Control-Allow-Methods "GET, POST, HEAD"
+    Header add Access-Control-Allow-Origin "*"
+    Header add Access-Control-Allow-Methods "POST, PUT, GET, DELETE, OPTIONS"
+    Header add Access-Control-Allow-Headers "X-CKAN-API-KEY, Authorization, Content-Type"
 
     Header add Referrer-Policy "default"
 
