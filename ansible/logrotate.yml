@@ -1,0 +1,62 @@
+---
+- hosts: all
+  sudo: yes
+  remote_user: ubuntu
+  roles:
+    - role: nickhammond.logrotate
+      logrotate_scripts:
+
+        - name: tomcat
+          path: "/var/log/tomcat6/*.out" 
+          options:
+            - daily
+            - missingok
+            - compress
+            - delaycompress
+            - copytruncate
+            - rotate 5
+            - size 250M
+
+        - name: nginx
+          path: "/var/log/nginx/*.log" 
+          options:
+            - daily
+            - missingok
+            - compress
+            - delaycompress
+            - copytruncate
+            - size 100M
+            - rotate 7
+          scripts:
+            postrotate: "[ -s /run/nginx.pid ] && kill -USR1 `cat /run/nginx.pid`"
+
+        - name: apache
+          path: "/var/log/apache2/*.log"
+          options:
+            - daily
+            - missingok
+            - compress
+            - delaycompress
+            - copytruncate
+            - size 100M
+            - rotate 7
+          scripts: 
+            postrotate: "/etc/init.d/apache2 reload > /dev/null"
+
+        - name: audit-log
+          path: "/var/log/audit/audit.log"
+          options:
+            - daily
+            - missingok
+            - compress
+            - delaycompress
+            - copytruncate
+            - size 250M
+            - rotate 5
+
+#/var/log/harvester_run.log
+#/var/log/fetch-consumer.log
+#/var/log/gather-consumer.log
+#/var/log/ckan_report.log
+#/var/log/ckan_tracking.log
+#/var/log/wp-cron.log
