@@ -15,3 +15,6 @@
 
 - name: teampants.elastalert
   src: teampants.elastalert
+
+- name: nickhammond.ansible-logrotate
+  src: nickhammond.ansible-logrotate
