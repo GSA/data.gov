@@ -1,0 +1,1 @@
+0 * * * * root find /var/log/tomcat6/ -type f -mtime +2 -delete

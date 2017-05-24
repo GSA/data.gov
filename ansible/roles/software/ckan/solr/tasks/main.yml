@@ -29,10 +29,11 @@
 - name: copy sample collection1 files to home dir
   shell: cp -R ~/solr-4.2.1/example/solr/collection1 /home/solr/{{app_type}}
 
-- name: copy solr web.xml
+- name: copy files
   action: copy src={{item}} dest=/{{item}} mode=644 force=yes
   with_items:
     - var/lib/tomcat6/webapps/solr/WEB-INF/web.xml
+    - etc/cron.d/cleanlog
 
 - name: copy solr schema file
   action: copy src={{app_type}}/home/solr/ckan/conf/schema.xml dest=/home/solr/{{app_type}}/conf/schema.xml mode=644 force=yes
