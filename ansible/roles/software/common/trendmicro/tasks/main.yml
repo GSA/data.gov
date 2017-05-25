@@ -1,12 +1,12 @@
 --- # Install the trendmicro agent
 
-- name: get agent.rpm
+- name: get agent.deb
   get_url:
-    url: https://dsm.sec.helix.gsa.gov:443/software/agent/Ubuntu_14.04/x86_64/
+    url: "{{ deb_url }}"
     dest: /tmp/agent.deb
     validate_certs: no
 
-- name: install trendmicro rpm
+- name: install trendmicro package
   shell: dpkg -i /tmp/agent.deb
 
 - name: sleep 10 seconds
