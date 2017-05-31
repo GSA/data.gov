@@ -90,16 +90,6 @@
     src: "s3.json"
     dest: "{{ project_source_new_code_path }}/s3.json"
 
-- name: Copy W3 Total Cache nginx config
-  copy:
-    src: "w3_nginx_conf"
-    dest: "{{ project_source_new_code_path }}/web/nginx.conf"
-
-- name: Copy W3 Total Cache files
-  command: "cp plugins/w3-total-cache/wp-content/advanced-cache.php advanced-cache.php"
-  args:
-    chdir: "{{ project_source_new_code_path }}/web/app"
-
 - name: Symlink current dir with new code
   file:
     src: "{{ project_source_new_code_path }}"
