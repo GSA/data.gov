@@ -1,0 +1,11 @@
+name: SUDO session alert
+type: any
+index: logstash-*
+filter:
+- query:
+    query_string:
+      query: 'message: "sudo:session" AND message: "session opened for" AND @log_name: es.authlog'
+alert:
+- "slack"
+slack_webhook_url:
+- {{ slack_webhook_url }}

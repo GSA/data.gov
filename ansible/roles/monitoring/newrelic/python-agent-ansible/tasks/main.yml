@@ -1,0 +1,10 @@
+---
+
+- name: Install the New Relic Python agent
+  pip:
+    name: newrelic 
+
+- name: Generate the configuration using your license key
+  command: newrelic-admin generate-config "{{ nrinfragent_license_key }}" newrelic.ini
+  notify:
+    - restart apache
