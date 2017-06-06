@@ -1,0 +1,8 @@
+---
+- name: Install Nessus Agent
+  hosts: all 
+  sudo: yes
+  remote_user: ubuntu
+
+  roles:
+    - {role: nessus}

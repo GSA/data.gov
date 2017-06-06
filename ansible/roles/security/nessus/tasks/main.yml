@@ -1,0 +1,56 @@
+- name: check if nessus is installed
+  command: dpkg-query -W nessusagent
+  register: nessus_check
+  ignore_errors: yes
+
+- name: copy nessus agent (ubuntu)
+  copy:
+    src: "{{ debian_nessus_agent_filename }}"
+    dest: "/opt/{{ debian_nessus_agent_filename }}"
+  when: 
+    - ansible_distribution == 'Ubuntu'
+
+- name: copy nessus agent (redhat)
+  copy:
+    src: "{{ redhat_nessus_agent_filename }}"
+    dest: "/opt/{{ redhat_nessus_agent_filename }}"
+  when: 
+    - ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: install nessus agent (ubuntu)
+  apt:
+    deb: "/opt/{{ debian_nessus_agent_filename }}"
+    state: present
+  when: 
+    - nessus_check.rc == 1
+    - ansible_distribution == 'Ubuntu'
+
+- name: install nessus agent (redhat)
+  yum:
+    name: "/opt/{{ redhat_nessus_agent_filename }}"
+    state: present
+  when:
+    - ansible_distribution == 'Red Hat Enterprise Linux'
+    
+- name: register nessus agent
+  shell: "/opt/nessus_agent/sbin/nessuscli agent link --key=e4c857bc1be1338aa11e576d493d2d8553d390effb6b449cdc8bcc13653ddb2c --groups='{{ group_name }}' --host=nm02.sec.helix.gsa.gov --port=50505"
+  args:
+    creates: "/opt/nessus_agent/var/nessus/master.key"
+
+- name: create nessus unlink script
+  copy:
+    src: "unlink-nessus"
+    dest: "/etc/rc0.d/K99_unlink-nessus"
+    mode: 0755
+
+- name: ensure required services are started
+  service:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  with_items:
+    - nessusagent
+
+
+
+
