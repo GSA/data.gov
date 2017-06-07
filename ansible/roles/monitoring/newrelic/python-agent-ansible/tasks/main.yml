@@ -1,10 +1,24 @@
 ---
 
 - name: Install the New Relic Python agent
-  pip:
-    name: newrelic 
+  pip: name=newrelic umask=0022
 
-- name: Generate the configuration using your license key
-  command: newrelic-admin generate-config "{{ nrinfragent_license_key }}" newrelic.ini
+- name: Generate apache.wsgi 
+  template: 
+    src: apache.wsgi.j2 
+    dest: "{{ ckan_config_path }}/apache.wsgi"
+    mode: '0755'
+
+- name: Create Newrelic config folder
+  file:
+    path: "{{ newrelic_config_path }}"
+    state: directory
+    mode: 0755
+
+- name: Generate newrelic.ini 
+  template: 
+    src: newrelic.ini.j2 
+    dest: "{{ newrelic_config_path }}/newrelic.ini"
+    mode: '0755'
   notify:
     - restart apache
