@@ -35,7 +35,7 @@
     - "{{ project_shared_path }}/archive/curl_header"
 
 - name: Restart php7.0-fpm
-  shell: /etc/init.d/php7.0-fpm start
+  shell: /etc/init.d/php7.0-fpm restart
 
 - name: Restart nginx
   service: name=nginx state=restarted
