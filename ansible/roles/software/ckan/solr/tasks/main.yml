@@ -33,7 +33,7 @@
   action: copy src={{item}} dest=/{{item}} mode=644 force=yes
   with_items:
     - var/lib/tomcat6/webapps/solr/WEB-INF/web.xml
-    - etc/cron.d/cleanlog
+    - var/lib/tomcat6/conf/logging.properties
 
 - name: copy solr schema file
   action: copy src={{app_type}}/home/solr/ckan/conf/schema.xml dest=/home/solr/{{app_type}}/conf/schema.xml mode=644 force=yes
