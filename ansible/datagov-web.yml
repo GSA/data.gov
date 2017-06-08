@@ -16,7 +16,7 @@
   roles:
   - die-no-tags
   - { role: misc, tags: [provision, misc] }
-  - { role: datagov-sudo-1-security, tags: [provision] }
+  - { role: php-common, tags: [provision] }
   - { role: git, tags: [provision] }
   - { role: nginx, tags: [provision] }
   - { role: php, tags: [php, provision] }

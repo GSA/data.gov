@@ -2,3 +2,36 @@
 
 # Enable crons only on specific hosts
 crons_enabled: false
+
+# Composer
+project_git_repo: https://github.com/project-open-data/project-open-data-dashboard.git
+project_git_version: master
+
+# Project path
+project_source_rollback_path: /var/www/dashboard/rollback
+project_source_new_code_path: /var/www/dashboard/new
+current_source_symlink: /var/www/dashboard/current
+project_index_path: /var/www/dashboard/current
+
+# Temp uploads
+project_shared_path: /var/www/dashboard/shared
+
+# MySQL credentials
+env_db_host: dashboard_db
+env_db_user: dashboard
+env_db_pass: superpassword
+env_db_name: dashboard
+
+# AWS S3 bucket
+s3_bucket: dashboard-rei-test
+s3_prefix: datagov/dashboard/
+
+# App
+default_host: 'labs.data.gov/dashboard'
+env_content_protocol: http
+
+# MAX SAML
+saml_sp_private_key_path: /etc/dashboard-saml-sp-private.pem
+saml_sp_cert_path: /etc/dashboard-saml-sp-cert.crt
+saml_sp_private_key: "private_key"
+saml_admin_pass: "admin_pass"

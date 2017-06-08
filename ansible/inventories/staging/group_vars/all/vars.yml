@@ -17,10 +17,6 @@ secops_user_public_key: "{{ vault_secops_user_public_key }}"
 trendmicro_policy_id_app: "{{ vault_trendmicro_policy_id_app }}"
 trendmicro_policy_id_web: "{{ vault_trendmicro_policy_id_web }}"
 
-# Nginx
-nginx_remove_default_vhost: true
-letsencrypt: false
-
 # CodeIgniter pre-approved admin emails
 codeigniter_pre_approved_admins: "{{ vault_codeigniter_pre_approved_admins }}"
 
@@ -41,22 +37,11 @@ saml2_idp_entry: login.test.max.gov
 saml2_idp_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
 saml_idp_cert_fprint: "7A43DACB95D67FB6A804FD37C8A7DCA5B0384939"
 
-# PHP-FPM
-php_enable_php_fpm: true
-php_fpm_listen: /var/run/php/php7.0-fpm.sock
-php_webserver_daemon: nginx
-
 # td-agent
 elasticsearch_endpoint: "{{ elasticsearch_endpoint }}"
 bsp_elasticsearch_endpoint: "{{ bsp_elasticsearch_endpoint }}"
 bsp_shared_key: "{{ bsp_shared_key }}"
 system: "es"
-
-# new python version
-python_version_number: 2.7.10
-python_version_name: Python-{{ python_version_number }}
-python_version_url: https://www.python.org/ftp/python/{{ python_version_number}}/{{ python_version_name }}.tgz
-python_version_directory: /usr/local/lib/python{{ python_version_number }}/
 
 # newrelic
 nrinfragent_license_key: "{{ vault_nrinfragent_license_key }}"

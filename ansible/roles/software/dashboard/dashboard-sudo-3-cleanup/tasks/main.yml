@@ -34,8 +34,8 @@
     - "/var/log/dashboard-cron-cfo.log"
     - "{{ project_shared_path }}/archive/curl_header"
 
-- name: Reload php7.0-fpm
-  service: name=php7.0-fpm state=reloaded
+- name: Restart php7.0-fpm
+  shell: /etc/init.d/php7.0-fpm start
 
-- name: Reload nginx
-  service: name=nginx state=reloaded
+- name: Restart nginx
+  service: name=nginx state=restarted

@@ -8,16 +8,46 @@ nginx_extra_http_options: |
   gzip_types    text/plain application/x-javascript text/xml text/css; # This directive let you specify which file types should be compressed, in this case plain text, js files, xml and css.
   gzip_vary on; # Enables response header of "Vary: Accept-Encoding
 
+# WordPress env
+env_wp_env: development
+env_content_protocol: http
 
-# Disabling MySQL server (we need only client on this machine)
-mysql_enabled_on_startup: false
+# Email
+default_email_from: datagov@localhost
 
-# Composer
+# wordpress app code
 project_git_repo: https://github.com/GSA/datagov-wp-boilerplate.git
 project_git_version: master
 
-# WordPress .env
-env_wp_env: development
+# Project path
+project_source_rollback_path: /var/www/datagov/rollback
+project_source_new_code_path: /var/www/datagov/new
+current_source_symlink: /var/www/datagov/current
+project_index_path: /var/www/datagov/current/web
 
-# Saml
-saml_auth_adminpassword: insecure
+# MySQL credentials
+env_db_host: wpdb
+env_db_user: datagov
+env_db_pass: superpassword
+env_db_name: datagov
+
+# .env keys # Generate your keys here: https://roots.io/salts.html
+auth_key: "{e#|YTpuf$r9f;>{x$z:9h1@{}m!/?XU1itq7UQ$^*y=cL]Sud%K]oBb?M_;RWx:"
+secure_auth_key: "}lrj6g|0Zm(0Wtrvc$AYeN%FL.rSek,nOpC}K>T/2$k9)yD)gQF^zCN*v_*pv:wZ"
+logged_in_key: "w,1B@SJcfKUBsP-eEs+qv3?A.=H$pN`xaV5k<)FVl>&/r)gNeK`,*N<[i5{<J-m_"
+nonce_key: "f{bDK[:,[LL-bN2q-kq7-*S1:sw$Or237MG>JI#oeA2J*/P?uanAPC33sfwh23[a"
+auth_salt: "3_wMD846UmdxtwoZ{2xqQ8]aP2ol8uAVWILG|LjZbpZg/U%]C;V<#e=:[2r3_bhe"
+secure_auth_salt: "ren`Yn${4-KCfo]Mr0>-yk8LS5MBArZ8-t)LO$LP>W@w9z|GE}rxpnQhwRMp6p>|"
+logged_in_salt: "rkYv=k$HbHs!0@Z2wBV{!ZMf{0gn8Z#5t6QYu)+f!h@#;-}[j.p1L%-nf4^XG=fS"
+nonce_salt: "zs=+JZ]{K3%Rr>=)/G:#svCX.cV,kT2C{in}9AfHJYQIUCF8+0+A<U7H#qNs#[k<"
+
+# SAML
+saml_idp_id: "https://localhost/idp/shibboleth"
+saml_idp_sso: "https://localhost/idp/profile/SAML2/POST/SSO"
+saml_idp_slo: "https://localhost/idp/profile/SAML2/POST/SLO"
+saml_auth_adminpassword: "insecure"
+saml_secretsalt: "insecure"
+
+# s3
+s3_bucket: bsp-ocsit-dev-east-appdata
+s3_prefix: datagov/wordpress/

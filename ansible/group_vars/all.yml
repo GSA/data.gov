@@ -1,0 +1,37 @@
+--- # Global defaults
+# Role defaults -> Global group_vars/all vars -> Inventories group_vars/all vars -> Inventories group_var/group vars
+
+# SAML
+saml2_idp_entry: "login.test.max.gov"
+saml2_idp_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
+saml_idp_cert_fprint: "7A43DACB95D67FB6A804FD37C8A7DCA5B0384939"
+
+# Nginx
+nginx_remove_default_vhost: true
+letsencrypt: false
+
+# App environment
+codeigniter_environment: development
+env_wp_env: development
+real_ansible_env: local
+
+# PHP-FPM
+php_enable_php_fpm: true
+php_fpm_listen: /var/run/php/php7.0-fpm.sock
+php_webserver_daemon: nginx
+
+# new python version
+python_version_number: 2.7.10
+python_version_name: Python-{{ python_version_number }}
+python_version_url: https://www.python.org/ftp/python/{{ python_version_number}}/{{ python_version_name }}.tgz
+python_version_directory: /usr/local/lib/python{{ python_version_number }}/
+
+# Codeigniter
+codeigniter_pre_approved_admins: none
+env_encryption_key: some-key
+
+# Disabling MySQL server (we need only client on this machine)
+mysql_enabled_on_startup: false
+
+# PHP
+php_memory_limit: 1G
