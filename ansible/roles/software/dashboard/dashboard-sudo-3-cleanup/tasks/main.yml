@@ -34,12 +34,17 @@
     - "/var/log/dashboard-cron-cfo.log"
     - "{{ project_shared_path }}/archive/curl_header"
 
+- name: php7.0-fpm status
+  shell: /etc/init.d/php7.0-fpm status
+  register: php_fpm_status
+
 - name: Start php7.0-fpm
   shell: /etc/init.d/php7.0-fpm start
-  ignore_errors: true
+  when: '"is not running" in php_fpm_status.stdout'
 
 - name: ReStart php7.0-fpm
   shell: /etc/init.d/php7.0-fpm restart
+  when: '"is running" in php_fpm_status.stdout'
 
 - name: Restart nginx
   service: name=nginx state=restarted

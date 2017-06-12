@@ -50,4 +50,4 @@
 
   roles:
   - { role: php-fixes, tags: [php, provision, deploy] }
-  - { role: datagov-sudo-3-cleanup, tags: [provision, deploy, deploy-rollback] }
+  - { role: datagov-sudo-3-cleanup, tags: [provision, deploy, deploy-rollback, cleanup] }
