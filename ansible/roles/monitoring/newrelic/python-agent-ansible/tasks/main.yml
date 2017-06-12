@@ -1,7 +1,15 @@
 ---
 
 - name: Install the New Relic Python agent
-  pip: name=newrelic umask=0022
+  pip: name=newrelic
+
+- name: Fix newrelic package permissions
+  file:
+    path: /usr/local/lib/python2.7/dist-packages
+    state: directory
+    recurse: yes
+    group: www-data
+    mode: 0755
 
 - name: Generate apache.wsgi 
   template: 
@@ -22,3 +30,4 @@
     mode: '0755'
   notify:
     - restart apache
+
