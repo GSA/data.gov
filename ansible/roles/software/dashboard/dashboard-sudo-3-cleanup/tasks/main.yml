@@ -36,6 +36,7 @@
 
 - name: Start php7.0-fpm
   shell: /etc/init.d/php7.0-fpm start
+  ignore_errors: true
 
 - name: ReStart php7.0-fpm
   shell: /etc/init.d/php7.0-fpm restart
