@@ -9,7 +9,7 @@ nginx_extra_http_options: |
   gzip_vary on; # Enables response header of "Vary: Accept-Encoding
 
 # WordPress env
-env_wp_env: development
+web_app_env: development
 env_content_protocol: http
 
 # Email

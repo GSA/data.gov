@@ -1,8 +1,6 @@
 ---
 
 # WordPress env
-#env_wp_env: development
-env_wp_env: production
 env_content_protocol: https
 
 # MySQL credentials

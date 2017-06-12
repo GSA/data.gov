@@ -40,13 +40,13 @@
 
 - name: Ensuring config directory exists
   file:
-    path: "{{ project_source_new_code_path }}/application/config/{{ codeigniter_environment }}"
+    path: "{{ project_source_new_code_path }}/application/config/{{ web_app_env }}"
     state: directory
 
 - name: Copying config files
   template:
     src: "{{ item }}"
-    dest: "{{ project_source_new_code_path }}/application/config/{{ codeigniter_environment }}/{{ item | basename }}"
+    dest: "{{ project_source_new_code_path }}/application/config/{{ web_app_env }}/{{ item | basename }}"
   with_fileglob:
     - ../templates/config/*.php
 

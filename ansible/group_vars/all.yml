@@ -11,13 +11,11 @@ nginx_remove_default_vhost: true
 letsencrypt: false
 
 # App environment
-codeigniter_environment: development
-env_wp_env: development
+web_app_env: development
 real_ansible_env: local
 
 # PHP-FPM
 php_enable_php_fpm: true
-php_fpm_listen: /var/run/php/php7.0-fpm.sock
 php_webserver_daemon: nginx
 
 # new python version

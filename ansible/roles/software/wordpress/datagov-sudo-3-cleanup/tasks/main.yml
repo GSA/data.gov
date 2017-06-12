@@ -27,7 +27,10 @@
   with_items:
     - "/var/log/wp-cron.log"
 
-- name: Restart php7.0-fpm
+- name: Start php7.0-fpm
+  shell: /etc/init.d/php7.0-fpm start
+
+- name: ReStart php7.0-fpm
   shell: /etc/init.d/php7.0-fpm restart
 
 - name: Restart nginx

@@ -2,7 +2,7 @@
 
 - name: Temporarily disabling keeping sessions in DB
   replace:
-    dest: "{{ current_source_symlink }}/application/config/{{ codeigniter_environment }}/config.php"
+    dest: "{{ current_source_symlink }}/application/config/{{ web_app_env }}/config.php"
     regexp: '(sess_use_database[^=]+)= TRUE;'
     replace: '\1= FALSE;'
 
@@ -18,6 +18,6 @@
 
 - name: Keeping sessions in DB again
   replace:
-    dest: "{{ current_source_symlink }}/application/config/{{ codeigniter_environment }}/config.php"
+    dest: "{{ current_source_symlink }}/application/config/{{ web_app_env }}/config.php"
     regexp: '(sess_use_database[^=]+)= FALSE;'
     replace: '\1= TRUE;'

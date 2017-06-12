@@ -27,6 +27,7 @@ s3_bucket: dashboard-rei-test
 s3_prefix: datagov/dashboard/
 
 # App
+web_app_env: development
 default_host: 'labs.data.gov/dashboard'
 env_content_protocol: http
 

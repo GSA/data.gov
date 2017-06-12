@@ -1,8 +1,6 @@
 ---
 
 # WordPress env
-#env_wp_env: development
-env_wp_env: production
 env_content_protocol: https
 
 # MySQL credentials
@@ -16,9 +14,6 @@ s3_bucket: bsp-ocsit-dev-east-appdata
 s3_prefix: datagov/wordpress/
 
 # SAML
-saml_sp_cert: "{{ vault_saml_sp_cert }}"
-saml_sp_key: "{{ vault_saml_sp_key }}"
-
 saml_idp_id: "https://{{ saml2_idp_entry }}/idp/shibboleth"
 saml_idp_sso: "https://{{ saml2_idp_entry }}/idp/profile/SAML2/POST/SSO"
 saml_idp_slo: "https://{{ saml2_idp_entry }}/idp/profile/SAML2/POST/SLO"

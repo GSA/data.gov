@@ -21,8 +21,7 @@ trendmicro_policy_id_web: "{{ vault_trendmicro_policy_id_web }}"
 codeigniter_pre_approved_admins: "{{ vault_codeigniter_pre_approved_admins }}"
 
 # App environment
-codeigniter_environment: production
-env_wp_env: production
+web_app_env: production
 real_ansible_env: staging
 
 # postfix

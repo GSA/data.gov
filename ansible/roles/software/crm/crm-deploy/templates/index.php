@@ -18,7 +18,7 @@
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
-define('ENVIRONMENT', '{{ codeigniter_environment }}');
+define('ENVIRONMENT', '{{ web_app_env }}');
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
