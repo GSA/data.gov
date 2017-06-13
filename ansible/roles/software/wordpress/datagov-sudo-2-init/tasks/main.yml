@@ -32,15 +32,12 @@
     cron_file: "wordpress-datagov"
   when: crons_enabled
 
-- name: MariaDB client
-  package:
-    name: mariadb-client-5.5
-    state: present
-
-- name: PHP Zip for metrics xmlx
-  package:
-    name: php7.0-zip
-    state: present
+- name: Installing required packages
+  package: name={{ item }} state=installed
+  with_items:
+    - mariadb-client-5.5
+    - php7.0-zip
+    - nginx-extras
 
 - name: Remove previous deployment rollback folder
   file: path="{{ project_source_rollback_path }}" state=absent
