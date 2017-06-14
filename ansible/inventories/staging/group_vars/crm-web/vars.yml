@@ -6,30 +6,12 @@ env_db_user: "{{ vault_env_db_user }}"
 env_db_pass: "{{ vault_env_db_pass }}"
 env_db_name: "{{ vault_env_db_name }}"
 
-# Disabling MySQL server
-mysql_enabled_on_startup: false
-
-# PHP
-php_memory_limit: 1G
-
-# Composer
-project_git_repo: https://github.com/GSA/open311-simple-crm.git
-project_git_version: ansible
-
-# Project path
-project_source_rollback_path: /var/www/crm/rollback
-project_source_new_code_path: /var/www/crm/new
-current_source_symlink: /var/www/crm/current
-project_index_path: /var/www/crm/current
-
 # CodeIgniter Session Encryption Key
 env_encryption_key: "{{ vault_codeigniter_encryption_key }}"
 
-default_host: 'labs.data.gov/crm'
-
 # MAX SAML
-saml_sp_private_key_path: /etc/crm-saml-sp-private.pem
-saml_sp_cert_path: /etc/crm-saml-sp-cert.crt
-
 saml_sp_private_key: "{{ vault_saml_private_key }}"
 saml_admin_pass: "{{ vault_saml_admin_pass }}"
+
+# App
+env_content_protocol: https

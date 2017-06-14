@@ -7,15 +7,18 @@
     mode: 0755
     recurse: yes
 
-- name: Chown www-data /var/www/
-  file:
-    path: "/var/www"
-    owner: "ubuntu"
-    group: "www-data"
-    recurse: yes
+- name: php7.0-fpm status
+  shell: /etc/init.d/php7.0-fpm status
+  register: php_fpm_status
+  ignore_errors: yes
 
-- name: Reload php7.0-fpm
-  service: name=php7.0-fpm state=reloaded
+- name: Start php7.0-fpm
+  shell: /etc/init.d/php7.0-fpm start
+  when: '"is not running" in php_fpm_status.stdout'
 
-- name: Reload nginx
-  service: name=nginx state=reloaded
+- name: ReStart php7.0-fpm
+  shell: /etc/init.d/php7.0-fpm restart
+  when: '"is running" in php_fpm_status.stdout'
+
+- name: Restart nginx
+  service: name=nginx state=restarted

@@ -14,7 +14,7 @@
 |
 */
 
-$protocol = 'https';
+$protocol = '{{ env_content_protocol }}';
 
 //if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
 //    $protocol = 'https';

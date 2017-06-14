@@ -16,7 +16,7 @@
   roles:
   - die-no-tags
   - { role: misc, tags: [provision, misc] }
-  - { role: datagov-sudo-1-security, tags: [provision] }
+  - { role: php-common, tags: [provision] }
   - { role: git, tags: [provision] }
   - { role: nginx, tags: [provision] }
   - { role: php, tags: [php, provision] }
@@ -50,4 +50,4 @@
 
   roles:
   - { role: php-fixes, tags: [php, provision, deploy] }
-  - { role: datagov-sudo-3-cleanup, tags: [provision, deploy, deploy-rollback] }
+  - { role: datagov-sudo-3-cleanup, tags: [provision, deploy, deploy-rollback, cleanup] }

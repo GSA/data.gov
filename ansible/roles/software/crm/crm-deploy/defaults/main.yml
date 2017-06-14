@@ -1,0 +1,34 @@
+---
+
+# Composer
+project_git_repo: https://github.com/GSA/open311-simple-crm.git
+project_git_version: master
+
+# Project path
+project_source_rollback_path: /var/www/crm/rollback
+project_source_new_code_path: /var/www/crm/new
+current_source_symlink: /var/www/crm/current
+project_index_path: /var/www/crm/current
+
+# MySQL credentials
+env_db_host: crm_db
+env_db_user: crm
+env_db_pass: superpassword
+env_db_name: crm
+
+# App
+web_app_env: development
+default_host: 'labs.data.gov/crm'
+env_content_protocol: http
+
+# SAML
+saml2_idp_entry: "login.test.max.gov"
+saml2_idp_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
+saml_sp_private_key_path: /etc/crm-saml-sp-private.pem
+saml_sp_cert_path: /etc/crm-saml-sp-cert.crt
+saml_sp_private_key: "private_key"
+saml_admin_pass: "admin_pass"
+
+# Codeigniter
+codeigniter_pre_approved_admins: none
+env_encryption_key: some-key
