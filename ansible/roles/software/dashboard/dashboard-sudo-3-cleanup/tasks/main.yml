@@ -37,6 +37,7 @@
 - name: php7.0-fpm status
   shell: /etc/init.d/php7.0-fpm status
   register: php_fpm_status
+  ignore_errors: yes
 
 - name: Start php7.0-fpm
   shell: /etc/init.d/php7.0-fpm start
