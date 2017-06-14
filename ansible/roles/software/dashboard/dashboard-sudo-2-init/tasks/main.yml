@@ -33,6 +33,7 @@
     - mariadb-client-5.5
     - php-mcrypt
     - php7.0-zip
+    - nginx-extras
 
 - name: Remove old rollback code
   file: path="{{ project_source_rollback_path }}" state=absent

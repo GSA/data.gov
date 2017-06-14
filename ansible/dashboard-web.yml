@@ -17,7 +17,7 @@
   roles:
   - die-no-tags
   - { role: misc, tags: [provision, misc] }
-  - { role: dashboard-sudo-1-security, tags: [provision] }
+  - { role: php-common, tags: [provision] }
   - { role: git, tags: [provision] }
   - { role: nginx, tags: [provision] }
   - { role: php, tags: [php, provision] }
@@ -26,12 +26,12 @@
   - { role: composer, tags: [php, provision] }
   - { role: vim, tags: [vim, provision] }
   - { role: dashboard-sudo-2-init, tags: [provision, deploy, deploy-rollback] }
-  - { role: secops-ssh, tags: [provision, secops] }
-  - { role: trendmicro, tags: [provision, trendmicro] }
-  - { role: ansible-postfix, tags: [provision, postfix] }
-  - {role: roles/monitoring/fluentd/kernel, tags: ['frontend', 'harvester', 'fluentd'] }
-  - {role: roles/monitoring/fluentd/limits, tags: ['frontend', 'harvester', 'fluentd'] }
-  - {role: roles/monitoring/fluentd/td-agent, tags: ['frontend', 'harvester', 'fluentd'] }
+  - { role: secops-ssh, tags: [provision, secops, prod] }
+  - { role: trendmicro, tags: [provision, trendmicro, prod] }
+  - { role: ansible-postfix, tags: [provision, postfix, prod] }
+  - {role: roles/monitoring/fluentd/kernel, tags: [frontend, harvester, fluentd, prod] }
+  - {role: roles/monitoring/fluentd/limits, tags: [frontend, harvester, fluentd, prod] }
+  - {role: roles/monitoring/fluentd/td-agent, tags: [frontend, harvester, fluentd, prod] }
 
 
 - name: Deploying Dashboard

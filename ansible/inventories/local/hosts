@@ -1,3 +1,9 @@
 
 [wordpress-web]
-localhost:2022
+wp.local ansible_ssh_port=2022 ansible_ssh_host=localhost ansible_ssh_user=ubuntu
+
+[crm-web]
+crm.local ansible_ssh_port=2233 ansible_ssh_host=localhost ansible_ssh_user=ubuntu
+
+[dashboard-web]
+dashboard.local ansible_ssh_port=2222 ansible_ssh_host=localhost ansible_ssh_user=ubuntu

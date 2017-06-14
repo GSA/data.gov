@@ -36,12 +36,12 @@
     path: "{{ item }}"
     state: directory
   with_items:
-    - "{{ project_source_new_code_path }}/application/config/{{ codeigniter_environment }}"
+    - "{{ project_source_new_code_path }}/application/config/{{ web_app_env }}"
 
 - name: Copying config files
   template:
     src: "{{ item }}"
-    dest: "{{ project_source_new_code_path }}/application/config/{{ codeigniter_environment }}/{{ item | basename }}"
+    dest: "{{ project_source_new_code_path }}/application/config/{{ web_app_env }}/{{ item | basename }}"
   with_fileglob:
     - ../templates/config/*.php
 
