@@ -10,3 +10,9 @@
   with_items:
     - /etc/ckan
     - "{{ project_source_new_code_path }}"
+
+- name: Fix 'Content-Cache' header
+  replace:
+    path: "{{ project_source_new_code_path }}/src/ckan/ckan/lib/base.py"
+    regexp: ' = "private"'
+    replace: ' = "max-age=0, no-cache, no-store, must-revalidate"'
