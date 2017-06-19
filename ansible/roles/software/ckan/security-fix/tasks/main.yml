@@ -14,8 +14,8 @@
 - name: Fix 'Content-Cache' header
   replace:
     dest: "{{ project_source_new_code_path }}/src/ckan/ckan/lib/base.py"
-    regexp: ' = "private"'
-    replace: ' = "max-age=0, no-cache, no-store, must-revalidate"'
+    regexp: '(response.headers\["Cache\-Control"\] =) "private"'
+    replace: '\1 "max-age=0, no-cache, no-store, must-revalidate"'
 
 - name: Apache ServerTokens Prod
   lineinfile:
