@@ -13,6 +13,18 @@
 
 - name: Fix 'Content-Cache' header
   replace:
-    path: "{{ project_source_new_code_path }}/src/ckan/ckan/lib/base.py"
+    dest: "{{ project_source_new_code_path }}/src/ckan/ckan/lib/base.py"
     regexp: ' = "private"'
     replace: ' = "max-age=0, no-cache, no-store, must-revalidate"'
+
+- name: Apache ServerTokens Prod
+  lineinfile:
+    dest: /etc/apache2/conf-enabled/security.conf
+    regexp: '^ServerTokens '
+    line: 'ServerTokens Prod'
+
+- name: Apache ServerSignature Off
+  lineinfile:
+    dest: /etc/apache2/conf-enabled/security.conf
+    regexp: '^ServerSignature '
+    line: 'ServerSignature Off'
