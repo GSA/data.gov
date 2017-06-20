@@ -1,0 +1,4 @@
+# provide some default values to be overwritten later by group vars and host vars...
+catalog_db_user: ckan
+catalog_db_pass: pass
+catalog_db_name: catalog

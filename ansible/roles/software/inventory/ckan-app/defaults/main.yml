@@ -39,3 +39,21 @@ datapusher_pkgs:
       repo: "https://github.com/GSA/datapusher",
       requirements: "requirements.txt"
     }
+
+# provide some default values to be overwritten later by group vars and host vars...
+ckan_instance_secret: a97df940-4ac1-4357-aac2-156d4f21d300
+ckan_instance_uuid: cf305c1a-1672-4451-9cc7-250629d6fdee
+inventory_db_user: ckan
+inventory_db_pass: pass
+inventory_db_name: inventory
+inventory_datapusher_db_name: datapusher
+inventory_datastore_user: ckan_datastore
+inventory_datastore_pass: pass
+inventory_datastore_ro_user: ckan_datastore_ro
+inventory_datastore_ro_pass: pass
+inventory_datastore_db_name: datastore
+saml2_site_url: https://inventory.data.gov/
+saml2_idp_entry: login.test.max.gov
+saml2_idp_url: https://{{ saml2_idp_entry }}/idp/shibboleth
+
+
