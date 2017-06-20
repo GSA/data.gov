@@ -30,6 +30,8 @@ postfix_relayhost_port: 25
 postfix_sasl_auth_enable: false
 postfix_relaytls: true
 default_email_from: "{{ vault_default_email_from }}"
+postfix_key: "{{ vault_postfix_key }}"
+postfix_pem: "{{ vault_postfix_pem }}"
 
 # SAML
 saml2_idp_entry: login.test.max.gov
