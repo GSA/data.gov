@@ -1,0 +1,7 @@
+- name: CircleCI Basic Lint and Syntax Checks
+  hosts: all
+  remote_user: ubuntu
+
+tasks:
+# First test - other roles coming soon
+- include: ansible/fluentd.yml
