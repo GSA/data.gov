@@ -26,11 +26,8 @@
   with_items:
     - etc/apache2/sites-enabled/jekyll.conf
 
-- name: enable modules
-  apache2_module: name={{item}} state=present
-  with_items:
-    - proxy
-    - proxy_http
+- name: use shell before buggy apache2_module is fixed
+  shell: a2enmod proxy && a2enmod proxy_http
 
 - name: restart apache
   service: name=apache2 state=restarted
