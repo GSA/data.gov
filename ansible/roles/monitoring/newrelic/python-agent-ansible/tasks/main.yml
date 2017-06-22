@@ -6,7 +6,7 @@
 
 - name: Install the New Relic Python agent
   pip: name=newrelic
-  when: (current_env == 'staging') or (current_env == 'production')
+  when: (current_env.stdout == 'staging') or (current_env.stdout == 'production')
 
 - name: Fix newrelic package permissions
   file:
@@ -15,21 +15,21 @@
     recurse: yes
     group: www-data
     mode: 0755
-  when: (current_env == 'staging') or (current_env == 'production')
+  when: (current_env.stdout == 'staging') or (current_env.stdout == 'production')
 
 - name: Generate apache.wsgi 
   template: 
     src: apache.wsgi.j2 
     dest: "{{ ckan_config_path }}/apache.wsgi"
     mode: '0755'
-  when: (current_env == 'staging') or (current_env == 'production')
+  when: (current_env.stdout == 'staging') or (current_env.stdout == 'production')
 
 - name: Create Newrelic config folder
   file:
     path: "{{ newrelic_config_path }}"
     state: directory
     mode: 0755
-  when: (current_env == 'staging') or (current_env == 'production')
+  when: (current_env.stdout == 'staging') or (current_env.stdout == 'production')
 
 
 - name: Generate newrelic.ini 
@@ -37,7 +37,7 @@
     src: newrelic.ini.j2 
     dest: "{{ newrelic_config_path }}/newrelic.ini"
     mode: '0755'
-  when: (current_env == 'staging') or (current_env == 'production')
+  when: (current_env.stdout == 'staging') or (current_env.stdout == 'production')
   notify:
     - restart apache
 
