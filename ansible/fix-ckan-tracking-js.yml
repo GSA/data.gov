@@ -1,0 +1,6 @@
+---
+- hosts: catalog-web
+  sudo: yes
+  remote_user: ubuntu
+  roles:
+    - misc

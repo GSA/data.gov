@@ -7,7 +7,7 @@
     - rvm use 2.3.0@{{gemset}} --create
     - rvm use 2.3.0@{{gemset}} && gem install jekyll specific_install
     - rvm use 2.3.0@{{gemset}} && gem uninstall jekyll-rebuilder
-    - rvm use 2.3.0@{{gemset}} && gem specific_install https://github.com/FuhuXia/jekyll-rebuilder
+    - rvm use 2.3.0@{{gemset}} && gem specific_install https://github.com/GSA/jekyll-rebuilder
 
 
 - name: get code
