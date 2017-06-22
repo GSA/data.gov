@@ -3,4 +3,4 @@
   sudo: yes
   remote_user: ubuntu
   roles:
-    - misc
+    - fix-ckan-tracking
