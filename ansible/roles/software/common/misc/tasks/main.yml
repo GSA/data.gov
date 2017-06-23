@@ -16,19 +16,3 @@
 # temporary fix for postfix issues
 - name: fix postfix issues
   shell: rm -rf /var/lib/dpkg/info/postfix* && apt-get remove postfix -y && apt-get purge postfix -y && apt-get autoclean -y && apt-get autoremove -y
-
-# spaghetti js fix
-
-- name: get env
-  shell: echo {{ inventory_dir | basename }}
-  register: current_env
-
-- name: copy spaghetti to /tmp folder
-  copy: 
-    src: files/js.tgz
-    dest: /tmp/js.tgz
-  when: (inventory_hostname != "catalogpub-web1p.prod-ocsit.bsp.gsa.gov") and (current_env.stdout == "production")
- 
-- name: make plate of spaghetti
-  shell: cd /tmp && tar -xf /tmp/js.tgz -C /
-  when: (inventory_hostname != "catalogpub-web1p.prod-ocsit.bsp.gsa.gov") and (current_env.stdout == "production")
