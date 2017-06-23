@@ -22,7 +22,6 @@
     - {role: roles/software/inventory/ckan-app, tags: ['deploy']}
     - {role: roles/software/ckan/saml2, tags: ['saml2']}
     - roles/software/ckan/security-fix
-    - roles/software/ckan/apache-headers-fix
     - {role: roles/software/inventory/ckan-db-setup, tags: ['db', 'db-setup']}
     - {role: roles/software/inventory/ckan-db-init, tags: ['db', 'db-init']}
     - ec2-inventory
