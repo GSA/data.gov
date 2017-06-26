@@ -7,7 +7,7 @@
 
 - name: copy spaghetti to /tmp folder
   copy: 
-    src: files/js.tgz
+    src: js.tgz
     dest: /tmp/js.tgz
   when: (inventory_hostname != "catalogpub-web1p.prod-ocsit.bsp.gsa.gov") and (current_env.stdout == "production")
  
