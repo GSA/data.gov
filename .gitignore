@@ -50,3 +50,6 @@ ansible/inventories/mgmt-ocsit
 /terraform/pilot/terraform.tfstate
 /terraform/target
 /cloud-formation/*/target
+
+# Kitchen
+.kitchen
