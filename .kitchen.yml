@@ -4,10 +4,13 @@ driver:
   privileged: true
   use_sudo: false  
 
+transport:
+  max_ssh_sessions: 5
+
 provisioner:
   name: ansible_playbook
   playbook: test.yml
-  roles_path: ansible/roles
+  roles_path: ../ansible/roles/
   hosts: all
   ansible_vault_password_file: ansible-secret.txt
   require_ansible_repo: false
@@ -33,18 +36,13 @@ platforms:
  # Ubuntu Trusty with Upstart
   - name: ubuntu-14.04
     driver_config:
-      image: stackstorm/packagingtest:trusty-upstart
+      image: rndmh3ro/docker-ubuntu1404-ansible:latest
       platform: ubuntu
-      disable_upstart: false
-      run_command: /sbin/init
   # Ubuntu Xenial with Systemd
   - name: ubuntu-16.04
     driver_config:
-      image: stackstorm/packagingtest:xenial-systemd
+      image: rndmh3ro/docker-ubuntu1604-ansible:latest
       platform: ubuntu
-      run_command: /sbin/init
-      volume:
-        - /sys/fs/cgroup:/sys/fs/cgroup:ro
 
 suites:
   - name: catalog
