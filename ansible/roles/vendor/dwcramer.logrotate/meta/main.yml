@@ -1,0 +1,12 @@
+---
+galaxy_info:
+  author: "Aaron Pederson"
+  company: "TELUS digital"
+  description: "rotates, compresses, and mails system logs"
+  license: MIT
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+  categories:
+    - system

@@ -5,7 +5,7 @@
   sudo: yes
 
   roles:
-  - role: roles/software/catalog/nginx
+  - role: software/catalog/nginx
     nginx_http_params:
       - sendfile "on"
       - access_log "/var/log/nginx/access.log"

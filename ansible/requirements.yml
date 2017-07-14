@@ -3,3 +3,27 @@
 # When making the Conductor image `ansible-galaxy install -r requirements.yml` is executed
 # using this file. Follow the instructions at http://docs.ansible.com/ansible/galaxy.html
 # to include any roles you want installed prior to running main.yml.
+
+- src: chusiang.vim-and-vi-mode
+- src: geerlingguy.composer
+- src: geerlingguy.git
+- src: geerlingguy.nginx
+- src: geerlingguy.php
+- src: geerlingguy.php-memcached
+- src: geerlingguy.php-mysql
+- src: heskethm.wp-cli
+- src: geerlingguy.java
+- src: geerlingguy.elasticsearch
+- src: geerlingguy.kibana
+- src: ANXS.apt
+- src: ANXS.build-essential
+- src: tersmitten.pip
+- src: dwcramer.upstart
+- src: tersmitten.logrotated
+- src: teampants.elastalert
+- src: nickhammond.logrotate
+- src: franklinkim.php5-newrelic
+
+- src: https://github.com/GSA/rvm1-ansible
+  version: v1.3.8-fix
+  name: gsa.rvm1-ruby

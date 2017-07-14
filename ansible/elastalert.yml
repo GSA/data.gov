@@ -7,4 +7,4 @@
   roles:
     - { role: ANXS.build-essential }
     - { role: teampants.elastalert }
-    - { role: elastalert }
+    - { role: monitoring/elastalert }

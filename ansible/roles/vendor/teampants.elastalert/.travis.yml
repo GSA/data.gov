@@ -1,0 +1,32 @@
+---
+sudo: required
+dist: trusty
+language: generic
+
+before_install:
+  - sudo apt-get update -qq
+
+install:
+  # install ansible
+  - sudo pip install ansible
+
+  # configure ansible
+  - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
+
+  # install dependencies
+  - "ansible-galaxy install --ignore-errors -r ansible-requirements.yml"
+
+script:
+  # check syntax
+  - "ansible-playbook -i test/inventory test/test.yml --syntax-check"
+
+  # TODO This role requires elasticsearch to be up. Commenting out tests until I figure out how I want to handle external service dependencies.
+  # initial run
+  #- "ansible-playbook -i test/inventory test/test.yml --connection=local --sudo"
+
+  # check idempotence
+  #- >
+  #  ansible-playbook -i test/inventory test/test.yml --connection=local --sudo
+  #  | grep -q 'changed=0.*failed=0'
+  #  && (echo 'Idempotence test: pass' && exit 0)
+  #  || (echo 'Idempotence test: fail' && exit 1)

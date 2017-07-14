@@ -36,8 +36,8 @@ Included in this Repository:
 - boto3 (for infrastructure provisioning only): https://github.com/boto/boto3
 - ansible-secret.txt: `export ANSIBLE_VAULT_PASSWORD_FILE=~/ansible-secret.txt`
 - run all provisioning/app deployment commands from repo's `ansible` folder
-- for wordpress/dashboard/crm/monitoring/jekyll run the following command within the role's root folder before you provision anything: `ansible-galaxy install -r requirements.yml`
-- {{ inventory }} can be:
+- run the following command within `ansible` folder before you provision anything: `ansible-galaxy install -r requirements.yml`
+- `inventory` can be:
   - inventories/staging/hosts
   - inventories/production/hosts
   - inventories/local/hosts

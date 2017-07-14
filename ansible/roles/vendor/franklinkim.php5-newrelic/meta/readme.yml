@@ -1,0 +1,15 @@
+---
+
+galaxy_name: franklinkim.php5-newrelic
+github_user: weareinteractive
+github_name: ansible-php5-newrelic
+badges: |
+  [![Build Status](https://img.shields.io/travis/weareinteractive/ansible-php5-newrelic.svg)](https://travis-ci.org/weareinteractive/ansible-php5-newrelic)
+  [![Galaxy](http://img.shields.io/badge/galaxy-franklinkim.php5-newrelic-blue.svg)](https://galaxy.ansible.com/franklinkim/php5-newrelic)
+  [![GitHub Tags](https://img.shields.io/github/tag/weareinteractive/ansible-php5-newrelic.svg)](https://github.com/weareinteractive/ansible-php5-newrelic)
+  [![GitHub Stars](https://img.shields.io/github/stars/weareinteractive/ansible-php5-newrelic.svg)](https://github.com/weareinteractive/ansible-php5-newrelic)
+description: |
+  > * installs newrelic php agent
+  > * configures newrelic php agent
+  >
+  > Note: Tests are failing due to invalid key

@@ -22,7 +22,8 @@
   remote_user: ubuntu
   roles: 
   - role: geerlingguy.nginx
-  - role: efk-nginx
+  - role: software/common/nginx-fixes
+  - role: monitoring/efk-nginx
 
 - name: Install Elastalert
   hosts: elasticsearch 
@@ -31,4 +32,4 @@
   roles:
     - role: ANXS.build-essential
     - role: teampants.elastalert
-    - role: elastalert
+    - role: monitoring/elastalert

@@ -14,32 +14,33 @@
   become_method: sudo
 
   roles:
-  - die-no-tags
-  - { role: misc, tags: [provision, misc] }
-  - { role: php-common, tags: [provision] }
-  - { role: git, tags: [provision] }
-  - { role: nginx, tags: [provision] }
-  - { role: php, tags: [php, provision] }
-  - { role: php-mysql, tags: [php, php-mysql, provision] }
-  - { role: php-memcached, tags: [php, php-memcached, provision] }
-  - { role: wp-cli, tags: [php, cli, provision] }
-  - { role: composer, tags: [php, provision] }
-  - { role: vim, tags: [provision, vim] }
-  - { role: datagov-sudo-2-init, tags: [provision, deploy, deploy-rollback] }
-  - { role: secops-ssh, tags: [provision, secops, prod] }
-  - { role: trendmicro, tags: [provision, trendmicro, prod] }
-  - { role: ansible-postfix, tags: [provision, postfix, prod] }
-  - {role: roles/monitoring/fluentd/kernel, tags: [frontend, harvester, fluentd, prod] }
-  - {role: roles/monitoring/fluentd/limits, tags: [frontend, harvester, fluentd, prod] }
-  - {role: roles/monitoring/fluentd/td-agent, tags: [frontend, harvester, fluentd, prod] }
+  - software/common/die-no-tags
+  - { role: software/common/misc, tags: [provision, misc] }
+  - { role: software/common/php-common, tags: [provision] }
+  - { role: geerlingguy.git, tags: [git, provision] }
+  - { role: geerlingguy.nginx, tags: [nginx, provision] }
+  - { role: software/common/nginx-fixes, tags: [nginx, provision] }
+  - { role: geerlingguy.php, tags: [php, provision] }
+  - { role: geerlingguy.php-mysql, tags: [php, php-mysql, provision] }
+  - { role: geerlingguy.php-memcached, tags: [php, php-memcached, provision] }
+  - { role: heskethm.wp-cli, tags: [php, cli, provision] }
+  - { role: geerlingguy.composer, tags: [php, provision] }
+  - { role: chusiang.vim-and-vi-mode, tags: [provision, vim] }
+  - { role: software/wordpress/datagov-sudo-2-init, tags: [provision, deploy, deploy-rollback] }
+  - { role: software/common/secops-ssh, tags: [provision, secops, prod] }
+  - { role: software/common/trendmicro, tags: [provision, trendmicro, prod] }
+  - { role: software/common/ansible-postfix, tags: [provision, postfix, prod] }
+  - { role: monitoring/fluentd/kernel, tags: [frontend, harvester, fluentd, prod] }
+  - { role: monitoring/fluentd/limits, tags: [frontend, harvester, fluentd, prod] }
+  - { role: monitoring/fluentd/td-agent, tags: [frontend, harvester, fluentd, prod] }
 
 - name: Deploying Data.gov
   hosts: wordpress-web
   remote_user: ubuntu
 
   roles:
-  - { role: datagov-deploy, tags: [deploy, provision] }
-  - { role: datagov-deploy-rollback, tags: [deploy-rollback] }
+  - { role: software/wordpress/datagov-deploy, tags: [deploy, provision] }
+  - { role: software/common/datagov-deploy-rollback, tags: [deploy-rollback] }
 
 
 - name: Cleanup
@@ -49,5 +50,5 @@
   become_method: sudo
 
   roles:
-  - { role: php-fixes, tags: [php, provision, deploy] }
-  - { role: datagov-sudo-3-cleanup, tags: [provision, deploy, deploy-rollback, cleanup] }
+  - { role: software/common/php-fixes, tags: [php, provision, deploy] }
+  - { role: software/wordpress/datagov-sudo-3-cleanup, tags: [provision, deploy, deploy-rollback, cleanup] }

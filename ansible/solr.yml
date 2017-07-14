@@ -5,4 +5,4 @@
   sudo: yes
 
   roles:
-  - role: roles/software/ckan/solr
+  - role: software/ckan/solr

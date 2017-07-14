@@ -6,8 +6,8 @@
       app_type: jumpbox
 
   roles:
-    - {role: roles/software/ubuntu/common, tags: ['always']}
-    - {role: roles/software/ckan/apache, tags: ['jumpbox', 'apache']}
+    - {role: software/ubuntu/common, tags: ['always']}
+    - {role: software/ckan/apache, tags: ['jumpbox', 'apache']}
 
-    - {role: roles/security/shibboleth, tags: ['jumpbox', 'shibboleth']}
-    - {role: roles/security/shibboleth, tags: ['jumpbox', 'shibboleth']}
+    - {role: security/shibboleth, tags: ['jumpbox', 'shibboleth']}
+    - {role: security/shibboleth, tags: ['jumpbox', 'shibboleth']}
