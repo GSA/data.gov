@@ -1,1 +1,4 @@
 solr_url: http://packages.reisys.com/ckan/solr/solr-4.2.1.tgz
+
+# provide some default values to be overwritten later by group vars and host vars...
+solr_master_server: 127.0.0.1

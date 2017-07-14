@@ -15,8 +15,8 @@
           config: "_config_prod.yml",
           branch: "master",
           port: 8000,
-          s3_bucket: "{{ s3_bucket_sdg }}",
-          secret_key: "{{ jekyll_webhook_secret }}"
+          s3_bucket: "{{ s3_bucket_sdg | default('') }}",
+          secret_key: "{{ jekyll_webhook_secret | default('') }}"
         }
       - {
           name: "data-federation",
@@ -24,8 +24,8 @@
           config: "_config_prod.yml",
           branch: "master",
           port: 8001,
-          s3_bucket: "{{ s3_bucket_federation }}",
-          secret_key: "{{ jekyll_webhook_secret }}"
+          s3_bucket: "{{ s3_bucket_federation | default('') }}",
+          secret_key: "{{ jekyll_webhook_secret | default('') }}"
         }
 
   roles:

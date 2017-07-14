@@ -12,7 +12,7 @@
 
 - name: get code
   git: repo={{item.repo}} dest=/root/{{item.name}} version={{item.branch|default('master')}}
-  with_items: jekyll_apps
+  with_items: "{{jekyll_apps}}"
 
 - include: supervisor.yml
 

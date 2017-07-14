@@ -15,3 +15,7 @@ saml2_pkgs:
       repo: "https://github.com/GSA/pysaml2",
       branch: "max"
     }
+
+# provide some default values to be overwritten later by group vars and host vars...
+project_source_new_code_path: /usr/lib/ckan-new
+who_ini_secret: e45cfed3-40f1-41c0-8e92-77eda7ddd9f3
