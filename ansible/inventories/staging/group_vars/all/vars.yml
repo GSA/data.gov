@@ -30,6 +30,8 @@ postfix_relayhost_port: 25
 postfix_sasl_auth_enable: false
 postfix_relaytls: true
 default_email_from: "{{ vault_default_email_from }}"
+postfix_key: "{{ vault_postfix_key }}"
+postfix_pem: "{{ vault_postfix_pem }}"
 
 # SAML
 saml2_idp_entry: login.test.max.gov
@@ -44,3 +46,9 @@ system: "es"
 
 # newrelic
 nrinfragent_license_key: "{{ vault_nrinfragent_license_key }}"
+
+# nessus
+nessus_agent_key: "{{ vault_nessus_agent_key }}"
+nessus_agent_host: "{{ vault_nessus_agent_host }}"
+nessus_agent_port: "{{ vault_nessus_agent_port }}"
+nessus_agent_group: "{{ vault_nessus_agent_group }}"

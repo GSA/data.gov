@@ -6,3 +6,5 @@
 
   roles:
     - {role: nessus}
+    - {role: nessus-agent}
+

@@ -1,9 +1,0 @@
----
-- name: Install postfix through SES
-  hosts: all 
-  sudo: yes
-  remote_user: ubuntu
-
-  roles:
-    - {role: roles/software/common/misc}
-    - {role: roles/software/common/ansible-postfix}

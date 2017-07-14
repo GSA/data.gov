@@ -6,17 +6,6 @@
     - role: nickhammond.logrotate
       logrotate_scripts:
 
-        - name: tomcat
-          path: "/var/log/tomcat6/*.out" 
-          options:
-            - daily
-            - missingok
-            - compress
-            - delaycompress
-            - copytruncate
-            - rotate 5
-            - size 250M
-
         - name: nginx
           path: "/var/log/nginx/*.log" 
           options:

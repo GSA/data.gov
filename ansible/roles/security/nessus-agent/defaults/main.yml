@@ -1,0 +1,13 @@
+---
+
+# required variable
+nessus_agent_key: ''
+nessus_agent_group: ''
+
+# can be either a repository package or a path to a file
+#     nessus_agent_package: nessus-agent
+#     nessus_agent_package: /tmp/nessus-agent_6.8.1_amd64.deb
+nessus_agent_package: NessusAgent-6.10.8-ubuntu1110_amd64.deb
+
+nessus_agent_host: cloud.tenable.com
+nessus_agent_port: 443

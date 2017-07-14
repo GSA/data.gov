@@ -1,0 +1,26 @@
+
+# CircleCI is only used for Ansible-Lint and Ansible Syntax checks
+# CircleCI default image is Ubuntu 14.04 w/ Python 2.7 (same for all Data.gov instances)
+# Test Kitchen (WIP) is used for Ansible Playbook tests
+dependencies:
+  override:
+    - |
+      sudo apt-add-repository -y ppa:ansible/ansible
+      sudo apt-get update
+      sudo apt-get install -y ansible
+    - sudo pip install ansible-lint
+  post:
+    - ansible-lint --version
+
+test:
+  override:
+    # Ansible syntax check
+    - ansible-playbook --syntax-check:
+        files:
+          - test.yml
+    # Ansible lint check
+    - ansible-lint -v:
+        files:
+          - ansible/roles/*/*/*.yaml
+          - ansible/roles/*/*/*.yml
+          - test.yml

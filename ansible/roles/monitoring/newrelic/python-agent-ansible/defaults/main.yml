@@ -1,0 +1,4 @@
+---
+nrinfragent_license_key: licesense-goes-here
+ckan_config_path: '/etc/ckan'
+newrelic_config_path: '/etc/newrelic'

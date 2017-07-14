@@ -1,0 +1,4 @@
+---
+
+# Install and configure agent
+- include: agent.yml

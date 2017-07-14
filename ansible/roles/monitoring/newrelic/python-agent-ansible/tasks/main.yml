@@ -1,0 +1,43 @@
+---
+
+- name: Set current_env var
+  set_fact:
+    current_env: "{{ inventory_dir | basename }}"
+
+- name: Install the New Relic Python agent
+  pip: name=newrelic
+  when: (current_env == 'staging') or (current_env == 'production')
+
+- name: Fix newrelic package permissions
+  file:
+    path: /usr/local/lib/python2.7/dist-packages
+    state: directory
+    recurse: yes
+    group: www-data
+    mode: 0755
+  when: (current_env == 'staging') or (current_env == 'production')
+
+- name: Generate apache.wsgi 
+  template: 
+    src: apache.wsgi.j2 
+    dest: "{{ ckan_config_path }}/apache.wsgi"
+    mode: '0755'
+  when: (current_env == 'staging') or (current_env == 'production')
+
+- name: Create Newrelic config folder
+  file:
+    path: "{{ newrelic_config_path }}"
+    state: directory
+    mode: 0755
+  when: (current_env == 'staging') or (current_env == 'production')
+
+
+- name: Generate newrelic.ini 
+  template: 
+    src: newrelic.ini.j2 
+    dest: "{{ newrelic_config_path }}/newrelic.ini"
+    mode: '0755'
+  when: (current_env == 'staging') or (current_env == 'production')
+  notify:
+    - restart apache
+
