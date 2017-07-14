@@ -1,7 +1,7 @@
 galaxy_info:
-  author: Your name
-  description: Describe your awesome application here.
-  company: Your company
+  author: GSA
+  description: Main repository for Data.gov's stack deployment
+  company: GSA
 
   # If the issue tracker for your role is not on GitHub, uncomment the
   # next line and provide a value
@@ -14,7 +14,7 @@ galaxy_info:
   # - GPLv3
   # - Apache
   # - CC-BY
-  license: license (GPLv2, CC-BY, etc)
+  license: CC-BY
 
   min_ansible_container_version: 0.9.0.0
 

@@ -1,8 +1,0 @@
----
-- hosts: all
-
-  vars:
-    nginx_use_ppa: true
-
-  roles:
-    - role_under_test

@@ -4,5 +4,5 @@
   become: yes
   become_method: sudo
   roles:
-    - hardening
+    - security/hardening
 

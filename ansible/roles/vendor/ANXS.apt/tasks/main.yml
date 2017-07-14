@@ -1,0 +1,52 @@
+# file: apt/tasks/main.yml
+
+- name: APT | Reset the sources list (/etc/apt/sources.list)
+  template:
+    src: etc_apt_sources.list.j2
+    dest: /etc/apt/sources.list
+    owner: root
+    group: root
+    mode: 0644
+  when: apt_reset_source_list
+
+- name: APT | Update the apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: "{{apt_cache_valid_time}}"
+
+- name: APT | Remove packages that are no longer needed for dependencies
+  shell: apt-get -y autoremove
+  when: apt_autoremove
+  register: autoremove_output
+  changed_when: "'0 upgraded, 0 newly installed, 0 to remove' not in autoremove_output.stdout and 'not upgraded' not in autoremove_output.stdout"
+
+- name: APT | Remove .deb files for packages no longer on your system
+  shell: apt-get -y autoclean
+  when: apt_autoclean
+  register: autoclean_output
+  changed_when: "'Del' in autoclean_output.stdout"
+
+- name: APT | Check for cached .deb files
+  shell: "ls /var/cache/apt/archives/*.deb 2&> /dev/null | wc -l"
+  register: apt_cache_check
+  changed_when: no
+  when: apt_clean
+
+- name: APT | Remove all cached .deb files
+  shell: apt-get -y clean
+  changed_when: apt_cache_check.stdout != "0"
+  when: apt_clean and apt_cache_check.stdout != "0"
+
+- name: APT | Update the general configuration (/etc/apt/apt.conf.ds/10general)
+  template:
+    src: etc_apt_apt.conf.d_10general.j2
+    dest: /etc/apt/apt.conf.d/10general
+    owner: root
+    group: root
+    mode: 0644
+
+- name: APT | Make sure the required packages are installed
+  apt:
+    pkg: "{{item}}"
+    state: present
+  with_items: "{{apt_default_packages}}"

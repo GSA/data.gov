@@ -1,0 +1,16 @@
+---
+
+- hosts: all
+  become: yes
+  roles:
+    - weareinteractive.apt
+    - franklinkim.newrelic
+    - franklinkim.php5
+    - franklinkim.php5-newrelic
+  vars:
+    apt_repositories:
+      - 'ppa:ondrej/php5-oldstable'
+    newrelic_license_key: ab2fa361cd4d0d373833cad619d7bcc424d27c16
+    php5_newrelic_appname: "My App"
+    php5_newrelic_extra_config:
+      newrelic.enabled: true

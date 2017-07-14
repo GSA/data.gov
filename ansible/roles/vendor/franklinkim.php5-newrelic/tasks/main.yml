@@ -1,0 +1,20 @@
+---
+
+- name: Checking for key
+  fail:
+    msg: "newrelic_license_key has not been defined"
+  when: newrelic_license_key|default(False) == False
+
+- include: install.yml
+  tags:
+    - monitoring
+    - php5-newrelic
+    - install
+    - php5-newrelic-install
+
+- include: config.yml
+  tags:
+    - monitoring
+    - php5-newrelic
+    - config
+    - php5-newrelic-config

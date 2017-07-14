@@ -1,0 +1,15 @@
+# file: apt/defaults/main.yml
+
+apt_reset_source_list: no                 # reset the /etc/apt/sources.list to the default
+apt_mirror_url: http://archive.ubuntu.com # the mirror from where to install packages
+apt_cache_valid_time: 3600                # Time (in seconds) the apt cache stays valid
+apt_install_recommends: no                # whether or not to install the "recommended" packages
+apt_install_suggests: no                  # whether or not to install the "suggested" packages
+apt_autoremove: yes                       # remove packages that are no longer needed for dependencies
+apt_clean: no                             # remove all cached .deb files
+apt_autoremove_recommends: yes            # whether to automatically remove "recommended" packages
+apt_autoremove_suggests: yes              # whether to automatically remove "suggested" packages
+apt_autoclean: yes                        # remove .deb files for packages no longer on your system
+apt_default_packages:
+  - python-apt
+  - unattended-upgrades

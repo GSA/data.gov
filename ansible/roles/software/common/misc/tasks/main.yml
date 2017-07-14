@@ -1,5 +1,6 @@
---- # fix "Unable to resolve host IP" issue
+---
 
+# fix "Unable to resolve host IP" issue
 - name: check whether hostname has been added already
   shell: cat /etc/hosts | grep $(hostname)
   register: hostname_grep
@@ -8,6 +9,7 @@
 - name: add hostname to /etc/hosts
   shell: echo 127.0.0.1 $(hostname) >> /etc/hosts
   when: hostname_grep.stdout == ""
+  ignore_errors: true
 
 # temporary fix for ntpd issues
 - name: fix ntpd issues

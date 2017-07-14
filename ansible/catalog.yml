@@ -12,34 +12,34 @@
   ## redis, fgdc2iso, cron
   ## sample usage: ansible-playbook ansibe/catalog.yml --tags "harvester" --skip-tags "solr,apache"
   roles:
-    - {role: roles/software/common/misc, tags: ['frontend', 'harvester', 'misc'] }
-    - {role: roles/software/ubuntu/common, tags: ['always']}
-    - {role: roles/software/ckan/common, tags: ['frontend', 'harvester']}
-    - {role: roles/software/common/secops-ssh, tags: ['frontend', 'harvester', 'secops'] }
-    - {role: roles/software/common/trendmicro, tags: ['frontend', 'harvester', 'trendmicro'] }
-    - {role: roles/software/common/ansible-postfix, tags: ['frontend', 'harvester', 'postfix'] }
-    - {role: roles/monitoring/fluentd/kernel, tags: ['frontend', 'harvester', 'fluentd'] }
-    - {role: roles/monitoring/fluentd/limits, tags: ['frontend', 'harvester', 'fluentd'] }
-    - {role: roles/monitoring/fluentd/td-agent, tags: ['frontend', 'harvester', 'fluentd'] }
-    - {role: roles/software/ckan/apache, tags: ['frontend', 'apache']}
-    - {role: roles/software/ckan/postgresql, tags: ['frontend', 'harvester', 'db', 'db-install']}
-    - {role: roles/software/ckan/solr, tags: ['frontend', 'harvester', 'solr']}
+    - {role: software/common/misc, tags: ['frontend', 'harvester', 'misc'] }
+    - {role: software/ubuntu/common, tags: ['always']}
+    - {role: software/ckan/common, tags: ['frontend', 'harvester']}
+    - {role: software/common/secops-ssh, tags: ['frontend', 'harvester', 'secops'] }
+    - {role: software/common/trendmicro, tags: ['frontend', 'harvester', 'trendmicro'] }
+    - {role: software/common/ansible-postfix, tags: ['frontend', 'harvester', 'postfix'] }
+    - {role: monitoring/fluentd/kernel, tags: ['frontend', 'harvester', 'fluentd'] }
+    - {role: monitoring/fluentd/limits, tags: ['frontend', 'harvester', 'fluentd'] }
+    - {role: monitoring/fluentd/td-agent, tags: ['frontend', 'harvester', 'fluentd'] }
+    - {role: software/ckan/apache, tags: ['frontend', 'apache']}
+    - {role: software/ckan/postgresql, tags: ['frontend', 'harvester', 'db', 'db-install']}
+    - {role: software/ckan/solr, tags: ['frontend', 'harvester', 'solr']}
 
-    - {role: roles/software/catalog/ckan-app, tags: ['frontend', 'harvester', 'deploy']}
-    - {role: roles/software/catalog/ckan-db-setup, tags: ['frontend', 'harvester', 'db', 'db-setup']}
-    - {role: roles/software/catalog/ckan-db-init, tags: ['frontend', 'harvester', 'db', 'db-init']}
+    - {role: software/catalog/ckan-app, tags: ['frontend', 'harvester', 'deploy']}
+    - {role: software/catalog/ckan-db-setup, tags: ['frontend', 'harvester', 'db', 'db-setup']}
+    - {role: software/catalog/ckan-db-init, tags: ['frontend', 'harvester', 'db', 'db-init']}
 
-    - {role: roles/software/catalog/harvest, tags: ['harvester']}
+    - {role: software/catalog/harvest, tags: ['harvester']}
 
-    - {role: roles/software/catalog/pycsw-app, tags: ['frontend', 'harvester', 'pycsw']}
-    - {role: roles/software/catalog/pycsw-db-setup, tags: ['frontend', 'harvester', 'pycsw','db', 'db-setup']}
-    - {role: roles/software/catalog/pycsw-db-init, tags: ['frontend', 'harvester', 'pycsw','db', 'db-init']}
+    - {role: software/catalog/pycsw-app, tags: ['frontend', 'harvester', 'pycsw']}
+    - {role: software/catalog/pycsw-db-setup, tags: ['frontend', 'harvester', 'pycsw','db', 'db-setup']}
+    - {role: software/catalog/pycsw-db-init, tags: ['frontend', 'harvester', 'pycsw','db', 'db-init']}
 
-    - {role: roles/software/ckan/saml2, tags: ['frontend', 'harvester', 'saml2']}
+    - {role: software/ckan/saml2, tags: ['frontend', 'harvester', 'saml2']}
 
-    - {role: roles/software/ckan/security-fix, tags: ['frontend', 'harvester', 'pycsw']}
+    - {role: software/ckan/security-fix, tags: ['frontend', 'harvester', 'pycsw']}
 
-    - {role: roles/software/ckan/fix-ckan-tracking, tags: ['frontend']}
+    - {role: software/ckan/fix-ckan-tracking, tags: ['frontend']}
 
-    - {role: ec2-catalog, tags: ['frontend', 'harvester']}
-    - {role: datagov-deploy-rollback, tags: ['deploy-rollback']}
+    - {role: software/ec2/ec2-catalog, tags: ['frontend', 'harvester']}
+    - {role: software/common/datagov-deploy-rollback, tags: ['deploy-rollback']}

@@ -1,0 +1,9 @@
+# vars file for pip
+---
+pip_dependencies:
+  - python
+  - python-dev
+  - curl
+
+pip_download_path: /var/lib/ansible/pip/downloads
+pip_download_url: https://bootstrap.pypa.io/get-pip.py

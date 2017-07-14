@@ -5,4 +5,4 @@
   remote_user: ubuntu
 
   roles:
-    - {role: roles/software/common/trendmicro}
+    - { role: software/common/trendmicro }

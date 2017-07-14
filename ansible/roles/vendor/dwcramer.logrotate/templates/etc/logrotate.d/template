@@ -1,0 +1,27 @@
+# {{ ansible_managed }}
+
+{{ logrotate_log_path }}/*.log {
+        {{ logrotate_frequency }}
+        rotate {{ logrotate_retention_limit }} 
+        {% if logrotate_ignore_missing_logs %}missingok{% endif %}
+        {% if logrotate_compression %}compress{% endif %}
+        {% if logrotate_postpone_compression %}delaycompress{% else %}nodelaycompress{% endif %}
+        {% if logrotate_ignore_empty_logs %}notifempty{% endif %}
+
+        create {{ logrotate_create_logs_with_mode }} {{ logrotate_create_logs_with_owner }} {{ logrotate_create_logs_with_group }}
+{% if logrotate_prerotate_commands %}
+        prerotate
+{%   for command in logrotate_prerotate_commands %}
+                {{ command }}
+{%   endfor %}
+        endscript
+{% endif %}
+
+{% if logrotate_postrotate_commands %}
+        postrotate
+{%   for command in logrotate_postrotate_commands %}
+                {{ command }}
+{%   endfor %}
+        endscript
+{% endif %}
+}

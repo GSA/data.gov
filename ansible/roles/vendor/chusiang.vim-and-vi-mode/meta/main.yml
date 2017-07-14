@@ -1,0 +1,33 @@
+galaxy_info:
+  author: chusiang
+  description: Install Vim and use Vi-mode in everyway.
+  license: MIT
+  min_ansible_version: 2.0
+
+  platforms:
+    - name: Debian
+      versions:
+      - wheezy
+      - jessie
+      - stretch
+    - name: Ubuntu
+      versions:
+      - precise
+      - trusty
+      - xenial
+    - name: EL
+      versions:
+      - 6
+      - 7
+    - name: MacOSX
+      versions:
+      - 10.11
+
+  galaxy_tags:
+    - editor
+    - shell
+    - vi
+    - vim
+
+dependencies: []
+

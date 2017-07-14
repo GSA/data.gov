@@ -1,0 +1,32 @@
+language: bash
+sudo: true
+services:
+  - docker
+
+before_install:
+  - docker info
+  - docker version
+  - echo "==> Build with Docker ..."
+  - docker build -f tests/Dockerfile.ubuntu12.04 -t vim:ubuntu12.04 . | tee tests/output.ubuntu12.04.log
+  - docker build -f tests/Dockerfile.ubuntu14.04 -t vim:ubuntu14.04 . | tee tests/output.ubuntu14.04.log
+  - docker build -f tests/Dockerfile.ubuntu16.04 -t vim:ubuntu16.04 . | tee tests/output.ubuntu16.04.log
+  - docker build -f tests/Dockerfile.debian7 -t vim:debian7 . | tee tests/output.debian7.log
+  - docker build -f tests/Dockerfile.debian8 -t vim:debian8 . | tee tests/output.debian8.log
+  - docker build -f tests/Dockerfile.centos6 -t vim:centos6 . | tee tests/output.centos6.log
+  - docker build -f tests/Dockerfile.centos7 -t vim:centos7 . | tee tests/output.centos7.log
+
+script:
+  - echo "==> Run Test case ..."
+  - grep 'VIM - Vi IMproved' tests/output.ubuntu12.04.log
+  - grep 'VIM - Vi IMproved' tests/output.ubuntu14.04.log
+  - grep 'VIM - Vi IMproved' tests/output.ubuntu16.04.log
+  - grep 'VIM - Vi IMproved' tests/output.debian7.log
+  - grep 'VIM - Vi IMproved' tests/output.debian8.log
+  - grep 'VIM - Vi IMproved' tests/output.centos6.log
+  - grep 'VIM - Vi IMproved' tests/output.centos7.log
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
+  slack:
+    secure: SKL8EBKhkBRj7SQedTSKP+CXXBj6gfYjuGyLjSo4dESLgWp4RweVYTIw3pBM+h+Df+YJWNStje03gHr5QMkcCYU+sJLQDi51dF3m4U/rhHkxnXWJOesKEQ7eIQIz2FNPQ5kkHKR6JyPghDuxTnqeBZuy0GFSoN7t7dQ7BQibesTAvY+qKqRsU71xJ0HeXCHqn35s5kSJOVPt7QOzgUl6U/E7VShi455LHOzw6fFqdvsdvbkjXYoVhpt1JODrongDEP8GSEIjFBQScP8M9fZrA1L+l64rHlI49Nyjk7Hr/C+rSCbcdC29xhn3+bW2+JqBic3QPK4ppMU+Iw9Abs/b30OMTaFCIS5/q9A7PSM9kdfv9OF/zZqRRUNgye6G5gXdfSms+i96lPRkr/CyiJULFIpNxtW3gD8VB5v8QDBhe0F4cLtPla6LyGyIS37fUV9FyFMMEtS2Njkj9CVlSJNtuIKw8LSNV9wuy3rxqqEKEoccPiBhlJmHqzJRbeBWDEZG3NVi2Jg1n/deSSg65vPP1nj4SVD5FTpD9Kp0nLCKwjox2MrXncEB4W65phfVFqzEa1BhTtukypDHzEbF2moS/qv9zfFnWkgKevNt4lwPeU32MPd1RM35Sy1SsT2ZXDFbYfXDTy8AIb1TzvmwdyBH0DgD18l1/9WEzkoZ4qBg488=
+

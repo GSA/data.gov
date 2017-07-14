@@ -7,22 +7,22 @@
     app_type: inventory
 
   roles:
-    - {role: misc, tags: ['misc']}
-    - roles/software/ubuntu/common
-    - {role: secops-ssh, tags: ['secops']}
-    - {role: trendmicro, tags: ['trendmicro']}
-    - {role: ansible-postfix, tags: ['postfix']}
-    - {role: roles/monitoring/fluentd/kernel, tags: ['frontend', 'harvester', 'fluentd'] }
-    - {role: roles/monitoring/fluentd/limits, tags: ['frontend', 'harvester', 'fluentd'] }
-    - {role: roles/monitoring/fluentd/td-agent, tags: ['frontend', 'harvester', 'fluentd'] }
-    - roles/software/ckan/common
-    - roles/software/ckan/apache
-    - {role: roles/software/ckan/postgresql, tags: ['db', 'db-install']}
-    - {role: roles/software/ckan/solr, tags: ['solr']}
-    - {role: roles/software/inventory/ckan-app, tags: ['deploy']}
-    - {role: roles/software/ckan/saml2, tags: ['saml2']}
-    - roles/software/ckan/security-fix
-    - {role: roles/software/inventory/ckan-db-setup, tags: ['db', 'db-setup']}
-    - {role: roles/software/inventory/ckan-db-init, tags: ['db', 'db-init']}
-    - ec2-inventory
-    - {role: datagov-deploy-rollback, tags: ['deploy-rollback']}
+    - {role: software/common/misc, tags: ['misc']}
+    - software/ubuntu/common
+    - {role: software/common/secops-ssh, tags: ['secops']}
+    - {role: software/common/trendmicro, tags: ['trendmicro']}
+    - {role: software/common/ansible-postfix, tags: ['postfix']}
+    - {role: monitoring/fluentd/kernel, tags: ['frontend', 'harvester', 'fluentd'] }
+    - {role: monitoring/fluentd/limits, tags: ['frontend', 'harvester', 'fluentd'] }
+    - {role: monitoring/fluentd/td-agent, tags: ['frontend', 'harvester', 'fluentd'] }
+    - software/ckan/common
+    - software/ckan/apache
+    - {role: software/ckan/postgresql, tags: ['db', 'db-install']}
+    - {role: software/ckan/solr, tags: ['solr']}
+    - {role: software/inventory/ckan-app, tags: ['deploy']}
+    - {role: software/ckan/saml2, tags: ['saml2']}
+    - software/ckan/security-fix
+    - {role: software/inventory/ckan-db-setup, tags: ['db', 'db-setup']}
+    - {role: software/inventory/ckan-db-init, tags: ['db', 'db-init']}
+    - software/ec2/ec2-inventory
+    - {role: software/common/datagov-deploy-rollback, tags: ['deploy-rollback']}

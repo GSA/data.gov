@@ -1,0 +1,22 @@
+---
+# newrelic_license_key: yourkey
+# php5_newrelic_extra_config:
+#   newrelic.enabled: true
+
+# Sets the name of the file to send log messages to.
+php5_newrelic_logfile: /var/log/newrelic/php_agent.log
+# Sets the level of detail to include in the log file.
+php5_newrelic_loglevel: info
+# Sets the name of the file to send daemon log messages to.
+php5_newrelic_daemon_logfile: /var/log/newrelic/newrelic-daemon.log
+# Sets the level of detail to include in the daemon log.
+php5_newrelic_daemon_loglevel: info
+# Enables high security for all applications.
+php5_newrelic_high_security: no
+# Sets the name of the application that metrics will be reported into.
+php5_newrelic_appname: myapp
+# Sets the desination location of the newrelic.ini file
+# Note: for php7 it's /etc/php/7.0/mods-available
+php5_newrelic_config_dest: /etc/php5/mods-available
+# Writes other config options to newrelic.ini.
+php5_newrelic_extra_config: {}

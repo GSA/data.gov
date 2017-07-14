@@ -1,0 +1,13 @@
+// {{ ansible_managed }}
+
+// Do not install recommended or suggested Packages.
+APT::Install-Recommends "{{apt_install_recommends}}";
+APT::Install-Suggests "{{apt_install_suggests}}";
+
+APT::Get::Show-Upgraded "True";
+
+// Allow apt-get autoremove to remove recommended or suggested Packages.
+APT::AutoRemove::RecommendsImportant "{{apt_autoremove_recommends}}";
+APT::AutoRemove::SuggestsImportant "{{apt_autoremove_suggests}}";
+
+// vim: ft=aptconf

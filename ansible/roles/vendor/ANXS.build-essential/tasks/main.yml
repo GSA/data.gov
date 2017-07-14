@@ -1,0 +1,41 @@
+# file: build-essential/tasks/main.yml
+
+- name: Read the family variables
+  include_vars: "{{ansible_os_family}}.yml"
+
+- name: Make sure the packages are installed (Debian)
+  apt:
+    name: "{{item}}"
+    state: present
+  with_items: "{{ buildessential_packages }}"
+  register: apt_output
+  changed_when: "('0 newly installed' not in apt_output.stdout|default('') and '0 upgraded' not in apt_output.stdout|default(''))"
+  when: ansible_os_family == "Debian" and ansible_version.major == 1
+
+- name: Make sure the packages are installed (Debian)
+  apt:
+    name: "{{item}}"
+    state: present
+  with_items: "{{ buildessential_packages }}"
+  when: ansible_os_family == "Debian" and ansible_version.major == 2
+
+- name: Make sure the packages are installed (Fedora)
+  yum:
+    name: "{{item}}"
+    state: present
+  with_items: "{{ buildessential_packages }}"
+  when: ansible_os_family == "Fedora"
+
+- name: Make sure the packages are installed (RedHat)
+  yum:
+    name: "{{item}}"
+    state: present
+  with_items: "{{ buildessential_packages }}"
+  when: ansible_os_family == "RedHat"
+
+- name: Make sure the packages are installed (Suse)
+  zypper:
+    name: "{{item}}"
+    state: present
+  with_items: "{{ buildessential_packages }}"
+  when: ansible_os_family == "Suse"

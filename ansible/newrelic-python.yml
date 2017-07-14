@@ -3,4 +3,4 @@
   sudo: yes
   remote_user: ubuntu
   roles:
-    - python-agent-ansible
+    - monitoring/newrelic/python-agent-ansible
