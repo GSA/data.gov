@@ -40,7 +40,7 @@
     shell: df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -0002 -print
     changed_when: False
     failed_when: False
-    always_run: True
+    check_mode: no
     register: world_files
     tags:
       - section12
@@ -57,7 +57,7 @@
     shell: df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nouser -ls
     changed_when: False
     failed_when: False
-    always_run: True
+    check_mode: no
     register: unowned_files
     tags:
       - section12
@@ -74,7 +74,7 @@
     shell: df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -nogroup -ls
     changed_when: False
     failed_when: False
-    always_run: True
+    check_mode: no
     register: ungrouped_files
     tags:
       - section12
@@ -92,7 +92,7 @@
     shell: df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -4000 -print
     changed_when: False
     failed_when: False
-    always_run: True
+    check_mode: no
     register: suid_files
     tags:
       - section12
@@ -109,7 +109,7 @@
     shell: df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type f -perm -2000 -print
     changed_when: False
     failed_when: False
-    always_run: True
+    check_mode: no
     register: gsuid_files
     tags:
       - section12

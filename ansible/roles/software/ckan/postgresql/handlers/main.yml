@@ -1,0 +1,5 @@
+---
+
+- name: reload postgres
+  command: service postgresql restart
+  tags: skip_ansible_lint

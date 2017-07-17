@@ -9,18 +9,66 @@ dependencies:
       sudo apt-get update
       sudo apt-get install -y ansible
     - sudo pip install ansible-lint
+    - sudo pip install ansible-lint-junit
   post:
     - ansible-lint --version
 
 test:
   override:
     # Ansible syntax check
-    - ansible-playbook --syntax-check:
+    - ansible-playbook --syntax-check --vault-password-file circle-ci-secret.txt:
         files:
-          - test.yml
-    # Ansible lint check
-    - ansible-lint -v:
+#          - test.yml
+          - ansible/catalog.yml
+          - ansible/crm-web.yml
+          - ansible/dashboard-web.yml
+          - ansible/datagov-web.yml
+          - ansible/efk-nginx.yml
+          - ansible/efk-stack.yml
+          - ansible/elastalert.yml
+          - ansible/elasticsearch.yml
+          - ansible/fluentd.yml
+          - ansible/hardening.yml
+          - ansible/inventory.yml
+          - ansible/jekyll.yml
+          - ansible/jumpbox.yml
+          - ansible/kibana.yml
+          - ansible/logrotate.yml
+          - ansible/nessus.yml
+          - ansible/newrelic-infrastructure.yml
+          - ansible/newrelic-php.yml
+          - ansible/newrelic-python.yml
+          - ansible/postfix.yml
+          - ansible/secops.yml
+          - ansible/solr.yml
+          - ansible/trendmicro.yml
+          - ansible/web-proxy.yml
+    # Ansible lint check, to skip Trailing spaces use
+    # ANSIBLE0010 Package installs should not use latest
+    - ansible-lint -v --exclude=ansible/roles/vendor -x ANSIBLE0010:
         files:
-          - ansible/roles/*/*/*.yaml
-          - ansible/roles/*/*/*.yml
-          - test.yml
+#          - test.yml
+          - ansible/catalog.yml
+          - ansible/crm-web.yml
+          - ansible/dashboard-web.yml
+          - ansible/datagov-web.yml
+          - ansible/efk-nginx.yml
+          - ansible/efk-stack.yml
+          - ansible/elastalert.yml
+          - ansible/elasticsearch.yml
+          - ansible/fluentd.yml
+          - ansible/hardening.yml
+          - ansible/inventory.yml
+          - ansible/jekyll.yml
+          - ansible/jumpbox.yml
+          - ansible/kibana.yml
+          - ansible/logrotate.yml
+          - ansible/nessus.yml
+          - ansible/newrelic-infrastructure.yml
+          - ansible/newrelic-php.yml
+          - ansible/newrelic-python.yml
+          - ansible/postfix.yml
+          - ansible/secops.yml
+          - ansible/solr.yml
+          - ansible/trendmicro.yml
+          - ansible/web-proxy.yml

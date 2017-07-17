@@ -13,7 +13,7 @@
     when: grub_cfg_file.stat.exists == True
     changed_when: False
     failed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section3
       - section3.3
@@ -40,7 +40,7 @@
     when: grub_cfg_file.stat.exists == True
     changed_when: False
     failed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section3
       - section3.3
@@ -87,7 +87,7 @@
     register: root_password_set
     changed_when: False
     failed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section3
       - section3.4

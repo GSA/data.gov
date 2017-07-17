@@ -25,7 +25,7 @@
       - section9.3.2
 
   - name: 9.3.3 Set Permissions on /etc/ssh/sshd_config (Scored)
-    file: path='/etc/ssh/sshd_config' owner=root group=root mode=600
+    file: path='/etc/ssh/sshd_config' owner=root group=root mode=0600
     notify: restart ssh
     tags:
       - section9
@@ -121,46 +121,49 @@
     register: allow_rc
     failed_when: allow_rc.rc == 1
     changed_when: False
-    always_run: True
+    check_mode: no
     ignore_errors: True
     tags:
       - section9
       - section9.3
       - section9.3.13
       - section9.3.13.1
+      - skip_ansible_lint
 
   - name: 9.3.13.2 Limit Access via SSH (Scored)
     shell: grep AllowGroups /etc/ssh/sshd_config
     register: allow_rc
     failed_when: allow_rc.rc == 1
     changed_when: False
-    always_run: True
+    check_mode: no
     ignore_errors: True
     tags:
       - section9
       - section9.3
       - section9.3.13
       - section9.3.13.2
+      - skip_ansible_lint
 
   - name: 9.3.13.3 Limit Access via SSH (Scored)
     shell: grep DenyUsers /etc/ssh/sshd_config
     register: allow_rc
     failed_when: allow_rc.rc == 1
     changed_when: False
-    always_run: True
+    check_mode: no
     ignore_errors: True
     tags:
       - section9
       - section9.3
       - section9.3.13
       - section9.3.13.3
+      - skip_ansible_lint
 
   - name: 9.3.13.4 Limit Access via SSH (Scored)
     shell: grep DenyGroups /etc/ssh/sshd_config
     register: allow_rc
     failed_when: allow_rc.rc == 1
     changed_when: False
-    always_run: True
+    check_mode: no
     ignore_errors: True
     notify: restart ssh
     tags:
@@ -168,6 +171,7 @@
       - section9.3
       - section9.3.13
       - section9.3.13.4
+      - skip_ansible_lint
 
   - name: 9.3.14 Set SSH Banner (Scored)
     lineinfile: >

@@ -17,9 +17,9 @@
     mode: 0755
   when: (current_env == 'staging') or (current_env == 'production')
 
-- name: Generate apache.wsgi 
-  template: 
-    src: apache.wsgi.j2 
+- name: Generate apache.wsgi
+  template:
+    src: apache.wsgi.j2
     dest: "{{ ckan_config_path }}/apache.wsgi"
     mode: '0755'
   when: (current_env == 'staging') or (current_env == 'production')
@@ -32,9 +32,9 @@
   when: (current_env == 'staging') or (current_env == 'production')
 
 
-- name: Generate newrelic.ini 
-  template: 
-    src: newrelic.ini.j2 
+- name: Generate newrelic.ini
+  template:
+    src: newrelic.ini.j2
     dest: "{{ newrelic_config_path }}/newrelic.ini"
     mode: '0755'
   when: (current_env == 'staging') or (current_env == 'production')

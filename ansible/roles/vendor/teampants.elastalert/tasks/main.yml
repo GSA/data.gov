@@ -27,11 +27,13 @@
   pip:
     requirements: /opt/elastalert/requirements.txt
     virtualenv: /opt/elastalert/venv
+  register: venv_result
 
 - name: Install elastalert
   command: /opt/elastalert/venv/bin/python setup.py install
   args:
     chdir: /opt/elastalert
+  when: venv_result|succeeded
 
 - name: Flush handlers to ensure a local elasticsearch has been started
   meta: flush_handlers

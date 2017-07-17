@@ -1,7 +1,8 @@
 ---
 - name: Install CKAN Stack
-  hosts: all 
-  sudo: yes
+  hosts: all
+  become: yes
+  become_method: sudo
   remote_user: ubuntu
   vars:
       app_type: catalog

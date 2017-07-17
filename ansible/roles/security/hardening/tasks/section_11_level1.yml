@@ -6,7 +6,7 @@
         create=yes
         line='Authorized uses only. All activity may be monitored and reported.'
         state=present
-        mode=644
+        mode=0644
         owner=root
         group=root
     with_items:

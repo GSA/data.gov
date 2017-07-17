@@ -1,5 +1,7 @@
 - name: Initialize ckan db
-  action: command ckan db init
+  command: ckan db init
+  tags: skip_ansible_lint
 
 - name: Initialize ckan report db
-  action: command ckan --plugin=ckanext-report report initdb
+  command: ckan --plugin=ckanext-report report initdb
+  tags: skip_ansible_lint

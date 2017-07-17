@@ -1,10 +1,11 @@
 ---
 - hosts: all
-  sudo: yes
+  become: yes
+  become_method: sudo
   remote_user: ubuntu
   roles:
     - franklinkim.php5-newrelic
   vars:
-    newrelic_license_key: "{{ vault_nrinfragent_license_key }}" 
+    newrelic_license_key: "{{ vault_nrinfragent_license_key }}"
     php5_newrelic_appname: "{{ inventory_hostname_short }}"
     php5_newrelic_config_dest: /etc/php/7.1/mods-available

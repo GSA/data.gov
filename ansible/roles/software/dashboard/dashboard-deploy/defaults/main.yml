@@ -34,7 +34,6 @@ real_ansible_env: local
 
 # SAML
 saml2_idp_entry: "login.test.max.gov"
-saml2_idp_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
 saml_sp_private_key_path: /etc/dashboard-saml-sp-private.pem
 saml_sp_cert_path: /etc/dashboard-saml-sp-cert.crt
 saml_sp_private_key: "private_key"

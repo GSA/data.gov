@@ -4,6 +4,4 @@
     - postgresql
     - postgis
     - postgresql-9.3-postgis-2.1
-
-- name: reload postgres config
-  command: /etc/init.d/postgresql restart
+  notify: reload postgres

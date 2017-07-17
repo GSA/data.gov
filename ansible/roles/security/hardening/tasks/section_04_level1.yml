@@ -14,7 +14,7 @@
         value=0
         state=present
     when: restrict_core_dumps == True
-    ignore_errors: True 
+    ignore_errors: True
     tags:
       - section4
       - section4.1

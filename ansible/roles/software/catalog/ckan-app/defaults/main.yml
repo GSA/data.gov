@@ -10,8 +10,6 @@ ckan_site_domain: catalog.data.gov
 project_source_rollback_path: /usr/lib/ckan-rollback
 project_source_new_code_path: /usr/lib/ckan-new
 current_source_symlink: /usr/lib/ckan
-app_repo: https://github.com/GSA/catalog-app.git
-app_source_path: /tmp/catalog-app
 url_readonly: https://catalog.data.gov
 url_writable: https://admin-catalog.data.gov
 saml2_idp_entry: login.test.max.gov

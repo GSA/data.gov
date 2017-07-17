@@ -3,18 +3,17 @@
   action: pip name=supervisor
 
 - name: copy all needed files
-  action: copy src={{item}} dest=/{{item}}
-  with_items:
-    - etc/init/supervisor.conf
+  copy:
+    src: etc/init/supervisor.conf
+    dest: /etc/init/supervisor.conf
+  notify:
+    - restart supervisor
+    - update supervisor
 
 - name: copy template files
-  template: src=templates/{{item}}.j2 dest=/{{item}}
-  with_items:
-    - etc/supervisord.conf
-
-- name: update supervisor if necessary
-  shell: supervisorctl reread && supervisorctl update
-  ignore_errors: yes
-
-- name: start supervisor
-  service: name=supervisor state=restarted
+  template:
+    src: etc/supervisord.conf.j2
+    dest: /etc/supervisord.conf
+  notify:
+      - restart supervisor
+      - update supervisor
