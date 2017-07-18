@@ -1,7 +1,27 @@
-- name: CircleCI Basic Lint and Syntax Checks
-  hosts: all
-  remote_user: ubuntu
+---
 
-tasks:
-# First test - other roles coming soon
+# CircleCI Basic Lint and Syntax Checks
+- include: ansible/catalog.yml
+- include: ansible/crm-web.yml
+- include: ansible/dashboard-web.yml
+- include: ansible/datagov-web.yml
+- include: ansible/efk-nginx.yml
+- include: ansible/efk-stack.yml
+- include: ansible/elastalert.yml
+- include: ansible/elasticsearch.yml
 - include: ansible/fluentd.yml
+- include: ansible/hardening.yml
+- include: ansible/inventory.yml
+- include: ansible/jekyll.yml
+- include: ansible/jumpbox.yml
+- include: ansible/kibana.yml
+- include: ansible/logrotate.yml
+- include: ansible/nessus.yml
+- include: ansible/newrelic-infrastructure.yml
+- include: ansible/newrelic-php.yml
+- include: ansible/newrelic-python.yml
+- include: ansible/postfix.yml
+- include: ansible/secops.yml
+- include: ansible/solr.yml
+- include: ansible/trendmicro.yml
+- include: ansible/web-proxy.yml

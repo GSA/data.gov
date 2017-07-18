@@ -1,8 +1,8 @@
 ---
 
-- name: Copy .htpasswd 
-  template: 
-    src: .htpasswd.j2 
+- name: Copy .htpasswd
+  template:
+    src: .htpasswd.j2
     dest: /etc/nginx/.htpasswd
     mode: '0755'
   notify:

@@ -4,7 +4,7 @@
     command: awk -F':' '($2 == "" ) { print $1 }' /etc/shadow
     register: awk_empty_shadow
     changed_when: False
-    always_run: True
+    check_mode: no
     failed_when: awk_empty_shadow.stdout != '' and lock_shadow_accounts == False
     ignore_errors: yes
     tags:
@@ -60,7 +60,7 @@
     shell: 'echo $PATH | grep ::'
     register: path_colon
     changed_when: False
-    always_run: True
+    check_mode: no
     failed_when: path_colon.rc == 0
     tags:
       - section13
@@ -70,7 +70,7 @@
     shell: 'echo $PATH | grep :$'
     register: path_colon_end
     changed_when: False
-    always_run: True
+    check_mode: no
     failed_when: path_colon_end.rc == 0
     tags:
       - section13
@@ -81,7 +81,7 @@
     become: yes
     register: dot_in_path
     changed_when: False
-    always_run: True
+    check_mode: no
     failed_when: '"." in dot_in_path.stdout_lines'
     tags:
       - section13
@@ -104,7 +104,7 @@
     register: home_users
     changed_when: False
     failed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section13
       - section13.7
@@ -124,7 +124,7 @@
     shell: for pth in `/bin/egrep -v '(root|halt|sync|shutdown)' /etc/passwd | /usr/bin/awk -F':' '($7 != "/usr/sbin/nologin") { print $6 }'`; do ls -d -A -1 $pth/.* | egrep -v '[..]$'; done
     changed_when: False
     failed_when: False
-    always_run: True
+    check_mode: no
     register: home_dot_files
     tags:
       - section13
@@ -164,7 +164,7 @@
     command: cut -s -d':' -f4 /etc/passwd
     register: groups_id_cut
     changed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section13
       - section13.11
@@ -174,7 +174,7 @@
     with_items: "{{groups_id_cut.stdout_lines}}"
     register: groups_present
     changed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section13
       - section13.11
@@ -184,7 +184,7 @@
     with_items: "{{home_users.stdout_lines}}"
     register: rstat
     failed_when: rstat is defined and rstat.stat.isdir == False
-    always_run: True
+    check_mode: no
     tags:
       - section13
       - section13.12
@@ -200,7 +200,7 @@
     register: uids_list
     failed_when: uids_list.stdout != ''
     changed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section13
       - section13.14
@@ -210,7 +210,7 @@
     register: gids_list
     failed_when: gids_list.stdout != ''
     changed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section13
       - section13.15
@@ -220,7 +220,7 @@
     register: uids_list
     failed_when: uids_list.stdout != ''
     changed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section13
       - section13.16
@@ -230,7 +230,7 @@
     register: uids_list
     failed_when: uids_list.stdout != ''
     changed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section13
       - section13.17
@@ -238,7 +238,7 @@
   - name: 13.18.1 Check for Presence of User .netrc Files (check) (Scored)
     stat: path='{{ item }}/.netrc'
     with_items: '{{ home_users.stdout_lines }}'
-    always_run: True
+    check_mode: no
     changed_when: False
     register: netrc_files
     tags:
@@ -267,7 +267,7 @@
     register: shadow_group_empty
     failed_when: shadow_group_empty.stdout != ''
     changed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section13
       - section13.20
@@ -278,7 +278,7 @@
     register: shadow_group_id
     failed_when: False
     changed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section13
       - section13.20
@@ -290,7 +290,7 @@
     with_items: "{{shadow_group_id.stdout_lines}}"
     changed_when: False
     failed_when: awk_passwd_shadow.stdout != ''
-    always_run: True
+    check_mode: no
     tags:
       - section13
       - section13.20

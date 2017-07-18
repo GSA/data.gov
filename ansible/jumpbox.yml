@@ -1,7 +1,8 @@
 ---
 - name: Install
   hosts: "{{ jumpbox_hosts | default('localhost') }}"
-  sudo: yes
+  become: yes
+  become_method: sudo
   vars:
       app_type: jumpbox
 

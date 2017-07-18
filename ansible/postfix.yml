@@ -1,7 +1,9 @@
 ---
+
 - name: Install postfix
-  hosts: all 
-  sudo: yes
+  hosts: all
+  become: yes
+  become_method: sudo
   remote_user: ubuntu
 
   roles:

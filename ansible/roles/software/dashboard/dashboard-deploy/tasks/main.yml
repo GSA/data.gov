@@ -96,7 +96,7 @@
     state: link
 
 - name: Set up campaign status cfo-act datajson cron job to run @ 11pm EST nightly
-  cron: 
+  cron:
     name: "campaign status cfo-act datajson cron job"
     minute: 0
     hour: 4

@@ -20,14 +20,23 @@
 - name: run setup
   command: chdir={{ project_source_new_code_path }}/src/{{item.name}}/ ../../bin/python setup.py develop
   with_items: "{{ saml2_pkgs }}"
+  tags: skip_ansible_lint
 
 - name: create directories
   action: file path=/etc/ckan/saml2/ state=directory mode=0755
 
 - name: copy all needed files
-  action: copy src=etc/ckan/saml2/{{saml2_idp_entry}}/ dest=/etc/ckan/saml2/
+  action: copy src=etc/ckan/saml2/ dest=/etc/ckan/saml2/
 
-- name: copy template files
-  template: src=templates/{{item}}.j2 dest=/{{item}}
+- name: template all needed files
+  action: template src=etc/ckan/{{item}} dest=/etc/ckan/{{item}}
   with_items:
-    - etc/ckan/who.ini
+    - saml2/pki/mycert.pem
+    - saml2/pki/mykey.pem
+    - who.ini
+
+- name: Downloads idp metadata
+  get_url:
+    url: "{{ saml2_idp_metadata_url }}"
+    dest: /etc/ckan/saml2/idp.xml
+    mode: 0644

@@ -1,0 +1,6 @@
+- name: restart supervisor
+  service: name=supervisor state=restarted
+
+- name: update supervisor
+  command: supervisorctl reread && supervisorctl update
+  ignore_errors: yes

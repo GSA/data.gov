@@ -54,6 +54,6 @@ inventory_datastore_ro_pass: pass
 inventory_datastore_db_name: datastore
 saml2_site_url: https://inventory.data.gov/
 saml2_idp_entry: login.test.max.gov
-saml2_idp_url: https://{{ saml2_idp_entry }}/idp/shibboleth
+saml2_idp_metadata_url: https://{{ saml2_idp_entry }}/idp/shibboleth
 
 

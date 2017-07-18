@@ -11,6 +11,8 @@
   args:
     chdir: "{{ current_source_symlink }}"
   register: migrations_output
+  tags:
+    - skip_ansible_lint
 
 - name: Migration status
   debug:

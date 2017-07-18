@@ -25,9 +25,9 @@
 - name: Remove new code
   file: path="{{ project_source_new_code_path }}" state=absent
 
-- include: build-pkgs.yml 
+- include: build-pkgs.yml
   vars:
-    pkg: "{{ ckan_pkgs }}" 
+    pkg: "{{ ckan_pkgs }}"
     virtualenv: "{{ project_source_new_code_path }}"
 
 - name: Remove old datapusher code

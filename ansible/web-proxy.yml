@@ -2,7 +2,9 @@
 
 - name: Install Nginx and configure it as a webproxy
   hosts: all
-  sudo: yes
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
 
   roles:
   - role: software/catalog/nginx

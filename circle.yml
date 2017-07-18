@@ -15,12 +15,11 @@ dependencies:
 test:
   override:
     # Ansible syntax check
-    - ansible-playbook --syntax-check:
+    - ansible-playbook --syntax-check --vault-password-file circle-ci-secret.txt:
         files:
-          - test.yml
-    # Ansible lint check
-    - ansible-lint -v:
+          - ansible/*.yml
+    # Ansible lint check, to skip Trailing spaces use
+    # ANSIBLE0010 Package installs should not use latest
+    - ansible-lint -v --exclude=ansible/roles/vendor -x ANSIBLE0010:
         files:
-          - ansible/roles/*/*/*.yaml
-          - ansible/roles/*/*/*.yml
-          - test.yml
+          - ansible/*.yml

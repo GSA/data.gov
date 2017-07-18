@@ -1,28 +1,25 @@
 ---
 - name: check to python version
-  shell: /{{ python_version_directory }}/bin/python --version
+  command: /{{ python_version_directory }}/bin/python --version
   register: python_version_check
   failed_when: '"Python {{ python_version_number }}" not in python_version_check.stderr'
   ignore_errors: True
-
-- name: get new python
-  get_url: url={{ python_version_url }} dest=/var/tmp/
-  when: python_version_check|failed
+  tags: skip_ansible_lint
 
 - name: unpack new python
-  shell: tar zxf /var/tmp/{{ python_version_name }}.tgz
-  args:
-    chdir: /var/tmp/
+  unarchive:
+    src: "{{ python_version_url }}"
+    dest: /var/tmp/
   when: python_version_check|failed
 
 - name: config new python
-  shell: ./configure --prefix {{ python_version_directory }} --enable-ipv6 --enable-unicode=ucs4
+  command: ./configure --prefix {{ python_version_directory }} --enable-ipv6 --enable-unicode=ucs4
   args:
     chdir: /var/tmp/{{ python_version_name }}
   when: python_version_check|failed
 
 - name: install new python
-  shell: "make && make install"
+  command: "make && make install"
   args:
     chdir: /var/tmp/{{ python_version_name }}
   when: python_version_check|failed

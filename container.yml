@@ -1,0 +1,14 @@
+version: "2"
+settings:
+  conductor_base: ubuntu:trusty
+
+services:
+  catalog:
+    from: ubuntu:trusty
+    roles:
+      - ansible/roles/software/ubuntu/common
+    dev_overrides:
+      environment:
+        - "DEBUG=1"
+    ports:
+      - "80:80"
