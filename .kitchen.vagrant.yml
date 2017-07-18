@@ -1,0 +1,60 @@
+---
+# Not Actively Used or Maintained
+driver:
+  name: vagrant
+
+provisioner:
+  name: ansible_playbook
+  playbook: default.yml
+  roles_path: ../
+  hosts: all
+  ansible_version:
+  ansible_vault_password_file: ~/ansible-secret.txt
+  require_ansible_repo: false
+  require_ansible_omnibus: true
+  ansible_verbose: true
+  ansible_diff: true
+  ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
+  custom_pre_install_command:	nil	Custom shell command to be used at beginning of install stage. Can be multiline.
+  custom_pre_play_command:	nil	Custom shell command to be used before the ansible play stage. Can be multiline. See examples below.
+  custom_post_install_command:	nil	Custom shell command to be used at after the install stage. Can be multiline.
+  custom_post_play_command:	nil	Custom shell command to be used after the ansible play stage. Can be multiline. See examples below.
+  enable_yum_epel:	false	Enable the yum EPEL repo
+  env_vars:	Hash.new	Hash to set environment variable to use with ansible-playbook command
+  extra_vars: git c
+  extra_vars_file:	nil	file containing environment variables e.g. private_vars/production.yml site.yml Don't prefix with a @ sign.
+  group_vars_path:	group_vars	Ansible repo group_vars directory
+  host_vars_path:	host_vars	Ansible repo hosts directory
+  idempotency_test:	false
+  command: |
+    sudo -s <<SERVERSPEC
+    cd /opt/gdc/serverspec-core
+    export SERVERSPEC_ENV=$EC2DATA_ENVIRONMENT
+    export SERVERSPEC_BACKEND=exec
+    serverspec junit=true tag=~skip_in_kitchen check:role:$EC2DATA_TYPE
+    SERVERSPEC
+
+platforms:
+- name: ubuntu-14.04
+- name: ubuntu-16.04
+
+suites:
+- name: catalog
+- name: inventory
+- name: crm-web
+- name: datagov-web
+- name: efk-nginx
+- name: efk-stack
+- name: elastalert
+- name: elasticsearch
+- name: fluentd
+- name: hardening
+- name: harvester
+- name: jekyll
+- name: jumpbox
+- name: kibana
+- name: secops
+- name: solr
+- name: trendmicro
+- name: web-proxy
+- name: webserver-frontend

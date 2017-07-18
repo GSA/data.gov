@@ -1,0 +1,66 @@
+---
+driver:
+  name: docker
+  privileged: true
+  use_sudo: false  
+
+transport:
+  max_ssh_sessions: 5
+
+provisioner:
+  name: ansible_playbook
+  playbook: test.yml
+  roles_path: ../ansible/roles/
+  hosts: all
+  ansible_vault_password_file: ansible-secret.txt
+  require_ansible_repo: false
+  require_ansible_omnibus: true
+  ansible_verbose: true
+  ansible_diff: true
+  ansible_verbosity: 2
+  idempotency_test: true
+  #ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
+  #ansible_version:
+  #custom_pre_install_command:	nil	Custom shell command to be used at beginning of install stage. Can be multiline.
+  #custom_pre_play_command:	nil	Custom shell command to be used before the ansible play stage. Can be multiline. See examples below.
+  #custom_post_install_command:	nil	Custom shell command to be used at after the install stage. Can be multiline.
+  #custom_post_play_command:	nil	Custom shell command to be used after the ansible play stage. Can be multiline. See examples below.
+  #env_vars:	Hash.new	Hash to set environment variable to use with ansible-playbook command
+  #extra_vars: git c
+  #extra_vars_file:	nil	file containing environment variables e.g. private_vars/production.yml site.yml Don't prefix with a @ sign.
+  #group_vars_path:	group_vars	Ansible repo group_vars directory
+  #host_vars_path:	host_vars	Ansible repo hosts directory
+  #command: |
+
+platforms:
+ # Ubuntu Trusty with Upstart
+  - name: ubuntu-14.04
+    driver_config:
+      image: rndmh3ro/docker-ubuntu1404-ansible:latest
+      platform: ubuntu
+  # Ubuntu Xenial with Systemd
+  - name: ubuntu-16.04
+    driver_config:
+      image: rndmh3ro/docker-ubuntu1604-ansible:latest
+      platform: ubuntu
+
+suites:
+  - name: catalog
+  - name: inventory
+  - name: crm-web
+  - name: datagov-web
+  - name: efk-nginx
+  - name: efk-stack
+  - name: elastalert
+  - name: elasticsearch
+  - name: fluentd
+  - name: hardening
+  - name: harvester
+  - name: jekyll
+  - name: jumpbox
+  - name: kibana
+  - name: secops
+  - name: solr
+  - name: trendmicro
+  - name: web-proxy
+  - name: webserver-frontend

@@ -1,9 +1,0 @@
----
-- name: Create datagov VPC
-  ec2_vpc:
-    cidr_block: "{{ vpc_cidr_block }}" 
-    region: "{{ vpc_region }}"
-    internet_gateway: yes
-    resource_tags: {"Name":"{{ vpc_name }}", "portofolio":"datagov" }
-    state: present
-  register: vpc
