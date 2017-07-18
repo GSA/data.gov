@@ -22,7 +22,7 @@
     register: startonfilesystem
     changed_when: False
     failed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section8
       - section8.2
@@ -72,14 +72,14 @@
     shell: awk '{ print $NF }' /etc/rsyslog.d/* /etc/rsyslog.conf | grep -oiP "/var/log/[\w\.-]+"
     register: result
     changed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section8
       - section8.2
       - section8.2.4
 
   - name: 8.2.4.2 Create and Set Permissions on rsyslog Log Files (Scored)
-    shell: 'mkdir -p -- "$(dirname -- {{ item }})"; touch -- {{ item }}' 
+    shell: 'mkdir -p -- "$(dirname -- {{ item }})"; touch -- {{ item }}'
     with_items: "{{result.stdout_lines}}"
     changed_when: False
     register: rsyslog_files_created
@@ -87,11 +87,12 @@
       - section8
       - section8.2
       - section8.2.4
+      - skip_ansible_lint
 
   - name: 8.2.4.3 Create and Set Permissions on rsyslog Log Files (Scored)
     file:
         path: "{{ item }}"
-        owner: root 
+        owner: root
         group: "{{ rsyslog_log_files_group }}"
         mode: "{{ rsyslog_log_files_permissions }}"
     when: "(rsyslog_files_created.results|length > 0) and ('skipped' not in rsyslog_files_created.results[0])"
@@ -104,10 +105,10 @@
 
   - name: 8.2.5.1 Configure rsyslog to Send Logs to a Remote Log Host (Scored)
     command: grep "^*.*[^I][^I]*@" /etc/rsyslog.conf
-    register: remoteloghost 
+    register: remoteloghost
     changed_when: False
     failed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section8
       - section8.2
@@ -130,7 +131,7 @@
     register: moadloadpresent
     changed_when: False
     failed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section8
       - section8.2

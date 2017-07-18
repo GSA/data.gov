@@ -26,7 +26,7 @@
     command: 'grep "^server" /etc/ntp.conf'
     register: ntp_server_rc
     changed_when: False
-    always_run: True
+    check_mode: no
     ignore_errors: True
     tags:
       - section6

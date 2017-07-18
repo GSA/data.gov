@@ -1,7 +1,0 @@
----
-
-# Remove db subnet group
-- rds_subnet_group:
-    state: absent
-    region: "{{ region }}"
-    name: "{{ app }}-rds-subnet-group"

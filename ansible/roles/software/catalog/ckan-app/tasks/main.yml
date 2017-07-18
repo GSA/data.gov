@@ -10,6 +10,7 @@
 - name: Create rollback code
   command: cp -r "{{ project_source_new_code_path }}" "{{ project_source_rollback_path }}"
   when: p.stat.isdir is defined and p.stat.isdir
+  tags: skip_ansible_lint
 
 - name: Symlink current dir with rollback code
   file:
@@ -22,10 +23,11 @@
   file: path="{{ project_source_new_code_path }}" state=absent
 
 - name: Clone CKAN app
-  action: git repo="{{ app_repo }}" dest="{{ app_source_path }}"
+  git: repo="{{ app_repo }}" dest="{{ app_source_path }}" version=master
 
 - name: Install CKAN app
-  command: sh install.sh "{{ project_source_new_code_path }}" chdir={{ app_source_path }} 
+  command: sh install.sh "{{ project_source_new_code_path }}" chdir={{ app_source_path }}
+  tags: skip_ansible_lint
 
 # Configure CKAN
 - name: Configure production.ini
@@ -34,7 +36,7 @@
     - etc/ckan/production.ini
 
 - name: Configure who.ini
-  shell: cp -r {{ app_source_path }}/config/environments/{{ env }}/saml2/who.ini /etc/ckan
+  copy: src={{ app_source_path }}/config/environments/{{ env }}/saml2/who.ini dest=/etc/ckan remote_src=True
 
 - name: Upgrade repoze.who to 2.0 for local env
   pip: name=repoze.who version=2.0 virtualenv="{{project_source_new_code_path }}"

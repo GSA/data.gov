@@ -1,13 +1,15 @@
 ---
-- pip: name=s3cmd state=present
+- name: Check s3cmd is present in pip
+  pip: name=s3cmd state=present
 
 - name: install gemset
-  shell: bash -lc "{{ item }}"
+  command: bash -lc "{{ item }}"
   with_items:
     - rvm use 2.3.0@{{gemset}} --create
     - rvm use 2.3.0@{{gemset}} && gem install jekyll specific_install
     - rvm use 2.3.0@{{gemset}} && gem uninstall jekyll-rebuilder
     - rvm use 2.3.0@{{gemset}} && gem specific_install https://github.com/GSA/jekyll-rebuilder
+  tags: skip_ansible_lint
 
 
 - name: get code
@@ -26,8 +28,12 @@
   with_items:
     - etc/apache2/sites-enabled/jekyll.conf
 
-- name: use shell before buggy apache2_module is fixed
-  shell: a2enmod proxy && a2enmod proxy_http
+- name: use command before buggy apache2_module is fixed
+  command: a2enmod {{ item }}
+  with_items:
+    - proxy
+    - proxy_http
+  tags: skip_ansible_lint
 
 - name: restart apache
   service: name=apache2 state=restarted

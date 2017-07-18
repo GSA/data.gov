@@ -1,13 +1,13 @@
 ---
 
 - name: Remove elastalert rules
-  file: 
-    path: "{{ elastalert_rules_dir }}" 
+  file:
+    path: "{{ elastalert_rules_dir }}"
     state: absent
-    
+
 - name: Create elastalert rules directory
-  file: 
-    path: "{{ elastalert_rules_dir }}" 
+  file:
+    path: "{{ elastalert_rules_dir }}"
     state: directory
 
 - name: Copy elastalert rules
@@ -19,7 +19,7 @@
   notify:
     - restart elastalert
 
-- name: Set elastalert ownership 
+- name: Set elastalert ownership
   file:
     path: "{{ item }}"
     owner: elastalert

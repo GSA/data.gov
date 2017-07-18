@@ -15,3 +15,5 @@
 - name: run setup
   command: chdir={{ virtualenv }}/src/{{item.name}}/ ../../bin/python setup.py develop
   with_items: "{{ pkg }}"
+  tags:
+    - skip_ansible_lint

@@ -12,7 +12,7 @@
   notify: restart shibd
 
 - name: Creates /etc/shibboleth/metadata directory
-  file: path=/etc/shibboleth/metadata state=directory mode=2774 group=_shibd owner=_shibd
+  file: path=/etc/shibboleth/metadata state=directory mode=0774 group=_shibd owner=_shibd
 
 - name: Downloads metadata into metadata directory as backup
   get_url: >
@@ -40,3 +40,4 @@
 - name: enables shib
   command: a2enmod shib2
   notify: restart shibd
+  tags: skip_ansible_lint

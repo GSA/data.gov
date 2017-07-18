@@ -1,13 +1,14 @@
 ---
 - hosts: all
-  sudo: yes
+  become: yes
+  become_method: sudo
   remote_user: ubuntu
   roles:
     - role: nickhammond.logrotate
       logrotate_scripts:
 
         - name: nginx
-          path: "/var/log/nginx/*.log" 
+          path: "/var/log/nginx/*.log"
           options:
             - daily
             - missingok
@@ -29,7 +30,7 @@
             - copytruncate
             - size 100M
             - rotate 7
-          scripts: 
+          scripts:
             postrotate: "/etc/init.d/apache2 reload > /dev/null"
 
         - name: audit-log

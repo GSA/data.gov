@@ -4,7 +4,7 @@
     command: grep -oP '(?<=^PASS_MAX_DAYS\s)[0-9]+' /etc/login.defs
     register: pass_max_days
     changed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section10
       - section10.1
@@ -25,7 +25,7 @@
     command: grep -oP '(?<=^PASS_MIN_DAYS\s)[0-9]+' /etc/login.defs
     register: pass_min_days
     changed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section10
       - section10.1
@@ -46,7 +46,7 @@
     command: grep -oP '(?<=^PASS_WARN_AGE\s)[0-9]+' /etc/login.defs
     register: pass_warn_age
     changed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section10
       - section10.1
@@ -67,7 +67,7 @@
     shell: awk -F':' '($1!="root" && $1!="sync" && $1!="shutdown" &&$1!="halt" && $3<500 && $7!="/usr/sbin/nologin" && $7!="/bin/false") {print $1}' /etc/passwd
     register: awk_etc_passwd
     changed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section10
       - section10.2
@@ -78,6 +78,7 @@
     tags:
       - section10
       - section10.2
+      - skip_ansible_lint
 
   - name: 10.3 Set Default Group for root Account (Scored)
     user: >
@@ -101,12 +102,12 @@
     command: grep INACTIVE /etc/login.defs
     changed_when: False
     failed_when: False
-    always_run: True
+    check_mode: no
     register: lock_inactive_rc
     tags:
       - section10
       - section10.5
-        
+
   - name: 10.5.2 Lock Inactive User Accounts (Scored)
     lineinfile: >
         dest=/etc/login.defs

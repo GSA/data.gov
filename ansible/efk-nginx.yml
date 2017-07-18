@@ -1,10 +1,11 @@
 ---
 - name: Install EFK nginx proxy
   hosts: efk_nginx
-  sudo: yes
+  become: yes
+  become_method: sudo
   remote_user: ubuntu
 
-  roles: 
+  roles:
   - role: geerlingguy.nginx
   - role: software/common/nginx-fixes
   - role: monitoring/efk-nginx

@@ -1,8 +1,0 @@
----
-
-- name: Delete Inventory IAM role
-  iam:
-    region: "{{ region }}"
-    iam_type: role
-    name: "{{ iam_role_name }}"
-    state: absent

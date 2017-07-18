@@ -1,0 +1,20 @@
+---
+sudo: required
+dist: trusty
+services: docker
+
+branches:
+  only:
+    - master
+
+env:
+  - DISTRO=ubuntu-14
+  - DISTRO=ubuntu-16
+
+before_script:
+  - bundle install
+  - ruby --version
+
+script:
+  # run kitchen tests (destroy, create, converge, setup, verify and destroy)
+  - kitchen test ${DISTRO}

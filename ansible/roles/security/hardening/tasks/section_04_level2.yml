@@ -12,7 +12,7 @@
     register: grub_apparmor
     changed_when: False
     when: grub_cfg_file.stat.exists
-    always_run: True
+    check_mode: no
     tags:
       - section4
       - section4.5
@@ -29,7 +29,7 @@
     register: extlinux_apparmor
     changed_when: False
     when: extlinux_cfg_file.stat.exists
-    always_run: True
+    check_mode: no
     tags:
       - section4
       - section4.5
@@ -38,7 +38,7 @@
     command: "grep CONFIG_DEFAULT_SECURITY_APPARMOR /boot/config-{{ ansible_kernel }}"
     register: boot_apparmor
     changed_when: False
-    always_run: True
+    check_mode: no
     tags:
       - section4
       - section4.5

@@ -14,3 +14,4 @@
   command: "dpkg -i {{ ansible_env.PWD }}/td-agent_{{ td_agent_version }}_{{ td_agent_architecture }}.deb"
   notify:
     - restart td-agent
+  tags: skip_ansible_lint
