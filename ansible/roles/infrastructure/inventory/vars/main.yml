@@ -1,6 +1,0 @@
----
-
-app: inventory
-region: us-east-1
-bucket_name: inventory_files_bucket
-iam_role_name: InventoryRole

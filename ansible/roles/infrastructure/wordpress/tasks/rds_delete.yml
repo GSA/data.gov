@@ -1,8 +1,0 @@
-- name: Delete wordpress mysql instance, but create a snapshot before doing so
-  rds:
-    command: delete
-    instance_name: "{{ wordpress_db_instance_name }}"
-    region: "{{ region }}"
-    wait: yes
-    wait_timeout: 600
-#    snapshot: "{{ ckan_db_instance_name }}_snapshot"
