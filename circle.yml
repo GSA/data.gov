@@ -15,7 +15,7 @@ dependencies:
 test:
   override:
     # Ansible syntax check
-    - ansible-playbook --syntax-check --vault-password-file circle-ci-secret.txt:
+    - ansible-playbook --syntax-check --vault-password-file= :
         files:
           - ansible/*.yml
     # Ansible lint check, to skip Trailing spaces use
