@@ -37,6 +37,7 @@
   shell: "ls -1 {{ newrelic_java_agent_dir }}/newrelic*.jar"
   register: files
   when: new_newrelic_download.changed
+  tags: skip_ansible_lint
 
 - name: Remove the old newrelic files when a new file has been downloaded and extracted
   file:
@@ -44,6 +45,7 @@
     state: absent
   with_items: "{{ files.stdout_lines | default() }}"
   when: new_newrelic_download.changed and item != newrelic_java_agent_file
+  tags: skip_ansible_lint
 
 - name: Set up the Newrelic config file
   template:
