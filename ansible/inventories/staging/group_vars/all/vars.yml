@@ -61,3 +61,8 @@ saxon_license: "{{ vault_saxon_license }}"
 # FluentD
 fluentd_aws_access_key_id: "{{ vault_fluentd_aws_access_key_id }}"
 fluentd_aws_secret_access_key: "{{ vault_fluentd_aws_secret_access_key }}"
+
+# web self-signed stuff
+web_crt: "{{ vault_web_crt }}"
+web_key: "{{ vault_web_key }}"
+web_csr: "{{ vault_web_csr }}" 
