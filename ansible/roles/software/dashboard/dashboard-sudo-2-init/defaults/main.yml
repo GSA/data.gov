@@ -18,5 +18,6 @@ saml_admin_pass: "admin_pass"
 saml2_sp_public_key: "add-yours-to-inventory"
 saml2_sp_private_pem: "add-yours-to-inventory"
 
-# Nginx
-letsencrypt: false
+# SSL keys
+web_crt: ""
+web_key: ""
