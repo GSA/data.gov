@@ -1,4 +1,4 @@
-# Catalog Deploy
+# Data.gov Deploy
 [![CircleCI](https://circleci.com/gh/GSA/catalog-deploy.svg?style=svg)](https://circleci.com/gh/GSA/catalog-deploy)
 
 This main repository for Data.gov's stack deployment onto AWS Infrastructure. The responsitory is broken into the following roles all created/provisioned using [Ansible](http://docs.ansible.com/ansible/intro_installation.html) and :
