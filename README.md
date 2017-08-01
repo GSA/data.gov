@@ -1,5 +1,5 @@
 # Data.gov Deploy
-[![CircleCI](https://circleci.com/gh/GSA/catalog-deploy.svg?style=svg)](https://circleci.com/gh/GSA/catalog-deploy)
+[![CircleCI](https://circleci.com/gh/GSA/datagov-deploy.svg?style=svg)](https://circleci.com/gh/GSA/datagov-deploy)
 
 This main repository for Data.gov's stack deployment onto AWS Infrastructure. The responsitory is broken into the following roles all created/provisioned using [Ansible](http://docs.ansible.com/ansible/intro_installation.html) and :
 
@@ -50,7 +50,7 @@ Moved to [datagov-infrastructure](https://github.com/gsa/datagov-infrastructure)
   - inventories/local/hosts
 
 # Provision apps
-cd /catalog-deploy/ansible and us -i "inventory/../hosts" flag to run playbooks w/ `ansible-playbook --help` or as` ansible all -a "cmd"` to run a one-off command on all hosts (only suggested for `-m ping` for query/stats/services all installation and configuration is done using playbooks)
+cd /datagov-deploy/ansible and us -i "inventory/../hosts" flag to run playbooks w/ `ansible-playbook --help` or as` ansible all -a "cmd"` to run a one-off command on all hosts (only suggested for `-m ping` for query/stats/services all installation and configuration is done using playbooks)
 
 ## Wordpress:
 
