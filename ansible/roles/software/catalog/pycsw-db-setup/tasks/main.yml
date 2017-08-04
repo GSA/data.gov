@@ -8,6 +8,8 @@
 #  shell: sudo -u postgres psql -c "CREATE DATABASE pycsw OWNER {{ catalog_db_user }};"
 
 - name: create pycsw database if missing
+  become: true
+  become_user: postgres
   postgresql_db:
     name: pycsw
     owner: "{{ catalog_db_user }}"
@@ -17,6 +19,8 @@
 #  shell: sudo -u postgres psql -d pycsw -c "CREATE EXTENSION postgis;"
 
 - name: add postgis to pycsw database
+  become: true
+  become_user: postgres
   postgresql_ext:
     name: postgis
     db: pycsw
