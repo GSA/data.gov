@@ -26,7 +26,7 @@
     - ntp
 
 # Upgrade python to 2.7.10
-- include: python-upgrade.yml
+#- include: python-upgrade.yml
 
 # The Network Time Protocol is used to manage the system clock over a network
 # If every system on a network reliably reports the same time, then it is much easier to correlate log messages in case of an attack
