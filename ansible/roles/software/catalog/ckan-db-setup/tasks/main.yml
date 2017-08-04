@@ -6,6 +6,8 @@
 #  - skip_ansible_lint
 
 - name: create geo.gov role if missing
+  become: true
+  become_user: postgres
 #  when: check_ckan_db_user.stdout.find("(0 rows)") != -1
   # shell: sudo -u postgres psql -c "CREATE USER {{ catalog_db_user }} WITH PASSWORD '{{ catalog_db_pass }}' SUPERUSER;"
   postgresql_user:
@@ -14,6 +16,8 @@
     role_attr_flags: SUPERUSER
 
 - name: create ckan database if missing
+  become: true
+  become_user: postgres
   # shell: sudo -u postgres psql -c "SELECT 1 FROM pg_database WHERE datname = '{{ catalog_db_name }}';"
   postgresql_db:
     name: "{{ catalog_db_name }}"
@@ -41,11 +45,14 @@
   tags: skip_ansible_lint
 
 - name: install postgis script
+  become: true
+  become_user: postgres
   # shell: sudo -u postgres psql -d {{ catalog_db_name }} -c "GRANT SELECT, UPDATE, INSERT, DELETE ON spatial_ref_sys TO {{ catalog_db_user }};"
   postgresql_privs:
     database: "{{ catalog_db_name }}"
     privs: SELECT,UPDATE,INSERT,DELETE
     roles: "{{ catalog_db_user }}"
+    objs: spatial_ref_sys
 
 - name: copy locations sql script
   action: copy src={{item}} dest=/{{item}} mode=0644

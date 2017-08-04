@@ -4,4 +4,5 @@
     - postgresql
     - postgis
     - postgresql-9.3-postgis-2.1
+    - python-psycopg2
   notify: reload postgres
