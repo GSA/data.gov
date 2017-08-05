@@ -7,3 +7,4 @@
 #30 5 * * * root ckan --plugin=ckanext-geodatagov geodatagov harvest-job-cleanup >> /var/log/harvest_job_cleanup.log 2>&1
 #30 4 * * * root ckan --plugin=ckanext-geodatagov geodatagov combine-feeds >> /var/log/ckan-combine-feeds.log 2>&1
 #2 2 * * * root ckan --plugin=ckanext-geodatagov geodatagov export-csv >> /var/log/ckan-export-csv.log 2>&1
+#0 5 * * * root ckan --plugin=ckanext-geodatagov geodatagov sitemap-to-s3 >> /var/log/sitemap-to-s3.log 2>&1
