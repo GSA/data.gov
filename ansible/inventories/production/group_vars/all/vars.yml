@@ -6,6 +6,9 @@ urls_public:
 urls_private:
   catalog: "{{ vault_urls_private_catalog }}"
 
+# s3 bucket
+catalog_bucket_name: "{{ vault_catalog_bucket_name }}"
+
 # solr
 solr_master_server: datagovsolrm1p.prod-ocsit.bsp.gsa.gov
 
