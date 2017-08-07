@@ -4,10 +4,9 @@
 
 - name: Download solr 4.2.1
   get_url:
-    src: "{{ solr_url }}"
+    url: "{{ solr_url }}"
     timeout: 40
-  args:
-    chdir: ~/
+    dest: ~/
 #  command: creates=~/solr-4.2.1.tgz chdir=~/ wget -T 40  {{ solr_url }}
 
 - name: Unpack solr
@@ -31,7 +30,7 @@
   - skip_ansible_lint
 
 - name: remove old /home/solr/ckan if exists
-  file: src=/home/solr/{{app_type}} state=absent
+  file: path=/home/solr/{{app_type}} state=absent
 
 - name: copy sample collection1 files to home dir
   shell: cp -R ~/solr-4.2.1/example/solr/collection1 /home/solr/{{app_type}}
@@ -63,7 +62,7 @@
 
 - name: Setup solr permissions
   file:
-    src: /home/solr
+    path: /home/solr
     state: directory
     owner: tomcat6
     recurse: yes

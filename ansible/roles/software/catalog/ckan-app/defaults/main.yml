@@ -19,4 +19,5 @@ catalog_db_user: ckan
 catalog_db_pass: pass
 catalog_db_name: catalog
 saml2_site_url: https://admin-catalog.data.gov/
+catalog_bucket_name: somebucketname
 env: local
