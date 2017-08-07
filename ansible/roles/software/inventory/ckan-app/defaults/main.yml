@@ -55,5 +55,7 @@ inventory_datastore_db_name: datastore
 saml2_site_url: https://inventory.data.gov/
 saml2_idp_entry: login.test.max.gov
 saml2_idp_metadata_url: https://{{ saml2_idp_entry }}/idp/shibboleth
+# Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
+who_secure: False
 
 

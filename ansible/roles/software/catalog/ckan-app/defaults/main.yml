@@ -21,3 +21,5 @@ catalog_db_name: catalog
 saml2_site_url: https://admin-catalog.data.gov/
 catalog_bucket_name: somebucketname
 env: local
+# Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
+who_secure: False
