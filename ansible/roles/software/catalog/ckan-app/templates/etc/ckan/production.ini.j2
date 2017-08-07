@@ -50,7 +50,7 @@ who.log_file = %(cache_dir)s/who_log.ini
 # Inactive by default, so the session doesn't expire.
 # who.timeout = 86400
 # who.httponly = True # DEFAULT True already
-who.secure = True
+who.secure = {{ who_secure }}
 
 ## Database Settings
 db_user = {{ catalog_db_user }}
