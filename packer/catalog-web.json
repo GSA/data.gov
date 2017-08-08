@@ -18,19 +18,14 @@
 
   "provisioners": [
     {
-      "type": "shell",
-      "inline": [
-        "echo {{user `ansible_vault_password`}} > /tmp/ansible_vault_password.txt"
-    ]},
-
-    {
         "type": "ansible-local",
         "playbook_dir": "ansible",
         "playbook_file": "ansible/catalog.yml",
+        "inventory_groups": "catalog-web",
         "extra_arguments": [
           "--tags 'frontend,ec2'",
-          "--skip-tags 'solr,db,cron,saml2,trendmicro,fluentd'",
-          "--vault-password-file=/tmp/ansible_vault_password.txt"
+          "--skip-tags 'solr,db,cron,saml2,trendmicro,fluentd,saml2'",
+          "--vault-password-file=''"
         ]
   }]
 }
