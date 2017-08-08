@@ -18,7 +18,7 @@ test:
     - ansible-playbook --syntax-check --vault-password-file= :
         files:
           - ansible/*.yml
-    # Ansible lint check, to skip Trailing spaces use
+    # Ansible lint check
     # ANSIBLE0010 Package installs should not use latest
     - ansible-lint -v --exclude=ansible/roles/vendor -x ANSIBLE0010:
         files:
