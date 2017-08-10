@@ -25,7 +25,7 @@
   when: python_dir.stat.exists == False or python_version_check|failed
 
 - name: install new python
-  command: "make && make install"
+  shell: "make && make install"
   args:
     chdir: /var/tmp/{{ python_version_name }}
   when: python_dir.stat.exists == False or python_version_check|failed
