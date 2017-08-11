@@ -8,3 +8,6 @@
 #30 4 * * * root ckan --plugin=ckanext-geodatagov geodatagov combine-feeds >> /var/log/ckan-combine-feeds.log 2>&1
 #2 2 * * * root ckan --plugin=ckanext-geodatagov geodatagov export-csv >> /var/log/ckan-export-csv.log 2>&1
 #0 5 * * * root ckan --plugin=ckanext-geodatagov geodatagov sitemap-to-s3 >> /var/log/sitemap-to-s3.log 2>&1
+
+## jsonl export on 3rd day of each month at 2:01 AM
+#1 2 3 * * root ckan --plugin=ckanext-geodatagov geodatagov jsonl-export >> /var/log/jsonl-export.log 2>&1
