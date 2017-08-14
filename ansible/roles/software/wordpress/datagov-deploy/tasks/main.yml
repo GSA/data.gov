@@ -102,20 +102,25 @@
     chdir: "{{ project_source_new_code_path }}"
   when: "'development' == web_app_env"
   run_once: true
+  tags: wp-cli
 
 - name: update s3 options
   shell: wp option update tantan_wordpress_s3 --format=json < s3.json
   args:
     chdir: "{{ project_source_new_code_path }}"
   run_once: true
-  tags: skip_ansible_lint
+  tags: 
+    - skip_ansible_lint
+    - wp-cli
 
 - name: Update saml saml_authentication_options
   shell: wp option update saml_authentication_options --format=json < saml.json
   args:
     chdir: "{{ project_source_new_code_path }}"
   run_once: true
-  tags: skip_ansible_lint
+  tags: 
+    - skip_ansible_lint
+    - wp-cli
 
 - name: Updating admin pass if env=Dev
   command: wp user update admin --user_pass=password
@@ -123,6 +128,8 @@
     chdir: "{{ project_source_new_code_path }}"
   when: "'development' == web_app_env"
   run_once: true
+  tags: 
+    - wp-cli
 
 - name: Enabling dev plugins if env=Dev
   command: wp plugin activate check-email debug-bar log-deprecated-notices query-monitor
@@ -130,6 +137,8 @@
     chdir: "{{ project_source_new_code_path }}"
   when: "'development' == web_app_env"
   run_once: true
+  tags: 
+    - wp-cli
 
 #- name: Set up main wp cronjob
 #  cron:
