@@ -109,7 +109,7 @@
   args:
     chdir: "{{ project_source_new_code_path }}"
   run_once: true
-  tags: 
+  tags:
     - skip_ansible_lint
     - wp-cli
 
@@ -118,7 +118,7 @@
   args:
     chdir: "{{ project_source_new_code_path }}"
   run_once: true
-  tags: 
+  tags:
     - skip_ansible_lint
     - wp-cli
 
@@ -128,7 +128,7 @@
     chdir: "{{ project_source_new_code_path }}"
   when: "'development' == web_app_env"
   run_once: true
-  tags: 
+  tags:
     - wp-cli
 
 - name: Enabling dev plugins if env=Dev
@@ -137,7 +137,7 @@
     chdir: "{{ project_source_new_code_path }}"
   when: "'development' == web_app_env"
   run_once: true
-  tags: 
+  tags:
     - wp-cli
 
 #- name: Set up main wp cronjob
