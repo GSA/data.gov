@@ -2,7 +2,7 @@
   "variables": {
     "source_ami": "ami-a5a98fde",
     "instance_type": "m3.medium",
-    "ami_name": "jekyll-web-ami {{isotime \"2006-01-02T03-04-05\"}}"
+    "ami_name": "elasticsearch-ami {{isotime \"2006-01-02T03-04-05\"}}"
   },
 
   "builders": [{
@@ -20,10 +20,9 @@
     {
         "type": "ansible-local",
         "playbook_dir": "ansible",
-        "playbook_file": "ansible/jekyll.yml",
-        "inventory_groups": "jekyll-web",
+        "playbook_file": "ansible/elasticsearch.yml",
+        "inventory_groups": "elasticsearch",
         "extra_arguments": [
-          "--skip-tags='trendmicro,secops'",
           "--vault-password-file=''"
         ]
   }]
