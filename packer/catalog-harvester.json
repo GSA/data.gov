@@ -21,7 +21,7 @@
         "type": "ansible-local",
         "playbook_dir": "ansible",
         "playbook_file": "ansible/catalog.yml",
-        "inventory_groups": "catalog-web",
+        "inventory_groups": "catalog-harvester",
         "extra_arguments": [
           "--tags 'harvester,ec2'",
           "--skip-tags 'apache,solr,db,saml2,redis,trendmicro,fluentd'",
