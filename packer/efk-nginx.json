@@ -2,7 +2,7 @@
   "variables": {
     "source_ami": "ami-a5a98fde",
     "instance_type": "m3.medium",
-    "ami_name": "catalog-web-ami {{isotime \"2006-01-02T03-04-05\"}}"
+    "ami_name": "efk-nginx-ami {{isotime \"2006-01-02T03-04-05\"}}"
   },
 
   "builders": [{
@@ -20,11 +20,9 @@
     {
         "type": "ansible-local",
         "playbook_dir": "ansible",
-        "playbook_file": "ansible/catalog.yml",
-        "inventory_groups": "catalog-web",
+        "playbook_file": "ansible/efk-nginx.yml",
+        "inventory_groups": "efk_nginx",
         "extra_arguments": [
-          "--tags 'frontend,ec2'",
-          "--skip-tags 'solr,db,cron,saml2,trendmicro,fluentd'",
           "--vault-password-file=''"
         ]
   }]
