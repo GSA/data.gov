@@ -16,7 +16,7 @@
  *     uat
  *     staging
  *     prod
- *     
+ *
  *
  * NOTE: If you change these, also change the error_reporting() code below
  *
@@ -41,10 +41,10 @@ if (defined('ENVIRONMENT'))
 		break;
 
 		case 'qa':
-		case 'uat':	
-        case 'staging':
+		case 'uat':
+    case 'staging':
 		case 'production':
-            error_reporting(E_ALL & ~E_NOTICE);
+            error_reporting(0);
             ini_set('display_errors', 0);
 		break;
 
@@ -211,7 +211,7 @@ if (defined('ENVIRONMENT'))
  */
 //include_once './vendor/autoload.php';
 require FCPATH . 'vendor/autoload.php';
- 
+
 require_once BASEPATH.'core/CodeIgniter.php';
 
 /* End of file index.php */
