@@ -4,8 +4,21 @@
   become: yes
   become_method: sudo
   remote_user: ubuntu
+  tasks:
+    - name: installing repo for Java 8 in Ubuntu
+      apt_repository: repo='ppa:openjdk-r/ppa'
 
+
+- name: Install ElasticSearch
+  hosts: elasticsearch
+  become: yes
+  become_method: sudo
+  remote_user: ubuntu
   roles:
-    - ANXS.apt
     - geerlingguy.java
-    - geerlingguy.elasticsearch
+    - ansible.elasticsearch
+  vars: 
+    es_instance_name: "node1"
+    es_java_install: false
+    es_data_dirs: "/data"
+    java_packages: openjdk-8-jdk
