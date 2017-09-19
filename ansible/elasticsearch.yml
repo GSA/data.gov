@@ -16,8 +16,15 @@
   remote_user: ubuntu
   roles:
     - geerlingguy.java
-    - ansible.elasticsearch
+    - { role: ansible.elasticsearch,
+    es_config: {
+        network.host: 0.0.0.0,
+        network.publish_host: 0.0.0.0,
+        }
+    }
+
   vars: 
+    es_version: 5.6.1
     es_instance_name: "node1"
     es_java_install: false
     es_data_dirs: "/data"
