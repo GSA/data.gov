@@ -17,7 +17,8 @@ galaxy_info:
       - all
     - name: Ubuntu
       versions:
-      - all
+      - trusty
+      - xenial
     - name: Archlinux
       versions:
       - all
