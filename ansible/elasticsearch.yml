@@ -23,7 +23,7 @@
         }
     }
 
-  vars: 
+  vars:
     es_version: 5.6.1
     es_instance_name: "node1"
     es_java_install: false
