@@ -1,0 +1,79 @@
+---
+
+- name: Remove config.d folder
+  file: path=/etc/td-agent/config.d state=absent
+  notify: restart td-agent
+
+- name: Create config.d folder
+  file: path=/etc/td-agent/config.d state=directory mode=0775
+
+- name: Configure td-agent.conf
+  template:
+    src: td-agent.j2
+    dest: /etc/td-agent/td-agent.conf
+    owner: td-agent
+    group: td-agent
+
+- name: Configure system sources
+  template:
+    src: system-source.j2
+    dest: /etc/td-agent/config.d/1-system-source.conf
+    owner: td-agent
+    group: td-agent
+  tags: system
+
+- name: Configure app sources
+  template:
+    src: "{{ group_names[0] }}-source.j2"
+    dest: /etc/td-agent/config.d/1-{{ group_names[0] }}-source.conf
+    owner: td-agent
+    group: td-agent
+  tags: app
+
+- name: Configure host filter
+  template:
+    src: host-filter.j2
+    dest: /etc/td-agent/config.d/2-host-filter.conf
+    owner: td-agent
+    group: td-agent
+  tags: host-filter
+
+- name: Configure OCSIT filter
+  template:
+    src: ocsit-filter.j2
+    dest: /etc/td-agent/config.d/3-ocsit-filter.conf
+    owner: td-agent
+    group: td-agent
+  tags: ocsit-filter
+
+- name: Configure datagov & bsp elasticsearch match
+  template:
+    src: match.j2
+    dest: /etc/td-agent/config.d/4-match.conf
+    owner: td-agent
+    group: td-agent
+  tags: match
+
+- name: Get the list of system log files
+  shell: cat /etc/td-agent/config.d/1-system-source.conf | grep -E '\.log$|.out$|\/syslog$' | awk '{print $2}'
+  register: list_of_log_files
+  tags: skip_ansible_lint
+
+- name: Fix system log file permissions
+  file: path={{ item }}  mode=0755
+  with_items: "{{ list_of_log_files.stdout_lines }}"
+  ignore_errors: yes
+
+- name: Fix /var/log/apache2 permissions
+  file: path=/var/log/apache2 mode=0755
+  ignore_errors: yes
+
+- name: Get the list of app log files
+  shell: cat /etc/td-agent/config.d/1-{{ group_names[0] }}-source.conf | grep -E '\.log$|.out$|\/syslog$' | awk '{print $2}'
+  register: list_of_log_files
+  tags: skip_ansible_lint
+
+- name: Fix app log file permissions
+  file: path={{ item }}  mode=0755
+  with_items: "{{ list_of_log_files.stdout_lines }}"
+  ignore_errors: yes
