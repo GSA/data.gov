@@ -21,6 +21,15 @@ use = egg:Paste#http
 host = 0.0.0.0
 port = 5000
 
+[app:celery]
+BROKER_BACKEND = redis
+BROKER_HOST = redis://localhost/1
+CELERY_RESULT_BACKEND = redis
+REDIS_HOST = 127.0.0.1
+REDIS_PORT = 6379
+REDIS_DB = 0
+REDIS_CONNECT_RETRY = True
+
 [app:main]
 use = egg:ckan
 full_stack = true
@@ -115,7 +124,7 @@ ckan.search.solr_commit = true
 #       Add ``datapusher`` to enable DataPusher
 #		Add ``resource_proxy`` to enable resorce proxying and get around the
 #		same origin policy
-ckan.plugins = stats geodatagov datagov_harvest ckan_harvester geodatagov_geoportal_harvester z3950_harvester arcgis_harvester waf_harvester_collection geodatagov_csw_harvester geodatagov_doc_harvester geodatagov_waf_harvester geodatagov_miscs spatial_metadata spatial_query resource_proxy spatial_harvest_metadata_api datagovtheme datajson_harvest datajson archiver qa googleanalyticsbasic extlink report broken_link_report
+ckan.plugins = stats geodatagov datagov_harvest ckan_harvester geodatagov_geoportal_harvester z3950_harvester arcgis_harvester waf_harvester_collection geodatagov_csw_harvester geodatagov_doc_harvester geodatagov_waf_harvester geodatagov_miscs spatial_metadata spatial_query resource_proxy spatial_harvest_metadata_api datagovtheme datajson_harvest datajson archiver qa googleanalyticsbasic ga-report extlink report broken_link_report
 
 # Define which views should be created by default
 # (plugins must be loaded in ckan.plugins)
@@ -138,7 +147,8 @@ ckan.preview.loadable = html htm rdf+xml owl+xml xml n3 n-triples turtle plain a
 #ckan.recaptcha.publickey =
 #ckan.recaptcha.privatekey =
 #licenses_group_url = http://licenses.opendefinition.org/licenses/groups/ckan.json
-# ckan.template_footer_end =
+#ckan.template_footer_end =
+
 ckan.template_head_end = <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
 ## Internationalisation Settings
@@ -242,7 +252,11 @@ saml2.max_redirect_slo =
 saml2.max_security_level = https://max.gov/icam/2015/10/securityLevels/securePlus2
 
 googleanalytics.ids = UA-42145528-2 UA-17367410-17
-googleanalytics.account = data.gov
+googleanalytics.id = UA-42145528-2
+googleanalytics.account = GSA Data.gov
+googleanalytics.token.filepath = /etc/pyenv/token.dat
+ga-report.period = monthly
+ga-report.bounce_url = /
 
 ## Logging configuration
 [loggers]
