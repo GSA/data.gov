@@ -1,6 +1,6 @@
 ---
 app_source_path: /tmp/catalog-app
-app_repo: https://github.com/GSA/catalog-app.git
+app_repo: https://github.com/john123yu/catalog-app.git
 
 # used in  production.ini/ckan_site_url and hosts
 ckan_site_domain: catalog.data.gov
