@@ -1,17 +1,5 @@
 ---
 
-- name: Check td_agent_architecture is defined if os is Debian
-  fail: msg="define 'td_agent_architecture', i386 or amd64.\nDetail for http://docs.fluentd.org/articles/install-by-deb"
-  when: ansible_distribution == "Debian" and ansible_distribution_version[0] == '6' and td_agent_architecture not in ['i386', 'amd64']
-
-- include: redhat_td-agent.yml
-  when: ansible_os_family == "RedHat"
-
-- include: ubuntu_td-agent.yml
-  when: ansible_distribution == "Ubuntu" and ansible_distribution_version in ['10.04', '12.04', '14.04']
-
-- include: debian_td-agent.yml
-  when: ansible_distribution == "Debian" and ansible_distribution_version[0] == '6'
-
+- include: td-agent.yml
 - include: plugins.yml
-  when: td_agent_plugins
+- include: templates.yml

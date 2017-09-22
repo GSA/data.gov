@@ -10,20 +10,18 @@
 
 - name: Add apt repository
   apt_repository: repo='deb [arch={{ td_agent_architecture }}] http://packages.treasuredata.com/2/ubuntu/trusty/ trusty contrib' state=present
-  when: ansible_distribution_version == '14.04'
-
-- name: Add apt repository
-  apt_repository: repo='deb [arch=amd64] http://packages.treasuredata.com/2/ubuntu/precise/ precise contrib' state=present
-  when: ansible_distribution_version == '12.04'
-
-- name: Add apt repository
-  apt_repository: repo='deb [arch={{ td_agent_architecture }}] http://packages.treasuredata.com/2/ubuntu/lucid/ contrib' state=present
-  when: ansible_distribution_version == '10.04'
 
 - name: apt-get td-agent
   apt: name=td-agent update_cache=yes force=yes
   notify:
     - restart td-agent
+
+- name: Configure td-agent service
+  lineinfile:
+    path: /etc/init.d/td-agent
+    regexp: "^TD_AGENT_GROUP=td-agent$"
+    line: "TD_AGENT_GROUP=adm"
+    state: present
 
 - name: copy BSP certificate
   copy:

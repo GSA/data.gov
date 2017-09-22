@@ -1,0 +1,55 @@
+---
+
+- name: Remove config.d folder
+  file: path=/etc/td-agent/config.d state=absent
+  notify: restart td-agent
+
+- name: Create config.d folder
+  file: path=/etc/td-agent/config.d state=directory mode=0775
+
+- name: Configure td-agent.conf
+  template:
+    src: td-agent.j2
+    dest: /etc/td-agent/td-agent.conf
+    owner: td-agent
+    group: td-agent
+
+- name: Configure system sources
+  template:
+    src: system-source.j2
+    dest: /etc/td-agent/config.d/1-system-source.conf
+    owner: td-agent
+    group: td-agent
+  tags: system
+
+- name: Configure app sources
+  template:
+    src: "{{ group_names[0] }}-source.j2"
+    dest: /etc/td-agent/config.d/1-{{ group_names[0] }}-source.conf
+    owner: td-agent
+    group: td-agent
+  tags: app
+
+- name: Configure host filter
+  template:
+    src: host-filter.j2
+    dest: /etc/td-agent/config.d/2-host-filter.conf
+    owner: td-agent
+    group: td-agent
+  tags: host-filter
+
+- name: Configure OCSIT filter
+  template:
+    src: ocsit-filter.j2
+    dest: /etc/td-agent/config.d/3-ocsit-filter.conf
+    owner: td-agent
+    group: td-agent
+  tags: ocsit-filter
+
+- name: Configure datagov & bsp elasticsearch match
+  template:
+    src: match.j2
+    dest: /etc/td-agent/config.d/4-match.conf
+    owner: td-agent
+    group: td-agent
+  tags: match
