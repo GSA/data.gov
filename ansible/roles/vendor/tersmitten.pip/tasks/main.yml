@@ -34,10 +34,14 @@
     force: true
   register: _download_latest
   tags:
+    - configuration
+    - pip
     - pip-pip-download
 
 - name: install (latest) pip (setuptools and wheel)
   command: python {{ _download_latest.dest }}
   when: _download_latest | changed
   tags:
+    - configuration
+    - pip
     - pip-pip-install
