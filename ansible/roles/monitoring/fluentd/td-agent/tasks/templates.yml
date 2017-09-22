@@ -53,27 +53,3 @@
     owner: td-agent
     group: td-agent
   tags: match
-
-- name: Get the list of system log files
-  shell: cat /etc/td-agent/config.d/1-system-source.conf | grep -E '\.log$|.out$|\/syslog$' | awk '{print $2}'
-  register: list_of_log_files
-  tags: skip_ansible_lint
-
-- name: Fix system log file permissions
-  file: path={{ item }}  mode=0755
-  with_items: "{{ list_of_log_files.stdout_lines }}"
-  ignore_errors: yes
-
-- name: Fix /var/log/apache2 permissions
-  file: path=/var/log/apache2 mode=0755
-  ignore_errors: yes
-
-- name: Get the list of app log files
-  shell: cat /etc/td-agent/config.d/1-{{ group_names[0] }}-source.conf | grep -E '\.log$|.out$|\/syslog$' | awk '{print $2}'
-  register: list_of_log_files
-  tags: skip_ansible_lint
-
-- name: Fix app log file permissions
-  file: path={{ item }}  mode=0755
-  with_items: "{{ list_of_log_files.stdout_lines }}"
-  ignore_errors: yes

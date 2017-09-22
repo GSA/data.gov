@@ -37,16 +37,6 @@
 <source>
   type tail
   format multiline
-  format_firstline /[A-Za-z]{3} [0-9]{1,2}, [0-9]{4} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2} [A-Z]{2}/
-  format1 /^(?<time>[A-Za-z]{3} [0-9]{1,2}, [0-9]{4} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2} [A-Z]{2}) (?<class>.*) (?<method>.*)\n/
-  format2 /(?<level>[A-Z]*): (?<message>.*)/
-  path /var/log/tomcat6/catalina.out
-  pos_file /var/log/td-agent/catalina.out.pos
-  tag "{{ system }}.tomcat.access"
-</source>
-<source>
-  type tail
-  format multiline
   format_firstline /\d{4}-\d{1,2}-\d{1,2}/
   format1 /^(?<time>\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2},\d{1,3}) (?<level>[^\s]+)(?<message>.*)/
   path /var/log/clean_deleted.log
