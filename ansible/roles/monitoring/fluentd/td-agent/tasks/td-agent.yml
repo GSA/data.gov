@@ -17,10 +17,10 @@
     - restart td-agent
 
 - name: Configure td-agent service
-  lineinfile: 
-    path: /etc/init.d/td-agent 
-    regexp: "^TD_AGENT_GROUP=td-agent$" 
-    line: "TD_AGENT_GROUP=adm" 
+  lineinfile:
+    path: /etc/init.d/td-agent
+    regexp: "^TD_AGENT_GROUP=td-agent$"
+    line: "TD_AGENT_GROUP=adm"
     state: present
 
 - name: copy BSP certificate
