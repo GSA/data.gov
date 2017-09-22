@@ -6,5 +6,4 @@
   remote_user: ubuntu
 
   roles:
-    - role: geerlingguy.kibana
-
+    - role: gsa.ansible-role-kibana
