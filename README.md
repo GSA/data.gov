@@ -92,7 +92,7 @@ cd /datagov-deploy/ansible and us -i "inventory/../hosts" flag to run playbooks 
 
 **provision vm && deploy app:** `ansible-playbook inventory.yml -i {{ inventory }} --skip-tags="solr,db,deploy-rollback" --limit inventory-web`
 
-**provision vm - solr:** `ansible-playbook inventory.yml -i {{ inventory }} --tags="solr,secops,trendmicro,misc" --limit solr`
+**provision vm - solr:** `ansible-playbook inventory.yml -i {{ inventory }} --tags="solr,ami-fix,bsp" --limit solr`
 
 ## Jekyll
 
