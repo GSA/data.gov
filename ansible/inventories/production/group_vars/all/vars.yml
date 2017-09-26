@@ -44,9 +44,9 @@ saml2_sp_public_key: "{{ vault_saml2_sp_public_key }}"
 saml2_sp_private_pem: "{{ vault_saml2_sp_private_pem }}"
 
 # td-agent
-elasticsearch_endpoint: "{{ elasticsearch_endpoint }}"
-bsp_elasticsearch_endpoint: "{{ bsp_elasticsearch_endpoint }}"
-bsp_shared_key: "{{ bsp_shared_key }}"
+elasticsearch_endpoint: "{{ vault_elasticsearch_endpoint }}"
+bsp_elasticsearch_endpoint: "{{ vault_bsp_elasticsearch_endpoint }}"
+bsp_shared_key: "{{ vault_bsp_shared_key }}"
 system: "es"
 
 # newrelic
