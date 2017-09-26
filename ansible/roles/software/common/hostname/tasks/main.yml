@@ -10,5 +10,5 @@
     dest: /etc/hostname
 
 - name: Specify new hostname through cli
-  command: hostname {{ inventory_hostname }}
-
+  command: hostname "{{ inventory_hostname }}"
+  when: ("{{ ansible_hostname }}") != ("{{ inventory_hostname }}")
