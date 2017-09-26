@@ -21,6 +21,15 @@ use = egg:Paste#http
 host = 0.0.0.0
 port = 5000
 
+[app:celery]
+BROKER_BACKEND = redis
+BROKER_HOST = redis://localhost/1
+CELERY_RESULT_BACKEND = redis
+REDIS_HOST = 127.0.0.1
+REDIS_PORT = 6379
+REDIS_DB = 0
+REDIS_CONNECT_RETRY = True
+
 [app:main]
 use = egg:ckan
 full_stack = true
