@@ -15,7 +15,7 @@ catalog_db_name: "{{ vault_catalog_db_name }}"
 catalog_pycsw_db_name: "{{ vault_catalog_pycsw_db_name }}"
 
 # other
-REDIS_SERVER: "localhost"
+REDIS_SERVER: "catalog-harvester1p.prod-ocsit.bsp.gsa.gov"
 SOLR_SERVER: "{{ solr_master_server }}"
 env: local
 
