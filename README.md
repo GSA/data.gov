@@ -82,17 +82,17 @@ cd /datagov-deploy/ansible and us -i "inventory/../hosts" flag to run playbooks 
 
 ## Catalog:
 
-**provision vm - web:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="frontend,ec2" --skip-tags="solr,db,cron" --limit catalog-web`
+**provision vm - web:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="frontend,ami-fix,bsp" --skip-tags="solr,db,cron" --limit catalog-web`
 
-**provision vm - harvester:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="harvester,ec2" --skip-tags="apache,solr,db,saml2" --limit catalog-harvester`
+**provision vm - harvester:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="harvester,ami-fix,bsp" --skip-tags="apache,solr,db,saml2" --limit catalog-harvester`
 
-**provision vm - solr:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="solr,secops,trendmicro,misc" --limit solr`
+**provision vm - solr:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="solr,ami-fix,bsp" --limit solr`
 
 ## Inventory
 
 **provision vm && deploy app:** `ansible-playbook inventory.yml -i {{ inventory }} --skip-tags="solr,db,deploy-rollback" --limit inventory-web`
 
-**provision vm - solr:** `ansible-playbook inventory.yml -i {{ inventory }} --tags="solr,secops,trendmicro,misc" --limit solr`
+**provision vm - solr:** `ansible-playbook inventory.yml -i {{ inventory }} --tags="solr,ami-fix,bsp" --limit solr`
 
 ## Jekyll
 
