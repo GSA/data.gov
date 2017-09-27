@@ -23,3 +23,4 @@ catalog_bucket_name: somebucketname
 env: local
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
 who_secure: False
+REDIS_SERVER: localhost
