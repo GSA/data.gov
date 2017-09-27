@@ -1,14 +1,5 @@
 ---
 
-- name: Get $(hostname)
-  set_fact: hostname="{{ lookup('env','hostname') }}"
-
-- name: add $(hostname) to /etc/hosts
-  lineinfile:
-    path: /etc/hosts
-    line: "127.0.0.1 {{ hostname }}"
-    unsafe_writes: yes
-
 # temporary fix for ntpd issues
 # Ansible `rm` module does not accept wildcards * yet
 - name: fix ntpd issues

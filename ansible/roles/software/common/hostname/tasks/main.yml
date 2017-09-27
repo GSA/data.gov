@@ -1,0 +1,14 @@
+---
+- name: Configure /etc/hosts
+  template:
+    src: hosts.j2
+    dest: /etc/hosts
+
+- name: Configure /etc/hostname
+  template:
+    src: hostname.j2
+    dest: /etc/hostname
+
+- name: Specify new hostname through cli
+  command: hostname "{{ inventory_hostname }}"
+  when: ("{{ ansible_hostname }}") != ("{{ inventory_hostname }}")
