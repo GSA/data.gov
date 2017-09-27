@@ -1,6 +1,6 @@
 ---
 
-td_agent_version: '1.1.18-1'
+td_agent_version: '2.3.5-0'
 td_agent_architecture: 'amd64'
 td_agent_plugins: [ 'fluent-plugin-aws-elasticsearch-service', 'fluent-plugin-elasticsearch' ,'fluent-plugin-secure-forward' ]
 ansible_distribution_version: '14.04'

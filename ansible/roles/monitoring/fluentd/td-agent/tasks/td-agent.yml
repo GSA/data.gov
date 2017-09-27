@@ -1,0 +1,31 @@
+---
+
+- name: install dependencies...
+  apt: name={{ item }} state=installed update_cache=yes
+  with_items:
+    - python-pycurl
+
+- name: Add the Treasuredata apt key
+  apt_key: url=http://packages.treasuredata.com/GPG-KEY-td-agent state=present
+
+- name: Add apt repository
+  apt_repository: repo='deb [arch={{ td_agent_architecture }}] http://packages.treasuredata.com/2/ubuntu/trusty/ trusty contrib' state=present
+
+- name: apt-get td-agent
+  apt: name=td-agent update_cache=yes force=yes
+  notify:
+    - restart td-agent
+
+- name: Configure td-agent service
+  lineinfile:
+    path: /etc/init.d/td-agent
+    regexp: "^TD_AGENT_GROUP=td-agent$"
+    line: "TD_AGENT_GROUP=adm"
+    state: present
+
+- name: copy BSP certificate
+  copy:
+    src: roles/monitoring/fluentd/td-agent/files/cacert.pem
+    dest: /etc/td-agent/bspcert.pem
+    owner: ubuntu
+    mode: 0444

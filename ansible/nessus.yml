@@ -6,5 +6,4 @@
   remote_user: ubuntu
 
   roles:
-    - {role: security/nessus}
     - {role: security/nessus-agent}

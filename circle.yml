@@ -9,13 +9,14 @@ dependencies:
       sudo apt-get update
       sudo apt-get install -y ansible
     - sudo pip install ansible-lint
+    - echo 'password' > ~/ansible-secret.txt
   post:
     - ansible-lint --version
 
 test:
   override:
     # Ansible syntax check
-    - ansible-playbook --syntax-check --vault-password-file= :
+    - ansible-playbook --syntax-check :
         files:
           - ansible/*.yml
     # Ansible lint check

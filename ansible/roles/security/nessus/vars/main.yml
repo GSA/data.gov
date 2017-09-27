@@ -1,3 +1,0 @@
-redhat_nessus_agent_filename: "NessusAgent-6.9.1-es6.x86_64.rpm"
-debian_nessus_agent_filename: "NessusAgent-6.9.1-ubuntu1110_amd64.deb"
-group_name: "{{ GROUP_NAME | default('SecOps') }}"

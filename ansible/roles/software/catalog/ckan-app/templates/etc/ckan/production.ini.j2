@@ -219,8 +219,10 @@ ckanext.geodatagov.aws_bucket_name = {{ catalog_bucket_name }}
 ckanext.geodatagov.aws_access_key_id = _placeholder
 ckanext.geodatagov.aws_secret_access_key = _placeholder
 
-ckanext.geodatagov.s3sitemap.aws_storage_path = gsa/catalog/
+ckanext.geodatagov.metrics_csv.aws_storage_path = gsa/catalog/metrics/
+ckanext.geodatagov.s3sitemap.aws_storage_path = gsa/catalog/sitemap/
 ckanext.geodatagov.jsonlexport.aws_storage_path = gsa/catalog/jsonl/
+ckanext.geodatagov.s3sitemap.aws_s3_url = https://filestore.data.gov/
 
 ## SAML2 Settings
 saml2.site_url = {{ saml2_site_url }}

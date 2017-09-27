@@ -33,8 +33,8 @@ boxes = [
     :ram => "256"
   },
   {
-    :name => "debian-87",
-    :box => "bento/debian-8.7",
+    :name => "debian-88",
+    :box => "bento/debian-8.8",
     :ip => '10.0.0.15',
     :cpu => "50",
     :ram => "256"
