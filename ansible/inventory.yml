@@ -8,14 +8,14 @@
     app_type: inventory
 
   roles:
-    - {role: software/common/misc, tags: ['misc']}
+    - {role: software/common/misc, tags: ['ami-fix', 'misc']}
     - software/ubuntu/common
-    - {role: software/common/secops-ssh, tags: ['secops']}
-    - {role: software/common/trendmicro, tags: ['trendmicro']}
-    - {role: software/common/ansible-postfix, tags: ['postfix']}
-    - {role: monitoring/fluentd/kernel, tags: ['frontend', 'harvester', 'fluentd'] }
-    - {role: monitoring/fluentd/limits, tags: ['frontend', 'harvester', 'fluentd'] }
-    - {role: monitoring/fluentd/td-agent, tags: ['frontend', 'harvester', 'fluentd'] }
+    - {role: software/common/secops-ssh, tags: ['bsp', 'secops']}
+    - {role: software/common/trendmicro, tags: ['bsp', 'trendmicro']}
+    - {role: software/common/ansible-postfix, tags: ['ami-fix', 'postfix']}
+    - {role: monitoring/fluentd/kernel, tags: ['bsp', 'fluentd'] }
+    - {role: monitoring/fluentd/limits, tags: ['bsp', 'fluentd'] }
+    - {role: monitoring/fluentd/td-agent, tags: ['bsp', 'fluentd'] }
     - software/ckan/common
     - software/ckan/apache
     - {role: software/ckan/postgresql, tags: ['db', 'db-install']}

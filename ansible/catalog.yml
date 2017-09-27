@@ -13,15 +13,15 @@
   ## redis, fgdc2iso, cron
   ## sample usage: ansible-playbook ansibe/catalog.yml --tags "harvester" --skip-tags "solr,apache"
   roles:
-    - {role: software/common/misc, tags: ['frontend', 'harvester', 'misc'] }
     - {role: software/ubuntu/common, tags: ['always']}
+    - {role: software/common/misc, tags: ['ami-fix', 'misc'] }
+    - {role: software/common/ansible-postfix, tags: ['ami-fix', 'postfix'] }
+    - {role: software/common/secops-ssh, tags: ['bsp', 'secops'] }
+    - {role: software/common/trendmicro, tags: ['bsp', 'trendmicro'] }
     - {role: software/ckan/common, tags: ['frontend', 'harvester']}
-    - {role: software/common/secops-ssh, tags: ['frontend', 'harvester', 'secops'] }
-    - {role: software/common/trendmicro, tags: ['frontend', 'harvester', 'trendmicro'] }
-    - {role: software/common/ansible-postfix, tags: ['frontend', 'harvester', 'postfix'] }
-    - {role: monitoring/fluentd/kernel, tags: ['frontend', 'harvester', 'fluentd'] }
-    - {role: monitoring/fluentd/limits, tags: ['frontend', 'harvester', 'fluentd'] }
-    - {role: monitoring/fluentd/td-agent, tags: ['frontend', 'harvester', 'fluentd'] }
+    - {role: monitoring/fluentd/kernel, tags: ['bsp', 'fluentd'] }
+    - {role: monitoring/fluentd/limits, tags: ['bsp', 'fluentd'] }
+    - {role: monitoring/fluentd/td-agent, tags: ['bsp', 'fluentd'] }
     - {role: software/ckan/apache, tags: ['frontend', 'apache']}
     - {role: software/ckan/postgresql, tags: ['frontend', 'harvester', 'db', 'db-install']}
     - {role: software/ckan/solr, tags: ['frontend', 'harvester', 'solr']}
