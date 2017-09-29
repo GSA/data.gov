@@ -51,7 +51,8 @@ Moved to [datagov-infrastructure](https://github.com/gsa/datagov-infrastructure)
 
 # Provision apps
 `cd ansible`
-`ansible-playbook --help` See example below
+`ansible-playbook --help` 
+See example(s) below
 
 ## Wordpress:
 
