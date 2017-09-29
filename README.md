@@ -27,7 +27,7 @@ Included in this Repository:
 | Development *Environment* | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> | 10/1/2016 |
 | Staging *Environment*     | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> | 10/30/2016 |
 | Production *Environment*  | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> | 12/15/2016 |
-| System Security Plan | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> &  <img src="https://img.shields.io/badge/status-On%20Track-blue.svg" />| 12/8/2016 (90 Day) & 12/8/2016 (1 Year ATO) |
+| System Security Plan | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> | 12/8/2016 (1 Year ATO) |
 | Authority to Operate kick-off meeting | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> | 12/8/2016 |
 | Scanning and Penetration Testing | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> | 12/1/2016 |
 | *Remediation of scanning/pen test findings* | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" />  | 3/15/2016 |
