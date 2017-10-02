@@ -20,4 +20,9 @@ python_version_directory: /usr/local/lib/python{{ python_version_number }}/
 mysql_enabled_on_startup: false
 
 # PHP
-php_memory_limit: 1G
+php_memory_limit: 512M
+php_expose_php: 0
+php_fpm_pm_max_children: 200
+php_fpm_pm_start_servers: 15
+php_fpm_pm_min_spare_servers: 5
+php_fpm_pm_max_spare_servers: 20

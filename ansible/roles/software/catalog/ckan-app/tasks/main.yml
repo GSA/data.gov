@@ -61,6 +61,7 @@
   action: copy src={{item}} dest=/{{item}}
   with_items:
     - etc/ckan/apache.wsgi
+    - etc/redis/redis.conf
   tags: ['frontend', 'apache']
 
 - name: Configure ckan.conf
