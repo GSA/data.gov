@@ -9,7 +9,7 @@
 - name: Initialize ckan ga-report db
   command: ckan --plugin=ckanext-ga-report initdb
   tags: skip_ansible_lint
-  
+
 - name: Initialize ckan archiver db
   command: ckan --plugin=ckanext-archiver archiver init
   tags: skip_ansible_lint
