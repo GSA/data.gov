@@ -6,7 +6,7 @@
 - name: check to python version
   command: /{{ python_version_directory }}/bin/python --version
   register: python_version_check
-  failed_when: '"Python {{ python_version_number }}" not in python_version_check.stderr'
+  failed_when: ("Python " + python_version_number) not in python_version_check.stderr
   ignore_errors: True
   when: python_dir.stat.exists == True
   tags: skip_ansible_lint
