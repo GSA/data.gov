@@ -1,6 +1,12 @@
-- name: restart supervisor
-  service: name=supervisor state=restarted
 
-- name: update supervisor
-  command: supervisorctl reread && supervisorctl update
-  ignore_errors: yes
+- name: restart supervisord
+  service:
+    name: supervisor
+    state: restarted
+    enabled: yes
+
+- name: update supervisorctl
+  supervisorctl:
+    name: jekyll
+    state: restarted
+    config: /etc/supervisord.conf
