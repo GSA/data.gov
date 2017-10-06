@@ -50,8 +50,11 @@ Moved to [datagov-infrastructure](https://github.com/gsa/datagov-infrastructure)
   - inventories/local/hosts
 
 # Provision apps
+
 `cd ansible`
+
 `ansible-playbook --help` 
+
 See example(s) below
 
 ## Wordpress:
