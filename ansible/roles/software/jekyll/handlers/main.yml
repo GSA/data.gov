@@ -1,12 +1,12 @@
 
-- name: update supervisor1
-  supervisorctl:
-    name: supervisor1
+- name: restart supervisord
+  service:
+    name: supervisor
     state: restarted
-    config: /etc/init/supervisor.conf
+    enabled: yes
 
-- name: update supervisor2
+- name: update supervisorctl
   supervisorctl:
-    name: supervisor2
+    name: jekyll
     state: restarted
     config: /etc/supervisord.conf
