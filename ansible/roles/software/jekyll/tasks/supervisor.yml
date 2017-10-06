@@ -7,13 +7,11 @@
     src: etc/init/supervisor.conf
     dest: /etc/init/supervisor.conf
   notify:
-    - restart supervisor
-    - update supervisor
+    - update supervisor1
 
 - name: copy template files
   template:
     src: etc/supervisord.conf.j2
     dest: /etc/supervisord.conf
   notify:
-      - restart supervisor
-      - update supervisor
+    - update supervisor2

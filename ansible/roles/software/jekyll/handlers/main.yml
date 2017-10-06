@@ -1,6 +1,12 @@
-- name: restart supervisor
-  service: name=supervisor state=restarted
 
-- name: update supervisor
-  command: supervisorctl reread && supervisorctl update
-  ignore_errors: yes
+- name: update supervisor1
+  supervisorctl:
+    name: supervisor1
+    state: restarted
+    config: /etc/init/supervisor.conf
+
+- name: update supervisor2
+  supervisorctl:
+    name: supervisor2
+    state: restarted
+    config: /etc/supervisord.conf
