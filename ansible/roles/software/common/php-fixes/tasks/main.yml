@@ -11,3 +11,13 @@
     dest: "/etc/php/7.0/fpm/php.ini"
     regexp: '^session.cookie_secure'
     line: 'session.cookie_secure = On'
+
+- name: Configure php-fpm pool
+  lineinfile:
+    dest: "/etc/php/7.0/fpm/pool.d/www.conf"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  with_items:
+    - regexp: "^.?request_terminate_timeout.?=.+$"
+      line: "request_terminate_timeout={{ php_fpm_request_terminate_timeout }}"
