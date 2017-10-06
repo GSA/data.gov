@@ -31,7 +31,11 @@
     </Directory>
 
     ErrorLog /var/log/apache2/ckan.error.log
-    CustomLog /var/log/apache2/ckan.custom.log combined
+
+    LogFormat "\"%{True-Client-IP}i\" %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" trueip
+    SetEnvIf True-Client-IP "^.*\..*\..*\..*" akamai
+    CustomLog /var/log/apache2/ckan.custom.log combined env=!akamai
+    CustomLog /var/log/apache2/ckan.custom.log trueip env=akamai
 
     # fix Cross-Frame Scripting (XFS) vulnerability
     Header set X-Frame-Options "SAMEORIGIN"
