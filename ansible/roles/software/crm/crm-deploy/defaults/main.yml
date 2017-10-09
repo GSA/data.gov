@@ -20,6 +20,7 @@ env_db_name: crm
 web_app_env: development
 default_host: 'labs.data.gov/crm'
 env_content_protocol: http
+cookie_secure_only: 'FALSE'
 
 # SAML
 saml2_idp_entry: "login.test.max.gov"

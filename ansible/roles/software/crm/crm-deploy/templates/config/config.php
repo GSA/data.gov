@@ -44,7 +44,7 @@ $config['pre_approved_admins'] = explode(',',$config['pre_approved_admins']);
 $config['akismet_key'] = ''; // see https://akismet.com/development/
 $config['akismet_siteurl'] = '';
 
-// Set local time zone 
+// Set local time zone
 date_default_timezone_set('America/New_York');
 
 // if you've explictly set $config['base_url'] to a URL, you can delete the following
@@ -208,7 +208,7 @@ $config['directory_trigger'] 	= 'd'; // experimental not currently in use
 | Error Logging Threshold
 |--------------------------------------------------------------------------
 |
-| If you have enabled error logging, you can set an error threshold to 
+| If you have enabled error logging, you can set an error threshold to
 | determine what gets logged. Threshold options are:
 | You can enable error logging by setting a threshold over zero. The
 | threshold determines what gets logged. Threshold options are:
@@ -271,7 +271,7 @@ $config['cache_path'] = '';
 |
 */
 $config['sess_cookie_name']		= 'ci_session_crm';
-$config['cookie_secure']	= TRUE;
+$config['cookie_secure']	= {{ cookie_secure_only }};
 $config['cookie_httponly'] 	= TRUE;
 $config['sess_expiration']		= 7200;
 $config['sess_encrypt_cookie']	= FALSE;
