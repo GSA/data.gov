@@ -10,6 +10,7 @@ nginx_extra_http_options: |
 
 # WordPress env
 web_app_env: development
+real_ansible_env: local
 env_content_protocol: http
 
 # Email
