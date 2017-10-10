@@ -27,5 +27,3 @@ RUN sed -i.bkp -e \
 
 ADD docker_entrypoint.sh /usr/local/bin/docker_entrypoint.sh
 CMD ["/usr/local/bin/docker_entrypoint.sh"]
-
-#CMD ["/usr/sbin/sshd", "-D"]

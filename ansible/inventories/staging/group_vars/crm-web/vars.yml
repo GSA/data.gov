@@ -15,3 +15,4 @@ saml_admin_pass: "{{ vault_saml_admin_pass }}"
 
 # App
 env_content_protocol: https
+cookie_secure_only: 'TRUE'

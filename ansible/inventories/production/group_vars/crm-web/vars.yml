@@ -18,3 +18,4 @@ codeigniter_pre_approved_admins: "{{ vault_codeigniter_pre_approved_admins }}"
 
 # App
 env_content_protocol: https
+cookie_secure_only: 'TRUE'
