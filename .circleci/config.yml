@@ -1,0 +1,20 @@
+# PHP CircleCI 2.0 configuration file
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      - image: particlekit/ansible-lint
+
+    working_directory: ~/repo
+
+    steps:
+      - run: ansible-lint --version
+      - checkout
+      - run: echo 'password' > ~/ansible-secret.txt
+
+      # Ansible syntax check
+      - run: ansible-playbook --syntax-check ansible/*.yml
+
+      # Ansible lint check
+      - run: ansible-lint -v -x ANSIBLE0010 --exclude=ansible/roles/vendor ansible/*.yml
