@@ -31,15 +31,9 @@
 
 # Configure CKAN
 - name: Configure production.ini
-  template: src=templates/{{ item }}.j2 dest=/{{ item }}
+  template: src=templates/{{item}}.j2 dest=/{{item}}
   with_items:
     - etc/ckan/production.ini
-
-# Add token.date file
-- name: Add token.date file
-  copy:
-    content="{{ token_dat }}"
-    dest=/etc/ckan/token.dat
 
 - name: Configure who.ini
   copy: src={{ app_source_path }}/config/environments/{{ env }}/saml2/who.ini dest=/etc/ckan remote_src=True
