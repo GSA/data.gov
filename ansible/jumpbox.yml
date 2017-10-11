@@ -1,14 +1,9 @@
 ---
-- name: Install
-  hosts: "{{ jumpbox_hosts | default('localhost') }}"
+- name: Provision Jumpbox 
+  hosts: jumpbox
+  remote_user: ubuntu
   become: yes
   become_method: sudo
-  vars:
-      app_type: jumpbox
 
   roles:
-    - {role: software/ubuntu/common, tags: ['always']}
-    - {role: software/ckan/apache, tags: ['jumpbox', 'apache']}
-
-    - {role: security/shibboleth, tags: ['jumpbox', 'shibboleth']}
-    - {role: security/shibboleth, tags: ['jumpbox', 'shibboleth']}
+    - { role: software/jumpbox }
