@@ -1,9 +1,11 @@
 ---
 - include: fgdc2iso.yml
   tags: ['fgdc2iso']
+  when: hostvars[inventory_hostname]['usage'] | default('main_worker') == 'main_worker'
 
 - include: redis.yml
   tags: ['redis']
+  when: hostvars[inventory_hostname]['usage'] | default('main_worker') == 'main_worker'
 
 - name: install supervisor
   action: pip name=supervisor virtualenv=/usr/lib/ckan/
@@ -11,26 +13,22 @@
 - name: copy supervisor.conf
   action: copy src=etc/init/supervisor.conf dest=/etc/init/supervisor.conf
 
-- name: copy primary supervisord config
-  copy: src=etc/supervisord-primary.conf dest=/etc/supervisord.conf
-  when: groups["catalog-harvester"]|length == 1 or inventory_hostname == groups["catalog-harvester"][0]
+- name: copy main_worker supervisord config
+  copy: src=etc/supervisord-main.conf dest=/etc/supervisord.conf
+  when: hostvars[inventory_hostname]['usage'] | default('main_worker') == 'main_worker'
 
-- name: copy redis.conf to primary
-  copy: src=etc/redis/redis.conf dest=/etc/redis/redis.conf
-  when: groups["catalog-harvester"]|length == 1 or inventory_hostname == groups["catalog-harvester"][0]
+- name: copy misc_worker supervisord config
+  copy: src=etc/supervisord-misc.conf dest=/etc/supervisord.conf
+  when: hostvars[inventory_hostname]['usage'] | default('main_worker') == 'misc_worker'
 
-- name: copy secondary supervisord config
-  copy: src=etc/supervisord-secondary.conf dest=/etc/supervisord.conf
-  when: groups["catalog-harvester"]|length > 1 and inventory_hostname == groups["catalog-harvester"][1]
-
-- name: copy primary cron job
-  copy: src=etc/cron.d/ckan-primary dest=/etc/cron.d/ckan
-  when: groups["catalog-harvester"]|length == 1 or inventory_hostname == groups["catalog-harvester"][0]
+- name: copy main_worker cron job
+  copy: src=etc/cron.d/ckan-main dest=/etc/cron.d/ckan
+  when: hostvars[inventory_hostname]['usage'] | default('main_worker') == 'main_worker'
   tags: ['cron']
 
-- name: copy secondary cron job
-  copy: src=etc/cron.d/ckan-secondary dest=/etc/cron.d/ckan
-  when: groups["catalog-harvester"]|length > 1 and inventory_hostname == groups["catalog-harvester"][1]
+- name: copy misc_worker cron job
+  copy: src=etc/cron.d/ckan-misc dest=/etc/cron.d/ckan
+  when: hostvars[inventory_hostname]['usage'] | default('main_worker') == 'misc_worker'
   tags: ['cron']
 
 - name: copy supervisor cron job
