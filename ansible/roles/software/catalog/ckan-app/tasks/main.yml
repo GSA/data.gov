@@ -35,8 +35,8 @@
   with_items:
     - etc/ckan/production.ini
 
-# Add token.date file
-- name: Add token.date file
+# Add token.dat file
+- name: Add token.dat file
   copy:
     content="{{ token_dat }}"
     dest=/etc/ckan/token.dat
