@@ -21,3 +21,9 @@
   with_items:
     - regexp: "^.?request_terminate_timeout.?=.+$"
       line: "request_terminate_timeout={{ php_fpm_request_terminate_timeout }}"
+
+- name: Set default php-cli to 7.0
+  file:
+    src: /usr/bin/php7.0
+    dest: /usr/bin/php
+    state: link
