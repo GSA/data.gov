@@ -27,3 +27,4 @@ php_fpm_pm_start_servers: 15
 php_fpm_pm_min_spare_servers: 5
 php_fpm_pm_max_spare_servers: 20
 php_fpm_request_terminate_timeout: 30s
+php_opcache_conf_filename: "10-opcache.ini"
