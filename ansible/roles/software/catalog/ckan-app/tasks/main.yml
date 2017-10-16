@@ -57,6 +57,9 @@
     path: "{{ current_source_symlink }}"
     state: link
 
+- name: Ensure /etc/redis directory exists
+  file: path="/etc/redis" state=directory
+
 - name: Copy all needed files
   action: copy src={{item}} dest=/{{item}}
   with_items:
