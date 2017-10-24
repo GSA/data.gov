@@ -11,4 +11,4 @@
 
 - name: restart redis
   service: name=redis-server state=restarted
-  when: restartredis.changed 
+  when: restartredis.changed
