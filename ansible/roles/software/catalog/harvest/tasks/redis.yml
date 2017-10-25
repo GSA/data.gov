@@ -7,4 +7,4 @@
 - name: copy redis.conf
   copy: src=etc/redis/redis.conf dest=/etc/redis/redis.conf
   # need to check changes and restart redis if necessary
-  notify: restartredis
+  notify: restart redis
