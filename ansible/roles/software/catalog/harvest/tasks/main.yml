@@ -21,6 +21,10 @@
   copy: src=etc/supervisord-misc.conf dest=/etc/supervisord.conf
   when: hostvars[inventory_hostname]['usage'] | default('main_worker') == 'misc_worker'
 
+- name: copy qa_worker supervisord config
+  copy: src=etc/supervisord-qa.conf dest=/etc/supervisord.conf
+  when: hostvars[inventory_hostname]['usage'] | default('main_worker') == 'qa_worker'
+
 - name: copy main_worker cron job
   copy: src=etc/cron.d/ckan-main dest=/etc/cron.d/ckan
   when: hostvars[inventory_hostname]['usage'] | default('main_worker') == 'main_worker'
