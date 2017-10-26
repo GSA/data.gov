@@ -1,11 +1,15 @@
 ---
+- name: set worker type
+  set_fact:
+    worker_type: hostvars[inventory_hostname]['usage'] | default('main_worker')
+
 - include: fgdc2iso.yml
   tags: ['fgdc2iso']
-  when: hostvars[inventory_hostname]['usage'] | default('main_worker') == 'main_worker'
+  when: worker_type == 'main_worker'
 
 - include: redis.yml
   tags: ['redis']
-  when: hostvars[inventory_hostname]['usage'] | default('main_worker') == 'main_worker'
+  when: worker_type == 'main_worker'
 
 - name: install supervisor
   action: pip name=supervisor virtualenv=/usr/lib/ckan/
@@ -13,34 +17,19 @@
 - name: copy supervisor.conf
   action: copy src=etc/init/supervisor.conf dest=/etc/init/supervisor.conf
 
-- name: copy main_worker supervisord config
-  copy: src=etc/supervisord-main.conf dest=/etc/supervisord.conf
-  when: hostvars[inventory_hostname]['usage'] | default('main_worker') == 'main_worker'
-
-- name: copy misc_worker supervisord config
-  copy: src=etc/supervisord-misc.conf dest=/etc/supervisord.conf
-  when: hostvars[inventory_hostname]['usage'] | default('main_worker') == 'misc_worker'
-
-- name: copy qa_worker supervisord config
-  copy: src=etc/supervisord-qa.conf dest=/etc/supervisord.conf
-  when: hostvars[inventory_hostname]['usage'] | default('main_worker') == 'qa_worker'
-
-- name: copy main_worker cron job
-  copy: src=etc/cron.d/ckan-main dest=/etc/cron.d/ckan
-  when: hostvars[inventory_hostname]['usage'] | default('main_worker') == 'main_worker'
-  tags: ['cron']
-
-- name: copy misc_worker cron job
-  copy: src=etc/cron.d/ckan-misc dest=/etc/cron.d/ckan
-  when: hostvars[inventory_hostname]['usage'] | default('main_worker') == 'misc_worker'
-  tags: ['cron']
-
-- name: copy supervisor cron job
-  copy: src=etc/cron.d/supervisor dest=/etc/cron.d/supervisor
-  tags: ['cron']
+- name: copy supervisord config
+  copy: src=etc/supervisord_{{ worker_type }}.conf dest=/etc/supervisord.conf
 
 - name: create superviserctl symlink
   action: file src=/usr/lib/ckan/bin/supervisorctl dest=/usr/bin/supervisorctl state=link
 
 - name: start supervisor
   service: name=supervisor state=started
+
+- name: copy supervisor cron job
+  copy: src=etc/cron.d/supervisor dest=/etc/cron.d/supervisor
+  tags: ['cron']
+
+- name: copy worker cron job
+  copy: src=etc/cron.d/ckan_{{ worker_type }} dest=/etc/cron.d/ckan
+  tags: ['cron']
