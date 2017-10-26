@@ -30,6 +30,13 @@
   copy: src=etc/cron.d/supervisor dest=/etc/cron.d/supervisor
   tags: ['cron']
 
-- name: copy worker cron job
+- name: copy worker cron job, if any
   copy: src=etc/cron.d/ckan_{{ worker_type }} dest=/etc/cron.d/ckan
   tags: ['cron']
+  # can skip error if some worker have no cron file
+
+- name: copy qa worker executables
+  action: copy src={{item}} dest=/{{item}} mode=0744
+  with_items:
+    - usr/bin/celery-mem-check.sh
+  when: worker_type == 'qa_worker'
