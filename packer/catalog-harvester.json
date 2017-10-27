@@ -13,7 +13,13 @@
     "source_ami": "{{user `source_ami`}}",
     "instance_type": "{{user `instance_type`}}",
     "ssh_username": "ubuntu",
-    "ami_name": "{{user `ami_name`}}"
+    "ami_name": "{{user `ami_name`}}",
+    "tags": {
+        "Name": "catalog-harvester",
+        "app":"catalog",
+        "portofolio":"datagov",
+        "built-with":"packer"
+    }
   }],
 
   "provisioners": [
