@@ -3,6 +3,7 @@
   user:
     name: "{{ item.username }}"
     comment: "{{ item.username }}"
+    shell: /bin/bash
   with_items: "{{ users }}"
 
 - name: Add SSH public key directory structure
