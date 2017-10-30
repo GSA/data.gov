@@ -1,5 +1,5 @@
 ---
-- name: Provision Jumpbox 
+- name: Provision Jumpbox
   hosts: jumpbox
   remote_user: ubuntu
   become: yes

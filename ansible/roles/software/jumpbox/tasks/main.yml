@@ -18,7 +18,7 @@
 
 - name: Copy SSH public key
   authorized_key:
-    user: "{{ item.username }}" 
+    user: "{{ item.username }}"
     key: "{{ item.public_key }}"
     exclusive: True
   with_items: "{{ users }}"
