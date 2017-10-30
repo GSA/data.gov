@@ -1,9 +1,15 @@
 ---
+- name: set worker type
+  set_fact:
+    worker_type: "{{ hostvars[inventory_hostname]['usage'] | default('main_worker') }}"
+
 - include: fgdc2iso.yml
   tags: ['fgdc2iso']
+  when: worker_type == 'main_worker'
 
 - include: redis.yml
   tags: ['redis']
+  when: worker_type == 'main_worker'
 
 - name: install supervisor
   action: pip name=supervisor virtualenv=/usr/lib/ckan/
@@ -11,30 +17,26 @@
 - name: copy supervisor.conf
   action: copy src=etc/init/supervisor.conf dest=/etc/init/supervisor.conf
 
-- name: copy primary supervisord config
-  copy: src=etc/supervisord-primary.conf dest=/etc/supervisord.conf
-  when: groups["catalog-harvester"]|length == 1 or inventory_hostname == groups["catalog-harvester"][0]
-
-- name: copy secondary supervisord config
-  copy: src=etc/supervisord-secondary.conf dest=/etc/supervisord.conf
-  when: groups["catalog-harvester"]|length > 1 and inventory_hostname == groups["catalog-harvester"][1]
-
-- name: copy primary cron job
-  copy: src=etc/cron.d/ckan-primary dest=/etc/cron.d/ckan
-  when: groups["catalog-harvester"]|length == 1 or inventory_hostname == groups["catalog-harvester"][0]
-  tags: ['cron']
-
-- name: copy secondary cron job
-  copy: src=etc/cron.d/ckan-secondary dest=/etc/cron.d/ckan
-  when: groups["catalog-harvester"]|length > 1 and inventory_hostname == groups["catalog-harvester"][1]
-  tags: ['cron']
-
-- name: copy supervisor cron job
-  copy: src=etc/cron.d/supervisor dest=/etc/cron.d/supervisor
-  tags: ['cron']
+- name: copy supervisord config
+  copy: src=etc/supervisord_{{ worker_type }}.conf dest=/etc/supervisord.conf
 
 - name: create superviserctl symlink
   action: file src=/usr/lib/ckan/bin/supervisorctl dest=/usr/bin/supervisorctl state=link
 
 - name: start supervisor
   service: name=supervisor state=started
+
+- name: copy supervisor cron job
+  copy: src=etc/cron.d/supervisor dest=/etc/cron.d/supervisor
+  tags: ['cron']
+
+- name: copy worker cron job, if any
+  copy: src=etc/cron.d/ckan_{{ worker_type }} dest=/etc/cron.d/ckan
+  tags: ['cron']
+  # can skip error if some worker have no cron file
+
+- name: copy qa worker executables
+  action: copy src={{item}} dest=/{{item}} mode=0744
+  with_items:
+    - usr/bin/celery-mem-check.sh
+  when: worker_type == 'qa_worker'

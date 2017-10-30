@@ -34,6 +34,7 @@
   command: /etc/init.d/php7.0-fpm status
   register: php_fpm_status
   tags: skip_ansible_lint
+  ignore_errors: true
 
 - name: Start php7.0-fpm
   command: /etc/init.d/php7.0-fpm start

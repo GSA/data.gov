@@ -13,7 +13,13 @@
     "source_ami": "{{user `source_ami`}}",
     "instance_type": "{{user `instance_type`}}",
     "ssh_username": "ubuntu",
-    "ami_name": "{{user `ami_name`}}"
+    "ami_name": "{{user `ami_name`}}",
+    "tags": {
+        "Name": "catalog-harvester",
+        "app":"catalog",
+        "portofolio":"datagov",
+        "built-with":"packer"
+    }
   }],
 
   "provisioners": [
@@ -23,8 +29,8 @@
         "playbook_file": "ansible/catalog.yml",
         "inventory_groups": "catalog-harvester",
         "extra_arguments": [
-          "--tags 'harvester,ec2'",
-          "--skip-tags 'apache,solr,db,saml2,redis,trendmicro,fluentd'",
+          "--tags 'harvester,ami-fix'",
+          "--skip-tags 'apache,solr,db,saml2'",
           "--vault-password-file=''"
         ]
   }]
