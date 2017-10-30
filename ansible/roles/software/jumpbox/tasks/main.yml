@@ -1,5 +1,5 @@
 ---
-- name: Create the linux account 
+- name: Create the linux account
   user:
     name: "{{ item.username }}"
     comment: "{{ item.username }}"
@@ -17,7 +17,7 @@
   - skip_ansible_lint
 
 - name: Copy SSH public key
-  authorized_key: 
+  authorized_key:
     user: "{{ item.username }}" 
     key: "{{ item.public_key }}"
     exclusive: True
