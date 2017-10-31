@@ -70,3 +70,6 @@ web_csr: "{{ vault_web_csr }}"
 # ckan
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
 who_secure: True
+
+# jumpbox users
+users: "{{ vault_users }}"
