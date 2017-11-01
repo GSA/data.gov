@@ -21,12 +21,16 @@ do
   freemem=$(free -m | grep 'buffers\/' | awk '{print $4}')
   if [ "$freemem" -gt 1000 ]
   then
+    echo -n $(date '+%Y-%m-%d %H:%M:%S')
+    echo " mem OK. $freemem free."
     break
   fi
 
   count=$((count-1))
   if [ "$count" -ne 0 ]
   then
+    echo -n $(date '+%Y-%m-%d %H:%M:%S')
+    echo " mem getting low. only $freemem free."
     sleep 30
   fi
 done
@@ -34,8 +38,8 @@ done
 # $count is 0 only if mem usage remains high for 3 checks.
 if [ "$count" -eq 0 ]
 then
-  echo $(date)
-  echo "mem low. restarting supervisord celeryd2."
+  echo -n $(date '+%Y-%m-%d %H:%M:%S')
+  echo " mem stays low!! restarting supervisord celeryd2."
   supervisorctl restart celeryd2:*
 fi
 
