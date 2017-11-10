@@ -25,7 +25,7 @@ $config['max_remote_size'] = 5000000;
 $config['google_analytics_id'] = ''; // UA-xxxxxxx-xx
 $config['google_analytics_domain'] = ''; // domain.com
 
-// Set local time zone 
+// Set local time zone
 date_default_timezone_set('America/New_York');
 
 $config['tmp_csv_import'] = '{{ project_shared_path }}/downloads/import.csv';
@@ -308,7 +308,7 @@ $config['encryption_key'] = getenv('ENCRYPTION_KEY');
 |
 */
 $config['sess_cookie_name'] = 'ci_session_dashboard';
-$config['sess_expiration'] = 7200;
+$config['sess_expiration'] = 900;
 $config['sess_expire_on_close'] = FALSE;
 $config['sess_encrypt_cookie'] = FALSE;
 $config['sess_use_database'] = TRUE;

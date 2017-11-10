@@ -140,6 +140,11 @@
   tags:
     - wp-cli
 
+- name: Remove vulnerable swfupload.swf
+  file:
+    dest: "{{ project_source_new_code_path }}/web/wp/wp-includes/js/swfupload/swfupload.swf"
+    state: absent
+    
 #- name: Set up main wp cronjob
 #  cron:
 #    name: "Set up main wp cronjob"
