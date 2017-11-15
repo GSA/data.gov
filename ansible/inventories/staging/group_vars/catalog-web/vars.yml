@@ -10,7 +10,7 @@ current_source_symlink: /usr/lib/ckan
 project_index_path: /usr/lib/ckan
 
 # other
-REDIS_SERVER: "localhost"
+REDIS_SERVER: "catalog-harvester1d.dev-ocsit.bsp.gsa.gov"
 SOLR_SERVER: placeholder
 env: local
 
