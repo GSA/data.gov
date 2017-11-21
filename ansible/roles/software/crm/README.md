@@ -8,3 +8,5 @@
     - `cd ../../..`
     - `ansible-playbook crm-web.yml -i inventories/local/hosts --tags provision --skip-tags prod`
     - Open http://localhost:8888/
+    
+    - PHPMyadmin : `docker run --name myadmin -d -e PMA_HOST=docker.for.mac.localhost -e PMA_PORT=3377 -e PMA_USER=crm -e PMA_PASSWORD=superpassword -p 8997:80 phpmyadmin/phpmyadmin`
