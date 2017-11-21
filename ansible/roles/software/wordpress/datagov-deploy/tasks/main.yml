@@ -145,6 +145,11 @@
     dest: "{{ project_source_new_code_path }}/web/wp/wp-includes/js/swfupload/swfupload.swf"
     state: absent
 
+- lineinfile:
+    path: "{{ project_source_new_code_path }}/web/app/plugins/amazon-s3-and-cloudfront/classes/as3cf-filter.php"
+    regexp: '\$value.*\$this->replace_urls\( \$value, \$url_pairs \);'
+    state: absent
+
 #- name: Set up main wp cronjob
 #  cron:
 #    name: "Set up main wp cronjob"
