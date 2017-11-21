@@ -3,7 +3,7 @@
     - `cp ~/.ssh/id_rsa.pub authorized_keys`
     - `docker build -t gsa/crm .`
     - `docker-compose up -d`
-    - Get fresh sql dump of Data.gov WordPress
+    - Get fresh sql dump of crm
     - `mysql -P 3377 -u crm -h 127.0.0.1 -psuperpassword crm < ~/Desktop/prod.crm.sql`
     - `cd ../../..`
     - `ansible-playbook crm-web.yml -i inventories/local/hosts --tags provision --skip-tags prod`
