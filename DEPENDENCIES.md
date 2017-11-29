@@ -1,6 +1,8 @@
-| Component                                           | Branch Used | Requires.io                                                                                                                                                                                                   |
+### Datagov-deploy
 [![Requirements Status](https://requires.io/github/GSA/datagov-deploy/requirements.svg?branch=master)](https://requires.io/github/GSA/datagov-deploy/requirements/?branch=master)
 
+## Dependencies
+| Component                                           | Branch Used | Requires.io                                                                                                                                                                                                   |
 |-----------------------------------------------------|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **CKAN (Python)**                                   |             |                                                                                                                                                                                                               |
 | https://github.com/GSA/ckan                         | datagov     | [![Requirements Status](https://requires.io/github/GSA/ckan/requirements.svg?branch=datagov)](https://requires.io/github/GSA/ckan/requirements/?branch=datagov)                                               |
