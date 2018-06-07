@@ -27,6 +27,15 @@
           s3_bucket: "{{ s3_bucket_federation | default('') }}",
           secret_key: "{{ jekyll_webhook_secret | default('') }}"
         }
+      - {
+          name: "data-strategy",
+          repo: "https://github.com/GSA/data-strategy",
+          config: "_config_prod.yml",
+          branch: "master",
+          port: 8002,
+          s3_bucket: "{{ s3_bucket_strategy | default('') }}",
+          secret_key: "{{ jekyll_webhook_secret | default('') }}"
+        }
 
   roles:
     - software/ubuntu/common
