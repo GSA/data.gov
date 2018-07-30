@@ -33,7 +33,7 @@ nginx_server_tokens: "on"
 
 nginx_client_max_body_size: "64m"
 
-nginx_server_names_hash_bucket_size: "64"
+nginx_server_names_hash_bucket_size: "128"
 
 nginx_proxy_cache_path: ""
 
