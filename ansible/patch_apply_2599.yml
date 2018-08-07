@@ -1,5 +1,5 @@
 ---
-hosts: catalog-web
+hosts: all # run with --limit catalog-web
 remote_user: ubuntu
 become: yes
 become_method: sudo
