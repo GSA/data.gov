@@ -1,0 +1,246 @@
+From dd44d441088020e6bac02b2597276b40f1b8bb10 Mon Sep 17 00:00:00 2001
+From: Joe Krzystan <joseph.krzystan@gsa.gov>
+Date: Fri, 29 Jun 2018 09:34:06 -0400
+Subject: [PATCH 1/2] Backport ckan PR2599
+
+Bring in updated url_for implementation from
+https://github.com/ckan/ckan/pull/2599/
+---
+ ckan/lib/helpers.py      | 40 ++++++++++++++++++++++++++++++++--------
+ ckan/templates/base.html |  2 +-
+ 2 files changed, 33 insertions(+), 9 deletions(-)
+
+diff --git a/ckan/lib/helpers.py b/ckan/lib/helpers.py
+index 8552b035d9..e5f781628e 100644
+--- a/ckan/lib/helpers.py
++++ b/ckan/lib/helpers.py
+@@ -109,6 +109,24 @@ def url(*args, **kw):
+     my_url = _pylons_default_url(*args, **kw)
+     return _add_i18n_to_url(my_url, locale=locale, **kw)
+ 
++def get_site_protocol_and_host():
++    '''Return the protocol and host of the configured `ckan.site_url`.
++    This is needed to generate valid, full-qualified URLs.
++    If `ckan.site_url` is set like this::
++        ckan.site_url = http://example.com
++
++    Then this function would return a tuple `('http', 'example.com')`
++    If the setting is missing, `(None, None)` is returned instead.
++    '''
++    site_url = config.get('ckan.site_url', None)
++
++    if site_url is not None:
++        parsed_url = urlparse.urlparse(site_url)
++        return (
++            parsed_url.scheme.encode('utf-8'),
++            parsed_url.netloc.encode('utf-8')
++        )
++    return (None, None)
+ 
+ def url_for(*args, **kw):
+     '''Return the URL for the given controller, action, id, etc.
+@@ -139,6 +157,8 @@ def url_for(*args, **kw):
+             raise Exception('api calls must specify the version! e.g. ver=3')
+         # fix ver to include the slash
+         kw['ver'] = '/%s' % ver
++    if kw.get('qualified', False):
++        kw['protocol'], kw['host'] = get_site_protocol_and_host()
+     my_url = _routes_default_url_for(*args, **kw)
+     kw['__ckan_no_root'] = no_root
+     return _add_i18n_to_url(my_url, locale=locale, **kw)
+@@ -222,7 +242,11 @@ def _add_i18n_to_url(url_to_amend, **kw):
+         root = ''
+     if kw.get('qualified', False):
+         # if qualified is given we want the full url ie http://...
+-        root = _routes_default_url_for('/', qualified=True)[:-1]
++        protocol, host = get_site_protocol_and_host()
++        root = _routes_default_url_for('/',
++                                        qualified=True,
++                                        host=host,
++                                        protocol=protocol)[:-1]
+     # ckan.root_path is defined when we have none standard language
+     # position in the url
+     root_path = config.get('ckan.root_path', None)
+@@ -231,15 +255,15 @@ def _add_i18n_to_url(url_to_amend, **kw):
+         # into the ecportal core is done - Toby
+         # we have a special root specified so use that
+         if default_locale:
+-            root = re.sub('/{{LANG}}', '', root_path)
++            root_path = re.sub('/{{LANG}}', '', root_path)
+         else:
+-            root = re.sub('{{LANG}}', locale, root_path)
++            root_path = re.sub('{{LANG}}', locale, root_path)
+         # make sure we don't have a trailing / on the root
+-        if root[-1] == '/':
+-            root = root[:-1]
+-        url = url_to_amend[len(re.sub('/{{LANG}}', '', root_path)):]
+-        url = '%s%s' % (root, url)
+-        root = re.sub('/{{LANG}}', '', root_path)
++        if root_path[-1] == '/':
++            root_path = root_path[:-1]
++
++        url_path = url_to_amend[len(root):]
++        url = '%s%s%s' % (root, root_path, url_path)
+     else:
+         if default_locale:
+             url = url_to_amend
+diff --git a/ckan/templates/base.html b/ckan/templates/base.html
+index 711475b1f7..97f9301d71 100644
+--- a/ckan/templates/base.html
++++ b/ckan/templates/base.html
+@@ -86,7 +86,7 @@
+   </head>
+ 
+   {# Allows custom attributes to be added to the <body> tag #}
+-  <body{% block bodytag %} data-site-root="{{ h.url('/', locale='default', qualified=true) }}" data-locale-root="{{ h.url('/', qualified=true) }}" {% endblock %}>
++  <body{% block bodytag %} data-site-root="{{ h.url_for('/', locale='default', qualified=true) }}" data-locale-root="{{ h.url_for('/', qualified=true) }}" {% endblock %}>
+ 
+     {#
+     The page block allows you to add content to the page. Most of the time it is
+
+From 65b4f6e5c9a056afb85a7573504bc76a5a6934c7 Mon Sep 17 00:00:00 2001
+From: Joe Krzystan <joseph.krzystan@gsa.gov>
+Date: Fri, 29 Jun 2018 09:43:53 -0400
+Subject: [PATCH 2/2] Backport url_for in api_info template
+
+Implementation from ckan 2.5 to
+leverage url_for when rendering the api_info
+template.
+
+https://github.com/ckan/ckan/commit/3bc799df894f26d209c2e2ff57e2306f2ffad6ba
+---
+ ckan/lib/helpers.py                        | 15 ++++++-----
+ ckan/templates/ajax_snippets/api_info.html | 29 +++++++++++-----------
+ 2 files changed, 23 insertions(+), 21 deletions(-)
+
+diff --git a/ckan/lib/helpers.py b/ckan/lib/helpers.py
+index e5f781628e..3a5b77bf94 100644
+--- a/ckan/lib/helpers.py
++++ b/ckan/lib/helpers.py
+@@ -16,6 +16,7 @@
+ import copy
+ import urlparse
+ from urllib import urlencode
++import uuid
+ 
+ from paste.deploy.converters import asbool
+ from webhelpers.html import escape, HTML, literal, url_escape
+@@ -2055,11 +2056,13 @@ def get_organization(org=None, include_datasets=False):
+     except (NotFound, ValidationError, NotAuthorized):
+         return {}
+ 
+-def parse_datastore_root_url(url):
+-    parsed_url = urlparse.urlparse(url)
+-    if not bool(parsed_url.scheme) or not bool(parsed_url.netloc):
+-        return "NOT_A_VALID_URL_FOR_"
+-    return url
++
++def sanitize_id(id_):
++    '''Given an id (uuid4), if it has any invalid characters it raises
++    ValueError.
++    '''
++    return str(uuid.UUID(id_))
++
+ 
+ # these are the functions that will end up in `h` template helpers
+ __allowed_functions__ = [
+@@ -2178,5 +2181,5 @@ def parse_datastore_root_url(url):
+     'urlencode',
+     'check_config_permission',
+     'view_resource_url',
+-    'parse_datastore_root_url',
++    'sanitize_id'
+ ]
+diff --git a/ckan/templates/ajax_snippets/api_info.html b/ckan/templates/ajax_snippets/api_info.html
+index d21c5c5152..6273865b26 100644
+--- a/ckan/templates/ajax_snippets/api_info.html
++++ b/ckan/templates/ajax_snippets/api_info.html
+@@ -1,18 +1,18 @@
+ {#
+ Displays information about accessing a resource via the API.
+ 
+-datastore_root_url - The root API url.
+ resource_id - The resource id
+ embedded - If true will not include the "modal" classes on the snippet.
+ 
+ Example
+ 
+-    {% snippet 'ajax_snippets/api_info.html', datastore_root_url=datastore_root_url, resource_id=resource_id, embedded=true %}
++    {% snippet 'ajax_snippets/api_info.html', resource_id=resource_id, embedded=true %}
+ 
+ #}
+ 
+-{% set sql_example_url = datastore_root_url + '/datastore_search_sql?sql=SELECT * from "' + resource_id + '" WHERE title LIKE \'jones\'' %}
+-
++{% set resource_id = h.sanitize_id(resource_id) %}
++{% set sql_example_url = h.url_for(controller='api', action='action', ver=3, logic_function='datastore_search_sql', qualified=True) + '?sql=SELECT * from "' + resource_id + '" WHERE title LIKE \'jones\'' %}
++{# not urlencoding the sql because its clearer #}
+ <div{% if not embedded %} class="modal"{% endif %}>
+   <div class="modal-header">
+     <h3>
+@@ -40,19 +40,19 @@ <h3>
+             <tbody>
+               <tr>
+                 <th scope="row">{{ _('Create') }}</th>
+-                <td><code>{{ h.parse_datastore_root_url(datastore_root_url) }}/datastore_create</code></td>
++                <td><code>{{ h.url_for(controller='api', action='action', ver=3, logic_function='datastore_create', qualified=True) }}</code></td>
+               </tr>
+               <tr>
+                 <th scope="row">{{ _('Update / Insert') }}</th>
+-                <td><code>{{ h.parse_datastore_root_url(datastore_root_url) }}/datastore_upsert</code></td>
++                <td><code>{{ h.url_for(controller='api', action='action', ver=3, logic_function='datastore_upsert', qualified=True) }}</code></td>
+               </tr>
+               <tr>
+                 <th scope="row">{{ _('Query') }}</th>
+-                <td><code>{{ h.parse_datastore_root_url(datastore_root_url) }}/datastore_search</code></td>
++                <td><code>{{ h.url_for(controller='api', action='action', ver=3, logic_function='datastore_search', qualified=True) }}</code></td>
+               </tr>
+               <tr>
+                 <th scope="row">{{ _('Query (via SQL)') }}</th>
+-                <td><code>{{ h.parse_datastore_root_url(datastore_root_url) }}/datastore_search_sql</code></td>
++                <td><code>{{ h.url_for(controller='api', action='action', ver=3, logic_function='datastore_search_sql', qualified=True) }}</code></td>
+               </tr>
+ 
+             </tbody>
+@@ -69,19 +69,18 @@ <h3>
+         <div class="accordion-inner">
+           <strong>{{ _('Query example (first 5 results)') }}</strong>
+           <p>
+-          <code><a href="{{ h.parse_datastore_root_url(datastore_root_url) }}/datastore_search?resource_id={{resource_id}}&limit=5" target="_blank">{{ h.parse_datastore_root_url(datastore_root_url) }}/datastore_search?resource_id={{resource_id}}&limit=5</a></code>
++          <code><a href="{{ h.url_for(controller='api', action='action', ver=3, logic_function='datastore_search', resource_id=resource_id, limit=5, qualified=True) }}" target="_blank">{{ h.url_for(controller='api', action='action', ver=3, logic_function='datastore_search', resource_id=resource_id, limit=5, qualified=True) }}</a></code>
+           </p>
+ 
+           <strong>{{ _('Query example (results containing \'jones\')') }}</strong>
+           <p>
+-          <code><a href="{{ h.parse_datastore_root_url(datastore_root_url) }}/datastore_search?resource_id={{resource_id}}&q=jones"
+-              target="_blank">{{ h.parse_datastore_root_url(datastore_root_url) }}/datastore_search?resource_id={{resource_id}}&q=jones</a></code>
++          <code><a href="{{ h.url_for(controller='api', action='action', ver=3, logic_function='datastore_search', resource_id=resource_id, q='jones', qualified=True) }}" target="_blank">{{ h.url_for(controller='api', action='action', ver=3, logic_function='datastore_search', resource_id=resource_id, q='jones', qualified=True) }}</a></code>
+           </p>
+ 
+           <strong>{{ _('Query example (via SQL statement)') }}</strong>
+           <p>
+-          <code><a href="{{ h.parse_datastore_root_url(sql_example_url) }}"
+-              target="_blank">{{h.parse_datastore_root_url(sql_example_url)}}</a></code>
++          <code><a href="{{sql_example_url}}"
++              target="_blank">{{sql_example_url}}</a></code>
+           </p>
+ 
+         </div>
+@@ -102,7 +101,7 @@ <h3>
+     q: 'jones' // query for 'jones'
+   };
+   $.ajax({
+-    url: '{{ datastore_root_url }}/datastore_search',
++    url: '{{ h.url_for(controller='api', action='action', ver=3, logic_function='datastore_search', qualified=True) }}',
+     data: data,
+     dataType: 'jsonp',
+     success: function(data) {
+@@ -121,7 +120,7 @@ <h3>
+         <div class="accordion-inner">
+           <pre>
+ import urllib
+-url = '{{ datastore_root_url }}/datastore_search?resource_id={{resource_id}}&amp;limit=5&amp;q=title:jones'
++url = '{{ h.url_for(qualified=True, controller='api', action='action', ver=3, logic_function='datastore_search', resource_id=resource_id, limit=5) + '&q=title:jones' }}'  {# not urlencoding the ":" because its clearer #}
+ fileobj = urllib.urlopen(url)
+ print fileobj.read()
+ </pre>
