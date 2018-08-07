@@ -1,0 +1,13 @@
+---
+hosts: catalog-web
+remote_user: ubuntu
+become: yes
+become_method: sudo
+tasks:
+  - name: Bring in updated url_for implementation from PR2599
+    patch: >
+      src=./files/2599_ckan.patch
+      basedir=/usr/lib/ckan/src/ckan
+
+  - name: Restart apache2 one more time
+    service: name=apache2 state=restarted enabled=yes
