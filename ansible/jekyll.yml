@@ -38,14 +38,14 @@
         }
 
   roles:
-    - software/ubuntu/common
+    - software/ubuntu/common   
     - {role: software/common/secops-ssh, tags: ['secops'] }
     - {role: software/common/trendmicro, tags: ['trendmicro'] }
     - {role: monitoring/fluentd/kernel, tags: ['frontend', 'harvester', 'fluentd'] }
     - {role: monitoring/fluentd/limits, tags: ['frontend', 'harvester', 'fluentd'] }
     - {role: monitoring/fluentd/td-agent, tags: ['frontend', 'harvester', 'fluentd'] }
     - {role: software/common/misc, tags: ['misc'] }
-    - { role: rvm.ruby }
+    - {role: rvm.ruby }
     - software/ckan/apache
     - software/jekyll
 #    - { role: gsa.rvm1-ruby,
