@@ -1,0 +1,29 @@
+# test file for logrotated
+---
+- hosts: localhost
+  connection: local
+  become: true
+  roles:
+    - ../../
+  vars:
+    logrotated_logrotate_d_files:
+      apache2:
+        - logs:
+            - '/var/log/apache2/*.log'
+          weekly: true
+          missingok: true
+          rotate: 52
+          compress: true
+          delaycompress: true
+          notifempty: true
+          create: '640 root adm'
+          sharedscripts: true
+          scripts:
+            postrotate:
+              - 'if /etc/init.d/apache2 status > /dev/null ; then \'
+              - '  /etc/init.d/apache2 reload > /dev/null; \'
+              - 'fi;'
+            prerotate:
+              - 'if [ -d /etc/logrotate.d/httpd-prerotate ]; then \'
+              - '  run-parts /etc/logrotate.d/httpd-prerotate; \'
+              - 'fi;'

@@ -1,0 +1,5 @@
+# ignoring .idea-directory of phpstorm
+/.idea
+/.vagrant
+.DS_Store
+

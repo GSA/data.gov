@@ -11,18 +11,19 @@
 - src: geerlingguy.php
 - src: geerlingguy.php-memcached
 - src: geerlingguy.php-mysql
-- src: heskethm.wp-cli
+- src: sbaerlocher.wp-cli
 - src: geerlingguy.java
 - src: geerlingguy.elasticsearch
 - src: geerlingguy.kibana
+- src: geerlingguy.pip
 - src: ANXS.apt
 - src: ANXS.build-essential
-- src: tersmitten.pip
 - src: dwcramer.upstart
-- src: tersmitten.logrotated
+- src: oefenweb.logrotated
 - src: teampants.elastalert
 - src: nickhammond.logrotate
-- src: franklinkim.php5-newrelic
+- src: nleutner.newrelic-php
+- src: newrelic.newrelic-infra
 
 - src: https://github.com/GSA/rvm1-ansible
   version: v1.3.8-fix

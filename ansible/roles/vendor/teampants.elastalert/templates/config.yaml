@@ -1,0 +1,15 @@
+---
+rules_folder: /etc/elastalert/rules
+run_every:
+  minutes: 5
+buffer_time:
+  minutes: 45
+
+es_host: {{ elastalert_elasticsearch_host }}
+es_port: {{ elastalert_elasticsearch_port }}
+
+writeback_index: elastalert_status
+
+alert_time_limit:
+  days: 2
+max_query_size: 10000

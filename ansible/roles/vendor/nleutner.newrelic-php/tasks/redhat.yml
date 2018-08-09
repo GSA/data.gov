@@ -1,0 +1,14 @@
+---
+- name: RedHat | Set newrelic_loaded_os_family
+  set_fact:
+    newrelic_loaded_os_family: "{{ ansible_os_family }}"
+
+- name: RedHat | Add the Rew Relic repository
+  yum:
+    name: "{{ newrelic_repo_url }}"
+    state: present
+
+- name: RedHat | Install New Relic PHP Agent
+  yum:
+    name: newrelic-php5
+    state: latest

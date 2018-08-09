@@ -1,0 +1,30 @@
+---
+sudo: required
+dist: trusty
+language: generic
+
+env:
+  - PLAYBOOK=test.yml
+
+before_install:
+  - sudo apt-get update -qq
+
+install:
+  # install ansible
+  - sudo pip install ansible
+
+  # configure ansible
+  - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
+
+  # install dependencies from meta/main.yml
+  - "read dependencies < <(cat meta/main.yml  | grep 'role:' | awk '{print $3}' | tr '\n' ' '); ansible-galaxy install $dependencies"
+
+script:
+  # check syntax
+  - "ansible-playbook -i tests/inventory tests/$PLAYBOOK --syntax-check"
+
+  # initial run
+  - "ansible-playbook -i tests/inventory tests/$PLAYBOOK --connection=local --sudo"
+
+  # check idempotence
+  - "ansible-playbook -i tests/inventory tests/$PLAYBOOK --connection=local --sudo"

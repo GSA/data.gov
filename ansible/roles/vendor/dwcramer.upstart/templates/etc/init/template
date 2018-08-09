@@ -1,0 +1,62 @@
+#!upstart
+
+# {{ ansible_managed }}
+
+description "{{ upstart_description }}"
+
+{% if upstart_environment is iterable %}
+{%   for environment_variable in upstart_environment %}
+{% if upstart_environment_global %}export{% else %}env{% endif %} {{ environment_variable.name }}={{ environment_variable.value }}
+{%   endfor %}
+{% endif %}
+
+{% for event in upstart_start_on %}
+start on {{ event }}
+{% endfor %}
+
+{% for event in upstart_stop_on %}
+stop on {{ event }}
+{% endfor %}
+
+{% if upstart_respawn %}
+respawn
+{% endif %}
+
+{% if upstart_respawn_limit %}
+respawn limit {{ upstart_respawn_limit_count }} {{ upstart_respawn_limit_interval }}
+{% endif %}
+
+{% if upstart_file_descriptor_limit %}
+limit nofile {{ upstart_file_descriptor_limit }} {{ upstart_file_descriptor_limit }}
+{% endif %}
+
+pre-start script
+  mkdir -p {{ upstart_runtime_root }}
+  chown {{ upstart_user }}:{{ upstart_group }} {{ upstart_runtime_root }}
+  mkdir -p {{ upstart_log_root }}
+  chown {{ upstart_user }}:{{ upstart_group }} {{ upstart_log_root }}
+{% if upstart_pre_start is iterable %}
+{%   for command in upstart_pre_start %}
+  {{ command  }}
+{%   endfor %}
+{% endif %}
+end script
+
+{% if upstart_script is iterable %}
+script
+{%   for command in upstart_script %}
+  {{ command }}
+{%   endfor %}
+end script
+{% else %}
+exec start-stop-daemon --start --chuid {{ upstart_user }} --group {{ upstart_group }} --make-pidfile --pidfile {{ upstart_pidfile_path }} --exec {{ upstart_exec_path }}{{ ' -- '~upstart_exec_flags|join(' ') if upstart_exec_flags else '' }} {{ '2>&1' if upstart_capture_errors else '' }} >> {{ upstart_log_path }}
+{% endif %}
+
+post-stop script
+  rm {{ upstart_pidfile_path }}
+{% if upstart_post_stop is iterable %}
+{%   for command in upstart_post_stop %}
+  {{ command }}
+{%   endfor %}
+{% endif %}
+end script

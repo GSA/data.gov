@@ -1,0 +1,21 @@
+---
+
+stages:
+  - test
+
+before_script:
+  # Install tests rules
+  - git clone https://github.com/arillso/tests tests
+
+lint:
+  stage: test
+  image: index.docker.io/arillso/ansible-lint
+  script:
+    # Ansible Lint check
+    - ansible-lint -R -r tests/lint-rules/ .
+
+    # YAML Lint check
+    - yamllint -c tests/yaml-lint/yamllint.yml .
+
+  tags:
+    - shared

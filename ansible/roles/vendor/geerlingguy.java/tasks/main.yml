@@ -1,0 +1,37 @@
+---
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+  when:
+    - ansible_os_family != 'Debian'
+    - ansible_distribution != 'Fedora'
+
+- name: Include OS-specific variables for Fedora.
+  include_vars: "{{ ansible_distribution }}.yml"
+  when: ansible_distribution == 'Fedora'
+
+- name: Include version-specific variables for Debian.
+  include_vars: "{{ ansible_distribution|title }}-{{ ansible_distribution_version.split('.')[0] }}.yml"
+  when: ansible_os_family == 'Debian'
+
+- name: Define java_packages.
+  set_fact:
+    java_packages: "{{ __java_packages | list }}"
+  when: java_packages is not defined
+
+# Setup/install tasks.
+- include_tasks: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include_tasks: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- include_tasks: setup-FreeBSD.yml
+  when: ansible_os_family == 'FreeBSD'
+
+# Environment setup.
+- name: Set JAVA_HOME if configured.
+  template:
+    src: java_home.sh.j2
+    dest: /etc/profile.d/java_home.sh
+    mode: 0644
+  when: java_home is defined and java_home != ''

@@ -1,0 +1,25 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: Norman Leutner
+  description: New Relic PHP Agent role / Application monitoring for RHEL/CentOS, Ubuntu, Debian
+  company: "all2e GmbH"
+  license: "license (BSD, MIT)"
+  min_ansible_version: 1.4
+  platforms:
+    - name: EL
+      versions:
+        - 5
+        - 6
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - lenny
+        - squeeze
+        - wheezy
+  categories:
+    - monitoring
+

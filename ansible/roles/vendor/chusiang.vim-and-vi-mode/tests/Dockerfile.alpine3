@@ -1,0 +1,8 @@
+# Dockerfile for building image that contains software stack provisioned by Ansible.
+
+FROM williamyeh/ansible:alpine3-onbuild
+MAINTAINER Chu-Siang Lai <chusiang.lai@gmail.com>
+
+# run.
+ENV PLAYBOOK provision.yml
+RUN ansible-playbook-wrapper -vvv
