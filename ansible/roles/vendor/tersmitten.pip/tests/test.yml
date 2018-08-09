@@ -1,7 +1,0 @@
-# test file for pip
----
-- hosts: localhost
-  connection: local
-  become: true
-  roles:
-    - ../../

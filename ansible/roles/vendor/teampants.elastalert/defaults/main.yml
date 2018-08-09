@@ -1,5 +1,0 @@
----
-elastalert_index: elastalert_status
-elastalert_version: v0.0.70
-elastalert_elasticsearch_host: localhost
-elastalert_elasticsearch_port: 9200
