@@ -24,8 +24,6 @@
 - src: nickhammond.logrotate
 - src: nleutner.newrelic-php
 - src: newrelic.newrelic-infra
-- src: rvm.ruby
-
-#- src: https://github.com/GSA/rvm1-ansible
-#  version: v1.3.8-fix
-#  name: gsa.rvm1-ruby
+- src: https://github.com/GSA/rvm1-ansible
+  version: v1.3.8-fix
+  name: gsa.rvm1-ruby
