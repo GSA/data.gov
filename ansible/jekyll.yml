@@ -38,7 +38,7 @@
         }
 
   roles:
-    - software/ubuntu/common   
+    - software/ubuntu/common
     - {role: software/common/secops-ssh, tags: ['secops'] }
     - {role: software/common/trendmicro, tags: ['trendmicro'] }
     - {role: monitoring/fluentd/kernel, tags: ['frontend', 'harvester', 'fluentd'] }
