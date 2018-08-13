@@ -28,9 +28,16 @@ jobs:
       - run:
           name: Generate fake vault password
           command: echo 'password' > ansible-secret.txt
+      - restore_cache:
+          keys:
+            - v1-bundle-{{ checksum "Gemfile.lock" }}
       - run:
           name: Install dependencies
           command: bundle install --path vendor/bundle
+      - save_cache:
+          key: v1-bundle-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
       - run:
           name: Run test-kitchen
           command: bundle exec kitchen test
