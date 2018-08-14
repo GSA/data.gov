@@ -1,9 +1,4 @@
 ---
-- name: prepare packages needed for harvester
-  action: apt pkg={{item}} state=installed
-  with_items:
-  - redis-server
-
-- name: copy redis.conf
-  copy: src=etc/redis/redis.conf dest=/etc/redis/redis.conf
-  notify: restart redis
+- name: Include datagov-deploy-ansible role
+  import_role:
+    name: datagov-deploy-redis

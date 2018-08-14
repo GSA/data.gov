@@ -1,0 +1,4 @@
+d {{ redis_pidfile|dirname }} 0755 {{ redis_user }} {{ redis_group }}
+{% if redis_pidfile|dirname != redis_sentinel_pidfile|dirname -%}
+d {{ redis_sentinel_pidfile|dirname }} 0755 {{ redis_user }} {{ redis_group }}
+{% endif -%}
