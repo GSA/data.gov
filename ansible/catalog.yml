@@ -22,7 +22,9 @@
     - {role: monitoring/fluentd/kernel, tags: ['bsp', 'fluentd'] }
     - {role: monitoring/fluentd/limits, tags: ['bsp', 'fluentd'] }
     - {role: monitoring/fluentd/td-agent, tags: ['bsp', 'fluentd'] }
-    - {role: software/ckan/apache, tags: ['frontend', 'apache']}
+    - role: software/ckan/apache
+      python_home: "{{ python_version_directory }}"
+      tags: ['frontend', 'apache']
     - {role: software/ckan/postgresql, tags: ['frontend', 'harvester', 'db', 'db-install']}
     - {role: software/ckan/solr, tags: ['frontend', 'harvester', 'solr']}
 
