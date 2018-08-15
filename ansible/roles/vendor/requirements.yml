@@ -29,4 +29,4 @@
   name: gsa.rvm1-ruby
 
 - src: https://github.com/GSA/datagov-deploy-redis
-  name: gsa.datagove-deploy-redis
+  name: gsa.datagov-deploy-redis
