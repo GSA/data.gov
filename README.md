@@ -130,8 +130,31 @@ See example(s) below
 
 **Unable to resolve host IP**: `echo 127.0.0.1 $(hostname) >> /etc/hosts`
 
-# Development
+## Development
 
-Install the dependencies.
+Install the dependencies (from a python virtualenv).
 
-    $ bundle install
+    $ make setup
+
+Run the playbooks locally.
+
+    $ make test
+
+Run a single suite.
+
+    $ bundle exec kitchen test catalog
+
+Log into the instance to debug.
+
+    $ bundle exec kitchen login catalog
+
+Re-run the playbook from a particular step.
+
+    $ ANSIBLE_EXTRA_FLAGS='--start-at-task="software/ckan/apache : make sure postgresql packages are installed"' bundle exec kitchen converge catalog
+
+Lint your work.
+
+    $ make lint
+
+
+Refer to [kitchen](https://kitchen.ci/) commands for more information.

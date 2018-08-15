@@ -1,4 +1,8 @@
-.PHONY: lint test
+.PHONY: lint setup test
+
+setup:
+	pip install -r requirements.txt
+	bundle install
 
 lint:
 	ansible-playbook --syntax-check ansible/*.yml
