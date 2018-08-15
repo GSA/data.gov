@@ -42,6 +42,9 @@ platforms:
 suites:
   - name: catalog
     provisioner:
+      hosts:
+        - catalog-web
+        - solr
       playbook: ansible/catalog.yml
 #  - name: crm-web
 #    provisioner:
