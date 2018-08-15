@@ -1,4 +1,4 @@
 ---
 - name: Include datagov-deploy-ansible role
   import_role:
-    name: datagov-deploy-redis
+    name: gsa.datagov-deploy-redis
