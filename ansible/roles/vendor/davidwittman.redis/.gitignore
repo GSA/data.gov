@@ -1,0 +1,5 @@
+*.swp
+.kitchen/
+.bundle
+.vagrant
+*.retry
