@@ -28,7 +28,9 @@
     dest: /etc/td-agent/config.d/1-{{ group_names[0] }}-source.conf
     owner: td-agent
     group: td-agent
-  tags: app
+  tags:
+    - app
+    - skip_in_kitchen # cannot find ungrouped-source.j2
 
 - name: Configure host filter
   template:

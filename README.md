@@ -129,3 +129,9 @@ See example(s) below
 **ntpd issues**: `apt-get remove ntp && apt-get purge ntp && apt-get autoclean && apt-get autoremove`
 
 **Unable to resolve host IP**: `echo 127.0.0.1 $(hostname) >> /etc/hosts`
+
+# Development
+
+Install the dependencies.
+
+    $ bundle install
