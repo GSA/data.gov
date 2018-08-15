@@ -3,7 +3,7 @@
   roles:
     - software/ubuntu/common
     - software/ckan/common
-    - software/ckan/apache
+    - gsa.datagov-deploy-apache2
   tasks:
     - name: Assert custom python was added to ld.so.cache
       shell: ldconfig -p | grep -q /usr/local/lib/python2.7.10
