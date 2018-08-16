@@ -1,6 +1,7 @@
-# The [twelve-factor app](http://12factor.net) Checklist
+# Principles
 
-Also factors in the four principles of modern [Release Engineering](https://en.wikipedia.org/wiki/Release_engineering)
+We lean heavily on the [twelve-factor app](http://12factor.net) as well as the
+four principles of modern [Release Engineering](https://en.wikipedia.org/wiki/Release_engineering):
 
 * **Identifiability** Being able to identify all of the source, tools, environment, and other components that make up a particular release.
 * **Reproducibility** The ability to integrate source, third party components, data, and deployment externals of a software system in order to guarantee operational stability.
