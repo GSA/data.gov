@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  roles:
+  - role: datagov-deploy-apache2
+    python_home: /usr/local
+  tasks:
+    - name: assert WSGIPythonHome is set
+      command: grep -rq "WSGIPythonHome /usr/local" /etc/apache2/conf-enabled
