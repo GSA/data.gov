@@ -17,7 +17,8 @@
     - {role: monitoring/fluentd/limits, tags: ['bsp', 'fluentd'] }
     - {role: monitoring/fluentd/td-agent, tags: ['bsp', 'fluentd'] }
     - software/ckan/common
-    - software/ckan/apache
+    - role: gsa.datagov-deploy-apache2
+      python_home: "{{ python_version_directory }}"
     - {role: software/ckan/postgresql, tags: ['db', 'db-install']}
     - {role: software/ckan/solr, tags: ['solr']}
     - {role: software/inventory/ckan-app, tags: ['deploy']}

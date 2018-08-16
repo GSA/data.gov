@@ -14,9 +14,6 @@ GEM
       test-kitchen (~> 1.4)
     kitchen-docker (2.7.0)
       test-kitchen (>= 1.0.0)
-    kitchen-sync (2.2.1)
-      net-sftp
-      test-kitchen (>= 1.0.0)
     little-plugger (1.1.4)
     logging (2.2.2)
       little-plugger (~> 1.1)
@@ -29,8 +26,6 @@ GEM
     mixlib-versioning (1.2.2)
     multi_json (1.13.1)
     net-scp (1.2.1)
-      net-ssh (>= 2.6.5)
-    net-sftp (2.1.2)
       net-ssh (>= 2.6.5)
     net-ssh (4.2.0)
     net-ssh-gateway (1.3.0)
@@ -73,8 +68,7 @@ PLATFORMS
 DEPENDENCIES
   kitchen-ansible
   kitchen-docker
-  kitchen-sync
-  test-kitchen
+  test-kitchen (~> 1.0)
 
 BUNDLED WITH
    1.16.3
