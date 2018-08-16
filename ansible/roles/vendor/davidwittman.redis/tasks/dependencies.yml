@@ -1,0 +1,53 @@
+---
+- name: install debian dependencies
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    cache_valid_time: 86400
+    state: present
+  with_items:
+    - gcc
+    - make
+    - libc6-dev
+    # This should be `else omit`, but it fails on Ansible 1.x, so just duplicate gcc
+    - "{{ 'libc6-dev-i386' if redis_make_32bit|bool else 'gcc' }}"
+  when: ansible_os_family == "Debian"
+
+- name: install redhat dependencies
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - gcc
+    - make
+  when: ansible_os_family == "RedHat"
+
+# Conditionally install the i686 build of libgcc if we are building 32-bit
+# It must be version-locked with x64 libgcc, so use 'latest' to update libgcc first
+# Otherwise you get a version mismatch error from yum when installing.
+- name: update libgcc on rhel for 32-bit dependencies
+  yum:
+    name: libgcc
+    state: latest
+  when: ansible_os_family == "RedHat" and redis_make_32bit|bool
+
+- name: install redhat 32-bit dependencies
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - libgcc.i686
+    - glibc-devel.i686
+  when: ansible_os_family == "RedHat" and redis_make_32bit|bool
+
+- name: install suse dependencies
+  zypper:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - gcc
+    - make
+    # This should be `else omit`, but it fails on Ansible 1.x, so just duplicate gcc
+    - "{{ 'gcc-32bit' if redis_make_32bit|bool else 'gcc' }}"
+    - "{{ 'libgcc_s1-32bit' if redis_make_32bit|bool else 'gcc' }}"
+  when: ansible_os_family == 'Suse'

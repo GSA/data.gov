@@ -1,0 +1,46 @@
+version: 2
+jobs:
+  lint:
+    docker:
+      # specify the version you desire here
+      - image: particlekit/ansible-lint
+
+    working_directory: ~/repo
+
+    steps:
+      - run: ansible-lint --version
+      - checkout
+
+      # Ansible Galaxy install requirements
+      - run: ansible-galaxy install -r requirements.yml
+
+      # Ansible syntax check
+      - run: ansible-playbook --syntax-check lint.yml
+
+      # Ansible lint check
+      - run: ansible-lint -v -x ANSIBLE0010 --exclude=/root/.ansible/roles lint.yml
+
+  test:
+    machine: true
+    working_directory: ~/datagov-deploy-redis
+    steps:
+      - checkout
+
+      # Bundle install for ansible-redis role
+      - run:
+          name: Bundle install
+          command: bundle install
+
+      # Run test kitchen for ansible-redis role
+      - run:
+          name: Run kitchen test
+          command: bundle exec kitchen test
+
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - lint
+      - test:
+          requires:
+            - lint
