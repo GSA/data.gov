@@ -1,0 +1,3 @@
+#Ansible Galaxy requirements
+---
+- src: davidwittman.redis

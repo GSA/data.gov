@@ -1,0 +1,55 @@
+*~
+*#
+.#*
+\#*#
+.*.sw[a-z]
+*.un~
+pkg/
+
+.DS_Store
+.vagrant
+secrets.yml
+ansible-secret.txt
+ansible/*.retry
+
+# Ignoring symlinks
+#config/
+src/
+
+# Ignore everything in these directories
+synced_folders/*
+
+# Except this .gitkeep file
+!synced_folders/.gitkeep
+
+# Intellij
+.idea
+/.project
+
+# NetBeans
+/nbproject/
+
+# Ansible
+vendor
+!ansible/roles/vendor
+authorized_keys
+*.retry
+!.env.j2
+ansible/inventories/ocsit
+ansible/inventories/mgmt-ocsit
+
+#SQL
+*.sql
+*.sql.gz
+.data
+
+# Terraform
+/terraform/terraform.tfvars
+.terraform
+/terraform/pilot/terraform.tfstate.backup
+/terraform/pilot/terraform.tfstate
+/terraform/target
+/cloud-formation/*/target
+
+# Kitchen
+.kitchen
