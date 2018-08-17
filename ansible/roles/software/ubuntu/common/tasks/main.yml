@@ -5,6 +5,7 @@
 - name: make sure packages are installed
   action: apt pkg={{item}} state=installed
   with_items:
+    - acl
     - htop
     - atool
     - ruby
