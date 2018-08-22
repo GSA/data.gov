@@ -3,7 +3,6 @@
   action: apt pkg={{item}} state=installed
   with_items:
     - memcached
-    - m2crypto
     - xmlsec1
     - swig
 
