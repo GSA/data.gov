@@ -204,7 +204,9 @@ ckan.tracking_enabled = True
 set debug = False
 ckan.harvest.mq.type = redis
 ckan.harvest.mq.hostname = localhost
+{% if redis_password is defined %}
 ckan.harvest.mq.password = {{ redis_password }}
+{% endif %}
 ckanext.harvest.email = on
 ckan.resource_proxy_enabled = 1
 ckan.spatial.validator.profiles = iso19139ngdc
