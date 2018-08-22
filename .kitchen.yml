@@ -44,8 +44,9 @@ suites:
     provisioner:
       hosts:
         - catalog-web
-        - solr
       playbook: ansible/catalog.yml
+      ansible_extra_flags: >-
+        --tags=frontend,ami-fix,bsp --skip-tags=solr,db,cron,skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
 #  - name: crm-web
 #    provisioner:
 #      playbook: ansible/crm-web.yml
