@@ -29,3 +29,4 @@
     dest: /etc/td-agent/bspcert.pem
     owner: ubuntu
     mode: 0444
+  tags: ['skip_in_kitchen'] # no ubuntu user

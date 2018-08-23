@@ -13,6 +13,7 @@ project_index_path: /usr/lib/ckan
 REDIS_SERVER: "localhost"
 SOLR_SERVER: "{{ vault_solr_server }}"
 env: local
+redis_password: "{{ vault_redis_pass }}"
 
 # max login
 saml2_site_url: https://admin-catalog.data.gov/
