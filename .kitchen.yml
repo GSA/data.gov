@@ -1,7 +1,6 @@
 ---
 driver:
   name: docker
-  privileged: false
   use_sudo: false
 
 transport:
