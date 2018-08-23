@@ -25,6 +25,9 @@
 - name: create directories
   action: file path=/etc/ckan/saml2/ state=directory mode=0755
 
+- name: create pki directory
+  action: file path=/etc/ckan/saml2/pki state=directory mode=0750
+
 - name: copy all needed files
   action: copy src=etc/ckan/saml2/ dest=/etc/ckan/saml2/
 
