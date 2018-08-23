@@ -39,13 +39,20 @@ platforms:
       platform: ubuntu
 
 suites:
-  - name: catalog
+  - name: catalog-web
     provisioner:
       hosts:
         - catalog-web
       playbook: ansible/catalog.yml
       ansible_extra_flags: >-
         --tags=frontend,ami-fix,bsp --skip-tags=solr,db,cron,skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
+  - name: catalog-harvester
+    provisioner:
+      hosts:
+        - catalog-harvester
+      playbook: ansible/catalog.yml
+      ansible_extra_flags: >-
+        --tags=harvester,ami-fix,bsp --skip-tags=apache,solr,db,saml2,skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
 #  - name: crm-web
 #    provisioner:
 #      playbook: ansible/crm-web.yml
