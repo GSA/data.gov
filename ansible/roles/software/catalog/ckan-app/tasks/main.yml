@@ -1,4 +1,10 @@
 ---
+- name: make sure ckanext-saml2 dependency packages are installed
+  action: apt pkg={{item}} state=installed
+  with_items:
+    - memcached
+    - xmlsec1
+    - swig
 
 - name: Remove old rollback code
   file: path="{{ project_source_rollback_path }}" state=absent
