@@ -1,11 +1,4 @@
 ---
-- name: make sure saml dependency packages are installed
-  action: apt pkg={{item}} state=installed
-  with_items:
-    - memcached
-    - xmlsec1
-    - swig
-
 - name: create directories
   action: file path=/etc/ckan/saml2/ state=directory mode=0755
 
