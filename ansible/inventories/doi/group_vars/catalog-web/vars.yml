@@ -13,6 +13,7 @@ project_index_path: /usr/lib/ckan
 REDIS_SERVER: "localhost"
 SOLR_SERVER: placeholder
 env: local
+redis_password: "{{ vault_redis_pass }}"
 
 # secrets
 who_ini_secret: "{{ vault_who_ini_secret }}"
