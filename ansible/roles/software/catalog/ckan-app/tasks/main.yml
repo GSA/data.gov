@@ -50,10 +50,6 @@
 - name: Configure who.ini
   copy: src={{ app_source_path }}/config/environments/{{ env }}/saml2/who.ini dest=/etc/ckan remote_src=True
 
-- name: Upgrade repoze.who to 2.0 for local env
-  pip: name=repoze.who version=2.0 virtualenv="{{project_source_new_code_path }}"
-  when: env == "local"
-
 - name: point site_url in /etc/hosts to localhost
   action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ ckan_site_domain | regex_replace('https?\://','') }}"
   tags: skip_in_kitchen # Device or resource busy ??
