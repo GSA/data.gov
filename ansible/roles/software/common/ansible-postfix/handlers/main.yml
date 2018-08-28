@@ -4,7 +4,7 @@
   service:
     name: postfix
     state: restarted
-  when: not kitchen
+  when: kitchen is not defined
 
 - name: new aliases
   command: newaliases
