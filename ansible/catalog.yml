@@ -28,7 +28,6 @@
     - {role: software/ckan/postgresql, tags: ['frontend', 'harvester', 'db', 'db-install']}
     - {role: software/ckan/solr, tags: ['frontend', 'harvester', 'solr']}
 
-    - {role: software/ckan/saml2, tags: ['frontend', 'harvester', 'saml2']}
     - {role: software/catalog/ckan-app, tags: ['frontend', 'harvester', 'deploy']}
     - {role: software/catalog/ckan-db-setup, tags: ['frontend', 'harvester', 'db', 'db-setup']}
     - {role: software/catalog/ckan-db-init, tags: ['frontend', 'harvester', 'db', 'db-init']}
@@ -39,6 +38,8 @@
     - {role: software/catalog/pycsw-db-setup, tags: ['frontend', 'harvester', 'pycsw','db', 'db-setup']}
     - {role: software/catalog/pycsw-db-init, tags: ['frontend', 'harvester', 'pycsw','db', 'db-init']}
 
+
+    - {role: software/ckan/saml2, tags: ['frontend', 'harvester', 'saml2']}
 
     - {role: software/ckan/security-fix, tags: ['frontend', 'harvester', 'pycsw']}
 
