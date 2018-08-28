@@ -14,7 +14,7 @@
   register: p
 
 - name: Create rollback code
-  copy: src="{{ project_source_new_code_path }}" dest="{{ project_source_rollback_path }}" remote_src=yes group=www-data
+  command: cp --recursive --preserve "{{ project_source_new_code_path }}" "{{ project_source_rollback_path }}"
   when: p.stat.isdir is defined and p.stat.isdir
   tags: skip_ansible_lint
 
