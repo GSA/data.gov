@@ -1,9 +1,4 @@
 ---
-- name: make sure packages are installed
-  action: apt pkg={{item}} state=installed update_cache=yes
-  with_items:
-    - python-psycopg2
-
 - name: Remove old rollback code
   file: path="{{ project_source_rollback_path }}" state=absent
 
@@ -42,9 +37,6 @@
   file: path={{ item }} state=directory group=www-data recurse=yes
   with_items:
     - "{{ datapusher_virtual_env }}"
-
-- name: remove psycopg2
-  action: pip name=psycopg2 virtualenv="{{ project_source_new_code_path }}" state=absent
 
 - name: create directories
   action: file path={{item}} state=directory owner="www-data" group="www-data" mode=0755
