@@ -87,9 +87,12 @@ suites:
 #  - name: harvester
 #    provisioner:
 #      playbook: ansible/harvester.yml
-#  - name: inventory
-#    provisioner:
-#      playbook: ansible/ineventory.yml
+  - name: inventory-web
+    provisioner:
+      hosts: inventory-web
+      playbook: ansible/inventory.yml
+      ansible_extra_flags: >-
+        --skip-tags="solr,db,deploy-rollback,skip_in_kitchen" <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
 #  - name: jekyll
 #    provisioner:
 #      playbook: ansible/jekyll.yml
