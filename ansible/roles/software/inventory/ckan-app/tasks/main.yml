@@ -1,4 +1,11 @@
 ---
+- name: Install build dependencies
+  apt: name={{ item }} state=present
+  with_items:
+    - memcached
+    - swig
+    - xmlsec1
+
 - name: Remove old rollback code
   file: path="{{ project_source_rollback_path }}" state=absent
 
@@ -24,6 +31,10 @@
   vars:
     pkg: "{{ ckan_pkgs }}"
     virtualenv: "{{ project_source_new_code_path }}"
+
+  # TODO move this upstream somewhere. Maybe ckan's requirements.txt.
+- name: install M2Crypto for pysaml2
+  pip: name=M2Crypto version=0.23.0 virtualenv="{{ project_source_new_code_path }}" state=present
 
 - name: Remove old datapusher code
   file: path="{{ datapusher_virtual_env }}" state=absent
