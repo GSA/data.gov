@@ -1,0 +1,21 @@
+---
+
+# MySQL credentials
+env_db_host: "{{ vault_env_db_host }}"
+env_db_user: "{{ vault_env_db_user }}"
+env_db_pass: "{{ vault_env_db_pass }}"
+env_db_name: "{{ vault_env_db_name }}"
+
+# CodeIgniter Session Encryption Key
+env_encryption_key: "{{ vault_codeigniter_encryption_key }}"
+
+# MAX SAML
+saml_sp_private_key: "{{ vault_saml_private_key }}"
+saml_admin_pass: "{{ vault_saml_admin_pass }}"
+
+# CodeIgniter pre-approved admin emails
+codeigniter_pre_approved_admins: "{{ vault_codeigniter_pre_approved_admins }}"
+
+# App
+env_content_protocol: https
+cookie_secure_only: 'TRUE'
