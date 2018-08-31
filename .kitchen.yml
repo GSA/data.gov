@@ -57,6 +57,12 @@ suites:
         redis_password: fake-redis-password
       ansible_extra_flags: >-
         --tags=harvester,ami-fix,bsp --skip-tags=apache,solr,db,saml2,skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
+  - name: postgis-upgrade
+    provisioner:
+      hosts:
+        - catalog-web
+      extra_vars:
+        redis_password: fake-redis-password
 #  - name: crm-web
 #    provisioner:
 #      playbook: ansible/crm-web.yml

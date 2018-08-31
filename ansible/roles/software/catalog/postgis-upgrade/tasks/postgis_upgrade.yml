@@ -1,0 +1,19 @@
+---
+- name: Check existing PostGIS extension version
+  command: psql --quiet --tuples-only --no-align -c 'select postgis_lib_version();'
+  environment:
+    PGDATABASE: "{{ db_name }}"
+    PGHOST: "{{ db_host }}"
+    PGUSER: "{{ db_user }}"
+    PGPASSWORD: "{{ db_password }}"
+  tags: skip_ansible_lint
+  register: postgis_version_actual
+
+- name: Upgrade PostGIS extension
+  command: psql -c 'ALTER EXTENSION postgis UPDATE TO "{{ postgis_version }}";'
+  environment:
+    PGDATABASE: "{{ db_name }}"
+    PGHOST: "{{ db_host }}"
+    PGUSER: "{{ db_user }}"
+    PGPASSWORD: "{{ db_password }}"
+  when: postgis_version_actual.stdout != postgis_version

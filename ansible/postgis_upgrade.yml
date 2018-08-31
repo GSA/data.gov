@@ -1,0 +1,14 @@
+---
+- hosts: catalog-web
+  roles:
+    - role: software/catalog/postgis-upgrade
+      db_name: "{{ catalog_db_name }}"
+      db_host: "{{ CKAN_DB_SERVER }}"
+      db_user: "{{ catalog_db_user }}"
+      db_password: "{{ catalog_db_pass }}"
+
+    - role: software/catalog/postgis-upgrade
+      db_name: "{{ catalog_pycsw_db_name }}"
+      db_host: "{{ PYCSW_DB_SERVER }}"
+      db_user: "{{ catalog_db_user }}"
+      db_password: "{{ catalog_db_pass }}"

@@ -1,0 +1,5 @@
+---
+  # Only run the db upgrade on the first host since there's only one database to upgrade
+- name: Upgrade {{ db_name }} database
+  include: postgis_upgrade.yml
+  when: inventory_hostname == ansible_play_hosts[0]

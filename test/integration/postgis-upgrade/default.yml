@@ -1,0 +1,69 @@
+---
+- hosts: all
+  become: yes
+  become_method: sudo
+  vars:
+    db_name: test
+    db_user: test_user
+    db_host: localhost
+    db_password: testpassword
+    postgis_version: '2.4.4'
+  pre_tasks:
+    - name: install postgres ppa apt-key
+      apt_key:
+        url: 'https://www.postgresql.org/media/keys/ACCC4CF8.asc'
+        state: present
+
+    - name: install postgres ppa
+      apt_repository:
+        repo: deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main
+        update_cache: yes
+        state: present
+
+    - name: install postgresql packages
+      apt: name={{ item }} state=present
+      with_items:
+        - postgresql-9.5
+        - postgresql-9.5-postgis-2.2
+        - postgresql-9.5-postgis-2.2-scripts
+        - python-psycopg2
+
+    - name: start postgresql server
+      service: name=postgresql state=started
+
+    - name: create test role
+      postgresql_user:
+        name: '{{ db_user }}'
+        password: '{{ db_password }}'
+        state: present
+        role_attr_flags: SUPERUSER
+      become_user: postgres
+
+    - name: create test database
+      postgresql_db:
+        name: '{{ db_name }}'
+        owner: '{{ db_user }}'
+      become_user: postgres
+
+      # RDS is actually running 2.2.5, but close enough
+    - name: install the old postgis extension as test user
+      command: psql -c 'CREATE EXTENSION postgis WITH VERSION "2.2.2";' {{ db_name }}
+      environment:
+        PGHOST: '{{ db_host }}'
+        PGUSER: '{{ db_user }}'
+        PGPASSWORD: '{{ db_password }}'
+
+    - name: install upgraded postgis packages
+      apt: name={{ item }} state=present
+      with_items:
+        - postgresql-9.5-postgis-2.4
+        - postgresql-9.5-postgis-2.4-scripts
+
+  roles:
+      # test the role
+    - role: software/catalog/postgis-upgrade
+
+  tasks:
+    - name: assert postgis version is correct
+      shell: psql -Aqt -c 'select postgis_lib_version();' {{ db_name }} | grep -q '{{ postgis_version }}'
+      become_user: postgres
