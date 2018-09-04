@@ -1,4 +1,7 @@
-.PHONY: apply plan ssh
+.PHONY: apply clean plan ssh
+
+clean:
+	rm plan.tfplan
 
 plan:
 	terraform plan -out plan.tfplan

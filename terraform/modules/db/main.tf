@@ -32,8 +32,7 @@ resource "aws_db_instance" "master" {
   identifier_prefix    = "${var.cluster_name}-master-"
   storage_type         = "gp2"
   engine               = "postgres"
-  apply_immediately    = true
-  engine_version       = "9.5"
+  engine_version       = "9.6"
   allow_major_version_upgrade = true
   instance_class       = "db.t2.micro"
   name           = "${var.db_name}"
@@ -41,7 +40,11 @@ resource "aws_db_instance" "master" {
   password         = "${var.db_password}"
   vpc_security_group_ids = ["${aws_security_group.db.id}"]
   db_subnet_group_name = "${aws_db_subnet_group.default.name}"
+
+  # For testing
   backup_retention_period = 1
+  skip_final_snapshot = true
+  apply_immediately    = true
 }
 
 resource "aws_db_instance" "replica" {
@@ -50,4 +53,8 @@ resource "aws_db_instance" "replica" {
   instance_class     = "db.t2.micro"
   replicate_source_db = "${aws_db_instance.master.id}"
   vpc_security_group_ids = ["${aws_security_group.db.id}"]
+
+  # For testing
+  skip_final_snapshot = true
+  apply_immediately    = true
 }
