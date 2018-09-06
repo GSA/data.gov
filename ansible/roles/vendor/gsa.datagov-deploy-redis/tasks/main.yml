@@ -1,1 +1,6 @@
 ---
+- name: Allow read permissions on redis install dir
+  file: dest=/opt/redis owner=root group=redis mode=0755 state=directory recurse=yes
+
+- name: Assert redis is started
+  service: name=redis state=started
