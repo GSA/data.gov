@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Redis' do
-  describe service('redis_6379') do
+  describe service('redis') do
     it { should be_enabled }
     it { should be_running }
   end

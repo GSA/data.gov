@@ -2,6 +2,7 @@
 dependencies:
 - role: 'davidwittman.redis'
   vars:
+    redis_service_name: redis
     redis_dir: /var/lib/redis
     redis_pidfile: /var/run/redis/redis-server.pid
     redis_logfile: /var/log/redis/redis-server.log

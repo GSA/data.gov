@@ -1,5 +1,6 @@
 ---
 - hosts: all
+  remote_user: ubuntu
   become: true
   tasks:
   - name: Remove OS redis packages
