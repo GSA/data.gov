@@ -31,5 +31,4 @@
   name: gsa.rvm1-ruby
 
 - src: https://github.com/GSA/datagov-deploy-redis
-  version: install-dir
   name: gsa.datagov-deploy-redis
