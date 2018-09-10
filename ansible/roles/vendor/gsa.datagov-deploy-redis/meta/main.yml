@@ -7,3 +7,4 @@ dependencies:
     redis_pidfile: /var/run/redis/redis-server.pid
     redis_logfile: /var/log/redis/redis-server.log
     redis_version: 4.0.11
+    redis_install_dir: /usr/local
