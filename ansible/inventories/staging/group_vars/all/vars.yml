@@ -5,6 +5,7 @@ urls_public:
   catalog: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
 urls_private:
   catalog: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
+ckan_site_domain: "{{ urls_public.catalog }}"
 
 # solr
 solr_master_server: datagovsolrm1d.dev-ocsit.bsp.gsa.gov
