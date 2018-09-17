@@ -46,6 +46,7 @@ suites:
       playbook: ansible/catalog.yml
       extra_vars:
         redis_password: fake-redis-password
+        ckan_site_domain: http://test-kitchen-datagov.local
       ansible_extra_flags: >-
         --tags=frontend,ami-fix,bsp --skip-tags=solr,db,cron,skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
   - name: catalog-harvester
