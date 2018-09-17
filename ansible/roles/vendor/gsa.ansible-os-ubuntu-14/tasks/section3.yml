@@ -1,0 +1,290 @@
+- name: "3.1.1 | Ensure IP forwarding is disabled"
+  sysctl:
+      name: net.ipv4.ip_forward
+      value: 0
+      state: present
+      reload: yes
+      ignoreerrors: yes
+  when: ubu14gsa_is_router == false
+  tags:
+      - id_3.1.1
+
+- name: "3.1.2 | Ensure packet redirect sending is disabled"
+  sysctl:
+      name: '{{ item.name }}'
+      value: '{{ item.value }}'
+      sysctl_set: yes
+      state: present
+      reload: yes
+      ignoreerrors: yes
+  with_items:
+      - { name: net.ipv4.conf.all.send_redirects, value: 0 }
+      - { name: net.ipv4.conf.default.send_redirects, value: 0 }
+  when: ubu14gsa_is_router == false
+  tags:
+      - id_3.1.2
+
+- name: "3.2.1 | Ensure source routed packets are not accepted"
+  sysctl:
+      name: '{{ item.name }}'
+      value: '{{ item.value }}'
+      sysctl_set: yes
+      state: present
+      reload: yes
+      ignoreerrors: yes
+  with_items:
+      - { name: net.ipv4.conf.all.accept_source_route, value: 0 }
+      - { name: net.ipv4.conf.default.accept_source_route, value: 0 }
+  tags:
+      - id_3.2.1
+
+- name: "3.2.2 | Ensure ICMP redirects are not accepted"
+  sysctl:
+      name: '{{ item.name }}'
+      value: '{{ item.value }}'
+      sysctl_set: yes
+      state: present
+      reload: yes
+      ignoreerrors: yes
+  with_items:
+      - { name: net.ipv4.conf.all.accept_redirects, value: 0 }
+      - { name: net.ipv4.conf.default.accept_redirects, value: 0 }
+  tags:
+      - id_3.2.2
+
+- name: "3.2.3 | Ensure secure ICMP redirects are not accepted"
+  sysctl:
+      name: '{{ item.name }}'
+      value: '{{ item.value }}'
+      sysctl_set: yes
+      state: present
+      reload: yes
+      ignoreerrors: yes
+  with_items:
+      - { name: net.ipv4.conf.all.secure_redirects, value: 0 }
+      - { name: net.ipv4.conf.default.secure_redirects, value: 0 }
+  tags:
+      - id_3.2.3
+
+- name: "3.2.4 | Ensure suspicious packets are logged"
+  sysctl:
+      name: '{{ item.name }}'
+      value: '{{ item.value }}'
+      sysctl_set: yes
+      state: present
+      reload: yes
+      ignoreerrors: yes
+  with_items:
+      - { name: net.ipv4.conf.all.log_martians, value: 1 }
+      - { name: net.ipv4.conf.default.log_martians, value: 1 }
+  tags:
+      - id_3.2.4
+
+- name: "3.2.5 | Ensure broadcast ICMP requests are ignored"
+  sysctl:
+      name: net.ipv4.icmp_echo_ignore_broadcasts
+      value: 1
+      state: present
+      reload: yes
+      ignoreerrors: yes
+  tags:
+      - id_3.2.5
+
+- name: "3.2.6 | Ensure bogus ICMP responses are ignored"
+  sysctl:
+      name: net.ipv4.icmp_ignore_bogus_error_responses
+      value: 1
+      state: present
+      reload: yes
+      ignoreerrors: yes
+  tags:
+      - id_3.2.6
+
+- name: "3.2.7 | Ensure Reverse Path Filtering is enabled"
+  sysctl:
+      name: '{{ item.name }}'
+      value: '{{ item.value }}'
+      sysctl_set: yes
+      state: present
+      reload: yes
+      ignoreerrors: yes
+  with_items:
+      - { name: net.ipv4.conf.all.rp_filter, value: 1 }
+      - { name: net.ipv4.conf.default.rp_filter, value: 1 }
+  tags:
+      - id_3.2.7
+
+- name: "3.2.8 | Ensure TCP SYN Cookies is enabled"
+  sysctl:
+      name: net.ipv4.tcp_syncookies
+      value: 1
+      state: present
+      reload: yes
+      ignoreerrors: yes
+  tags:
+      - id_3.2.8
+
+- name: "3.3.1 | Ensure IPv6 router advertisements are not accepted"
+  sysctl:
+      name: '{{ item.name }}'
+      value: '{{ item.value }}'
+      sysctl_set: yes
+      state: present
+      reload: yes
+      ignoreerrors: yes
+  with_items:
+      - { name: net.ipv6.conf.all.accept_ra, value: 0 }
+      - { name: net.ipv6.conf.default.accept_ra, value: 0 }
+  tags:
+      - id_3.3.1
+
+- name: "3.3.2 | Ensure IPv6 redirects are not accepted"
+  sysctl:
+      name: '{{ item.name }}'
+      value: '{{ item.value }}'
+      sysctl_set: yes
+      state: present
+      reload: yes
+  with_items:
+      - { name: net.ipv6.conf.all.accept_redirects, value: 0 }
+      - { name: net.ipv6.conf.default.accept_redirects, value: 0 }
+  tags:
+      - id_3.3.2
+
+- name: "3.3.3 | Ensure IPv6 is disabled"
+  lineinfile: >
+      dest=/etc/default/grub
+      line='GRUB_CMDLINE_LINUX="ipv6.disable=1"'
+      state=present
+      create=yes
+  when: ubu14gsa_ipv6_disable == true
+  tags:
+      - id_3.3.3
+
+- name: "3.4.1 | Ensure TCP Wrappers is installed"
+  apt:
+    name: tcpd
+    state: present
+  tags:
+      - id_3.4.1
+
+- name: "3.4.4 | Ensure permissions on /etc/hosts.allow are 644"
+  file:
+      dest: /etc/hosts.allow
+      owner: root
+      group: root
+      mode: 0644
+  tags:
+      - id_3.4.5
+
+- name: "3.4.5 | Ensure permissions on /etc/hosts.deny are 644"
+  file:
+      dest: /etc/hosts.deny
+      owner: root
+      group: root
+      mode: 0644
+  tags:
+      - id_3.4.5
+
+- name: "3.5.1 | Ensure DCCP is disabled"
+  lineinfile:
+      dest: /etc/modprobe.d/CIS.conf
+      regexp: "^(#)?install dccp(\\s|$)"
+      line: "install dccp /bin/true"
+      create: yes
+  tags:
+      - id_3.5.1
+
+- name: "3.5.2 | Ensure SCTP is disabled"
+  lineinfile:
+      dest: /etc/modprobe.d/CIS.conf
+      regexp: "^(#)?install sctp(\\s|$)"
+      line: "install sctp /bin/true"
+      create: yes
+  tags:
+      - id_3.5.2
+
+- name: "3.5.3 | Ensure RDS is disabled"
+  lineinfile:
+      dest: /etc/modprobe.d/CIS.conf
+      regexp: "^(#)?install rds(\\s|$)"
+      line: "install rds /bin/true"
+      create: yes
+  tags:
+      - id_3.5.3
+
+- name: "3.5.4 | Ensure TIPC is disabled"
+  lineinfile:
+      dest: /etc/modprobe.d/CIS.conf
+      regexp: "^(#)?install tipc(\\s|$)"
+      line: "install tipc /bin/true"
+      create: yes
+  tags:
+      - id_3.5.4
+
+- name: "3.6 | Ensure firewalld is installed and started | CUSTOM"
+  apt:
+      name: firewalld
+      state: present
+  when: ubu14gsa_firewall == "firewalld"
+  tags:
+      - id_3.6
+
+- name: "3.6 | Ensure firewalld is installed and started | CUSTOM"
+  service:
+      name: firewalld
+      state: stopped
+      enabled: no
+  when: ubu14gsa_firewall == "firewalld"
+  tags:
+      - id_3.6
+
+- name: "3.6.1 | Ensure iptables is installed"
+  apt:
+      name: iptables
+      state: present
+  when: ubu14gsa_firewall == "iptables"
+  tags:
+      - id_3.6.1
+
+- name: "3.6.2 | Configuring ssh to not break connections"
+  command: iptables -A OUTPUT -p tcp --sport 22 -j ACCEPT
+  when: ubu14gsa_firewall == "iptables_plus" and ubu14gsa_firewall_status == true
+  tags:
+      - id_3.6.2
+
+- name: "3.6.2 | Ensure default firewall policy is configure"
+  iptables:
+    chain: INPUT
+    policy: DROP
+  when: ubu14gsa_firewall == "iptables_plus" and ubu14gsa_firewall_status == true
+  tags:
+      - id_3.6.2
+
+- name: "3.6.2 | Ensure default firewall policy is configure"
+  iptables:
+    chain: FORWARD
+    policy: DROP
+  when: ubu14gsa_firewall == "iptables_plus" and ubu14gsa_firewall_status == true
+  tags:
+      - id_3.6.2
+
+- name: "3.6.2 | Ensure default firewall policy is configure"
+  iptables:
+    chain: OUTPUT
+    policy: DROP
+  when: ubu14gsa_firewall == "iptables_plus" and ubu14gsa_firewall_status == true
+  tags:
+      - id_3.6.2
+
+- name: "Saving iptables rules"
+  command: /sbin/service iptables save
+  when: ubu14gsa_firewall == "iptables_plus" and ubu14gsa_firewall_status == true
+
+- name: 3.7 | Deactivate Wireless Interfaces
+  shell: 'lspci -k | grep -i wifi'
+  changed_when: False
+  register: lspci_wifi
+  failed_when: lspci_wifi.rc == 0
+  tags:
+    - id_3.7

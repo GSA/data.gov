@@ -1,0 +1,21 @@
+pipeline {
+  agent none
+
+  stages {
+
+    stage('Build::Packer') {
+      agent {
+        docker {
+          image 'hashicorp/packer'
+        }
+
+      }
+
+      steps {
+        "gsa-hardened-ubuntu-1404": {
+          sh 'packer build packer.json'
+        }
+      }
+    }
+  }
+}

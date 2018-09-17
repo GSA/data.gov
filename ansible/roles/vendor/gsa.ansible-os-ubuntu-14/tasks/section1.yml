@@ -1,0 +1,280 @@
+- name: "1.1.1.1 | Ensure mounting of cramfs filesystems is disabled"
+  lineinfile:
+      dest: /etc/modprobe.d/CIS.conf
+      regexp: "^(#)?install cramfs(\\s|$)"
+      line: "install cramfs /bin/true"
+      create: yes
+  tags:
+      - id_1.1.1.1
+
+- name: "1.1.1.2 | Ensure mounting of freevxfs filesystems is disabled"
+  lineinfile:
+      dest: /etc/modprobe.d/CIS.conf
+      regexp: "^(#)?install freevxfs(\\s|$)"
+      line: "install freevxfs /bin/true"
+      create: yes
+  tags:
+      - id_1.1.1.2
+
+- name: "1.1.1.3 | Ensure mounting of jffs2 filesystems is disabled"
+  lineinfile:
+      dest: /etc/modprobe.d/CIS.conf
+      regexp: "^(#)?install jffs2(\\s|$)"
+      line: "install jffs2 /bin/true"
+      create: yes
+  tags:
+      - id_1.1.1.3
+
+- name: "1.1.1.4 | Ensure mounting of hfs filesystems is disabled"
+  lineinfile:
+      dest: /etc/modprobe.d/CIS.conf
+      regexp: "^(#)?install hfs(\\s|$)"
+      line: "install hfs /bin/true"
+      create: yes
+  tags:
+      - id_1.1.1.4
+
+- name: "1.1.1.5 | Ensure mounting of hfsplus filesystems is disabled"
+  lineinfile:
+      dest: /etc/modprobe.d/CIS.conf
+      regexp: "^(#)?install hfsplus(\\s|$)"
+      line: "install hfsplus /bin/true"
+      create: yes
+  tags:
+      - id_1.1.1.5
+
+- name: "1.1.1.6 | Ensure mounting of squashfs filesystems is disabled"
+  lineinfile:
+      dest: /etc/modprobe.d/CIS.conf
+      regexp: "^(#)?install squashfs(\\s|$)"
+      line: "install squashfs /bin/true"
+      create: yes
+  tags:
+      - id_1.1.1.6
+
+- name: "1.1.1.7 | Ensure mounting of udf filesystems is disabled"
+  lineinfile:
+      dest: /etc/modprobe.d/CIS.conf
+      regexp: "^(#)?install udf(\\s|$)"
+      line: "install udf /bin/true"
+      create: yes
+  tags:
+      - id_1.1.1.7
+
+- name: "1.1.1.8 | Ensure mounting of FAT filesystems is disabled"
+  lineinfile:
+      dest: /etc/modprobe.d/CIS.conf
+      regexp: "^(#)?install vfat(\\s|$)"
+      line: "install vfat /bin/true"
+      create: yes
+  tags:
+      - id_1.1.1.8
+
+- name: "1.1.20 | Set Sticky Bit on All World-Writable Directories"
+  shell: df --local -P| awk {'if (NR!=1) print $6'}| xargs -I '{}' find '{}' -xdev -type d -perm -0002 -print 2>/dev/null
+  failed_when: False
+  changed_when: False
+  check_mode: no
+  register: sticky_bit_dirs
+  tags:
+    - id_1.1.20
+
+- name: "1.1.21 | Disable Automounting"
+  service:
+      name: autofs
+      enabled: no
+  failed_when: False
+  tags:
+      - id_1.1.21
+
+- name: "1.3.1 | Ensure AIDE is installed"
+  apt:
+      name: aide
+      state: present
+  when: ubu14gsa_config_aide == "true"
+  tags:
+      - id_1.3.1
+
+- name: "1.3.1 | Ensure AIDE is installed"
+  command: /usr/sbin/aide --init -B 'database_out=file:/var/lib/aide/aide.db.gz'
+  args:
+      creates: /var/lib/aide/aide.db.gz
+  when: ubu14gsa_config_aide == "true"
+  async: 45
+  poll: 0
+  tags:
+      - id_1.3.1
+
+- name: "1.3.2 | Ensure filesystem integrity is regularly checked"
+  cron:
+      name: Run AIDE integrity check weekly
+      cron_file: "{{ ubu14gsa_aide_cron['cron_file'] }}"
+      user: "{{ ubu14gsa_aide_cron['cron_user'] }}"
+      minute: "{{ ubu14gsa_aide_cron['aide_minute'] | default('0') }}"
+      hour: "{{ ubu14gsa_aide_cron['aide_hour'] | default('5') }}"
+      day: "{{ ubu14gsa_aide_cron['aide_day'] | default('*') }}"
+      month: "{{ ubu14gsa_aide_cron['aide_month'] | default('*') }}"
+      weekday: "{{ ubu14gsa_aide_cron['aide_weekday'] | default('*') }}"
+      job: "{{ ubu14gsa_aide_cron['aide_job'] }}"
+  when: ubu14gsa_config_aide == "true"
+  tags:
+      - rule_1.3.2
+
+- name: "1.4.1 | Ensure permissions on bootloader config are configured"
+  stat:
+      path: /boot/grub/grub.cfg
+  register: grub_cfg
+  tags:
+      - id_1.4.1
+
+- name: "1.4.1 | Ensure permissions on bootloader config are configured"
+  file:
+      path: /boot/grub/grub.cfg
+      owner: root
+      group: root
+      mode: 0600
+  when: grub_cfg.stat.exists
+  tags:
+      - id_1.4.1
+
+- name: "1.5.1 | Ensure core dumps are restricted"
+  lineinfile:
+      state: present
+      dest: /etc/security/limits.conf
+      regexp: '^#?\\*.*core'
+      line: '*                hard    core            0'
+      insertbefore: '^# End of file'
+  tags:
+      - id_1.5.1
+
+- name: "1.5.1 | Ensure core dumps are restricted"
+  sysctl:
+      name: fs.suid_dumpable
+      value: 0
+      state: present
+      reload: yes
+      sysctl_set: yes
+      #ignoreerrors: yes
+  tags:
+      - id_1.5.1
+
+- name: "1.5.3 | Ensure address space layout randomization (ASLR) is enabled"
+  sysctl:
+      name: kernel.randomize_va_space
+      value: 2
+      state: present
+      reload: yes
+      sysctl_set: yes
+      ignoreerrors: yes
+  tags:
+      - id_1.5.3
+
+- name: "1.5.4 | Ensure prelink is disabled"
+  apt:
+    name: prelink
+    state: absent
+  tags:
+      - id_1.5.4
+
+- name: "1.6.1.4 | Ensure no unconfied daemons exist"
+  shell: ps -eZ | egrep "initrc" | egrep -vw "tr|ps|egrep|bash|awk" | tr ':' ' ' | awk '{print $NF }'
+  register: result1_6_1_4
+  changed_when: "result1_6_1_4.stdout"
+  failed_when: "result1_6_1_4.stdout"
+  ignore_errors: yes
+  tags:
+    - id_1.6.1.4
+
+- name: "1.6.2.1 | Ensure AppArmor is not disabled in bootloader configuration"
+  lineinfile:
+      dest: /etc/default/grub
+      regexp: "^GRUB_CMDLINE_LINUX="
+      line: 'GRUB_CMDLINE_LINUX=apparmor="1 security=apparmor"'
+      state: present
+  when: ubu14gsa_config_apparmor == true
+  tags:
+    - id_1.6.2.1
+
+- name: "1.6.2.2 |  Ensure all AppArmor Profiles are enforcing"
+  shell: for profile in /etc/apparmor.d/*; do aa-enforce $profile; done
+  register: aaenforce_rc
+  failed_when: aaenforce_rc.rc == 1
+  changed_when: False
+  when: ubu14gsa_config_apparmor == true
+  tags:
+    - id_1.6.2.2
+
+- name: "1.6.3 | Ensure SELinux or AppArmor are installed"
+  apt:
+      name: apparmor
+      state: present
+  when: ubu14gsa_config_apparmor == true
+  tags:
+      - id_1.6.3_apparmor
+
+- name: "1.6.3 | Ensure SELinux or AppArmor are installed"
+  apt:
+      name: selinux
+      state: present
+  when: ubu14gsa_config_selinux == true
+  tags:
+      - id_1.6.3_selinux
+
+
+- name: "1.7.1.1 | Ensure message of the day is configured properly"
+  template:
+      src: motd.j2
+      dest: /etc/motd
+  tags:
+      - id_1.7.1.1
+
+- name: "1.7.1.2 | Ensure local login warning banner is configured properly"
+  template:
+      src: issue.j2
+      dest: /etc/issue
+  tags:
+      - id_1.7.1.2
+
+- name: "1.7.1.3 | Ensure remote login warning banner is configured properly"
+  template:
+      src: issue.net.j2
+      dest: /etc/issue.net
+  tags:
+      - id_1.7.1.3
+
+- name: "1.7.1.4 | Ensure permissions on /etc/motd are configured"
+  file:
+      dest: /etc/motd
+      state: file
+      owner: root
+      group: root
+      mode: 0644
+  tags:
+      - id_1.7.1.4
+
+- name: "1.7.1.5 | Ensure permissions on /etc/issue are configured"
+  file:
+      dest: /etc/issue
+      state: file
+      owner: root
+      group: root
+      mode: 0644
+  tags:
+      - id_1.7.1.5
+
+- name: "1.7.1.6 | Ensure permissions on /etc/issue.net are configured"
+  file:
+      dest: /etc/issue.net
+      state: file
+      owner: root
+      group: root
+      mode: 0644
+  tags:
+      - id_1.7.1.6
+
+- name: "1.8 | Ensure updates, patches, and additional security software are installed"
+  apt:
+      update_cache: yes
+      upgrade: dist
+  tags:
+      - id_1.8

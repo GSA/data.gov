@@ -3,7 +3,7 @@
 *.log
 
 # ansible
-setup.retry
+provision.retry
 
 # docker
 tests/output.*.log

@@ -1,0 +1,361 @@
+- name: "5.1.1 | Ensure cron daemon is enabled"
+  service:
+      name: cron
+      enabled: yes
+  tags:
+      - id_5.1.1
+
+- name: "5.1.2 | Ensure permissions on /etc/crontab are configured"
+  file:
+      dest: /etc/crontab
+      owner: root
+      group: root
+      mode: 0600
+  tags:
+      - id_5.1.2
+
+- name: "5.1.3 | Ensure permissions on /etc/cron.hourly are configured"
+  file:
+      dest: /etc/cron.hourly
+      owner: root
+      group: root
+      mode: 0600
+  tags:
+      - id_5.1.3
+
+- name: "5.1.4 | Ensure permissions on /etc/cron.daily are configured"
+  file:
+      dest: /etc/cron.daily
+      owner: root
+      group: root
+      mode: 0600
+  tags:
+      - id_5.1.4
+
+- name: "5.1.5 | Ensure permissions on /etc/cron.weekly are configured"
+  file:
+      dest: /etc/cron.weekly
+      owner: root
+      group: root
+      mode: 0600
+  tags:
+      - id_5.1.5
+
+- name: "5.1.6 | Ensure permissions on /etc/cron.monthly are configured"
+  file:
+      dest: /etc/cron.monthly
+      owner: root
+      group: root
+      mode: 0600
+  tags:
+      - id_5.1.6
+
+- name: "5.1.7 | Ensure permissions on /etc/cron.d are configured"
+  file:
+      dest: /etc/cron.d
+      state: directory
+      owner: root
+      group: root
+      mode: 0600
+  tags:
+      - id_5.1.7
+
+- name: "5.1.8 | Ensure at/cron is restricted to authorized users"
+  file:
+      dest: /etc/at.deny
+      state: absent
+  tags:
+      - id_5.1.8
+
+- name: "5.1.8 | Ensure at/cron is restricted to authorized users"
+  copy:
+      dest: /etc/at.allow
+      owner: root
+      group: root
+      mode: 0600
+      content: ""
+      force: no
+  tags:
+      - id_5.1.8
+
+- name: "5.1.8 | Ensure at/cron is restricted to authorized users"
+  file:
+      dest: /etc/cron.deny
+      state: absent
+  tags:
+      - id_5.1.8
+
+- name: "5.1.8 | Ensure at/cron is restricted to authorized users"
+  copy:
+      dest: /etc/cron.allow
+      owner: root
+      group: root
+      mode: 0600
+      content: ""
+      force: no
+  tags:
+      - id_5.1.8
+
+- name: "5.2.1 | Ensure permissions on /etc/ssh/sshd_config are configured"
+  file:
+      dest: /etc/ssh/sshd_config
+      state: file
+      owner: root
+      group: root
+      mode: 0600
+  tags:
+      - id_5.2.1
+
+- name: "5.2.2 | Ensure SSH Protocol is set to 2"
+  lineinfile:
+      state: present
+      dest: /etc/ssh/sshd_config
+      regexp: '^Protocol'
+      line: 'Protocol 2'
+  tags:
+      - id_5.2.2
+
+- name: "5.2.3 | Ensure SSH LogLevel is set to INFO"
+  lineinfile:
+      state: present
+      dest: /etc/ssh/sshd_config
+      regexp: '^LogLevel'
+      line: 'LogLevel INFO'
+  tags:
+      - id_5.2.3
+
+- name: "5.2.4 | Ensure SSH X11 forwarding is disabled"
+  lineinfile:
+      state: present
+      dest: /etc/ssh/sshd_config
+      regexp: '^X11Forwarding'
+      line: 'X11Forwarding no'
+  tags:
+      - id_5.2.4
+
+- name: "5.2.5 | Ensure SSH MaxAuthTries is set to 4 or less"
+  lineinfile:
+      state: present
+      dest: /etc/ssh/sshd_config
+      regexp: '^(#)?MaxAuthTries \d'
+      line: 'MaxAuthTries 4'
+  tags:
+      - id_5.2.5
+
+- name: "5.2.6 | Ensure SSH IgnoreRhosts is enabled"
+  lineinfile:
+      state: present
+      dest: /etc/ssh/sshd_config
+      regexp: '^IgnoreRhosts'
+      line: 'IgnoreRhosts yes'
+  tags:
+      - id_5.2.6
+
+- name: "5.2.7 | Ensure SSH HostbasedAuthentication is disabled"
+  lineinfile:
+      state: present
+      dest: /etc/ssh/sshd_config
+      regexp: '^HostbasedAuthentication'
+      line: 'HostbasedAuthentication no'
+  tags:
+      - id_5.2.7
+
+- name: "5.2.8 | Ensure SSH root login is disabled"
+  lineinfile:
+      state: present
+      dest: /etc/ssh/sshd_config
+      regexp: '^PermitRootLogin'
+      line: 'PermitRootLogin no'
+  tags:
+      - id_5.2.8
+
+- name: "5.2.9 | Ensure SSH PermitEmptyPasswords is disabled"
+  lineinfile:
+      state: present
+      dest: /etc/ssh/sshd_config
+      regexp: '^PermitEmptyPasswords'
+      line: 'PermitEmptyPasswords no'
+  when: ubu14gsa_ssh_required == true
+  tags:
+      - id_5.2.9
+
+- name: "5.2.10 | Ensure SSH PermitUserEnvironment is disabled"
+  lineinfile:
+      state: present
+      dest: /etc/ssh/sshd_config
+      regexp: '^PermitUserEnvironment'
+      line: 'PermitUserEnvironment no'
+  tags:
+      - id_5.2.10
+
+- name: "5.2.11 | Ensure only approved ciphers are used"
+  lineinfile:
+      state: present
+      dest: /etc/ssh/sshd_config
+      regexp: '^Ciphers'
+      line: 'Ciphers aes128-ctr,aes192-ctr,aes256-ctr'
+  tags:
+      - id_5.2.11
+
+- name: "5.2.11 | Ensure only approved MAC algorithms are used"
+  lineinfile:
+      state: present
+      dest: /etc/ssh/sshd_config
+      regexp: '^MACs'
+      line: 'MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com'
+  tags:
+      - id_5.2.12
+
+- name: "5.2.12 | Ensure SSH Idle Timeout Interval is configured"
+  lineinfile:
+      state: present
+      dest: /etc/ssh/sshd_config
+      regexp: '^ClientAliveInterval'
+      line: 'ClientAliveInterval 900'
+  tags:
+      - id_5.2.13
+
+- name: "5.2.13 | Ensure SSH Idle Timeout Interval is configured"
+  lineinfile:
+      state: present
+      dest: /etc/ssh/sshd_config
+      regexp: '^ClientAliveCountMax'
+      line: 'ClientAliveCountMax 0'
+  tags:
+      - id_5.2.13
+
+- name: "5.2.13 | Ensure SSH LoginGraceTime is set to one minute or less"
+  lineinfile:
+      state: present
+      dest: /etc/ssh/sshd_config
+      regexp: '^LoginGraceTime'
+      line: 'LoginGraceTime 60'
+  tags:
+      - id_5.2.14
+
+- name: "5.2.15 | Ensure SSH warning banner is configured"
+  lineinfile:
+      state: present
+      dest: /etc/ssh/sshd_config
+      regexp: '^Banner'
+      line: 'Banner /etc/issue.net'
+  tags:
+      - id_5.2.15
+
+- name: "5.3.1 | Ensure password creation requirements are configured"
+  apt:
+    name: libpam-pwquality
+    state: present
+
+- name: "5.3.1 | Ensure password creation requirements are configured (pwquality)"
+  lineinfile:
+      state: present
+      dest: /etc/security/pwquality.conf
+      regexp: '^{{ item.key }}'
+      line: '{{ item.key }} = {{ item.value }}'
+  with_items:
+      - { key: 'minlen',  value: '16' }
+      - { key: 'retry',   value: '3' }
+  tags:
+      - id_5.3.1
+
+- name: "5.3.2-5.3.4 | Ensure lockout for failed password attempts is configured; password-auth"
+  template:
+    src: common-auth
+    dest: /etc/pam.d/common-auth
+  tags:
+      - id_5.3.2
+      - id_5.3.3
+      - id_5.3.4
+
+- name: "5.3.2-5.3.4 | Ensure lockout for failed password attempts is configured; password-auth"
+  template:
+    src: common-password
+    dest:  /etc/pam.d/common-password
+  tags:
+      - id_5.3.2
+      - id_5.3.3
+      - id_5.3.4
+
+- name: "5.4.1.1 | Ensure password expiration is 90 days or less"
+  lineinfile:
+      state: present
+      dest: /etc/login.defs
+      regexp: '^PASS_MAX_DAYS'
+      line: 'PASS_MAX_DAYS 90'
+  tags:
+      - id_5.4.1.1
+
+- name: "5.4.1.2 | Ensure minimum days between password changes is 0 or more"
+  lineinfile:
+      state: present
+      dest: /etc/login.defs
+      regexp: '^PASS_MIN_DAYS'
+      line: 'PASS_MIN_DAYS 0'
+  tags:
+      - id_5.4.1.2
+
+- name: "5.4.1.3 | Ensure password expiration warning days is 7 or more"
+  lineinfile:
+      state: present
+      dest: /etc/login.defs
+      regexp: '^PASS_WARN_AGE'
+      line: 'PASS_WARN_AGE 7'
+  tags:
+      - id_5.4.1.3
+
+- name: "5.4.1.4 | Lock Inactive User Accounts"
+  lineinfile:
+      state: present
+      dest: /etc/default/useradd
+      regexp: '^INACTIVE'
+      line: 'INACTIVE=30'
+  tags:
+    -  id_5.4.1.4
+
+- name: 5.4.2 | Disable System Accounts
+  shell: awk -F':' '($1!="root" && $1!="sync" && $1!="shutdown" &&$1!="halt" && $3<500 && $7!="/usr/sbin/nologin" && $7!="/bin/false") {print $1}' /etc/passwd
+  register: awk_etc_passwd
+  changed_when: False
+  check_mode: no
+  tags:
+    - id_5.4.2
+
+- name: 5.4.2 | Disable System Accounts
+  command: /usr/sbin/usermod -s /usr/sbin/nologin {{ item }}
+  with_items: "{{awk_etc_passwd.stdout_lines}}"
+  tags:
+    - id_5.4.2
+
+- name: "5.4.3 | Ensure default group for the root account is GID 0"
+  command: usermod -g 0 root
+  tags:
+      - id_5.4.3
+
+- name: "5.4.4 Set Default umask for Users"
+  lineinfile:
+    state=present
+    create=yes
+    dest=/etc/bash.bashrc
+    line="umask 027"
+  ignore_errors: true
+  tags:
+    - id_5.4.4
+
+- name: "5.4.4 Set Default umask for Users"
+  lineinfile:
+    state=present
+    create=yes
+    dest=/etc/profile
+    line="umask 027"
+  ignore_errors: true
+  tags:
+    - id_5.4.4
+
+- name: "5.6 | Ensure access to the su command is restricted"
+  lineinfile:
+    dest: /etc/pam.d/su
+    line: 'auth            required        pam_wheel.so use_uid'
+    state: present
+  tags:
+      - id_5.6

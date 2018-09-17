@@ -1,0 +1,136 @@
+- name: "4.1.1.x | Ensure Auditd is installe"
+  apt:
+    name: auditd
+    state: present
+  when: ubu14gsa_auditd_config == true
+  tags:
+    - id_4.1.1x
+
+- name: "4.1.1.3 | Ensure audit logs are not automatically deleted"
+  lineinfile:
+      dest: /etc/audit/auditd.conf
+      regexp: "^max_log_file_action"
+      line: "max_log_file_action = keep_logs"
+      state: present
+  when: ubu14gsa_auditd_config == true
+  tags:
+      - id_4.1.1.3
+
+- name: "4.1.2 | Ensure auditd service is enabled"
+  service:
+      name: auditd
+      state: started
+      enabled: yes
+  when: ubu14gsa_auditd_config == true
+  tags:
+      - id_4.1.2
+
+- name: "4.1.3 | Ensure auditing for processes that start prior to auditd is enabled"
+  lineinfile: >
+      dest=/etc/default/grub
+      line='GRUB_CMDLINE_LINUX="audit=1"'
+      state=present
+      create=yes
+  when: ubu14gsa_auditd_config == true
+  tags:
+      - id_4.1.3
+
+- name: "4.1.4-4.1.17 | Configure Auditd rules and configurations."
+  template:
+    src: audit_rules
+    dest: /etc/audit/audit.rules
+  when: ubu14gsa_auditd_config == true
+  tags:
+      - id_4.1.4
+      - id_4.1.5
+      - id_4.1.6
+      - id_4.1.7
+      - id_4.1.8
+      - id_4.1.9
+      - id_4.1.10
+      - id_4.1.11
+      - id_4.1.13
+      - id_4.1.14
+      - id_4.1.15
+      - id_4.1.16
+      - id_4.1.17
+      - id_4.1.18
+
+- name: "4.1.12 | Collect Use of Privileged Commands"
+  shell: find / -xdev \( -perm -4000 -o -perm -2000 \) -type f | awk '{print "-a always,exit -F path=" $1 " -F perm=x -F auid>=500 -F auid!=4294967295 -k privileged" }'
+  register: audit_lines_for_find
+  changed_when: False
+  tags:
+    - id_4.1.12
+
+- name: "4.1.12 | Collect Use of Privileged Commands"
+  lineinfile: >
+      dest=/etc/audit/audit.rules
+      line='{{ item }}'
+      state=present
+      create=yes
+  with_items: "{{ audit_lines_for_find.stdout_lines }}"
+  tags:
+    - id_4.1.12
+
+- name: "4.2.1.1 Ensure rsyslog Service is enabled"
+  service:
+      name: rsyslog
+      enabled: yes
+      state: started
+  when: ubu14gsa_logging == "rsyslog" and ubu14gsa_config_logging == true
+  tags:
+      - id_4.2.1.1
+
+- name: "4.2.1.3 | Ensure rsyslog default file permissions configured"
+  lineinfile:
+      dest: /etc/rsyslog.conf
+      regexp: "^\\$FileCreateMode"
+      line:  "$FileCreateMode 0640"
+      state: present
+  when: ubu14gsa_logging == "rsyslog" and ubu14gsa_config_logging == true
+  tags:
+      - id_4.2.1.3
+
+- name: "4.2.2.1 Ensure rsyslog Service is enabled"
+  service:
+      name: syslog-ng
+      enabled: yes
+      state: started
+  when: ubu14gsa_logging == "syslog-ng" and ubu14gsa_config_logging == true
+  tags:
+      - id_4.2.2.1
+
+- name: "4.2.2.3 | Ensure rsyslog default file permissions configured"
+  lineinfile:
+      dest: /etc/syslog-ng/syslog-ng.conf
+      regexp: "^perm\\(0640\\)"
+      line:  "perm(0640)"
+      state: present
+  when: ubu14gsa_logging == "syslog-ng" and ubu14gsa_config_logging == true
+  tags:
+      - id_4.2.2.3
+
+- name: "4.2.3 | Ensure rsyslog or syslog-ng is installed"
+  apt:
+      name: rsyslog
+      state: present
+  when: ubu14gsa_logging == "rsyslog" and ubu14gsa_config_logging == true
+  tags:
+      - id_4.2.3
+
+- name: "4.2.3 | Ensure rsyslog or syslog-ng is installed"
+  apt:
+      name: syslog-ng
+      state: present
+  when: ubu14gsa_logging == "syslog-ng" and ubu14gsa_config_logging == true
+  tags:
+      - id_4.2.3
+
+#- name: "4.2.4 | Ensure permissions on all logfiles are configured"
+#  file:
+#    path: /var/log
+#    mode: 755
+#    recurse: yes
+#  tags:
+#      - id_4.2.4
