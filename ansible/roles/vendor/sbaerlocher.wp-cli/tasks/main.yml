@@ -12,12 +12,12 @@
   tags:
     - packages
 
-- name: Install WP-CLI Packets
+- name: Install WP-CLI Packages
   command: "{{ wp_cli_bin_command }} package install {{ item }}"
   register: command_result
   changed_when: "'Installing package' in command_result.stdout"
   when: item is defined
   with_items:
-    - "{{ wp_cli_package }}"
+    - "{{ wp_cli_packages }}"
   tags:
     - packages

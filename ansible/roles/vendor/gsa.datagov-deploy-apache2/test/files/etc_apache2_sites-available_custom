@@ -1,0 +1,5 @@
+<VirtualHost 0.0.0.0:80>
+  <Location />
+     Return 200
+  </Location>
+</VirtualHost>

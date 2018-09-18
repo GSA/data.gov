@@ -9,6 +9,10 @@ env:
   - distro: debian9
   - distro: debian8
 
+matrix:
+  allow_failures:
+    - env: distro=ubuntu1404
+
 script:
   # Configure test script so we can run extra tests after playbook is run.
   - export container_id=$(date +%s)

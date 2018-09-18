@@ -1,0 +1,43 @@
+---
+
+# get_url on Ansible 1.x only supports sha256 checksumming, so we're only
+# using `redis_checksums` on Ansible 2.x because they're sha1.
+- name: set redis checksum
+  set_fact:
+    redis_checksum: "{{ 'sha1' if redis_checksums[redis_version]|length == 40 else 'sha256' }}:{{ redis_checksums[redis_version] }}"
+  when:
+    - redis_verify_checksum|bool
+    - redis_checksum is not defined
+    - redis_version in redis_checksums
+    - ansible_version.major >= 2
+
+- name: download redis (ansible 1.x)
+  get_url:
+    url: "{{ redis_download_url }}"
+    dest: /usr/local/src/redis-{{ redis_version }}.tar.gz
+    sha256sum: "{{ redis_checksum|default(omit) }}"
+  when:
+    - not redis_tarball
+    - ansible_version.major < 2
+
+- name: download redis (ansible 2.x)
+  get_url:
+    url: "{{ redis_download_url }}"
+    dest: /usr/local/src/redis-{{ redis_version }}.tar.gz
+    checksum: "{{ redis_checksum|default(omit) }}"
+  when:
+    - not redis_tarball
+    - ansible_version.major >= 2
+
+- name: upload redis
+  copy:
+    src: "{{ redis_tarball }}"
+    dest: /usr/local/src/redis-{{ redis_version }}.tar.gz
+  when: redis_tarball|default(false)
+
+- name: extract redis tarball
+  unarchive:
+    src: /usr/local/src/redis-{{ redis_version }}.tar.gz
+    dest: /usr/local/src
+    creates: /usr/local/src/redis-{{ redis_version }}/Makefile
+    copy: no

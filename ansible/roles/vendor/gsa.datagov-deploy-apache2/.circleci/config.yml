@@ -1,0 +1,33 @@
+version: 2
+jobs:
+  lint:
+    docker:
+      - image: particlekit/ansible-lint
+    steps:
+      - checkout
+      - run: make lint
+
+  test-kitchen:
+    machine: true
+    working_directory: ~/datagov-deploy-apache2
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-bundle-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Install dependencies
+          command: bundle install --path vendor/bundle
+      - save_cache:
+          key: v1-bundle-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+      - run:
+          name: Run test-kitchen
+          command: bundle exec kitchen test
+
+workflows:
+  version: 2
+  commit:
+    jobs:
+    - test-kitchen

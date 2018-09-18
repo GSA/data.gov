@@ -1,4 +1,4 @@
-- src: geerlingguy.pip
+- src: oefenweb.pip
   version: "v1.2.0"
 - src: dwcramer.upstart
   version: "0.1.0"

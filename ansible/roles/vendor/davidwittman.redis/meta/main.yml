@@ -1,0 +1,25 @@
+---
+galaxy_info:
+  author: David Wittman
+  description: Highly configurable role to install Redis and Redis Sentinel from source
+  min_ansible_version: 1.9.0
+  license: MIT
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+    - name: EL
+      versions:
+        - 6
+    - name: SLES
+      versions:
+        - 11
+        - 12
+  categories:
+    - database
+    - database:nosql
+
+dependencies: []
