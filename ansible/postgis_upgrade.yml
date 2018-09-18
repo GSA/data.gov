@@ -1,0 +1,16 @@
+---
+- hosts: catalogpub-web1d.dev-ocsit.bsp.gsa.gov
+  vars: 
+    postgis_version: "2.4.4"
+  roles:
+    - role: software/catalog/postgis-upgrade
+      db_name: "{{ catalog_db_name }}"
+      db_host: "{{ CKAN_DB_SERVER }}"
+      db_user: "{{ catalog_db_user }}"
+      db_password: "{{ catalog_db_pass }}"
+
+    - role: software/catalog/postgis-upgrade
+      db_name: "{{ catalog_pycsw_db_name }}"
+      db_host: "{{ PYCSW_DB_SERVER }}"
+      db_user: "{{ catalog_db_user }}"
+      db_password: "{{ catalog_db_pass }}"
