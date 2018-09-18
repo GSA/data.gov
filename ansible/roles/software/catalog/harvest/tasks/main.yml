@@ -2,6 +2,9 @@
 - name: set worker type
   set_fact:
     worker_type: "{{ hostvars[inventory_hostname]['usage'] | default('main_worker') }}"
+  tags:
+    - redis
+    - fgdc2iso
 
 - include: fgdc2iso.yml
   tags: ['fgdc2iso']

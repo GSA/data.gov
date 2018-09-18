@@ -5,6 +5,7 @@ urls_public:
   catalog: https://catalog.data.gov
 urls_private:
   catalog: "{{ vault_urls_private_catalog }}"
+ckan_site_domain: "{{ urls_public.catalog }}"
 
 # s3 bucket
 catalog_bucket_name: "{{ vault_catalog_bucket_name }}"

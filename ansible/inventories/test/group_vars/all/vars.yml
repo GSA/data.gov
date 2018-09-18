@@ -2,13 +2,16 @@
 
 # public urls
 urls_public:
-  catalog: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
+  catalog: http://catalog-web-test.datagov.us
 urls_private:
-  catalog: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
+  catalog: "{{ vault_urls_private_catalog }}"
 ckan_site_domain: "{{ urls_public.catalog }}"
 
+# s3 bucket
+catalog_bucket_name: "{{ vault_catalog_bucket_name }}"
+
 # solr
-solr_master_server: datagovsolrm1d.dev-ocsit.bsp.gsa.gov
+solr_master_server: datagovsolrm1t.datagov.us
 
 # SecOps user
 secops_user: "{{ vault_secops_user }}"
@@ -23,7 +26,7 @@ codeigniter_pre_approved_admins: "{{ vault_codeigniter_pre_approved_admins }}"
 
 # App environment
 web_app_env: production
-real_ansible_env: staging
+real_ansible_env: production
 
 # postfix
 postfix_relayhost: smtp.gsa.gov
@@ -35,9 +38,9 @@ postfix_key: "{{ vault_postfix_key }}"
 postfix_pem: "{{ vault_postfix_pem }}"
 
 # SAML
-saml2_idp_entry: login.test.max.gov
+saml2_idp_entry: login.max.gov
 saml2_idp_metadata_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
-saml_idp_cert_fprint: "7A43DACB95D67FB6A804FD37C8A7DCA5B0384939"
+saml_idp_cert_fprint: "67:76:BB:87:FE:76:D6:4A:BE:19:3F:E2:B6:1A:49:06:AE:56:06:B8"
 saml2_sp_public_key: "{{ vault_saml2_sp_public_key }}"
 saml2_sp_private_pem: "{{ vault_saml2_sp_private_pem }}"
 
@@ -66,11 +69,7 @@ fluentd_aws_secret_access_key: "{{ vault_fluentd_aws_secret_access_key }}"
 # web self-signed stuff
 web_crt: "{{ vault_web_crt }}"
 web_key: "{{ vault_web_key }}"
-web_csr: "{{ vault_web_csr }}"
 
 # ckan
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
 who_secure: True
-
-# jumpbox users
-users: "{{ vault_users }}"

@@ -1,8 +1,13 @@
 ---
+
 - name: make sure ckanext-saml2 dependency packages are installed
   action: apt pkg={{item}} state=installed
   with_items:
     - memcached
+
+- name: build dependencies
+  apt: name={{ item }} state=present
+  with_items:
     - xmlsec1
     - swig
 
