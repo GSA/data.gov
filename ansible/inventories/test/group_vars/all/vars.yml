@@ -1,0 +1,75 @@
+---
+
+# public urls
+urls_public:
+  catalog: http://catalog-web-test.datagov.us
+urls_private:
+  catalog: "{{ vault_urls_private_catalog }}"
+ckan_site_domain: "{{ urls_public.catalog }}"
+
+# s3 bucket
+catalog_bucket_name: "{{ vault_catalog_bucket_name }}"
+
+# solr
+solr_master_server: datagovsolrm1t.datagov.us
+
+# SecOps user
+secops_user: "{{ vault_secops_user }}"
+secops_user_public_key: "{{ vault_secops_user_public_key }}"
+
+# TrendMicro
+trendmicro_policy_id_app: "{{ vault_trendmicro_policy_id_app }}"
+trendmicro_policy_id_web: "{{ vault_trendmicro_policy_id_web }}"
+
+# CodeIgniter pre-approved admin emails
+codeigniter_pre_approved_admins: "{{ vault_codeigniter_pre_approved_admins }}"
+
+# App environment
+web_app_env: production
+real_ansible_env: production
+
+# postfix
+postfix_relayhost: smtp.gsa.gov
+postfix_relayhost_port: 25
+postfix_sasl_auth_enable: false
+postfix_relaytls: true
+default_email_from: "{{ vault_default_email_from }}"
+postfix_key: "{{ vault_postfix_key }}"
+postfix_pem: "{{ vault_postfix_pem }}"
+
+# SAML
+saml2_idp_entry: login.max.gov
+saml2_idp_metadata_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
+saml_idp_cert_fprint: "67:76:BB:87:FE:76:D6:4A:BE:19:3F:E2:B6:1A:49:06:AE:56:06:B8"
+saml2_sp_public_key: "{{ vault_saml2_sp_public_key }}"
+saml2_sp_private_pem: "{{ vault_saml2_sp_private_pem }}"
+
+# td-agent
+elasticsearch_endpoint: "{{ vault_elasticsearch_endpoint }}"
+bsp_elasticsearch_endpoint: "{{ vault_bsp_elasticsearch_endpoint }}"
+bsp_shared_key: "{{ vault_bsp_shared_key }}"
+system: "es"
+
+# newrelic
+nrinfragent_license_key: "{{ vault_nrinfragent_license_key }}"
+
+# nessus
+nessus_agent_key: "{{ vault_nessus_agent_key }}"
+nessus_agent_host: "{{ vault_nessus_agent_host }}"
+nessus_agent_port: "{{ vault_nessus_agent_port }}"
+nessus_agent_group: "{{ vault_nessus_agent_group }}"
+
+# saxon license
+saxon_license: "{{ vault_saxon_license }}"
+
+# FluentD
+fluentd_aws_access_key_id: "{{ vault_fluentd_aws_access_key_id }}"
+fluentd_aws_secret_access_key: "{{ vault_fluentd_aws_secret_access_key }}"
+
+# web self-signed stuff
+web_crt: "{{ vault_web_crt }}"
+web_key: "{{ vault_web_key }}"
+
+# ckan
+# Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
+who_secure: True

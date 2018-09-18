@@ -32,6 +32,12 @@ ckan_pkgs:
       name: "ckanext-googleanalyticsbasic",
       repo: "https://github.com/GSA/ckanext-googleanalyticsbasic"
     }
+  - {
+      name: "ckanext-saml2",
+      repo: "https://github.com/GSA/ckanext-saml2",
+      branch: "max",
+      requirements: "requirements.txt"
+    }
 
 datapusher_pkgs:
   - {

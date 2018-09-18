@@ -1,0 +1,34 @@
+---
+
+# project path
+project_source_rollback_path: /usr/lib/ckan-rollback
+project_source_new_code_path: /usr/lib/ckan-new
+current_source_symlink: /usr/lib/ckan
+project_index_path: /usr/lib/ckan
+
+# db credentials
+CKAN_DB_SERVER: "{{ vault_ckan_db_server }}"
+inventory_db_user: "{{ vault_inventory_db_user }}"
+inventory_db_pass: "{{ vault_inventory_db_pass }}"
+inventory_db_name: "{{ vault_inventory_db_name }}"
+DATASTORE_DB_SERVER: "{{ vault_datastore_db_server }}"
+inventory_datapusher_db_name: "{{ vault_inventory_datapusher_db_name }}"
+inventory_datastore_db_name: "{{ vault_inventory_datastore_db_name }}"
+inventory_datastore_user: "{{ vault_inventory_datastore_user }}"
+inventory_datastore_pass: "{{ vault_inventory_datastore_pass }}"
+inventory_datastore_ro_user: "{{ vault_inventory_datastore_ro_user }}"
+inventory_datastore_ro_pass: "{{ vault_inventory_datastore_ro_pass }}"
+
+# other
+SOLR_SERVER: "{{ vault_solr_server }}"
+BUCKET_NAME: "{{ vault_bucket_name }}"
+BUCKET_PREFIX: "{{ vault_bucket_prefix }}"
+ckan_site_domain: "{{ vault_ckan_site_domain }}"
+
+# max login
+saml2_site_url: "{{ vault_saml2_site_url }}"
+
+# secrets
+who_ini_secret: "{{ vault_who_ini_secret }}"
+ckan_instance_secret: "{{ vault_ckan_instance_secret }}"
+ckan_instance_uuid: "{{ vault_ckan_instance_secret }}"

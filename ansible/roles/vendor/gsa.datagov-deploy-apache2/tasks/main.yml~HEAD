@@ -8,15 +8,18 @@
 
 - name: default apache removed
   action: file path=/etc/apache2/sites-enabled/000-default.conf state=absent
+  notify: reload apache
 
 - name: Apache | Enable some required modules
   action: command a2enmod rewrite headers remoteip
+  notify: reload apache
   tags:
     - common
     - skip_ansible_lint
 
 - name: Apache | Enable Web Application Firewall
   action: command a2enmod security2
+  notify: reload apache
   tags:
     - web_application_firewall
     - CM-7
@@ -25,16 +28,29 @@
     - skip_ansible_lint
 
 - name: Configure mod_remoteip
-  template: src=templates/etc/apache2/conf-enabled/mod_remoteip.conf dest=/etc/apache2/conf-enabled/mod_remoteip.conf
+  template: src=templates/etc/apache2/conf-enabled/mod_remoteip.conf dest=/etc/apache2/conf-enabled/mod_remoteip.conf mode=0644
+  notify: reload apache
 
 - name: Apache ServerTokens Prod
   lineinfile:
     dest: /etc/apache2/conf-enabled/security.conf
     regexp: '^ServerTokens '
     line: 'ServerTokens Prod'
+  notify: reload apache
 
 - name: Apache ServerSignature Off
   lineinfile:
     dest: /etc/apache2/conf-enabled/security.conf
     regexp: '^ServerSignature '
     line: 'ServerSignature Off'
+  notify: reload apache
+
+- name: enable apache2 mod_wsgi config to use custom python
+  template: src=etc/apache2/conf-enabled/wsgi-custom-python.conf.j2 dest=/etc/apache2/conf-enabled/wsgi-custom-python.conf mode=0644
+  notify: reload apache
+
+- name: enable apache2
+  service:
+    name: apache2
+    state: started
+    enabled: yes

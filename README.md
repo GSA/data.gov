@@ -19,21 +19,11 @@ Included in this Repository:
     - Trendmicro (OSSEC-HIDS)
     - OSQuery (TBD)
 
+
 ## Project Status
 
-| Milestone | Status | Target Date |
-| --- | --- | --- |
-| Architecture | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> | 8/16/2016 |
-| Development *Environment* | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> | 10/1/2016 |
-| Staging *Environment*     | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> | 10/30/2016 |
-| Production *Environment*  | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> | 12/15/2016 |
-| System Security Plan | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> | 12/8/2016 (1 Year ATO) |
-| Authority to Operate kick-off meeting | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> | 12/8/2016 |
-| Scanning and Penetration Testing | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" /> | 12/1/2016 |
-| *Remediation of scanning/pen test findings* | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" />  | 3/15/2016 |
-| Authority to Operate Issued 90-day | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" />  | 12/8/2016 |
-| Infrastructure Switch Over | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" />| 12/29/2016 |
-| Start of 1 year Authority to Operate | <img src="https://img.shields.io/badge/status-Completed-brightgreen.svg" />  | 1/2/2017 |
+See our [Roadmap](docs/roadmap.md).
+
 
 # Provision Infrastructure
 Moved to [datagov-infrastructure](https://github.com/gsa/datagov-infrastructure)
@@ -139,3 +129,32 @@ See example(s) below
 **ntpd issues**: `apt-get remove ntp && apt-get purge ntp && apt-get autoclean && apt-get autoremove`
 
 **Unable to resolve host IP**: `echo 127.0.0.1 $(hostname) >> /etc/hosts`
+
+## Development
+
+Install the dependencies (from a python virtualenv).
+
+    $ make setup
+
+Run the playbooks locally.
+
+    $ make test
+
+Run a single suite.
+
+    $ bundle exec kitchen test catalog
+
+Log into the instance to debug.
+
+    $ bundle exec kitchen login catalog
+
+Re-run the playbook from a particular step.
+
+    $ ANSIBLE_EXTRA_FLAGS='--start-at-task="software/ckan/apache : make sure postgresql packages are installed"' bundle exec kitchen converge catalog
+
+Lint your work.
+
+    $ make lint
+
+
+Refer to [kitchen](https://kitchen.ci/) commands for more information.

@@ -24,6 +24,7 @@
 - src: nickhammond.logrotate
 - src: nleutner.newrelic-php
 - src: newrelic.newrelic-infra
+- src: franklinkim.php5-newrelic
 
 - src: https://github.com/GSA/datagov-deploy-apache2
   name: gsa.datagov-deploy-apache2
@@ -34,4 +35,3 @@
 
 - src: https://github.com/GSA/datagov-deploy-redis
   name: gsa.datagov-deploy-redis
-
