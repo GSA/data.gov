@@ -7,19 +7,6 @@ saml2_idp_metadata_url: https://login.test.max.gov/idp/shibboleth
 saml2_sp_public_key: "add-yours-to-inventory"
 saml2_sp_private_pem: "add-yours-to-inventory"
 
-# packages to install ckan app
-saml2_pkgs:
-  - {
-      name: "ckanext-saml2",
-      repo: "https://github.com/GSA/ckanext-saml2",
-      branch: "max"
-    }
-  - {
-      name: "pysaml2",
-      repo: "https://github.com/GSA/pysaml2",
-      branch: "max"
-    }
-
 # provide some default values to be overwritten later by group vars and host vars...
 project_source_new_code_path: /usr/lib/ckan-new
 who_ini_secret: e45cfed3-40f1-41c0-8e92-77eda7ddd9f3

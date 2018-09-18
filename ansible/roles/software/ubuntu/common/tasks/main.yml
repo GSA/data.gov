@@ -5,6 +5,7 @@
 - name: make sure packages are installed
   action: apt pkg={{item}} state=installed
   with_items:
+    - acl
     - htop
     - atool
     - ruby
@@ -16,6 +17,7 @@
     - postgresql-client
     - bison
     - python-pip
+    - libbz2-dev
     - libgeos-c1
     - libxml2-dev
     - libxslt1-dev

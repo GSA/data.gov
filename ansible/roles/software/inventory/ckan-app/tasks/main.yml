@@ -1,8 +1,10 @@
 ---
-- name: make sure packages are installed
-  action: apt pkg={{item}} state=installed update_cache=yes
+- name: Install build dependencies
+  apt: name={{ item }} state=present
   with_items:
-    - python-psycopg2
+    - memcached
+    - swig
+    - xmlsec1
 
 - name: Remove old rollback code
   file: path="{{ project_source_rollback_path }}" state=absent
@@ -30,6 +32,10 @@
     pkg: "{{ ckan_pkgs }}"
     virtualenv: "{{ project_source_new_code_path }}"
 
+  # TODO move this upstream somewhere. Maybe ckan's requirements.txt.
+- name: install M2Crypto for pysaml2
+  pip: name=M2Crypto version=0.23.0 virtualenv="{{ project_source_new_code_path }}" state=present
+
 - name: Remove old datapusher code
   file: path="{{ datapusher_virtual_env }}" state=absent
 
@@ -42,9 +48,6 @@
   file: path={{ item }} state=directory group=www-data recurse=yes
   with_items:
     - "{{ datapusher_virtual_env }}"
-
-- name: remove psycopg2
-  action: pip name=psycopg2 virtualenv="{{ project_source_new_code_path }}" state=absent
 
 - name: create directories
   action: file path={{item}} state=directory owner="www-data" group="www-data" mode=0755
@@ -80,3 +83,5 @@
 
 - name: point site_url in /etc/hosts to localhost
   action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ ckan_site_domain | regex_replace('https?\://','') }}"
+  tags:
+    - skip_in_kitchen # Device or resource busy ranaming temp file
