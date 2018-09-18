@@ -44,7 +44,7 @@
     - {role: monitoring/fluentd/kernel, tags: ['frontend', 'harvester', 'fluentd'] }
     - {role: monitoring/fluentd/limits, tags: ['frontend', 'harvester', 'fluentd'] }
     - {role: monitoring/fluentd/td-agent, tags: ['frontend', 'harvester', 'fluentd'] }
-    - {role: software/common/misc, tags: ['misc'] }e
+    - {role: software/common/misc, tags: ['misc'] }
     - software/jekyll
     - role: gsa.datagov-deploy-apache2
     - { role: gsa.rvm1-ruby,
