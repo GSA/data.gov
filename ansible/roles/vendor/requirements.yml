@@ -24,9 +24,14 @@
 - src: nickhammond.logrotate
 - src: nleutner.newrelic-php
 - src: newrelic.newrelic-infra
+<<<<<<< HEAD
 - src: franklinkim.php5-newrelic
 
 - src: https://github.com/GSA/datagov-deploy-apache2
+=======
+
+- src: 'https://github.com/GSA/datagov-deploy-apache2'
+>>>>>>> 76429afcd52034d06482def455fe5469de1b996a
   name: gsa.datagov-deploy-apache2
 
 - src: https://github.com/GSA/rvm1-ansible

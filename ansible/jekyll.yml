@@ -46,11 +46,16 @@
     - {role: monitoring/fluentd/td-agent, tags: ['frontend', 'harvester', 'fluentd'] }
     - {role: software/common/misc, tags: ['misc'] }
 <<<<<<< HEAD
+<<<<<<< HEAD
     - software/ckan/apache
     - software/jekyll
 =======
     - role: gsa.datagov-deploy-apache2
 >>>>>>> ad406c5054b42d2aa2b78bb7102aa7eea2af4592
+=======
+    - software/jekyll
+    - role: gsa.datagov-deploy-apache2
+>>>>>>> 76429afcd52034d06482def455fe5469de1b996a
     - { role: gsa.rvm1-ruby,
         rvm1_rvm_check_for_updates: False,
         rvm1_rubies: ['ruby-{{ruby_version}}'],
