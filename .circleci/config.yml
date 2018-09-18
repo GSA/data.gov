@@ -1,7 +1,6 @@
-# PHP CircleCI 2.0 configuration file
 version: 2
 jobs:
-  build:
+  lint:
     docker:
       # specify the version you desire here
       - image: particlekit/ansible-lint
@@ -12,9 +11,29 @@ jobs:
       - run: ansible-lint --version
       - checkout
       - run: echo 'password' > ~/ansible-secret.txt
+      - run: make lint
 
-      # Ansible syntax check
-      - run: ansible-playbook --syntax-check ansible/*.yml
+  test-kitchen:
+    machine: true
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-bundle-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Install dependencies
+          command: bundle install --path vendor/bundle
+      - save_cache:
+          key: v1-bundle-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+      - run:
+          name: Run test-kitchen
+          command: make test
 
-      # Ansible lint check
-      - run: ansible-lint -v -x ANSIBLE0010 --exclude=ansible/roles/vendor ansible/*.yml
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - lint
+      - test-kitchen

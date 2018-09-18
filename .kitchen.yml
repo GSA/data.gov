@@ -1,36 +1,35 @@
 ---
 driver:
   name: docker
-  privileged: true
-  use_sudo: false  
+  use_sudo: false
 
 transport:
   max_ssh_sessions: 5
 
 provisioner:
   name: ansible_playbook
-  playbook: test.yml
-  roles_path: ../ansible/roles/
+  roles_path: ansible/roles
   hosts: all
-  ansible_vault_password_file: ansible-secret.txt
   require_ansible_repo: false
-  require_ansible_omnibus: true
-  ansible_verbose: true
-  ansible_diff: true
-  ansible_verbosity: 2
-  idempotency_test: true
-  #ansible_extra_flags: <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
-  #ansible_version:
-  #custom_pre_install_command:	nil	Custom shell command to be used at beginning of install stage. Can be multiline.
-  #custom_pre_play_command:	nil	Custom shell command to be used before the ansible play stage. Can be multiline. See examples below.
-  #custom_post_install_command:	nil	Custom shell command to be used at after the install stage. Can be multiline.
-  #custom_post_play_command:	nil	Custom shell command to be used after the ansible play stage. Can be multiline. See examples below.
-  #env_vars:	Hash.new	Hash to set environment variable to use with ansible-playbook command
-  #extra_vars: git c
-  #extra_vars_file:	nil	file containing environment variables e.g. private_vars/production.yml site.yml Don't prefix with a @ sign.
-  #group_vars_path:	group_vars	Ansible repo group_vars directory
-  #host_vars_path:	host_vars	Ansible repo hosts directory
-  #command: |
+  require_ansible_omnibus: false
+  # The config expects ~/ansible-secret.txt, no easy way to override so we just
+  # create the file.
+  custom_pre_play_command: |
+    echo fake-password > ~/ansible-secret.txt
+  ansible_extra_flags: >-
+    --skip-tags=skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
+  # kitchen-ansible sets ANSIBLE_ROLE_PATH which ignores our ansible.cfg
+  # role_path. To work around, we override the env variable so roles/vendor is
+  # included.
+  # https://github.com/neillturner/kitchen-ansible/issues/284
+  env_vars:
+    ANSIBLE_ROLES_PATH: /tmp/kitchen/roles:/tmp/kitchen/roles/vendor
+  extra_vars:
+    kitchen: true
+  # For debugging
+  #ansible_verbose: true
+  #ansible_diff: true
+  #ansible_verbosity: 2
 
 platforms:
  # Ubuntu Trusty with Upstart
@@ -38,29 +37,96 @@ platforms:
     driver_config:
       image: rndmh3ro/docker-ubuntu1404-ansible:latest
       platform: ubuntu
-  # Ubuntu Xenial with Systemd
-  - name: ubuntu-16.04
-    driver_config:
-      image: rndmh3ro/docker-ubuntu1604-ansible:latest
-      platform: ubuntu
 
 suites:
-  - name: catalog
-  - name: inventory
-  - name: crm-web
-  - name: datagov-web
-  - name: efk-nginx
-  - name: efk-stack
-  - name: elastalert
-  - name: elasticsearch
-  - name: fluentd
-  - name: hardening
-  - name: harvester
-  - name: jekyll
-  - name: jumpbox
-  - name: kibana
-  - name: secops
-  - name: solr
-  - name: trendmicro
-  - name: web-proxy
-  - name: webserver-frontend
+  - name: catalog-web
+    provisioner:
+      hosts:
+        - catalog-web
+      playbook: ansible/catalog.yml
+      extra_vars:
+        redis_password: fake-redis-password
+        ckan_site_domain: http://test-kitchen-datagov.local
+      ansible_extra_flags: >-
+        --tags=frontend,ami-fix,bsp --skip-tags=solr,db,cron,skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
+  - name: catalog-harvester
+    provisioner:
+      hosts:
+        - catalog-harvester
+      playbook: ansible/catalog.yml
+      extra_vars:
+        redis_password: fake-redis-password
+      ansible_extra_flags: >-
+        --tags=harvester,ami-fix,bsp --skip-tags=apache,solr,db,saml2,skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
+#  - name: crm-web
+#    provisioner:
+#      playbook: ansible/crm-web.yml
+#  - name: dashboard-web
+#    provisioner:
+#      playbook: ansible/dashboard-web.yml
+#  - name: datagov-web
+#    provisioner:
+#      playbook: ansible/datagov-web.yml
+#  - name: efk-nginx
+#    provisioner:
+#      playbook: ansible/ekf-nginx.yml
+#  - name: efk-stack
+#    provisioner:
+#      playbook: ansible/ekf-stack.yml
+#  - name: elastalert
+#    provisioner:
+#      playbook: ansible/elastalert.yml
+#  - name: elasticsearch
+#    provisioner:
+#      playbook: ansible/elasticsearch.yml
+#  - name: fluentd
+#    provisioner:
+#      playbook: ansible/fluent.yml
+#  - name: hardening
+#    provisioner:
+#      playbook: ansible/hardening.yml
+#  - name: harvester
+#    provisioner:
+#      playbook: ansible/harvester.yml
+#  - name: inventory
+#    provisioner:
+#      playbook: ansible/ineventory.yml
+#  - name: jekyll
+#    provisioner:
+#      playbook: ansible/jekyll.yml
+#  - name: jumpbox
+#    provisioner:
+#      playbook: ansible/jumpbox.yml
+#  - name: kibana
+#    provisioner:
+#      playbook: ansible/kibana.yml
+#  - name: logrotate
+#    provisioner:
+#      playbook: ansible/logrotate.yml
+#  - name: nessus
+#    provisioner:
+#      playbook: ansible/nessus.yml
+#  - name: newrelic-infrastructure
+#    provisioner:
+#      playbook: ansible/newrelic-infrastructure.yml
+#  - name: newrelic-php
+#    provisioner:
+#      playbook: ansible/newrelic-php.yml
+#  - name: newrelic-python
+#    provisioner:
+#      playbook: ansible/newrelic-python.yml
+#  - name: postfix
+#    provisioner:
+#      playbook: ansible/postfix.yml
+#  - name: secops
+#    provisioner:
+#      playbook: ansible/secops.yml
+#  - name: solr
+#    provisioner:
+#      playbook: ansible/solr.yml
+#  - name: trendmicro
+#    provisioner:
+#      playbook: ansible/trendmicro.yml
+#  - name: web-proxy
+#    provisioner:
+#      playbook: ansible/web-proxy.yml

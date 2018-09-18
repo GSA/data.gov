@@ -19,7 +19,7 @@
   when: python_dir.stat.exists == False or python_version_check|failed
 
 - name: config new python
-  command: ./configure --prefix {{ python_version_directory }} --enable-ipv6 --enable-unicode=ucs4
+  command: ./configure --prefix {{ python_version_directory }} --enable-ipv6 --enable-unicode=ucs4 --enable-shared
   args:
     chdir: /var/tmp/{{ python_version_name }}
   when: python_dir.stat.exists == False or python_version_check|failed
@@ -29,3 +29,12 @@
   args:
     chdir: /var/tmp/{{ python_version_name }}
   when: python_dir.stat.exists == False or python_version_check|failed
+
+  #TODO install python to a known prefix like /usr/local to avoid this
+- name: add python lib to ld.so.conf
+  template: src=etc/ld.so.conf.d/20python.conf dest=/etc/ld.so.conf.d/20python.conf
+  register: ubuntu_python_ld_so
+
+- name: update ld.so.cache
+  command: ldconfig
+  when: ubuntu_python_ld_so | changed

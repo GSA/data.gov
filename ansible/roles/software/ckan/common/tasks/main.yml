@@ -1,6 +1,6 @@
 ---
 - name: create ckan config dir
-  action: file path=/etc/ckan state=directory follow=yes
+  action: file path=/etc/ckan state=directory owner=root group=www-data mode=0750 follow=yes
 
 - name: copy executables
   action: copy src={{item}} dest=/{{item}} mode=0744
