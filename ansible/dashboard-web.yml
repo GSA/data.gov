@@ -28,11 +28,11 @@
   - { role: chusiang.vim-and-vi-mode, tags: [vim, provision] }
   - { role: software/dashboard/dashboard-sudo-2-init, tags: [provision, deploy, deploy-rollback] }
   - { role: software/common/secops-ssh, tags: [provision, secops, prod] }
-  - { role: software/common/trendmicro, tags: [provision, trendmicro, prod] }
+  - { role: software/common/trendmicro, tags: [provision, trendmicro, prod, skip_in_kitchen] }
   - { role: software/common/ansible-postfix, tags: [provision, postfix, prod] }
   - {role: monitoring/fluentd/kernel, tags: [frontend, harvester, fluentd, prod] }
   - {role: monitoring/fluentd/limits, tags: [frontend, harvester, fluentd, prod] }
-  - {role: monitoring/fluentd/td-agent, tags: [frontend, harvester, fluentd, prod] }
+  - {role: monitoring/fluentd/td-agent, tags: [frontend, harvester, fluentd, prod, skip_in_kitchen] }
 
 
 - name: Deploying Dashboard

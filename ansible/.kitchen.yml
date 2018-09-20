@@ -60,9 +60,13 @@ suites:
 #  - name: crm-web
 #    provisioner:
 #      playbook: crm-web.yml
-#  - name: dashboard-web
-#    provisioner:
-#      playbook: dashboard-web.yml
+  - name: dashboard-web
+    provisioner:
+      hosts:
+        - dashboard-web
+      playbook: dashboard-web.yml
+      ansible_extra_flags: >-
+        --tags=provision --skip-tags=skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
 #  - name: datagov-web
 #    provisioner:
 #      playbook: datagov-web.yml
