@@ -6,7 +6,7 @@ catalogpub-web1d.dev-ocsit.bsp.gsa.gov
 catalog-harvester[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [solr]
-datagovsolrm1d.dev-ocsit.bsp.gsa.gov
+tempdatagovsolrm1d.dev-ocsit.bsp.gsa.gov
 datagovsolr[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [inventory-web]
