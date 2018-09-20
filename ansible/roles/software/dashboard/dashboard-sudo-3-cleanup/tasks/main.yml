@@ -38,6 +38,7 @@
 # `service php7.0-fpm restart` itself will not start `php7.0-fpm` if it's not running
 - name: php7.0-fpm status
   command: /etc/init.d/php7.0-fpm status
+  ignore_errors: yes
   register: php_fpm_status
   tags: skip_ansible_lint
 
