@@ -12,7 +12,7 @@
     path: "{{ item }}"
     state: directory
     mode: 0775
-    owner: "ubuntu"
+    owner: "{{ dashboard_user }}"
     group: "www-data"
     recurse: yes
   with_items:

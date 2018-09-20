@@ -65,6 +65,8 @@ suites:
       hosts:
         - dashboard-web
       playbook: dashboard-web.yml
+      extra_vars:
+        dashboard_user: kitchen # TODO this should just be the default user (ubuntu) but the role should ensure the user exists
       ansible_extra_flags: >-
         --tags=provision --skip-tags=skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
 #  - name: datagov-web
