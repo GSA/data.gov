@@ -9,4 +9,5 @@ lint:
 	ansible-lint -v -x ANSIBLE0010 --exclude=ansible/roles/vendor ansible/*.yml
 
 test:
+	cd ansible && \
 	bundle exec kitchen test --concurrency 2
