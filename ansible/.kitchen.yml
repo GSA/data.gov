@@ -57,9 +57,13 @@ suites:
         redis_password: fake-redis-password
       ansible_extra_flags: >-
         --tags=harvester,ami-fix,bsp --skip-tags=apache,solr,db,saml2,skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
-#  - name: crm-web
-#    provisioner:
-#      playbook: crm-web.yml
+  - name: crm-web
+    provisioner:
+      hosts:
+        - crm-web
+      playbook: crm-web.yml
+      ansible_extra_flags: >-
+        --tags=provision --skip-tags=skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
   - name: dashboard-web
     provisioner:
       hosts:
