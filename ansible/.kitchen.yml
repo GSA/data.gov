@@ -71,9 +71,11 @@ suites:
       hosts:
         - efk_nginx
       playbook: efk-nginx.yml
-#  - name: efk-stack
-#    provisioner:
-#      playbook: ekf-stack.yml
+  - name: efk-stack
+    provisioner:
+      hosts:
+        - efk_nginx
+      playbook: efk-stack.yml
 #  - name: elastalert
 #    provisioner:
 #      playbook: elastalert.yml
