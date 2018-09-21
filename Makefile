@@ -1,5 +1,8 @@
 .PHONY: lint setup test
 
+KITCHEN_CONCURRENCY ?= 2
+
+
 update-vendor:
 	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml
 
@@ -22,4 +25,4 @@ lint:
 
 test:
 	cd ansible && \
-	bundle exec kitchen test --concurrency 2
+	bundle exec kitchen test --concurrency $(KITCHEN_CONCURRENCY)
