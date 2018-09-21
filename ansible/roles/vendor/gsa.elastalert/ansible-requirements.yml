@@ -1,6 +1,6 @@
-- src: tersmitten.pip
-  version: "v1.2.0"
+- src: geerlingguy.pip
+  version: master
 - src: dwcramer.upstart
-  version: "0.1.0"
-- src: tersmitten.logrotated
-  version: "v1.0.2"
+  version: master
+- src: oefenweb.logrotated
+  version: master

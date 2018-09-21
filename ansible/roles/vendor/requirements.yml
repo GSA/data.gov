@@ -34,5 +34,6 @@
 - src: https://github.com/GSA/rvm1-ansible
   version: v1.3.8-fix
   name: gsa.rvm1-ruby
-- src: https://github.com/GSA/datagov-deploy-redis
+- src: 'https://github.com/GSA/datagov-deploy-redis'
+  version: master
   name: gsa.datagov-deploy-redis
