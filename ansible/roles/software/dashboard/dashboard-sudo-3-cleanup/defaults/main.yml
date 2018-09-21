@@ -1,4 +1,5 @@
 ---
+dashboard_user: ubuntu
 
 # Project path
 project_source_rollback_path: /var/www/dashboard/rollback
