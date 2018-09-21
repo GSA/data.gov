@@ -6,7 +6,7 @@ galaxy_info:
   min_ansible_version: 1.9.1
 
 dependencies:
-  - role: tersmitten.pip
+  - role: Oefenweb.pip
   - role: dwcramer.upstart
     upstart_name: elastalert
     upstart_exec_path: "/opt/elastalert/venv/bin/python -- -m elastalert.elastalert --verbose --config /etc/elastalert/config.yaml"
@@ -18,7 +18,7 @@ dependencies:
     upstart_stop_on:
       - shutdown
     upstart_capture_errors: yes
-  - role: tersmitten.logrotated
+  - role: Oefenweb.logrotated
     logrotated_logrotate_d_files:
       elastalert:
         - logs:

@@ -23,6 +23,11 @@
   tags:
     - apt
 
+- name: Install six 1.9.0
+  pip:
+    name: six==1.9.0
+    virtualenv: /opt/elastalert/venv
+    
 - name: Install elastalert dependencies
   pip:
     requirements: /opt/elastalert/requirements.txt

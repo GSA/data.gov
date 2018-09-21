@@ -20,23 +20,18 @@
 - src: ANXS.build-essential
 - src: dwcramer.upstart
 - src: oefenweb.logrotated
-- src: teampants.elastalert
 - src: nickhammond.logrotate
 - src: nleutner.newrelic-php
 - src: newrelic.newrelic-infra
-<<<<<<< HEAD
-- src: franklinkim.php5-newrelic
 
-- src: https://github.com/GSA/datagov-deploy-apache2
-=======
-
+- src: https://github.com/GSA/ansible-elastalert
+  name: gsa.elastalert
+- src: https://github.com/GSA/ansible-os-ubuntu-14
+  name: gsa.ansible-os-ubuntu-14  
 - src: 'https://github.com/GSA/datagov-deploy-apache2'
->>>>>>> 76429afcd52034d06482def455fe5469de1b996a
   name: gsa.datagov-deploy-apache2
-
 - src: https://github.com/GSA/rvm1-ansible
   version: v1.3.8-fix
   name: gsa.rvm1-ruby
-
 - src: https://github.com/GSA/datagov-deploy-redis
   name: gsa.datagov-deploy-redis

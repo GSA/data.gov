@@ -1,0 +1,29 @@
+# This does a preliminary check of various services and variables.
+# THey are registered for use with the later tasks
+
+# List users in order to look files inside each home directory
+- name: "PRELIM | List users accounts"
+  command: "awk -F: '{print $1}' /etc/passwd"
+  register: users
+  changed_when: no
+  check_mode: no
+
+- name: "PRELIM | Gather accounts with empty password fields"
+  shell: "cat /etc/shadow | awk -F: '($2 == \"\" ) {j++;print $1; } END {exit j}'"
+  register: empty_password_accounts
+  changed_when: no
+  check_mode: no
+
+- name: "PRELIM | Gather UID 0 accounts other than root"
+  shell: "cat /etc/passwd | awk -F: '($3 == 0 && $1 != \"root\") {i++;print $1 } END {exit i}'"
+  register: uid_zero_accounts_except_root
+  changed_when: no
+  check_mode: no
+
+# Gather empty passwords
+
+- name: "PRELIM | Gather accounts with empty password fields"
+  shell: "cat /etc/shadow | awk -F: '($2 == \"\" ) {j++;print $1; } END {exit j}'"
+  register: empty_password_accounts
+  changed_when: no
+  check_mode: no

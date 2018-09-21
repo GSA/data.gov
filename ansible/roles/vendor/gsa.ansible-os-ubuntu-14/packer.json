@@ -1,0 +1,37 @@
+{
+  "variables": {
+    "source_ami": "ami-a5a98fde",
+    "instance_type": "t2.medium",
+    "ami_name": "gsa-hardened-ubuntu-1404"
+  },
+
+  "builders": [{
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "us-east-1",
+    "source_ami": "{{user `source_ami`}}",
+    "instance_type": "{{user `instance_type`}}",
+    "ssh_username": "ubuntu",
+    "ami_name": "{{user `ami_name`}}",
+    "tags": {
+        "Name": "gsa-hardened-ubuntu-1404",
+        "app":"ubuntu-1404",
+        "portofolio":"gsa-ise",
+        "built-with":"packer"
+    }
+  }],
+
+  "provisioners": [
+    {
+        "type": "ansible-local",
+        "playbook_dir": "ansible",
+        "playbook_file": "test.yml",
+        "inventory_groups": "localhost",
+        "extra_arguments": [
+          "--tags ''",
+          "--skip-tags ''",
+          "--vault-password-file=''"
+        ]
+  }]
+}

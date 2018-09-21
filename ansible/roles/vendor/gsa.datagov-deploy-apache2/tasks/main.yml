@@ -28,7 +28,7 @@
     - skip_ansible_lint
 
 - name: Configure mod_remoteip
-  template: src=templates/etc/apache2/conf-enabled/mod_remoteip.conf dest=/etc/apache2/conf-enabled/mod_remoteip.conf
+  template: src=templates/etc/apache2/conf-enabled/mod_remoteip.conf dest=/etc/apache2/conf-enabled/mod_remoteip.conf mode=0644
   notify: reload apache
 
 - name: Apache ServerTokens Prod
@@ -46,7 +46,7 @@
   notify: reload apache
 
 - name: enable apache2 mod_wsgi config to use custom python
-  template: src=etc/apache2/conf-enabled/wsgi-custom-python.conf.j2 dest=/etc/apache2/conf-enabled/wsgi-custom-python.conf
+  template: src=etc/apache2/conf-enabled/wsgi-custom-python.conf.j2 dest=/etc/apache2/conf-enabled/wsgi-custom-python.conf mode=0644
   notify: reload apache
 
 - name: enable apache2
