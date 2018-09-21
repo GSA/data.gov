@@ -34,20 +34,43 @@ This repository contains Dockerized [Ansible](https://github.com/ansible/ansible
 
 ### Images
 
-* chusiang/vim-and-vi-mode:ubuntu14.04 (lastest)
-* chusiang/vim-and-vi-mode:ubuntu16.04
-* chusiang/vim-and-vi-mode:debian7
+* chusiang/vim-and-vi-mode:ubuntu16.04 (lastest)
+* chusiang/vim-and-vi-mode:ubuntu14.04
+* chusiang/vim-and-vi-mode:debian9
 * chusiang/vim-and-vi-mode:debian8
-* chusiang/vim-and-vi-mode:centos6
+* ~~chusiang/vim-and-vi-mode:debian7~~ (EOL)
 * chusiang/vim-and-vi-mode:centos7
+* ~~chusiang/vim-and-vi-mode:centos6~~ (EOL)
+* chusiang/vim-and-vi-mode:alpine3
 
 ### Usage
 
-    $ docker run -it -v /src:/data chusiang/vim-and-vi-mode:ubuntu14.04 bash
-    root@a138a8d7ca3c:/tmp# vim --version
-    VIM - Vi IMproved 7.4 (2013 Aug 10, compiled Jan  2 2014 19:39:32)
-    ...
+#### Normal mode
+
+Run container.
+
+```
+$ docker run -it -v $PWD:/srv chusiang/vim-and-vi-mode:debian9 bash
+root@a138a8d7ca3c:/tmp# vim --version
+VIM - Vi IMproved 8.0 (2016 Sep 12, compiled Sep 30 2017 18:21:38)
+...
+```
+
+#### Daemon (service) mode
+
+1. Run container as service.
+
+    ```
+    $ docker run --name vim -d -v $PWD:/srv chusiang/vim-and-vi-mode:debian9 run.sh
+    4f4abc41abff3e4dbd37145fafd84a43de0230599883ebd82249b778ea1994c6
+    ```
+
+1. Enter the container.
+
+    ```
+    $ docker exec -it vim bash
+    ```
 
 ## License
 
-Copyright (c) chusiang from 2016-2017 under the MIT license.
+Copyright (c) chusiang from 2016-2018 under the MIT license.

@@ -1,0 +1,142 @@
+- name: "2.1.1-2.1.10 | Ensure rsh, rlogin, rexec, talk, telnet, chargen, daytime, echo, discard, time is not enabled (stat inetd)"
+  stat: path=/etc/inetd.conf
+  register: inetd_path
+  tags:
+  - id_2.1.1-2.1.10
+
+- name: "2.1.1-2.1.10 | Ensure rsh, rlogin, rexec, talk, telnet, chargen, daytime, echo, discard, time is not enabled"
+  lineinfile: >
+      dest=/etc/inetd.conf
+      regexp='^({{ item }}.*)'
+      line='#\1'
+      state=present
+      backrefs=yes
+      backup=yes
+  with_items:
+      - chargen
+      - daytime
+      - discard
+      - echo
+      - time
+      - shell
+      - login
+      - exec
+      - talk
+      - ntalk
+      - telnet
+      - tftp
+      - xinetd
+  when: inetd_path.stat.exists == True
+  tags:
+  - id_2.1.1-2.1.10
+
+- name: "2.2.1.1 | Ensure time synchronization is in use"
+  apt:
+      name: ntp
+      state: present
+  when: ubu14gsa_time_usentp == True
+  tags:
+      - id_2.1.1.1
+
+- name: "2.2.1.1 | Ensure time synchronization is in use"
+  apt:
+      name: chrony
+      state: present
+  when: ubu14gsa_time_usechrony == True
+  tags:
+      - id_2.1.1.1
+
+- name: "2.2.2 | Ensure X Window System in not installed"
+  apt:
+      name: xserver-xorg-core
+      state: absent
+  tags:
+      - id_2.2.2
+
+- name: 2.2.3-2.2.14 | Ensure DNS,FTP,HTTP,IMAP,POP,Samba,Proxy,SNMP Servers are not enabled
+  service: >
+      name={{ item }}
+      enabled=no
+  with_items:
+    - avahi-daemon
+    - cups
+    - isc-dhcp-server
+    - nfs-kernel-server
+    - rpcbind
+    - slapd
+    - bind9
+    - vsftpd
+    - apache2
+    - dovecot
+    - smbd
+    - squid3
+    - snmpd
+  failed_when: False
+  tags:
+    - id_2.2.8-2.2.14
+
+- name: 2.2.15 Configure Mail Transfer Agent for Local-Only Mode
+  stat: path=/etc/postfix/main.cf
+  register: postfix_main_cf
+  tags:
+    - id_2.2.15
+
+- name: 2.2.15 | Configure Mail Transfer Agent for Local-Only Mode (Scored)
+  lineinfile: >
+      dest=/etc/postfix/main.cf
+      regexp='^inet_interfaces ='
+      line='inet_interfaces = localhost'
+      state=present
+  when: postfix_main_cf.stat.exists == True
+  tags:
+    - id_2.2.15
+
+- name: 2.2.15 | Configure Mail Transfer Agent for Local-Only Mode (Scored)
+  lineinfile: >
+      dest=/etc/postfix/main.cf
+      regexp='^inet_protocols ='
+      line='inet_protocols = ipv4'
+      state=present
+  when: postfix_main_cf.stat.exists == True
+  tags:
+    - id_2.2.15
+
+- name: 2.2.16 | Ensure rsync service is not enabled
+  stat: path=/etc/default/rsync
+  register: default_rsync
+  tags:
+    - id_2.2.16
+
+- name: 2.2.16 | Ensure rsync service is not enabled
+  lineinfile: >
+      dest='/etc/default/rsync'
+      regexp='^RSYNC_ENABLE'
+      line='RSYNC_ENABLE=false'
+  when: default_rsync.stat.exists == True
+  tags:
+    - id_2.2.16
+
+- name: "2.2.17 | Ensure NIS Server is not enabled"
+  service:
+      name: ypserv
+      state: stopped
+      enabled: no
+  failed_when: False
+  tags:
+      - id_2.2.17
+
+- name: 2.3.1-2.3.5 | Ensure NIS, RSH, Talk, Telnet, and Ldap are not installed
+  apt: >
+      name={{ item }}
+      state=absent
+      purge=yes
+  with_items:
+    - nis
+    - ypbind
+    - rsh
+    - talk
+    - telnet
+    - ldap-utils
+    - openldap-clients
+  tags:
+    - id_2.3.1-2.3.5

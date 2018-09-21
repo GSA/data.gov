@@ -4,5 +4,5 @@
   become: yes
   become_method: sudo
   roles:
-    - security/hardening
+    - gsa.ansible-os-ubuntu-14
 

@@ -1,32 +1,93 @@
 language: bash
-sudo: true
+sudo: required
 services:
   - docker
 
 before_install:
   - docker info
   - docker version
-  - echo "==> Build with Docker ..."
-  - docker build -f tests/Dockerfile.ubuntu12.04 -t vim:ubuntu12.04 . | tee tests/output.ubuntu12.04.log
-  - docker build -f tests/Dockerfile.ubuntu14.04 -t vim:ubuntu14.04 . | tee tests/output.ubuntu14.04.log
-  - docker build -f tests/Dockerfile.ubuntu16.04 -t vim:ubuntu16.04 . | tee tests/output.ubuntu16.04.log
-  - docker build -f tests/Dockerfile.debian7 -t vim:debian7 . | tee tests/output.debian7.log
-  - docker build -f tests/Dockerfile.debian8 -t vim:debian8 . | tee tests/output.debian8.log
-  - docker build -f tests/Dockerfile.centos6 -t vim:centos6 . | tee tests/output.centos6.log
-  - docker build -f tests/Dockerfile.centos7 -t vim:centos7 . | tee tests/output.centos7.log
 
-script:
-  - echo "==> Run Test case ..."
-  - grep 'VIM - Vi IMproved' tests/output.ubuntu12.04.log
-  - grep 'VIM - Vi IMproved' tests/output.ubuntu14.04.log
-  - grep 'VIM - Vi IMproved' tests/output.ubuntu16.04.log
-  - grep 'VIM - Vi IMproved' tests/output.debian7.log
-  - grep 'VIM - Vi IMproved' tests/output.debian8.log
-  - grep 'VIM - Vi IMproved' tests/output.centos6.log
-  - grep 'VIM - Vi IMproved' tests/output.centos7.log
+jobs:
+  include:
+
+    # Stage of Syntax check
+    # =====================
+
+    - stage: Syntax check
+      script:
+        - echo "==> Syntax Check on Ansible 2.4 ..."
+        - docker run --rm -it -v $PWD:/srv chusiang/ansible:2.4 /bin/sh -c "cd /srv && ansible-playbook --syntax-check provision.yml"
+
+    - stage: Syntax check
+      script:
+        - echo "==> Syntax Check on Ansible 2.5 ..."
+        - docker run --rm -it -v $PWD:/srv chusiang/ansible:2.5 /bin/sh -c "cd /srv && ansible-playbook --syntax-check provision.yml"
+
+    # Stage of Lint check
+    # ===================
+
+    - stage: Lint check
+      script:
+        - echo "==> Lint Check on Ansible 2.4 ..."
+        - docker run --rm -it -v $PWD:/srv chusiang/ansible:2.4 /bin/sh -c "cd /srv && ansible-lint provision.yml"
+
+    - stage: Lint check
+      script:
+        - echo "==> Lint Check on Ansible 2.5 ..."
+        - docker run --rm -it -v $PWD:/srv chusiang/ansible:2.5 /bin/sh -c "cd /srv && ansible-lint provision.yml"
+
+    # Stage of Build
+    # ==============
+
+    - stage: Build
+      script:
+        - echo "==> Build on Alpine 3 ..."
+        - docker build -f tests/Dockerfile.alpine3 -t vim:alpine3 . | tee tests/output.alpine3.log
+
+        - echo "==> Run test case on Alpine 3 ..."
+        - grep 'VIM - Vi IMproved' tests/output.alpine3.log
+
+    - stage: Build
+      script:
+        - echo "==> Build on CentOS 7 ..."
+        - docker build -f tests/Dockerfile.centos7 -t vim:centos7 . | tee tests/output.centos7.log
+
+        - echo "==> Run test case on CentOS 7 ..."
+        - grep 'VIM - Vi IMproved' tests/output.centos7.log
+
+    - stage: Build
+      script:
+        - echo "==> Build on Debian 8 ..."
+        - docker build -f tests/Dockerfile.debian8 -t vim:debian8 . | tee tests/output.debian8.log
+
+        - echo "==> Run test case on Debian 8 ..."
+        - grep 'VIM - Vi IMproved' tests/output.debian8.log
+
+    - stage: Build
+      script:
+        - echo "==> Build on Debian 9 ..."
+        - docker build -f tests/Dockerfile.debian9 -t vim:debian9 . | tee tests/output.debian9.log
+
+        - echo "==> Run test case on Debian 9 ..."
+        - grep 'VIM - Vi IMproved' tests/output.debian9.log
+
+    - stage: Build
+      script:
+        - echo "==> Build on Ubuntu 14.04 ..."
+        - docker build -f tests/Dockerfile.ubuntu14.04 -t vim:ubuntu14.04 . | tee tests/output.ubuntu14.04.log
+
+        - echo "==> Run test case on Ubuntu 14.04 ..."
+        - grep 'VIM - Vi IMproved' tests/output.ubuntu14.04.log
+
+    - stage: Build
+      script:
+        - echo "==> Build on Ubuntu 16.04 ..."
+        - docker build -f tests/Dockerfile.ubuntu16.04 -t vim:ubuntu16.04 . | tee tests/output.ubuntu16.04.log
+
+        - echo "==> Run test case on Ubuntu 16.04 ..."
+        - grep 'VIM - Vi IMproved' tests/output.ubuntu16.04.log
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
   slack:
-    secure: SKL8EBKhkBRj7SQedTSKP+CXXBj6gfYjuGyLjSo4dESLgWp4RweVYTIw3pBM+h+Df+YJWNStje03gHr5QMkcCYU+sJLQDi51dF3m4U/rhHkxnXWJOesKEQ7eIQIz2FNPQ5kkHKR6JyPghDuxTnqeBZuy0GFSoN7t7dQ7BQibesTAvY+qKqRsU71xJ0HeXCHqn35s5kSJOVPt7QOzgUl6U/E7VShi455LHOzw6fFqdvsdvbkjXYoVhpt1JODrongDEP8GSEIjFBQScP8M9fZrA1L+l64rHlI49Nyjk7Hr/C+rSCbcdC29xhn3+bW2+JqBic3QPK4ppMU+Iw9Abs/b30OMTaFCIS5/q9A7PSM9kdfv9OF/zZqRRUNgye6G5gXdfSms+i96lPRkr/CyiJULFIpNxtW3gD8VB5v8QDBhe0F4cLtPla6LyGyIS37fUV9FyFMMEtS2Njkj9CVlSJNtuIKw8LSNV9wuy3rxqqEKEoccPiBhlJmHqzJRbeBWDEZG3NVi2Jg1n/deSSg65vPP1nj4SVD5FTpD9Kp0nLCKwjox2MrXncEB4W65phfVFqzEa1BhTtukypDHzEbF2moS/qv9zfFnWkgKevNt4lwPeU32MPd1RM35Sy1SsT2ZXDFbYfXDTy8AIb1TzvmwdyBH0DgD18l1/9WEzkoZ4qBg488=
-
+    secure: H7bSfCL234KFovfWn1RGr4szDDFE1/tVJhj1FTXwSCdI75opuXYd2mGZX65jVeeSdCNuN03EooLLWPoYc6FXZKKVr60QehoDHaa8tcHDfk0paumx1ptkL8xcocP3hIRZMns58i3kD/jjFpbTQJs7VkeE5yMZ+Qokjp83Oq2tuxSSO5TLTfwj/WujLBQxJziL49Sjc+Cn7AmCANVjTeR38d/DW5WD7qp7Echd8pll7bqAWaqSOGEDLyi5mNQmtRn+US2yAQXkvkL3/7CoM0ksfHPjoZPfGGpS74cErKaZNgvAdj99BIcjnUrbBIO7A2lqXzgTeIRmttZ8Xh8vdQVT/IXnOQ4u/ZpMhbdQatUz5OF6hhayeLg7JBo5wAZkLywW1WGjBD2ohA5rDc2mN5G/gwvOUh7jmyZrcc3RiYl1RS8BrAes/4LyHDxIIVzuIBs9VLxnzWmW8UH2VpVTxIDcD2pubsOhYtGvZYlDzid3/59aCRe9HQPLfMHdJGW17a2mofj06b99gXWhieBkeUK9jY7m46t7s9hRpDB3oqvJVC5+dNRN7wkKWMPfOxT/2ohhQhAh0syW+67kUCRlmVmYGIrpgwusYL/AaGQmsw+GjgDrdifeeqSp6H19gX4t+bvbagdl2CNOVjT9IWsDLlK1wcV/uR/IjQmp0jEZSHYxasM=

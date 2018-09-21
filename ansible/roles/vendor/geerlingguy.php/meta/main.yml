@@ -6,7 +6,7 @@ galaxy_info:
   description: PHP for RedHat/CentOS/Fedora/Debian/Ubuntu.
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
-  min_ansible_version: 2.0
+  min_ansible_version: 2.4
   platforms:
   - name: EL
     versions:
@@ -20,7 +20,16 @@ galaxy_info:
     - all
   - name: Ubuntu
     versions:
-    - all
+    - trusty
+    - xenial
+    - bionic
   galaxy_tags:
     - development
     - web
+    - php
+    - language
+    - fpm
+    - drupal
+    - wordpress
+    - joomla
+    - magento

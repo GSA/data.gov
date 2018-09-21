@@ -32,3 +32,6 @@
 
 - src: https://github.com/GSA/datagov-deploy-redis
   name: gsa.datagov-deploy-redis
+
+- src: https://github.com/GSA/ansible-os-ubuntu-14
+  name: gsa.ansible-os-ubuntu-14
