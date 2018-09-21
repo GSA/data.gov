@@ -99,9 +99,11 @@ suites:
       playbook: inventory.yml
       ansible_extra_flags: >-
         --skip-tags="solr,db,deploy-rollback,skip_in_kitchen" <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
-#  - name: jekyll
-#    provisioner:
-#      playbook: jekyll.yml
+  - name: jekyll
+    provisioner:
+      hosts:
+        - jekyll-web
+      playbook: jekyll.yml
 #  - name: jumpbox
 #    provisioner:
 #      playbook: jumpbox.yml
