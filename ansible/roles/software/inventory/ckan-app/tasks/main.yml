@@ -55,7 +55,7 @@
     - /var/lib/ckan
 
 - name: copy all needed files
-  action: copy src={{item}} dest=/{{item}}
+  action: copy src={{item}} dest=/{{item}} owner=root group=www-data mode=0640
   with_items:
     - etc/ckan/who.ini
     - etc/ckan/apache.wsgi
@@ -64,7 +64,7 @@
     - etc/apache2/sites-enabled/datapusher.conf
 
 - name: Configure production.ini
-  template: src=templates/{{item}} dest=/{{item}}
+  template: src=templates/{{item}} dest=/{{item}} owner=root group=www-data mode=0640
   with_items:
     - etc/ckan/production.ini
     - etc/ckan/datapusher_settings.py
