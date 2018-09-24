@@ -135,6 +135,6 @@ suites:
 #  - name: trendmicro
 #    provisioner:
 #      playbook: trendmicro.yml
-#  - name: web-proxy
-#    provisioner:
-#      playbook: web-proxy.yml
+  - name: web-proxy
+    provisioner:
+      playbook: web-proxy.yml
