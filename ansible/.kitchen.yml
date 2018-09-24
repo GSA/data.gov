@@ -108,9 +108,9 @@ suites:
 #  - name: kibana
 #    provisioner:
 #      playbook: kibana.yml
-#  - name: logrotate
-#    provisioner:
-#      playbook: logrotate.yml
+  - name: logrotate
+    provisioner:
+      playbook: logrotate.yml
 #  - name: nessus
 #    provisioner:
 #      playbook: nessus.yml
