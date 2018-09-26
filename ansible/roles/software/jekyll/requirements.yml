@@ -1,3 +1,0 @@
-- src: https://github.com/GSA/rvm1-ansible
-  version: v1.3.8-fix
-  name: rvm1-ruby
