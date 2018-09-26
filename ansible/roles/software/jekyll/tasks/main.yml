@@ -24,7 +24,7 @@
     - root/.s3cfg
 
 - name: copy template files
-  template: src=templates/{{item}}.j2 dest=/{{item}}
+  template: src=templates/{{item}}.j2 dest=/{{item}} mode=0644
   with_items:
     - etc/apache2/sites-enabled/jekyll.conf
 
