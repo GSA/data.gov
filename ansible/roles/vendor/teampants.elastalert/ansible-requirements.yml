@@ -1,6 +1,0 @@
-- src: tersmitten.pip
-  version: "v1.2.0"
-- src: dwcramer.upstart
-  version: "0.1.0"
-- src: tersmitten.logrotated
-  version: "v1.0.2"

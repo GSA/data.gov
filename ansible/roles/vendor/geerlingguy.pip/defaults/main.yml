@@ -1,0 +1,5 @@
+---
+# For Python 3, use python3-pip.
+pip_package: python-pip
+
+pip_install_packages: []

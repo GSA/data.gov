@@ -3,7 +3,6 @@
   service:
     name: supervisor
     state: restarted
-    enabled: yes
 
 - name: update supervisorctl
   supervisorctl:

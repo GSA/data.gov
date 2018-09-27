@@ -1,0 +1,7 @@
+---
+# defaults file for sbaerlocher.wp-cli
+
+wp_cli_phar_url: https://raw.github.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+wp_cli_bin_path: "/usr/bin/{{ wp_cli_bin_command }}"
+wp_cli_bin_command: wp
+wp_cli_packages: []

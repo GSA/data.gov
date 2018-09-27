@@ -1,0 +1,6 @@
+- src: geerlingguy.pip
+  version: master
+- src: dwcramer.upstart
+  version: master
+- src: oefenweb.logrotated
+  version: master

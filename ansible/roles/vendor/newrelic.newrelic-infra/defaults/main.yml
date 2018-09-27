@@ -1,0 +1,5 @@
+---
+nrinfragent_state: "latest"
+nrinfragent_version: "*"
+nrinfragent_config:
+  license_key: YOUR_LICENSE_KEY

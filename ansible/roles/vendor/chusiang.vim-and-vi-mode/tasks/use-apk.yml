@@ -1,0 +1,48 @@
+#!/usr/bin/env ansible-playbook
+---
+
+# Install Vim.
+- name: install vim on alpine base system
+  become: true
+  apk:
+    name: vim
+
+- name: touch /etc/profile.d/vim.sh
+  become: true
+  file:
+    path: /etc/profile.d/vim.sh
+    state: touch
+    mode: "u=rw,g=r,o=r"
+
+- name: add vi alias
+  become: true
+  lineinfile:
+    dest: /etc/profile.d/vim.sh
+    line: 'alias vi=vim'
+
+- name: use vi-mode in sh
+  become: true
+  lineinfile:
+    dest: /etc/profile.d/vim.sh
+    line: 'set -o vi'
+
+- name: setting $EDITOR
+  become: true
+  lineinfile:
+    dest: /etc/profile.d/vim.sh
+    line: 'export EDITOR=vim'
+
+- name: use dark background in vim
+  become: true
+  lineinfile:
+    dest: /etc/vim/vimrc
+    line: 'set background=dark'
+
+- name: touch /etc/inputrc
+  become: true
+  file:
+    path: /etc/inputrc
+    state: touch
+    mode: "u=rw,g=r,o=r"
+
+# vim: ft=ansible :

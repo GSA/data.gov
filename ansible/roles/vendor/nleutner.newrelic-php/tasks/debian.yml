@@ -1,0 +1,31 @@
+---
+- name: Debian | Set newrelic_loaded_os_family
+  set_fact:
+    newrelic_loaded_os_family: "{{ ansible_os_family }}"
+
+- name: Debian | Add New Relic repo key
+  apt_key:
+    url: https://download.newrelic.com/548C16BF.gpg
+    id: 548C16BF
+    state: present
+
+- name: Debian | Add New Relic repository
+  copy:
+    content: "deb http://apt.newrelic.com/debian/ newrelic non-free"
+    dest: /etc/apt/sources.list.d/newrelic.list
+    owner: root
+    group: root
+    mode: 0644
+  register: newrelic_repo
+
+- name: Debian | apt-get update
+  apt:
+    update_cache: yes
+  when: newrelic_repo.changed
+
+- name: Debian | Install New Relic PHP Agent
+  apt:
+    pkg: newrelic-php5
+    update_cache: yes
+    cache_valid_time: 86400
+    state: latest

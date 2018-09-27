@@ -1,0 +1,23 @@
+---
+# tasks file for sbaerlocher.wp-cli
+
+- name: Install WP-CLI
+  get_url:
+    url: "{{ wp_cli_phar_url }}"
+    dest: "{{ wp_cli_bin_path }}"
+    force: true
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+    - packages
+
+- name: Install WP-CLI Packages
+  command: "{{ wp_cli_bin_command }} package install {{ item }}"
+  register: command_result
+  changed_when: "'Installing package' in command_result.stdout"
+  when: item is defined
+  with_items:
+    - "{{ wp_cli_packages }}"
+  tags:
+    - packages

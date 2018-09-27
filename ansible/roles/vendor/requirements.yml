@@ -11,24 +11,28 @@
 - src: geerlingguy.php
 - src: geerlingguy.php-memcached
 - src: geerlingguy.php-mysql
-- src: heskethm.wp-cli
+- src: sbaerlocher.wp-cli
 - src: geerlingguy.java
 - src: geerlingguy.elasticsearch
 - src: geerlingguy.kibana
+- src: geerlingguy.pip
 - src: ANXS.apt
 - src: ANXS.build-essential
-- src: tersmitten.pip
 - src: dwcramer.upstart
-- src: tersmitten.logrotated
-- src: teampants.elastalert
+- src: oefenweb.logrotated
 - src: nickhammond.logrotate
-- src: franklinkim.php5-newrelic
+- src: nleutner.newrelic-php
+- src: newrelic.newrelic-infra
+- src: rvm_io.ruby
+  version: v2.0.1
+
+- src: https://github.com/GSA/ansible-elastalert
+  version: develop
+  name: gsa.elastalert
+- src: https://github.com/GSA/ansible-os-ubuntu-14
+  name: gsa.ansible-os-ubuntu-14
 - src: 'https://github.com/GSA/datagov-deploy-apache2'
   name: gsa.datagov-deploy-apache2
-
-- src: https://github.com/GSA/rvm1-ansible
-  version: v1.3.8-fix
-  name: gsa.rvm1-ruby
-
-- src: https://github.com/GSA/datagov-deploy-redis
+- src: 'https://github.com/GSA/datagov-deploy-redis'
+  version: master
   name: gsa.datagov-deploy-redis
