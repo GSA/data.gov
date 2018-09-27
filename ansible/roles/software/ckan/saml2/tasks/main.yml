@@ -1,15 +1,15 @@
 ---
 - name: create directories
-  action: file path=/etc/ckan/saml2/ state=directory mode=0755
+  action: file path=/etc/ckan/saml2/ state=directory mode=0755 owner=root group=www-data
 
 - name: create pki directory
-  action: file path=/etc/ckan/saml2/pki state=directory mode=0750
+  action: file path=/etc/ckan/saml2/pki state=directory mode=0750 owner=root group=www-data
 
 - name: copy all needed files
-  action: copy src=etc/ckan/saml2/ dest=/etc/ckan/saml2/
+  action: copy src=etc/ckan/saml2/ dest=/etc/ckan/saml2/ mode=0644 owner=root group=www-data
 
 - name: template all needed files
-  action: template src=etc/ckan/{{item}} dest=/etc/ckan/{{item}}
+  action: template src=etc/ckan/{{item}} dest=/etc/ckan/{{item}} mode=0640 owner=root group=www-data
   with_items:
     - saml2/pki/mycert.pem
     - saml2/pki/mykey.pem

@@ -40,9 +40,14 @@
   command: ./install.sh "{{ project_source_new_code_path }}" chdir={{ app_source_path }}
   tags: skip_ansible_lint
 
+  # TODO instead of fixing the permissions after the fact, we should be using
+  # the pip module with `umask` to install the requirements-freeze.txt
+- name: Fix permissions on ckan install dir
+  file: owner=root group=www-data dest={{ project_source_new_code_path }} state=directory recurse=yes
+
 # Configure CKAN
 - name: Configure production.ini
-  template: src=templates/{{ item }}.j2 dest=/{{ item }}
+  template: src=templates/{{ item }}.j2 dest=/{{ item }} owner=root group=www-data mode=0640
   with_items:
     - etc/ckan/production.ini
 
@@ -51,9 +56,18 @@
   copy:
     content="{{ token_dat }}"
     dest=/etc/ckan/token.dat
+    owner=root
+    group=www-data
+    mode=0640
 
 - name: Configure who.ini
-  copy: src={{ app_source_path }}/config/environments/{{ env }}/saml2/who.ini dest=/etc/ckan remote_src=True
+  copy:
+    src: "{{ app_source_path }}/config/environments/{{ env }}/saml2/who.ini"
+    dest: /etc/ckan
+    remote_src: true
+    owner: root
+    group: www-data
+    mode: 0640
 
 - name: point site_url in /etc/hosts to localhost
   action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ ckan_site_domain | regex_replace('https?\://','') }}"
@@ -66,13 +80,13 @@
     state: link
 
 - name: Copy all needed files
-  action: copy src={{item}} dest=/{{item}}
+  action: copy src={{item}} dest=/{{item}} mode=0644 owner=root group=www-data
   with_items:
     - etc/ckan/apache.wsgi
   tags: ['frontend', 'apache']
 
 - name: Configure ckan.conf
-  template: src=templates/etc/apache2/sites-enabled/ckan.{{readwrite_type|default('default')}}.conf.j2 dest=/etc/apache2/sites-enabled/ckan.conf
+  template: src=templates/etc/apache2/sites-enabled/ckan.{{readwrite_type|default('default')}}.conf.j2 dest=/etc/apache2/sites-enabled/ckan.conf mode=0644 owner=root group=www-data
   tags: ['frontend', 'apache']
 
 - name: Restart apache

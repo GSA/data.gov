@@ -8,7 +8,6 @@ transport:
 
 provisioner:
   name: ansible_playbook
-  roles_path: ansible/roles
   hosts: all
   require_ansible_repo: false
   require_ansible_omnibus: false
@@ -43,7 +42,7 @@ suites:
     provisioner:
       hosts:
         - catalog-web
-      playbook: ansible/catalog.yml
+      playbook: catalog.yml
       extra_vars:
         redis_password: fake-redis-password
         ckan_site_domain: http://test-kitchen-datagov.local
@@ -53,83 +52,89 @@ suites:
     provisioner:
       hosts:
         - catalog-harvester
-      playbook: ansible/catalog.yml
+      playbook: catalog.yml
       extra_vars:
         redis_password: fake-redis-password
       ansible_extra_flags: >-
         --tags=harvester,ami-fix,bsp --skip-tags=apache,solr,db,saml2,skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
 #  - name: crm-web
 #    provisioner:
-#      playbook: ansible/crm-web.yml
-#  - name: dashboard-web
-#    provisioner:
-#      playbook: ansible/dashboard-web.yml
+#      playbook: crm-web.yml
+  - name: dashboard-web
+    provisioner:
+      hosts:
+        - dashboard-web
+      playbook: dashboard-web.yml
+      extra_vars:
+        dashboard_user: kitchen # TODO this should just be the default user (ubuntu) but the role should ensure the user exists
+      ansible_extra_flags: >-
+        --tags=provision --skip-tags=skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
 #  - name: datagov-web
 #    provisioner:
-#      playbook: ansible/datagov-web.yml
+#      playbook: datagov-web.yml
 #  - name: efk-nginx
 #    provisioner:
-#      playbook: ansible/ekf-nginx.yml
+#      playbook: ekf-nginx.yml
 #  - name: efk-stack
 #    provisioner:
-#      playbook: ansible/ekf-stack.yml
+#      playbook: ekf-stack.yml
 #  - name: elastalert
 #    provisioner:
-#      playbook: ansible/elastalert.yml
+#      playbook: elastalert.yml
 #  - name: elasticsearch
 #    provisioner:
-#      playbook: ansible/elasticsearch.yml
+#      playbook: elasticsearch.yml
 #  - name: fluentd
 #    provisioner:
-#      playbook: ansible/fluent.yml
+#      playbook: fluent.yml
 #  - name: hardening
 #    provisioner:
-#      playbook: ansible/hardening.yml
+#      playbook: hardening.yml
 #  - name: harvester
 #    provisioner:
-#      playbook: ansible/harvester.yml
+#      playbook: harvester.yml
   - name: inventory-web
     provisioner:
       hosts: inventory-web
-      playbook: ansible/inventory.yml
+      playbook: inventory.yml
       ansible_extra_flags: >-
         --skip-tags="solr,db,deploy-rollback,skip_in_kitchen" <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
 #  - name: jekyll
 #    provisioner:
-#      playbook: ansible/jekyll.yml
+#      playbook: jekyll.yml
 #  - name: jumpbox
 #    provisioner:
-#      playbook: ansible/jumpbox.yml
+#      playbook: jumpbox.yml
 #  - name: kibana
 #    provisioner:
-#      playbook: ansible/kibana.yml
-#  - name: logrotate
-#    provisioner:
-#      playbook: ansible/logrotate.yml
+#      playbook: kibana.yml
+  - name: logrotate
+    provisioner:
+      playbook: logrotate.yml
 #  - name: nessus
 #    provisioner:
-#      playbook: ansible/nessus.yml
+#      playbook: nessus.yml
 #  - name: newrelic-infrastructure
 #    provisioner:
-#      playbook: ansible/newrelic-infrastructure.yml
+#      playbook: newrelic-infrastructure.yml
 #  - name: newrelic-php
 #    provisioner:
-#      playbook: ansible/newrelic-php.yml
+#      playbook: newrelic-php.yml
 #  - name: newrelic-python
 #    provisioner:
-#      playbook: ansible/newrelic-python.yml
+#      playbook: newrelic-python.yml
 #  - name: postfix
 #    provisioner:
-#      playbook: ansible/postfix.yml
+#      playbook: postfix.yml
 #  - name: secops
 #    provisioner:
-#      playbook: ansible/secops.yml
+#      playbook: secops.yml
 #  - name: solr
 #    provisioner:
-#      playbook: ansible/solr.yml
+#      playbook: solr.yml
 #  - name: trendmicro
 #    provisioner:
-#      playbook: ansible/trendmicro.yml
-#  - name: web-proxy
-#    provisioner:
-#      playbook: ansible/web-proxy.yml
+#      playbook: trendmicro.yml
+  - name: web-proxy
+    provisioner:
+      playbook: web-proxy.yml
