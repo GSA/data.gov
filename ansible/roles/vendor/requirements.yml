@@ -4,25 +4,25 @@
 # using this file. Follow the instructions at http://docs.ansible.com/ansible/galaxy.html
 # to include any roles you want installed prior to running main.yml.
 
+- src: ANXS.apt
+- src: ANXS.build-essential
 - src: chusiang.vim-and-vi-mode
+- src: dwcramer.upstart
 - src: geerlingguy.composer
+- src: geerlingguy.elasticsearch
 - src: geerlingguy.git
+- src: geerlingguy.java
+- src: geerlingguy.kibana
 - src: geerlingguy.nginx
 - src: geerlingguy.php
 - src: geerlingguy.php-memcached
 - src: geerlingguy.php-mysql
-- src: sbaerlocher.wp-cli
-- src: geerlingguy.java
-- src: geerlingguy.elasticsearch
-- src: geerlingguy.kibana
 - src: geerlingguy.pip
-- src: ANXS.apt
-- src: ANXS.build-essential
-- src: dwcramer.upstart
-- src: oefenweb.logrotated
+- src: newrelic.newrelic-infra
 - src: nickhammond.logrotate
 - src: nleutner.newrelic-php
-- src: newrelic.newrelic-infra
+- src: oefenweb.logrotated
+- src: sbaerlocher.wp-cli
 - src: rvm_io.ruby
   version: v2.0.1
 
