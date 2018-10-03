@@ -20,7 +20,7 @@ jobs:
       - restore_cache:
           keys:
             - v1-bundle-{{ checksum "Gemfile.lock" }}
-      - run: pip install -r requirements
+      - run: pip install -r requirements.txt
       - run:
           name: Install dependencies
           command: bundle install --path vendor/bundle
