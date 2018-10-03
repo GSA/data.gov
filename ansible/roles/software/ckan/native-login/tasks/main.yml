@@ -4,6 +4,7 @@
     src: etc/apache2/sites-enabled/ckan.conf
     dest: /etc/apache2/sites-enabled/ckan.conf
     mode: 0644
+  notify: reload apache
 
 - name: install ckan config
   template:
@@ -11,6 +12,7 @@
     dest: /etc/ckan/production.ini
     mode: 0640
     group: www-data
+  notify: reload apache
 
 - name: install ckan who.ini config
   template:
@@ -18,6 +20,7 @@
     dest: /etc/ckan/who.ini
     mode: 0640
     group: www-data
+  notify: reload apache
 
 - name: copy requirements.txt with special dependencies
   copy:
@@ -30,3 +33,4 @@
     requirements: /tmp/requirements.native-login.txt
     virtualenv: /usr/lib/ckan
     umask: '0022'
+  notify: reload apache
