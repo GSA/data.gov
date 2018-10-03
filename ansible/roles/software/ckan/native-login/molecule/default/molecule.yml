@@ -7,7 +7,6 @@ lint:
   name: yamllint
 platforms:
   - name: ckan-native-login
-    hostname: ckan-native-login
     image: ubuntu:trusty
     groups:
       - catalog-web

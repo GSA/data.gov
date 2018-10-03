@@ -1,16 +1,23 @@
 ---
+
+# Setup the machine similar to if we ran the catalog playbook.
 - name: Prepare
   hosts: all
-  pre_tasks:
+  tasks:
     - name: install packages
       apt: name={{ item }} update_cache=yes state=present
       with_items:
         - apache2
         - git
+        - libbz2-dev
+        - libpq-dev
+        - libxml2-dev
+        - libxslt1-dev
+        - python-dev
         - python-virtualenv
+        - swig
+        - xmlsec1
 
-    # The package here doesnt matter, but is required
-    # for ansible. We just need the virtualenv to exist.
     - name: setup ckan virtualenv
       pip:
         name: pip
