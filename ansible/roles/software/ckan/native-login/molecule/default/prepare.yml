@@ -1,0 +1,24 @@
+---
+- name: Prepare
+  hosts: all
+  pre_tasks:
+    - name: install packages
+      apt: name={{ item }} update_cache=yes state=present
+      with_items:
+        - apache2
+        - git
+        - python-virtualenv
+
+    # The package here doesnt matter, but is required
+    # for ansible. We just need the virtualenv to exist.
+    - name: setup ckan virtualenv
+      pip:
+        name: pip
+        version: "8.1.1"
+        virtualenv: /usr/lib/ckan
+
+    - name: create ckan config directory
+      file:
+        dest: /etc/ckan
+        state: directory
+        mode: 0755

@@ -1,0 +1,25 @@
+---
+- name: install apache site config
+  copy:
+    src: etc/apache2/sites-enabled/ckan.conf
+    dest: /etc/apache2/sites-enabled/ckan.conf
+    mode: 0644
+
+- name: install ckan config
+  template:
+    src: etc/ckan/production.ini.j2
+    dest: /etc/ckan/production.ini
+    mode: 0640
+    group: www-data
+
+- name: install ckan who.ini config
+  template:
+    src: etc/ckan/who.ini.j2
+    dest: /etc/ckan/who.ini
+    mode: 0640
+    group: www-data
+
+- name: install compatible version of repoze.who
+  command: /usr/lib/ckan/bin/pip install -U repoze.who==2.0 Paste==1.7.5.1
+  tags:
+    - skip_ansible_lint
