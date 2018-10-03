@@ -64,7 +64,7 @@ who.secure = {{ who_secure }}
 ## Database Settings
 db_user = {{ catalog_db_user }}
 db_pass = {{ catalog_db_pass }}
-db_server = terraform-20180618152009351000000001.clsowbdquocd.us-east-1.rds.amazonaws.com
+db_server = {{ CKAN_DB_SERVER }}
 db_database = {{ catalog_db_name }}
 sqlalchemy.url = postgresql://%(db_user)s:%(db_pass)s@%(db_server)s/%(db_database)s
 
