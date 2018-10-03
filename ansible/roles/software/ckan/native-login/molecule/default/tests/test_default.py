@@ -31,3 +31,9 @@ def test_who_ini_config(host):
     who_ini = host.file('/etc/ckan/who.ini')
 
     assert not who_ini.contains(r'saml2')
+
+
+def test_apache(host):
+    apache = host.service('apache2')
+
+    assert apache.is_running
