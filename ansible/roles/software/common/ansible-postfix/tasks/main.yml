@@ -45,7 +45,7 @@
     group: root
     mode: 0644
   notify: restart postfix
-  when:  ({% if wordpress-web not in group_names %} True {% else %} False {% endif %})
+  when:  wordpress not in group_names
   tags:
     - configuration
     - postfix
@@ -80,7 +80,7 @@
       chdir: /etc/postfix
     when: update_config_file.changed
     notify: restart postfix
-    when:  ({% if wordpress-web in group_names %} True {% else %} False {% endif %})
+    when:  wordpress in group_names
     
 - name: configure sasl username/password
   template:
