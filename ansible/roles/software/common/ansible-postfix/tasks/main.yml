@@ -69,7 +69,7 @@
     copy:
       src: "{{ item }}"
       dest: /etc/postfix/
-    loop:
+    with_items:
       - Makefile
       - generic
       - sender_canonical_maps
