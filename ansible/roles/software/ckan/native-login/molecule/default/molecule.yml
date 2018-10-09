@@ -1,0 +1,38 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: ckan-native-login
+    image: ubuntu:trusty
+    groups:
+      - catalog-web
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+  env:
+    ANSIBLE_ROLES_PATH: ../../../../..
+  inventory:
+    group_vars:
+      catalog-web:
+        app_type: catalog
+        catalog_db_user: ckan
+        catalog_db_name: ckan
+        catalog_db_pass: ckandbpassword
+        ckan_instance_secret: ckansecret
+        ckan_instance_uuid: ckanuuid
+        ckan_site_domain: https://ckan.example.com
+        redis_pass: redispassword
+        REDIS_SERVER: redis-host
+        who_ini_secret: whosecret
+        who_secure: false
+scenario:
+  name: default
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

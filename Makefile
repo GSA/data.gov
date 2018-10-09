@@ -24,5 +24,7 @@ lint:
 	ansible-lint -v -x ANSIBLE0010 --exclude=ansible/roles/vendor ansible/*.yml
 
 test:
+	cd ansible/roles/software/ckan/native-login && \
+	molecule test
 	cd ansible && \
 	bundle exec kitchen test --concurrency $(KITCHEN_CONCURRENCY)
