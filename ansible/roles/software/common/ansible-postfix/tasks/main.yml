@@ -11,7 +11,6 @@
     - configuration
     - postfix
     - postfix-install
-
 - name: install package
   apt:
     name: "{{ item }}"
@@ -23,7 +22,6 @@
     - configuration
     - postfix
     - postfix-install
-
 - name: configure mailname
   template:
     src: etc/mailname.j2
@@ -36,7 +34,6 @@
     - configuration
     - postfix
     - postfix-mailname
-
 - name: update configuration file
   template:
     src: etc/postfix/main.cf.j2
@@ -50,7 +47,6 @@
     - configuration
     - postfix
     - postfix-configuration
-
 - block:
   - name: update wordpress configuration file
     template:
@@ -64,7 +60,6 @@
       - configuration
       - postfix
       - postfix-configuration    
-
   - name: copy required files
     copy:
       src: "{{ item }}"
@@ -73,15 +68,13 @@
       - Makefile
       - generic
       - sender_canonical_maps
-
   - name: execute make file
     command: make
     args:
       chdir: /etc/postfix
     when: update_config_file.changed
     notify: restart postfix
-  when:  "'wordpress-web' in group_names"
-    
+  when:  "'wordpress-web' in group_names" 
 - name: configure sasl username/password
   template:
     src: etc/postfix/sasl_passwd.j2
@@ -97,17 +90,14 @@
     - configuration
     - postfix
     - postfix-sasl-passwd
-
 - name: create postifx.key file
   template:
     src: postfix.key.j2
     dest: /etc/ssl/certs/postfix.key
-
 - name: create postifx.pem file
   template:
     src: postfix.pem.j2
     dest: /etc/ssl/certs/postfix.pem
-
 - name: start and enable service
   service:
     name: postfix
