@@ -59,7 +59,7 @@
     tags:
       - configuration
       - postfix
-      - postfix-configuration    
+      - postfix-configuration
   - name: copy required files
     copy:
       src: "{{ item }}"
@@ -74,7 +74,7 @@
       chdir: /etc/postfix
     when: update_config_file.changed
     notify: restart postfix
-  when:  "'wordpress-web' in group_names" 
+  when:  "'wordpress-web' in group_names"
 - name: configure sasl username/password
   template:
     src: etc/postfix/sasl_passwd.j2
