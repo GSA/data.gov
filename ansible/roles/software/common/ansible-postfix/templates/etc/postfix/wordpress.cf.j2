@@ -37,6 +37,7 @@ smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
 
 myhostname = {{ postfix_hostname }}
 myorigin = $mydomain
+relayhost = [{{ postfix_relayhost }}]:{{ postfix_relayhost_port }}
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 #mydestination = {{ postfix_hostname }}, localdomain, localhost, localhost.localdomain
@@ -48,7 +49,7 @@ inet_protocols = {{ postfix_inet_protocols }}
 mydestination =
 
 {% if postfix_relayhost %}
-relayhost = [{{ postfix_relayhost }}]:{{ postfix_relayhost_port }}
+#relayhost = [{{ postfix_relayhost }}]:{{ postfix_relayhost_port }}
 {% if postfix_sasl_auth_enable %}
 smtp_sasl_auth_enable = {{ 'yes' if postfix_sasl_auth_enable else 'no' }}
 smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
