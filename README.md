@@ -140,12 +140,18 @@ Run the playbooks locally.
 
     $ make test
 
+You can set the concurrency parameter by environment variable.
+
+    $ KITCHEN_CONCURRENCY=4 make test
+
 Run a single suite.
 
+    $ cd ansible
     $ bundle exec kitchen test catalog
 
 Log into the instance to debug.
 
+    $ cd ansible
     $ bundle exec kitchen login catalog
 
 Re-run the playbook from a particular step.
