@@ -36,3 +36,5 @@
 - src: 'https://github.com/GSA/datagov-deploy-redis'
   version: master
   name: gsa.datagov-deploy-redis
+- src: https://github.com/GSA/datagov-deploy-solr
+  name: gsa.datagov-deploy-solr

@@ -1,0 +1,20 @@
+---
+galaxy_info:
+  author: Aaron D Borden
+  description: Apache Solr provision
+  company: GSA
+  license: CC0-1.0
+  min_ansible_version: 2.2
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - "14.04"
+
+  galaxy_tags: []
+
+dependencies:
+  - role: geerlingguy.solr
+    solr_version: '5.5.5'
+    solr_cores:
+      - "{{ app_type }}"

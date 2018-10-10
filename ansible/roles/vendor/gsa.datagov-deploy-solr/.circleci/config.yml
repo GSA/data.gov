@@ -1,0 +1,11 @@
+---
+version: 2
+jobs:
+  build:
+    machine: true
+    # dir name must match molecule role
+    working_directory: ~/datagov-deploy-solr
+    steps:
+      - checkout
+      - run: make setup
+      - run: make test

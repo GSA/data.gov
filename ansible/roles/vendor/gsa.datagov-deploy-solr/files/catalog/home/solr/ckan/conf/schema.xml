@@ -142,6 +142,7 @@
     <dynamicField name="vocab_*" type="string" indexed="true" stored="true" multiValued="true"/>
     <dynamicField name="*" type="string" indexed="true"  stored="false"/>
 
+    <!-- TODO test this with solr 5, this was missing from the docker config -->
     <!-- required for spatial search -->
     <field name="bbox_area" type="float" indexed="true" stored="true" />
     <field name="maxx" type="float" indexed="true" stored="true" />

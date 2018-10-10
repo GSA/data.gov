@@ -1,0 +1,8 @@
+---
+- name: Prepare
+  hosts: all
+  roles:
+    - geerlingguy.java
+  tasks:
+    - name: install curl for core creation on solr 4
+      apt: name=curl state=present

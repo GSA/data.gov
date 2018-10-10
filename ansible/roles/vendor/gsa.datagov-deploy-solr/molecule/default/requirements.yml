@@ -1,0 +1,5 @@
+---
+- src: geerlingguy.java
+  version: '1.9.2'
+- src: geerlingguy.solr
+  version: '4.3.0'

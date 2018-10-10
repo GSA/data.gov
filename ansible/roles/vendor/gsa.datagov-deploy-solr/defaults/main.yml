@@ -1,0 +1,8 @@
+---
+is_solr_replica: false  # Assume master node configuration by default
+solr_master_server: 127.0.0.1
+
+# Variables that are shared with geerlingguy.solr. They must match those
+# defaults otherwise you'll end up with inconsistent results.
+solr_home: /var/solr
+solr_port: "8983"
