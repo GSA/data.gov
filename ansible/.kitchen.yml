@@ -104,6 +104,15 @@ suites:
       hosts:
         - jekyll-web
       playbook: jekyll.yml
+      extra_vars:
+        jekyll_apps:
+          - name: sdg-indicators
+            repo: https://github.com/GSA/sdg-indicators/
+            config: _config_prod.yml
+            branch: master
+            port: "8000"
+            s3_bucket: fakebucket
+            secret_key: testsecret
 #  - name: jumpbox
 #    provisioner:
 #      playbook: jumpbox.yml

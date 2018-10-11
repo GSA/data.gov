@@ -1,23 +1,31 @@
 ---
-- name: install supervisor
-  action: pip name=supervisor
+- name: uninstall pip provided supervisor
+  pip: name=supervisor state=absent
 
-- name: copy all needed files
-  copy:
-    src: etc/init/supervisor.conf
-    dest: /etc/init/supervisor.conf
-  notify:
-    - restart supervisord
+- name: remove old pip supervisor files
+  file: path={{ item }} state=absent
+  with_items:
+    - /etc/supervisord.conf
+    - /var/log/supervisord.log
+
+- name: install supervisor
+  apt: name=supervisor state=present
 
 - name: copy template files
   template:
-    src: etc/supervisord.conf.j2
-    dest: /etc/supervisord.conf
+    src: etc/supervisor/conf.d/jekyll.conf.j2
+    dest: /etc/supervisor/conf.d/jekyll.conf
+    mode: 0640
   notify:
-    - update supervisorctl
+    - restart supervisord
+    - restart jekyll
 
 - name: ensure supervisor is enabled
   service:
     name: supervisor
     state: started
     enabled: yes
+
+- name: ensure jekyll services are started
+  supervisorctl: name=jekyll-{{ item.name }} state=started
+  with_items: "{{ jekyll_apps }}"
