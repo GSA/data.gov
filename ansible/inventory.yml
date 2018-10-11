@@ -19,6 +19,7 @@
     - software/ckan/common
     - role: gsa.datagov-deploy-apache2
     - {role: software/ckan/postgresql, tags: ['db', 'db-install']}
+    - {role: geerlingguy.java, tags: ['frontend', 'harvester', 'solr']}
     - {role: gsa.datagov-deploy-solr, tags: ['frontend', 'harvester', 'solr']}
     - {role: software/inventory/ckan-app, tags: ['deploy']}
     - {role: software/ckan/saml2, tags: ['saml2']}
