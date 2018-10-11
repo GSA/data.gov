@@ -7,4 +7,5 @@
   become_method: sudo
 
   roles:
-  - role: software/ckan/solr
+  - role: geerlingguy.java
+  - role: geerlingguy.solr

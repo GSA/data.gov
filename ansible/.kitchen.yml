@@ -148,9 +148,12 @@ suites:
 #  - name: secops
 #    provisioner:
 #      playbook: secops.yml
-#  - name: solr
-#    provisioner:
-#      playbook: solr.yml
+  - name: solr
+    provisioner:
+      hosts: solr
+      playbook: catalog.yml
+      ansible_extra_flags: >-
+        --tags="solr" --skip-tags="skip_in_kitchen" <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
 #  - name: trendmicro
 #    provisioner:
 #      playbook: trendmicro.yml
