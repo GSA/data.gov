@@ -13,8 +13,8 @@ catalog-harvester3t.datagov.us
 catalog-harvester6t.datagov.us
 
 [solr]
-datagovsolr1t.datagov.us
-datagovsolr2t.datagov.us
+datagovsolr1t.datagov.us is_solr_replica=true
+datagovsolr2t.datagov.us is_solr_replica=true
 datagovsolrm1t.datagov.us
 
 [inventory-web]

@@ -10,7 +10,7 @@ catalog-harvester[3:6]p.prod-ocsit.bsp.gsa.gov usage=qa_worker
 
 [solr]
 datagovsolrm1p.prod-ocsit.bsp.gsa.gov
-datagovsolr[1:2]p.prod-ocsit.bsp.gsa.gov
+datagovsolr[1:2]p.prod-ocsit.bsp.gsa.gov is_solr_replica=true
 
 [inventory-web]
 inventory[1:2]p.prod-ocsit.bsp.gsa.gov
