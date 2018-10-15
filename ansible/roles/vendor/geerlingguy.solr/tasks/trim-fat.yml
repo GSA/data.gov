@@ -1,0 +1,22 @@
+---
+- name: Remove the downloaded Solr archive.
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "{{ solr_workspace }}/{{ solr_filename }}.tgz"
+    - "{{ solr_workspace }}/{{ solr_filename }}"
+
+- name: Remove docs, if not needed.
+  file:
+    path: "{{ solr_install_path }}/docs"
+    state: absent
+  when: solr_remove_cruft
+
+- name: Remove example dir, if not needed.
+  file:
+    path: "{{ solr_install_path }}/example"
+    state: absent
+  when:
+    - solr_remove_cruft
+    - solr_version.split('.')[0] >= '5'
