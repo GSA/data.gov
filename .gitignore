@@ -57,3 +57,5 @@ ansible/inventories/mgmt-ocsit
 
 # Kitchen
 .kitchen
+
+__pycache__

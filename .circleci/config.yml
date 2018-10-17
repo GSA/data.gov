@@ -15,11 +15,14 @@ jobs:
 
   test-kitchen:
     machine: true
+    environment:
+      KITCHEN_CONCURRENCY: "4"
     steps:
       - checkout
       - restore_cache:
           keys:
             - v1-bundle-{{ checksum "Gemfile.lock" }}
+      - run: pip install -r requirements.txt
       - run:
           name: Install dependencies
           command: bundle install --path vendor/bundle
