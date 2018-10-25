@@ -99,8 +99,8 @@ ckan.auth.roles_that_cascade_to_sub_groups = admin
 
 ckan.site_id = geo.gov
 
-solr_server = 127.0.0.1
-solr_url = http://%(solr_server)s:8080/solr/{{app_type}}
+solr_server = {{ solr_host }}
+solr_url = http://%(solr_server)s:{{ solr_port }}/solr/{{app_type}}
 
 #ckan.simple_search = 1
 search.facets.default = 5
