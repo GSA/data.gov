@@ -31,8 +31,9 @@ php_fpm_request_terminate_timeout: 30s
 php_opcache_conf_filename: "10-opcache.ini"
 
 # Solr
-solr_home: "/var/lib/solr"
+solr_home: "/home/solr5"
 solr_version: "5.5.5"
 solr_port: "8983"
 solr_cores:
-  - "{{ app_type }}"
+  - catalog
+  - inventory
