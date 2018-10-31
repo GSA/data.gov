@@ -1,0 +1,17 @@
+[catalog-web:children]
+tag_group_catalog_web
+
+[catalog-harvester:children]
+tag_group_catalog_harvester
+
+[solr:children]
+tag_group_solr
+
+[crm-web]
+[dashboard-web]
+[efk_nginx]
+[elasticsearch]
+[inventory-web]
+[jekyll-web]
+[kibana]
+[wordpress-web]
