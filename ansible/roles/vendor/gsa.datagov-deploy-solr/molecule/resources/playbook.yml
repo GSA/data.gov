@@ -1,7 +1,5 @@
 ---
 - name: Converge
   hosts: all
-  vars:
-    app_type: catalog
   roles:
     - role: datagov-deploy-solr

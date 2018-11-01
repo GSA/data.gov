@@ -6,3 +6,5 @@ solr_master_server: 127.0.0.1
 # defaults otherwise you'll end up with inconsistent results.
 solr_home: /var/solr
 solr_port: "8983"
+solr_cores:
+  - collection1

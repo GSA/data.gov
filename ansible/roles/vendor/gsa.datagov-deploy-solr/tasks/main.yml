@@ -1,46 +1,52 @@
 ---
-- name: Remove tomcat6
-  apt: name=tomcat6 state=absent
+# TODO once solr is upgraded and re-indexed, tomcat can be removed
+# - name: Remove tomcat6
+#   apt: name=tomcat6 state=absent
 
-- name: Create Solr home dir
+- name: Create Solr core conf dir
   file: >-
-    path={{ solr_home }}/{{ app_type }}/conf
+    path={{ solr_home }}/data/{{ item }}/conf
     state=directory mode=0755 owner=solr group=solr
+  with_items: "{{ solr_cores }}"
 
 - name: copy solr schema file
   action: >-
-    copy src={{app_type}}/home/solr/ckan/conf/schema.xml
-    dest={{ solr_home }}/{{ app_type }}/conf/schema.xml
+    copy src={{ item }}/home/solr/ckan/conf/schema.xml
+    dest={{ solr_home }}/data/{{ item }}/conf/schema.xml
     mode=0644
     force=yes
   notify: restart solr
+  with_items: "{{ solr_cores }}"
 
 - name: Copy solrconfig.xml on master solr
   template:
     src: solrconfig-master.xml.j2
-    dest: "{{ solr_home }}/{{ app_type }}/conf/solrconfig.xml"
+    dest: "{{ solr_home }}/data/{{ item }}/conf/solrconfig.xml"
     force: true
     mode: 0644
   when: not is_solr_replica
   notify: restart solr
+  with_items: "{{ solr_cores }}"
 
 - name: Copy solrconfig.xml on replica solr
   template:
     src: solrconfig-replica.xml.j2
-    dest: "{{ solr_home }}/{{ app_type }}/conf/solrconfig.xml"
+    dest: "{{ solr_home }}/data/{{ item }}/conf/solrconfig.xml"
     force: true
     mode: 0644
   when: is_solr_replica
   notify: restart solr
+  with_items: "{{ solr_cores }}"
 
 # For solr <5, we have to create the core via API
 # - name: Add the new core
 #   shell: "curl 'http://127.0.0.1:{{ solr_port }}/solr/admin/cores?\
-#           action=CREATE&name={{app_type}}&\
-#           instanceDir={{ solr_home }}/{{app_type}}&\
-#           config={{ solr_home }}/{{app_type}}/conf/solrconfig.xml&\
-#           schema={{ solr_home }}/{{app_type}}/conf/schema.xml&\
-#           dataDir={{ solr_home }}/{{app_type}}'"
+#           action=CREATE&name={{ item }}&\
+#           instanceDir={{ solr_home }}/data/{{ item }}&\
+#           config={{ solr_home }}/data/{{ item }}/conf/solrconfig.xml&\
+#           schema={{ solr_home }}/data/{{ item }}/conf/schema.xml&\
+#           dataDir={{ solr_home }}/data/{{ item }}'"
 #   notify: restart solr
+#   with_items: "{{ solr_cores }}"
 #   tags:
 #     - skip_ansible_lint

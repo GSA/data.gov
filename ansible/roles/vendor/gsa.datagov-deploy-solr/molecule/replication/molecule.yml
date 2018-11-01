@@ -8,7 +8,9 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: solr-catalog
+  - name: solr-master
+    image: ubuntu:trusty
+  - name: solr-replica
     image: ubuntu:trusty
 provisioner:
   name: ansible
@@ -23,9 +25,15 @@ provisioner:
         solr_version: '5.5.5'
         solr_cores:
           - catalog
-          - inventory
+        # the docker containers don't actually talk to
+        # each other, so this is just to confirm the
+        # configuration.
+        solr_master_server: solr-master
+    host_vars:
+      solr-replica:
+        is_solr_replica: true
 scenario:
-  name: default
+  name: replication
 verifier:
   name: testinfra
   lint:
