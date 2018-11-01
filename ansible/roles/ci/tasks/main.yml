@@ -1,0 +1,34 @@
+---
+- name: Create the ci user
+  user:
+    name: "{{ item.username }}"
+    comment: "{{ item.username }}"
+    # password: "cipass"
+    # groups:
+    #   - sudo
+    state: present
+    shell: /bin/bash
+    system: true
+    createhome: false
+  with_items: "{{ users }}"
+
+- name: Install git
+  include_role:
+    name: geerlingguy.git
+
+- name: Clone the datagov-deploy repo
+  git:
+    repo: "https://github.com/GSA/datagov-deploy"
+    dest: "/home/{{ item.username }}/datagov-deploy"
+    version: bsp-ci
+  with_items: "{{ users }}"
+
+- name: Add the ci script to crontab
+  cron:
+    name: "The CI script"
+    minute: "0"
+    hour: "12"
+    job: "/home/{{ item.username }}/datagov-deploy/ci.sh"
+  with_items: "{{ users }}"
+  become: true
+  become_user: "{{ item.username }}"
