@@ -8,4 +8,4 @@
 
   roles:
   - role: geerlingguy.java
-  - role: geerlingguy.solr
+  - role: gsa.datagov-deploy-solr

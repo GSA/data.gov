@@ -151,9 +151,9 @@ suites:
   - name: solr
     provisioner:
       hosts: solr
-      playbook: catalog.yml
-      ansible_extra_flags: >-
-        --tags="solr" --skip-tags="skip_in_kitchen" <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
+      playbook: solr.yml
+      extra_vars:
+        app_type: catalog
 #  - name: trendmicro
 #    provisioner:
 #      playbook: trendmicro.yml
