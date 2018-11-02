@@ -3,6 +3,17 @@
 # - name: Remove tomcat6
 #   apt: name=tomcat6 state=absent
 
+- name: Create logging directory
+  file: dest=/var/log/solr state=directory owner=solr group=solr mode=0755
+
+- name: Configure logging directory
+  lineinfile:
+    path: "{{ solr_home }}/log4j.properties"
+    regexp: "^solr\\.log="
+    line: solr.log=/var/log/solr
+    state: present
+  notify: restart solr
+
 - name: Create Solr core conf dir
   file: >-
     path={{ solr_home }}/data/{{ item }}/conf
