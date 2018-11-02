@@ -1,3 +1,0 @@
----
-solr_xms: "32768m"
-solr_xmx: "32768m"
