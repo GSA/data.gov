@@ -11,7 +11,7 @@ project_index_path: /usr/lib/ckan
 
 # other
 REDIS_SERVER: "localhost"
-SOLR_SERVER: "{{ vault_solr_server }}"
+SOLR_SERVER: "{{ solr_master_server }}"
 env: local
 redis_password: "{{ vault_redis_pass }}"
 
