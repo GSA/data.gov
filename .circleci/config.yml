@@ -1,42 +1,142 @@
+test-molecule-steps: &test-molecule-steps
+  - checkout
+  - restore_cache:
+      keys:
+        - v1-pip-{{ checksum "requirements.txt" }}
+        - v1-pip-
+  - run: |
+      virtualenv venv
+      . venv/bin/activate
+      pip install -r requirements.txt
+  - save_cache:
+      key: v1-pip-{{ checksum "requirements.txt" }}
+      paths:
+        - venv
+  - run:
+      name: Run molecule
+      command: |
+        . venv/bin/activate
+        make test-molecule-$MOLECULE_SUITE
+
+
+test-kitchen-steps: &test-kitchen-steps
+  - checkout
+  - restore_cache:
+      keys:
+        - v1-bundle-{{ checksum "Gemfile.lock" }}
+        - v1-bundle-
+  - run:
+      name: Install dependencies
+      command: bundle install --path vendor/bundle
+  - save_cache:
+      key: v1-bundle-{{ checksum "Gemfile.lock" }}
+      paths:
+        - vendor/bundle
+  - run:
+      name: Run test-kitchen
+      command: make test-kitchen-$KITCHEN_SUITE
+
+
 version: 2
 jobs:
   lint:
     docker:
       # specify the version you desire here
       - image: particlekit/ansible-lint
-
     working_directory: ~/repo
-
     steps:
       - run: ansible-lint --version
       - checkout
       - run: echo 'password' > ~/ansible-secret.txt
       - run: make lint
 
-  test-kitchen:
+  test-kitchen-catalog-web:
     machine: true
     environment:
-      KITCHEN_CONCURRENCY: "4"
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-bundle-{{ checksum "Gemfile.lock" }}
-      - run: pip install -r requirements.txt
-      - run:
-          name: Install dependencies
-          command: bundle install --path vendor/bundle
-      - save_cache:
-          key: v1-bundle-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
-      - run:
-          name: Run test-kitchen
-          command: make test
+      KITCHEN_SUITE: catalog-web
+    steps: *test-kitchen-steps
+
+  test-kitchen-catalog-harvester:
+    machine: true
+    environment:
+      KITCHEN_SUITE: catalog-harvester
+    steps: *test-kitchen-steps
+
+  test-kitchen-crm-web:
+    machine: true
+    environment:
+      KITCHEN_SUITE: crm-web
+    steps: *test-kitchen-steps
+
+  test-kitchen-dashboard-web:
+    machine: true
+    environment:
+      KITCHEN_SUITE: dashboard-web
+    steps: *test-kitchen-steps
+
+  test-kitchen-efk-nginx:
+    machine: true
+    environment:
+      KITCHEN_SUITE: efk-nginx
+    steps: *test-kitchen-steps
+
+  test-kitchen-efk-stack:
+    machine: true
+    environment:
+      KITCHEN_SUITE: efk-stack
+    steps: *test-kitchen-steps
+
+  test-kitchen-inventory-web:
+    machine: true
+    environment:
+      KITCHEN_SUITE: inventory-web
+    steps: *test-kitchen-steps
+
+  test-kitchen-jekyll:
+    machine: true
+    environment:
+      KITCHEN_SUITE: jekyll
+    steps: *test-kitchen-steps
+
+  test-kitchen-logrotate:
+    machine: true
+    environment:
+      KITCHEN_SUITE: logrotate
+    steps: *test-kitchen-steps
+
+  test-kitchen-solr:
+    machine: true
+    environment:
+      KITCHEN_SUITE: solr
+    steps: *test-kitchen-steps
+
+  test-kitchen-web-proxy:
+    machine: true
+    environment:
+      KITCHEN_SUITE: web-proxy
+    steps: *test-kitchen-steps
+
+  test-molecule-software/ckan/native-login:
+    machine: true
+    environment:
+      MOLECULE_SUITE: software/ckan/native-login
+    steps: *test-molecule-steps
+
 
 workflows:
   version: 2
   commit:
     jobs:
       - lint
-      - test-kitchen
+      - test-kitchen-catalog-web
+      - test-kitchen-catalog-harvester
+      - test-kitchen-crm-web
+      - test-kitchen-dashboard-web
+      - test-kitchen-efk-nginx
+      - test-kitchen-efk-stack
+      - test-kitchen-inventory-web
+      - test-kitchen-jekyll
+      - test-kitchen-logrotate
+      - test-kitchen-solr
+      - test-kitchen-web-proxy
+      - test-molecule-software/ckan/native-login

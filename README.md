@@ -140,9 +140,9 @@ Run the playbooks locally.
 
     $ make test
 
-You can set the concurrency parameter by environment variable.
+You can set the concurrency parameter with make's `-j` parameter.
 
-    $ KITCHEN_CONCURRENCY=4 make test
+    $ make -j4 test
 
 Run a single suite.
 
