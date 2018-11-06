@@ -6,6 +6,9 @@ This role configures the jumpbox host for access by operators.
 - Users have password-less sudo access
 - Users are allowed SSH access by the specified public key
 
+## Requirements
+
+- [Ansible](https://www.ansible.com/) 2.6+
 
 ## Usage
 

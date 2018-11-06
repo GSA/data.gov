@@ -29,6 +29,18 @@ provisioner:
             removed: true
 scenario:
   name: default
+  test_sequence:
+    - lint
+    - destroy
+    - dependency
+    - syntax
+    - create
+    - prepare
+    - converge
+    # - idempotence # Disable idempodence, a bug with user locking https://github.com/ansible/ansible/issues/43670
+    - side_effect
+    - verify
+    - destroy
 verifier:
   name: testinfra
   lint:

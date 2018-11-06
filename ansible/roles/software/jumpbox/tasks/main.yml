@@ -2,7 +2,7 @@
 - name: install jumpbox packages
   apt: name={{ item }} update_cache=yes state=present
   with_items:
-    # These are mostly dependencies for ansible
+    # These are mostly dependencies for datagov-deploy's requirements.txt
     - git
     - libffi-dev
     - libssl-dev
