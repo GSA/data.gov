@@ -1,4 +1,3 @@
-
 # Base images the others are based on, usually the platform
 PLATFORM_IMAGES := ubuntu1404-ansible
 
