@@ -30,6 +30,7 @@ php_fpm_pm_max_spare_servers: 20
 php_fpm_request_terminate_timeout: 30s
 php_opcache_conf_filename: "10-opcache.ini"
 
+# This should probably be environment specific
 operators:
   - username: adborden
     email: aaron.borden@gsa.gov
