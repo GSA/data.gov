@@ -104,12 +104,6 @@ jobs:
       KITCHEN_SUITE: logrotate
     steps: *test-kitchen-steps
 
-  test-kitchen-solr:
-    machine: true
-    environment:
-      KITCHEN_SUITE: solr
-    steps: *test-kitchen-steps
-
   test-kitchen-web-proxy:
     machine: true
     environment:
@@ -137,6 +131,5 @@ workflows:
       - test-kitchen-inventory-web
       - test-kitchen-jekyll
       - test-kitchen-logrotate
-      - test-kitchen-solr
       - test-kitchen-web-proxy
       - test-molecule-software/ckan/native-login

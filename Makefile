@@ -8,7 +8,6 @@ KITCHEN_SUITES := \
   inventory-web \
   jekyll \
   logrotate \
-  solr \
   web-proxy
 
 MOLECULE_SUITES := \
