@@ -19,7 +19,5 @@ $(PLATFORM_IMAGES):
 catalog-base-%: %
 	./docker-playbook.sh catalog-base $* catalog.yml --tags=frontend --skip-tags=solr,db,trendmicro,fluentd,skip_in_kitchen
 
-image:
-	@echo $(TAG_TARGETS)
 
 .PHONY: all $(PLATFORM_IMAGES)
