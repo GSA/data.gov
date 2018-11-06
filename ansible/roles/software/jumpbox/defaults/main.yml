@@ -1,3 +1,5 @@
-users:
-  - { username: 'user1', public_key: 'ssh-rsa defaul-user-public-key-user1' }
-  - { username: 'user2', public_key: 'ssh-rsa defaul-user-public-key-user2' }
+---
+operators: []
+# - username: 'user1'
+#   public_key: 'ssh-rsa defaul-user-public-key-user1'
+#   email: email@example.com
