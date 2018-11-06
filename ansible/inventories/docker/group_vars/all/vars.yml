@@ -1,0 +1,9 @@
+---
+# Variables and settings used for docker test containers. Any secrets here are
+# not secure since they are public. Do not re-use them.
+#
+# TODO change these to template strings that can pick up env variables at
+# container run time.
+
+redis_password: eguosel1Weigh3Io
+ckan_site_domain: http://test-docker-datagov.local
