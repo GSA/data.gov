@@ -1,1 +1,3 @@
-Not used... see ansible folder and ansible-container
+# Dockerfiles for test
+
+These files are used to create docker images that are used in testing.

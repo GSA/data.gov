@@ -1,0 +1,3 @@
+# This inventory is used for creating test images
+# See docker/README.md
+ubuntu1404-ansible ansible_connection=docker ansible_user=root
