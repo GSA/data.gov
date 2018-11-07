@@ -1,7 +1,7 @@
 ---
 
 - name: Install Solr
-  hosts: all
+  hosts: solr
   remote_user: ubuntu
   become: yes
   become_method: sudo
