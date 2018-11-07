@@ -8,6 +8,8 @@ Hello! Thank you for considering a contribution to [Data.gov](https://www.data.g
 We're currently using GitHub Projects for our [Kanban
 board](https://github.com/GSA/datagov-deploy/projects/8).
 
+For project office and security compliance related tasks, see our [Trello board](https://trello.com/b/cTl4qRBr/datagov-team-planning).
+
 ### Columns
 
 **Icebox**
