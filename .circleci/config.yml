@@ -117,6 +117,18 @@ jobs:
     steps: *test-molecule-steps
 
 
+  packer:
+    docker:
+      - image: hashicorp/packer
+        entrypoint: ['/bin/sh']
+    environment:
+      SUBNET_ID: subnet-003ce3686614a2e12
+    steps:
+      - checkout
+      - run:
+          name: build jumpbox AMI
+          command: packer build -var subnet_id=$SUBNET_ID packer/jumpbox.json
+
 workflows:
   version: 2
   commit:

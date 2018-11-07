@@ -195,3 +195,30 @@ Re-run the playbook from a particular step.
     $ ANSIBLE_EXTRA_FLAGS='--start-at-task="software/ckan/apache : make sure postgresql packages are installed"' bundle exec kitchen converge catalog
 
 Refer to [kitchen](https://kitchen.ci/) commands for more information.
+
+
+## Packer
+
+Images built from packer are used for testing only. BSP currently does not allow
+custom images.
+
+In order to build images with packer, you'll need to set your AWS access key as
+environment variables.
+
+    $ export AWS_ACCESS_KEY_ID=<your-access-key-id>
+    $ export AWS_SECRET_ACCESS_KEY=<your-secret-access-key>
+    $ packer build packer/jumpbox.json
+
+_Note: there is no default VPC so you must specify a subnet_id in which to
+create the instance._
+
+    $ packer build -var subnet_id=<subnet-id> packer/jumpbox.json
+
+### Variables
+
+Variable | Default | Description
+-------- | ------- | -----------
+`ami_name` | _varies_ | Use an alternate name for the image.
+`region` | use-east-1 | Create the image for an alternate AWS region.
+`env`    | test    | Create the image for an alternative environment.
+`subnet_id` | _varies_ | Build the image with the specified subnet.

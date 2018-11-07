@@ -1,0 +1,58 @@
+{
+  "variables": {
+    "ami_name": "jumpbox-ami {{isotime \"2006-01-02T03-04-05\"}}",
+    "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
+    "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
+    "region": "us-east-1",
+    "env": "test",
+    "subnet_id": "subnet-02c74696a54ba2766"
+  },
+
+  "builders": [{
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "{{user `region`}}",
+    "instance_type": "t2.small",
+    "ssh_username": "ubuntu",
+    "ami_name": "{{user `ami_name`}}",
+    "subnet_id": "{{user `subnet_id`}}",
+    "source_ami_filter": {
+      "filters": {
+        "virtualization-type": "hvm",
+        "name": "ubuntu/images/*ubuntu-trusty-14.04-amd64-server-*",
+        "root-device-type": "ebs"
+      },
+      "owners": ["099720109477"],
+      "most_recent": true
+    },
+    "tags": {
+        "Name": "jumpbox",
+        "app": "jumpbox",
+        "env": "{{user `env`}}",
+        "portofolio": "datagov",
+        "built-with": "packer"
+    }
+  }],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sudo apt-get update",
+        "sudo apt-get install -y python-pip",
+        "sudo pip install -U pip",
+        "sudo pip install 'ansible~=2.6.1' boto",
+        "echo fake-ansible-secret > ~/ansible-secret.txt"
+      ]
+    },
+    {
+        "type": "ansible-local",
+        "playbook_dir": "ansible",
+        "playbook_file": "ansible/jumpbox.yml",
+        "inventory_groups": "jumpbox",
+        "extra_arguments": [
+          "--vault-password-file=''"
+        ]
+  }]
+}
