@@ -145,3 +145,8 @@ workflows:
       - test-kitchen-logrotate
       - test-kitchen-web-proxy
       - test-molecule-software/ckan/native-login
+      - packer:
+          filters:
+            branches:
+              only:
+                - master
