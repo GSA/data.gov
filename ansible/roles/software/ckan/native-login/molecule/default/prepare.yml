@@ -33,6 +33,12 @@
         version: "8.1.1"
         virtualenv: /usr/lib/ckan
 
+    - name: install newer version of setuptools
+      pip:
+        name: setuptools
+        version: "40.5.0"
+        virtualenv: /usr/lib/ckan
+
     - name: create ckan config directory
       file:
         dest: /etc/ckan

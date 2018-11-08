@@ -24,7 +24,7 @@ port = 5000
 [app:celery]
 REDIS_HOST = {{ REDIS_SERVER }}
 BROKER_BACKEND = redis
-BROKER_HOST = redis://%(REDIS_HOST)s/1
+BROKER_HOST = redis://:{{ redis_password }}@%(REDIS_HOST)s/1
 CELERY_RESULT_BACKEND = redis
 REDIS_PORT = 6379
 REDIS_DB = 0

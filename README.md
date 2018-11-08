@@ -43,7 +43,7 @@ Moved to [datagov-infrastructure](https://github.com/gsa/datagov-infrastructure)
 
 `cd ansible`
 
-`ansible-playbook --help` 
+`ansible-playbook --help`
 
 See example(s) below
 
@@ -56,7 +56,7 @@ See example(s) below
 **deploy rollback:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy-rollback" --limit wordpress-web`
 
 - You can override branch to be deployed via `-e project_git_version=develop`
-  
+
   ***e.g.*** `ansible-playbook datagov-web.yml -i inventories/staging/hosts --tags=deploy --limit wordpress-web -e project_git_version=develop`
 
 ## Dashboard
@@ -140,9 +140,45 @@ Run the playbooks locally.
 
     $ make test
 
-You can set the concurrency parameter by environment variable.
+You can set the concurrency parameter with make's `-j` parameter.
 
-    $ KITCHEN_CONCURRENCY=4 make test
+    $ make -j4 test
+
+This runs all the suites, both molecule and kitchen tests. See below for more on
+how to work with individual suites. Both suites rely on docker for running tests
+within containers.
+
+Lint your work.
+
+    $ make lint
+
+
+### Testing with molecule
+
+[Molecule](https://molecule.readthedocs.io/en/latest/) is the preferred test
+suite for testing roles. Playbooks can be tested by including them in the
+molecule playbook.
+
+Molecule is modular, so you must `cd` to the directory of the role you are
+testing.
+
+    $ cd roles/software/ckan/native-login
+    $ molecule test
+
+During development, you'll want to run only the converge playbook to avoid
+creating/destroying the container every time.
+
+    $ molecule converge
+
+If you have multiple scenarios, you can specify them individually.
+
+    $ moelcule test -s <scenario>
+
+
+### Testing with kitchen
+
+We use [Kitchen](https://kitchen.ci/) for testing playbooks, although we are
+moving suites to molecule.
 
 Run a single suite.
 
@@ -157,10 +193,5 @@ Log into the instance to debug.
 Re-run the playbook from a particular step.
 
     $ ANSIBLE_EXTRA_FLAGS='--start-at-task="software/ckan/apache : make sure postgresql packages are installed"' bundle exec kitchen converge catalog
-
-Lint your work.
-
-    $ make lint
-
 
 Refer to [kitchen](https://kitchen.ci/) commands for more information.
