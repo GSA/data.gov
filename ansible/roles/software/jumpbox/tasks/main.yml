@@ -19,7 +19,7 @@
     state: "{{ item.removed is defined and 'absent' or 'present' }}"
     password_lock: yes
     expires: -1
-  with_items: "{{ operators }}"
+  with_items: "{{ jumpbox_operators }}"
 
 - name: Add SSH public key directory structure
   file: >-
@@ -29,7 +29,7 @@
     owner={{ item.username }}
     group={{ item.username }}
   when: item.removed is undefined
-  with_items: "{{ operators }}"
+  with_items: "{{ jumpbox_operators }}"
 
 - name: Copy SSH public key
   authorized_key:
@@ -38,7 +38,7 @@
     exclusive: True
     state: "present"
   when: item.removed is not defined
-  with_items: "{{ operators }}"
+  with_items: "{{ jumpbox_operators }}"
 
 - name: Update the system /etc/sudoers file
   template: >-
@@ -46,20 +46,20 @@
     dest=/etc/sudoers.d/{{ item.username }}
     mode=0600
   when: item.removed is not defined
-  with_items: "{{ operators }}"
+  with_items: "{{ jumpbox_operators }}"
 
 - name: Remove sudoers for removed users
   file: >-
     dest=/etc/sudoers.d/{{ item.username }}
     state=absent
   when: item.removed is defined
-  with_items: "{{ operators }}"
+  with_items: "{{ jumpbox_operators }}"
 
 - name: Add SSH users to AllowUsers
   lineinfile:
     dest: "/etc/ssh/sshd_config"
     regexp: '^AllowUsers'
-    line: "AllowUsers {{ operators | selectattr('removed', 'undefined') | map(attribute='username') | join(' ') }}"
+    line: "AllowUsers {{ jumpbox_operators | selectattr('removed', 'undefined') | map(attribute='username') | join(' ') }}"
     state: present
   notify: restart sshd
 
@@ -67,6 +67,6 @@
   lineinfile:
     dest: "/etc/ssh/sshd_config"
     regexp: '^AllowGroups'
-    line: "AllowGroups {{ operators | selectattr('removed', 'undefined') | map(attribute='username') | join(' ') }}"
+    line: "AllowGroups {{ jumpbox_operators | selectattr('removed', 'undefined') | map(attribute='username') | join(' ') }}"
     state: present
   notify: restart sshd
