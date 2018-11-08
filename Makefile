@@ -11,7 +11,8 @@ KITCHEN_SUITES := \
   web-proxy
 
 MOLECULE_SUITES := \
-	software/ckan/native-login
+  ci \
+  software/ckan/native-login
 
 # Create test-kitchen-<suite> targets
 KITCHEN_SUITE_TARGETS := $(patsubst %,test-kitchen-%,$(KITCHEN_SUITES))

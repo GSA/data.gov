@@ -54,5 +54,6 @@ trap cleanup EXIT
 
 cd "$HOME/datagov-deploy/ansible"
 
+testcase ci ci.yml --limit jumpbox
 testcase catalog-web catalog.yml --tags="frontend,ami-fix,bsp" --skip-tags="solr,db,cron,trendmicro,fluentd" --limit catalog-web
 testcase catalog-harvest catalog.yml --tags="harvest,ami-fix,bsp" --skip-tags="solr,db,cron,trendmicro,fluentd" --limit catalog-harvester
