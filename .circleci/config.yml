@@ -110,10 +110,10 @@ jobs:
       KITCHEN_SUITE: web-proxy
     steps: *test-kitchen-steps
 
-  test-molecule-ci:
+  test-molecule-software/ci:
     machine: true
     environment:
-      MOLECULE_SUITE: ci
+      MOLECULE_SUITE: software/ci
     steps: *test-molecule-steps
 
   test-molecule-software/ckan/native-login:
@@ -138,5 +138,5 @@ workflows:
       - test-kitchen-jekyll
       - test-kitchen-logrotate
       - test-kitchen-web-proxy
-      - test-molecule-ci
+      - test-molecule-software/ci
       - test-molecule-software/ckan/native-login

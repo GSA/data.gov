@@ -15,7 +15,7 @@ provisioner:
   lint:
     name: ansible-lint
   env:
-    ANSIBLE_ROLES_PATH: ../../../../roles/vendor/
+    ANSIBLE_ROLES_PATH: ../../../../../roles/vendor/
   inventory:
     group_vars:
       all:
