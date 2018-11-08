@@ -1,3 +1,9 @@
 ---
-users:
-  - { username: 'ci' }
+# Linux user account to create
+ci_username: 'ci'
+
+# Home directory for the CI user
+ci_home_dir: /home/{{ ci_username }}
+
+# Directory to log cron runs to
+ci_log_dir: /var/log

@@ -20,7 +20,7 @@ function usage () {
 function summarize () {
   echo
   echo Summary
-  echo ===============================
+  echo "==============================="
   for name in "${!summary[@]}"; do
     echo Test case "$name"... "${summary[$name]}"
   done
@@ -34,7 +34,7 @@ function testcase () {
 
   # Execute the playbook with any arguments
   echo ansible-playbook "$@"
-  if ansible-playbook --inventory "$inventory" "$@"; then
+  if ansible-playbook --inventory "$inventory" --check "$@"; then
     summary[$name]=ok
   else
     summary[$name]=fail
@@ -52,7 +52,7 @@ fi
 # Set trap for cleanup tasks
 trap cleanup EXIT
 
-cd datagov-deploy/ansible
+cd "$HOME/datagov-deploy/ansible"
 
 testcase catalog-web catalog.yml --tags="frontend,ami-fix,bsp" --skip-tags="solr,db,cron,trendmicro,fluentd" --limit catalog-web
-testcase catalog-harvest catalog.yml --tags="harvest,ami-fix,bsp" --skip-tags="solr,db,cron,trendmicro,fluentd" --limit catalog-web
+testcase catalog-harvest catalog.yml --tags="harvest,ami-fix,bsp" --skip-tags="solr,db,cron,trendmicro,fluentd" --limit catalog-harvester

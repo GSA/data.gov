@@ -7,5 +7,11 @@
   become_method: sudo
 
   roles:
-#  - { role: geerlingguy.git, tags: [git, provision] }
-  - role: ci
+    - role: ci
+    - role: logrotate
+      logrotate_scripts:
+        - name: ci
+          path: /var/log/ci.log
+          options:
+            - daily
+            - rotate 7

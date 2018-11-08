@@ -1,48 +1,54 @@
-Role Name
-=========
+# CI
 
-A brief description of the role goes here.
+Configures a host to automatically run the ansible playbooks and log the
+results. This is used in firewalled environments where third-party CI solution
+is unavailable.
 
-Requirements
-------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should
-be mentioned here. For instance, if the role uses the EC2 module, it may be a
-good idea to mention in this section that the boto package is required.
+## Requirements
 
-Role Variables
---------------
+N/A
 
-A description of the settable variables for this role should go here, including
-any variables that are in defaults/main.yml, vars/main.yml, and any variables
-that can/should be set via parameters to the role. Any variables that are read
-from other roles and/or the global scope (ie. hostvars, group vars, etc.) should
-be mentioned here as well.
 
-Dependencies
-------------
+## Role variables
 
-A list of other roles hosted on Galaxy should go here, plus any details in
-regards to parameters that may need to be set for other roles, or variables that
-are used from other roles.
+**ci_inventory** string **required**
 
-Example Playbook
-----------------
+The ansible inventory to run the CI script against.
 
-Including an example of how to use your role (for instance, with variables
-passed in as parameters) is always nice for users too:
+**ci_username** string
 
-    - hosts: servers
-      roles:
-         - { role: ci, x: 42 }
+The Linux user account to create for running the CI script.
 
-License
--------
+**ci_home_dir** string
 
-BSD
+Home directory for the CI user.
 
-Author Information
-------------------
+**ci_log_dir** string
 
-An optional section for the role authors to include contact information, or a
-website (HTML is not allowed).
+The directory to log to. You may want to configure logrotate for /var/log/ci.log
+to avoid the file growing too large.
+
+
+## Dependencies
+
+- [geerlingguy.git](https://galaxy.ansible.com/geerlingguy/git) role
+
+
+## Example playbook
+
+```yaml
+---
+- hosts: jumpbox
+  roles:
+     - role: ci
+```
+
+
+## Public domain
+
+This project is in the worldwide [public domain](LICENSE.md). As stated in [CONTRIBUTING](CONTRIBUTING.md):
+
+> This project is in the public domain within the United States, and copyright and related rights in the work worldwide are waived through the [CC0 1.0 Universal public domain dedication](https://creativecommons.org/publicdomain/zero/1.0/).
+>
+> All contributions to this project will be released under the CC0 dedication. By submitting a pull request, you are agreeing to comply with this waiver of copyright interest.

@@ -1,34 +1,38 @@
 ---
+- name: Check ci_inventory is defined
+  fail:
+    msg: ci_inventory is not defined
+  when: ci_inventory is not defined
+
 - name: Create the ci user
   user:
-    name: "{{ item.username }}"
-    comment: "{{ item.username }}"
-    # password: "cipass"
-    # groups:
-    #   - sudo
+    name: "{{ ci_username }}"
+    comment: "Continuous integration for ansible playbooks"
     state: present
-    shell: /bin/bash
     system: true
-    createhome: false
-  with_items: "{{ users }}"
+    home: "{{ ci_home_dir }}"
 
 - name: Install git
   include_role:
     name: geerlingguy.git
 
+- name: Copy the CI script
+  copy: src=ci.sh dest={{ ci_home_dir }}/ci.sh owner={{ ci_username }} group={{ ci_username }} mode=0755
+
 - name: Clone the datagov-deploy repo
   git:
-    repo: "https://github.com/GSA/datagov-deploy"
-    dest: "/home/{{ item.username }}/datagov-deploy"
+    umask: "0022"
+    repo: "https://github.com/GSA/datagov-deploy.git"
+    dest: "{{ ci_home_dir }}/datagov-deploy"
     version: bsp-ci
-  with_items: "{{ users }}"
+  become: true
+  become_user: "{{ ci_username }}"
 
-- name: Add the ci script to crontab
+- name: Add the CI script to crontab
   cron:
-    name: "The CI script"
+    name: "Continuous integration for ansible playbooks"
     minute: "0"
     hour: "12"
-    job: "/home/{{ item.username }}/datagov-deploy/ci.sh"
-  with_items: "{{ users }}"
+    job: "{{ ci_home_dir }}/ci.sh {{ ci_inventory }} >> {{ ci_log_dir }}/ci.log"
   become: true
-  become_user: "{{ item.username }}"
+  become_user: "{{ ci_username }}"
