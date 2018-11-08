@@ -24,3 +24,9 @@ The user accounts to create on the jumpbox. User objects should include
 a `username`, `email`, and `public_key` (contents of the users id_rsa.pub). The
 authorized_keys is set exclusively to this key, so any modifications to
 authorized_keys will be overridden the next time this role is run.
+
+**jumpbox_ssh_allow_users** boolean (default `true`)
+
+Configure sshd_config with `AllowUsers` to the `jumpbox_operators`. If you have
+other users that need ssh access which are not in `jumpbox_operators` (like an
+automated account) you should set this to `false`.

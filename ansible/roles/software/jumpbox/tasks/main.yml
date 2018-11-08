@@ -61,6 +61,7 @@
     regexp: '^AllowUsers'
     line: "AllowUsers {{ jumpbox_operators | selectattr('removed', 'undefined') | map(attribute='username') | join(' ') }}"
     state: present
+  when: jumpbox_ssh_allow_users
   notify: restart sshd
 
 - name: Add SSH users to AllowGroups
@@ -69,4 +70,5 @@
     regexp: '^AllowGroups'
     line: "AllowGroups {{ jumpbox_operators | selectattr('removed', 'undefined') | map(attribute='username') | join(' ') }}"
     state: present
+  when: jumpbox_ssh_allow_users
   notify: restart sshd
