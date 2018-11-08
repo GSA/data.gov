@@ -1,11 +1,22 @@
-[catalog-web:children]
-tag_group_catalog_web
+# Define ec2 tag groups
+[tag_group_catalog_harvester]
+[tag_group_catalog_web]
+[tag_group_jumpbox]
+[tag_group_solr]
+
 
 [catalog-harvester:children]
 tag_group_catalog_harvester
 
+[catalog-web:children]
+tag_group_catalog_web
+
+[jumpbox:children]
+tag_group_jumpbox
+
 [solr:children]
 tag_group_solr
+
 
 [crm-web]
 [dashboard-web]
