@@ -52,7 +52,7 @@
         "playbook_file": "ansible/jumpbox.yml",
         "inventory_groups": "jumpbox",
         "extra_arguments": [
-          "--vault-password-file=''"
+          "--vault-password-file='' -e jumpbox_ssh_allow_users=false"
         ]
   }]
 }
