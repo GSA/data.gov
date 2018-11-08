@@ -53,6 +53,7 @@ fi
 trap cleanup EXIT
 
 cd "$HOME/datagov-deploy/ansible"
+git pull
 
 testcase ci ci.yml --limit jumpbox
 testcase catalog-web catalog.yml --tags="frontend,ami-fix,bsp" --skip-tags="solr,db,cron,trendmicro,fluentd" --limit catalog-web
