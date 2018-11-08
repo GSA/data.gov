@@ -19,7 +19,7 @@ provisioner:
   inventory:
     group_vars:
       jumpbox:
-        operators:
+        jumpbox_operators:
           - username: testuser
             email: testuser@example.com
             public_key: ssh-rsa testuser-public-key-string comment

@@ -18,7 +18,7 @@ ansible-galaxy.
 
 ### Variables
 
-**operators** list<object>
+**jumpbox_operators** list<object>
 
 The user accounts to create on the jumpbox. User objects should include
 a `username`, `email`, and `public_key` (contents of the users id_rsa.pub). The
