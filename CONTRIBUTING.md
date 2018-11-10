@@ -49,3 +49,18 @@ pushed to the `master` branch and applied to production (BSP).
 **Done**
 
 Task has been applied to production and is considered done.
+
+
+## Managing deployment
+
+We use the [git flow framework](https://danielkummer.github.io/git-flow-cheatsheet/) for managing our deploys.
+
+Branch | Deployed to | Frequency
+------ | ----------- | ---------
+`develop` | AWS test-ci | manual
+`staging` | BSP dev | manual
+`production` | BSP prod | manual
+
+
+_Note: we don't use the git flow program itself, although you are welcome to
+install and use it._
