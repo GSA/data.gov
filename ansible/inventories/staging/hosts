@@ -5,6 +5,9 @@ catalogpub-web1d.dev-ocsit.bsp.gsa.gov
 [catalog-harvester]
 catalog-harvester[1:2]d.dev-ocsit.bsp.gsa.gov
 
+[jumpbox]
+datagov-jump1d.dev-ocsit.bsp.gsa.gov
+
 [solr]
 tempdatagovsolrm1d.dev-ocsit.bsp.gsa.gov
 datagovsolr[1:2]d.dev-ocsit.bsp.gsa.gov
