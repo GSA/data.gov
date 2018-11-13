@@ -1,14 +1,14 @@
 ---
 
 - name: Setup CI
-  hosts: vagrant
-  remote_user: vagrant
+  hosts: jumpbox
+  remote_user: ubuntu
   become: yes
   become_method: sudo
 
   roles:
     - role: software/ci
-    - role: logrotate
+    - role: nickhammond.logrotate
       logrotate_scripts:
         - name: ci
           path: /var/log/ci.log
