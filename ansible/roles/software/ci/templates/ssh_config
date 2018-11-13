@@ -1,5 +1,5 @@
 StrictHostKeyChecking no
 
 Host {{ ci_ssh_config_host }}
-        IdentityFile {{ ci_ssh_config_identity_file }}
+        IdentityFile ~/.ssh/{{ ci_ssh_config_identity_file }}
         User {{ ci_ssh_config_user }}
