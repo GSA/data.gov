@@ -9,6 +9,22 @@ is unavailable.
 
 N/A
 
+## Usage
+
+After you run the playbook, there are two manual steps:
+
+- Configure the user with the Ansible Vault key
+- Configure the user with the SSH key to use
+
+For data.gov, this usually copying the files over from the root user:
+
+```shell
+sudo cp /root/ansible-secret.txt /home/ci/
+sudo chown ci:ci /home/ci/ansible-secret.txt
+sudo cp /root/.ssh/ckan-csw-aws.pem /home/ci/.ssh/
+sudo chown ci:ci /home/ci/.ssh/ckan-csw-aws.pem
+```
+
 
 ## Role variables
 

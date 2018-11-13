@@ -74,3 +74,7 @@ who_secure: True
 
 # jumpbox users
 users: "{{ vault_users }}"
+
+# Automated CI tests
+ci_inventory: inventories/staging
+ci_ssh_config_host: '*.dev-ocsit.bsp.gsa.gov'

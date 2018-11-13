@@ -16,6 +16,12 @@
   include_role:
     name: geerlingguy.git
 
+- name: Configure SSH directory
+  file: state=directory path={{ ci_home_dir }}/.ssh owner={{ ci_username }} group={{ ci_username }}  mode=0700
+
+- name: Copy SSH configurtion
+  template: src=ssh_config dest={{ ci_home_dir }}/.ssh/config owner={{ ci_username }} group={{ ci_username }}
+
 - name: Copy the CI script
   copy: src=ci.sh dest={{ ci_home_dir }}/ci.sh owner={{ ci_username }} group={{ ci_username }} mode=0755
 
