@@ -33,8 +33,9 @@ function testcase () {
   echo Test case "$name"...
 
   # Execute the playbook with any arguments
-  echo ansible-playbook "$@"
-  if ansible-playbook --inventory "$inventory" --check "$@"; then
+  local ansible_playbook_command="ansible-playbook --inventory $inventory --check $@"
+  echo "$ansible_playbook_command"
+  if $ansible_playbook_command; then
     summary[$name]=ok
   else
     summary[$name]=fail
