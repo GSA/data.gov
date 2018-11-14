@@ -30,7 +30,7 @@ function testcase () {
   local name="$1"
   shift
 
-  echo Test case "$name"...
+  echo $(date): Test case "$name"...
 
   # Execute the playbook with any arguments
   local ansible_playbook_command="ansible-playbook --inventory $inventory --check $@"
