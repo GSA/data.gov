@@ -35,7 +35,9 @@
   become_user: "{{ ci_username }}"
 
 - name: Ensure log file exists
-  file: state=file path={{ ci_log_dir }}/ci.log owner={{ ci_username }} group={{ ci_username }}
+  # We use copy force=false for idempotence
+  copy: >-
+    force=false content="" dest={{ ci_log_dir }}/ci.log owner={{ ci_username }} group={{ ci_username }}
 
 - name: Add the CI script to crontab
   cron:

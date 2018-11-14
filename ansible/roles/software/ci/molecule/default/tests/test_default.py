@@ -21,7 +21,7 @@ def test_datagov_deploy_repo(host):
 
 
 def test_cron_job(host):
-    assert "0 12 * * * /home/ci/ci.sh inventories/example" in \
+    assert "0 */6 * * * /home/ci/ci.sh inventories/example" in \
         host.check_output(
             "crontab -l -u ci"
         )
