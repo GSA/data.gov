@@ -41,7 +41,7 @@
   cron:
     name: "Continuous integration for ansible playbooks"
     minute: "0"
-    hour: "12"
+    hour: "*/6"
     job: "{{ ci_home_dir }}/ci.sh {{ ci_inventory }} >> {{ ci_log_dir }}/ci.log 2>&1"
   become: true
   become_user: "{{ ci_username }}"
