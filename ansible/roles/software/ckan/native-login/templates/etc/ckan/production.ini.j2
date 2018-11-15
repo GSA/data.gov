@@ -24,7 +24,7 @@ port = 5000
 [app:celery]
 REDIS_HOST = {{ REDIS_SERVER }}
 BROKER_BACKEND = redis
-BROKER_HOST = redis://:{{ redis_password }}@%(REDIS_HOST)s/1
+BROKER_HOST = redis://%(REDIS_HOST)s/1
 CELERY_RESULT_BACKEND = redis
 REDIS_PORT = 6379
 REDIS_DB = 0
@@ -53,7 +53,7 @@ app_instance_uuid = {{ ckan_instance_uuid }}
 
 # repoze.who config
 who.config_file = %(here)s/who.ini
-who.log_level = warning
+who.log_level = debug
 who.log_file = %(cache_dir)s/who_log.ini
 # Session timeout (user logged out after period of inactivity, in seconds).
 # Inactive by default, so the session doesn't expire.
@@ -64,7 +64,7 @@ who.secure = {{ who_secure }}
 ## Database Settings
 db_user = {{ catalog_db_user }}
 db_pass = {{ catalog_db_pass }}
-db_server = localhost
+db_server = {{ CKAN_DB_SERVER }}
 db_database = {{ catalog_db_name }}
 sqlalchemy.url = postgresql://%(db_user)s:%(db_pass)s@%(db_server)s/%(db_database)s
 
@@ -99,8 +99,8 @@ ckan.auth.roles_that_cascade_to_sub_groups = admin
 
 ckan.site_id = geo.gov
 
-solr_server = 127.0.0.1
-solr_url = http://%(solr_server)s:8080/solr/{{app_type}}
+solr_server = datagovsolrm1t.datagov.us
+solr_url = http://%(solr_server)s:8080/solr/{{ app_type }}
 
 #ckan.simple_search = 1
 search.facets.default = 5
@@ -122,9 +122,9 @@ ckan.search.solr_commit = true
 
 # Note: Add ``datastore`` to enable the CKAN DataStore
 #       Add ``datapusher`` to enable DataPusher
-#		Add ``resource_proxy`` to enable resorce proxying and get around the
-#		same origin policy
-ckan.plugins = stats geodatagov datagov_harvest ckan_harvester geodatagov_geoportal_harvester z3950_harvester arcgis_harvester waf_harvester_collection geodatagov_csw_harvester geodatagov_doc_harvester geodatagov_waf_harvester geodatagov_miscs spatial_metadata spatial_query resource_proxy spatial_harvest_metadata_api datagovtheme datajson_harvest datajson archiver qa googleanalyticsbasic ga-report extlink report broken_link_report saml2
+#               Add ``resource_proxy`` to enable resorce proxying and get around the
+#               same origin policy
+ckan.plugins = stats geodatagov datagov_harvest ckan_harvester geodatagov_geoportal_harvester z3950_harvester arcgis_harvester waf_harvester_collection geodatagov_csw_harvester geodatagov_doc_harvester geodatagov_waf_harvester geodatagov_miscs spatial_metadata spatial_query resource_proxy spatial_harvest_metadata_api datagovtheme datajson_harvest datajson archiver qa googleanalyticsbasic ga-report extlink report broken_link_report
 
 # Define which views should be created by default
 # (plugins must be loaded in ckan.plugins)
@@ -204,7 +204,7 @@ ckan.tracking_enabled = True
 set debug = False
 ckan.harvest.mq.type = redis
 ckan.harvest.mq.hostname = localhost
-ckan.harvest.mq.password = {{ redis_password }}
+ckan.harvest.mq.password = T35tr3d1sp@ss
 ckanext.harvest.email = on
 ckan.resource_proxy_enabled = 1
 ckan.spatial.validator.profiles = iso19139ngdc
@@ -225,7 +225,7 @@ ckanext.geodatagov.bureau_csv.url = https://project-open-data.cio.gov/data/omb_b
 ckanext.geodatagov.doi.url = https://data.doi.gov/
 
 ckanext.geodatagov.aws_use_ami_role = true
-ckanext.geodatagov.aws_bucket_name = {{ catalog_bucket_name }}
+ckanext.geodatagov.aws_bucket_name = bsp-ocsit-prod-east-data-site-filestore
 ckanext.geodatagov.aws_access_key_id = _placeholder
 ckanext.geodatagov.aws_secret_access_key = _placeholder
 
@@ -235,7 +235,7 @@ ckanext.geodatagov.jsonlexport.aws_storage_path = gsa/catalog/jsonl/
 ckanext.geodatagov.s3sitemap.aws_s3_url = https://filestore.data.gov/
 
 ## SAML2 Settings
-saml2.site_url = {{ saml2_site_url }}
+saml2.site_url = https://admin-catalog.data.gov/
 saml2.config_path = %(here)s/saml2
 
 saml2.user_mapping =
@@ -274,7 +274,7 @@ level = INFO
 handlers = console
 
 [logger_ckan]
-level = INFO
+level = DEBUG
 handlers = console
 qualname = ckan
 propagate = 0

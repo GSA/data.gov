@@ -72,4 +72,5 @@ web_key: "{{ vault_web_key }}"
 
 # ckan
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
-who_secure: True
+# ELB is not setup with HTTPS in test
+who_secure: false
