@@ -30,7 +30,7 @@
     umask: "0022"
     repo: "https://github.com/GSA/datagov-deploy.git"
     dest: "{{ ci_home_dir }}/datagov-deploy"
-    version: bsp-ci
+    version: "{{ ci_deploy_version }}"
   become: true
   become_user: "{{ ci_username }}"
 

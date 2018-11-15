@@ -14,3 +14,6 @@ ci_ssh_config_host: '*'
 ci_ssh_config_identity_file: ckan-csw-aws.pem
 # Username to use to connect to hosts
 ci_ssh_config_user: ubuntu
+
+# The version of the datagov-deploy code to checkout for CI
+ci_deploy_version: master
