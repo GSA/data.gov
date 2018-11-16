@@ -1,9 +1,7 @@
 ---
 - name: Install CKAN Stack
-  hosts: all
-  become: yes
-  become_method: sudo
-  remote_user: ubuntu
+  hosts: catalog-web:catalog-harvester
+  serial: 1
   vars:
       app_type: catalog
 

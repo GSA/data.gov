@@ -1,8 +1,4 @@
 ---
 - hosts: all
-  remote_user: ubuntu
-  become: yes
-  become_method: sudo
   roles:
     - gsa.ansible-os-ubuntu-14
-

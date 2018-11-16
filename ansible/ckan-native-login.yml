@@ -1,7 +1,7 @@
 ---
 - name: Configure user/password authentication for CKAN
   hosts: catalog-web
-  become: true
+  serial: 2
   vars:
     app_type: catalog
   roles:

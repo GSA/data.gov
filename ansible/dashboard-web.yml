@@ -10,10 +10,7 @@
 
 - name: Provisioning Web AMI
   hosts: dashboard-web
-  remote_user: ubuntu
-  become: yes
-  become_method: sudo
-
+  serial: 1
   roles:
   - software/common/die-no-tags
   - { role: software/common/misc, tags: [provision, misc] }
@@ -36,8 +33,7 @@
 
 - name: Deploying Dashboard
   hosts: dashboard-web
-  remote_user: ubuntu
-
+  serial: 1
   roles:
   - { role: software/dashboard/dashboard-deploy, tags: [deploy, provision] }
   - { role: software/common/datagov-deploy-rollback, tags: [deploy-rollback] }
@@ -45,10 +41,7 @@
 
 - name: Cleanup
   hosts: dashboard-web
-  remote_user: ubuntu
-  become: yes
-  become_method: sudo
-
+  serial: 1
   roles:
   - { role: software/common/php-fixes, tags: [php, provision, deploy] }
   - { role: software/dashboard/dashboard-sudo-3-cleanup, tags: [provision, deploy, deploy-rollback] }
@@ -57,7 +50,6 @@
 
 - name: Dashboard DB Migration
   hosts: dashboard-web
-  remote_user: ubuntu
-
+  serial: 1
   roles:
   - { role: software/dashboard/dashboard-db-migrations, tags: [provision, deploy, migrate] }
