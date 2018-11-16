@@ -59,3 +59,5 @@ git pull
 testcase ci ci.yml --limit jumpbox
 testcase catalog-web catalog.yml --tags="frontend,ami-fix,bsp" --skip-tags="solr,db,cron,trendmicro,fluentd" --limit catalog-web
 testcase catalog-harvest catalog.yml --tags="harvester,ami-fix,bsp" --skip-tags="solr,db,cron,trendmicro,fluentd" --limit catalog-harvester
+testcase hardening hardening.yml
+testcase inventory inventory.yml --skip-tags="solr,db,deploy-rollback" --limit inventory-web
