@@ -12,7 +12,7 @@ catalog-harvester[3:6]p.prod-ocsit.bsp.gsa.gov usage=qa_worker
 datagovsolrm2p.prod-ocsit.bsp.gsa.gov
 datagovsolr[3:4]p.prod-ocsit.bsp.gsa.gov is_solr_replica=true
 
-# Solr 4 hosts are being replaced with solr5 hosts. These should be removed
+# Solr 4 hosts are being replaced with new hosts. These should be removed
 # once we open the BSP ticket to de-provision them.
 [solr-old]
 datagovsolrm1p.prod-ocsit.bsp.gsa.gov
