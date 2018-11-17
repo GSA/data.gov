@@ -1,4 +1,6 @@
 extends: default
+ignore: |
+  venv
 
 rules:
   braces:

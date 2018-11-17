@@ -1,11 +1,48 @@
 ---
+test-molecule-job: &test-molecule-job
+  machine: true
+  # dir name must match molecule role
+  working_directory: ~/datagov-deploy-solr
+  steps:
+    - checkout
+    - restore_cache:
+        keys:
+          - v1-pip-{{ checksum "requirements.txt" }}
+          - v1-pip-
+    - run: |
+        virtualenv venv
+        . venv/bin/activate
+        make setup
+    - save_cache:
+        key: v1-pip-{{ checksum "requirements.txt" }}
+        paths:
+          - venv
+    - run: |
+        . venv/bin/activate
+        make test-$SCENARIO
+
+
 version: 2
 jobs:
-  build:
-    machine: true
-    # dir name must match molecule role
-    working_directory: ~/datagov-deploy-solr
-    steps:
-      - checkout
-      - run: make setup
-      - run: make test
+  test-default:
+    <<: *test-molecule-job
+    environment:
+      SCENARIO: default
+
+  test-replication:
+    <<: *test-molecule-job
+    environment:
+      SCENARIO: replication
+
+  test-solr4:
+    <<: *test-molecule-job
+    environment:
+      SCENARIO: solr4
+
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - test-default
+      - test-replication
+      - test-solr4

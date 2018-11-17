@@ -1,0 +1,3 @@
+---
+# This should match geerlingguy.solr
+solr_install_path: /opt/solr

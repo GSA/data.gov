@@ -1,4 +1,8 @@
 ---
+- name: set facts
+  set_fact:
+    is_solr4: "{{ solr_version.split('.')[0] == '4' }}"
+
 # TODO once solr is upgraded and re-indexed, tomcat can be removed
 # - name: Remove tomcat6
 #   apt: name=tomcat6 state=absent
@@ -13,21 +17,51 @@
     line: solr.log=/var/log/solr
     state: present
   notify: restart solr
+  when: not is_solr4
 
 - name: Create Solr core conf dir
   file: >-
     path={{ solr_home }}/data/{{ item }}/conf
     state=directory mode=0755 owner=solr group=solr
   with_items: "{{ solr_cores }}"
+  when: not is_solr4
 
-- name: copy solr schema file
+- name: Create Solr 4 core conf dir
+  command: cp --archive {{ solr_install_path }}/example/solr/collection1/. {{ solr_home }}/{{ item }}
+  args:
+    creates: "{{ solr_home }}/{{ item }}"
+  with_items: "{{ solr_cores }}"
+  register: solr_cores_created
+  when: is_solr4
+
+  # Need to remove core.properties which contains the default collection name.
+  # This seems strange. Maybe because we're copying from the install directory
+  # instead of the downloaded files (which no longer exist after
+  # geerlingguy.solr runs).
+- name: Remove solr 4 core.properties file
+  file: path={{ solr_home }}/{{ item.item }}/core.properties state=absent
+  with_items: "{{ solr_cores_created.results }}"
+  when: item is changed
+
+- name: Copy solr schema file
   action: >-
     copy src={{ item }}/home/solr/ckan/conf/schema.xml
     dest={{ solr_home }}/data/{{ item }}/conf/schema.xml
     mode=0644
     force=yes
-  notify: restart solr
   with_items: "{{ solr_cores }}"
+  notify: restart solr
+  when: not is_solr4
+
+- name: Copy solr 4 schema file
+  action: >-
+    copy src={{ item }}/home/solr/ckan/conf/schema.xml
+    dest={{ solr_home }}/{{ item }}/conf/schema.xml
+    mode=0644
+    force=yes
+  with_items: "{{ solr_cores }}"
+  notify: restart solr
+  when: is_solr4
 
 - name: Copy solrconfig.xml on master solr
   template:
@@ -35,7 +69,7 @@
     dest: "{{ solr_home }}/data/{{ item }}/conf/solrconfig.xml"
     force: true
     mode: 0644
-  when: not is_solr_replica
+  when: not is_solr4 and not is_solr_replica
   notify: restart solr
   with_items: "{{ solr_cores }}"
 
@@ -45,19 +79,41 @@
     dest: "{{ solr_home }}/data/{{ item }}/conf/solrconfig.xml"
     force: true
     mode: 0644
-  when: is_solr_replica
+  when: not is_solr4 and is_solr_replica
+  notify: restart solr
+  with_items: "{{ solr_cores }}"
+
+- name: Copy solrconfig.xml on master solr 4
+  template:
+    src: solrconfig-solr4-master.xml.j2
+    dest: "{{ solr_home }}/{{ item }}/conf/solrconfig.xml"
+    force: true
+    mode: 0644
+  when: is_solr4 and not is_solr_replica
+  notify: restart solr
+  with_items: "{{ solr_cores }}"
+
+- name: Copy solrconfig.xml on replica for solr 4
+  template:
+    src: solrconfig-solr4-replica.xml.j2
+    dest: "{{ solr_home }}/{{ item }}/conf/solrconfig.xml"
+    force: true
+    mode: 0644
+  when: is_solr4 and is_solr_replica
   notify: restart solr
   with_items: "{{ solr_cores }}"
 
 # For solr <5, we have to create the core via API
-# - name: Add the new core
-#   shell: "curl 'http://127.0.0.1:{{ solr_port }}/solr/admin/cores?\
-#           action=CREATE&name={{ item }}&\
-#           instanceDir={{ solr_home }}/data/{{ item }}&\
-#           config={{ solr_home }}/data/{{ item }}/conf/solrconfig.xml&\
-#           schema={{ solr_home }}/data/{{ item }}/conf/schema.xml&\
-#           dataDir={{ solr_home }}/data/{{ item }}'"
-#   notify: restart solr
-#   with_items: "{{ solr_cores }}"
-#   tags:
-#     - skip_ansible_lint
+- name: Add the new core
+  shell: "curl 'http://127.0.0.1:{{ solr_port }}/solr/admin/cores?\
+          action=CREATE&name={{ item.item }}&\
+          instanceDir={{ solr_home }}/{{ item.item }}&\
+          config={{ solr_home }}/{{ item.item }}/conf/solrconfig.xml&\
+          schema={{ solr_home }}/{{ item.item }}/conf/schema.xml&\
+          dataDir={{ solr_home }}/{{ item.item }}'"
+  notify: restart solr
+  with_items: "{{ solr_cores_created.results }}"
+  when: item is changed
+  check_mode: false
+  tags:
+    - skip_ansible_lint
