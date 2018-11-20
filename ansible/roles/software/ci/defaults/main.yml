@@ -1,0 +1,19 @@
+---
+# Linux user account to create
+ci_username: 'ci'
+
+# Home directory for the CI user
+ci_home_dir: /home/{{ ci_username }}
+
+# Directory to log cron runs to
+ci_log_dir: /var/log
+
+# Hostnames to match in ssh_config
+ci_ssh_config_host: '*'
+# Key to use for connecting to hosts
+ci_ssh_config_identity_file: ckan-csw-aws.pem
+# Username to use to connect to hosts
+ci_ssh_config_user: ubuntu
+
+# The version of the datagov-deploy code to checkout for CI
+ci_deploy_version: master

@@ -1,0 +1,5 @@
+StrictHostKeyChecking no
+
+Host {{ ci_ssh_config_host }}
+        IdentityFile ~/.ssh/{{ ci_ssh_config_identity_file }}
+        User {{ ci_ssh_config_user }}

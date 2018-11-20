@@ -73,3 +73,8 @@ web_key: "{{ vault_web_key }}"
 # ckan
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
 who_secure: True
+
+# Automated CI tests
+ci_inventory: inventories/production
+ci_ssh_config_host: '*.prod-ocsit.bsp.gsa.gov'
+ci_deploy_version: master

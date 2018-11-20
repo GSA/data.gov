@@ -8,6 +8,9 @@ catalog-harvester1p.prod-ocsit.bsp.gsa.gov usage=main_worker
 catalog-harvester2p.prod-ocsit.bsp.gsa.gov usage=misc_worker
 catalog-harvester[3:6]p.prod-ocsit.bsp.gsa.gov usage=qa_worker
 
+[jumpbox]
+datagov-jump1p.prod-ocsit.bsp.gsa.gov
+
 [solr]
 datagovsolrm1p.prod-ocsit.bsp.gsa.gov
 datagovsolr[1:2]p.prod-ocsit.bsp.gsa.gov
