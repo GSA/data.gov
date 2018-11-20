@@ -5,6 +5,8 @@
 
 # Nginx
 nginx_remove_default_vhost: true
+nginx_ppa_use: true
+nginx_ppa_version: stable
 
 # PHP-FPM
 php_enable_php_fpm: true
