@@ -54,21 +54,3 @@
     state=absent
   when: item.removed is defined
   with_items: "{{ jumpbox_operators }}"
-
-- name: Add SSH users to AllowUsers
-  lineinfile:
-    dest: "/etc/ssh/sshd_config"
-    regexp: '^AllowUsers'
-    line: "AllowUsers {{ jumpbox_operators | selectattr('removed', 'undefined') | map(attribute='username') | join(' ') }}"
-    state: present
-  when: jumpbox_ssh_allow_users
-  notify: restart sshd
-
-- name: Add SSH users to AllowGroups
-  lineinfile:
-    dest: "/etc/ssh/sshd_config"
-    regexp: '^AllowGroups'
-    line: "AllowGroups {{ jumpbox_operators | selectattr('removed', 'undefined') | map(attribute='username') | join(' ') }}"
-    state: present
-  when: jumpbox_ssh_allow_users
-  notify: restart sshd
