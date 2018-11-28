@@ -1,5 +1,5 @@
 ---
-- hosts: !jumpbox
+- hosts: '!jumpbox'
   serial: 1
   tasks:
     - name: Reboot host
