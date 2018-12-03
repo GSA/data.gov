@@ -121,9 +121,6 @@ suites:
             port: "8000"
             s3_bucket: fakebucket
             secret_key: testsecret
-#  - name: jumpbox
-#    provisioner:
-#      playbook: jumpbox.yml
 #  - name: kibana
 #    provisioner:
 #      playbook: kibana.yml
