@@ -1,0 +1,8 @@
+---
+- hosts: '!jumpbox'
+  serial: 1
+  tasks:
+    - name: Reboot host
+      command: reboot
+    - name: Wait for host to come up
+      local_action: wait_for host={{ ansible_ssh_host }} state=started
