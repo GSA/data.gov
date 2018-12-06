@@ -157,3 +157,6 @@ suites:
   - name: web-proxy
     provisioner:
       playbook: web-proxy.yml
+  - name: unattended-upgrades
+    provisioner:
+      playbook: unattended-upgrades.yml     
