@@ -8,7 +8,8 @@ KITCHEN_SUITES := \
   inventory-web \
   jekyll \
   logrotate \
-  web-proxy
+  web-proxy \ 
+  unattended-upgrades
 
 MOLECULE_SUITES := \
 	software/ckan/native-login
