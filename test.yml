@@ -25,3 +25,4 @@
 - include: ansible/solr.yml
 - include: ansible/trendmicro.yml
 - include: ansible/web-proxy.yml
+- include: ansible/unattended-upgrades.yml
