@@ -26,7 +26,7 @@ See our [Roadmap](docs/roadmap.md).
 
 
 # Provision Infrastructure
-Moved to [datagov-infrastructure](https://github.com/gsa/datagov-infrastructure)
+Moved to [datagov-infrastructure-live](https://github.com/gsa/datagov-infrastructure-live)
 
 # Requirements for Software Provisioning
 - Ansible > 1.10
