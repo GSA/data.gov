@@ -5,6 +5,5 @@
     - 'origin=Ubuntu,archive=${distro_codename}-security'
     - 'o=Ubuntu,a=${distro_codename}'
     - 'o=Ubuntu,a=${distro_codename}-updates'
-    - 'o=Ubuntu,a=${distro_codename}-proposed-updates'
     unattended_package_blacklist: []
     unattended_mail: 'datagov@gsa.gov'
