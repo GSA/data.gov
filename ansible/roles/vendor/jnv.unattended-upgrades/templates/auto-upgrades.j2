@@ -1,0 +1,25 @@
+APT::Periodic::Unattended-Upgrade "1";
+
+{% if unattended_update_package_list is defined %}
+APT::Periodic::Update-Package-Lists "{{unattended_update_package_list}}";
+{% endif %}
+
+{% if unattended_download_upgradeable is defined %}
+APT::Periodic::Download-Upgradeable-Packages "{{unattended_download_upgradeable}}";
+{% endif %}
+
+{% if unattended_autoclean_interval is defined %}
+APT::Periodic::AutocleanInterval "{{unattended_autoclean_interval}}";
+{% endif %}
+
+{% if unattended_clean_interval is defined %}
+APT::Periodic::CleanInterval "{{unattended_clean_interval}}";
+{% endif %}
+
+{% if unattended_verbose is defined %}
+APT::Periodic::Verbose "{{unattended_verbose}}";
+{% endif %}
+
+{% if unattended_random_sleep is defined %}
+APT::Periodic::RandomSleep "{{unattended_random_sleep}}";
+{% endif %}

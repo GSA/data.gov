@@ -122,6 +122,11 @@ jobs:
       MOLECULE_SUITE: software/ckan/native-login
     steps: *test-molecule-steps
 
+  test-kitchen-unattended-upgrades:
+    machine: true
+    environment:
+      KITCHEN_SUITE: unattended-upgrades
+    steps: *test-kitchen-steps
 
 workflows:
   version: 2
@@ -140,3 +145,4 @@ workflows:
       - test-kitchen-web-proxy
       - test-molecule-software/ci
       - test-molecule-software/ckan/native-login
+      - test-kitchen-unattended-upgrades
