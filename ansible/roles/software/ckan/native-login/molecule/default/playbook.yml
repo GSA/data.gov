@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    CKAN_DB_SERVER: localhost
+  roles:
+    - role: native-login

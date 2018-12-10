@@ -1,11 +1,17 @@
 
+# https://bugs.launchpad.net/ubuntu/+source/supervisor/+bug/1427434
+# Supervisor init script does not wait properly and the handler fails
 - name: restart supervisord
-  service:
-    name: supervisor
-    state: restarted
+  shell: |
+    set -e
+    service supervisor stop
+    sleep 3
+    service supervisor start
+    sleep 3
+  tags: skip_ansible_lint
 
-- name: update supervisorctl
+- name: restart jekyll
   supervisorctl:
-    name: jekyll
+    name: "jekyll-{{ item.name }}"
     state: restarted
-    config: /etc/supervisord.conf
+  with_items: "{{ jekyll_apps }}"

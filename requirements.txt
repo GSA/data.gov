@@ -1,2 +1,5 @@
 ansible==2.5.2
 ansible-lint==3.4.23
+molecule
+docker-py
+pytest==3.9.3

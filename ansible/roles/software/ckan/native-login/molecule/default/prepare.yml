@@ -1,0 +1,62 @@
+---
+
+# Setup the machine similar to if we ran the catalog playbook.
+- name: Prepare
+  hosts: all
+  tasks:
+    - name: install packages
+      apt: name={{ item }} update_cache=yes state=present
+      with_items:
+        - apache2
+        - git
+        - libapache2-mod-wsgi
+        - libapache2-modsecurity
+        - libbz2-dev
+        - libpq-dev
+        - libxml2-dev
+        - libxslt1-dev
+        - python-dev
+        - python-virtualenv
+        - swig
+        - xmlsec1
+
+    - name: configure apache
+      apache2_module: name={{ item }} state=present
+      with_items:
+        - headers
+        - rewrite
+        - wsgi
+
+    - name: setup ckan virtualenv
+      pip:
+        name: pip
+        version: "8.1.1"
+        virtualenv: /usr/lib/ckan
+
+    - name: install newer version of setuptools
+      pip:
+        name: setuptools
+        version: "40.5.0"
+        virtualenv: /usr/lib/ckan
+
+    - name: create ckan config directory
+      file:
+        dest: /etc/ckan
+        state: directory
+        mode: 0755
+
+    - name: create wsgi file for apache
+      copy:
+        dest: /etc/ckan/apache.wsgi
+        mode: 0644
+        content: |
+          import os
+          activate_this = os.path.join('/usr/lib/ckan/bin/activate_this.py')
+          execfile(activate_this, dict(__file__=activate_this))
+
+          import ckanext
+          from paste.deploy import loadapp
+          config_filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'production.ini')
+          from paste.script.util.logging_config import fileConfig
+          fileConfig(config_filepath)
+          application = loadapp('config:%s' % config_filepath)

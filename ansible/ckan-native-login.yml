@@ -1,0 +1,8 @@
+---
+- name: Configure user/password authentication for CKAN
+  hosts: catalog-web
+  become: true
+  vars:
+    app_type: catalog
+  roles:
+    - software/ckan/native-login

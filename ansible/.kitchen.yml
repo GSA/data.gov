@@ -57,9 +57,13 @@ suites:
         redis_password: fake-redis-password
       ansible_extra_flags: >-
         --tags=harvester,ami-fix,bsp --skip-tags=apache,solr,db,saml2,skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
-#  - name: crm-web
-#    provisioner:
-#      playbook: crm-web.yml
+  - name: crm-web
+    provisioner:
+      hosts:
+        - crm-web
+      playbook: crm-web.yml
+      ansible_extra_flags: >-
+        --tags=provision --skip-tags=skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
   - name: dashboard-web
     provisioner:
       hosts:
@@ -72,12 +76,16 @@ suites:
 #  - name: datagov-web
 #    provisioner:
 #      playbook: datagov-web.yml
-#  - name: efk-nginx
-#    provisioner:
-#      playbook: ekf-nginx.yml
-#  - name: efk-stack
-#    provisioner:
-#      playbook: ekf-stack.yml
+  - name: efk-nginx
+    provisioner:
+      hosts:
+        - efk_nginx
+      playbook: efk-nginx.yml
+  - name: efk-stack
+    provisioner:
+      hosts:
+        - efk_nginx
+      playbook: efk-stack.yml
 #  - name: elastalert
 #    provisioner:
 #      playbook: elastalert.yml
@@ -99,9 +107,20 @@ suites:
       playbook: inventory.yml
       ansible_extra_flags: >-
         --skip-tags="solr,db,deploy-rollback,skip_in_kitchen" <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
-#  - name: jekyll
-#    provisioner:
-#      playbook: jekyll.yml
+  - name: jekyll
+    provisioner:
+      hosts:
+        - jekyll-web
+      playbook: jekyll.yml
+      extra_vars:
+        jekyll_apps:
+          - name: sdg-indicators
+            repo: https://github.com/GSA/sdg-indicators/
+            config: _config_prod.yml
+            branch: master
+            port: "8000"
+            s3_bucket: fakebucket
+            secret_key: testsecret
 #  - name: jumpbox
 #    provisioner:
 #      playbook: jumpbox.yml
