@@ -57,6 +57,4 @@ ansible/inventories/mgmt-ocsit
 
 # Kitchen
 .kitchen
-Gemfile.lock
-
 __pycache__
