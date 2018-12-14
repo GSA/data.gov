@@ -1,31 +1,37 @@
 ---
 - name: make sure packages are installed
-  action: apt pkg={{item}} state=installed
+  apt: pkg={{item}} state=present
   with_items:
     - apache2
     - libapache2-mod-wsgi
     - libapache2-modsecurity
+  notify: restart apache
 
-- name: default apache removed
+- name: default apache site removed
   action: file path=/etc/apache2/sites-enabled/000-default.conf state=absent
   notify: reload apache
 
 - name: Apache | Enable some required modules
-  action: command a2enmod rewrite headers remoteip
+  apache2_module: name={{ item }} state=present
+  with_items:
+    - headers
+    - remoteip
+    - rewrite
+    - ssl
   notify: reload apache
   tags:
     - common
-    - skip_ansible_lint
 
 - name: Apache | Enable Web Application Firewall
-  action: command a2enmod security2
+  apache2_module: name={{ item }} state=present
+  with_items:
+    - security2
   notify: reload apache
   tags:
     - web_application_firewall
     - CM-7
     - SC-7
     - SI-10
-    - skip_ansible_lint
 
 - name: Configure mod_remoteip
   template: src=templates/etc/apache2/conf-enabled/mod_remoteip.conf dest=/etc/apache2/conf-enabled/mod_remoteip.conf mode=0644
@@ -44,6 +50,16 @@
     regexp: '^ServerSignature '
     line: 'ServerSignature Off'
   notify: reload apache
+
+- name: Enable specific versions of SSL
+  lineinfile:
+    dest: /etc/apache2/mods-enabled/ssl.conf
+    regexp: 'SSLProtocol '
+    line: SSLProtocol {{ apache2_ssl_versions | join(' ') }}
+  notify: reload apache
+
+- name: Create /var/run/apache2 with correct umask on startup
+  copy: src=usr_lib_tmpfiles_d_apache2.conf dest=/usr/lib/tmpfiles.d/apache2.conf mode=0644 owner=root group=root
 
 - name: enable apache2 mod_wsgi config to use custom python
   template: src=etc/apache2/conf-enabled/wsgi-custom-python.conf.j2 dest=/etc/apache2/conf-enabled/wsgi-custom-python.conf mode=0644

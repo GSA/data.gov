@@ -1,33 +1,35 @@
+---
 version: 2
 jobs:
-  lint:
+  build:
     docker:
-      - image: particlekit/ansible-lint
-    steps:
-      - checkout
-      - run: make lint
-
-  test-kitchen:
-    machine: true
+      - image: circleci/python:2.7
     working_directory: ~/datagov-deploy-apache2
     steps:
+      - setup_remote_docker
       - checkout
       - restore_cache:
           keys:
-            - v1-bundle-{{ checksum "Gemfile.lock" }}
+            - v1-venv-{{ checksum "requirements.txt" }}
+            - v1-venv-
       - run:
           name: Install dependencies
-          command: bundle install --path vendor/bundle
+          command: |
+            virtualenv venv
+            source venv/bin/activate
+            pip install -r requirements.txt
       - save_cache:
-          key: v1-bundle-{{ checksum "Gemfile.lock" }}
+          key: v1-venv-{{ checksum "requirements.txt" }}
           paths:
-            - vendor/bundle
+            - venv
       - run:
-          name: Run test-kitchen
-          command: bundle exec kitchen test
+          name: Run tests
+          command: |
+            source venv/bin/activate
+            make test
 
 workflows:
   version: 2
   commit:
     jobs:
-    - test-kitchen
+      - build

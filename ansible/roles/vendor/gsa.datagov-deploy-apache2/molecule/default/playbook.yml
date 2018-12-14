@@ -1,0 +1,17 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: datagov-deploy-apache2
+      python_home: /usr/local
+  tasks:
+    - name: copy custom site
+      copy:
+        content: |
+          <VirtualHost 0.0.0.0:80>
+            <Location />
+               Return 200
+            </Location>
+          </VirtualHost>
+        dest: /etc/apache2/sites-enabled/custom
+      notify: reload apache
