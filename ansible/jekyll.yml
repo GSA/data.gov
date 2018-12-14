@@ -46,7 +46,7 @@
     - {role: monitoring/fluentd/td-agent, tags: ['frontend', 'harvester', 'fluentd', 'skip_in_kitchen'] }
     - {role: software/common/misc, tags: ['misc'] }
     - role: gsa.datagov-deploy-apache2
-    - role: rvm_io.ruby
+    - role: rvm.ruby
       rvm1_user: root
       rvm1_install_path: /usr/local/rvm
       rvm1_install_flags: '--auto-dotfiles'

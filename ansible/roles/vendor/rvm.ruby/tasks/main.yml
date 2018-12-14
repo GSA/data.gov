@@ -1,11 +1,11 @@
 ---
 
 - name: Install RVM
-  include: 'rvm.yml'
+  import_tasks: 'rvm.yml'
   become: yes
   become_user: '{{ rvm1_user }}'
 
 - name: Install Ruby and Gems
-  include: 'rubies.yml'
+  import_tasks: 'rubies.yml'
   become: yes
   become_user: '{{ rvm1_user }}'
