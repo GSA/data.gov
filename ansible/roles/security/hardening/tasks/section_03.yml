@@ -1,7 +1,0 @@
----
-
-  - include: section_03_level1.yml
-    tags:
-      - section03
-      - level1
-

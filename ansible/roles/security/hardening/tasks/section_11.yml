@@ -1,7 +1,0 @@
----
-
-  - include: section_11_level1.yml
-    tags:
-      - section11
-      - level1
-
