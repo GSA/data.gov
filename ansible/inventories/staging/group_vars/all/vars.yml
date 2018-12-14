@@ -8,7 +8,7 @@ urls_private:
 ckan_site_domain: "{{ urls_public.catalog }}"
 
 # solr
-solr_master_server: datagovsolrm1d.dev-ocsit.bsp.gsa.gov
+solr_master_server: tempdatagovsolrm1d.dev-ocsit.bsp.gsa.gov
 
 # SecOps user
 secops_user: "{{ vault_secops_user }}"
