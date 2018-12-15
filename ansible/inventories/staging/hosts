@@ -12,6 +12,12 @@ datagov-jump1d.dev-ocsit.bsp.gsa.gov
 tempdatagovsolrm1d.dev-ocsit.bsp.gsa.gov
 datagovsolr[1:2]d.dev-ocsit.bsp.gsa.gov
 
+# This group is not associated with any particular role
+# but allows us to keep track of retired hosts until they
+# are actually terminated from the environment
+[solr-retired]
+datagovsolrm1d.dev-ocsit.bsp.gsa.gov
+
 [inventory-web]
 inventory[1:2]d.dev-ocsit.bsp.gsa.gov
 
