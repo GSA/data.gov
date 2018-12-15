@@ -6,4 +6,5 @@
   become_method: sudo
 
   roles:
+    - { role: software/common/ansible-postfix, tags: ['postfix'] }
     - { role: software/jumpbox }
