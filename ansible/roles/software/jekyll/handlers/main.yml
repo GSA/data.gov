@@ -9,9 +9,3 @@
     service supervisor start
     sleep 3
   tags: skip_ansible_lint
-
-- name: restart jekyll
-  supervisorctl:
-    name: "jekyll-{{ item.name }}"
-    state: restarted
-  with_items: "{{ jekyll_apps }}"
