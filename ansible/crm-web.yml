@@ -9,10 +9,7 @@
 
 - name: Provisioning Web AMI
   hosts: crm-web
-  remote_user: ubuntu
-  become: yes
-  become_method: sudo
-
+  serial: 1
   roles:
   - software/common/die-no-tags
   - { role: software/common/misc, tags: [provision, misc] }
@@ -35,8 +32,7 @@
 
 - name: Deploying crm
   hosts: crm-web
-  remote_user: ubuntu
-
+  serial: 1
   roles:
   - { role: software/crm/crm-deploy, tags: [provision, deploy] }
   - { role: software/common/datagov-deploy-rollback, tags: [deploy-rollback] }
@@ -44,17 +40,13 @@
 
 - name: Cleanup
   hosts: crm-web
-  remote_user: ubuntu
-  become: yes
-  become_method: sudo
-
+  serial: 1
   roles:
   - { role: software/common/php-fixes, tags: [php, provision, deploy] }
   - { role: software/crm/crm-sudo-3-cleanup, tags: [provision, deploy, deploy-rollback] }
 
 - name: CRM Migration
   hosts: crm-web
-  remote_user: ubuntu
-
+  serial: 1
   roles:
   - { role: software/crm/crm-migrations, tags: [provision, deploy, migrate] }

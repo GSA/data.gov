@@ -1,7 +1,4 @@
 ---
 - hosts: all
-  become: yes
-  become_method: sudo
-  remote_user: ubuntu
   roles:
     - monitoring/newrelic/python-agent-ansible

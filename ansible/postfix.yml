@@ -2,9 +2,5 @@
 
 - name: Install postfix
   hosts: all
-  become: yes
-  become_method: sudo
-  remote_user: ubuntu
-
   roles:
     - { role: software/common/ansible-postfix }

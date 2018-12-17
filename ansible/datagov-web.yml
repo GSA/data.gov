@@ -9,10 +9,7 @@
 
 - name: Provisioning WordPress Web AMI
   hosts:  "{{ datagov_web_hosts | default('wordpress-web') }}"
-  remote_user: ubuntu
-  become: yes
-  become_method: sudo
-
+  serial: 1
   roles:
   - software/common/die-no-tags
   - { role: software/common/misc, tags: [provision, misc] }
@@ -35,8 +32,7 @@
 
 - name: Deploying Data.gov
   hosts: wordpress-web
-  remote_user: ubuntu
-
+  serial: 1
   roles:
   - { role: software/wordpress/datagov-deploy, tags: [deploy, provision] }
   - { role: software/common/datagov-deploy-rollback, tags: [deploy-rollback] }
@@ -44,10 +40,7 @@
 
 - name: Cleanup
   hosts: wordpress-web
-  remote_user: ubuntu
-  become: yes
-  become_method: sudo
-
+  serial: 1
   roles:
   - { role: software/common/php-fixes, tags: [php, provision, deploy] }
   - { role: software/wordpress/datagov-sudo-3-cleanup, tags: [provision, deploy, deploy-rollback, cleanup] }

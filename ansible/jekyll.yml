@@ -1,10 +1,7 @@
 ---
 - name: Install Jekyll Apps
   hosts: jekyll-web
-  remote_user: ubuntu
-  become: yes
-  become_method: sudo
-
+  serial: 1
   vars:
     ruby_version: "2.3.0"
     gemset: "jekyll"
