@@ -1,0 +1,4 @@
+---
+- import_playbook: hostname.yml
+- import_playbook: hardening.yml
+- import_playbook: secops.yml
