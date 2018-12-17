@@ -18,7 +18,6 @@
     mode: 0640
   notify:
     - restart supervisord
-    - restart jekyll
 
 - name: ensure supervisor is enabled
   service:
@@ -29,3 +28,6 @@
 - name: ensure jekyll services are started
   supervisorctl: name=jekyll-{{ item.name }} state=started
   with_items: "{{ jekyll_apps }}"
+  tags:
+    # https://github.com/ansible/ansible/issues/3977 fixed in ansible 2.7.5
+    - skip_in_kitchen

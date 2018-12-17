@@ -1,0 +1,40 @@
+---
+- name: Check that ruby exists
+  shell: . $HOME/.bash_profile && ruby -v | cut -c1-4
+  args:
+    executable: /bin/bash
+  register: check_ruby
+  changed_when: false
+- assert:
+    that:
+      - check_ruby.stdout == 'ruby'
+      - check_ruby.rc == 0
+    msg: No ruby installed
+
+- name: Check default ruby
+  shell: ~/.rvm/wrappers/default/ruby -v | cut -c1-10
+  register: check_ruby_default
+  changed_when: false
+- assert:
+    that:
+      - check_ruby_default.stdout == 'ruby 2.3.1'
+    msg: No default ruby installed
+
+- name: Check multiple rubies
+  command: ls ~/.rvm/rubies
+  register: check_ruby_multiple
+  changed_when: false
+- assert:
+    that:
+      - "'ruby-2.2.5' in check_ruby_multiple.stdout"
+      - "'ruby-2.3.1' in check_ruby_multiple.stdout"
+    msg: No multiple rubies installed
+
+- name: Check bundler symlinked on system path
+  shell: ls ~/.rvm/wrappers/default/ |grep 'bundler'
+  register: check_ruby_bundler
+  changed_when: false
+- assert:
+    that:
+      - check_ruby_bundler.stdout == 'bundler'
+    msg: No bundler symlinked on system path

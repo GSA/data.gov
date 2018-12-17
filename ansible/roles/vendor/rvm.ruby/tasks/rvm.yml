@@ -22,7 +22,7 @@
   when: not rvm_installer.stat.exists
 
 - name: Import GPG keys
-  command: 'gpg --keyserver {{ rvm1_gpg_key_server }} --recv-keys {{ rvm1_gpg_keys }}'
+  command: 'gpg --batch --keyserver {{ rvm1_gpg_key_server }} --recv-keys {{ rvm1_gpg_keys }}'
   changed_when: False
   check_mode: False
   when: not ansible_check_mode and rvm1_gpg_keys != ''
@@ -33,7 +33,7 @@
   ignore_errors: True
 
 - name: Import GPG keys the other way
-  shell: curl -sSL https://rvm.io/mpapis.asc | gpg --import -
+  shell: curl -sSL https://rvm.io/mpapis.asc | gpg --batch --import -
   when: not ansible_check_mode and rvm1_gpg_keys != '' and gpg_result.rc != 0
 
 - name: Install rvm

@@ -1,0 +1,40 @@
+---
+language: generic
+
+sudo: required
+
+env:
+  DOCKER_COMPOSE_VERSION: 1.16.1
+
+services:
+  - docker
+
+cache:
+  pip: true
+  directories:
+    - $HOME/docker
+
+before_install:
+  - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
+install:
+  - sudo pip install ansible==2.4.6.0 > /dev/null 2>&1
+
+script:
+  - cd tests
+  - docker-compose up -d
+  - ansible-playbook user.yml -l centos
+  - ansible-playbook user.yml -l debian
+  - ansible-playbook user.yml -l ubuntu
+
+before_cache:
+  - >
+    mkdir -p $HOME/docker && docker images -a --filter='dangling=false' --format '{{.Repository}}:{{.Tag}} {{.ID}}'
+    | xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

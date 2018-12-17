@@ -24,8 +24,12 @@
 - src: nleutner.newrelic-php
 - src: newrelic.newrelic-infra
 - src: jnv.unattended-upgrades
-- src: rvm_io.ruby
-  version: v2.0.1
+  # TODO waiting for a new release >v2.0.1
+  #- src: rvm.ruby
+  #  version: v2.0.1
+- src: git+https://github.com/rvm/rvm1-ansible
+  name: rvm.ruby
+  version: 444d60821d4ea5ad72101156676e1846e242f445
 
 - src: https://github.com/GSA/ansible-elastalert
   version: develop
