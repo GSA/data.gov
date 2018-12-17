@@ -7,5 +7,4 @@
 
   roles:
   - role: geerlingguy.nginx
-  - role: software/common/nginx-fixes
   - role: monitoring/efk-nginx

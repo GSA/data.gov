@@ -22,6 +22,10 @@ and enable them with `a2ensite`.
 
 ### Variables
 
+**`apache2_ssl_versions`** array<string> (default: `["TLSv1.1", "TLSv1.2"]`)
+
+SSL versions to support for mod_ssl.
+
 **`python_home`** (default: `/usr`)
 
 The prefix path to where python is installed. If you installed your own version
@@ -31,7 +35,6 @@ virtualenv.
 
 ## Prerequisites for development
 
-- [Ruby](https://www.ruby-lang.org/) 2.3+
 - [Docker](https://www.docker.com/)
 - [Python](https://www.python.org/) 2.7 or 3.5+ in a virtualenv
 
@@ -46,7 +49,6 @@ Run the tests.
 
     $ make test
 
-You can debug the container after it runs. See `kitchen help` for additional
-commands.
-
-    $ bundle exec kitchen login
+For more information on how to use
+[Molecule](https://molecule.readthedocs.io/en/latest/) for development, see [our
+wiki](https://github.com/GSA/datagov-deploy/wiki/Developing-Ansible-roles-with-Molecule).

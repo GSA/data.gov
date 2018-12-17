@@ -1,2 +1,7 @@
 ---
-python_home: /usr # Use the system python
+# Versions of SSL to support
+apache2_ssl_versions:
+  - TLSv1.1
+  - TLSv1.2
+
+python_home: /usr  # Use the system python
