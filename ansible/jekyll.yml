@@ -10,10 +10,10 @@
     gemset: "jekyll"
     jekyll_apps:
       - {
-          name: "sdg-indicators",
-          repo: "https://github.com/GSA/sdg-indicators/",
-          config: "_config_prod.yml",
-          branch: "master",
+          name: "sdg-indicators-usa",
+          repo: "https://github.com/GSA/sdg-indicators-usa/",
+          config: "_config.yml",
+          branch: "prod-pages",
           port: 8000,
           s3_bucket: "{{ s3_bucket_sdg | default('') }}",
           secret_key: "{{ jekyll_webhook_secret | default('') }}"
