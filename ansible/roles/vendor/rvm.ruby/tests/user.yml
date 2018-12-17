@@ -1,0 +1,21 @@
+---
+- hosts: all
+  gather_facts: false
+  remote_user: user
+  vars:
+    rvm1_user: user
+    rvm1_install_path: '/home/{{ rvm1_user }}/.rvm'
+    rvm1_rubies:
+      - 'ruby-2.2.5'
+      - 'ruby-2.3.1'
+  roles:
+    - role: rvm1-ansible
+      become: yes
+
+# Asserts tasks
+- hosts: all
+  gather_facts: false
+  remote_user: user
+  tasks:
+    - name: Assert tasks
+      import_tasks: assertions.yml

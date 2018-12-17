@@ -4,3 +4,4 @@
 .*.sw*
 *~
 .idea/
+*.retry

@@ -38,7 +38,7 @@ rvm1_rvm_check_for_updates: True
 # Note: Unless you know what you're doing, just keep it as is
 #           Identity proof: https://keybase.io/mpapis
 #           PGP message: https://rvm.io/mpapis.asc
-rvm1_gpg_keys: '409B6B1796C275462A1703113804BB82D39DC0E3'
+rvm1_gpg_keys: '409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB'
 
 # The GPG key server
 rvm1_gpg_key_server: 'hkp://keys.gnupg.net'
