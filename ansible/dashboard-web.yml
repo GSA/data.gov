@@ -34,6 +34,7 @@
 - name: Deploying Dashboard
   hosts: dashboard-web
   serial: 1
+  become: no
   roles:
   - { role: software/dashboard/dashboard-deploy, tags: [deploy, provision] }
   - { role: software/common/datagov-deploy-rollback, tags: [deploy-rollback] }
@@ -51,5 +52,6 @@
 - name: Dashboard DB Migration
   hosts: dashboard-web
   serial: 1
+  become: no
   roles:
   - { role: software/dashboard/dashboard-db-migrations, tags: [provision, deploy, migrate] }

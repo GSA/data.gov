@@ -33,6 +33,7 @@
 - name: Deploying crm
   hosts: crm-web
   serial: 1
+  become: no
   roles:
   - { role: software/crm/crm-deploy, tags: [provision, deploy] }
   - { role: software/common/datagov-deploy-rollback, tags: [deploy-rollback] }
@@ -48,5 +49,6 @@
 - name: CRM Migration
   hosts: crm-web
   serial: 1
+  become: no
   roles:
   - { role: software/crm/crm-migrations, tags: [provision, deploy, migrate] }
