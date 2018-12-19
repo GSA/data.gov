@@ -24,12 +24,6 @@
 
     WSGIProcessGroup ckan
 
-    <Directory /etc/ckan>
-      Options All
-      AllowOverride All
-      Require all granted
-    </Directory>
-
     ErrorLog /var/log/apache2/ckan.error.log
 
     LogFormat "\"%{True-Client-IP}i\" %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" trueip
