@@ -16,7 +16,7 @@
   - { role: software/common/misc, tags: [provision, misc] }
   - { role: software/common/php-common, tags: [provision] }
   - { role: geerlingguy.git, tags: [provision] }
-  - { role: geerlingguy.nginx, tags: [provision] }
+  - { role: geerlingguy.nginx, tags: [nginx, provision] }
   - { role: geerlingguy.php, tags: [php, provision] }
   - { role: geerlingguy.php-mysql, tags: [php, php-mysql, provision] }
   - { role: geerlingguy.php-memcached, tags: [php, php-memcached, provision] }

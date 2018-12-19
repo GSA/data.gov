@@ -15,7 +15,7 @@
     - {role: monitoring/fluentd/limits, tags: ['bsp', 'fluentd'] }
     - {role: monitoring/fluentd/td-agent, tags: ['bsp', 'fluentd', 'skip_in_kitchen'] }
     - software/ckan/common
-    - role: gsa.datagov-deploy-apache2
+    - {role: gsa.datagov-deploy-apache2, tags: ['apache']}
     - {role: software/ckan/postgresql, tags: ['db', 'db-install']}
     - {role: software/ckan/solr, tags: ['solr']}
     - {role: software/inventory/ckan-app, tags: ['deploy']}

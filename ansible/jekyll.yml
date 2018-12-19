@@ -42,7 +42,7 @@
     - {role: monitoring/fluentd/limits, tags: ['frontend', 'harvester', 'fluentd'] }
     - {role: monitoring/fluentd/td-agent, tags: ['frontend', 'harvester', 'fluentd', 'skip_in_kitchen'] }
     - {role: software/common/misc, tags: ['misc'] }
-    - role: gsa.datagov-deploy-apache2
+    - {role: gsa.datagov-deploy-apache2, tags: ['apache']}
     - role: rvm.ruby
       rvm1_user: root
       rvm1_install_path: /usr/local/rvm
