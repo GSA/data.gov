@@ -27,13 +27,13 @@ ansible-playbook -i "$inventory" site.yml
 # script
 
 # dashboard
-ansible-playbook -i "$inventory" dashboard-web.yml --tags="deploy"
+ansible-playbook -i "$inventory" dashboard-web.yml --tags="provision,deploy"
 
 # datagov
-ansible-playbook -i "$inventory" datagov-web.yml --tags="deploy" --limit wordpress-web
+ansible-playbook -i "$inventory" datagov-web.yml --tags="provision,deploy" --limit wordpress-web
 
 # crm
-ansible-playbook -i "$inventory"
+ansible-playbook -i "$inventory" crm-web.yml --tags="provision,deploy" --limit crm-web
 
 # catalog-web
 ansible-playbook -i "$inventory" catalog.yml --tags="frontend,ami-fix" --skip-tags="solr,db,cron,bsp" --limit catalog-web
