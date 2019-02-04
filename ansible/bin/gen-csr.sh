@@ -5,6 +5,9 @@
 #
 # The script should be run from your ansible directory and assumes
 # ansible-inventory, jq, and openssl are already installed and available.
+#
+# CSR requirements are described in Service Now
+# https://docs.google.com/document/d/1VzyUAf2LuaNCWGt-ZU94kqq4DWMexmIKxHtjj_JyGDA/edit
 
 set -o errexit
 set -o pipefail
@@ -84,11 +87,13 @@ C=US
 ST=District of Columbia
 L=Washington
 O=General Services Administration
-OU=Data.gov
+OU=Technology Transformation Service
 emailAddress=datagov@gsa.gov
 CN = $(ansible_hosts "$inventory" | head -n 1)
 
 [ req_ext ]
+# Server Authentication (1.3.6.1.5.5.7.3.1) required by GSA
+extendedKeyUsage = 1.3.6.1.5.5.7.3.1
 subjectAltName = @alt_names
 
 [ alt_names ]
