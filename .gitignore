@@ -58,3 +58,5 @@ ansible/inventories/mgmt-ocsit
 # Kitchen
 .kitchen
 __pycache__
+
+gen-csr-out
