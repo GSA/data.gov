@@ -63,7 +63,6 @@ Install the trendmicro agent.
 
     $ ansible-playbook -i {{ inventory }} trendmicro.yml
 
-
 Upgrade OS packages as a one-off command on all hosts.
 
     $ ansible -i {{ inventory }} -m apt -a 'update_cache=yes upgrade=dist' all
