@@ -2,3 +2,4 @@
 - import_playbook: hostname.yml
 - import_playbook: hardening.yml
 - import_playbook: secops.yml
+- import_playbook: unattended-upgrades.yml

@@ -25,10 +25,10 @@ Included in this Repository:
 See our [Roadmap](docs/roadmap.md).
 
 
-# Provision Infrastructure
+## Provision Infrastructure
 Moved to [datagov-infrastructure-live](https://github.com/gsa/datagov-infrastructure-live)
 
-# Requirements for Software Provisioning
+## Requirements for Software Provisioning
 - Ansible > 1.10
 - SSH access (via keypair) to remote instances
 - ansible-secret.txt: `export ANSIBLE_VAULT_PASSWORD_FILE=~/ansible-secret.txt`
@@ -39,7 +39,44 @@ Moved to [datagov-infrastructure-live](https://github.com/gsa/datagov-infrastruc
   - inventories/production/hosts
   - inventories/local/hosts
 
-# Provision apps
+## Common plays
+
+Update/deploy all data.gov assets.
+
+    $ ansible-playbook -i {{ inventory }} site.yml
+
+_Note: the above playbook is incomplete. There are a few playbooks that must be
+run with specific parameters. For that we include them in `site.sh`:_
+
+    $ ./site.sh {{ inventory }}
+
+If the playbooks failed to apply to a few hosts, you can address the failures
+and then retry with the `--limit` parameter and the retry file.
+
+    $ ansible-playbook -i {{ inventory }} site.yml --limit @site.retry
+
+Reboot the hosts after emergency patching. _Note: this takes a while since we only reboot one host at a time._
+
+    $ ansible-playbook -i {{ inventory }} actions/reboot.yml
+
+Install the trendmicro agent.
+
+    $ ansible-playbook -i {{ inventory }} trendmicro.yml
+
+Upgrade OS packages as a one-off command on all hosts.
+
+    $ ansible -i {{ inventory }} -m apt -a 'update_cache=yes upgrade=dist' all
+
+Restart the apache2 service for catalog.
+
+    $ ansible-playbook -i {{ inventory }} -m service -a 'name=apache2 state=restarted' catalog-web
+
+Run a one-off shell command.
+
+    $ ansible -i {{ inventory }} -m shell -a "/usr/bin/killall dhclient && dhclient -1 -v -pf /run/dhclient.eth0.pid -lf /var/lib/dhcp/dhclient.eth0.leases eth0" all
+
+
+## Provision apps
 
 `cd ansible`
 
@@ -47,7 +84,7 @@ Moved to [datagov-infrastructure-live](https://github.com/gsa/datagov-infrastruc
 
 See example(s) below
 
-## Wordpress:
+### Wordpress:
 
 **provision vm & deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="provision" --limit wordpress-web`
 
@@ -59,7 +96,7 @@ See example(s) below
 
   ***e.g.*** `ansible-playbook datagov-web.yml -i inventories/staging/hosts --tags=deploy --limit wordpress-web -e project_git_version=develop`
 
-## Dashboard
+### Dashboard
 
 **provision vm & deploy app:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="provision" --limit dashboard-web`
 
@@ -67,7 +104,7 @@ See example(s) below
 
 **deploy rollback:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="deploy-rollback"`
 
-## CRM
+### CRM
 
 **provision vm & deploy app:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="provision" --limit crm-web`
 
@@ -75,7 +112,7 @@ See example(s) below
 
 **deploy rollback:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="deploy-rollback"`
 
-## Catalog:
+### Catalog:
 
 **provision vm - web:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="frontend,ami-fix,bsp" --skip-tags="solr,db,cron" --limit catalog-web`
 
@@ -83,41 +120,28 @@ See example(s) below
 
 **provision vm - solr:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="solr,ami-fix,bsp" --limit solr`
 
-## Inventory
+### Inventory
 
 **provision vm && deploy app:** `ansible-playbook inventory.yml -i {{ inventory }} --skip-tags="solr,db,deploy-rollback" --limit inventory-web`
 
 **provision vm - solr:** `ansible-playbook inventory.yml -i {{ inventory }} --tags="solr,ami-fix,bsp" --limit solr`
 
-## Jekyll
+### Jekyll
 
 **provision vm && deploy app:** `ansible-playbook jekyll.yml -i {{ inventory }} --limit jekyll-web`
 
-## ElasticSearch
+### ElasticSearch
 
 **provision vm && deploy app:** `ansible-playbook elasticsearch.yml -i {{ inventory }}`
 
-## Kibana
+### Kibana
 
 **provision vm && deploy app:** `ansible-playbook kibana.yml -i {{ inventory }}`
 
-## EFK nginx
+### EFK nginx
 
 **provision vm && deploy app:** `ansible-playbook efk_nginx.yml -i {{ inventory }}`
 
-## Common:
-**install the trendmicro agent:** `ansible-playbook trendmicro.yml -i {{ inventory }}`
-
-**Add SecOps user:** `ansible-playbook secops.yml -i {{ inventory }}`
-
-## Upgrade ubuntu VMs:
-`ansible all -m shell -a "apt-get update && apt-get dist-upgrade" --sudo`
-
-`ansible all -m shell -a "service tomcat6 restart" --sudo`
-
-`ansible all -m shell -a "service ntp restart" --sudo`
-
-`ansible all -m shell -a "/usr/bin/killall dhclient && dhclient -1 -v -pf /run/dhclient.eth0.pid -lf /var/lib/dhcp/dhclient.eth0.leases eth0" --sudo`
 
 ## Troubleshooting:
 **dpkg errors**:
