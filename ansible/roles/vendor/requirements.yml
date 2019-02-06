@@ -23,6 +23,7 @@
 - src: nickhammond.logrotate
 - src: nleutner.newrelic-php
 - src: newrelic.newrelic-infra
+  version: 0.6.1
 - src: jnv.unattended-upgrades
   # TODO waiting for a new release >v2.0.1
   #- src: rvm.ruby
