@@ -40,21 +40,33 @@
 
 - name: setup agent repo reference
   yum_repository:
-    baseurl: "https://download.newrelic.com/infrastructure_agent/linux/yum/el/{{ (ansible_distribution == 'Amazon') | ternary('6', nrinfragent_os_version) }}/x86_64"
+    baseurl: "https://download.newrelic.com/infrastructure_agent/linux/yum/el/{{ (ansible_service_mgr == 'upstart') | ternary('6', '7') }}/x86_64"
     gpgcheck: "yes"
     gpgkey: https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg
     name: 'newrelic-infra'
-    repo_gpgcheck: "yes"
+    repo_gpgcheck: 'yes'
     state: present
     description: New Relic Infrastructure
-  when: nrinfragent_os_name|lower == 'redhat'
+  when: ansible_distribution|lower == 'amazon'
+  register: setup_agent_repo
+
+- name: setup agent repo reference
+  yum_repository:
+    baseurl: "https://download.newrelic.com/infrastructure_agent/linux/yum/el/{{ nrinfragent_os_version }}/x86_64"
+    gpgcheck: "yes"
+    gpgkey: https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg
+    name: 'newrelic-infra'
+    repo_gpgcheck: "{{ (nrinfragent_os_version == '5') | ternary('no', 'yes') }}"
+    state: present
+    description: New Relic Infrastructure
+  when: nrinfragent_os_name|lower == 'redhat' and ansible_distribution|lower != 'amazon'
   register: setup_agent_repo
 
 - name: setup agent repo reference
   zypper_repository:
     name: newrelic-infra
     description: New Relic Infrastructure Agent
-    repo: http://download.newrelic.com/infrastructure_agent/beta/linux/zypp/sles/{{ansible_distribution_version}}/{{ansible_machine}}/
+    repo: "http://download.newrelic.com/infrastructure_agent/linux/zypp/sles/{{ ansible_distribution_version }}/{{ ansible_machine }}/"
     runrefresh: "yes"
     auto_import_keys: "yes"
     disable_gpg_check: "yes"
@@ -70,22 +82,14 @@
     warn: false
 
 - name: install agent
-  yum:
-    name: "newrelic-infra{{ nrinfragent_version }}"
+  package:
+    name: "newrelic-infra"
     state: "{{ nrinfragent_state }}"
-  when: nrinfragent_os_name|lower == 'redhat'
 
-- name: install agent
-  apt:
-    name: "newrelic-infra{{ nrinfragent_version }}"
-    state: "{{ nrinfragent_state }}"
-  when: nrinfragent_os_name|lower == 'debian'
-
-- name: install agent
-  zypper:
-    name: newrelic-infra
-    state: "{{ nrinfragent_state }}"
-  when: nrinfragent_os_name|lower == 'suse'
+- name: install integrations
+  package:
+    name: "newrelic-infra-integrations"
+    state: "{{ nrinfraintegrations_state }}"
 
 - name: setup agent config
   template:
