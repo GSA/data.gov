@@ -47,6 +47,10 @@ suites:
       extra_vars:
         redis_password: fake-redis-password
         ckan_site_domain: http://test-kitchen-datagov.local
+        vault_default_tls_host_certificate: |-
+          test certificate data
+        vault_default_tls_host_key: |-
+          test key data
       ansible_extra_flags: >-
         --tags=frontend,ami-fix,bsp --skip-tags=solr,db,cron,skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
   - name: catalog-harvester
