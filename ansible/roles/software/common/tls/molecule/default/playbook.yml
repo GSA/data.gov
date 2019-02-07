@@ -1,0 +1,12 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    common_tls_host_certificate: |
+      test certificate
+
+    common_tls_host_key: |
+      test key
+
+  roles:
+    - role: tls
