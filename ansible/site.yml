@@ -1,7 +1,12 @@
 ---
 # Base node
+############
+
+# Run these first
 - import_playbook: hostname.yml
 - import_playbook: hardening.yml
+
+- import_playbook: nessus.yml
+- import_playbook: newrelic-infrastructure.yml
 - import_playbook: secops.yml
 - import_playbook: unattended-upgrades.yml
-- import_playbook: newrelic-infrastructure.yml
