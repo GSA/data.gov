@@ -3,7 +3,7 @@
   hosts: jekyll-web
   serial: 1
   vars:
-    ruby_version: "2.3.0"
+    ruby_version: "2.3.8"
     gemset: "jekyll"
     jekyll_apps:
       - {
@@ -49,4 +49,5 @@
       rvm1_install_flags: '--auto-dotfiles'
       rvm1_rvm_check_for_updates: False
       rvm1_rubies: ['ruby-{{ruby_version}}']
-    - software/jekyll
+    - role: software/jekyll
+      jekyll_ruby_version: '{{ ruby_version }}'
