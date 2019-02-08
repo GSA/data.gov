@@ -11,23 +11,28 @@
 - name: install supervisor
   apt: name=supervisor state=present
 
-- name: copy template files
-  template:
-    src: etc/supervisor/conf.d/jekyll.conf.j2
-    dest: /etc/supervisor/conf.d/jekyll.conf
-    mode: 0640
-  notify:
-    - restart supervisord
-
 - name: ensure supervisor is enabled
   service:
     name: supervisor
     state: started
     enabled: yes
 
+- name: copy template files
+  template:
+    src: etc/supervisor/conf.d/jekyll.conf.j2
+    dest: /etc/supervisor/conf.d/jekyll.conf
+    mode: 0640
+  register: config
+
+- name: reload supervisor
+  # reread tells supervisor to reload the configuration files
+  command: supervisorctl reread
+  when: config is changed
+  tags:
+    - skip_ansible_lint
+
 - name: ensure jekyll services are started
   supervisorctl: name=jekyll-{{ item.name }} state=started
   with_items: "{{ jekyll_apps }}"
-  tags:
-    # https://github.com/ansible/ansible/issues/3977 fixed in ansible 2.7.5
-    - skip_in_kitchen
+  # https://github.com/ansible/ansible/issues/3977 fixed in ansible 2.7.5
+  ignore_errors: true
