@@ -88,7 +88,7 @@ ST=District of Columbia
 L=Washington
 O=General Services Administration
 OU=Technology Transformation Service
-emailAddress=datagov@gsa.gov
+emailAddress=datagovhelp@gsa.gov
 CN = $(ansible_hosts "$inventory" | head -n 1)
 
 [ req_ext ]

@@ -92,7 +92,7 @@ $config = array (
 	 * also as the technical contact in generated metadata.
 	 */
 	'technicalcontact_name'     => 'Administrator',
-	'technicalcontact_email'    => 'datagov@gsa.gov',
+	'technicalcontact_email'    => 'datagovhelp@gsa.gov',
 
 	/*
 	 * The timezone of the server. This option should be set to the timezone you want
