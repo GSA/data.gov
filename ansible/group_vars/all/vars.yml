@@ -7,6 +7,14 @@
 default_tls_host_certificate_filepath: /etc/ssl/certs/datagov_host.crt
 default_tls_host_key_filepath: /etc/ssl/private/datagov_host.key
 
+# apache2 role
+apache2_ssl_certificate_file: "{{ default_tls_host_certificate_filepath }}"
+apache2_ssl_certificate_key_file: "{{ default_tls_host_key_filepath }}"
+
+# common roles
+common_tls_host_key: "{{ default_tls_host_key }}"
+common_tls_host_certificate: "{{ default_tls_host_certificate }}"
+
 # Nginx
 nginx_remove_default_vhost: true
 nginx_ppa_use: true
