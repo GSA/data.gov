@@ -1,11 +1,8 @@
-{% if default_tls_host_certificate_filepath %}
 <VirtualHost 0.0.0.0:443>
 # TODO https://github.com/GSA/datagov-deploy/issues/570
-SSLCertificateFile {{ default_tls_host_certificate_filepath }}
-SSLCertificateKeyFile {{ default_tls_host_certificate_filepath }}
+SSLEngine on
 </VirtualHost>
 
-{% endif %}
 <VirtualHost 0.0.0.0:80>
     ServerName ckan 
 

@@ -6,6 +6,7 @@
     app_type: inventory
 
   roles:
+    - {role: software/common/tls, tags: ['tls']}
     - software/ckan/common
     - {role: gsa.datagov-deploy-apache2, tags: ['apache']}
     - {role: software/ckan/postgresql, tags: ['db', 'db-install']}
