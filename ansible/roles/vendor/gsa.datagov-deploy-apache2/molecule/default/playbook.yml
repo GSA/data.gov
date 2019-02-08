@@ -3,15 +3,29 @@
   hosts: all
   roles:
     - role: datagov-deploy-apache2
-      python_home: /usr/local
+      # We use an existing prefix where python is
+      # installed. Otherwise Apache/wsgi won't start up
+      # properly.
+      python_home: /usr
   tasks:
+    - name: create docroot
+      file: dest=/www state=directory
+
+    - name: copy custom index
+      copy:
+        content: |
+          <h1>Hello World</h1>
+        dest: /www/index.html
+      notify: reload apache
+
     - name: copy custom site
       copy:
         content: |
           <VirtualHost 0.0.0.0:80>
-            <Location />
-               Return 200
-            </Location>
+            DocumentRoot /www
+            <Directory /www>
+              Require all granted
+            </Directory>
           </VirtualHost>
-        dest: /etc/apache2/sites-enabled/custom
+        dest: /etc/apache2/sites-enabled/custom.conf
       notify: reload apache

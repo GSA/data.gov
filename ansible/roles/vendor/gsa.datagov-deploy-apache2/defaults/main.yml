@@ -1,7 +1,13 @@
 ---
+# Configure /var/www with -Indexes
+apache2_disable_var_www_indexes: true
+
 # Versions of SSL to support
 apache2_ssl_versions:
   - TLSv1.1
   - TLSv1.2
+
+# Enable strong ciphers
+apache2_ssl_ciphers: HIGH:!aNULL:!MD5
 
 python_home: /usr  # Use the system python

@@ -1,0 +1,8 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    apache2_ssl_certificate_file: /etc/ssl/certs/ssl-cert-snakeoil.pem
+    apache2_ssl_certificate_key_file: /etc/ssl/private/ssl-cert-snakeoil.key
+  roles:
+    - role: datagov-deploy-apache2
