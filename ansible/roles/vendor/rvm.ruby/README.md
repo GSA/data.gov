@@ -75,7 +75,7 @@ rvm1_rvm_check_for_updates: True
 rvm1_gpg_keys: '409B6B1796C275462A1703113804BB82D39DC0E3'
 
 # The GPG key server
-rvm1_gpg_key_server: 'hkp://keys.gnupg.net'
+rvm1_gpg_key_server: 'hkp://pool.sks-keyservers.net'
 
 # autolib mode, see https://rvm.io/rvm/autolibs
 rvm1_autolib_mode: 3
