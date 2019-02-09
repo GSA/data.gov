@@ -1,19 +1,10 @@
 --- # Data.gov prerequisites
-
-- name: Copying SSL certs
-  template:
-    src: "web_{{ item }}"
-    dest: "/etc/ssl/{{ item }}"
-  with_items:
-    - cert.pem
-    - key.pem
-
 - name: Copying Data.gov configuration for Nginx
   template:
     src: "datagov.nginx.conf"
     dest: "/etc/nginx/sites-enabled/datagov.nginx.conf"
-#  notify:
-#      - reload nginx
+  notify:
+      - reload nginx
 
 - name: Mkdir /var/www/
   file:

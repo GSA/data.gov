@@ -95,10 +95,6 @@ saxon_license: "{{ vault_saxon_license }}"
 fluentd_aws_access_key_id: "{{ vault_fluentd_aws_access_key_id }}"
 fluentd_aws_secret_access_key: "{{ vault_fluentd_aws_secret_access_key }}"
 
-# web self-signed stuff
-web_crt: "{{ vault_web_crt }}"
-web_key: "{{ vault_web_key }}"
-
 # ckan
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
 # ELB is not setup with HTTPS in test
