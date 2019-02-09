@@ -5,11 +5,18 @@ KITCHEN_SUITES := \
   dashboard-web \
   efk-nginx \
   efk-stack \
+  fluentd \
   inventory-web \
   jekyll \
   logrotate \
-  web-proxy \
-  unattended-upgrades
+  misc \
+  newrelic-infrastructure \
+  postfix \
+  secops \
+  trendmicro \
+  ubuntu-common \
+  unattended-upgrades \
+  web-proxy
 
 MOLECULE_SUITES := \
   software/ci \

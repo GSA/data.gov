@@ -150,9 +150,9 @@ suites:
 #  - name: elasticsearch
 #    provisioner:
 #      playbook: elasticsearch.yml
-#  - name: fluentd
-#    provisioner:
-#      playbook: fluent.yml
+  - name: fluentd
+    provisioner:
+      playbook: common/fluentd.yml
 #  - name: hardening
 #    provisioner:
 #      playbook: hardening.yml
@@ -185,33 +185,43 @@ suites:
   - name: logrotate
     provisioner:
       playbook: logrotate.yml
+  - name: misc
+    provisioner:
+      hosts:
+        - web
+      playbook: common/misc.yml
 #  - name: nessus
 #    provisioner:
 #      playbook: nessus.yml
-#  - name: newrelic-infrastructure
-#    provisioner:
-#      playbook: newrelic-infrastructure.yml
+  - name: newrelic-infrastructure
+    provisioner:
+      playbook: newrelic-infrastructure.yml
 #  - name: newrelic-php
 #    provisioner:
 #      playbook: newrelic-php.yml
 #  - name: newrelic-python
 #    provisioner:
 #      playbook: newrelic-python.yml
-#  - name: postfix
-#    provisioner:
-#      playbook: postfix.yml
-#  - name: secops
-#    provisioner:
-#      playbook: secops.yml
+  - name: postfix
+    provisioner:
+      playbook: common/postfix.yml
+  - name: secops
+    provisioner:
+      playbook: common/secops.yml
 #  - name: solr
 #    provisioner:
 #      playbook: solr.yml
-#  - name: trendmicro
-#    provisioner:
-#      playbook: trendmicro.yml
+  - name: trendmicro
+    provisioner:
+      playbook: common/trendmicro.yml
   - name: web-proxy
     provisioner:
       playbook: web-proxy.yml
+    # We use "ubuntu-common" instead of "ubuntu" to avoid kitchen thinking
+    # we're talking about the ubuntu platform.
+  - name: ubuntu-common
+    provisioner:
+      playbook: common/ubuntu.yml
   - name: unattended-upgrades
     provisioner:
-      playbook: unattended-upgrades.yml     
+      playbook: unattended-upgrades.yml
