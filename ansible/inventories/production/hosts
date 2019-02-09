@@ -32,8 +32,16 @@ crm-web[1:2]p.prod-ocsit.bsp.gsa.gov
 [dashboard-web]
 dashboard-web[1:2]p.prod-ocsit.bsp.gsa.gov
 
+[jekyll-web]
+static-web1p.prod-ocsit.bsp.gsa.gov
+
 [wordpress-web]
 wordpress-web[1:2]p.prod-ocsit.bsp.gsa.gov
 
-[jekyll-web]
-static-web1p.prod-ocsit.bsp.gsa.gov
+[web:children]
+catalog-web
+crm-web
+dashboard-web
+inventory-web
+jekyll-web
+wordpress-web

@@ -1,18 +1,11 @@
---- # crm Web AMI
-
-#- name: Initial prechecks
-#  hosts: crm-web
-#  remote_user: ubuntu
-#
-#  roles:
-#  - { role: crm-sudo-0-precheck, tags: [precheck] }
-
+---
 - name: Provisioning Web AMI
   hosts: crm-web
   serial: 1
   roles:
+  # TODO remove the die-no-tags role. You should be able to run a role playbook
+  # with no tags and have it be idempotent.
   - software/common/die-no-tags
-  - { role: software/common/misc, tags: [provision, misc] }
   - { role: software/common/php-common, tags: [provision] }
   - { role: geerlingguy.git, tags: [provision] }
   - { role: geerlingguy.nginx, tags: [nginx, provision] }
@@ -22,12 +15,6 @@
   - { role: geerlingguy.composer, tags: [php, provision] }
   - { role: chusiang.vim-and-vi-mode, tags: [provision, vim] }
   - { role: software/crm/crm-sudo-2-init, tags: [provision, deploy, deploy-rollback] }
-  - { role: software/common/secops-ssh, tags: [provision, secops, prod] }
-  - { role: software/common/trendmicro, tags: [provision, trendmicro, prod, skip_in_kitchen] }
-  - { role: software/common/ansible-postfix, tags: [provision, postfix, prod] }
-  - { role: monitoring/fluentd/kernel, tags: [frontend, harvester, fluentd, prod] }
-  - { role: monitoring/fluentd/limits, tags: [frontend, harvester, fluentd, prod] }
-  - { role: monitoring/fluentd/td-agent, tags: [frontend, harvester, fluentd, prod, skip_in_kitchen] }
 
 
 - name: Deploying crm

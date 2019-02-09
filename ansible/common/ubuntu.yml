@@ -1,0 +1,5 @@
+---
+- name: Common tasks for Ubuntu hosts
+  hosts: all
+  roles:
+    - {role: software/ubuntu/common, tags: [ubuntu]}

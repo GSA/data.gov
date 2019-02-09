@@ -5,8 +5,13 @@ catalogpub-web1d.dev-ocsit.bsp.gsa.gov
 [catalog-harvester]
 catalog-harvester[1:2]d.dev-ocsit.bsp.gsa.gov
 
+[efk_nginx]
+[elasticsearch]
+
 [jumpbox]
 datagov-jump1d.dev-ocsit.bsp.gsa.gov
+
+[kibana]
 
 [solr]
 tempdatagovsolrm1d.dev-ocsit.bsp.gsa.gov
@@ -33,8 +38,10 @@ wordpress-web[1:2]d.dev-ocsit.bsp.gsa.gov
 [jekyll-web]
 static-web1d.dev-ocsit.bsp.gsa.gov
 
-[elasticsearch]
-
-[kibana]
-
-[efk_nginx]
+[web:children]
+catalog-web
+crm-web
+dashboard-web
+inventory-web
+jekyll-web
+wordpress-web

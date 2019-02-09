@@ -2,5 +2,4 @@
 - name: Provision Jumpbox
   hosts: jumpbox
   roles:
-    - { role: software/common/ansible-postfix, tags: ['postfix'] }
-    - { role: software/jumpbox }
+    - {role: software/jumpbox, tags: [jumpbox]}

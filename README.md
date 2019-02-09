@@ -154,6 +154,79 @@ See example(s) below
 
 **Unable to resolve host IP**: `echo 127.0.0.1 $(hostname) >> /etc/hosts`
 
+
+## Inventory
+
+This section describes how the Ansible inventories are organized and variables
+defined.
+
+### Groups
+
+**catalog-web**
+
+Web hosts for the catalog app.
+
+
+**catalog-harvester**
+
+Worker hosts for the catalog app.
+
+
+**jumpbox**
+
+Jumpbox host where Ansible playbooks are executed from.
+
+
+**solr**
+
+Solr hosts.
+
+
+**inventory-web**
+
+Web hosts for the inventory app.
+
+
+**crm-web**
+
+Web hosts for the CRM app.
+
+
+**dashboard-web**
+
+Web hosts for the Dashboard app.
+
+
+**wordpress-web**
+
+Web hosts for the datagov/wordpress app.
+
+
+**jekyll-web**
+
+Web hosts for the static/jekyll app.
+
+
+**elasticsearch**
+
+Elasticsearch hosts in mgmt vpc only.
+
+
+**kibana**
+
+Kibana hosts in mgmt vpc only.
+
+
+**efk_nginx**
+
+EFK hosts in mgmt vpc only.
+
+
+**web**
+
+Meta group containing any hosts with a web server (e.g. apache2 or nginx).
+
+
 ## Development
 
 Install the dependencies (from a python virtualenv).

@@ -11,19 +11,10 @@
   ## redis, fgdc2iso, cron
   ## sample usage: ansible-playbook ansibe/catalog.yml --tags "harvester" --skip-tags "solr,apache"
   roles:
-    - {role: software/ubuntu/common, tags: ['always']}
-    - {role: software/common/misc, tags: ['ami-fix', 'misc'] }
-    - {role: software/common/ansible-postfix, tags: ['ami-fix', 'postfix'] }
-    - {role: software/common/secops-ssh, tags: ['bsp', 'secops'] }
-    - {role: software/common/trendmicro, tags: ['bsp', 'trendmicro', 'skip_in_kitchen'] }
     - {role: software/ckan/common, tags: ['frontend', 'harvester']}
-    - {role: monitoring/fluentd/kernel, tags: ['bsp', 'fluentd'] }
-    - {role: monitoring/fluentd/limits, tags: ['bsp', 'fluentd'] }
-    - {role: monitoring/fluentd/td-agent, tags: ['bsp', 'fluentd', 'skip_in_kitchen'] }
     - {role: gsa.datagov-deploy-apache2, tags: ['frontend', 'apache']}
     - {role: software/ckan/postgresql, tags: ['frontend', 'harvester', 'db', 'db-install']}
     - {role: software/ckan/solr, tags: ['frontend', 'harvester', 'solr']}
-
     - {role: software/catalog/ckan-app, tags: ['frontend', 'harvester', 'deploy']}
     - {role: software/catalog/ckan-db-setup, tags: ['frontend', 'harvester', 'db', 'db-setup']}
     - {role: software/catalog/ckan-db-init, tags: ['frontend', 'harvester', 'db', 'db-init']}
