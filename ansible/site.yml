@@ -10,3 +10,7 @@
 - import_playbook: nessus.yml
 - import_playbook: newrelic-infrastructure.yml
 - import_playbook: unattended-upgrades.yml
+
+# App plays
+#############
+- import_playbook: jekyll.yml

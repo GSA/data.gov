@@ -43,6 +43,3 @@ ansible-playbook -i "$inventory" catalog.yml --tags="harvester,ami-fix" --skip-t
 
 # inventory
 ansible-playbook -i "$inventory" inventory.yml --skip-tags="solr,db,deploy-rollback" --limit inventory-web
-
-# jekyll
-ansible-playbook -i "$inventory" jekyll.yml --limit jekyll-web
