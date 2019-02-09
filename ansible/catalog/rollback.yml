@@ -1,0 +1,8 @@
+---
+- name: Rollback catalog app hosts
+  hosts: catalog-web:catalog-harvester
+  serial: 40%
+  vars:
+      app_type: catalog
+  roles:
+    - {role: software/common/datagov-deploy-rollback, tags: ['deploy-rollback']}

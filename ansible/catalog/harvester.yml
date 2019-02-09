@@ -1,0 +1,12 @@
+---
+- name: Configure catalog app harvester hosts
+  hosts: catalog-harvester
+  vars:
+      app_type: catalog
+  roles:
+    - {role: software/ckan/common}
+    - {role: software/catalog/ckan-app, tags: [deploy]}
+    - {role: software/catalog/harvest}
+    - {role: software/catalog/pycsw-app, tags: [pycsw]}
+    - {role: software/ckan/security-fix, tags: [pycsw]}
+    - {role: software/ec2/ec2-catalog}

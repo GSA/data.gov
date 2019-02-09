@@ -1,0 +1,16 @@
+---
+- name: Configure catalog app web hosts
+  hosts: catalog-web
+  serial: 40%
+  vars:
+    app_type: catalog
+  roles:
+    - {role: software/common/tls, tags: [tls]}
+    - {role: software/ckan/common}
+    - {role: gsa.datagov-deploy-apache2, tags: [apache2]}
+    - {role: software/catalog/ckan-app, tags: [deploy]}
+    - {role: software/catalog/pycsw-app, tags: [pycsw]}
+    - {role: software/ckan/saml2}
+    - {role: software/ckan/security-fix, tags: [pycsw]}
+    - {role: software/ckan/fix-ckan-tracking}
+    - {role: software/ec2/ec2-catalog}

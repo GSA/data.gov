@@ -112,13 +112,46 @@ See example(s) below
 
 **deploy rollback:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="deploy-rollback"`
 
-### Catalog:
 
-**provision vm - web:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="frontend,ami-fix,bsp" --skip-tags="solr,db,cron" --limit catalog-web`
+### Catalog
 
-**provision vm - harvester:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="harvester,ami-fix,bsp" --skip-tags="apache,solr,db,saml2" --limit catalog-harvester`
 
-**provision vm - solr:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="solr,ami-fix,bsp" --limit solr`
+#### catalog.yml
+
+Provisions the catalog application.
+
+    $ ansible-playbook -i {{ inventory }} catalog.yml
+
+
+#### catalog/web.yml
+
+Provisions web hosts for the catalog app.
+
+    $ ansible-playbook -i {{ inventory }} catalog/web.yml
+
+
+##### Tags
+
+**apache2** install and configure apache2.
+
+**deploy** deploy the CKAN catalog app.
+
+**pycsw** install and configure pycsw.
+
+
+#### catalog/harvester.yml
+
+Provisions harvester/worker hosts for the catalog app.
+
+    $ ansible-playbook -i {{ inventory }} catalog/harvester.yml
+
+
+##### Tags
+
+**pycsw** install and configure pycsw.
+
+**deploy** deploy the CKAN catalog app.
+
 
 ### Inventory
 

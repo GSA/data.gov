@@ -13,4 +13,5 @@
 
 # App plays
 #############
+- import_playbook: catalog.yml
 - import_playbook: jekyll.yml
