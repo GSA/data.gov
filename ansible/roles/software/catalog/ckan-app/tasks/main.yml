@@ -78,17 +78,3 @@
     src: "{{ project_source_new_code_path }}"
     path: "{{ current_source_symlink }}"
     state: link
-
-- name: Copy all needed files
-  action: copy src={{item}} dest=/{{item}} mode=0644 owner=root group=www-data
-  with_items:
-    - etc/ckan/apache.wsgi
-  tags: ['frontend', 'apache']
-
-- name: Configure ckan.conf
-  template: src=templates/etc/apache2/sites-enabled/ckan.{{readwrite_type|default('default')}}.conf.j2 dest=/etc/apache2/sites-enabled/ckan.conf mode=0644 owner=root group=www-data
-  tags: ['frontend', 'apache']
-
-- name: Restart apache
-  service: name=apache2 state=restarted
-  tags: ['frontend', 'apache']

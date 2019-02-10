@@ -9,6 +9,7 @@
     - {role: software/ckan/common}
     - {role: gsa.datagov-deploy-apache2, tags: [apache2]}
     - {role: software/catalog/ckan-app, tags: [deploy]}
+    - {role: software/catalog/www, tags: [apache2]}
     - {role: software/catalog/pycsw-app, tags: [pycsw]}
     - {role: software/ckan/saml2}
     - {role: software/ckan/security-fix, tags: [pycsw]}

@@ -1,0 +1,19 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: ensure apache2 is installed and configured
+      apt: name={{ item }} state=present
+      with_items:
+        - apache2
+        - libapache2-mod-wsgi
+
+    - name: configure apache2
+      apache2_module: name={{ item }} state=present
+      with_items:
+        - headers
+        - rewrite
+        - wsgi
+
+    - name: ensure ckan config directory exists
+      file: dest=/etc/ckan state=directory owner=root group=www-data mode=0750

@@ -20,6 +20,7 @@ KITCHEN_SUITES := \
 
 MOLECULE_SUITES := \
   software/ci \
+  software/catalog/www \
   software/ckan/native-login \
   software/common/tls
 
