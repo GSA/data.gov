@@ -1,5 +1,5 @@
 ---
-- name: install os dependencies
+- name: ensure necessary packages are installed
   apt: name={{ item }} state=present
   with_items:
     - git
