@@ -113,7 +113,7 @@ See example(s) below
 **deploy rollback:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="deploy-rollback"`
 
 
-### Catalog
+### Catalog CKAN app
 
 
 #### catalog.yml
@@ -153,11 +153,24 @@ Provisions harvester/worker hosts for the catalog app.
 **deploy** deploy the CKAN catalog app.
 
 
-### Inventory
+### Inventory CKAN app
 
-**provision vm && deploy app:** `ansible-playbook inventory.yml -i {{ inventory }} --skip-tags="solr,db,deploy-rollback" --limit inventory-web`
 
-**provision vm - solr:** `ansible-playbook inventory.yml -i {{ inventory }} --tags="solr,ami-fix,bsp" --limit solr`
+#### inventory.yml
+
+Provisions inventory hosts.
+
+    $ ansible-playbook -i {{ inventory }} catalog/harvester.yml
+
+
+##### Tags
+
+**apache2** install and configure apache2.
+
+**deploy** deploy the inventory CKAN app.
+
+**saml2** install and configure saml2 dependencies.
+
 
 ### Jekyll
 

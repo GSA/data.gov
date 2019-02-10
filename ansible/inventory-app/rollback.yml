@@ -1,0 +1,8 @@
+---
+- name: Configure inventory CKAN app
+  hosts: inventory-web
+  serial: 1
+  vars:
+    app_type: inventory
+  roles:
+    - {role: software/common/datagov-deploy-rollback}

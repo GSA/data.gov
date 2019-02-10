@@ -158,9 +158,7 @@ suites:
   - name: inventory-web
     provisioner:
       hosts: inventory-web
-      playbook: inventory.yml
-      ansible_extra_flags: >-
-        --skip-tags="solr,db,deploy-rollback,skip_in_kitchen" <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
+      playbook: inventory/web.yml
   - name: jekyll
     provisioner:
       hosts:
