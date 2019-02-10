@@ -166,8 +166,6 @@ Provisions harvester/worker hosts for the catalog app.
 
 ##### Tags
 
-**pycsw** install and configure pycsw.
-
 **deploy** deploy the CKAN catalog app.
 
 
