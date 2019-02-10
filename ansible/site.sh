@@ -26,9 +26,6 @@ ansible-playbook -i "$inventory" site.yml
 # TODO refactor the following playbooks into site.yml and then remove this
 # script
 
-# dashboard
-ansible-playbook -i "$inventory" dashboard-web.yml --tags="provision,deploy"
-
 # datagov
 ansible-playbook -i "$inventory" datagov-web.yml --tags="provision,deploy" --limit wordpress-web
 
