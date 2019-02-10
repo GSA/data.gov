@@ -96,13 +96,31 @@ See example(s) below
 
   ***e.g.*** `ansible-playbook datagov-web.yml -i inventories/staging/hosts --tags=deploy --limit wordpress-web -e project_git_version=develop`
 
+
 ### Dashboard
 
-**provision vm & deploy app:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="provision" --limit dashboard-web`
+[Dashboard](https://labs.data.gov/dashboard/) showing Federal agency progress towards the Open Data Policy.
 
-**deploy app:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="deploy"`
 
-**deploy rollback:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="deploy-rollback"`
+#### dashboard.yml
+
+Provision the dashboard application.
+
+
+##### Tags
+
+**php** Install and configure PHP.
+
+**php-mysql** Install and configure PHP MySQL dependencies.
+
+**php-memcached** Install and configure PHP Memcached dependencies.
+
+**nginx** Install and configure nginx.
+
+**deploy** Deploy the application.
+
+**migrate** Run the database migrations.
+
 
 ### CRM
 

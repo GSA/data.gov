@@ -1,0 +1,19 @@
+---
+- name: Rollback dashboard
+  hosts: dashboard-web
+  serial: 1
+  roles:
+    - {role: software/dashboard/dashboard-sudo-2-init}
+
+- name: Rollback dashboard
+  hosts: dashboard-web
+  become: no
+  serial: 1
+  roles:
+    - {role: software/common/datagov-deploy-rollback}
+
+- name: Cleanup rollback dashboard
+  hosts: dashboard-web
+  serial: 1
+  roles:
+  - {role: software/dashboard/dashboard-sudo-3-cleanup}
