@@ -64,4 +64,6 @@ saml2_idp_metadata_url: https://{{ saml2_idp_entry }}/idp/shibboleth
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
 who_secure: False
 
-
+project_source_rollback_path: /usr/lib/ckan-rollback
+project_source_new_code_path: /usr/lib/ckan-new
+current_source_symlink: /usr/lib/ckan

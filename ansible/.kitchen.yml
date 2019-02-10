@@ -158,7 +158,7 @@ suites:
   - name: inventory-web
     provisioner:
       hosts: inventory-web
-      playbook: inventory/web.yml
+      playbook: inventory-app/web.yml
   - name: jekyll
     provisioner:
       hosts:
