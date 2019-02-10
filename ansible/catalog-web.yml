@@ -25,6 +25,10 @@
       tags:
         - app-deploy
 
+    - role: software/catalog/www
+      tags:
+        - apache2
+
     - role: software/catalog/pycsw-app
       tags:
         - pycsw
