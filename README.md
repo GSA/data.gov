@@ -109,26 +109,42 @@ Provision the dashboard application.
 
 ##### Tags
 
-**php** Install and configure PHP.
+**deploy** Deploy the application.
 
-**php-mysql** Install and configure PHP MySQL dependencies.
+**migrate** Run the database migrations.
+
+**nginx** Install and configure nginx.
+
+**php** Install and configure PHP.
 
 **php-memcached** Install and configure PHP Memcached dependencies.
 
-**nginx** Install and configure nginx.
+**php-mysql** Install and configure PHP MySQL dependencies.
+
+
+### CRM
+
+[CRM](https://labs.data.gov/crm) data.gov help desk.
+
+
+#### crm.yml
+
+Provision the crm application.
+
+
+##### Tags
 
 **deploy** Deploy the application.
 
 **migrate** Run the database migrations.
 
+**nginx** Install and configure nginx.
 
-### CRM
+**php** Install and configure PHP.
 
-**provision vm & deploy app:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="provision" --limit crm-web`
+**php-memcached** Install and configure PHP Memcached dependencies.
 
-**deploy app:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="deploy"`
-
-**deploy rollback:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="deploy-rollback"`
+**php-mysql** Install and configure PHP MySQL dependencies.
 
 
 ### Catalog CKAN app

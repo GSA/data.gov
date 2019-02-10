@@ -1,0 +1,37 @@
+---
+- name: Provisioning Web AMI
+  hosts: crm-web
+  serial: 1
+  roles:
+  - {role: software/common/tls, tags: [tls]}
+  - {role: software/common/php-common, tags: [php]}
+  - {role: geerlingguy.git}
+  - {role: geerlingguy.nginx, tags: [nginx]}
+  - {role: geerlingguy.php, tags: [php]}
+  - {role: geerlingguy.php-mysql, tags: [php, php-mysql]}
+  - {role: geerlingguy.php-memcached, tags: [php, php-memcached]}
+  - {role: geerlingguy.composer, tags: [php]}
+  - {role: software/crm/crm-sudo-2-init, tags: [deploy]}
+
+
+- name: Deploying crm
+  hosts: crm-web
+  serial: 1
+  become: no
+  roles:
+  - {role: software/crm/crm-deploy, tags: [deploy]}
+
+
+- name: Cleanup
+  hosts: crm-web
+  serial: 1
+  roles:
+  - {role: software/common/php-fixes, tags: [php, deploy]}
+  - {role: software/crm/crm-sudo-3-cleanup, tags: [deploy]}
+
+- name: CRM Migration
+  hosts: crm-web
+  serial: 1
+  become: no
+  roles:
+  - {role: software/crm/crm-migrations, tags: [deploy, migrate]}

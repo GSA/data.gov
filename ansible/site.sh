@@ -28,6 +28,3 @@ ansible-playbook -i "$inventory" site.yml
 
 # datagov
 ansible-playbook -i "$inventory" datagov-web.yml --tags="provision,deploy" --limit wordpress-web
-
-# crm
-ansible-playbook -i "$inventory" crm-web.yml --tags="provision,deploy" --limit crm-web

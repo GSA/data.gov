@@ -1,0 +1,21 @@
+---
+- name: CRM rollback (provision)
+  hosts: crm-web
+  serial: 1
+  roles:
+  - {role: software/crm/crm-sudo-2-init}
+
+
+- name: CRM rollback
+  hosts: crm-web
+  serial: 1
+  become: no
+  roles:
+  - {role: software/common/datagov-deploy-rollback}
+
+
+- name: CRM rollback (cleanup)
+  hosts: crm-web
+  serial: 1
+  roles:
+  - {role: software/crm/crm-sudo-3-cleanup}

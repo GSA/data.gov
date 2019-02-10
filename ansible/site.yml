@@ -14,6 +14,7 @@
 # App plays
 #############
 - import_playbook: catalog.yml
+- import_playbook: crm.yml
 - import_playbook: dashboard.yml
 - import_playbook: inventory.yml
 - import_playbook: jekyll.yml
