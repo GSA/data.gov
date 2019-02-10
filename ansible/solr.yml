@@ -1,6 +1,10 @@
 ---
 
 - name: Install Solr
-  hosts: all
+  # The current solr role is destructive, it deletes the solr data
+  # directory and recreates it. This is okay for provisioning, but should never
+  # be run on existing hosts.
+  # TODO replace the solr role with one that can be idempotent
+  hosts: solr-provision
   roles:
   - role: software/ckan/solr
