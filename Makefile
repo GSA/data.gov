@@ -3,6 +3,7 @@ KITCHEN_SUITES := \
   catalog-harvester \
   crm-web \
   dashboard-web \
+  datagov \
   efk-nginx \
   efk-stack \
   fluentd \

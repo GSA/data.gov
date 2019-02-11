@@ -1,0 +1,29 @@
+---
+- name: Provisioning WordPress Web AMI
+  hosts:  wordpress-web
+  serial: 1
+  roles:
+  - {role: software/common/php-common, tags: [php]}
+  - {role: geerlingguy.git, tags: [git]}
+  - {role: geerlingguy.nginx, tags: [nginx]}
+  - {role: geerlingguy.php, tags: [php]}
+  - {role: geerlingguy.php-mysql, tags: [php, php-mysql]}
+  - {role: geerlingguy.php-memcached, tags: [php, php-memcached]}
+  - {role: sbaerlocher.wp-cli, tags: [php, wp-cli]}
+  - {role: geerlingguy.composer, tags: [php]}
+  - {role: software/wordpress/datagov-sudo-2-init, tags: [deploy]}
+
+- name: Deploying Data.gov
+  hosts: wordpress-web
+  serial: 1
+  become: no
+  roles:
+  - {role: software/wordpress/datagov-deploy, tags: [deploy]}
+
+
+- name: Cleanup
+  hosts: wordpress-web
+  serial: 1
+  roles:
+  - {role: software/common/php-fixes, tags: [php, deploy]}
+  - {role: software/wordpress/datagov-sudo-3-cleanup, tags: [deploy, cleanup]}

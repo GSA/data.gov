@@ -84,17 +84,43 @@ Run a one-off shell command.
 
 See example(s) below
 
-### Wordpress:
 
-**provision vm & deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="provision" --limit wordpress-web`
+### Data.gov (Wordpress)
 
-**deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy" --limit wordpress-web`
+The [Data.gov](https://www.data.gov/) app is the main website.
 
-**deploy rollback:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy-rollback" --limit wordpress-web`
 
-- You can override branch to be deployed via `-e project_git_version=develop`
+#### datagov.yml
 
-  ***e.g.*** `ansible-playbook datagov-web.yml -i inventories/staging/hosts --tags=deploy --limit wordpress-web -e project_git_version=develop`
+Provision the Data.gov application.
+
+    $ ansible-playbook -i {{ inventory }} datagov.yml
+
+
+##### Variables
+
+**project_git_version** string (default: `master`)
+
+Specify the version of the application code to deploy.
+
+
+##### Tags
+
+**cleanup** Run cleanup tasks.
+
+**deploy** Deploy the wordpress code.
+
+**git** Install and configure git.
+
+**nginx** Install and configure nginx.
+
+**php** Install and configure PHP.
+
+**php-memcached** Install and configure PHP memcached dependencies.
+
+**php-mysql** Install and configure PHP MySQL dependencies.
+
+**wp-cli** Install and configure the Wordpress CLI.
 
 
 ### Dashboard

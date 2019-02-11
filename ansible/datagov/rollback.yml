@@ -1,0 +1,20 @@
+---
+- name: Rollback datagov (provision)
+  hosts:  wordpress-web
+  serial: 1
+  roles:
+  - {role: software/wordpress/datagov-sudo-2-init}
+
+- name: Rollback datagov
+  hosts: wordpress-web
+  serial: 1
+  become: no
+  roles:
+  - {role: software/common/datagov-deploy-rollback}
+
+
+- name: Rollback datagov (cleanup)
+  hosts: wordpress-web
+  serial: 1
+  roles:
+  - {role: software/wordpress/datagov-sudo-3-cleanup}
