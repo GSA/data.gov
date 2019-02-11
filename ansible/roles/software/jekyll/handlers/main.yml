@@ -3,14 +3,3 @@
     name: "jekyll-{{ item.name }}"
     state: restarted
   with_items: "{{ jekyll_apps }}"
-
-# https://bugs.launchpad.net/ubuntu/+source/supervisor/+bug/1427434
-# Supervisor init script does not wait properly and the handler fails
-- name: restart supervisord
-  shell: |
-    set -e
-    service supervisor stop
-    sleep 3
-    service supervisor start
-    sleep 3
-  tags: skip_ansible_lint
