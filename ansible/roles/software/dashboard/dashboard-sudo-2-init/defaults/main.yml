@@ -11,8 +11,8 @@ project_shared_path: /var/www/dashboard/shared
 
 # SAML
 saml2_idp_entry: "login.test.max.gov"
-saml_sp_private_key_path: /etc/crm-saml-sp-private.pem
-saml_sp_cert_path: /etc/crm-saml-sp-cert.crt
+saml_sp_private_key_path: /etc/dashboard-saml-sp-private.pem
+saml_sp_cert_path: /etc/dashboard-saml-sp-cert.crt
 saml_sp_private_key: "private_key"
 saml_admin_pass: "admin_pass"
 saml2_sp_public_key: "add-yours-to-inventory"
