@@ -1,0 +1,6 @@
+---
+# handlers file for beats
+- name: "Ensure {{ package }} is restarted"
+  service:
+    name: "{{ package }}"
+    state: restarted
