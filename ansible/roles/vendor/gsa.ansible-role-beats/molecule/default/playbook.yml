@@ -1,0 +1,28 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: ansible-role-beats
+      products:
+        - filebeat
+#        - metricbeat
+#        - heartbeat
+      vars:
+        filebeat_config:
+          filebeat.config.modules:
+            enabled: true
+            path: ${path.config}/modules.d/*.yml
+          filebeat.modules:
+            - module: system
+              syslog:
+                enabled: true
+            - module: apache2
+            - module: redis
+            - module: nginx
+#            - module: auditd
+#              auditd:
+#                enabled: true
+          output.console:
+            enabled: true
+#         output.logstash:
+#           hosts: ["{{ vault.secops_logstash_output }}"]

@@ -1,0 +1,51 @@
+---
+
+- name: Configuting new package
+  set_fact:
+    package: "{{ item }}"
+
+- name: Getting filebeat configuration
+  set_fact:
+    package_config: "{{ filebeat_config }}"
+  when:
+    - filebeat_config is defined
+    - package == "filebeat"
+
+- name: Getting metricbeat configuration
+  set_fact:
+    package_config: "{{ metricbeat_config }}"
+  when:
+    - metricbeat_config is defined
+    - package == "metricbeat"
+
+- name: Getting heartbeat configuration
+  set_fact:
+    package_config: "{{ heartbeat_config }}"
+  when:
+    - heartbeat_config is defined
+    - package == "heartbeat"
+
+- name: "Ensure {{ package }} is installed"
+  apt:
+    name: "{{ package }}={{ beats_ver }}"
+    state: present
+
+- name: "Ensure {{ package }} is started and enabled on startup"
+  service:
+    name: "{{ package }}"
+    state: started
+    enabled: true
+
+- name: "Ensure that the {{ package }} configuration is present"
+  template:
+    src: config.j2
+    dest: "/etc/{{ package }}/{{ package }}.yml"
+    validate: "{{ package }} test %s"
+  register: config
+  when: package_config is defined
+
+- name: "Ensure {{ package }} is restarted"
+  service:
+    name: "{{ package }}"
+    state: restarted
+  when: config is changed

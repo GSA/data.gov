@@ -38,3 +38,6 @@
 - src: 'https://github.com/GSA/datagov-deploy-redis'
   version: master
   name: gsa.datagov-deploy-redis
+- src: 'https://github.com/GSA/ansible-role-beats'
+  version: master
+  name: gsa.ansible-role-beats

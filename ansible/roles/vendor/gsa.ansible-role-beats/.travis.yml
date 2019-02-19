@@ -1,0 +1,7 @@
+language: python
+services: docker
+before_script:
+  - pip install pipenv
+  - pipenv install --dev --system
+script:
+  - pipenv run test
