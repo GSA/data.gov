@@ -25,6 +25,7 @@ provisioner:
     ANSIBLE_ROLES_PATH: /tmp/kitchen/roles:/tmp/kitchen/roles/vendor
   extra_vars:
     kitchen: true
+    python_home: /usr
   # For debugging
   #ansible_verbose: true
   #ansible_diff: true

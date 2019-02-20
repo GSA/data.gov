@@ -1,0 +1,5 @@
+---
+- name: misc fix for web hosts
+  hosts: web
+  roles:
+    - {role: software/common/misc, tags: [misc]}

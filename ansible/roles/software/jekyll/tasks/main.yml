@@ -1,4 +1,10 @@
 ---
+- name: install os dependencies
+  apt: name={{ item }} state=present
+  with_items:
+    - git
+    - python-pip
+
 - name: Check s3cmd is present in pip
   pip: name=s3cmd state=present
 

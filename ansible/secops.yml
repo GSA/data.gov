@@ -1,5 +1,0 @@
----
-- name: Add SecOps user
-  hosts: all
-  roles:
-    - { role: software/common/secops-ssh }

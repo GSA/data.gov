@@ -12,6 +12,12 @@ catalog-harvester2t.datagov.us
 catalog-harvester3t.datagov.us
 catalog-harvester6t.datagov.us
 
+[jekyll-web]
+static-web1t.datagov.us
+
+[jumpbox]
+datagov-jump1t.datagov.us
+
 [solr]
 datagovsolr1t.datagov.us
 datagovsolr2t.datagov.us
@@ -33,6 +39,10 @@ dashboard-web2t.datagov.us
 wordpress-web1t.datagov.us
 wordpress-web2t.datagov.us
 
-[jekyll-web]
-static-web1t.datagov.us
-
+[web:children]
+catalog-web
+crm-web
+dashboard-web
+inventory-web
+jekyll-web
+wordpress-web
