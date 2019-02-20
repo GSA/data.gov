@@ -3,5 +3,6 @@
   hosts: all
   vars:
     CKAN_DB_SERVER: localhost
+    SOLR_SERVER: localhost
   roles:
     - role: native-login
