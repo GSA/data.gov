@@ -39,6 +39,6 @@ saml_sp_cert_path: /etc/dashboard-saml-sp-cert.crt
 saml_sp_private_key: "private_key"
 saml_admin_pass: "admin_pass"
 
-# Codeigniter
-codeigniter_pre_approved_admins: none
+# List of CodeIgniter pre-approved admin emails
+codeigniter_pre_approved_admins: []
 env_encryption_key: some-key
