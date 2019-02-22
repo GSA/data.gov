@@ -35,6 +35,7 @@
         }
 
   roles:
+    - {role: software/common/tls, tags: ['tls']}
     - {role: gsa.datagov-deploy-apache2, tags: ['apache']}
     - role: rvm.ruby
       rvm1_user: root

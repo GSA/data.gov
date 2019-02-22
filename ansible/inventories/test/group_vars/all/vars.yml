@@ -1,4 +1,33 @@
 ---
+default_tls_host_key: "{{ vault_default_tls_host_key }}"
+default_tls_host_certificate: |-
+  -----BEGIN CERTIFICATE-----
+  MIIEVTCCAz2gAwIBAgIJALhe8ZrGe78rMA0GCSqGSIb3DQEBCwUAMIHAMQswCQYD
+  VQQGEwJVUzELMAkGA1UECAwCREMxEzARBgNVBAcMCldhc2hpbmd0b24xKDAmBgNV
+  BAoMH0dlbmVyYWwgU2VydmljZXMgQWRtaW5pc3RyYXRpb24xKjAoBgNVBAsMIVRl
+  Y2hub2xvZ3kgVHJhbnNmb3JtYXRpb24gU2VydmljZTEVMBMGA1UEAwwMKi5kYXRh
+  Z292LnVzMSIwIAYJKoZIhvcNAQkBFhNkYXRhZ292aGVscEBnc2EuZ292MB4XDTE5
+  MDIwOTAwMjMzNloXDTIxMDIwODAwMjMzNlowgcAxCzAJBgNVBAYTAlVTMQswCQYD
+  VQQIDAJEQzETMBEGA1UEBwwKV2FzaGluZ3RvbjEoMCYGA1UECgwfR2VuZXJhbCBT
+  ZXJ2aWNlcyBBZG1pbmlzdHJhdGlvbjEqMCgGA1UECwwhVGVjaG5vbG9neSBUcmFu
+  c2Zvcm1hdGlvbiBTZXJ2aWNlMRUwEwYDVQQDDAwqLmRhdGFnb3YudXMxIjAgBgkq
+  hkiG9w0BCQEWE2RhdGFnb3ZoZWxwQGdzYS5nb3YwggEiMA0GCSqGSIb3DQEBAQUA
+  A4IBDwAwggEKAoIBAQCrvX1zkUtZyxjkniG8x8EXoFHmtm2PiavFhcs6d0W2IHPe
+  jXXLUEXJb7ldwdKwi5yCTuW8J0CGoIl8EkkTy3+rQWjjS74iTvewxkcYVdHB/oXf
+  wpPuL9azvX1WEekfdKCYf98D+RWnr+5XWMbXyRafI2a9yeE3et6mkeqeu4iP/8iA
+  G7o/BEcLhrDFQFuzA0WQxGhajqQvSTTfjhEp2Dqq4u/Ek7DqVuf7IJ/KYt3PeGeX
+  bV19LAzKt2HE5uqXSRZn0vnMRyCT9kz+yNZqUVHCzk7GE01Jl7wxTDU1cGraqrMK
+  9Cg4zBNX1g3B8xucGOichpawOBiW+a5A2yhCNPzjAgMBAAGjUDBOMB0GA1UdDgQW
+  BBRe5bzhJ9N8pjtAXKbwzLu6c2F4hDAfBgNVHSMEGDAWgBRe5bzhJ9N8pjtAXKbw
+  zLu6c2F4hDAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQCdv74tZfxn
+  NsfDG4SwnPvusMorYWM719wDdfXO0VIQMGcP/aRitgw6aMlHXpWltqMXOO0NyOv3
+  zMbYIvTNJWRCFiOMSUSTc3UEs/Hd5/O8d31Ncqg7MJRfISlIRvjQ6FntOZ3WDmrG
+  ZwnqGkfGYpj92Q2xuXDd7FjGTKXVJiwaVMkDifUe/ez74R3ltSNeohaLOkZf5Zcw
+  68XH2jjigSenaTkHd8QND1yde5/ekyX7s594M5tz16Tr05Wmnf+3OSNFssooFlXY
+  a6iApABZqU0Aac0KNKxx7F8BvcTfems78jd0RhKrGKD77l4VTtFb+gU2C02Abbm+
+  lo4YdL0A8Y/f
+  -----END CERTIFICATE-----
+
 
 # public urls
 urls_public:
@@ -65,10 +94,6 @@ saxon_license: "{{ vault_saxon_license }}"
 # FluentD
 fluentd_aws_access_key_id: "{{ vault_fluentd_aws_access_key_id }}"
 fluentd_aws_secret_access_key: "{{ vault_fluentd_aws_secret_access_key }}"
-
-# web self-signed stuff
-web_crt: "{{ vault_web_crt }}"
-web_key: "{{ vault_web_key }}"
 
 # ckan
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production

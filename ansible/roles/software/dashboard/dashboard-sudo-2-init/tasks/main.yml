@@ -1,19 +1,11 @@
 --- # Dashboard prerequisites
 
-- name: Copying SSL certs
-  template:
-    src: "web_{{ item }}"
-    dest: "/etc/ssl/{{ item }}"
-  with_items:
-    - cert.pem
-    - key.pem
-
 - name: Copying Dashboard configuration for Nginx
   template:
     src: "dashboard.nginx.conf"
     dest: "/etc/nginx/sites-enabled/dashboard.nginx.conf"
-#  notify:
-#      - reload nginx
+  notify:
+      - reload nginx
 
 - name: Mkdir /var/www/
   file:

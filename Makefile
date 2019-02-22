@@ -1,5 +1,5 @@
 KITCHEN_SUITES := \
-	catalog-web \
+  catalog-web \
   catalog-harvester \
   crm-web \
   dashboard-web \
@@ -13,7 +13,8 @@ KITCHEN_SUITES := \
 
 MOLECULE_SUITES := \
   software/ci \
-  software/ckan/native-login
+  software/ckan/native-login \
+  software/common/tls
 
 # Create test-kitchen-<suite> targets
 KITCHEN_SUITE_TARGETS := $(patsubst %,test-kitchen-%,$(KITCHEN_SUITES))

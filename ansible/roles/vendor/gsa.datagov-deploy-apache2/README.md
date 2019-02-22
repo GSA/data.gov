@@ -22,6 +22,18 @@ and enable them with `a2ensite`.
 
 ### Variables
 
+**`apache2_ssl_certificate_file`** string (default: none)
+
+File path to the TLS/SSL certificate file.
+
+**`apache2_ssl_certificate_key_file`** string (default: none)
+
+File path to the TLS/SSL certificate key file.
+
+**`apache2_ssl_ciphers`** string (default: `HIGH:!aNULL:!MD5`)
+
+SSL cipher string to support for mod_ssl.
+
 **`apache2_ssl_versions`** array<string> (default: `["TLSv1.1", "TLSv1.2"]`)
 
 SSL versions to support for mod_ssl.
@@ -48,6 +60,10 @@ Install dependencies.
 Run the tests.
 
     $ make test
+
+To run the ssl scenario playbook with molecule.
+
+    $ molecule converge -s ssl
 
 For more information on how to use
 [Molecule](https://molecule.readthedocs.io/en/latest/) for development, see [our

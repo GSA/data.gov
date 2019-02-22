@@ -35,6 +35,7 @@
   name: gsa.ansible-os-ubuntu-14
 - src: 'https://github.com/GSA/datagov-deploy-apache2'
   name: gsa.datagov-deploy-apache2
+  version: ssl-certificate
 - src: 'https://github.com/GSA/datagov-deploy-redis'
   version: master
   name: gsa.datagov-deploy-redis
