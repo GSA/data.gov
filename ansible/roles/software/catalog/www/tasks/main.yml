@@ -6,5 +6,10 @@
   notify: reload apache2
 
 - name: Configure ckan.conf
-  template: src=templates/etc/apache2/sites-enabled/ckan.{{readwrite_type|default('default')}}.conf.j2 dest=/etc/apache2/sites-enabled/ckan.conf mode=0644 owner=root group=www-data
+  template: >-
+    src=etc/apache2/sites-enabled/ckan.{{readwrite_type|default('default')}}.conf.j2
+    dest=/etc/apache2/sites-enabled/ckan.conf
+    mode=0644
+    owner=root
+    group=www-data
   notify: reload apache2

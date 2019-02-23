@@ -8,6 +8,8 @@ lint:
 platforms:
   - name: catalog-www
     image: ubuntu:trusty
+  - name: catalog-www-bionic
+    image: ubuntu:bionic
 provisioner:
   name: ansible
   lint:
