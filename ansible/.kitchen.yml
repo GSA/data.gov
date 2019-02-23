@@ -111,22 +111,28 @@ suites:
       playbook: catalog/harvester.yml
       extra_vars:
         redis_password: fake-redis-password
-  - name: crm-web
+  - name: crm
     provisioner:
       hosts:
         - crm-web
-      playbook: crm-web.yml
-      ansible_extra_flags: >-
-        --tags=provision --skip-tags=skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
-  - name: dashboard-web
+      playbook: crm.yml
+  - name: crm-rollback
+    provisioner:
+      hosts:
+        - crm-web
+      playbook: crm/rollback.yml
+  - name: dashboard
     provisioner:
       hosts:
         - dashboard-web
-      playbook: dashboard-web.yml
+      playbook: dashboard.yml
       extra_vars:
         dashboard_user: kitchen # TODO this should just be the default user (ubuntu) but the role should ensure the user exists
-      ansible_extra_flags: >-
-        --tags=provision --skip-tags=skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
+  - name: dashboard-rollback
+    provisioner:
+      hosts:
+        - dashboard-web
+      playbook: dashboard/rollback.yml
   - name: datagov
     provisioner:
       hosts:
@@ -213,9 +219,7 @@ suites:
   - name: web-proxy
     provisioner:
       playbook: web-proxy.yml
-    # We use "ubuntu-common" instead of "ubuntu" to avoid kitchen thinking
-    # we're talking about the ubuntu platform.
-  - name: ubuntu-common
+  - name: ubuntu
     provisioner:
       playbook: common/ubuntu.yml
   - name: unattended-upgrades

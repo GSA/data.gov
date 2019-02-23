@@ -1,9 +1,8 @@
 KITCHEN_SUITES := \
   catalog-web \
   catalog-harvester \
-  crm-web \
-  dashboard-web \
-  datagov \
+  crm \
+  dashboard \
   efk-nginx \
   efk-stack \
   fluentd \
@@ -15,9 +14,16 @@ KITCHEN_SUITES := \
   postfix \
   secops \
   trendmicro \
-  ubuntu-common \
+  ubuntu \
   unattended-upgrades \
   web-proxy
+  #crm-rollback \
+  #dashboard-rollback \
+  #datagov \
+  #datagov-rollback \
+
+KITCHEN_PLATFORMS := \
+  ubuntu-1404
 
 MOLECULE_SUITES := \
   software/ci \
@@ -26,7 +32,10 @@ MOLECULE_SUITES := \
   software/common/tls
 
 # Create test-kitchen-<suite> targets
-KITCHEN_SUITE_TARGETS := $(patsubst %,test-kitchen-%,$(KITCHEN_SUITES))
+KITCHEN_SUITE_TARGETS := $(addprefix test-kitchen-, $(KITCHEN_SUITES))
+
+# Create test-kitchen-<suite>.platform targets
+KITCHEN_SUITE_PLATFORM_TARGETS := $(foreach platform, $(KITCHEN_PLATFORMS), $(addsuffix .$(platform), $(KITCHEN_SUITE_TARGETS)))
 
 # Create test-molecule-<suite> targets
 MOLECULE_SUITE_TARGETS := $(patsubst %,test-molecule-%,$(MOLECULE_SUITES))
@@ -35,6 +44,10 @@ MOLECULE_SUITE_TARGETS := $(patsubst %,test-molecule-%,$(MOLECULE_SUITES))
 # https://circleci.com/docs/2.0/parallelism-faster-jobs/
 circleci-glob:
 	@echo $(KITCHEN_SUITE_TARGETS) $(MOLECULE_SUITE_TARGETS) | sed -e 's/ /\n/g'
+
+kitchen_suite = $(word 1, $(subst ., , $(subst test-kitchen-,,$@)))
+kitchen_platform = $(word 2, $(subst ., , $(subst test-kitchen-,,$@)))
+
 
 update-vendor:
 	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml
@@ -56,9 +69,12 @@ lint:
 	ansible-playbook --syntax-check ansible/*.yml
 	ansible-lint -v -x ANSIBLE0010 --exclude=ansible/roles/vendor ansible/*.yml
 
-$(KITCHEN_SUITE_TARGETS):
+# e.g. test-kitchen-<suite>: test-kitchen-<suite>.<platform>
+$(KITCHEN_SUITE_TARGETS): %: $(addprefix %., $(KITCHEN_PLATFORMS))
+
+$(KITCHEN_SUITE_PLATFORM_TARGETS):
 	cd ansible && \
-	bundle exec kitchen test $(subst test-kitchen-,,$@)
+	bundle exec kitchen test $(kitchen_suite)-$(kitchen_platform)
 
 $(MOLECULE_SUITE_TARGETS):
 	cd ansible/roles/$(subst test-molecule-,,$@) && \
@@ -66,4 +82,4 @@ $(MOLECULE_SUITE_TARGETS):
 
 test: $(KITCHEN_SUITE_TARGETS) $(MOLECULE_SUITE_TARGETS)
 
-.PHONY: lint setup test $(KITCHEN_SUITE_TARGETS) $(MOLECULE_SUITE_TARGETS)
+.PHONY: lint setup test $(KITCHEN_SUITE_TARGETS) $(KITCHEN_SUITE_PLATFORM_TARGETS) $(MOLECULE_SUITE_TARGETS)
