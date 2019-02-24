@@ -1,7 +1,5 @@
 ---
-- import_tasks: td-agent.yml
-  when: fluentd_disable is undefined
-- import_tasks: plugins.yml
-  when: fluentd_disable is undefined
-- import_tasks: templates.yml
-  when: fluentd_disable is undefined
+
+- include: td-agent.yml
+- include: plugins.yml
+- include: templates.yml
