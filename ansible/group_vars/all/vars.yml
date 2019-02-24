@@ -15,6 +15,13 @@ apache2_ssl_certificate_key_file: "{{ default_tls_host_key_filepath }}"
 common_tls_host_key: "{{ default_tls_host_key }}"
 common_tls_host_certificate: "{{ default_tls_host_certificate }}"
 
+# newrelic monitoring
+nrinfragent_config:
+  license_key: "{{ vault_nrinfragent_license_key }}"
+  custom_attributes:
+    environment: "{{ datagov_environment }}"
+    service: "{{ datagov_service }}"
+
 # Nginx
 nginx_remove_default_vhost: true
 nginx_ppa_use: true

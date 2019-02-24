@@ -1,4 +1,6 @@
 ---
+datagov_service: jekyll
+
 # s3
 s3_bucket_sdg: "{{ vault_s3_bucket_sdg }}"
 s3_bucket_federation: "{{ vault_s3_bucket_federation }}"

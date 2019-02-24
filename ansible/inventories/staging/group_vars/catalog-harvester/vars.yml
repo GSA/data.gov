@@ -1,4 +1,5 @@
 ---
+datagov_service: catalog
 
 # project path
 project_source_rollback_path: /usr/lib/ckan-rollback
