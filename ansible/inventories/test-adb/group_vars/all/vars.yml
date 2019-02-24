@@ -1,0 +1,4 @@
+---
+fluentd_disable: true
+nessus_agent_disable: true
+trendmicro_disable: true

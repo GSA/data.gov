@@ -1,0 +1,43 @@
+--- # Install the trendmicro agent
+
+- name: get agent.deb
+  get_url:
+    url: "{{ deb_url }}"
+    dest: /tmp/agent.deb
+    validate_certs: no
+
+- name: install trendmicro package
+  command: dpkg -i /tmp/agent.deb
+  tags:
+  - skip_ansible_lint
+
+- name: sleep 10 seconds
+  command: sleep 10
+  tags:
+  - skip_ansible_lint
+
+- name: start trendmicro agent @ web tier
+  command: /opt/ds_agent/dsa_control -a dsm://dsm.sec.helix.gsa.gov:4120/ "policyid:{{ trendmicro_policy_id_web }}"
+  when: |
+    (inventory_hostname in groups["catalog-web"]) or
+    (inventory_hostname in groups["inventory-web"]) or
+    (inventory_hostname in groups["crm-web"]) or
+    (inventory_hostname in groups["dashboard-web"]) or
+    (inventory_hostname in groups["wordpress-web"]) or
+    (inventory_hostname in groups["jekyll-web"])
+
+- name: start trendmicro agent @ app tier
+  command: /opt/ds_agent/dsa_control -a dsm://dsm.sec.helix.gsa.gov:4120/ "policyid:{{ trendmicro_policy_id_app }}"
+  when: |
+    (inventory_hostname in groups["solr"]) or
+    (inventory_hostname in groups["catalog-harvester"])
+
+- name: start trendmicro agent @ mgmt web tier
+  command: /opt/ds_agent/dsa_control -a dsm://dsm.sec.helix.gsa.gov:4120/ "policyid:{{ trendmicro_policy_id_mgmt_web }}"
+  when: ("efk_nginx" in groups) and (inventory_hostname in groups["efk_nginx"])
+
+- name: start trendmicro agent @ mgmt app tier
+  command: /opt/ds_agent/dsa_control -a dsm://dsm.sec.helix.gsa.gov:4120/ "policyid:{{ trendmicro_policy_id_mgmt_app }}"
+  when: |
+    (("kibana" in groups) and (inventory_hostname in groups["kibana"])) or
+    (("elasticsearch" in groups) and (inventory_hostname in groups["elasticsearch"]))
