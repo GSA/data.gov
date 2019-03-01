@@ -5,3 +5,6 @@
   command: supervisorctl reread
   tags:
     - skip_ansible_lint
+
+- name: restart tomcat
+  service: name={{ catalog_harvester_tomcat_service }} state=restarted

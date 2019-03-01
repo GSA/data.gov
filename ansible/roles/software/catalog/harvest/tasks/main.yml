@@ -16,6 +16,8 @@
 
 - name: Remove pip installed supervisor
   pip: name=supervisor virtualenv=/usr/lib/ckan/ state=absent
+  tags:
+    - notest
 
 - name: remove supervisor.conf init
   file: dest=/etc/init/supervisor.conf state=absent
@@ -24,7 +26,7 @@
   apt: name=supervisor state=present
 
 - name: copy supervisord config
-  copy: src=etc/supervisord_{{ worker_type }}.conf dest=/etc/supervisord/conf.d/harvest.conf
+  copy: src=etc/supervisord_{{ worker_type }}.conf dest=/etc/supervisor/conf.d/catalog-harvest.conf mode=0644
   notify: reload supervisor
 
 - name: enable supervisor service
@@ -32,13 +34,15 @@
 
 - name: remove supervisor cron job
   file: dest=/etc/cron.d/supervisor state=absent
+  tags:
+    - notest
 
 - name: copy worker cron job, if any
-  copy: src=etc/cron.d/ckan_{{ worker_type }} dest=/etc/cron.d/ckan
+  copy: src=etc/cron.d/ckan_{{ worker_type }} dest=/etc/cron.d/ckan mode=0644
   tags: ['cron']
 
 - name: copy qa worker executables
-  action: copy src={{item}} dest=/{{item}} mode=0744
+  action: copy src={{item}} dest=/{{item}} mode=0755
   with_items:
     - usr/bin/celery-mem-check.sh
   when: worker_type == 'qa_worker'
