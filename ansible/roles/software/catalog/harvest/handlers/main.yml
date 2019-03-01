@@ -1,2 +1,7 @@
 - name: restart redis
   service: name=redis-server state=restarted
+
+- name: reload supervisor
+  command: supervisorctl reread
+  tags:
+    - skip_ansible_lint

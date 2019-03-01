@@ -1,2 +1,1 @@
 */5 * * * * root /usr/bin/celery-mem-check.sh >> /var/log/celery-mem-check.log 2>&1
- 

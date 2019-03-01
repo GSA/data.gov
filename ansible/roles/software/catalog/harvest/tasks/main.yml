@@ -14,29 +14,28 @@
   tags: ['redis']
   when: worker_type == 'main_worker'
 
-- name: install supervisor
-  action: pip name=supervisor virtualenv=/usr/lib/ckan/
+- name: Remove pip installed supervisor
+  pip: name=supervisor virtualenv=/usr/lib/ckan/ state=absent
 
-- name: copy supervisor.conf
-  action: copy src=etc/init/supervisor.conf dest=/etc/init/supervisor.conf
+- name: remove supervisor.conf init
+  file: dest=/etc/init/supervisor.conf state=absent
+
+- name: install supervisor
+  apt: name=supervisor state=present
 
 - name: copy supervisord config
-  copy: src=etc/supervisord_{{ worker_type }}.conf dest=/etc/supervisord.conf
+  copy: src=etc/supervisord_{{ worker_type }}.conf dest=/etc/supervisord/conf.d/harvest.conf
+  notify: reload supervisor
 
-- name: create superviserctl symlink
-  action: file src=/usr/lib/ckan/bin/supervisorctl dest=/usr/bin/supervisorctl state=link
+- name: enable supervisor service
+  service: name=supervisor state=started enabled=yes
 
-- name: start supervisor
-  service: name=supervisor state=started
-
-- name: copy supervisor cron job
-  copy: src=etc/cron.d/supervisor dest=/etc/cron.d/supervisor
-  tags: ['cron']
+- name: remove supervisor cron job
+  file: dest=/etc/cron.d/supervisor state=absent
 
 - name: copy worker cron job, if any
   copy: src=etc/cron.d/ckan_{{ worker_type }} dest=/etc/cron.d/ckan
   tags: ['cron']
-  # can skip error if some worker have no cron file
 
 - name: copy qa worker executables
   action: copy src={{item}} dest=/{{item}} mode=0744
