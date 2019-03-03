@@ -30,6 +30,17 @@
 # Upgrade python to 2.7.10
 - include: python-upgrade.yml
 
+- name: install reboot-notify script
+  copy: src=reboot-notify.sh dest=/usr/local/reboot-notify.sh mode=0755 owner=root group=root
+
+  # In xenial+ a new package reboot-notifier does this
+- name: notify when reboot is required
+  cron: >-
+    cron_file=reboot-notify
+    special_time=daily
+    state=present
+    job=/usr/local/reboot-notify.sh
+
 # The Network Time Protocol is used to manage the system clock over a network
 # If every system on a network reliably reports the same time, then it is much easier to correlate log messages in case of an attack
 
