@@ -19,8 +19,8 @@ common_tls_host_certificate: "{{ default_tls_host_certificate }}"
 nrinfragent_config:
   license_key: "{{ vault_nrinfragent_license_key }}"
   custom_attributes:
-    environment: "{{ datagov_environment | default("unknown") }}"
-    service: "{{ datagov_service | default("unknown") }}"
+    environment: "{{ datagov_environment | default('unknown') }}"
+    service: "{{ datagov_service | default('unknown') }}"
 
 # Nginx
 nginx_remove_default_vhost: true
