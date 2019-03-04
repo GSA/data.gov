@@ -6,7 +6,7 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: catalog-www
+  - name: catalog-www-trusty
     image: ubuntu:trusty
   - name: catalog-www-bionic
     image: ubuntu:bionic
