@@ -51,6 +51,7 @@ jumpbox_operators:
   - username: adborden
     email: aaron.borden@gsa.gov
     public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDFtWXnfXkTvUrcGxsColboVWfaRAB57vqA0zbsz3bHXh0XngTEaOrGiT3Eg9ep6a5YZJnsO83DIfdNllYWRE45PaJsAxcTKoBZ/KRJXCVODnj/H0CoccHFCUexOpIJWjCs4IjlGRgVnp9s7DMeh021XYVUE1CeXFFLZVLpbWpDC4PkmdolD3Lu/8LJ4YkXGSmEGvzf1eVneekW301g4fhIbI9k3zZSqknpIPjVh2ZNUNssJ0K8hRSuWbyE4neTXLUlJ9gdXLXIVbpPQW/ny56jz2h9G0ImLChHit80v19WEgCH3E84Bp7hiGz2q5tW5flTOcSluCd0n7xeD0zeh5wL datagov-adborden
-  #- username: jjediny
-  #  email: john.jediny@gsa.gov
-  #  public_key: ''
+  - username: jjediny
+    email: john.jediny@gsa.gov
+    public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDWkYdnJm6FIQ6JgtNRmBEfNBtL6Y3yqX0waHHybaQnQyvJvd+VaU5dX0ad0tTwTRUPhy9yZN/kWRLdeYFOg4akkTnL6CAvPbjU67QAMGIXJpzz29+GIVWWWqhQbEFvvLG6nUdFGCBpRd0AiPUUn7gLYqbE/SvS0M9kdkBtpz+z/ZbiEVjUmGkugInhbPcl4sSdlaJULmq8vWHLTga/+PX+1VbE4L/h2gBpQutntws81WUb+Lmb8pXJSUmbsKX2KW9Jt11rZKI4Tk9PMw1qogj8Y7uY5jr6QUtC+6uBjP/etTPHF/1rc4ozesbCYFtK1zmaD+l3/pzXudKhGO5FKBwRxS9sAfM2ZC60XuZDBUZY4fqTsRnovO23dEBtkemEBjqJ6ZzxSXzRZ5KTBISOYGiZSHuc7tTiUeK22Xe0u3AEitnV3+t/VBpAgpG9/VIy4DF1qVCsQ5QR4Zw5kfXUHHHlxGZBnpC8R0TI2cBATB7FRnIQSzj/LhQi3gvZAhCIOUyPuAukwyFGedsBgr6dudqDeHkHAdNTEX2QxYKJhFUqkCBVBQMaWGTL91YZSzzbSQM5W8URAaK4c8Jk2/E1/ycO6dHT2fwP9vKQBZNerRI0h+i7L+SL24upN8BHQMnd+m9l4hQtsfXYGSAqapiOnp5xA7pzpoxCp/GTVq/uf9hSfw== john.jediny@gsa.gov
+
