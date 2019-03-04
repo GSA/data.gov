@@ -1,4 +1,9 @@
 ---
+# On CI, the bionic hander fails to reload apache because it is not started.
+# This ensures it's started before the handler runs.
+- name: Enable apache2
+  service: name=apache2 state=started enabled=true
+
 - name: Copy all needed files
   action: copy src={{item}} dest=/{{item}} mode=0644 owner=root group=www-data
   with_items:
