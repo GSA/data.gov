@@ -1,4 +1,6 @@
 ---
+datagov_service: catalog
+
 # role url
 url_readonly: "{{ urls_public.catalog }}"
 url_writable: https://admin-catalog-datagov.dev-ocsit.bsp.gsa.gov
