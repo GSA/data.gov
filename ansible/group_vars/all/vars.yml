@@ -15,6 +15,10 @@ apache2_ssl_certificate_key_file: "{{ default_tls_host_key_filepath }}"
 common_tls_host_key: "{{ default_tls_host_key }}"
 common_tls_host_certificate: "{{ default_tls_host_certificate }}"
 
+# site-wide datagov variables
+datagov_support_email: datagov@gsa.gov
+datagov_team_email: datagovhelp@gsa.gov
+
 # newrelic monitoring
 nrinfragent_config:
   license_key: "{{ vault_nrinfragent_license_key }}"
