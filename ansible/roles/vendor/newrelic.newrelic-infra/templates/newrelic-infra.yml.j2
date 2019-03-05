@@ -1,6 +1,7 @@
+{# Print out all the configuration options #}
+{{ nrinfragent_config | to_nice_yaml }}
+
 {# For backward compatibility, the license key will be written if it is defined #}
 {% if nrinfragent_license_key is defined %}
 license_key: {{ nrinfragent_license_key }}
 {% endif %}
-
-{{ nrinfragent_config | to_nice_yaml }}

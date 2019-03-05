@@ -1,9 +1,0 @@
-[crm-web]
-crm.aws
-
-[dashboard-web]
-dashboard.aws
-
-[wordpress-web]
-datagov.aws
-

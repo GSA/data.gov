@@ -1,14 +1,20 @@
 ---
+- name: install os dependencies
+  apt: name={{ item }} state=present
+  with_items:
+    - git
+    - python-pip
+
 - name: Check s3cmd is present in pip
   pip: name=s3cmd state=present
 
 - name: install gemset
   command: bash -lc "{{ item }}"
   with_items:
-    - rvm use 2.3.0@{{gemset}} --create
-    - rvm use 2.3.0@{{gemset}} && gem install jekyll specific_install
-    - rvm use 2.3.0@{{gemset}} && gem uninstall jekyll-rebuilder
-    - rvm use 2.3.0@{{gemset}} && gem specific_install https://github.com/GSA/jekyll-rebuilder
+    - rvm use {{ jekyll_ruby_version }}@{{gemset}} --create
+    - rvm use {{ jekyll_ruby_version }}@{{gemset}} && gem install jekyll specific_install
+    - rvm use {{ jekyll_ruby_version }}@{{gemset}} && gem uninstall jekyll-rebuilder
+    - rvm use {{ jekyll_ruby_version }}@{{gemset}} && gem specific_install https://github.com/GSA/jekyll-rebuilder
   tags: skip_ansible_lint
 
 

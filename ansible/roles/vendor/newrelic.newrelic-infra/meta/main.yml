@@ -8,6 +8,7 @@ galaxy_info:
   platforms:
     - name: EL
       versions:
+        - 5
         - 6
         - 7
     - name: Amazon
@@ -24,6 +25,7 @@ galaxy_info:
         - precise
         - trusty
         - xenial
+        - bionic
   categories:
     - cloud:ec2
     - monitoring

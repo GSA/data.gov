@@ -38,7 +38,7 @@ if (isset($_SERVER['REQUEST_URI']) && 0 === stripos($_SERVER['REQUEST_URI'], '/c
     $cookie_path_prefix = 'crm';
 }
 
-$config['pre_approved_admins'] = '{{ codeigniter_pre_approved_admins }}';
+$config['pre_approved_admins'] = '{{ codeigniter_pre_approved_admins | join(",") }}';
 $config['pre_approved_admins'] = explode(',',$config['pre_approved_admins']);
 
 $config['akismet_key'] = ''; // see https://akismet.com/development/

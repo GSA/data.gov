@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+molecule = "*"
+docker-py = "*"
+ansible = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "2.7"
+
+[scripts]
+test ="molecule test"
+debug ="molecule converge"
+cleanup ="molecule destroy"
+login-trusty ="molecule login --host trusty"
+login-xenial ="molecule login --host xenial"
+login-bionic ="molecule login --host bionic"

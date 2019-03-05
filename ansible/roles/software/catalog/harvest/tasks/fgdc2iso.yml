@@ -5,6 +5,10 @@
     - default-jdk
     - tomcat6
 
+  # Nessus 12085
+- name: remove default tomcat files
+  file: dest=/var/lib/tomcat6/webapps/ROOT state=absent
+
 - name: copy all needed files
   action: copy src={{item}} dest=/{{item}} mode=0644
   with_items:

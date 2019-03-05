@@ -1,0 +1,31 @@
+---
+- name: Ensure APT cache is update
+  apt:
+    update_cache: true
+    cache_valid_time: 300
+
+- name: Ensure needed packages are installed
+  apt:
+    name: "apt-transport-https"
+    state: present
+
+- name: Ensure that extra keys are present
+  apt_key:
+    url: "{{ item }}"
+    state: present
+  register: apt_keys
+  with_items:
+    - "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+
+- name: Ensure extra repos are present
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+  register: apt_repos
+  with_items:
+    - "deb https://artifacts.elastic.co/packages/{{ beats_ver[0] }}.x/apt stable main"
+
+- name: Update cache if needed
+  apt:
+    update_cache: true
+  when: apt_repos is changed or apt_keys is changed

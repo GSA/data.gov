@@ -1,4 +1,15 @@
 ---
+- name: ensure necesary packages are installed
+  apt: name={{ item }} state=present
+  with_items:
+    - git
+    - libbz2-dev
+    - libpq-dev
+    - libxml2-dev
+    - libxslt1-dev
+    - python-dev
+    - python-virtualenv
+
 - name: create ckan config dir
   action: file path=/etc/ckan state=directory owner=root group=www-data mode=0750 follow=yes
 

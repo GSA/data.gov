@@ -1,0 +1,24 @@
+---
+galaxy_info:
+  author: Eric Magalhães
+  description: Ansible role for isntalling Beats on Ubuntu
+  company: JobScore
+  license: license (GPLv3)
+  min_ansible_version: 2.0
+  platforms:
+    - name: Ubuntu
+      versions:
+        - trusty
+        - xenial
+  galaxy_tags:
+    - beats
+    - elasticsearch
+    - ELK
+    - kibana
+    - logstash
+    - filebeat
+    - metricbeat
+    - packetbeat
+    - auditbeat
+    - heartbeat
+dependencies: []
