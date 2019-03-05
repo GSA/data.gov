@@ -1,4 +1,9 @@
 --- # Data.gov prerequisites
+# TODO this doesn't really belong here. And we shouldn't be installing from
+# subversion.
+- name: install subversion for composer dependencies
+  apt: name=subversion state=present
+
 - name: Copying Data.gov configuration for Nginx
   template:
     src: "datagov.nginx.conf"
