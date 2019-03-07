@@ -2,5 +2,13 @@
 - name: Prepare
   hosts: all
   tasks:
+    - name: create ubuntu user
+      user:
+        name: ubuntu
+        comment: ubuntu
+        shell: /bin/bash
+        state: present
+        password_lock: yes
+        expires: -1
     - name: update apt
       apt: update_cache=true
