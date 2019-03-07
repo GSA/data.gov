@@ -7,3 +7,5 @@ urls_private:
 catalog_db_user: ckan
 catalog_db_pass: pass
 catalog_pycsw_db_name: pycsw
+
+pycsw_app_version: ckan
