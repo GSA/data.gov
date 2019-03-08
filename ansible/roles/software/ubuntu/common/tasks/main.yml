@@ -64,3 +64,11 @@
     state=present
   tags:
     - skip_in_kitchen
+
+- name: install GSA CA certificates
+  copy: src=gsa.crt dest=/usr/local/share/ca-certificates/gsa.crt mode=0644 owner=root group=root
+  register: gsa_ca_certificate
+
+- name: update system certificates
+  command: update-ca-certificates
+  when: gsa_ca_certificate is changed
