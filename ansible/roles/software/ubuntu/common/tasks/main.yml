@@ -15,6 +15,7 @@
 
 - name: install reboot-notify script
   copy: src=reboot-notify.sh dest=/usr/local/reboot-notify.sh mode=0755 owner=root group=root
+  when: ansible_distribution_release == "trusty"
 
   # In xenial+ a new package reboot-notifier does this
 - name: notify when reboot is required
@@ -24,6 +25,7 @@
     state=present
     job=/usr/local/reboot-notify.sh
     user=root
+  when: ansible_distribution_release == "trusty"
 
 - name: be sure ntpd is running and enabled
   service: name=ntp state=started enabled=yes

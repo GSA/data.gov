@@ -5,6 +5,7 @@ common_os_packages:
   - git
   - htop
   - ntp
+  - reboot-notifier
   - ruby
 
   # TODO these should probably be moved to a more specific role, not sure why
