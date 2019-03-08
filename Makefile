@@ -14,6 +14,7 @@ KITCHEN_SUITES := \
 MOLECULE_SUITES := \
   software/ci \
   software/ckan/native-login \
+  software/common/php-fixes \
   software/common/tls
 
 # Create test-kitchen-<suite> targets
