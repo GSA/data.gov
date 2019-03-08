@@ -33,8 +33,8 @@
     - ntp
     - AU-8
 
-  # Prevent a bug in grub where update-grub hangs probing
-  # devices
+# Prevent a bug in grub where update-grub hangs probing
+# devices
 - name: ensure grub os prober is disabled
   lineinfile: >-
     path=/etc/default/grub

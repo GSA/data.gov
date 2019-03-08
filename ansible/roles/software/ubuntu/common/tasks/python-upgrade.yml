@@ -34,7 +34,7 @@
     chdir: /var/tmp/{{ python_version_name }}
   when: python_dir.stat.exists == False or python_version_check is failed or not python_shared_lib.stat.exists
 
-  #TODO install python to a known prefix like /usr/local to avoid this
+# TODO install python to a known prefix like /usr/local to avoid this
 - name: add python lib to ld.so.conf
   template: src=etc/ld.so.conf.d/20python.conf dest=/etc/ld.so.conf.d/20python.conf
   register: ubuntu_python_ld_so
