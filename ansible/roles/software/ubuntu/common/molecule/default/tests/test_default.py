@@ -12,3 +12,14 @@ def test_hosts_file(host):
     assert f.exists
     assert f.user == 'root'
     assert f.group == 'root'
+
+
+def test_ntp_installed(host):
+    ntp = host.package('ntp')
+    assert ntp.is_installed
+
+
+def test_ntp_enabled(host):
+    ntp = host.service('ntp')
+    assert ntp.is_running
+    assert ntp.is_enabled
