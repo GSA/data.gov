@@ -7,14 +7,14 @@ lint:
   name: yamllint
   enabled: false
 platforms:
-  - name: catalog-harvest-trusty
+  - name: catalog-harvest-qa-trusty
     image: ubuntu:trusty
     # start-stop-daemon doesn't detect tomcat is running in docker and `service
     # start/stop` fails. SYS_PTRACE is needed.
     # https://stackoverflow.com/questions/29683231/tomcat7-fail-to-start-inside-ubuntu-docker-container/29686963#29686963
     capabilities:
       - SYS_PTRACE
-  - name: catalog-harvest-bionic
+  - name: catalog-harvest-qa-bionic
     image: ubuntu:bionic
     # start-stop-daemon doesn't detect tomcat is running in docker and `service
     # start/stop` fails. SYS_PTRACE is needed.
@@ -26,7 +26,7 @@ provisioner:
   lint:
     name: ansible-lint
 scenario:
-  name: default
+  name: qa_worker
   # Disable idempotence check
   # davidwittman.redis is not idempotent
   # https://github.com/DavidWittman/ansible-redis/pull/202
