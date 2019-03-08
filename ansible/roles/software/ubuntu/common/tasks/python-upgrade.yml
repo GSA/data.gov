@@ -11,7 +11,9 @@
   command: /{{ python_version_directory }}/bin/python --version
   register: python_version_check
   failed_when: ("Python " + python_version_number) not in python_version_check.stderr
-  ignore_errors: True
+  # Never report as changed for idempotence
+  changed_when: false
+  ignore_errors: true
   when: python_dir.stat.exists == True
   tags: skip_ansible_lint
 

@@ -3,7 +3,7 @@
   include_vars: "{{ ansible_distribution_release }}.yml"
 
 - name: get information on newest versions of packages and their dependencies
-  apt: update_cache=yes
+  apt: update_cache=yes cache_valid_time={{ 5 * 24 * 60 * 60 }}  # 5 days
 
 - name: make sure packages are installed
   action: apt pkg={{ common_os_packages }} state=present
@@ -20,6 +20,7 @@
   # In xenial+ a new package reboot-notifier does this
 - name: notify when reboot is required
   cron: >-
+    name="notifies when a reboot is required"
     cron_file=reboot-notify
     special_time=daily
     state=present
