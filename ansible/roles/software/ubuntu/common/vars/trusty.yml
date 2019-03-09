@@ -3,6 +3,7 @@ common_os_packages:
   - acl
   - atool
   - bison
+  - cron
   - git
   - htop
   - lib32z1-dev
@@ -21,3 +22,4 @@ common_os_packages:
   - python-virtualenv
   - ruby
   - ruby-dev
+  - supervisor
