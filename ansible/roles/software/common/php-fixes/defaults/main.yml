@@ -1,0 +1,10 @@
+---
+# For tasks with the php cli, use these settings
+php_cli_max_execution_time: 600
+php_cli_memory_limit: 2048M
+
+# Name of the PHP FPM service
+php_fpm_service_name: php{{ php_major_minor_version }}-fpm
+
+# Major/minor version of PHP
+php_major_minor_version: "7.0"
