@@ -11,7 +11,9 @@
   command: /{{ python_version_directory }}/bin/python --version
   register: python_version_check
   failed_when: ("Python " + python_version_number) not in python_version_check.stderr
-  ignore_errors: True
+  # Never report as changed for idempotence
+  changed_when: false
+  ignore_errors: true
   when: python_dir.stat.exists == True
   tags: skip_ansible_lint
 
@@ -20,25 +22,25 @@
     src: "{{ python_version_url }}"
     dest: /var/tmp/
     remote_src: yes
-  when: python_dir.stat.exists == False or python_version_check|failed or not python_shared_lib.stat.exists
+  when: python_dir.stat.exists == False or python_version_check is failed or not python_shared_lib.stat.exists
 
 - name: config new python
   command: ./configure --prefix {{ python_version_directory }} --enable-ipv6 --enable-unicode=ucs4 --enable-shared
   args:
     chdir: /var/tmp/{{ python_version_name }}
-  when: python_dir.stat.exists == False or python_version_check|failed or not python_shared_lib.stat.exists
+  when: python_dir.stat.exists == False or python_version_check is failed or not python_shared_lib.stat.exists
 
 - name: install new python
   shell: "umask 022; make && make install"
   args:
     chdir: /var/tmp/{{ python_version_name }}
-  when: python_dir.stat.exists == False or python_version_check|failed or not python_shared_lib.stat.exists
+  when: python_dir.stat.exists == False or python_version_check is failed or not python_shared_lib.stat.exists
 
-  #TODO install python to a known prefix like /usr/local to avoid this
+# TODO install python to a known prefix like /usr/local to avoid this
 - name: add python lib to ld.so.conf
   template: src=etc/ld.so.conf.d/20python.conf dest=/etc/ld.so.conf.d/20python.conf
   register: ubuntu_python_ld_so
 
 - name: update ld.so.cache
   command: ldconfig
-  when: ubuntu_python_ld_so | changed
+  when: ubuntu_python_ld_so is changed
