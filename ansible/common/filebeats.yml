@@ -10,6 +10,9 @@
           filebeat.config.modules:
             enabled: true
             path: ${path.config}/modules.d/*.yml
+          filebeat.inputs:
+           - paths: [/var/log/auth.log]
+             type: log  
           filebeat.modules:
             - module: system
               syslog:

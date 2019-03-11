@@ -19,6 +19,13 @@ common_tls_host_certificate: "{{ default_tls_host_certificate }}"
 datagov_support_email: datagov@gsa.gov
 datagov_team_email: datagovhelp@gsa.gov
 
+# filebeats
+logstash_endpoint: "{{ vault_logstash_endpoint }}"
+secops_logstash_endpoint: "{{ vault_secops_logstash_endpoint }}"
+
+#fluentd
+elasticsearch_endpoint: "{{ vault_elasticsearch_endpoint }}"
+
 # newrelic monitoring
 nrinfragent_config:
   license_key: "{{ vault_nrinfragent_license_key }}"
