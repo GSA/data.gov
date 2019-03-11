@@ -134,16 +134,16 @@ suites:
 #  - name: datagov-web
 #    provisioner:
 #      playbook: datagov-web.yml
-  - name: efk-nginx
-    provisioner:
-      hosts:
-        - efk_nginx
-      playbook: efk-nginx.yml
-  - name: efk-stack
-    provisioner:
-      hosts:
-        - efk_nginx
-      playbook: efk-stack.yml
+#  - name: efk-nginx
+#    provisioner:
+#      hosts:
+#        - efk_nginx
+#      playbook: efk-nginx.yml
+#  - name: efk-stack
+#    provisioner:
+#      hosts:
+#        - efk_nginx
+#      playbook: efk-stack.yml
 #  - name: elastalert
 #    provisioner:
 #      playbook: elastalert.yml
