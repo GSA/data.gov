@@ -3,8 +3,6 @@ KITCHEN_SUITES := \
   catalog-harvester \
   crm-web \
   dashboard-web \
-  efk-nginx \
-  efk-stack \
   inventory-web \
   jekyll \
   logrotate \
