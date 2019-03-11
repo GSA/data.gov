@@ -33,9 +33,19 @@ nginx_ppa_version: stable
 nginx_extra_conf_options: |-
   include /etc/nginx/modules-enabled/*.conf;
 
-# PHP-FPM
+
+# PHP
 php_enable_php_fpm: true
+php_expose_php: 0
+php_fpm_pm_max_children: 200
+php_fpm_pm_max_spare_servers: 20
+php_fpm_pm_min_spare_servers: 5
+php_fpm_pm_start_servers: 15
+php_max_execution_time: 300
+php_memory_limit: 2048M
+php_opcache_conf_filename: "10-opcache.ini"
 php_webserver_daemon: nginx
+
 
 # new python version
 python_version_number: 2.7.10
@@ -47,15 +57,6 @@ python_home: "{{ python_version_directory }}"
 # Disabling MySQL server (we need only client on this machine)
 mysql_enabled_on_startup: false
 
-# PHP
-php_memory_limit: 512M
-php_expose_php: 0
-php_fpm_pm_max_children: 200
-php_fpm_pm_start_servers: 15
-php_fpm_pm_min_spare_servers: 5
-php_fpm_pm_max_spare_servers: 20
-php_fpm_request_terminate_timeout: 30s
-php_opcache_conf_filename: "10-opcache.ini"
 
 # This should probably be environment specific
 jumpbox_operators:
