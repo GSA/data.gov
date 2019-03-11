@@ -1,0 +1,5 @@
+---
+- name: Remove Elasticsearch repository (and clean up left-over metadata)
+  yum_repository:
+    name: elastic_repo
+    state: absent

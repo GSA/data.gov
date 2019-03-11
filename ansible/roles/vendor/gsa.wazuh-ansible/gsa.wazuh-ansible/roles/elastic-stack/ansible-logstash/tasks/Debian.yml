@@ -1,0 +1,64 @@
+---
+- name: Debian/Ubuntu | Install apt-transport-https and ca-certificates
+  apt:
+    name: "{{ item }}"
+    state: present
+    cache_valid_time: 3600
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+
+- when: logstash_install_java
+  block:
+    - name: Debian/Ubuntu | Setting webupd8 repository
+      apt_repository:
+        repo: 'ppa:webupd8team/java'
+        codename: 'xenial'
+
+    - name: Debian/Ubuntu | Accept Oracle Java 8 license
+      debconf:
+        name: oracle-java8-installer
+        question: shared/accepted-oracle-license-v1-1
+        value: true
+        vtype: boolean
+
+    - name: Debian/Ubuntu | Oracle Java 8 installer
+      apt:
+        name: oracle-java8-installer
+        state: present
+        cache_valid_time: 3600
+      tags: install
+
+- name: Debian/Ubuntu | Add Elasticsearch GPG key
+  apt_key:
+    url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+    state: present
+
+- name: Debian/Ubuntu | Install Elasticsearch repo
+  apt_repository:
+    repo: 'deb https://artifacts.elastic.co/packages/6.x/apt stable main'
+    state: present
+    filename: 'elastic_repo'
+
+- name: Debian/Ubuntu | Install Logstash
+  apt:
+    name: "logstash=1:{{ elastic_stack_version }}-1"
+    state: present
+    update_cache: yes
+  tags: install
+
+- name: Debian/Ubuntu | Checking if wazuh-manager is installed
+  command: dpkg -l wazuh-manager
+  register: wazuh_manager_check_deb
+  when: logstash_input_beats == false
+  args:
+    warn: no
+
+- name: Debian/Ubuntu | Add user logstash to group ossec
+  user:
+    name: logstash
+    groups: ossec
+    append: yes
+  when:
+    - logstash_input_beats == false
+    - wazuh_manager_check_deb.rc == 0

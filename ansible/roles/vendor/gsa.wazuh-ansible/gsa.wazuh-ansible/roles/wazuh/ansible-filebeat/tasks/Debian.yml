@@ -1,0 +1,21 @@
+---
+- name: Debian/Ubuntu | Install apt-transport-https and ca-certificates
+  apt:
+    name: "{{ packages }}"
+    state: present
+    cache_valid_time: 3600
+  vars:
+    packages:
+      - apt-transport-https
+      - ca-certificates
+
+- name: Debian/Ubuntu | Add Elasticsearch apt key.
+  apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    state: present
+
+- name: Debian/Ubuntu | Add Filebeat repository.
+  apt_repository:
+    repo: 'deb https://artifacts.elastic.co/packages/6.x/apt stable main'
+    state: present
+    update_cache: yes

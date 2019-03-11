@@ -1,0 +1,40 @@
+---
+- import_tasks: RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- import_tasks: Debian.yml
+  when: ansible_os_family == "Debian"
+
+- import_tasks: config.yml
+  when: logstash_create_config
+
+- name: Reload systemd
+  systemd: daemon_reload=yes
+  ignore_errors: yes
+  when:
+    - not (ansible_distribution == "Amazon" and ansible_distribution_major_version == "NA")
+    - not (ansible_distribution == "Ubuntu" and ansible_distribution_version is version('15.04', '<'))
+    - not (ansible_distribution == "Debian" and ansible_distribution_version is version('8', '<'))
+
+- name: Amazon Linux create service
+  shell: /usr/share/logstash/bin/system-install /etc/logstash/startup.options
+  when: ansible_distribution == "Amazon" and ansible_distribution_major_version == "NA"
+
+- name: Ensure Logstash started and enabled
+  service:
+    name: logstash
+    enabled: yes
+    state: started
+
+- name: Amazon Linux start Logstash
+  service:
+    name: logstash
+    enabled: yes
+    state: started
+  when: ansible_distribution == "Amazon" and ansible_distribution_major_version == "NA"
+
+- import_tasks: "RMRedHat.yml"
+  when: ansible_os_family == "RedHat"
+
+- import_tasks: "RMDebian.yml"
+  when: ansible_os_family == "Debian"

@@ -1,0 +1,33 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+  enabled: true # fix in seperate PR
+platforms:
+  - name: bionic
+    image: ubuntu:bionic
+  - name: xenial
+    image: ubuntu:xenial
+  - name: trusty
+    image: ubuntu:trusty
+  - name: centos6
+    image: centos:6
+  - name: centos7
+    image: centos:7
+provisioner:
+  name: ansible
+  env:
+    ANSIBLE_ROLES_PATH: $HOME/wazuh-ansible/roles
+  lint:
+    name: ansible-lint
+    enabled: true
+scenario:
+  name: default
+verifier:
+  name: testinfra
+  lint:
+    name: flake8
+    enabled: true

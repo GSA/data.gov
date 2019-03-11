@@ -1,0 +1,6 @@
+---
+- name: restart wazuh-agent
+  service: name=wazuh-agent state=restarted enabled=yes
+
+- name: restart wazuh-agent windows
+  win_service: name=OssecSvc start_mode=auto state=restarted

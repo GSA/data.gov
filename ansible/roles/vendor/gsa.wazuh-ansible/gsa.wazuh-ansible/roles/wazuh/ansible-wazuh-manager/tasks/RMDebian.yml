@@ -1,0 +1,10 @@
+---
+- name: Debian/Ubuntu | Remove Wazuh repository.
+  apt_repository:
+    repo: deb https://packages.wazuh.com/apt {{ ansible_distribution_release }} main
+    state: absent
+
+- name: Debian/Ubuntu | Remove Nodejs repository.
+  apt_repository:
+    repo: deb https://deb.nodesource.com/node_6.x {{ ansible_distribution_release }} main
+    state: absent

@@ -1,0 +1,77 @@
+---
+- name: Debian/Ubuntu | Install apt-transport-https and ca-certificates
+  apt:
+    name: "{{ packages }}"
+    state: present
+    cache_valid_time: 3600
+  vars:
+    packages:
+      - apt-transport-https
+      - ca-certificates
+
+- name: Debian/Ubuntu | Installing repository key
+  apt_key: url=https://packages.wazuh.com/key/GPG-KEY-WAZUH
+
+- name: Debian/Ubuntu | Add Wazuh repositories
+  apt_repository:
+    repo: 'deb https://packages.wazuh.com/3.x/apt/ stable main'
+    state: present
+    update_cache: yes
+
+- name: Debian/Ubuntu | Set Distribution CIS filename for debian
+  set_fact:
+    cis_distribution_filename: cis_debian_linux_rcl.txt
+  when: ansible_os_family == "Debian"
+
+- when:
+    - wazuh_agent_config.cis_cat.disable == 'no'
+    - wazuh_agent_config.cis_cat.install_java == 'yes'
+  block:
+    - name: Debian/Ubuntu | Setting webupd8 repository
+      apt_repository:
+        repo: 'ppa:webupd8team/java'
+        codename: 'xenial'
+        update_cache: yes
+
+    - name: Debian/Ubuntu | Accept Oracle Java 8 license
+      debconf:
+        name: oracle-java8-installer
+        question: shared/accepted-oracle-license-v1-1
+        value: true
+        vtype: boolean
+
+    - name: Debian/Ubuntu | Oracle Java 8 installer
+      apt:
+        name: oracle-java8-installer
+        state: present
+        cache_valid_time: 3600
+  tags:
+    - init
+
+- name: Debian/Ubuntu | Install OpenScap
+  apt:
+    name: "{{ item }}"
+    state: present
+    cache_valid_time: 3600
+  when: wazuh_agent_config.openscap.disable == 'no'
+  with_items:
+    - libopenscap8
+    - xsltproc
+  tags:
+    - init
+
+- name: Debian/Ubuntu | Get OpenScap installed version
+  shell: "dpkg-query --showformat='${Version}' --show libopenscap8"
+  register: openscap_version
+  changed_when: true
+  when: wazuh_agent_config.openscap.disable == 'no'
+  tags:
+    - config
+
+- name: Debian/Ubuntu | Check OpenScap version
+  shell: "dpkg --compare-versions '{{ openscap_version.stdout }}' '>=' '1.2'; echo $?"
+  register: openscap_version_valid
+  changed_when: true
+  when: wazuh_agent_config.openscap.disable == 'no'
+  tags:
+    - config

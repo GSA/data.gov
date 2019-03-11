@@ -1,0 +1,550 @@
+#jinja2: trim_blocks: False
+<!--
+  Wazuh - Manager - Default configuration
+  More info at: https://documentation.wazuh.com
+  Mailing list: https://groups.google.com/forum/#!forum/wazuh
+-->
+
+<ossec_config>
+  <global>
+    <jsonout_output>{{ wazuh_manager_config.json_output }}</jsonout_output>
+    <alerts_log>{{ wazuh_manager_config.alerts_log }}</alerts_log>
+    <logall>{{ wazuh_manager_config.logall }}</logall>
+    <logall_json>{{ wazuh_manager_config.logall_json }}</logall_json>
+    {% if wazuh_manager_config.email_notification | lower == "yes" %}
+    <email_notification>yes</email_notification>
+    {% else %}
+    <email_notification>no</email_notification>
+    {% endif %}
+    {% for to in wazuh_manager_config.mail_to %}
+    <email_to>{{ to }}</email_to>
+    {% endfor %}
+    <smtp_server>{{ wazuh_manager_config.mail_smtp_server }}</smtp_server>
+    <email_from>{{ wazuh_manager_config.mail_from }}</email_from>
+    <email_maxperhour>{{ wazuh_manager_config.mail_maxperhour }}</email_maxperhour>
+    <queue_size>{{ wazuh_manager_config.mail_queue_size }}</queue_size>
+  </global>
+
+  <alerts>
+    <log_alert_level>{{ wazuh_manager_config.log_level }}</log_alert_level>
+    <email_alert_level>{{ wazuh_manager_config.email_level }}</email_alert_level>
+  </alerts>
+
+{% if wazuh_manager_config.extra_emails is defined %}
+{% for mail in wazuh_manager_config.extra_emails %}
+{% if mail.enable == true %}
+  <email_alerts>
+    <email_to>{{ mail.mail_to }}</email_to>
+    {% if mail.format is not none %}
+    <format>{{ mail.format }}</format>
+    {% endif %}
+    {% if mail.level is not none %}
+    <level>{{ mail.level }}</level>
+    {% endif %}
+    {% if mail.event_location is not none %}
+    <event_location>{{ mail.event_location }}</event_location>
+    {% endif %}
+    {% if mail.group is not none %}
+    <group>{{ mail.group }}</group>
+    {% endif %}
+    {% if mail.do_not_delay is not none and mail.do_not_delay == true %}
+    <do_not_delay />
+    {% endif %}
+    {% if mail.do_not_group is not none and mail.do_not_group == true %}
+    <do_not_group />
+    {% endif %}
+    {% if mail.rule_id is not none %}
+    <rule_id>{{ mail.rule_id }}</rule_id>
+    {% endif %}
+  </email_alerts>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+  <!-- Choose between "plain", "json", or "plain,json" for the format of internal logs -->
+  <logging>
+    <log_format>{{ wazuh_manager_config.log_format }}</log_format>
+  </logging>
+
+  {% for connection in wazuh_manager_config.connection %}
+   <remote>
+    <connection>{{ connection.type }}</connection>
+    {% if connection.port is defined %}<port>{{ connection.port }}</port>{% endif %}
+    {% if connection.protocol is defined %}<protocol>{{ connection.protocol }}</protocol>{% endif %}
+    {% if connection.allowed_ips is defined %}
+    {% for allowed_ip in connection.allowed_ips %}
+    <allowed-ips>{{ allowed_ip }}</allowed-ips>
+    {% endfor %}
+    {% endif %}
+    {% if connection.denied_ips is defined %}
+    {% for denied_ip in connection.denied_ips %}
+    <denied-ips>{{ denied_ip }}</denied-ips>
+    {% endfor %}
+    {% endif %}
+    {% if connection.local_ip is defined %}<local_ip>{{ connection.local_ip }}</local_ip>{% endif %}
+    {% if connection.ipv6 is defined %}<ipv6>{{ connection.ipv6 }}</ipv6>{% endif %}
+    {% if connection.queue_size is defined %}<queue_size>{{connection.queue_size}}</queue_size>{% endif %}
+  </remote>
+  {% endfor %}
+
+{% if wazuh_manager_config.reports is defined %}
+{% for report in wazuh_manager_config.reports %}
+{% if report.enable == true %}
+  <reports>
+    <category>{{ report.category }}</category>
+    <title>{{ report.title }}</title>
+    <email_to>{{ report.email_to }}</email_to>
+    {% if report.location is not none %}<location>{{ report.location }}</location>{% endif %}
+    {% if report.group is not none %}<group>{{ report.group }}</group>{% endif %}
+    {% if report.rule is not none %}<rule>{{ report.rule }}</rule>{% endif %}
+    {% if report.level is not none %}<level>{{ report.level }}</level>{% endif %}
+    {% if report.srcip is not none %}<srcip>{{ report.srcip }}</srcip>{% endif %}
+    {% if report.user is not none %}<user>{{ report.user }}</user>{% endif %}
+    {% if report.showlogs is not none %}<showlogs>{{ report.showlogs }}</showlogs>{% endif %}
+  </reports>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+
+  <!-- Policy monitoring -->
+  <rootcheck>
+    <disabled>no</disabled>
+    <check_unixaudit>yes</check_unixaudit>
+    <check_files>yes</check_files>
+    <check_trojans>yes</check_trojans>
+    <check_dev>yes</check_dev>
+    <check_sys>yes</check_sys>
+    <check_pids>yes</check_pids>
+    <check_ports>yes</check_ports>
+    <check_if>yes</check_if>
+
+    <!-- Frequency that rootcheck is executed - every 12 hours -->
+    <frequency>{{ wazuh_manager_config.rootcheck.frequency }}</frequency>
+
+    <rootkit_files>/var/ossec/etc/shared/default/rootkit_files.txt</rootkit_files>
+    <rootkit_trojans>/var/ossec/etc/shared/default/rootkit_trojans.txt</rootkit_trojans>
+    <system_audit>/var/ossec/etc/shared/default/system_audit_rcl.txt</system_audit>
+    <system_audit>/var/ossec/etc/shared/default/system_audit_ssh.txt</system_audit>
+    {% if cis_distribution_filename is defined %}
+    <system_audit>/var/ossec/etc/shared/default/{{ cis_distribution_filename }}</system_audit>
+    {% endif %}
+
+    <skip_nfs>yes</skip_nfs>
+  </rootcheck>
+
+    {% if ansible_system == "Linux" and wazuh_manager_config.openscap.disable == 'no' %}
+  <wodle name="open-scap">
+    <disabled>no</disabled>
+    <timeout>{{ wazuh_manager_config.openscap.timeout }}</timeout>
+    <interval>{{ wazuh_manager_config.openscap.interval }}</interval>
+    <scan-on-start>{{ wazuh_manager_config.openscap.scan_on_start }}</scan-on-start>
+    {% if ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'xenial' %}
+    <content type="xccdf" path="ssg-ubuntu-1604-ds.xml">
+      <profile>xccdf_org.ssgproject.content_profile_common</profile>
+    </content>
+    {% elif ansible_distribution == 'Debian' %}
+    {% if ansible_distribution_release == 'jessie' %}
+    {% if openscap_version_valid.stdout == "0" %}
+    <content type="xccdf" path="ssg-debian-8-ds.xml">
+      <profile>xccdf_org.ssgproject.content_profile_common</profile>
+    </content>
+    <content type="oval" path="cve-debian-8-oval.xml"/>
+    {% endif %}
+    {% elif ansible_distribution_release == 'stretch' %}
+    <content type="oval" path="cve-debian-9-oval.xml"/>
+    {% endif %}
+    {% elif ansible_distribution == 'CentOS' %}
+      {% if ansible_distribution_major_version == '7' %}
+      <content type="xccdf" path="ssg-centos-7-ds.xml">
+      {% elif ansible_distribution_major_version == '6' %}
+      <content type="xccdf" path="ssg-centos-6-ds.xml">
+      {% endif %}
+        <profile>xccdf_org.ssgproject.content_profile_pci-dss</profile>
+        <profile>xccdf_org.ssgproject.content_profile_common</profile>
+      </content>
+    {% elif ansible_distribution == 'RedHat' %}
+      {% if ansible_distribution_major_version == '7' %}
+      <content type="xccdf" path="ssg-rhel-7-ds.xml">
+      {% elif ansible_distribution_major_version == '6' %}
+      <content type="xccdf" path="ssg-rhel-6-ds.xml">
+      {% endif %}
+        <profile>xccdf_org.ssgproject.content_profile_pci-dss</profile>
+        <profile>xccdf_org.ssgproject.content_profile_common</profile>
+      </content>
+      {% if ansible_distribution_major_version == '7' %}
+      <content type="oval" path="cve-redhat-7-ds.xml"/>
+      {% elif ansible_distribution_major_version == '6' %}
+      <content type="oval" path="cve-redhat-6-ds.xml"/>
+      {% endif %}
+    {% elif ansible_distribution == 'Fedora' %}
+      <content type="xccdf" path="ssg-fedora-ds.xml">
+        <profile>xccdf_org.ssgproject.content_profile_pci-dss</profile>
+        <profile>xccdf_org.ssgproject.content_profile_common</profile>
+      </content>
+    {% endif %}
+  </wodle>
+  {% endif %}
+
+  <wodle name="cis-cat">
+    <disabled>{{ wazuh_manager_config.cis_cat.disable}}</disabled>
+    <timeout>{{ wazuh_manager_config.cis_cat.timeout }}</timeout>
+    <interval>{{ wazuh_manager_config.cis_cat.interval }}</interval>
+    <scan-on-start>{{ wazuh_manager_config.cis_cat.scan_on_start }}</scan-on-start>
+    {% if wazuh_manager_config.cis_cat.install_java == 'yes' %}
+    <java_path>wodles/java</java_path>
+    {% else %}
+    <java_path>{{ wazuh_manager_config.cis_cat.java_path }}</java_path>
+    {% endif %}
+    <ciscat_path>{{ wazuh_manager_config.cis_cat.ciscat_path }}</ciscat_path>
+    {% for benchmark in wazuh_manager_config.cis_cat.content %}
+    <content type="{{ benchmark.type }}" path="{{ benchmark.path }}">
+      <profile>{{ benchmark.profile }}</profile>
+    </content>
+    {% endfor %}
+  </wodle>
+
+  <!-- Osquery integration -->
+  <wodle name="osquery">
+    <disabled>{{ wazuh_manager_config.osquery.disable }}</disabled>
+    <run_daemon>{{ wazuh_manager_config.osquery.run_daemon }}</run_daemon>
+    <log_path>{{ wazuh_manager_config.osquery.log_path }}</log_path>
+    <config_path>{{ wazuh_manager_config.osquery.config_path }}</config_path>
+    <add_labels>{{ wazuh_manager_config.osquery.ad_labels }}</add_labels>
+  </wodle>
+
+  <!-- System inventory -->
+  <wodle name="syscollector">
+    <disabled>{{ wazuh_manager_config.syscollector.disable }}</disabled>
+    <interval>{{ wazuh_manager_config.syscollector.interval }}</interval>
+    <scan_on_start>{{ wazuh_manager_config.syscollector.scan_on_start }}</scan_on_start>
+    <hardware>{{ wazuh_manager_config.syscollector.hardware }}</hardware>
+    <os>{{ wazuh_manager_config.syscollector.os }}</os>
+    <network>{{ wazuh_manager_config.syscollector.network }}</network>
+    <packages>{{ wazuh_manager_config.syscollector.packages }}</packages>
+    <ports all="no">{{ wazuh_manager_config.syscollector.ports_no }}</ports>
+    <processes>{{ wazuh_manager_config.syscollector.processes }}</processes>
+  </wodle>
+
+  <wodle name="vulnerability-detector">
+    <disabled>{{ wazuh_manager_config.vul_detector.disable }}</disabled>
+    <interval>{{ wazuh_manager_config.vul_detector.interval }}</interval>
+    <ignore_time>{{ wazuh_manager_config.vul_detector.ignore_time }}</ignore_time>
+    <run_on_start>{{ wazuh_manager_config.vul_detector.run_on_start }}</run_on_start>
+    <feed name="ubuntu-18">
+      <disabled>{{ wazuh_manager_config.vul_detector.ubuntu.disable }}</disabled>
+      <update_interval>{{ wazuh_manager_config.vul_detector.ubuntu.update_interval }}</update_interval>
+    </feed>
+    <feed name="redhat-7">
+      <disabled>{{ wazuh_manager_config.vul_detector.redhat.disable }}</disabled>
+      <update_interval>{{ wazuh_manager_config.vul_detector.redhat.update_interval }}</update_interval>
+    </feed>
+    <feed name="debian-9">
+      <disabled>{{ wazuh_manager_config.vul_detector.debian.disable }}</disabled>
+      <update_interval>{{ wazuh_manager_config.vul_detector.debian.update_interval }}</update_interval>
+    </feed>
+  </wodle>
+
+  <!-- File integrity monitoring -->
+  <syscheck>
+    <disabled>{{ wazuh_manager_config.syscheck.disable }}</disabled>
+    <auto_ignore>{{ wazuh_manager_config.syscheck.auto_ignore }}</auto_ignore>
+    <alert_new_files>{{ wazuh_manager_config.syscheck.alert_new_files }}</alert_new_files>
+    <!-- Frequency that syscheck is executed -- default every 20 hours -->
+    <frequency>{{ wazuh_manager_config.syscheck.frequency }}</frequency>
+    <scan_on_start>{{ wazuh_manager_config.syscheck.scan_on_start }}</scan_on_start>
+
+    <!-- Don't ignore files that change more than 'frequency' times -->
+    {% if wazuh_manager_config.syscheck.auto_ignore_frequency is defined %}
+    <auto_ignore {{ wazuh_manager_config.syscheck.auto_ignore_frequency.frequency }} {{ wazuh_manager_config.syscheck.auto_ignore_frequency.timeframe }}>{{wazuh_manager_config.syscheck.auto_ignore_frequency.value }}</auto_ignore>
+    {% endif %}
+
+    <!-- Directories to check  (perform all possible verifications) -->
+    {% if wazuh_manager_config.syscheck.directories is defined %}
+    {% for directory in wazuh_manager_config.syscheck.directories %}
+    <directories {{ directory.checks }}>{{ directory.dirs }}</directories>
+    {% endfor %}
+    {% endif %}
+
+    <!-- Files/directories to ignore -->
+    {% if wazuh_manager_config.syscheck.ignore is defined %}
+    {% for ignore in wazuh_manager_config.syscheck.ignore %}
+    <ignore>{{ ignore }}</ignore>
+    {% endfor %}
+    {% endif %}
+
+    <!-- Files no diff -->
+    {% for no_diff in wazuh_manager_config.syscheck.no_diff %}
+    <nodiff>{{ no_diff }}</nodiff>
+    {% endfor %}
+
+    {% if wazuh_manager_config.syscheck.skip_nfs is defined %}
+    <skip_nfs>{{ wazuh_manager_config.syscheck.skip_nfs }}</skip_nfs>
+    {% endif %}
+
+    <!-- Remove not monitored files -->
+    {% if wazuh_manager_config.syscheck.remove_old_diff is defined %}
+    <remove_old_diff>{{ wazuh_manager_config.syscheck.remove_old_diff }}</remove_old_diff>
+    {% endif %}
+
+    <!-- Allow the system to restart Auditd after installing the plugin -->
+    {% if wazuh_manager_config.syscheck.restart_audit is defined %}
+    <restart_audit>{{ wazuh_manager_config.syscheck.restart_audit }}</restart_audit>
+    {% endif %}
+  </syscheck>
+
+  <global>
+{% for white_list in wazuh_manager_config.globals %}
+    <white_list>{{ white_list }}</white_list>
+{% endfor %}
+  </global>
+
+  {% for command in wazuh_manager_config.commands %}
+    <command>
+      <name>{{ command.name }}</name>
+      <executable>{{ command.executable }}</executable>
+      <expect>{{ command.expect }}</expect>
+      <timeout_allowed>{{ command.timeout_allowed }}</timeout_allowed>
+    </command>
+  {% endfor %}
+
+  <!--
+  <active-response>
+    active-response options here
+  </active-response>
+  -->
+
+   <ruleset>
+    <!-- Default ruleset -->
+    <decoder_dir>ruleset/decoders</decoder_dir>
+    <rule_dir>ruleset/rules</rule_dir>
+    {% if wazuh_manager_config.rule_exclude is defined %}
+    {% for rule in wazuh_manager_config.rule_exclude %}
+    <rule_exclude>{{ rule }}</rule_exclude>
+    {% endfor %}
+    {% endif %}
+    {% if cdb_lists is defined %}
+    {% for list in cdb_lists %}
+    <list>etc/lists/{{ list.name }}</list>
+    {% endfor %}
+    {% endif %}
+
+    <!-- User-defined ruleset -->
+    <decoder_dir>etc/decoders</decoder_dir>
+    <rule_dir>etc/rules</rule_dir>
+  </ruleset>
+
+{% if wazuh_manager_config.authd.enable == true %}
+  <auth>
+    <disabled>no</disabled>
+    {% if wazuh_manager_config.authd.port is not none %}<port>{{wazuh_manager_config.authd.port}}</port>{% else %}<port>1515</port>{% endif %}
+    {% if wazuh_manager_config.authd.use_source_ip is not none %}<use_source_ip>{{wazuh_manager_config.authd.use_source_ip}}</use_source_ip>{% endif %}
+    {% if wazuh_manager_config.authd.force_insert is not none %}<force_insert>{{wazuh_manager_config.authd.force_insert}}</force_insert>{% endif %}
+    {% if wazuh_manager_config.authd.force_time is not none %}<force_time>{{wazuh_manager_config.authd.force_time}}</force_time>{% endif %}
+    {% if wazuh_manager_config.authd.purge is not none %}<purge>{{wazuh_manager_config.authd.purge}}</purge>{% endif %}
+    {% if wazuh_manager_config.authd.use_password is not none %}<use_password>{{wazuh_manager_config.authd.use_password}}</use_password>{% endif %}
+    {% if wazuh_manager_config.authd.ssl_agent_ca is not none %}<ssl_agent_ca>/var/ossec/etc/{{wazuh_manager_config.authd.ssl_agent_ca | basename}}</ssl_agent_ca>{% endif %}
+    {% if wazuh_manager_config.authd.ssl_verify_host is not none %}<ssl_verify_host>{{wazuh_manager_config.authd.ssl_verify_host}}</ssl_verify_host>{% endif %}
+    {% if wazuh_manager_config.authd.ssl_manager_cert is not none %}<ssl_manager_cert>/var/ossec/etc/{{wazuh_manager_config.authd.ssl_manager_cert | basename}}</ssl_manager_cert>{% endif %}
+    {% if wazuh_manager_config.authd.ssl_manager_key is not none %}<ssl_manager_key>/var/ossec/etc/{{wazuh_manager_config.authd.ssl_manager_key | basename}}</ssl_manager_key>{% endif %}
+    {% if wazuh_manager_config.authd.ssl_auto_negotiate is not none %}<ssl_auto_negotiate>{{wazuh_manager_config.authd.ssl_auto_negotiate}}</ssl_auto_negotiate>{% endif %}
+  </auth>
+{% endif %}
+
+
+  <cluster>
+    <disabled>{{ wazuh_manager_config.cluster.disable }}</disabled>
+    <name>{{ wazuh_manager_config.cluster.name }}</name>
+    <node_name>{{ wazuh_manager_config.cluster.node_name }}</node_name>
+    <node_type>{{ wazuh_manager_config.cluster.node_type }}</node_type>
+    <key>{{ wazuh_manager_config.cluster.key }}</key>
+    {% if wazuh_manager_config.cluster.interval is defined %}
+    <interval>{{ wazuh_manager_config.cluster.interval }}</interval>
+    {% endif %}
+    <port>{{ wazuh_manager_config.cluster.port }}</port>
+    <bind_addr>{{ wazuh_manager_config.cluster.bind_addr }}</bind_addr>
+    <nodes>
+    {% for node in wazuh_manager_config.cluster.nodes %}
+      <node>{{ node }}</node>
+    {% endfor %}
+    </nodes>
+    <hidden>{{ wazuh_manager_config.cluster.hidden }}</hidden>
+  </cluster>
+
+  {% if ansible_system == "Linux" and wazuh_manager_config.vuls.disable == 'no' %}
+  <wodle name="command">
+    <disabled>no</disabled>
+    <tag>Wazuh-VULS</tag>
+    <command>/usr/bin/python /var/ossec/wodles/vuls/vuls.py{% for arg in wazuh_manager_config.vuls.args %} --{{ arg }}{% endfor %}</command>
+    <interval>{{ wazuh_manager_config.vuls.interval }}</interval>
+    <ignore_output>yes</ignore_output>
+    <run_on_start>{{ wazuh_manager_config.vuls.run_on_start }}</run_on_start>
+  </wodle>
+  {% endif %}
+
+{% if agentless_creds is defined %}
+{% for agentless in agentless_creds %}
+  <agentless>
+    <type>{{ agentless.type }}</type>
+    <frequency>{{ agentless.frequency }}</frequency>
+    <host>{{ agentless.host }}</host>
+    <state>{{ agentless.state }}</state>
+    {% if agentless.arguments is defined %}
+      <arguments>{{ agentless.arguments }}</arguments>
+    {% endif %}
+  </agentless>
+
+{% endfor %}
+{% endif %}
+
+
+  <!-- Active Response Config 
+{% for response in wazuh_manager_config.active_responses %}
+  <active-response>
+    <disabled>{% if response.disabled is defined %}{{ response.disabled }}{% else %}no{% endif %}</disabled>
+    {%if response.command is defined %}<command>{{ response.command }}</command>{% endif %}
+    {%if response.location is defined %}<location>{{ response.location }}</location>{% endif %}
+    {%if response.agent_id is defined %}<agent_id>{{ response.agent_id }}</agent_id>{% endif %}
+    {%if response.level is defined %}<level>{{ response.level }}</level>{% endif %}
+    {%if response.rules_group is defined %}<rules_group>{{ response.rules_group }}</rules_group>{% endif %}
+    {%if response.rules_id is defined %}<rules_id>{{ response.rules_id }}</rules_id>{% endif %}
+    {%if response.timeout is defined %}<timeout>{{ response.timeout }}</timeout>{% endif %}
+    {%if response.repeated_offenders is defined %}<repeated_offenders>{{ response.repeated_offenders }}</repeated_offenders>{% endif %}
+  </active-response>
+{% endfor %}
+-->
+
+  <!-- Files to monitor (localfiles) -->
+{% for localfile in wazuh_manager_config.localfiles.common %}
+  <localfile>
+     <log_format>{{ localfile.format }}</log_format>
+     {% if localfile.format == 'command' or localfile.format == 'full_command' %}
+     <command>{{ localfile.command }}</command>
+     {% if localfile.alias is defined %}
+     <alias>{{ localfile.alias }}</alias>
+     {% endif %}
+     {% if localfile.frequency is defined %}
+     <frequency>{{ localfile.frequency }}</frequency>
+     {% endif %}
+     {% else %}
+     <location>{{ localfile.location }}</location>
+     {% if localfile.format == 'eventchannel' %}
+     {% if localfile.only_future_events is defined %}
+     <only-future-events>{{ localfile.only_future_events }}</only_future_events>
+     {% endif %}
+     {% if localfile.query is defined %}
+     <query>{{ localfile.query }}</query>
+     {% endif %}
+     {% endif %}
+     {% endif %}
+     {% if localfile.format == 'json' and localfile.labels is defined %}
+     {% for key, value in localfile.labels.iteritems() %}
+     <label key="{{ key }}">{{ value }}</label>
+     {% endfor %}
+     {% endif %}
+     {% if localfile.target is defined %}
+     <target>{{ localfile.target }}</target>
+     {% endif %}
+     {% if localfile.out_format is defined %}
+     <out_format>{{ localfile.out_format }}</out_format>
+     {% endif %}
+  </localfile>
+{% endfor %}
+
+{% if ansible_os_family == "Debian" %}
+{% for localfile in wazuh_manager_config.localfiles.debian %}
+  <localfile>
+     <log_format>{{ localfile.format }}</log_format>
+     {% if localfile.format == 'command' or localfile.format == 'full_command' %}
+     <command>{{ localfile.command }}</command>
+     {% if localfile.alias is defined %}
+     <alias>{{ localfile.alias }}</alias>
+     {% endif %}
+     {% if localfile.frequency is defined %}
+     <frequency>{{ localfile.frequency }}</frequency>
+     {% endif %}
+     {% else %}
+     <location>{{ localfile.location }}</location>
+     {% if localfile.format == 'eventchannel' %}
+     {% if localfile.only_future_events is defined %}
+     <only-future-events>{{ localfile.only_future_events }}</only_future_events>
+     {% endif %}
+     {% if localfile.query is defined %}
+     <query>{{ localfile.query }}</query>
+     {% endif %}
+     {% endif %}
+     {% endif %}
+     {% if localfile.format == 'json' and localfile.labels is defined %}
+     {% for key, value in localfile.labels.iteritems() %}
+     <label key="{{ key }}">{{ value }}</label>
+     {% endfor %}
+     {% endif %}
+     {% if localfile.target is defined %}
+     <target>{{ localfile.target }}</target>
+     {% endif %}
+     {% if localfile.out_format is defined %}
+     <out_format>{{ localfile.out_format }}</out_format>
+     {% endif %}
+  </localfile>
+{% endfor %}
+{% endif %}
+
+{% if ansible_os_family == "RedHat" %}  
+{% for localfile in wazuh_manager_config.localfiles.centos %}
+  <localfile>
+     <log_format>{{ localfile.format }}</log_format>
+     {% if localfile.format == 'command' or localfile.format == 'full_command' %}
+     <command>{{ localfile.command }}</command>
+     {% if localfile.alias is defined %}
+     <alias>{{ localfile.alias }}</alias>
+     {% endif %}
+     {% if localfile.frequency is defined %}
+     <frequency>{{ localfile.frequency }}</frequency>
+     {% endif %}
+     {% else %}
+     <location>{{ localfile.location }}</location>
+     {% if localfile.format == 'eventchannel' %}
+     {% if localfile.only_future_events is defined %}
+     <only-future-events>{{ localfile.only_future_events }}</only_future_events>
+     {% endif %}
+     {% if localfile.query is defined %}
+     <query>{{ localfile.query }}</query>
+     {% endif %}
+     {% endif %}
+     {% endif %}
+     {% if localfile.format == 'json' and localfile.labels is defined %}
+     {% for key, value in localfile.labels.iteritems() %}
+     <label key="{{ key }}">{{ value }}</label>
+     {% endfor %}
+     {% endif %}
+     {% if localfile.target is defined %}
+     <target>{{ localfile.target }}</target>
+     {% endif %}
+     {% if localfile.out_format is defined %}
+     <out_format>{{ localfile.out_format }}</out_format>
+     {% endif %}
+  </localfile>
+{% endfor %}
+{% endif %}
+
+{% if wazuh_manager_config.syslog_outputs is defined %}
+{% for syslog_output in wazuh_manager_config.syslog_outputs %}
+{% if syslog_output.server is not none  %}
+  <syslog_output>
+    <server>{{ syslog_output.server }}</server>
+    <port>{{ syslog_output.port }}</port>
+    <format>{{ syslog_output.format }}</format>
+  </syslog_output>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if wazuh_manager_config.labels.enable == true %}
+  <labels>
+  {% for label in wazuh_manager_config.labels.list %}
+    <label key="{{ label.key }}"{% if label.hidden is defined %} hidden="{{ label.hidden }}"{% endif %}>{{ label.value }}</label>
+  {% endfor %}
+  </labels>
+{% endif %}
+
+</ossec_config>

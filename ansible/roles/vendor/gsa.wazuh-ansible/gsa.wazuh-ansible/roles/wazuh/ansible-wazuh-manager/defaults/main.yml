@@ -1,0 +1,331 @@
+---
+wazuh_manager_fqdn: "wazuh-server"
+
+wazuh_manager_config:
+  json_output: 'yes'
+  alerts_log: 'yes'
+  logall: 'no'
+  logall_json: 'no'
+  log_format: 'plain'
+  api:
+    bind_addr: '0.0.0.0'
+    port: 55000
+    https: 'no'
+    basic_auth: 'yes'
+    behind_proxy_server: 'no'
+    https_cert: '/var/ossec/etc/sslmanager.cert'
+    https_key: '/var/ossec/etc/sslmanager.key'
+    https_use_ca: 'no'
+    https_ca: ''
+    use_only_authd: 'false'
+    drop_privileges: 'true'
+    experimental_features: 'false'
+    secure_protocol: 'TLSv1_2_method'
+    honor_cipher_order: 'true'
+    ciphers: ''
+  cluster:
+    disable: 'yes'
+    name: 'wazuh'
+    node_name: 'manager_01'
+    node_type: 'master'
+    key: 'ugdtAnd7Pi9myP7CVts4qZaZQEQcRYZa'
+    interval: '2m'
+    port: '1516'
+    bind_addr: '0.0.0.0'
+    nodes:
+      - '172.17.0.2'
+      - '172.17.0.3'
+      - '172.17.0.4'
+    hidden: 'no'
+  connection:
+    - type: 'secure'
+      port: '1514'
+      protocol: 'udp'
+      queue_size: 131072
+  authd:
+    enable: true
+    port: 1515
+    use_source_ip: 'yes'
+    force_insert: 'yes'
+    force_time: 0
+    purge: 'no'
+    use_password: 'no'
+    ssl_agent_ca: null
+    ssl_verify_host: 'no'
+    ssl_manager_cert: '/var/ossec/etc/sslmanager.cert'
+    ssl_manager_key: '/var/ossec/etc/sslmanager.key'
+    ssl_auto_negotiate: 'no'
+  email_notification: 'no'
+  mail_to:
+    - 'admin@example.net'
+  mail_smtp_server: localhost
+  mail_from: wazuh-server@example.com
+  mail_maxperhour: 12
+  mail_queue_size: 131072
+  extra_emails:
+    - enable: false
+      mail_to: 'admin@example.net'
+      format: full
+      level: 7
+      event_location: null
+      group: null
+      do_not_delay: false
+      do_not_group: false
+      rule_id: null
+  reports:
+    - enable: false
+      category: 'syscheck'
+      title: 'Daily report: File changes'
+      email_to: 'admin@example.net'
+      location: null
+      group: null
+      rule: null
+      level: null
+      srcip: null
+      user: null
+      showlogs: null
+  syscheck:
+    disable: 'no'
+    frequency: 43200
+    scan_on_start: 'yes'
+    auto_ignore: 'no'
+    alert_new_files: 'yes'
+    ignore:
+      - /etc/mtab
+      - /etc/hosts.deny
+      - /etc/mail/statistics
+      - /etc/random-seed
+      - /etc/random.seed
+      - /etc/adjtime
+      - /etc/httpd/logs
+      - /etc/utmpx
+      - /etc/wtmpx
+      - /etc/cups/certs
+      - /etc/dumpdates
+      - /etc/svc/volatile
+      - /sys/kernel/security
+      - /sys/kernel/debug
+    no_diff:
+      - /etc/ssl/private.key
+    directories:
+      - dirs: /etc,/usr/bin,/usr/sbin
+        checks: 'check_all="yes"'
+      - dirs: /bin,/sbin,/boot
+        checks: 'check_all="yes"'
+    auto_ignore_frequency:
+      frequency: 'frequency="10"'
+      timeframe: 'timeframe="3600"'
+      value: 'no'
+    skip_nfs: 'yes'
+    remove_old_diff: 'yes'
+    restart_audit: 'yes'
+  rootcheck:
+    frequency: 43200
+  openscap:
+    disable: 'no'
+    timeout: 1800
+    interval: '1d'
+    scan_on_start: 'yes'
+  cis_cat:
+    disable: 'yes'
+    install_java: 'yes'
+    timeout: 1800
+    interval: '1d'
+    scan_on_start: 'yes'
+    java_path: '/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/bin'
+    ciscat_path: 'wodles/ciscat'
+    content:
+      - type: 'xccdf'
+        path: 'benchmarks/CIS_Ubuntu_Linux_16.04_LTS_Benchmark_v1.0.0-xccdf.xml'
+        profile: 'xccdf_org.cisecurity.benchmarks_profile_Level_1_-_Server'
+  osquery:
+    disable: 'yes'
+    run_daemon: 'yes'
+    log_path: '/var/log/osquery/osqueryd.results.log'
+    config_path: '/etc/osquery/osquery.conf'
+    ad_labels: 'yes'
+  syscollector:
+    disable: 'no'
+    interval: '1h'
+    scan_on_start: 'yes'
+    hardware: 'yes'
+    os: 'yes'
+    network: 'yes'
+    packages: 'yes'
+    ports_no: 'yes'
+    processes: 'yes'
+  vul_detector:
+    disable: 'yes'
+    interval: '5m'
+    ignore_time: '6h'
+    run_on_start: 'yes'
+    ubuntu:
+      disable: 'yes'
+      update_interval: '1h'
+    redhat:
+      disable: 'yes'
+      update_interval: '1h'
+    debian:
+      disable: 'yes'
+      update_interval: '1h'
+  vuls:
+    disable: 'yes'
+    interval: '1d'
+    run_on_start: 'yes'
+    args:
+      - 'mincvss 5'
+      - 'antiquity-limit 20'
+      - 'updatenvd'
+      - 'nvd-year 2016'
+      - 'autoupdate'
+  log_level: 1
+  email_level: 12
+  localfiles:
+    common:
+      - format: 'command'
+        command: 'df -P'
+        frequency: '360'
+      - format: 'full_command'
+        command: netstat -tulpn | sed 's/\([[:alnum:]]\+\)\ \+[[:digit:]]\+\ \+[[:digit:]]\+\ \+\(.*\):\([[:digit:]]*\)\ \+\([0-9\.\:\*]\+\).\+\ \([[:digit:]]*\/[[:alnum:]\-]*\).*/\1 \2 == \3 == \4 \5/' | sort -k 4 -g | sed 's/ == \(.*\) ==/:\1/' | sed 1,2d
+        alias: 'netstat listening ports'
+        frequency: '360'
+      - format: 'full_command'
+        command: 'last -n 20'
+      - format: 'syslog'
+        location: '/var/ossec/logs/active-responses.log'
+    debian:
+      - format: 'syslog'
+        location: '/var/log/auth.log'
+      - format: 'syslog'
+        location: '/var/log/syslog'
+      - format: 'syslog'
+        location: '/var/log/dpkg.log'
+      - format: 'syslog'
+        location: '/var/log/kern.log'
+    centos:
+      - format: 'syslog'
+        location: '/var/log/messages'
+      - format: 'syslog'
+        location: '/var/log/secure'
+      - format: 'syslog'
+        location: '/var/log/maillog'
+      - format: 'audit'
+        location: '/var/log/audit/audit.log'
+  globals:
+    - '127.0.0.1'
+    - '192.168.2.1'
+  commands:
+    - name: 'disable-account'
+      executable: 'disable-account.sh'
+      expect: 'user'
+      timeout_allowed: 'yes'
+    #- name: 'restart-ossec'
+    #  executable: 'restart-ossec.sh'
+    #  expect: ''
+    #  timeout_allowed: 'no'
+    - name: 'win_restart-ossec'
+      executable: 'restart-ossec.cmd'
+      expect: ''
+      timeout_allowed: 'no'
+    - name: 'firewall-drop'
+      executable: 'firewall-drop.sh'
+      expect: 'srcip'
+      timeout_allowed: 'yes'
+    - name: 'host-deny'
+      executable: 'host-deny.sh'
+      expect: 'srcip'
+      timeout_allowed: 'yes'
+    - name: 'route-null'
+      executable: 'route-null.sh'
+      expect: 'srcip'
+      timeout_allowed: 'yes'
+    - name: 'win_route-null'
+      executable: 'route-null.cmd'
+      expect: 'srcip'
+      timeout_allowed: 'yes'
+    - name: 'netsh'
+      executable: 'netsh.cmd'
+      expect: 'srcip'
+      timeout_allowed: 'yes'
+    - name: 'netsh-win-2016'
+      executable: 'netsh-win-2016.cmd'
+      expect: 'srcip'
+      timeout_allowed: 'yes'
+  ruleset:
+    rules_path: 'custom_ruleset/rules/'
+    decoders_path: 'custom_ruleset/decoders/'
+  rule_exclude:
+    - '0215-policy_rules.xml'
+  active_responses:
+    - command: 'restart-ossec'
+      location: 'local'
+      rules_id: '100002'
+    - command: 'win_restart-ossec'
+      location: 'local'
+      rules_id: '100003'
+    - command: 'host-deny'
+      location: 'local'
+      level: 6
+      timeout: 600
+  syslog_outputs:
+    - server: null
+      port: null
+      format: null
+  labels:
+    enable: false
+    list:
+      - key: Env
+        value: Production
+
+wazuh_agent_configs:
+  - type: os
+    type_value: Linux
+    syscheck:
+      frequency: 43200
+      scan_on_start: 'yes'
+      auto_ignore: 'no'
+      alert_new_files: 'yes'
+      ignore:
+        - /etc/mtab
+        - /etc/mnttab
+        - /etc/hosts.deny
+        - /etc/mail/statistics
+        - /etc/svc/volatile
+      no_diff:
+        - /etc/ssl/private.key
+      # Example
+      #directories:
+        #- dirs: /etc,/usr/bin,/usr/sbin
+        #  checks: 'check_all="yes"'
+    rootcheck:
+      frequency: 43200
+      cis_distribution_filename: null
+    localfiles:
+      - format: 'syslog'
+        location: '/var/log/messages'
+      - format: 'syslog'
+        location: '/var/log/secure'
+      - format: 'syslog'
+        location: '/var/log/maillog'
+      - format: 'apache'
+        location: '/var/log/httpd/error_log'
+      - format: 'apache'
+        location: '/var/log/httpd/access_log'
+      - format: 'apache'
+        location: '/var/ossec/logs/active-responses.log'
+  - type: os
+    type_value: Windows
+    syscheck:
+      frequency: 43200
+      scan_on_start: 'yes'
+      auto_ignore: 'no'
+      alert_new_files: 'yes'
+      windows_registry:
+        - key: 'HKEY_LOCAL_MACHINE\Software\Classes\batfile'
+          arch: 'both'
+        - key: 'HKEY_LOCAL_MACHINE\Software\Classes\Folder'
+    localfiles:
+      - location: 'Security'
+        format: 'eventchannel'
+      - location: 'System'
+        format: 'eventlog'

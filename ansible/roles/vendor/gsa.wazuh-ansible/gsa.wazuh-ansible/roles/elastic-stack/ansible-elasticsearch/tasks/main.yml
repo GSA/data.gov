@@ -1,0 +1,114 @@
+---
+- import_tasks: RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- import_tasks: Debian.yml
+  when: ansible_os_family == "Debian"
+
+- name: Create elasticsearch.service.d folder.
+  file: path=/etc/systemd/system/elasticsearch.service.d/ state=directory
+  when:
+    - ansible_service_mgr == "systemd"
+
+- name: Configure Elasticsearch System Resources.
+  template:
+    src: elasticsearch_systemd.conf.j2
+    dest: /etc/systemd/system/elasticsearch.service.d/elasticsearch.conf
+    owner: root
+    group: elasticsearch
+    mode: 0660
+  notify: restart elasticsearch
+  tags: configure
+  when:
+    - ansible_service_mgr == "systemd"
+
+- name: Debian/Ubuntu | Configure Elasticsearch System Resources.
+  template:
+    src: elasticsearch_nonsystemd.j2
+    dest: /etc/default/elasticsearch
+    owner: root
+    group: elasticsearch
+    mode: 0660
+  notify: restart elasticsearch
+  tags: configure
+  when:
+    - ansible_service_mgr != "systemd"
+    - ansible_os_family == "Debian"
+
+- name: RedHat/CentOS/Fedora | Configure Elasticsearch System Resources.
+  template:
+    src: elasticsearch_nonsystemd.j2
+    dest: /etc/sysconfig/elasticsearch
+    owner: root
+    group: elasticsearch
+    mode: 0660
+  notify: restart elasticsearch
+  tags: configure
+  when:
+    - ansible_service_mgr != "systemd"
+    - ansible_os_family == "RedHat"
+
+- name: Configure Elasticsearch.
+  template:
+    src: elasticsearch.yml.j2
+    dest: /etc/elasticsearch/elasticsearch.yml
+    owner: root
+    group: elasticsearch
+    mode: 0660
+  notify: restart elasticsearch
+  tags: configure
+
+- name: Configure Elasticsearch JVM memmory.
+  template:
+    src: jvm.options.j2
+    dest: /etc/elasticsearch/jvm.options
+    owner: root
+    group: elasticsearch
+    mode: 0660
+  notify: restart elasticsearch
+  tags: configure
+
+- name: Reload systemd
+  systemd: daemon_reload=yes
+  ignore_errors: yes #fix in new PR
+  when:
+    - not (ansible_distribution == "Amazon" and ansible_distribution_major_version == "NA")
+    - not (ansible_distribution == "Ubuntu" and ansible_distribution_version is version('15.04', '<'))
+    - not (ansible_distribution == "Debian" and ansible_distribution_version is version('8', '<'))
+
+- name: Ensure Elasticsearch started and enabled
+  ignore_errors: yes
+  service:
+    name: elasticsearch
+    enabled: yes
+    state: started
+
+- name: Make sure Elasticsearch is running before proceeding
+  wait_for: host={{ elasticsearch_network_host }} port={{ elasticsearch_http_port }} delay=3 timeout=300
+  tags:
+    - configure
+    - init
+
+- name: Check for Wazuh Alerts template
+  uri:
+    url: "http://{{elasticsearch_network_host}}:{{elasticsearch_http_port}}/_template/wazuh"
+    method: GET
+    status_code: 200, 404
+  register: wazuh_alerts_template_exits
+  tags: init
+
+- name: Installing Wazuh Alerts template
+  uri:
+    url: "http://{{elasticsearch_network_host}}:{{elasticsearch_http_port}}/_template/wazuh"
+    method: PUT
+    status_code: 200
+    body_format: json
+    body: "{{ lookup('template','wazuh-elastic6-template-alerts.json.j2') }}"
+  when: wazuh_alerts_template_exits.status != 200
+  tags: init
+
+- import_tasks: "RMRedHat.yml"
+  when: ansible_os_family == "RedHat"
+
+- import_tasks: "RMDebian.yml"
+  when: ansible_os_family == "Debian"

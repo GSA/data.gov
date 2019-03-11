@@ -1,0 +1,21 @@
+---
+- hosts: all
+
+  pre_tasks:
+    - name: Update apt cache.
+      apt:
+        cache_valid_time: 600
+      when: ansible_os_family == 'Debian'
+
+    - name: Install test dependencies (RedHat).
+      package: name=which state=present
+      when: ansible_os_family == 'RedHat'
+
+    - name: Install test dependencies.
+      package: name=curl state=present
+
+  roles:
+    - geerlingguy.java
+    - geerlingguy.elasticsearch
+    - geerlingguy.logstash
+    - role_under_test

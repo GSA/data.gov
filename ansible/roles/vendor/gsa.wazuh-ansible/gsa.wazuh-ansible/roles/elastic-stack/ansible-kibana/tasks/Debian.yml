@@ -1,0 +1,28 @@
+---
+- name: Debian/Ubuntu | Install apt-transport-https and ca-certificates
+  apt:
+    name: "{{ item }}"
+    state: present
+    cache_valid_time: 3600
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+
+- name: Debian/Ubuntu | Add Elasticsearch GPG key
+  apt_key:
+    url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+    state: present
+
+- name: Debian/Ubuntu | Install Elastic repo
+  apt_repository:
+    repo: 'deb https://artifacts.elastic.co/packages/6.x/apt stable main'
+    state: present
+    filename: 'elastic_repo'
+    update_cache: yes
+
+- name: Debian/Ubuntu | Install Kibana
+  apt:
+    name: "kibana={{ elastic_stack_version }}"
+    state: present
+    cache_valid_time: 3600
+  tags: install

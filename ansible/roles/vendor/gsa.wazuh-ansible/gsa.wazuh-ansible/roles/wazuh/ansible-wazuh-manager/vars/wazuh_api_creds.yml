@@ -1,0 +1,3 @@
+---
+wazuh_api_user:
+  - "foo:$apr1$/axqZYWQ$Xo/nz/IG3PdwV82EnfYKh/"

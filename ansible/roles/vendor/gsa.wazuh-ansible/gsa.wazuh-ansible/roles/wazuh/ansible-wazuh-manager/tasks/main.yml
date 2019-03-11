@@ -1,0 +1,364 @@
+---
+- import_tasks: "RedHat.yml"
+  when: (ansible_os_family == "RedHat" and ansible_distribution_major_version|int > 5) or (ansible_os_family  == "RedHat" and ansible_distribution == "Amazon")
+
+- import_tasks: "Debian.yml"
+  when: ansible_os_family == "Debian"
+
+- name: Install wazuh-manager, wazuh-api and expect
+  package: pkg={{ item }} state=present
+  with_items:
+    - wazuh-manager
+    - wazuh-api
+    - expect
+  when:
+    - not (( ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat' ) and ansible_distribution_major_version|int < 6 )
+  tags:
+    - init
+
+- name: CentOS/RedHat 6 | Enabling python2.7 and sqlite3
+  replace:
+    path: /etc/init.d/wazuh-manager
+    regexp: 'echo -n "Starting Wazuh-manager: "'
+    replace: 'echo -n "Starting Wazuh-manager (EL6): "; source /opt/rh/python27/enable; export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/var/ossec/framework/lib'
+  when:
+    - ( ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat' ) and ansible_distribution_major_version == '6'
+    - wazuh_manager_config.cluster.disable != 'yes'
+
+- name: Install wazuh-manager and expect (EL5)
+  package: pkg={{ item }} state=present
+  with_items:
+    - wazuh-manager
+    - expect
+  when:
+    - ( ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat' ) and  ansible_distribution_major_version|int < 6
+  tags:
+    - init
+
+- name: Generate SSL files for authd
+  command: "openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:1825 -keyout sslmanager.key -out sslmanager.cert -subj /CN={{wazuh_manager_fqdn}}/"
+  args:
+    creates: sslmanager.cert
+    chdir: /var/ossec/etc/
+  tags:
+    - config
+  when: not wazuh_manager_config.authd.ssl_agent_ca is not none
+
+- name: Copy CA, SSL key and cert for authd
+  copy:
+    src: "{{ item }}"
+    dest: "/var/ossec/etc/{{ item | basename }}"
+    mode: 0644
+  with_items:
+    - "{{ wazuh_manager_config.authd.ssl_agent_ca }}"
+    - "{{ wazuh_manager_config.authd.ssl_manager_cert }}"
+    - "{{ wazuh_manager_config.authd.ssl_manager_key }}"
+  tags:
+    - config
+  when: wazuh_manager_config.authd.ssl_agent_ca is not none
+
+- name: Verifying for old init authd service
+  stat: path=/etc/init.d/ossec-authd
+  register: old_authd_service
+  tags:
+    - config
+
+- name: Verifying for old systemd authd service
+  stat: path=/lib/systemd/system/ossec-authd.service
+  register: old_authd_service
+  tags:
+    - config
+
+- name: Ensure ossec-authd service is disabled
+  service: name=ossec-authd enabled=no state=stopped
+  when: old_authd_service.stat.exists == True
+  tags:
+    - config
+
+- name: Removing old init authd services
+  file: path="{{ item }}" state=absent
+  with_items:
+    - "/etc/init.d/ossec-authd"
+    - "/lib/systemd/system/ossec-authd.service"
+  when: old_authd_service.stat.exists == True
+  tags:
+    - config
+
+- name: Installing the local_rules.xml (default local_rules.xml)
+  template: src=var-ossec-rules-local_rules.xml.j2
+            dest=/var/ossec/etc/rules/local_rules.xml
+            owner=root
+            group=ossec
+            mode=0640
+  notify: restart wazuh-manager
+  tags:
+    - init
+    - config
+    - rules
+
+- name: Adding local rules files
+  copy: src="{{ wazuh_manager_config.ruleset.rules_path }}"
+        dest=/var/ossec/etc/rules/
+        owner=root
+        group=ossec
+        mode=0640
+  notify: restart wazuh-manager
+  tags:
+    - init
+    - config
+    - rules
+
+- name: Installing the local_decoder.xml
+  template: src=var-ossec-rules-local_decoder.xml.j2
+            dest=/var/ossec/etc/decoders/local_decoder.xml
+            owner=root
+            group=ossec
+            mode=0640
+  notify: restart wazuh-manager
+  tags:
+    - init
+    - config
+    - rules
+
+- name: Adding local decoders files
+  copy: src="{{ wazuh_manager_config.ruleset.decoders_path }}"
+        dest=/var/ossec/etc/decoders/
+        owner=root
+        group=ossec
+        mode=0640
+  notify: restart wazuh-manager
+  tags:
+    - init
+    - config
+    - rules
+
+- name: Configure the shared-agent.conf
+  template:
+    src: var-ossec-etc-shared-agent.conf.j2
+    dest: /var/ossec/etc/shared/default/agent.conf
+    owner: ossec
+    group: ossec
+    mode: 0640
+    validate: '/var/ossec/bin/verify-agent-conf -f %s'
+  notify: restart wazuh-manager
+  tags:
+    - init
+    - config
+
+- name: Installing the config.js (api configuration)
+  template: src=var-ossec-api-configuration-config.js.j2
+            dest=/var/ossec/api/configuration/config.js
+            owner=root
+            group=ossec
+            mode=0740
+  notify: restart wazuh-api
+  tags:
+    - init
+    - config
+
+- name: Installing the local_internal_options.conf
+  template: src=var-ossec-etc-local-internal-options.conf.j2
+            dest=/var/ossec/etc/local_internal_options.conf
+            owner=root
+            group=ossec
+            mode=0640
+  notify: restart wazuh-manager
+  tags:
+    - init
+    - config
+
+- name: Retrieving Agentless Credentials
+  include_vars: agentless_creds.yml
+  tags:
+    - config
+
+- name: Retrieving authd Credentials
+  include_vars: authd_pass.yml
+  tags:
+    - config
+
+- name: Retrieving Wazuh-API User Credentials
+  include_vars: wazuh_api_creds.yml
+  when:
+    - not (( ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat' ) and ansible_distribution_major_version|int < 6 )
+  tags:
+    - config
+
+- name: Retrieving CDB lists
+  include_vars: cdb_lists.yml
+  tags:
+    - config
+
+- name: Check if syslog output is enabled
+  set_fact: syslog_output=true
+  when: item.server is not none
+  with_items:
+    - "{{ wazuh_manager_config.syslog_outputs }}"
+  tags:
+    - config
+
+- name: Check if client-syslog is enabled
+  shell: "grep -c 'ossec-csyslogd' /var/ossec/bin/.process_list | xargs echo"
+  args:
+    removes: /var/ossec/bin/.process_list
+  changed_when: False
+  check_mode: no
+  register: csyslog_enabled
+  tags:
+    - config
+
+- name: Enable client-syslog
+  command: /var/ossec/bin/ossec-control enable client-syslog
+  notify: restart wazuh-manager
+  when:
+    - csyslog_enabled.stdout == '0' or "skipped" in csyslog_enabled.stdout
+    - syslog_output is defined and syslog_output == true
+  tags:
+    - config
+
+- name: Check if ossec-agentlessd is enabled
+  shell: "grep -c 'ossec-agentlessd' /var/ossec/bin/.process_list | xargs echo"
+  args:
+    removes: /var/ossec/bin/.process_list
+  changed_when: False
+  check_mode: no
+  register: agentlessd_enabled
+  tags:
+    - config
+
+- name: Enable ossec-agentlessd
+  command: /var/ossec/bin/ossec-control enable agentless
+  notify: restart wazuh-manager
+  when:
+    - agentlessd_enabled.stdout == '0' or "skipped" in agentlessd_enabled.stdout
+    - agentless_creds is defined
+  tags:
+    - config
+
+- name: Checking alert log output settings
+  fail: msg="Please enable json_output or alerts_log options."
+  when:
+    - wazuh_manager_config.json_output == 'no'
+    - wazuh_manager_config.alerts_log == 'no'
+  tags:
+    - init
+    - config
+
+- name: Linux | Vuls integration deploy (runs in background, can take a while)
+  command: /var/ossec/wodles/vuls/deploy_vuls.sh {{ ansible_distribution|lower }} {{ ansible_distribution_major_version|int }}
+  args:
+    creates: /var/ossec/wodles/vuls/config.toml
+  async: 3600
+  poll: 0
+  when:
+    - wazuh_manager_config.vuls.disable != 'yes'
+    - ansible_distribution == 'Redhat' or ansible_distribution == 'CentOS' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian' or ansible_distribution == 'Oracle'
+  tags:
+    - init
+
+- name: Configure ossec.conf
+  template: src=var-ossec-etc-ossec-server.conf.j2
+            dest=/var/ossec/etc/ossec.conf
+            owner=root
+            group=ossec
+            mode=0644
+  notify: restart wazuh-manager
+  tags:
+    - init
+    - config
+
+- name: Ossec-authd password
+  template:
+    src: authd_pass.j2
+    dest: "/var/ossec/etc/authd.pass"
+    owner: ossec
+    group: ossec
+    mode: 0640
+  no_log: true
+  notify: restart wazuh-manager
+  when:
+    - wazuh_manager_config.authd.use_password is defined
+    - wazuh_manager_config.authd.use_password == 'yes'
+  tags:
+    - config
+
+- name: Wazuh-API User
+  template:
+    src: api_user.j2
+    dest: "/var/ossec/api/configuration/auth/user"
+    owner: root
+    group: root
+    mode: 0750
+  no_log: true
+  notify: restart wazuh-api
+  when:
+    - wazuh_api_user is defined
+    - not (( ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat' ) and ansible_distribution_major_version|int < 6 )
+  tags:
+    - config
+
+- name: Agentless Hosts & Passwd
+  template:
+    src: agentless.j2
+    dest: "/var/ossec/agentless/.passlist_tmp"
+    owner: root
+    group: root
+    mode: 0644
+  no_log: true
+  when: agentless_creds is defined
+  tags:
+    - config
+
+- name: Encode the secret
+  shell: /usr/bin/base64 /var/ossec/agentless/.passlist_tmp > /var/ossec/agentless/.passlist && rm /var/ossec/agentless/.passlist_tmp
+  when: agentless_creds is defined
+  tags:
+    - config
+
+- name: CDB Lists
+  template:
+    src: cdb_lists.j2
+    dest: "/var/ossec/etc/lists/{{ item.name }}"
+    owner: root
+    group: ossec
+    mode: 0640
+  no_log: true
+  notify:
+    - rebuild cdb_lists
+    - restart wazuh-manager
+  with_items:
+    - "{{ cdb_lists }}"
+  when: cdb_lists is defined
+  tags:
+    - config
+
+- name: Ensure Wazuh Manager, wazuh API service is started and enabled
+  service:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  with_items:
+    - wazuh-manager
+    - wazuh-api
+  tags:
+    - config
+  environment:
+    LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:/var/ossec/framework/lib"
+  when:
+    - not (( ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat' ) and ansible_distribution_major_version|int < 6 )
+
+- name: Ensure Wazuh Manager is started and enabled (EL5)
+  service:
+    name: wazuh-manager
+    enabled: yes
+    state: started
+  tags:
+    - config
+  when:
+    - ( ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat' ) and ansible_distribution_major_version|int < 6
+
+- import_tasks: "RMRedHat.yml"
+  when: ansible_os_family == "RedHat"
+
+- import_tasks: "RMDebian.yml"
+  when: ansible_os_family == "Debian"

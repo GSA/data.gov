@@ -1,0 +1,10 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - {role: wazuh/ansible-wazuh-manager}
+    - {role: wazuh/ansible-filebeat} #, filebeat_output_logstash_hosts: 'your elastic stack server IP'
+    # Elasticsearch requires too much memory to test multiple containers concurrently - To Fix
+    #- {role: elastic-stack/ansible-elasticsearch, elasticsearch_network_host: 'localhost'}
+    #- {role: elastic-stack/ansible-logstash, logstash_input_beats: true, elasticsearch_network_host: 'localhost'}
+    #- {role: elastic-stack/ansible-kibana, elasticsearch_network_host: 'localhost'}

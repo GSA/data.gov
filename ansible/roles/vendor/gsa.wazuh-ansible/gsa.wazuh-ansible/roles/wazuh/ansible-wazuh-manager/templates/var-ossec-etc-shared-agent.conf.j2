@@ -1,0 +1,103 @@
+#jinja2: trim_blocks: False
+{% if wazuh_agent_configs is defined %}
+{% for agent_config in wazuh_agent_configs %}
+<agent_config {{ agent_config.type }}="{{ agent_config.type_value }}">
+  <syscheck>
+    <auto_ignore>{{ agent_config.syscheck.auto_ignore }}</auto_ignore>
+    <alert_new_files>{{ agent_config.syscheck.alert_new_files }}</alert_new_files>
+    <!-- Frequency that syscheck is executed -- default every 20 hours -->
+    <frequency>{{ agent_config.syscheck.frequency }}</frequency>
+    <scan_on_start>{{ agent_config.syscheck.scan_on_start }}</scan_on_start>
+
+    <!-- Directories to check  (perform all possible verifications) -->
+    {% if agent_config.syscheck.directories is defined %}
+    {% for directory in agent_config.syscheck.directories %}
+    <directories {{ directory.checks }}>{{ directory.dirs }}</directories>
+    {% endfor %}
+    {% endif %}
+
+    <!-- Files/directories to ignore -->
+    {% if agent_config.syscheck.ignore is defined %}
+    {% for ignore in agent_config.syscheck.ignore %}
+    <ignore>{{ ignore }}</ignore>
+    {% endfor %}
+    {% endif %}
+
+    <!-- Files no diff -->
+    {% if agent_config.syscheck.no_diff is defined %}
+    {% for no_diff in agent_config.syscheck.no_diff %}
+    <nodiff>{{ no_diff }}</nodiff>
+    {% endfor %}
+    {% endif %}
+
+    {% if agent_config.syscheck.windows_registry is defined %}
+    {% for registry_key in agent_config.syscheck.windows_registry %}
+    {% if registry_key.arch is defined %}
+    <windows_registry arch="{{ registry_key.arch }}">{{ registry_key.key }}</windows_registry>
+    {% else %}
+    <windows_registry>{{ registry_key.key }}</windows_registry>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+  </syscheck>
+
+  {% for localfile in agent_config.localfiles %}
+    <localfile>
+       <log_format>{{ localfile.format }}</log_format>
+       {% if localfile.format == 'command' or localfile.format == 'full_command' %}
+       <command>{{ localfile.command }}</command>
+       {% if localfile.alias is defined %}
+       <alias>{{ localfile.alias }}</alias>
+       {% endif %}
+       {% if localfile.frequency is defined %}
+       <frequency>{{ localfile.frequency }}</frequency>
+       {% endif %}
+       {% else %}
+       <location>{{ localfile.location }}</location>
+       {% if localfile.format == 'eventchannel' %}
+       {% if localfile.only_future_events is defined %}
+       <only-future-events>{{ localfile.only_future_events }}</only_future_events>
+       {% endif %}
+       {% if localfile.query is defined %}
+       <query>{{ localfile.query }}</query>
+       {% endif %}
+       {% endif %}
+       {% endif %}
+       {% if localfile.format == 'json' and localfile.labels is defined %}
+       {% for key, value in localfile.labels.iteritems() %}
+       <label key="{{ key }}">{{ value }}</label>
+       {% endfor %}
+       {% endif %}
+       {% if localfile.target is defined %}
+       <target>{{ localfile.target }}</target>
+       {% endif %}
+       {% if localfile.out_format is defined %}
+       <out_format>{{ localfile.out_format }}</out_format>
+       {% endif %}
+    </localfile>
+  {% endfor %}
+
+  {% if agent_config.rootcheck is defined %}
+  <rootcheck>
+    <disabled>no</disabled>
+    <check_unixaudit>yes</check_unixaudit>
+    <check_files>yes</check_files>
+    <check_trojans>yes</check_trojans>
+    <check_dev>yes</check_dev>
+    <check_sys>yes</check_sys>
+    <check_pids>yes</check_pids>
+    <check_ports>yes</check_ports>
+    <check_if>yes</check_if>
+
+    <!-- Frequency that rootcheck is executed - every 12 hours -->
+    <frequency>{{ agent_config.rootcheck.frequency }}</frequency>
+
+    {% if agent_config.rootcheck.cis_distribution_filename is not none %}
+    <system_audit>/var/ossec/etc/shared/default/{{ agent_config.rootcheck.cis_distribution_filename }}</system_audit>
+    {% endif %}
+    <skip_nfs>yes</skip_nfs>
+  </rootcheck>
+  {% endif %}
+</agent_config>
+{% endfor %}
+{% endif %}

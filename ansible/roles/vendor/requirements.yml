@@ -42,3 +42,6 @@
 - src: 'https://github.com/GSA/ansible-role-beats'
   version: master
   name: gsa.ansible-role-beats
+- src: 'https://github.com/GSA/wazuh-ansible'
+  version: master
+  name: gsa.wazuh-ansible

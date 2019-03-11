@@ -1,0 +1,178 @@
+---
+- import_tasks: "RedHat.yml"
+  when: ansible_os_family == "RedHat"
+
+- import_tasks: "Debian.yml"
+  when: ansible_os_family == "Debian"
+
+- name: Linux | Install wazuh-agent
+  package: name=wazuh-agent state=present
+  async: 90
+  poll: 15
+  tags:
+    - init
+
+- name: Linux | Check if client.keys exists
+  stat: path=/var/ossec/etc/client.keys
+  register: check_keys
+  tags:
+    - config
+
+- name: Linux | Agent registration via authd
+  block:
+
+    - name: Retrieving authd Credentials
+      include_vars: authd_pass.yml
+
+    - name: Copy CA, SSL key and cert for authd
+      copy:
+        src: "{{ item }}"
+        dest: "/var/ossec/etc/{{ item | basename }}"
+        mode: 0644
+      with_items:
+        - "{{ wazuh_agent_authd.ssl_agent_ca }}"
+        - "{{ wazuh_agent_authd.ssl_agent_cert }}"
+        - "{{ wazuh_agent_authd.ssl_agent_key }}"
+      when:
+        - wazuh_agent_authd.ssl_agent_ca is not none
+
+    - name: Linux | Register agent (via authd)
+      shell: >
+        /var/ossec/bin/agent-auth
+        -A {{ agent_name }}
+        -m {{ wazuh_managers.0.address }}
+        -p {{ wazuh_agent_authd.port }}
+        {% if authd_pass is defined %}-P {{ authd_pass }}{% endif %}
+        {% if wazuh_agent_authd.ssl_agent_ca is not none %}
+        -v "/var/ossec/etc/{{ wazuh_agent_authd.ssl_agent_ca | basename }}"
+        -x "/var/ossec/etc/{{ wazuh_agent_authd.ssl_agent_cert | basename }}"
+        -k "/var/ossec/etc/{{ wazuh_agent_authd.ssl_agent_key | basename }}"
+        {% endif %}
+        {% if wazuh_agent_authd.ssl_auto_negotiate == 'yes' %}-a{% endif %}
+      register: agent_auth_output
+      vars:
+        agent_name: "{% if single_agent_name is defined %}{{ single_agent_name }}{% else %}{{ ansible_hostname }}{% endif %}"
+      when:
+        - check_keys.stat.exists == false or check_keys.stat.size == 0
+        - wazuh_managers.0.address is not none
+
+    - name: Linux | Verify agent registration
+      shell: echo {{ agent_auth_output }} | grep "Valid key created"
+      when:
+        - check_keys.stat.exists == false or check_keys.stat.size == 0
+        - wazuh_managers.0.address is not none
+
+  when: wazuh_agent_authd.enable == true
+  tags:
+    - config
+    - authd
+
+- name: Linux | Agent registration via rest-API
+  block:
+
+    - name: Retrieving rest-API Credentials
+      include_vars: api_pass.yml
+
+    - name: Linux | Create the agent key via rest-API
+      uri:
+        url: "{{ wazuh_managers.0.api_proto }}://{{ wazuh_managers.0.address }}:{{ wazuh_managers.0.api_port }}/agents/"
+        validate_certs: no
+        method: POST
+        body: {"name":"{{ agent_name }}"}
+        body_format: json
+        status_code: 200
+        headers:
+          Content-Type: "application/json"
+        user: "{{ wazuh_managers.0.api_user }}"
+        password: "{{ api_pass }}"
+      register: newagent_api
+      changed_when: newagent_api.json.error == 0
+      vars:
+        agent_name: "{% if single_agent_name is defined %}{{ single_agent_name }}{% else %}{{ inventory_hostname }}{% endif %}"
+      when:
+        - check_keys.stat.exists == false or check_keys.stat.size == 0
+        - wazuh_managers.0.address is not none
+      become: no
+
+    - name: Linux | Retieve new agent data via rest-API
+      uri:
+        url: "{{ wazuh_managers.0.api_proto }}://{{ wazuh_managers.0.address }}:{{ wazuh_managers.0.api_port }}/agents/{{ newagent_api.json.data.id }}"
+        validate_certs: no
+        method: GET
+        return_content: yes
+        user: "{{ wazuh_managers.0.api_user }}"
+        password: "{{ api_pass }}"
+      when:
+        - check_keys.stat.exists == false or check_keys.stat.size == 0
+        - wazuh_managers.0.address is not none
+        - newagent_api.json.error == 0
+      register: newagentdata_api
+      delegate_to: localhost
+      become: no
+
+    - name: Linux | Register agent (via rest-API)
+      command: /var/ossec/bin/manage_agents
+      environment:
+        OSSEC_ACTION: i
+        OSSEC_AGENT_NAME: '{{ newagentdata_api.json.data.name }}'
+        OSSEC_AGENT_IP: '{{ newagentdata_api.json.data.ip }}'
+        OSSEC_AGENT_ID: '{{ newagent_api.json.data.id }}'
+        OSSEC_AGENT_KEY: '{{ newagent_api.json.data.key }}'
+        OSSEC_ACTION_CONFIRMED: y
+      register: manage_agents_output
+      when:
+        - check_keys.stat.exists == false or check_keys.stat.size == 0
+        - wazuh_managers.0.address is not none
+        - newagent_api.changed
+      notify: restart wazuh-agent
+
+  when: wazuh_agent_authd.enable == false
+  tags:
+    - config
+    - api
+
+- name: Linux | Vuls integration deploy (runs in background, can take a while)
+  command: /var/ossec/wodles/vuls/deploy_vuls.sh {{ ansible_distribution|lower }} {{ ansible_distribution_major_version|int }}
+  args:
+    creates: /var/ossec/wodles/vuls/config.toml
+  async: 3600
+  poll: 0
+  when:
+    - wazuh_agent_config.vuls.disable != 'yes'
+    - ansible_distribution == 'Redhat' or ansible_distribution == 'CentOS' or ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian' or ansible_distribution == 'Oracle'
+  tags:
+    - init
+
+- name: Linux | Installing agent configuration (ossec.conf)
+  template: src=var-ossec-etc-ossec-agent.conf.j2
+            dest=/var/ossec/etc/ossec.conf
+            owner=root
+            group=ossec
+            mode=0644
+  notify: restart wazuh-agent
+  tags:
+    - init
+    - config
+
+- name: Linux | Installing local_internal_options.conf
+  template: src=var-ossec-etc-local-internal-options.conf.j2
+            dest=/var/ossec/etc/local_internal_options.conf
+            owner=root
+            group=ossec
+            mode=0640
+  notify: restart wazuh-agent
+  tags:
+    - init
+    - config
+
+- name: Linux | Ensure Wazuh Agent service is started and enabled
+  service:
+    name: wazuh-agent
+    enabled: yes
+    state: started
+
+- import_tasks: "RMRedHat.yml"
+  when: ansible_os_family == "RedHat"
+
+- import_tasks: "RMDebian.yml"
+  when: ansible_os_family == "Debian"

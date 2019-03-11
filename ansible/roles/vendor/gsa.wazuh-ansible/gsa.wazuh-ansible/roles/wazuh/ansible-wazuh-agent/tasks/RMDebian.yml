@@ -1,0 +1,5 @@
+---
+- name: Remove Wazuh repository (and clean up left-over metadata)
+  apt_repository:
+    repo: deb https://packages.wazuh.com/apt {{ ansible_distribution_release }} main
+    state: absent

@@ -1,0 +1,19 @@
+---
+logstash_create_config: true
+logstash_input_beats: false
+
+#You can introduce Multiples IPs
+# elasticseacrh_network_host: ["Localhost1", "Localhost2", "Localhost3", ...]
+elasticsearch_network_host: ["Localhost"]
+
+elasticsearch_http_port: "9200"
+elasticsearch_shards: 5
+elasticsearch_replicas: 1
+elastic_stack_version: 6.5.4
+
+logstash_ssl: false
+logstash_ssl_dir: /etc/pki/logstash
+logstash_ssl_certificate_file: ""
+logstash_ssl_key_file: ""
+
+logstash_install_java: yes

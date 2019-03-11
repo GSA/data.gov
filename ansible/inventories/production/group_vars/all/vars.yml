@@ -104,12 +104,6 @@ saml_idp_cert_fprint: "67:76:BB:87:FE:76:D6:4A:BE:19:3F:E2:B6:1A:49:06:AE:56:06:
 saml2_sp_public_key: "{{ vault_saml2_sp_public_key }}"
 saml2_sp_private_pem: "{{ vault_saml2_sp_private_pem }}"
 
-# td-agent
-elasticsearch_endpoint: "{{ vault_elasticsearch_endpoint }}"
-bsp_elasticsearch_endpoint: "{{ vault_bsp_elasticsearch_endpoint }}"
-bsp_shared_key: "{{ vault_bsp_shared_key }}"
-system: "es"
-
 # nessus
 nessus_agent_key: "{{ vault_nessus_agent_key }}"
 nessus_agent_host: "{{ vault_nessus_agent_host }}"
@@ -118,10 +112,6 @@ nessus_agent_group: "{{ vault_nessus_agent_group }}"
 
 # saxon license
 saxon_license: "{{ vault_saxon_license }}"
-
-# FluentD
-fluentd_aws_access_key_id: "{{ vault_fluentd_aws_access_key_id }}"
-fluentd_aws_secret_access_key: "{{ vault_fluentd_aws_secret_access_key }}"
 
 # ckan
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production

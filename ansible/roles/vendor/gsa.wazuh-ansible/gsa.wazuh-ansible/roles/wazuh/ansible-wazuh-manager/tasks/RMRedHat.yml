@@ -1,0 +1,10 @@
+---
+- name: RedHat/CentOS/Fedora | Remove NodeJS repository (and clean up left-over metadata)
+  yum_repository:
+    name: NodeJS
+    state: absent
+
+- name: RedHat/CentOS/Fedora | Remove Wazuh repository (and clean up left-over metadata)
+  yum_repository:
+    name: wazuh_repo
+    state: absent

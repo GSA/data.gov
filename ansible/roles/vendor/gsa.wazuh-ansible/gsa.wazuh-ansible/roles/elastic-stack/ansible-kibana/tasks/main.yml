@@ -1,0 +1,68 @@
+---
+- import_tasks: RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- import_tasks: Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Make sure Elasticsearch is running before proceeding.
+  wait_for: host={{ elasticsearch_network_host }} port={{ elasticsearch_http_port }} delay=3 timeout=300
+  tags: configure
+  ignore_errors: yes # fix
+
+- name: Reload systemd
+  systemd: daemon_reload=yes
+  ignore_errors: yes
+  when:
+    - not (ansible_distribution == "Amazon" and ansible_distribution_major_version == "NA")
+    - not (ansible_distribution == "Ubuntu" and ansible_distribution_version is version('15.04', '<'))
+    - not (ansible_distribution == "Debian" and ansible_distribution_version is version('8', '<'))
+
+- name: Kibana configuration
+  template:
+    src: kibana.yml.j2
+    dest: /etc/kibana/kibana.yml
+    owner: root
+    group: root
+    mode: 0664
+  notify: restart kibana
+  tags: configure
+
+- name: Checking Wazuh-APP version
+  shell: "grep -c -E 'version.*{{ elastic_stack_version }}' /usr/share/kibana/plugins/wazuh/package.json | xargs echo"
+  args:
+    removes: /usr/share/kibana/plugins/wazuh/package.json
+  register: wazuh_app_verify
+  changed_when: False
+  tags: install
+
+- name: Removing old Wazuh-APP
+  command: /usr/share/kibana/bin/kibana-plugin remove wazuh
+  when: wazuh_app_verify.stdout == "0"
+  tags: install
+
+- name: Removing bundles
+  file: path=/usr/share/kibana/optimize/bundles state=absent
+  when: wazuh_app_verify.stdout == "0"
+  tags: install
+
+- name: Install Wazuh-APP (can take a while)
+  shell: "/usr/share/kibana/bin/kibana-plugin install  https://packages.wazuh.com/wazuhapp/wazuhapp-{{ wazuh_version }}_{{ elastic_stack_version }}.zip"
+  environment:
+    NODE_OPTIONS: "--max-old-space-size=3072"
+  args:
+    creates: /usr/share/kibana/plugins/wazuh/package.json
+  notify: restart kibana
+  tags: install
+
+- name: Ensure Kibana started and enabled
+  service:
+    name: kibana
+    enabled: yes
+    state: started
+
+- import_tasks: RMRedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- import_tasks: RMDebian.yml
+  when: ansible_os_family == 'Debian'

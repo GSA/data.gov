@@ -1,0 +1,6 @@
+---
+- name: Install ElasticSearch
+  hosts: elasticsearch
+  roles:
+      - {role: /ansible/roles/vendor/gsa.wazuh-ansible/roles/elastic-stack/ansible-elasticsearch, elasticsearch_network_host: 'localhost'}
+      - { role: /ansible/roles/vendor/gsa.wazuh-ansible/elastic-stack/ansible-logstash, elasticsearch_network_host: 'localhost' }

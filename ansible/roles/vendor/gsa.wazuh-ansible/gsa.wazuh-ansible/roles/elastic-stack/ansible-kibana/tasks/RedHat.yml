@@ -1,0 +1,12 @@
+---
+- name: RedHat/CentOS/Fedora | Install Elastic repo
+  yum_repository:
+    name: elastic_repo
+    description: Elastic repository for 6.x packages
+    baseurl: https://artifacts.elastic.co/packages/6.x/yum
+    gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    gpgcheck: yes
+
+- name: RedHat/CentOS/Fedora | Install Kibana
+  package: name=kibana-{{ elastic_stack_version }} state=present
+  tags: install

@@ -1,0 +1,8 @@
+---
+# agentless_creds:
+# - type: ssh_integrity_check_linux
+#   frequency: 3600
+#   host: root@example.net
+#   state: periodic
+#   arguments: '/bin /etc/ /sbin'
+#   passwd: qwerty

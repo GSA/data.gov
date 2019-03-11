@@ -1,0 +1,5 @@
+---
+- name: Debian/Ubuntu | Removing Elasticsearch repository
+  apt_repository:
+    repo: deb https://artifacts.elastic.co/packages/5.x/apt stable main
+    state: absent

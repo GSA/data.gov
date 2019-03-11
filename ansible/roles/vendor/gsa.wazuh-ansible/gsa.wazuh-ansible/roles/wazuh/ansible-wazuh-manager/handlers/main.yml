@@ -1,0 +1,15 @@
+---
+- name: rebuild cdb_lists
+  command: /var/ossec/bin/ossec-makelists
+
+- name: restart wazuh-manager
+  service:
+    name: wazuh-manager
+    state: restarted
+    enabled: true
+
+- name: restart wazuh-api
+  service:
+    name: wazuh-api
+    state: restarted
+    enabled: true

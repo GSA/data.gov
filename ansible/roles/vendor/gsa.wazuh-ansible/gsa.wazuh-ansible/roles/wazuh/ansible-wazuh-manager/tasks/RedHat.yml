@@ -1,0 +1,131 @@
+---
+- name: RedHat/CentOS | Install Nodejs repo
+  yum_repository:
+    name: NodeJS
+    description: NodeJS-$releasever
+    baseurl: https://rpm.nodesource.com/pub_6.x/el/{{ansible_distribution_major_version}}/x86_64
+    gpgkey: https://rpm.nodesource.com/pub/el/NODESOURCE-GPG-SIGNING-KEY-EL
+    gpgcheck: yes
+  when:
+    - ansible_distribution_major_version|int > 5
+
+- name: Fedora | Install Nodejs repo
+  yum_repository:
+    name: NodeJS
+    description: NodeJS-$releasever
+    baseurl: https://rpm.nodesource.com/pub_6.x/fc/$releasever/x86_64
+    gpgkey: https://rpm.nodesource.com/pub/el/NODESOURCE-GPG-SIGNING-KEY-EL
+    gpgcheck: yes
+  when: ansible_distribution == 'Fedora'
+
+- name: AmazonLinux | Get Nodejs
+  shell: curl --silent --location https://rpm.nodesource.com/setup_8.x | bash -
+  args:
+    warn: no
+  when:
+    - ansible_distribution == "Amazon" and ansible_distribution_major_version == "NA"
+
+- name: AmazonLinux | Install Nodejs repo
+  yum:
+    name: nodejs
+    state: present
+  when:
+    - ansible_distribution == "Amazon" and ansible_distribution_major_version == "NA"
+
+- name: RedHat/CentOS/Fedora | Install Wazuh repo
+  yum_repository:
+    name: wazuh_repo
+    description: Wazuh repository
+    baseurl: https://packages.wazuh.com/3.x/yum/
+    gpgkey: https://packages.wazuh.com/key/GPG-KEY-WAZUH
+    gpgcheck: yes
+  when:
+    - (ansible_distribution_major_version|int > 5) or (ansible_distribution == "Amazon" and ansible_distribution_major_version == "NA")
+
+- name: RedHat/CentOS 5 | Install Wazuh repo
+  yum_repository:
+    name: wazuh_repo
+    description: Wazuh repository
+    baseurl: https://packages.wazuh.com/3.x/yum/5/
+    gpgkey: https://packages.wazuh.com/key/GPG-KEY-WAZUH
+    gpgcheck: yes
+  when:
+    - ansible_distribution_major_version|int == 5
+
+- name: RedHat/CentOS/Fedora | Install openscap
+  package: name=openscap-scanner state=present
+  tags:
+    - init
+  when: not (ansible_distribution == "Amazon" and ansible_distribution_major_version == "NA")
+
+- name: CentOS 6 | Install Software Collections (SCL) Repository
+  package: name=centos-release-scl state=present
+  when:
+    - ansible_distribution == 'CentOS' and ansible_distribution_major_version == '6'
+    - wazuh_manager_config.cluster.disable != 'yes'
+
+- name: RedHat 6 | Enabling Red Hat Software Collections (RHSCL)
+  command: yum-config-manager --enable {{ item }}
+  with_items:
+    - rhui-REGION-rhel-server-rhscl
+    - rhel-server-rhscl-6-rpms
+  when:
+    - ansible_distribution == 'RedHat' and  ansible_distribution_major_version == '6'
+    - wazuh_manager_config.cluster.disable != 'yes'
+
+- name: CentOS/RedHat 6 | Install Python 2.7
+  package: name=python27 state=present
+  when:
+    - ( ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat' ) and ansible_distribution_major_version == '6'
+    - wazuh_manager_config.cluster.disable != 'yes'
+
+- name: CentOS/RedHat 6 | Install python-cryptography module
+  shell: pip2.7 install cryptography
+  environment:
+    PATH: "/opt/rh/python27/root/usr/bin:{{ ansible_env.PATH }}"
+    LD_LIBRARY_PATH: "/opt/rh/python27/root/usr/lib64:/opt/rh/python27/root/usr/lib"
+  when:
+    - ( ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat' ) and ansible_distribution_major_version == '6'
+    - wazuh_manager_config.cluster.disable != 'yes'
+
+- name: RedHat/CentOS/Fedora | Install python-cryptography module
+  package: name=python-cryptography state=present
+  when:
+    - not (( ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat') and ansible_distribution_major_version == '6' )
+    - wazuh_manager_config.cluster.disable != 'yes'
+
+- name: RedHat/CentOS/Fedora | download Oracle Java RPM
+  get_url:
+    url: https://download.oracle.com/otn-pub/java/jdk/8u202-b08/1961070e4c9b4e26a04e7f5a083f551e/jre-8u202-linux-x64.rpm
+    dest: /tmp/jre-8-linux-x64.rpm
+    headers: 'Cookie:oraclelicense=accept-securebackup-cookie'
+  register: oracle_java_task_rpm_download
+  when:
+    - wazuh_manager_config.cis_cat.disable == 'no'
+    - wazuh_manager_config.cis_cat.install_java == 'yes'
+  tags:
+    - init
+
+- name: RedHat/CentOS/Fedora | Install Oracle Java RPM
+  package: name=/tmp/jre-8-linux-x64.rpm state=present
+  when:
+    - wazuh_manager_config.cis_cat.disable == 'no'
+    - wazuh_manager_config.cis_cat.install_java == 'yes'
+    - oracle_java_task_rpm_download is defined
+  tags:
+    - init
+
+- name: Set Distribution CIS filename for RHEL5/CentOS-5
+  set_fact:
+    cis_distribution_filename: cis_rhel5_linux_rcl.txt
+  when: ansible_os_family == "RedHat" and ansible_distribution_major_version == '5'
+
+- name: Set Distribution CIS filename for RHEL6/CentOS-6
+  set_fact:
+    cis_distribution_filename: cis_rhel6_linux_rcl.txt
+  when: ansible_os_family == "RedHat" and ansible_distribution_major_version == '6'
+
+- name: Set Distribution CIS filename for RHEL7/CentOS-7
+  set_fact:
+    cis_distribution_filename: cis_rhel7_linux_rcl.txt
+    when: (ansible_os_family == "RedHat" and ansible_distribution_major_version == '7') or (ansible_distribution == "Amazon" and ansible_distribution_major_version == "NA")

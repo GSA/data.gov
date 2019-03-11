@@ -1,0 +1,5 @@
+---
+- name: Debian/Ubuntu | Remove Filebeat repository (and clean up left-over metadata)
+  apt_repository:
+    repo: deb https://artifacts.elastic.co/packages/5.x/apt stable main
+    state: absent
