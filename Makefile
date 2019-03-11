@@ -1,5 +1,5 @@
 KITCHEN_SUITES := \
-	catalog-web \
+  catalog-web \
   catalog-harvester \
   crm-web \
   dashboard-web \
@@ -8,16 +8,24 @@ KITCHEN_SUITES := \
   inventory-web \
   jekyll \
   logrotate \
-  web-proxy
+  web-proxy \
+  unattended-upgrades
 
 MOLECULE_SUITES := \
-	software/ckan/native-login
+  software/ci \
+  software/ckan/native-login \
+  software/common/tls
 
 # Create test-kitchen-<suite> targets
 KITCHEN_SUITE_TARGETS := $(patsubst %,test-kitchen-%,$(KITCHEN_SUITES))
 
 # Create test-molecule-<suite> targets
 MOLECULE_SUITE_TARGETS := $(patsubst %,test-molecule-%,$(MOLECULE_SUITES))
+
+# Used for parallelization on CircleCI. See `circleci tests glob`.
+# https://circleci.com/docs/2.0/parallelism-faster-jobs/
+circleci-glob:
+	@echo $(KITCHEN_SUITE_TARGETS) $(MOLECULE_SUITE_TARGETS) | sed -e 's/ /\n/g'
 
 update-vendor:
 	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml
@@ -45,7 +53,7 @@ $(KITCHEN_SUITE_TARGETS):
 
 $(MOLECULE_SUITE_TARGETS):
 	cd ansible/roles/$(subst test-molecule-,,$@) && \
-	molecule test
+	molecule test --all
 
 test: $(KITCHEN_SUITE_TARGETS) $(MOLECULE_SUITE_TARGETS)
 

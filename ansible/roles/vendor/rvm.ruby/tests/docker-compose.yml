@@ -1,0 +1,26 @@
+version: "3"
+services:
+  centos6:
+    build: ./dockerfiles/centos6
+    cap_add:
+      - ALL
+  centos7:
+    build: ./dockerfiles/centos7
+    cap_add:
+      - ALL
+  debian8:
+    build: ./dockerfiles/debian8
+    cap_add:
+      - ALL
+  debian9:
+    build: ./dockerfiles/debian9
+    cap_add:
+      - ALL
+  ubuntu14:
+    build: ./dockerfiles/ubuntu14
+    cap_add:
+      - ALL
+  ubuntu16:
+    build: ./dockerfiles/ubuntu16
+    cap_add:
+      - ALL

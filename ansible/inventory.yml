@@ -1,23 +1,14 @@
 ---
 - name: Install CKAN Stack
   hosts: all
-  remote_user: ubuntu
-  become: yes
-  become_method: sudo
+  serial: 1
   vars:
     app_type: inventory
 
   roles:
-    - {role: software/common/misc, tags: ['ami-fix', 'misc']}
-    - software/ubuntu/common
-    - {role: software/common/secops-ssh, tags: ['bsp', 'secops']}
-    - {role: software/common/trendmicro, tags: ['bsp', 'trendmicro', 'skip_in_kitchen']}
-    - {role: software/common/ansible-postfix, tags: ['ami-fix', 'postfix']}
-    - {role: monitoring/fluentd/kernel, tags: ['bsp', 'fluentd'] }
-    - {role: monitoring/fluentd/limits, tags: ['bsp', 'fluentd'] }
-    - {role: monitoring/fluentd/td-agent, tags: ['bsp', 'fluentd', 'skip_in_kitchen'] }
+    - {role: software/common/tls, tags: ['tls']}
     - software/ckan/common
-    - role: gsa.datagov-deploy-apache2
+    - {role: gsa.datagov-deploy-apache2, tags: ['apache']}
     - {role: software/ckan/postgresql, tags: ['db', 'db-install']}
     - {role: software/ckan/solr, tags: ['solr']}
     - {role: software/inventory/ckan-app, tags: ['deploy']}

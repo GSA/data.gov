@@ -1,0 +1,16 @@
+---
+- hosts: '!jumpbox'
+  serial: 1
+  tasks:
+    - name: Check if reboot is required
+      stat: path=/var/run/reboot-required
+      register: reboot_required
+
+    - name: Reboot host
+      command: reboot
+      when: force_reboot is defined or reboot_required.stat.exists
+      register: rebooted
+
+    - name: Wait for host to come up
+      local_action: wait_for host={{ ansible_ssh_host }} port=22 delay=60 state=started
+      when: rebooted is not skipped

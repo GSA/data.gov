@@ -22,6 +22,22 @@ and enable them with `a2ensite`.
 
 ### Variables
 
+**`apache2_ssl_certificate_file`** string (default: none)
+
+File path to the TLS/SSL certificate file.
+
+**`apache2_ssl_certificate_key_file`** string (default: none)
+
+File path to the TLS/SSL certificate key file.
+
+**`apache2_ssl_ciphers`** string (default: `HIGH:!aNULL:!MD5`)
+
+SSL cipher string to support for mod_ssl.
+
+**`apache2_ssl_versions`** array<string> (default: `["TLSv1.1", "TLSv1.2"]`)
+
+SSL versions to support for mod_ssl.
+
 **`python_home`** (default: `/usr`)
 
 The prefix path to where python is installed. If you installed your own version
@@ -31,7 +47,6 @@ virtualenv.
 
 ## Prerequisites for development
 
-- [Ruby](https://www.ruby-lang.org/) 2.3+
 - [Docker](https://www.docker.com/)
 - [Python](https://www.python.org/) 2.7 or 3.5+ in a virtualenv
 
@@ -46,7 +61,10 @@ Run the tests.
 
     $ make test
 
-You can debug the container after it runs. See `kitchen help` for additional
-commands.
+To run the ssl scenario playbook with molecule.
 
-    $ bundle exec kitchen login
+    $ molecule converge -s ssl
+
+For more information on how to use
+[Molecule](https://molecule.readthedocs.io/en/latest/) for development, see [our
+wiki](https://github.com/GSA/datagov-deploy/wiki/Developing-Ansible-roles-with-Molecule).

@@ -1,43 +1,27 @@
---- # crm Web AMI
-
-#- name: Initial prechecks
-#  hosts: crm-web
-#  remote_user: ubuntu
-#
-#  roles:
-#  - { role: crm-sudo-0-precheck, tags: [precheck] }
-
+---
 - name: Provisioning Web AMI
   hosts: crm-web
-  remote_user: ubuntu
-  become: yes
-  become_method: sudo
-
+  serial: 1
   roles:
+  # TODO remove the die-no-tags role. You should be able to run a role playbook
+  # with no tags and have it be idempotent.
   - software/common/die-no-tags
-  - { role: software/common/misc, tags: [provision, misc] }
+  - { role: software/common/tls, tags: [provision, tls] }
   - { role: software/common/php-common, tags: [provision] }
   - { role: geerlingguy.git, tags: [provision] }
-  - { role: geerlingguy.nginx, tags: [provision] }
-  - { role: software/common/nginx-fixes, tags: [provision] }
+  - { role: geerlingguy.nginx, tags: [nginx, provision] }
   - { role: geerlingguy.php, tags: [php, provision] }
   - { role: geerlingguy.php-mysql, tags: [php, php-mysql, provision] }
   - { role: geerlingguy.php-memcached, tags: [php, php-memcached, provision] }
   - { role: geerlingguy.composer, tags: [php, provision] }
   - { role: chusiang.vim-and-vi-mode, tags: [provision, vim] }
   - { role: software/crm/crm-sudo-2-init, tags: [provision, deploy, deploy-rollback] }
-  - { role: software/common/secops-ssh, tags: [provision, secops, prod] }
-  - { role: software/common/trendmicro, tags: [provision, trendmicro, prod, skip_in_kitchen] }
-  - { role: software/common/ansible-postfix, tags: [provision, postfix, prod] }
-  - { role: monitoring/fluentd/kernel, tags: [frontend, harvester, fluentd, prod] }
-  - { role: monitoring/fluentd/limits, tags: [frontend, harvester, fluentd, prod] }
-  - { role: monitoring/fluentd/td-agent, tags: [frontend, harvester, fluentd, prod, skip_in_kitchen] }
 
 
 - name: Deploying crm
   hosts: crm-web
-  remote_user: ubuntu
-
+  serial: 1
+  become: no
   roles:
   - { role: software/crm/crm-deploy, tags: [provision, deploy] }
   - { role: software/common/datagov-deploy-rollback, tags: [deploy-rollback] }
@@ -45,17 +29,14 @@
 
 - name: Cleanup
   hosts: crm-web
-  remote_user: ubuntu
-  become: yes
-  become_method: sudo
-
+  serial: 1
   roles:
   - { role: software/common/php-fixes, tags: [php, provision, deploy] }
   - { role: software/crm/crm-sudo-3-cleanup, tags: [provision, deploy, deploy-rollback] }
 
 - name: CRM Migration
   hosts: crm-web
-  remote_user: ubuntu
-
+  serial: 1
+  become: no
   roles:
   - { role: software/crm/crm-migrations, tags: [provision, deploy, migrate] }

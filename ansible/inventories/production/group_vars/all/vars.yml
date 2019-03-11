@@ -1,4 +1,62 @@
 ---
+default_tls_host_key: "{{ vault_default_tls_host_key }}"
+default_tls_host_certificate: |-
+  -----BEGIN CERTIFICATE-----
+  MIIJ0DCCCLigAwIBAgIKIARatQACAAA80zANBgkqhkiG9w0BAQsFADBvMRMwEQYK
+  CZImiZPyLGQBGRYDZ292MRMwEQYKCZImiZPyLGQBGRYDZ3NhMRIwEAYKCZImiZPy
+  LGQBGRYCZHMxEzARBgoJkiaJk/IsZAEZFgNlbnQxGjAYBgNVBAMTEUVDT0gyUy1J
+  U1NDQTAxKDEpMB4XDTE5MDIwODE2MDk1NVoXDTIyMDIwNzE2MDk1NVowgecxCzAJ
+  BgNVBAYTAlVTMR0wGwYDVQQIExREaXN0cmljdCBvZiBDb2x1bWJpYTETMBEGA1UE
+  BxMKV2FzaGluZ3RvbjEoMCYGA1UEChMfR2VuZXJhbCBTZXJ2aWNlcyBBZG1pbmlz
+  dHJhdGlvbjEqMCgGA1UECxMhVGVjaG5vbG9neSBUcmFuc2Zvcm1hdGlvbiBTZXJ2
+  aWNlMS4wLAYDVQQDEyVjYXRhbG9nYi13ZWIxcC5wcm9kLW9jc2l0LmJzcC5nc2Eu
+  Z292MR4wHAYJKoZIhvcNAQkBFg9kYXRhZ292QGdzYS5nb3YwggEiMA0GCSqGSIb3
+  DQEBAQUAA4IBDwAwggEKAoIBAQCmEluKp/TfnE3gsNQQy5/3zlLc7IXq1h1S1sw5
+  xotA5qzSoYuaVXHaywA4zrdgoIAcyo5r5dMow7/EC+cRFg27O3/svLmR5Ta5l7mc
+  EJgX0DWs0heW0gDX5kZn/KS7RCgd14YhHsBRdvRiK/4ilV927s863FwQSlazTM4I
+  XhOm/Tb1N+BZ5qkBhLNL/GUMnfberEc58/5dgIyxIsJZq3LK8w7vVhU7PHJarlT4
+  5Ap9bgqfCQVPjswZADuP/peSZdZrPZ3Gp2u4VvFHKp9NoIXugbeIjuA/oOhUPSHn
+  g+DPVn9jLJkF89rQvguVq37UlisiVeq/M1efp7u+ii3NyHUHAgMBAAGjggXzMIIF
+  7zATBgNVHSUEDDAKBggrBgEFBQcDATCCBDYGA1UdEQSCBC0wggQpgiVjYXRhbG9n
+  Yi13ZWIxcC5wcm9kLW9jc2l0LmJzcC5nc2EuZ292giVjYXRhbG9nYi13ZWIycC5w
+  cm9kLW9jc2l0LmJzcC5nc2EuZ292gipjYXRhbG9nLWhhcnZlc3RlcjFwLnByb2Qt
+  b2NzaXQuYnNwLmdzYS5nb3aCKmNhdGFsb2ctaGFydmVzdGVyMnAucHJvZC1vY3Np
+  dC5ic3AuZ3NhLmdvdoIqY2F0YWxvZy1oYXJ2ZXN0ZXIzcC5wcm9kLW9jc2l0LmJz
+  cC5nc2EuZ292gipjYXRhbG9nLWhhcnZlc3RlcjRwLnByb2Qtb2NzaXQuYnNwLmdz
+  YS5nb3aCKmNhdGFsb2ctaGFydmVzdGVyNXAucHJvZC1vY3NpdC5ic3AuZ3NhLmdv
+  doIqY2F0YWxvZy1oYXJ2ZXN0ZXI2cC5wcm9kLW9jc2l0LmJzcC5nc2EuZ292gidj
+  YXRhbG9ncHViLXdlYjFwLnByb2Qtb2NzaXQuYnNwLmdzYS5nb3aCJGNhdGFsb2ct
+  d2ViMXAucHJvZC1vY3NpdC5ic3AuZ3NhLmdvdoIkY2F0YWxvZy13ZWIycC5wcm9k
+  LW9jc2l0LmJzcC5nc2EuZ292giBjcm0td2ViMXAucHJvZC1vY3NpdC5ic3AuZ3Nh
+  LmdvdoIgY3JtLXdlYjJwLnByb2Qtb2NzaXQuYnNwLmdzYS5nb3aCJmRhc2hib2Fy
+  ZC13ZWIxcC5wcm9kLW9jc2l0LmJzcC5nc2EuZ292giZkYXNoYm9hcmQtd2ViMnAu
+  cHJvZC1vY3NpdC5ic3AuZ3NhLmdvdoIlZGF0YWdvdi1qdW1wMXAucHJvZC1vY3Np
+  dC5ic3AuZ3NhLmdvdoIkZGF0YWdvdnNvbHIxcC5wcm9kLW9jc2l0LmJzcC5nc2Eu
+  Z292giRkYXRhZ292c29scjJwLnByb2Qtb2NzaXQuYnNwLmdzYS5nb3aCJGRhdGFn
+  b3Zzb2xyM3AucHJvZC1vY3NpdC5ic3AuZ3NhLmdvdoIkZGF0YWdvdnNvbHI0cC5w
+  cm9kLW9jc2l0LmJzcC5nc2EuZ292giVkYXRhZ292c29scm0xcC5wcm9kLW9jc2l0
+  LmJzcC5nc2EuZ292giVkYXRhZ292c29scm0ycC5wcm9kLW9jc2l0LmJzcC5nc2Eu
+  Z292giJpbnZlbnRvcnkxcC5wcm9kLW9jc2l0LmJzcC5nc2EuZ292giJpbnZlbnRv
+  cnkycC5wcm9kLW9jc2l0LmJzcC5nc2EuZ292giNzdGF0aWMtd2ViMXAucHJvZC1v
+  Y3NpdC5ic3AuZ3NhLmdvdoImd29yZHByZXNzLXdlYjFwLnByb2Qtb2NzaXQuYnNw
+  LmdzYS5nb3aCJndvcmRwcmVzcy13ZWIycC5wcm9kLW9jc2l0LmJzcC5nc2EuZ292
+  MB0GA1UdDgQWBBQWbDalEvxyVVSW4xzMEI1bp5qVqTAfBgNVHSMEGDAWgBRJTMnw
+  /2SFmsdiK/7LKLQoTEUiGDBMBgNVHR8ERTBDMEGgP6A9hjtodHRwOi8vZ3NhcGtp
+  LmVudC5kcy5nc2EuZ292L2dzYWNlcnRzL0VDT0gyUy1JU1NDQTAxKDIpLmNybDCB
+  pwYIKwYBBQUHAQEEgZowgZcwZQYIKwYBBQUHMAKGWWh0dHA6Ly9nc2Fwa2kuZW50
+  LmRzLmdzYS5nb3YvZ3NhY2VydHMvRUNPSDJTLUlTU0NBMDEuZW50LmRzLmdzYS5n
+  b3ZfRUNPSDJTLUlTU0NBMDEoMikuY3J0MC4GCCsGAQUFBzABhiJodHRwOi8vZ3Nh
+  b2NzcC5lbnQuZHMuZ3NhLmdvdi9vY3NwMAsGA1UdDwQEAwIFoDA8BgkrBgEEAYI3
+  FQcELzAtBiUrBgEEAYI3FQiDia8vhZ6gfYL5gw+GsI4NhJ+XET6B6pw1hO9mAgFk
+  AgERMBsGCSsGAQQBgjcVCgQOMAwwCgYIKwYBBQUHAwEwDQYJKoZIhvcNAQELBQAD
+  ggEBABcpOKkjW7OwJgTkKZwcURcBKojyJ+edRv6WOO15iXottRQEvxmzpoByu4rc
+  dG30hK4YhmsuMN04qUhdrEzWzLyT4satvsd8HZqWfjFDTswulemXSAH6kGVUbrKI
+  8olQy+7be8y3ZWdhEdXmW3en77QEbhFZ9JqeRk9kRijarOZMHQmfwxQ/8fztPG3i
+  1S7Ql20TJ5x0RjP7GqoikUH+qYf9lYyDplMoFHcxorLpDO0xuqdK+OomfWix33zd
+  AIsuRGQLEPaEEKNjgUjASZ1e4F2h+k7+0+3HU/gtE9DxC17iBkyQx9nmNI2YipZU
+  +4fphueHY6jET9id30vhn8H6Fd0=
+  -----END CERTIFICATE-----
+
 
 # public urls
 urls_public:
@@ -21,7 +79,7 @@ secops_user_public_key: "{{ vault_secops_user_public_key }}"
 trendmicro_policy_id_app: "{{ vault_trendmicro_policy_id_app }}"
 trendmicro_policy_id_web: "{{ vault_trendmicro_policy_id_web }}"
 
-# CodeIgniter pre-approved admin emails
+# List of CodeIgniter pre-approved admin emails
 codeigniter_pre_approved_admins: "{{ vault_codeigniter_pre_approved_admins }}"
 
 # App environment
@@ -66,10 +124,11 @@ saxon_license: "{{ vault_saxon_license }}"
 fluentd_aws_access_key_id: "{{ vault_fluentd_aws_access_key_id }}"
 fluentd_aws_secret_access_key: "{{ vault_fluentd_aws_secret_access_key }}"
 
-# web self-signed stuff
-web_crt: "{{ vault_web_crt }}"
-web_key: "{{ vault_web_key }}"
-
 # ckan
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
 who_secure: True
+
+# Automated CI tests
+ci_inventory: inventories/production
+ci_ssh_config_host: '*.prod-ocsit.bsp.gsa.gov'
+ci_deploy_version: master

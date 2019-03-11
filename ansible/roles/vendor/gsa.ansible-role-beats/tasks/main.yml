@@ -1,0 +1,11 @@
+---
+# tasks file for beats
+
+- include_tasks: deps.yml
+  tags:
+    - beats-install
+
+- include_tasks: install.yml
+  with_items: "{{ products }}"
+  tags:
+    - beats-install

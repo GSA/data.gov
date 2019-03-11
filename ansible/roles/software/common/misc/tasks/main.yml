@@ -1,4 +1,5 @@
 ---
+# TODO I think this can be removed. Looks like a fix for an old AMI?
 
 # temporary fix for ntpd issues
 # Ansible `rm` module does not accept wildcards * yet

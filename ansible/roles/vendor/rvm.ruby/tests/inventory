@@ -1,0 +1,9 @@
+[centos]
+tests_centos6_1 ansible_connection=docker
+tests_centos7_1 ansible_connection=docker
+[debian]
+tests_debian8_1 ansible_connection=docker
+tests_debian9_1 ansible_connection=docker
+[ubuntu]
+tests_ubuntu14_1 ansible_connection=docker
+tests_ubuntu16_1 ansible_connection=docker

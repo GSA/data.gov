@@ -8,9 +8,20 @@ catalog-harvester1p.prod-ocsit.bsp.gsa.gov usage=main_worker
 catalog-harvester2p.prod-ocsit.bsp.gsa.gov usage=misc_worker
 catalog-harvester[3:6]p.prod-ocsit.bsp.gsa.gov usage=qa_worker
 
+[jumpbox]
+datagov-jump1p.prod-ocsit.bsp.gsa.gov
+
 [solr]
 datagovsolrm1p.prod-ocsit.bsp.gsa.gov
 datagovsolr[1:2]p.prod-ocsit.bsp.gsa.gov
+
+# These hosts are part of our solr upgrade but are not
+# associated with the current solr role. We include them
+# here so that we can keep track of them and keep them
+# updated.
+[solr5]
+datagovsolrm2p.prod-ocsit.bsp.gsa.gov
+datagovsolr[3:4]p.prod-ocsit.bsp.gsa.gov
 
 [inventory-web]
 inventory[1:2]p.prod-ocsit.bsp.gsa.gov
@@ -21,8 +32,16 @@ crm-web[1:2]p.prod-ocsit.bsp.gsa.gov
 [dashboard-web]
 dashboard-web[1:2]p.prod-ocsit.bsp.gsa.gov
 
+[jekyll-web]
+static-web1p.prod-ocsit.bsp.gsa.gov
+
 [wordpress-web]
 wordpress-web[1:2]p.prod-ocsit.bsp.gsa.gov
 
-[jekyll-web]
-static-web1p.prod-ocsit.bsp.gsa.gov
+[web:children]
+catalog-web
+crm-web
+dashboard-web
+inventory-web
+jekyll-web
+wordpress-web

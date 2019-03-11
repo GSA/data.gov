@@ -1,9 +1,5 @@
 ---
 - name: Provision Jumpbox
   hosts: jumpbox
-  remote_user: ubuntu
-  become: yes
-  become_method: sudo
-
   roles:
-    - { role: software/jumpbox }
+    - {role: software/jumpbox, tags: [jumpbox]}

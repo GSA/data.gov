@@ -1,0 +1,49 @@
+---
+- name: Check ci_inventory is defined
+  fail:
+    msg: ci_inventory is not defined
+  when: ci_inventory is not defined
+
+- name: Create the ci user
+  user:
+    name: "{{ ci_username }}"
+    comment: "Continuous integration for ansible playbooks"
+    state: present
+    system: true
+    home: "{{ ci_home_dir }}"
+
+- name: Install git
+  include_role:
+    name: geerlingguy.git
+
+- name: Configure SSH directory
+  file: state=directory path={{ ci_home_dir }}/.ssh owner={{ ci_username }} group={{ ci_username }}  mode=0700
+
+- name: Copy SSH configurtion
+  template: src=ssh_config dest={{ ci_home_dir }}/.ssh/config owner={{ ci_username }} group={{ ci_username }}
+
+- name: Copy the CI script
+  copy: src=ci.sh dest={{ ci_home_dir }}/ci.sh owner={{ ci_username }} group={{ ci_username }} mode=0755
+
+- name: Clone the datagov-deploy repo
+  git:
+    umask: "0022"
+    repo: "https://github.com/GSA/datagov-deploy.git"
+    dest: "{{ ci_home_dir }}/datagov-deploy"
+    version: "{{ ci_deploy_version }}"
+  become: true
+  become_user: "{{ ci_username }}"
+
+- name: Ensure log file exists
+  # We use copy force=false for idempotence
+  copy: >-
+    force=false content="" dest={{ ci_log_dir }}/ci.log owner={{ ci_username }} group={{ ci_username }}
+
+- name: Add the CI script to crontab
+  cron:
+    name: "Continuous integration for ansible playbooks"
+    minute: "0"
+    hour: "*/6"
+    job: "{{ ci_home_dir }}/ci.sh {{ ci_inventory }} >> {{ ci_log_dir }}/ci.log 2>&1"
+  become: true
+  become_user: "{{ ci_username }}"

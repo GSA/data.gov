@@ -1,0 +1,16 @@
+sudo: required
+language: python
+services: docker
+
+cache: pip
+
+install:
+  - pip install ansible docker
+  - ansible-galaxy install -r tests/requirements.yml -p tests/roles/
+
+script:
+  - ansible --version
+  - tests/test.sh
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

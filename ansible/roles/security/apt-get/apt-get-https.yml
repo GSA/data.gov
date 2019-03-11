@@ -1,6 +1,0 @@
----
-- name: ensure latest http-transport-https
-  apt:
-    pkg: apt-transport-https
-    state: latest
-    update_cache: yes

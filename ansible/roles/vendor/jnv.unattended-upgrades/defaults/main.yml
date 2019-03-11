@@ -1,0 +1,122 @@
+---
+# Cache update time for apt module
+unattended_cache_valid_time: 3600
+
+#Unattended-Upgrade::Origins-Pattern
+# Automatically upgrade packages from these origin patterns
+# e.g.: 'o=Debian,a=stable', 'o=Debian,a=stable-updates'
+#
+# Left unset, distribution-specific defaults will be used through
+# __unattended_origins_patterns variable only if this variable
+#   is not provided externally
+# REFS https://github.com/ansible/ansible/issues/8121
+#unattended_origins_patterns: []
+
+#Unattended-Upgrade::Package-Blacklist
+# List of packages to not update
+unattended_package_blacklist: []
+
+#Unattended-Upgrade::AutoFixInterruptedDpkg
+# On a unclean dpkg exit unattended-upgrades will run
+#   dpkg --force-confold --configure -a
+# The default is true, to ensure updates keep getting installed
+unattended_autofix_interrupted_dpkg: true
+
+#Unattended-Upgrade::MinimalSteps
+# Split the upgrade into the smallest possible chunks so that
+# they can be interrupted with SIGUSR1. This makes the upgrade
+# a bit slower but it has the benefit that shutdown while a upgrade
+# is running is possible (with a small delay)
+unattended_minimal_steps: false
+
+#Unattended-Upgrade::InstallOnShutdown
+# Install all unattended-upgrades when the machine is shuting down
+# instead of doing it in the background while the machine is running
+# This will (obviously) make shutdown slower
+unattended_install_on_shutdown: false
+
+#Unattended-Upgrade::Mail
+# Send email to this address for problems or packages upgrades
+# If empty or unset then no email is sent, make sure that you
+# have a working mail setup on your system. A package that provides
+# 'mailx' must be installed.
+unattended_mail: false
+
+#Unattended-Upgrade::MailOnlyOnError
+# Set this value to "true" to get emails only on errors. Default
+# is to always send a mail if Unattended-Upgrade::Mail is set
+unattended_mail_only_on_error: false
+
+#Unattended-Upgrade::Remove-Unused-Dependencies
+# Do automatic removal of new unused dependencies after the upgrade
+# (equivalent to apt-get autoremove)
+unattended_remove_unused_dependencies: false
+
+#Unattended-Upgrade::Automatic-Reboot
+# Automatically reboot *WITHOUT CONFIRMATION* if a
+# the file /var/run/reboot-required is found after the upgrade
+unattended_automatic_reboot: false
+
+#Unattended-Upgrade::Automatic-Reboot-Time
+# If automatic reboot is enabled and needed, reboot at the specific
+# time instead of immediately
+unattended_automatic_reboot_time: false
+
+#Unattended-Upgrade::IgnoreAppsRequireRestart
+# Do upgrade application even if it requires restart after upgrade
+# I.e. "XB-Upgrade-Requires: app-restart" is set in the debian/control file
+unattended_ignore_apps_require_restart: false
+
+### APT::Periodic configuration
+# Snatched from /usr/lib/apt/apt.systemd.daily
+
+#APT::Periodic::Update-Package-Lists "0";
+# - Do "apt-get update" automatically every n-days (0=disable)
+unattended_update_package_list: 1
+
+#APT::Periodic::Download-Upgradeable-Packages "0";
+# - Do "apt-get upgrade --download-only" every n-days (0=disable)
+#unattended_download_upgradeable: 0
+
+#APT::Periodic::AutocleanInterval "0";
+# - Do "apt-get autoclean" every n-days (0=disable)
+unattended_autoclean_interval: 7
+
+#APT::Periodic::CleanInterval "0";
+# - Do "apt-get clean" every n-days (0=disable)
+#unattended_clean_interval: 0
+
+#APT::Periodic::Verbose "0";
+# - Send report mail to root
+#     0:  no report             (or null string)
+#     1:  progress report       (actually any string)
+#     2:  + command outputs     (remove -qq, remove 2>/dev/null, add -d)
+#     3:  + trace on
+#unattended_verbose: 0
+
+## Cron systems only
+
+#APT::Periodic::RandomSleep
+# When the apt job starts, it will sleep for a random period between 0
+# and APT::Periodic::RandomSleep seconds
+# The default value is "1800" so that the script will stall for up to 30
+# minutes (1800 seconds) so that the mirror servers are not crushed by
+# everyone running their updates all at the same time
+# Kept undefined to allow default (1800)
+#unattended_random_sleep: 0
+
+#Dpkg::Options
+# Provide dpkg options that take effect during unattended upgrades.
+# By default no flags are appended. Configuration file changes can
+# block installation of certain packages. Passing the flags
+# "--force-confdef" and "--force-confold" will ensure updates are applied
+# and old configuration files are preserved.
+unattended_dpkg_options: []
+
+# unattended_dpkg_options:
+#   - "--force-confdef"
+#   - "--force-confold"
+
+
+# Use apt bandwidth limit feature, this example limits the download speed to 70kb/sec
+#unattended_dl_limit: 70

@@ -23,9 +23,11 @@
 - src: nickhammond.logrotate
 - src: nleutner.newrelic-php
 - src: newrelic.newrelic-infra
-- src: rvm_io.ruby
-  version: v2.0.1
-
+  version: 0.6.1
+- src: jnv.unattended-upgrades
+- src: rvm.ruby
+  name: rvm.ruby
+  version: v2.1.2
 - src: https://github.com/GSA/ansible-elastalert
   version: develop
   name: gsa.elastalert
@@ -33,6 +35,10 @@
   name: gsa.ansible-os-ubuntu-14
 - src: 'https://github.com/GSA/datagov-deploy-apache2'
   name: gsa.datagov-deploy-apache2
+  version: ssl-certificate
 - src: 'https://github.com/GSA/datagov-deploy-redis'
   version: master
   name: gsa.datagov-deploy-redis
+- src: 'https://github.com/GSA/ansible-role-beats'
+  version: master
+  name: gsa.ansible-role-beats

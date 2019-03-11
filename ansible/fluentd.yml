@@ -1,9 +1,0 @@
----
-- hosts: all
-  become: yes
-  become_method: sudo
-  remote_user: ubuntu
-  roles:
-    - monitoring/fluentd/kernel
-    - monitoring/fluentd/limits
-    - monitoring/fluentd/td-agent

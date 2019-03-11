@@ -2,9 +2,7 @@
 
 - name: Install ElasticSearch
   hosts: elasticsearch
-  become: yes
-  become_method: sudo
-  remote_user: ubuntu
+  serial: 1
   roles:
   - ANXS.apt
   - geerlingguy.java
@@ -12,27 +10,20 @@
 
 - name: Install Kibana
   hosts: kibana
-  become: yes
-  become_method: sudo
-  remote_user: ubuntu
+  serial: 1
   roles:
   - geerlingguy.kibana
 
 - name: Install EFK nginx proxy
   hosts: efk_nginx
-  become: yes
-  become_method: sudo
-  remote_user: ubuntu
+  serial: 1
   roles:
   - role: geerlingguy.nginx
-  - role: software/common/nginx-fixes
   - role: monitoring/efk-nginx
 
 - name: Install Elastalert
   hosts: elasticsearch
-  become: yes
-  become_method: sudo
-  remote_user: ubuntu
+  serial: 1
   roles:
     - role: ANXS.build-essential
     - role: gsa.elastalert

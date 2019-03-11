@@ -1,25 +1,15 @@
---- # WordPress Web AMI
-
-#- name: Initial prechecks
-#  hosts: wordpress-web
-#  remote_user: ubuntu
-#
-#  roles:
-#  - { role: datagov-sudo-0-precheck, tags: [precheck] }
-
+---
 - name: Provisioning WordPress Web AMI
   hosts:  "{{ datagov_web_hosts | default('wordpress-web') }}"
-  remote_user: ubuntu
-  become: yes
-  become_method: sudo
-
+  serial: 1
   roles:
+  # TODO remove the die-no-tags role. You should be able to run a role playbook
+  # with no tags and have it be idempotent.
   - software/common/die-no-tags
-  - { role: software/common/misc, tags: [provision, misc] }
+  - { role: software/common/tls, tags: [provision, tls] }
   - { role: software/common/php-common, tags: [provision] }
   - { role: geerlingguy.git, tags: [git, provision] }
   - { role: geerlingguy.nginx, tags: [nginx, provision] }
-  - { role: software/common/nginx-fixes, tags: [nginx, provision] }
   - { role: geerlingguy.php, tags: [php, provision] }
   - { role: geerlingguy.php-mysql, tags: [php, php-mysql, provision] }
   - { role: geerlingguy.php-memcached, tags: [php, php-memcached, provision] }
@@ -27,17 +17,11 @@
   - { role: geerlingguy.composer, tags: [php, provision] }
   - { role: chusiang.vim-and-vi-mode, tags: [provision, vim] }
   - { role: software/wordpress/datagov-sudo-2-init, tags: [provision, deploy, deploy-rollback] }
-  - { role: software/common/secops-ssh, tags: [provision, secops, prod] }
-  - { role: software/common/trendmicro, tags: [provision, trendmicro, prod] }
-  - { role: software/common/ansible-postfix, tags: [provision, postfix, prod] }
-  - { role: monitoring/fluentd/kernel, tags: [frontend, harvester, fluentd, prod] }
-  - { role: monitoring/fluentd/limits, tags: [frontend, harvester, fluentd, prod] }
-  - { role: monitoring/fluentd/td-agent, tags: [frontend, harvester, fluentd, prod] }
 
 - name: Deploying Data.gov
   hosts: wordpress-web
-  remote_user: ubuntu
-
+  serial: 1
+  become: no
   roles:
   - { role: software/wordpress/datagov-deploy, tags: [deploy, provision] }
   - { role: software/common/datagov-deploy-rollback, tags: [deploy-rollback] }
@@ -45,10 +29,7 @@
 
 - name: Cleanup
   hosts: wordpress-web
-  remote_user: ubuntu
-  become: yes
-  become_method: sudo
-
+  serial: 1
   roles:
   - { role: software/common/php-fixes, tags: [php, provision, deploy] }
   - { role: software/wordpress/datagov-sudo-3-cleanup, tags: [provision, deploy, deploy-rollback, cleanup] }

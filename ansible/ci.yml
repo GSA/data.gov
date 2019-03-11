@@ -1,0 +1,17 @@
+---
+
+- name: Setup CI
+  hosts: jumpbox
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  roles:
+    - role: software/ci
+    - role: nickhammond.logrotate
+      logrotate_scripts:
+        - name: ci
+          path: /var/log/ci.log
+          options:
+            - daily
+            - rotate 7

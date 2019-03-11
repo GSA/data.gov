@@ -1,7 +1,6 @@
 .PHONY: setup test
 
 setup:
-	bundle install
 	pip install -r requirements.txt
 
 lint:
@@ -9,4 +8,4 @@ lint:
 	ansible-lint -v .
 
 test:
-	bundle exec kitchen test --concurrency 2
+	molecule test --all

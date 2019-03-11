@@ -1,7 +1,0 @@
----
-
-- name: Remove default conf
-  file:
-    path: /etc/nginx/sites-enabled/default.conf
-    state: absent
-  notify: reload nginx

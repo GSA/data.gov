@@ -1,0 +1,58 @@
+---
+
+- name: Detect rvm binary
+  stat: path='{{ rvm1_rvm }}'
+  register: rvm_binary
+
+- name: Detect rvm installer
+  stat: path='{{ rvm1_temp_download_path }}/rvm-installer.sh'
+  register: rvm_installer
+
+- name: Detect current rvm version
+  command: '{{ rvm1_rvm}} version'
+  changed_when: False
+  register: rvm_current_version
+  when: rvm_binary.stat.exists
+
+- name: Install rvm installer
+  get_url:
+    url: '{{ rvm1_rvm_latest_installer }}'
+    dest: '{{ rvm1_temp_download_path }}/rvm-installer.sh'
+    mode: 0755
+  when: not rvm_installer.stat.exists
+
+- name: Import GPG keys from keyservers
+  shell: 'gpg --batch --keyserver {{ item }} --recv-keys {{ rvm1_gpg_keys }}'
+  changed_when: False
+  check_mode: False
+  with_items: '{{ rvm1_gpg_key_servers }}'
+  register: gpg_import
+  when: not ansible_check_mode and rvm1_gpg_keys != '' and (gpg_import is not defined or gpg_import.rc != 0)
+  ignore_errors: True
+
+- name: Was GPG import from keyservers succesfull?
+  set_fact: gpg_imported_from={{ item.item }}
+  when: "'rc' in item and item.rc == 0"
+  with_items: "{{ gpg_import.results }}"
+
+- name: Import GPG keys from rvm.io, if keyservers failed
+  shell: 'curl -sSL https://rvm.io/{{ item }} | gpg --batch --import -'
+  with_items:
+    - mpapis.asc
+    - pkuczynski.asc
+  when: not ansible_check_mode and rvm1_gpg_keys != '' and gpg_imported_from is not defined
+
+- name: Install rvm
+  shell: >
+    {{ rvm1_temp_download_path }}/rvm-installer.sh {{ rvm1_rvm_version }}
+    --path {{ rvm1_install_path }} {{ rvm1_install_flags }}
+  when: not rvm_binary.stat.exists
+
+- name: Update rvm
+  shell: '{{ rvm1_rvm }} get {{ rvm1_rvm_version }} && {{ rvm1_rvm }} reload'
+  changed_when: False
+  when: rvm_binary.stat.exists and rvm1_rvm_check_for_updates
+
+- name: Configure rvm
+  command: '{{ rvm1_rvm }} autolibs {{ rvm1_autolib_mode }}'
+  when: not rvm_binary.stat.exists

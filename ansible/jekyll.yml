@@ -1,19 +1,16 @@
 ---
 - name: Install Jekyll Apps
   hosts: jekyll-web
-  remote_user: ubuntu
-  become: yes
-  become_method: sudo
-
+  serial: 1
   vars:
-    ruby_version: "2.3.0"
+    ruby_version: "2.3.8"
     gemset: "jekyll"
     jekyll_apps:
       - {
-          name: "sdg-indicators",
-          repo: "https://github.com/GSA/sdg-indicators/",
-          config: "_config_prod.yml",
-          branch: "master",
+          name: "sdg-indicators-usa",
+          repo: "https://github.com/GSA/sdg-indicators-usa/",
+          config: "_config.yml",
+          branch: "prod-pages",
           port: 8000,
           s3_bucket: "{{ s3_bucket_sdg | default('') }}",
           secret_key: "{{ jekyll_webhook_secret | default('') }}"
@@ -38,18 +35,13 @@
         }
 
   roles:
-    - software/ubuntu/common
-    - {role: software/common/secops-ssh, tags: ['secops'] }
-    - {role: software/common/trendmicro, tags: ['trendmicro', 'skip_in_kitchen'] }
-    - {role: monitoring/fluentd/kernel, tags: ['frontend', 'harvester', 'fluentd'] }
-    - {role: monitoring/fluentd/limits, tags: ['frontend', 'harvester', 'fluentd'] }
-    - {role: monitoring/fluentd/td-agent, tags: ['frontend', 'harvester', 'fluentd', 'skip_in_kitchen'] }
-    - {role: software/common/misc, tags: ['misc'] }
-    - role: gsa.datagov-deploy-apache2
-    - role: rvm_io.ruby
+    - {role: software/common/tls, tags: ['tls']}
+    - {role: gsa.datagov-deploy-apache2, tags: ['apache']}
+    - role: rvm.ruby
       rvm1_user: root
       rvm1_install_path: /usr/local/rvm
       rvm1_install_flags: '--auto-dotfiles'
       rvm1_rvm_check_for_updates: False
       rvm1_rubies: ['ruby-{{ruby_version}}']
-    - software/jekyll
+    - role: software/jekyll
+      jekyll_ruby_version: '{{ ruby_version }}'
