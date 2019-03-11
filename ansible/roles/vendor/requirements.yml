@@ -45,3 +45,4 @@
 - src: 'https://github.com/GSA/wazuh-ansible'
   version: master
   name: gsa.wazuh-ansible
+- src: elastic.elasticsearch
