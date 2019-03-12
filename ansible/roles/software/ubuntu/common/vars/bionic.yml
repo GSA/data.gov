@@ -2,11 +2,13 @@
 common_os_packages:
   - acl
   - atool
+  - cron
   - git
   - htop
   - ntp
   - reboot-notifier
   - ruby
+  - systemd
 
   # TODO these should probably be moved to a more specific role, not sure why
   # they are needed in common
