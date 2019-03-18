@@ -31,6 +31,14 @@
   when: item.removed is undefined
   with_items: "{{ jumpbox_operators }}"
 
+- name: Add SSH public key directory structure for ubuntu
+  file: >-
+    path=/home/ubuntu/.ssh
+    state=directory
+    mode=0700
+    owner=ubuntu
+    group=ubuntu
+
 - name: Copy SSH public key
   authorized_key:
     user: "{{ item.username }}"
@@ -39,6 +47,26 @@
     state: "present"
   when: item.removed is not defined
   with_items: "{{ jumpbox_operators }}"
+
+- name: Update ssh config with inventory for auto completion
+  template:
+    src: ssh_config.j2
+    dest: /home/{{ item.username }}/.ssh/config
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
+    mode: 0640
+    force: no
+  when: item.removed is not defined
+  with_items: "{{ jumpbox_operators }}"
+
+- name: Update ssh config with inventory for auto completion for ubuntu user
+  template:
+    dest: /home/ubuntu/.ssh/config
+    src: ssh_config.j2
+    owner: ubuntu
+    group: ubuntu
+    mode: 0640
+    force: no
 
 - name: Update the system /etc/sudoers file
   template: >-
