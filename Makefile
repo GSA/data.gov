@@ -8,7 +8,6 @@ KITCHEN_SUITES := \
   inventory-web \
   jekyll \
   logrotate \
-  web-proxy \
   unattended-upgrades
 
 MOLECULE_SUITES := \
