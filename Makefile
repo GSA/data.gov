@@ -1,6 +1,5 @@
 KITCHEN_SUITES := \
   catalog-web \
-  catalog-harvester \
   crm-web \
   dashboard-web \
   efk-nginx \
