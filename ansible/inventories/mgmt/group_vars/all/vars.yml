@@ -5,5 +5,13 @@ trendmicro_policy_id_mgmt_web: "{{ vault_trendmicro_policy_id_mgmt_web }}"
 # Elasticsearch/Kibana shared creds
 kibana_elasticsearch_username: "{{ vault_kibana_elasticsearch_username }}"
 kibana_elasticsearch_password: "{{ vault_kibana_elasticsearch_password }}"
+elasticsearch_name: "{{ vault_elasticsearch_name }}"
 elasticsearch_port: 9200
 kibana_port: 5601
+
+# Nginx basic auth
+basic_auth_user: "{{ vault_basic_auth_user }}"
+basic_auth_hash: "{{ vault_basic_auth_hash }}"
+
+# Elastalert Slack webhook
+slack_webhook_url: "{{ vault_slack_webhook_url }}"
