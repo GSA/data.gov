@@ -16,5 +16,5 @@ es_config:
 es_api_host: "{{ groups.elasticsearch.0 }}"
 
 #elastalert
-elastalert_version: v0.1.8
+elastalert_version: v0.1.38
 slack_webhook_url: "{{ vault_slack_webhook_url }}" 
