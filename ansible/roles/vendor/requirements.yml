@@ -13,8 +13,9 @@
 - src: geerlingguy.php-mysql
 - src: sbaerlocher.wp-cli
 - src: geerlingguy.java
-- src: geerlingguy.elasticsearch
-- src: geerlingguy.kibana
+- src: elastic.elasticsearch
+- src: https://github.com/GSA/ansible-role-kibana
+  name: gsa.ansible-role-kibana
 - src: geerlingguy.pip
 - src: ANXS.apt
 - src: ANXS.build-essential
