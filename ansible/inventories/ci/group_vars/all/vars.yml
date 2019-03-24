@@ -1,4 +1,5 @@
 ---
+datagov_enable_postgresql_role: true
 datagov_sandbox_env: ci
 
 default_tls_host_key: "{{ vault_default_tls_host_key }}"
