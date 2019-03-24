@@ -1,0 +1,28 @@
+---
+- name: Prepare
+  hosts: all
+  tasks:
+    - name: install os dependencies
+      apt: name={{ packages }} state=present
+      vars:
+        packages:
+          - postgis
+          - postgresql
+          - python-psycopg2
+
+    - name: install postgis-scripts for trusty
+      apt: name=postgresql-9.3-postgis-scripts state=present
+      when: ansible_distribution_release == "trusty"
+
+    - name: ensure postgresql server is started
+      service: name=postgresql state=started enabled=true
+
+    - name: create a master db user for the test
+      postgresql_user: name=master_user role_attr_flags=SUPERUSER password=masterpassword state=present
+      become: true
+      become_user: postgres
+
+    - name: create a db for the master user for the test
+      postgresql_db: name=master_user owner=master_user state=present
+      become: true
+      become_user: postgres
