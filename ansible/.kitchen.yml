@@ -105,6 +105,9 @@ suites:
         redis_password: fake-redis-password
         ckan_site_domain: http://test-kitchen-datagov.local
         catalog_ckan_db_host: localhost
+        catalog_ckan_redis_host: localhost
+        catalog_ckan_solr_host: localhost
+        pycsw_db_server: localhost
       ansible_extra_flags: >-
         --tags=frontend,ami-fix,bsp --skip-tags=solr,db,cron,skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
   - name: crm-web
@@ -156,7 +159,11 @@ suites:
       hosts: inventory-web
       playbook: inventory.yml
       extra_vars:
+        datastore_db_server: localhost
         inventory_ckan_db_host: localhost
+        inventory_ckan_solr_host: localhost
+        inventory_ckan_bucket_name: s3bucket
+        inventory_ckan_bucket_prefix: s3bucket-prefix-
       ansible_extra_flags: >-
         --skip-tags="solr,db,deploy-rollback,skip_in_kitchen" <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
   - name: jekyll
