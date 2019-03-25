@@ -1,19 +1,20 @@
 ---
+- name: include distribution-specific variables
+  include_vars: "{{ ansible_distribution_release }}.yml"
+
 - name: prepare packages needed for harvester
-  action: apt pkg={{item}} state=installed
-  with_items:
-    - default-jdk
-    - tomcat6
+  apt: name="{{ catalog_harvester_fgdc2iso_apt_packages }}" state=present
 
   # Nessus 12085
 - name: remove default tomcat files
-  file: dest=/var/lib/tomcat6/webapps/ROOT state=absent
+  file: dest={{ catalog_harvester_tomcat_directory }}/webapps/ROOT state=absent
 
-- name: copy all needed files
-  action: copy src={{item}} dest=/{{item}} mode=0644
-  with_items:
-    - etc/cron.d/clean-tmp-files
-    - var/lib/tomcat6/webapps/fgdc2iso.war
+- name: copy clean-tmp-files cron
+  copy: src=etc/cron.d/clean-tmp-files dest=/etc/cron.d/clean-tmp-files mode=0644
+
+- name: copy fgdc2iso app
+  copy: src=var/lib/tomcat6/webapps/fgdc2iso.war dest={{ catalog_harvester_tomcat_directory }}/webapps/fgdc2iso.war mode=0644
+  notify: restart tomcat
 
 - name: copy saxon-license.lic
   action: template src={{item}} dest=/{{item}} mode=0644
