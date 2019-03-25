@@ -32,5 +32,4 @@
 
     - {role: software/ckan/fix-ckan-tracking, tags: ['frontend']}
 
-    - {role: software/ec2/ec2-catalog, tags: ['frontend', 'harvester']}
     - {role: software/common/datagov-deploy-rollback, tags: ['deploy-rollback']}
