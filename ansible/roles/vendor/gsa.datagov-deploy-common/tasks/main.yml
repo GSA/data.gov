@@ -42,7 +42,6 @@
     line='GRUB_DISABLE_OS_PROBER=true'
     state=present
   tags:
-    - skip_in_kitchen
     - notest
 
 - name: install GSA CA certificates

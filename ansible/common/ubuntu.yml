@@ -2,4 +2,5 @@
 - name: Common tasks for Ubuntu hosts
   hosts: all
   roles:
-    - {role: software/ubuntu/common, tags: [ubuntu]}
+    - role: gsa.datagov-deploy-common
+      tags: common
