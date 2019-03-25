@@ -20,6 +20,7 @@ provisioner:
     group_vars:
       catalog-web:
         app_type: catalog
+        catalog_bucket_name: s3bucket
         catalog_ckan_redis_host: localhost
         catalog_db_user: ckan
         catalog_db_name: ckan
