@@ -5,7 +5,6 @@ admin-catalog-bsp.data.gov
 ag.data.gov
 agriculture.data.gov
 alpha.data.gov
-api.data.gov
 businesss.data.gov
 businessusa.data.gov
 catalog.data.gov
