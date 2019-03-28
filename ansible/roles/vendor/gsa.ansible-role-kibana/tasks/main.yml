@@ -6,18 +6,20 @@
   when: ansible_os_family == 'Debian'
 
 - name: Install Kibana.
-  package: name=kibana state=present
+  package:
+    name: "{{ kibana_package }}"
+    state: "{{ kibana_package_state }}"
 
 - name: Ensure Kibana is started and enabled at boot.
   service:
     name: kibana
-    state: started
-    enabled: yes
+    state: "{{ kibana_service_state }}"
+    enabled: "{{ kibana_service_enabled }}"
 
 - name: Copy Kibana configuration.
   template:
-    src: kibana.yml.j2
-    dest: "/etc/kibana/kibana.yml"
+    src: "{{ kibana_config_template }}"
+    dest: "{{ kibana_config_file_path }}"
     owner: root
     group: root
     mode: 0644

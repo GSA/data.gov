@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+molecule = "*"
+docker-py = "*"
+ansible = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "2.7"
+
+[scripts]
+test ="molecule test"
+test_debug ="molecule --debug test"

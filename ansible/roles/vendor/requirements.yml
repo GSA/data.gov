@@ -13,8 +13,7 @@
 - src: geerlingguy.php-mysql
 - src: sbaerlocher.wp-cli
 - src: geerlingguy.java
-- src: geerlingguy.elasticsearch
-- src: geerlingguy.kibana
+- src: elastic.elasticsearch
 - src: geerlingguy.pip
 - src: ANXS.apt
 - src: ANXS.build-essential
@@ -42,3 +41,5 @@
 - src: 'https://github.com/GSA/ansible-role-beats'
   version: master
   name: gsa.ansible-role-beats
+- src: 'https://github.com/GSA/ansible-role-kibana'
+  name: gsa.ansible-role-kibana  
