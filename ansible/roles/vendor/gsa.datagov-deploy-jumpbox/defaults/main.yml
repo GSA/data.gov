@@ -1,0 +1,5 @@
+---
+jumpbox_operators: []
+# - username: 'user1'
+#   public_key: 'ssh-rsa defaul-user-public-key-user1'
+#   email: email@example.com
