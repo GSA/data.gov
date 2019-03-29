@@ -35,6 +35,9 @@
 - src: 'https://github.com/GSA/datagov-deploy-apache2'
   name: gsa.datagov-deploy-apache2
   version: ssl-certificate
+- src: 'https://github.com/GSA/datagov-deploy-common'
+  version: v1.0.0
+  name: gsa.datagov-deploy-common
 - src: 'https://github.com/GSA/datagov-deploy-redis'
   version: master
   name: gsa.datagov-deploy-redis

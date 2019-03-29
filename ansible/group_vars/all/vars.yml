@@ -48,11 +48,9 @@ php_webserver_daemon: nginx
 
 
 # new python version
-python_version_number: 2.7.10
-python_version_name: Python-{{ python_version_number }}
-python_version_url: https://www.python.org/ftp/python/{{ python_version_number}}/{{ python_version_name }}.tgz
-python_version_directory: /usr/local/lib/python{{ python_version_number }}
-python_home: "{{ python_version_directory }}"
+common_python_version_number: 2.7.10
+common_python_version_directory: /usr/local/lib/python{{ python_version_number }}
+python_home: "{{ common_python_version_directory }}"
 
 # Disabling MySQL server (we need only client on this machine)
 mysql_enabled_on_startup: false
