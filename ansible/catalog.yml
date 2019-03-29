@@ -15,6 +15,9 @@
     - {role: software/ckan/common, tags: ['frontend', 'harvester']}
     - {role: gsa.datagov-deploy-apache2, tags: ['frontend', 'apache']}
     - {role: software/ckan/postgresql, tags: ['frontend', 'harvester', 'db', 'db-install']}
+    - role: gsa.datagov-deploy-postgresql
+      tags: ['frontend', 'db']
+      when: datagov_enable_postgresql_role is defined
     - {role: software/ckan/solr, tags: ['frontend', 'harvester', 'solr']}
     - {role: software/catalog/ckan-app, tags: ['frontend', 'harvester', 'deploy']}
     - {role: software/catalog/ckan-db-setup, tags: ['frontend', 'harvester', 'db', 'db-setup']}

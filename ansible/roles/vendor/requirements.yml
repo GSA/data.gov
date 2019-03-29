@@ -38,6 +38,9 @@
 - src: 'https://github.com/GSA/datagov-deploy-common'
   version: v1.0.0
   name: gsa.datagov-deploy-common
+- src: https://github.com/GSA/datagov-deploy-postgresql
+  version: v1.0.0
+  name: gsa.datagov-deploy-postgresql
 - src: 'https://github.com/GSA/datagov-deploy-redis'
   version: master
   name: gsa.datagov-deploy-redis
