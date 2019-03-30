@@ -30,6 +30,9 @@ default_tls_host_certificate: |-
   Bbue8FC5sfTkY70oq6O17iUyTx0hgbDbm78=
   -----END CERTIFICATE-----
 
+nessus_agent_disable: true
+fluentd_disable: true
+trendmicro_disable: true
 
 # public urls
 urls_public:
