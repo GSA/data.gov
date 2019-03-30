@@ -1,0 +1,34 @@
+---
+datagov_service: catalog
+
+# project path
+project_source_rollback_path: /usr/lib/ckan-rollback
+project_source_new_code_path: /usr/lib/ckan-new
+current_source_symlink: /usr/lib/ckan
+project_index_path: /usr/lib/ckan
+
+# db credentials
+ckan_db_server: "{{ vault_ckan_db_server }}"
+catalog_ckan_db_host: "{{ ckan_db_server }}"
+pycsw_db_server: "{{ ckan_db_server }}"
+catalog_db_user: catalog_master
+catalog_db_pass: "{{ vault_catalog_db_pass }}"
+catalog_db_name: catalog_db
+catalog_pycsw_db_name: pycsw_db
+
+# other
+catalog_ckan_redis_host: catalog-harvester1tf.internal.bionic.datagov.us
+catalog_ckan_solr_host: datagovsolr1tf.internal.bionic.datagov.us
+env: local
+redis_password: "{{ vault_redis_pass }}"
+
+# max login
+saml2_site_url: https://catalog.bionic.datagov.us
+
+# secrets
+who_ini_secret: "{{ vault_who_ini_secret }}"
+ckan_instance_secret: "{{ vault_ckan_instance_secret }}"
+ckan_instance_uuid: "{{ vault_ckan_instance_secret }}"
+
+# token_dat for Google Analytics
+token_dat: "{{ vault_token_dat }}"
