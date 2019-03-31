@@ -1,0 +1,41 @@
+---
+# Additinal php configs
+
+- name: Configure secure cookie sessions
+  copy: >-
+    src=php_fpm_session.ini
+    dest=/etc/php/{{ php_major_minor_version }}/fpm/conf.d/90-session.ini
+    mode=0644
+    owner=root
+    group=root
+  notify: reload php-fpm
+
+# This is mostly for dashboard
+- name: Configure cli for long-running worker jobs
+  template: >-
+    src=php_cli_worker.ini.j2
+    dest=/etc/php/{{ php_major_minor_version }}/cli/conf.d/90-worker.ini
+    mode=0644
+    owner=root
+    group=root
+  notify: reload php-fpm
+
+- name: Configure php-fpm pool
+  lineinfile:
+    dest: "/etc/php/{{ php_major_minor_version }}/fpm/pool.d/www.conf"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  with_items:
+    - regexp: "^.?request_terminate_timeout.?=.+$"
+      line: "request_terminate_timeout={{ php_fpm_request_terminate_timeout }}"
+  notify: reload php-fpm
+  when: php_fpm_request_terminate_timeout is defined
+
+# TODO this should be done with update-alternatives
+- name: Set default php-cli
+  file:
+    src: /usr/bin/php{{ php_major_minor_version }}
+    dest: /usr/bin/php
+    state: link
+  notify: restart php-fpm

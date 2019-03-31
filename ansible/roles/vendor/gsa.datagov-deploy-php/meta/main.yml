@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: Data.gov <datagovhelp@gsa.gov>
+  description: |
+    Configure a PHP web application.
+  license: CC0-1.0
+  min_ansible_version: 2.0
+  platforms:
+    - name: Ubuntu
+      versions:
+        - trusty
+        - bionic
+
+dependencies: []

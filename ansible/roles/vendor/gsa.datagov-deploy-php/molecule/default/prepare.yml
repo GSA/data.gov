@@ -1,0 +1,21 @@
+---
+- name: Prepare
+  hosts: all
+  pre_tasks:
+    - name: Add repository for PHP
+      apt_repository:
+        repo: "ppa:ondrej/php"
+      register: ppa
+
+    - name: Update Apt
+      apt: update_cache=yes
+      when: ppa is changed
+
+  roles:
+    - role: geerlingguy.nginx
+    - role: geerlingguy.php
+      vars:
+        php_default_version_debian: "7.0"
+        php_enable_php_fpm: true
+        php_max_execution_time: 30
+        php_webserver_daemon: nginx
