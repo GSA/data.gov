@@ -35,6 +35,7 @@ nginx_extra_conf_options: |-
 
 
 # PHP
+php_default_version_debian: "7.0"
 php_enable_php_fpm: true
 php_expose_php: 0
 php_fpm_pm_max_children: 200

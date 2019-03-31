@@ -1,5 +1,0 @@
----
-- src: geerlingguy.nginx
-  version: 2.6.2
-- src: geerlingguy.php
-  version: 3.7.0

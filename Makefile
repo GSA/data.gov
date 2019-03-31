@@ -13,7 +13,6 @@ MOLECULE_SUITES := \
   software/ci \
   software/catalog/harvest \
   software/ckan/native-login \
-  software/common/php-fixes \
   software/common/tls \
   software/jumpbox
 
