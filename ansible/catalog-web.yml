@@ -1,0 +1,38 @@
+---
+- name: Catalog web stack
+  hosts: catalog-web
+  serial: 1
+  vars:
+      app_type: catalog
+
+  roles:
+    - role: software/common/tls
+      tags:
+        - tls
+
+    - role: software/ckan/common
+
+    - role: gsa.datagov-deploy-apache2
+      tags:
+        - apache
+
+    - role: gsa.datagov-deploy-postgresql
+      tags:
+        - database
+      when: datagov_enable_postgresql_role is defined
+
+    - role: software/catalog/ckan-app
+      tags:
+        - app-deploy
+
+    - role: software/catalog/pycsw-app
+      tags:
+        - pycsw
+
+    - role: software/ckan/saml2
+      tags:
+        - saml2
+
+    - role: software/ckan/fix-ckan-tracking
+      tags:
+        - frontend
