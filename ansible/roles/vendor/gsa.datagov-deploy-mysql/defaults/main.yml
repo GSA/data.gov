@@ -1,0 +1,8 @@
+---
+mysql_database_name: "{{ mysql_app_name }}"
+mysql_user_name: "{{ mysql_app_name }}"
+mysql_enable_extensions: []
+mysql_connection_use_socket: false
+
+mysql_login_user: root
+mysql_login_host: localhost

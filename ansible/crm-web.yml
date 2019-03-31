@@ -1,4 +1,19 @@
 ---
+- name: Configure database for application
+  hosts: crm-web
+  roles:
+    - role: gsa.datagov-deploy-mysql
+      vars:
+        mysql_user_name: "{{ crm_database_user }}"
+        mysql_user_password: "{{ crm_database_password }}"
+        mysql_login_host: "{{ crm_database_host }}"
+        mysql_login_user: "{{ crm_database_master_user }}"
+        mysql_login_password: "{{ crm_database_master_password }}"
+      delegate_to: localhost
+      run_once: true
+      tags:
+        - skip_kitchen_test
+
 - name: Provisioning Web AMI
   hosts: crm-web
   serial: 1

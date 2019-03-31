@@ -1,0 +1,35 @@
+---
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.6
+    environment:
+      PIPENV_VENV_IN_PROJECT: 1
+    working_directory: ~/datagov-deploy-mysql
+    steps:
+      - checkout
+      - setup_remote_docker
+      - restore_cache:
+          keys:
+            - v1-pip-{{ checksum "Pipfile.lock" }}
+            - v1-pip-
+      - run:
+          name: install python dependencies
+          command: |
+            pip install --user --upgrade pipenv
+            pipenv install --dev
+      - save_cache:
+          key: v1-pip-{{ checksum "Pipfile.lock" }}
+          paths:
+            - .venv
+      - run:
+          name: test
+          command: pipenv run molecule test --all
+
+
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - build

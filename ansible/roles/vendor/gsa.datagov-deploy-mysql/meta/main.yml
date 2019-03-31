@@ -1,0 +1,13 @@
+---
+galaxy_info:
+  author: Data.gov <datagovhelp@gsa.gov>
+  description: Configures a MySQL application database.
+  license: CC0-1.0
+  min_ansible_version: 1.2
+  platforms:
+    - name: Ubuntu
+      versions:
+        - trusty
+        - bionic
+
+dependencies: []

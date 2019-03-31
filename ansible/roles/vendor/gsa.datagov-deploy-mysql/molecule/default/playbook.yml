@@ -1,0 +1,10 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: datagov-deploy-mysql
+      vars:
+        mysql_app_name: myapp
+        mysql_user_password: fakepassword
+        mysql_login_user: masteruser
+        mysql_login_password: fakemasterpassword

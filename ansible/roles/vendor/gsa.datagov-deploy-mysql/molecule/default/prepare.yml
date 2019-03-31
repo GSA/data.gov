@@ -1,0 +1,30 @@
+---
+- name: Prepare
+  hosts: all
+  tasks:
+    - name: install test depedencies
+      apt: name={{ packages }} state=present
+      vars:
+        packages:
+          - mysql-server
+          - python-pip
+
+    # service module succeeds, but mysql isn't actually
+    # started. Use the command module instead.
+    - name: start mysql
+      command: service mysql start
+      when: ansible_distribution_release == "trusty"
+
+    - name: start mysql
+      service: name=mysql state=started
+      when: ansible_distribution_release != "trusty"
+
+    - name: install ansible dependencies
+      pip: name=PyMySQL state=present
+
+    - name: set root password for remote login to mysql
+      mysql_user: >-
+        name=masteruser
+        password=fakemasterpassword
+        priv='*.*:ALL,GRANT'
+        login_unix_socket=/var/run/mysqld/mysqld.sock

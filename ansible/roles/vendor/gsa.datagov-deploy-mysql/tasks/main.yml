@@ -1,0 +1,19 @@
+---
+- name: create database for application
+  mysql_db: >-
+    name={{ mysql_database_name }}
+    encoding=utf8
+    login_user={{ mysql_login_user }}
+    login_host={{ mysql_login_host }}
+    login_password={{ mysql_login_password }}
+    state=present
+
+- name: create database user for application
+  mysql_user: >-
+    name={{ mysql_user_name }}
+    password={{ mysql_user_password }}
+    priv='{{ mysql_database_name }}.*:ALL'
+    login_user={{ mysql_login_user }}
+    login_host={{ mysql_login_host }}
+    login_password={{ mysql_login_password }}
+    state=present
