@@ -87,8 +87,11 @@
     line: SSLCipherSuite {{ apache2_ssl_ciphers }}
   notify: reload apache
 
+- name: ensure tmpfiles.d exists
+  file: dest=/etc/tmpfiles.d mode=0755 owner=root group=root state=directory
+
 - name: Create /var/run/apache2 with correct umask on startup
-  copy: src=usr_lib_tmpfiles_d_apache2.conf dest=/usr/lib/tmpfiles.d/apache2.conf mode=0644 owner=root group=root
+  copy: src=etc_tmpfiles_d_apache2.conf dest=/etc/tmpfiles.d/apache2.conf mode=0644 owner=root group=root
 
 - name: enable apache2 mod_wsgi config to use custom python
   template: src=etc/apache2/conf-enabled/wsgi-custom-python.conf.j2 dest=/etc/apache2/conf-enabled/wsgi-custom-python.conf mode=0644
