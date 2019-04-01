@@ -1,6 +1,6 @@
 ---
-- import_playbook: common/ubuntu.yml
-- import_playbook: common/secops.yml
-- import_playbook: common/trendmicro.yml
-- import_playbook: common/misc.yml
-- import_playbook: common/postfix.yml
+- import_playbook: common-ubuntu.yml
+- import_playbook: common-secops.yml
+- import_playbook: common-trendmicro.yml
+- import_playbook: common-misc.yml
+- import_playbook: common-postfix.yml
