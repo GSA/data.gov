@@ -1,4 +1,6 @@
 ---
+ckan_session_store_type: memory
+
 # role url
 url_readonly: "{{ urls_public.catalog }}"
 url_writable: https://admin-catalog.data.gov
