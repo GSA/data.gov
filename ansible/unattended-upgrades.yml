@@ -6,4 +6,5 @@
     - 'o=Ubuntu,a=${distro_codename}'
     - 'o=Ubuntu,a=${distro_codename}-updates'
     unattended_package_blacklist: []
-    unattended_mail: 'datagovhelp@gsa.gov'
+    unattended_mail: "{{ datagov_team_email }}"
+    unattended_mail_only_on_error: true

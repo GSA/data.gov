@@ -1,4 +1,6 @@
 ---
+datagov_environment: test
+
 default_tls_host_key: "{{ vault_default_tls_host_key }}"
 default_tls_host_certificate: |-
   -----BEGIN CERTIFICATE-----
@@ -78,9 +80,6 @@ elasticsearch_endpoint: "{{ vault_elasticsearch_endpoint }}"
 bsp_elasticsearch_endpoint: "{{ vault_bsp_elasticsearch_endpoint }}"
 bsp_shared_key: "{{ vault_bsp_shared_key }}"
 system: "es"
-
-# newrelic
-nrinfragent_license_key: "{{ vault_nrinfragent_license_key }}"
 
 # nessus
 nessus_agent_key: "{{ vault_nessus_agent_key }}"

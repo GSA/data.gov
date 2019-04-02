@@ -5,12 +5,14 @@
     name: apt-transport-https
     state: present
 
-- name: Add repository for PHP 7.0
+- name: Add repository for PHP
   apt_repository:
     repo: "ppa:ondrej/php"
+  register: ppa
 
 - name: Update Apt
   apt: update_cache=yes
+  when: ppa is changed
 
 - name: Installing unzip (required by composer)
   apt:
