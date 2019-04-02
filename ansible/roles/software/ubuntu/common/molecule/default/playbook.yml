@@ -3,3 +3,5 @@
   hosts: all
   roles:
     - role: common
+      vars:
+        datagov_team_email: team@example.com
