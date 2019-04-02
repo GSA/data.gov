@@ -53,7 +53,9 @@ jobs:
             - v1-bundle-
       - run:
           name: Install dependencies
-          command: bundle install --path vendor/bundle
+          command: |
+            sudo gem install bundler
+            bundle install --path vendor/bundle
       - save_cache:
           key: v1-bundle-{{ checksum "Gemfile.lock" }}
           paths:
