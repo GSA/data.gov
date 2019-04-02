@@ -1,0 +1,4 @@
+---
+- src: 'https://github.com/GSA/datagov-deploy-redis'
+  version: master
+  name: gsa.datagov-deploy-redis

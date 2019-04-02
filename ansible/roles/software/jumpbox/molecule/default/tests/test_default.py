@@ -32,17 +32,3 @@ def test_removed_user(host):
     passwd = host.file('/etc/passwd')
 
     assert not passwd.contains(removeduser)
-
-
-def test_ssh_allowusers(host):
-    ssh_config = host.file('/etc/ssh/sshd_config')
-
-    assert ssh_config.contains(r'AllowUsers .*%s' % testuser), \
-        '%s user should be allowed ssh access' % testuser
-    assert not ssh_config.contains(r'AllowUsers .*%s' % removeduser), \
-        '%s user should not be allowed ssh access' % removeduser
-
-    assert ssh_config.contains(r'AllowGroups .*%s' % testuser), \
-        '%s group should be allowed ssh access' % testuser
-    assert not ssh_config.contains(r'AllowGroups .*%s' % removeduser), \
-        '%s group should not be allowed ssh access' % removeduser

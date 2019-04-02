@@ -1,0 +1,8 @@
+---
+catalog_harvester_fgdc2iso_apt_packages:
+  - cron
+  - default-jdk
+  - tomcat6
+
+catalog_harvester_tomcat_directory: /var/lib/tomcat6
+catalog_harvester_tomcat_service: tomcat6

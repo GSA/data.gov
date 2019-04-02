@@ -106,15 +106,6 @@ suites:
         ckan_site_domain: http://test-kitchen-datagov.local
       ansible_extra_flags: >-
         --tags=frontend,ami-fix,bsp --skip-tags=solr,db,cron,skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
-  - name: catalog-harvester
-    provisioner:
-      hosts:
-        - catalog-harvester
-      playbook: catalog.yml
-      extra_vars:
-        redis_password: fake-redis-password
-      ansible_extra_flags: >-
-        --tags=harvester,ami-fix,bsp --skip-tags=apache,solr,db,saml2,skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
   - name: crm-web
     provisioner:
       hosts:
@@ -209,9 +200,6 @@ suites:
 #  - name: trendmicro
 #    provisioner:
 #      playbook: trendmicro.yml
-  - name: web-proxy
-    provisioner:
-      playbook: web-proxy.yml
   - name: unattended-upgrades
     provisioner:
-      playbook: unattended-upgrades.yml     
+      playbook: unattended-upgrades.yml

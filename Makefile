@@ -1,6 +1,5 @@
 KITCHEN_SUITES := \
   catalog-web \
-  catalog-harvester \
   crm-web \
   dashboard-web \
   efk-nginx \
@@ -8,13 +7,16 @@ KITCHEN_SUITES := \
   inventory-web \
   jekyll \
   logrotate \
-  web-proxy \
   unattended-upgrades
 
 MOLECULE_SUITES := \
   software/ci \
+  software/catalog/harvest \
   software/ckan/native-login \
-  software/common/tls
+  software/common/php-fixes \
+  software/common/tls \
+  software/jumpbox \
+  software/ubuntu/common
 
 # Create test-kitchen-<suite> targets
 KITCHEN_SUITE_TARGETS := $(patsubst %,test-kitchen-%,$(KITCHEN_SUITES))
