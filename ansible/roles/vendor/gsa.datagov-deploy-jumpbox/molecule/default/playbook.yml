@@ -2,4 +2,4 @@
 - name: Converge
   hosts: all
   roles:
-    - role: jumpbox
+    - role: datagov-deploy-jumpbox

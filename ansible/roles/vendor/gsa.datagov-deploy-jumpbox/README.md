@@ -15,6 +15,17 @@ This role configures the jumpbox host for access by operators.
 Add gsa.datagov-deploy-jumpbox to your requirements.yml and install with
 ansible-galaxy.
 
+Example Playbook
+-------------------------
+
+```
+---
+- name: Jumpbox
+  hosts: all
+  roles:
+    - role: jumpbox
+```
+
 
 ### Variables
 

@@ -10,12 +10,14 @@ platforms:
     image: ubuntu:trusty
     groups:
       - jumpbox
+  - name: jumpbox2
+    image: ubuntu:bionic
+    groups:
+      - jumpbox
 provisioner:
   name: ansible
   lint:
     name: ansible-lint
-  env:
-    ANSIBLE_ROLES_PATH: ../../../..
   inventory:
     group_vars:
       jumpbox:
