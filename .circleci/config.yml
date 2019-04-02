@@ -54,6 +54,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            sudo apt-get install ruby
             sudo gem install bundler
             bundle install --path vendor/bundle
       - save_cache:
