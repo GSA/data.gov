@@ -29,15 +29,16 @@ See our [Roadmap](docs/roadmap.md).
 Moved to [datagov-infrastructure-live](https://github.com/gsa/datagov-infrastructure-live)
 
 ## Requirements for Software Provisioning
-- Ansible > 1.10
+- Ansible > 2.6
+- [pipenv](https://pipenv.readthedocs.io/en/latest/)
 - SSH access (via keypair) to remote instances
 - ansible-secret.txt: `export ANSIBLE_VAULT_PASSWORD_FILE=~/ansible-secret.txt`
 - run all provisioning/app deployment commands from repo's `ansible` folder
 - to update `ansible/roles/vendor` roles run there: `ansible-galaxy install -r requirements.yml`
 - `{{ inventory }}` can be:
-  - inventories/staging/hosts
-  - inventories/production/hosts
-  - inventories/local/hosts
+  - inventories/staging
+  - inventories/production
+  - inventories/ci
 
 ## Common plays
 
@@ -229,7 +230,7 @@ Meta group containing any hosts with a web server (e.g. apache2 or nginx).
 
 ## Development
 
-Install the dependencies (from a python virtualenv).
+Install the dependencies with pipenv and bundler.
 
     $ make setup
 

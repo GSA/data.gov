@@ -2,33 +2,50 @@ version: 2
 jobs:
   lint:
     docker:
-      # specify the version you desire here
-      - image: particlekit/ansible-lint
-    working_directory: ~/repo
+      - image: circleci/python:3.6
+    environment:
+      PIPENV_VENV_IN_PROJECT: 1
     steps:
-      - run: ansible-lint --version
       - checkout
+      - restore_cache:
+          keys:
+            - v1-pipfile-{{ checksum "Pipfile.lock" }}
+            - v1-pipfile-
+      - run:
+          name: dependencies
+          command: |
+            pip install --user --upgrade pipenv
+            pipenv install --dev
+      - save_cache:
+          key: v1-pipfile-{{ checksum "Pipfile.lock" }}
+          paths:
+            - .venv
       - run: echo 'password' > ~/ansible-secret.txt
       - run: make lint
 
   test:
-    machine: true
+    docker:
+      - image: circleci/python:3.6
+    environment:
+      PIPENV_VENV_IN_PROJECT: 1
     parallelism: 4
     steps:
       - checkout
+      - setup_remote_docker
       # Restore cache and install python dependencies
       - restore_cache:
           keys:
-            - v1-pip-{{ checksum "requirements.txt" }}
-            - v1-pip-
-      - run: |
-          virtualenv venv
-          . venv/bin/activate
-          pip install -r requirements.txt
+            - v1-pipfile-{{ checksum "Pipfile.lock" }}
+            - v1-pipfile-
+      - run:
+          name: dependencies
+          command: |
+            pip install --user --upgrade pipenv
+            pipenv install --dev
       - save_cache:
-          key: v1-pip-{{ checksum "requirements.txt" }}
+          key: v1-pipfile-{{ checksum "Pipfile.lock" }}
           paths:
-            - venv
+            - .venv
       # Restore cache and install ruby dependencies
       - restore_cache:
           keys:
@@ -43,9 +60,8 @@ jobs:
             - vendor/bundle
 
       - run:
-          name: Run tests
+          name: tests
           command: |
-            . venv/bin/activate
             TEST_TARGETS=$(make circleci-glob | circleci tests split)
             make ${TEST_TARGETS}
 
