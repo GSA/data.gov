@@ -49,7 +49,6 @@ jobs:
       - run:
           name: Run tests
           command: |
-            . venv/bin/activate
             TEST_TARGETS=$(make circleci-glob | circleci tests split)
             make ${TEST_TARGETS}
 
