@@ -8,11 +8,17 @@ jobs:
     steps:
       - run: ansible-lint --version
       - checkout
-      - run: |
-          pip install --user --upgrade pipenv
-          pipenv install --dev
+      - run:
+          name: dependencies
+          command: |
+            pip install --user --upgrade pipenv
+            pipenv install --dev
       - run: echo 'password' > ~/ansible-secret.txt
-      - run: make lint
+      - run:
+          name: lint
+          command: |
+            export PATH=~/.local/bin:$PATH
+            make lint
 
   test:
     machine: true
@@ -26,9 +32,11 @@ jobs:
           keys:
             - v1-pipfile-{{ checksum "Pipfile.lock" }}
             - v1-pipfile-
-      - run: |
-          pip install --user --upgrade pipenv
-          pipenv install --dev
+      - run:
+          name: python dependencies
+          command: |
+            pip install --user --upgrade pipenv
+            pipenv install --dev
       - save_cache:
           key: v1-pipfile-{{ checksum "Pipfile.lock" }}
           paths:
@@ -39,7 +47,7 @@ jobs:
             - v1-bundle-{{ checksum "Gemfile.lock" }}
             - v1-bundle-
       - run:
-          name: Install dependencies
+          name: ruby dependencies
           command: bundle install --path vendor/bundle
       - save_cache:
           key: v1-bundle-{{ checksum "Gemfile.lock" }}
@@ -47,7 +55,7 @@ jobs:
             - vendor/bundle
 
       - run:
-          name: Run tests
+          name: tests
           command: |
             TEST_TARGETS=$(make circleci-glob | circleci tests split)
             make ${TEST_TARGETS}
