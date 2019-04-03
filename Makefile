@@ -25,8 +25,13 @@ MOLECULE_SUITE_TARGETS := $(patsubst %,test-molecule-%,$(MOLECULE_SUITES))
 
 # Used for parallelization on CircleCI. See `circleci tests glob`.
 # https://circleci.com/docs/2.0/parallelism-faster-jobs/
-circleci-glob:
-	@echo $(KITCHEN_SUITE_TARGETS) $(MOLECULE_SUITE_TARGETS) | sed -e 's/ /\n/g'
+circleci-glob-kitchen:
+	@echo $(KITCHEN_SUITE_TARGETS) | sed -e 's/ /\n/g'
+
+# Used for parallelization on CircleCI. See `circleci tests glob`.
+# https://circleci.com/docs/2.0/parallelism-faster-jobs/
+circleci-glob-molecule:
+	@echo $(MOLECULE_SUITE_TARGETS) | sed -e 's/ /\n/g'
 
 update-vendor:
 	pipenv run ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml
@@ -52,12 +57,16 @@ lint:
 
 $(KITCHEN_SUITE_TARGETS):
 	cd ansible && \
-	pipenv run bundle exec kitchen test $(subst test-kitchen-,,$@)
+	bundle exec kitchen test $(subst test-kitchen-,,$@)
 
 $(MOLECULE_SUITE_TARGETS):
 	cd ansible/roles/$(subst test-molecule-,,$@) && \
 	pipenv run molecule test --all
 
-test: $(KITCHEN_SUITE_TARGETS) $(MOLECULE_SUITE_TARGETS)
+test-molecule: $(MOLECULE_SUITE_TARGETS)
+test-kitchen: $(KITCHEN_SUITE_TARGETS)
 
-.PHONY: lint setup test $(KITCHEN_SUITE_TARGETS) $(MOLECULE_SUITE_TARGETS)
+test: test-molecule test-kitchen
+
+
+.PHONY: lint setup test test-molecule test-kitchen $(KITCHEN_SUITE_TARGETS) $(MOLECULE_SUITE_TARGETS)

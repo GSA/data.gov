@@ -21,31 +21,27 @@ jobs:
       - run: echo 'password' > ~/ansible-secret.txt
       - run: make lint
 
-  test:
+
+  kitchen-tests:
     machine: true
-    environment:
-      PIPENV_VENV_IN_PROJECT: 1
     parallelism: 4
     steps:
       - checkout
-      - run:
-          name: setup path
-          command: |
-            echo 'export PATH=~/.local/bin:$PATH' >> $BASH_ENV
       # Restore cache and install python dependencies
       - restore_cache:
           keys:
-            - v1-pipfile-{{ checksum "Pipfile.lock" }}
-            - v1-pipfile-
+            - v1-pip-{{ checksum "requirements.txt" }}
+            - v1-pip-
       - run:
           name: python dependencies
           command: |
-            pip install --user --upgrade pipenv
-            pipenv install --dev
+            virtualenv venv
+            source venv/bin/activate
+            pip install -r requirements.txt
       - save_cache:
-          key: v1-pipfile-{{ checksum "Pipfile.lock" }}
+          key: v1-pip-{{ checksum "requirements.txt" }}
           paths:
-            - .venv
+            - venv
       # Restore cache and install ruby dependencies
       - restore_cache:
           keys:
@@ -62,7 +58,8 @@ jobs:
       - run:
           name: tests
           command: |
-            TEST_TARGETS=$(make circleci-glob | circleci tests split)
+            source venv/bin/activate
+            TEST_TARGETS=$(make circleci-glob-kitchen | circleci tests split)
             make ${TEST_TARGETS}
 
 
