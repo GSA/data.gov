@@ -2,25 +2,24 @@ version: 2
 jobs:
   lint:
     docker:
-      # specify the version you desire here
-      - image: particlekit/ansible-lint
-    working_directory: ~/repo
+      - image: circleci/python:3.6
     steps:
-      - run: ansible-lint --version
-      - run:
-          name: setup path
-          command: |
-            echo 'export PATH=~/.local/bin:$PATH' >> $BASH_ENV
       - checkout
+      - restore_cache:
+          keys:
+            - v1-pipfile-{{ checksum "Pipfile.lock" }}
+            - v1-pipfile-
       - run:
-          name: dependencies
+          name: python dependencies
           command: |
             pip install --user --upgrade pipenv
             pipenv install --dev
+      - save_cache:
+          key: v1-pipfile-{{ checksum "Pipfile.lock" }}
+          paths:
+            - .venv
       - run: echo 'password' > ~/ansible-secret.txt
-      - run:
-          name: lint
-          command: make lint
+      - run: make lint
 
   test:
     machine: true
