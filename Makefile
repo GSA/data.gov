@@ -45,8 +45,10 @@ setup:
 	bundle install
 
 lint:
-	pipenv run ansible-playbook --syntax-check ansible/*.yml
-	pipenv run ansible-lint -v -x ANSIBLE0010 --exclude=ansible/roles/vendor ansible/*.yml
+	cd ansible && \
+	pipenv run ansible-playbook --syntax-check *.yml
+	cd ansible && \
+	pipenv run ansible-lint -v *.yml
 
 $(KITCHEN_SUITE_TARGETS):
 	cd ansible && \
