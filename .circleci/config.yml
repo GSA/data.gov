@@ -68,4 +68,4 @@ workflows:
   commit:
     jobs:
       - lint
-      - test
+      - kitchen-tests
