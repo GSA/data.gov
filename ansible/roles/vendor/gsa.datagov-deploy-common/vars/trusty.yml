@@ -1,0 +1,25 @@
+---
+common_os_packages:
+  - acl
+  - atool
+  - bison
+  - cron
+  - git
+  - htop
+  - lib32z1-dev
+  - libbz2-dev
+  - libffi-dev
+  - libgeos-c1
+  - libpq-dev
+  - libssl-dev
+  - libxml2-dev
+  - libxslt1-dev
+  - ntp
+  - postgresql-client
+  - python-dev
+  - python-pip
+  - python-setuptools
+  - python-virtualenv
+  - ruby
+  - ruby-dev
+  - supervisor

@@ -1,4 +1,5 @@
 ---
+datagov_service: crm
 
 # MySQL credentials
 env_db_host: "{{ vault_env_db_host }}"

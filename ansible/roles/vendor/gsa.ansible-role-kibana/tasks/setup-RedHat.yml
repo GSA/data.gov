@@ -1,7 +1,7 @@
 ---
 - name: Add Elasticsearch GPG key.
   rpm_key:
-    key: https://packages.elastic.co/GPG-KEY-elasticsearch
+    key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
     state: present
 
 - name: Add Kibana repository.

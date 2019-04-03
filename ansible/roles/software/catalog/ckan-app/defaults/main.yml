@@ -23,4 +23,4 @@ env: local
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
 who_secure: False
 token_dat: placeholder-token
-REDIS_SERVER: localhost
+catalog_ckan_redis_host: localhost

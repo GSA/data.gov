@@ -5,10 +5,10 @@ nginx_vhosts:
     server_name: "{{ inventory_hostname }}"
     extra_parameters: |
       location / {
-        proxy_pass  http://{{ groups.kibana.0 }}:5601;
+        proxy_pass  http://{{ groups.kibana.0 }}:{{ kibana_port }};
         auth_basic "Restricted Content";
         auth_basic_user_file /etc/nginx/.htpasswd;
       }
 
-basic_auth_user: "{{ basic_auth_user }}"
-basic_auth_hash: "{{ basic_auth_hash }}"
+basic_auth_user: "{{ vault_basic_auth_user }}"
+basic_auth_hash: "{{ vault_basic_auth_hash }}"

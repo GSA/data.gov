@@ -1,4 +1,6 @@
 ---
+datagov_envrionment: production
+
 default_tls_host_key: "{{ vault_default_tls_host_key }}"
 default_tls_host_certificate: |-
   -----BEGIN CERTIFICATE-----
@@ -68,6 +70,32 @@ ckan_site_domain: "{{ urls_public.catalog }}"
 # s3 bucket
 catalog_bucket_name: "{{ vault_catalog_bucket_name }}"
 
+jekyll_apps:
+  - name: sdg-indicators-usa
+    repo: https://github.com/GSA/sdg-indicators-usa/
+    config: _config.yml
+    branch: prod-pages
+    port: 8000
+    s3_bucket: "{{ s3_bucket_sdg | default('') }}"
+    secret_key: "{{ jekyll_webhook_secret | default('') }}"
+
+  - name: data-federation
+    repo: https://github.com/GSA/us-data-federation
+    config: _config_prod.yml
+    branch: master
+    port: 8001
+    s3_bucket: "{{ s3_bucket_federation | default('') }}"
+    secret_key: "{{ jekyll_webhook_secret | default('') }}"
+
+  - name: data-strategy
+    repo: https://github.com/GSA/data-strategy
+    config: _config_prod.yml
+    branch: master
+    port: 8002
+    s3_bucket: "{{ s3_bucket_strategy | default('') }}"
+    secret_key: "{{ jekyll_webhook_secret | default('') }}"
+
+
 # solr
 solr_master_server: datagovsolrm1p.prod-ocsit.bsp.gsa.gov
 
@@ -107,9 +135,6 @@ elasticsearch_endpoint: "{{ vault_elasticsearch_endpoint }}"
 bsp_elasticsearch_endpoint: "{{ vault_bsp_elasticsearch_endpoint }}"
 bsp_shared_key: "{{ vault_bsp_shared_key }}"
 system: "es"
-
-# newrelic
-nrinfragent_license_key: "{{ vault_nrinfragent_license_key }}"
 
 # nessus
 nessus_agent_key: "{{ vault_nessus_agent_key }}"

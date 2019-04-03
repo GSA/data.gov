@@ -15,6 +15,17 @@ apache2_ssl_certificate_key_file: "{{ default_tls_host_key_filepath }}"
 common_tls_host_key: "{{ default_tls_host_key }}"
 common_tls_host_certificate: "{{ default_tls_host_certificate }}"
 
+# site-wide datagov variables
+datagov_support_email: datagov@gsa.gov
+datagov_team_email: datagovhelp@gsa.gov
+
+# newrelic monitoring
+nrinfragent_config:
+  license_key: "{{ vault_nrinfragent_license_key }}"
+  custom_attributes:
+    environment: "{{ datagov_environment | default('unknown') }}"
+    service: "{{ datagov_service | default('unknown') }}"
+
 # Nginx
 nginx_remove_default_vhost: true
 nginx_ppa_use: true
@@ -22,29 +33,28 @@ nginx_ppa_version: stable
 nginx_extra_conf_options: |-
   include /etc/nginx/modules-enabled/*.conf;
 
-# PHP-FPM
+
+# PHP
 php_enable_php_fpm: true
+php_expose_php: 0
+php_fpm_pm_max_children: 200
+php_fpm_pm_max_spare_servers: 20
+php_fpm_pm_min_spare_servers: 5
+php_fpm_pm_start_servers: 15
+php_max_execution_time: 300
+php_memory_limit: 2048M
+php_opcache_conf_filename: "10-opcache.ini"
 php_webserver_daemon: nginx
 
+
 # new python version
-python_version_number: 2.7.10
-python_version_name: Python-{{ python_version_number }}
-python_version_url: https://www.python.org/ftp/python/{{ python_version_number}}/{{ python_version_name }}.tgz
-python_version_directory: /usr/local/lib/python{{ python_version_number }}
-python_home: "{{ python_version_directory }}"
+common_python_version_number: 2.7.10
+common_python_version_directory: /usr/local/lib/python{{ python_version_number }}
+python_home: "{{ common_python_version_directory }}"
 
 # Disabling MySQL server (we need only client on this machine)
 mysql_enabled_on_startup: false
 
-# PHP
-php_memory_limit: 512M
-php_expose_php: 0
-php_fpm_pm_max_children: 200
-php_fpm_pm_start_servers: 15
-php_fpm_pm_min_spare_servers: 5
-php_fpm_pm_max_spare_servers: 20
-php_fpm_request_terminate_timeout: 30s
-php_opcache_conf_filename: "10-opcache.ini"
 
 # This should probably be environment specific
 jumpbox_operators:

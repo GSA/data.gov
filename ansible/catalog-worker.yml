@@ -1,0 +1,29 @@
+---
+- name: Catalog worker (harvester) stack
+  hosts: catalog-harvester
+  serial: 1
+  vars:
+      app_type: catalog
+
+  roles:
+    - role: software/ckan/common
+
+    - role: gsa.datagov-deploy-postgresql
+      tags:
+        - database
+      when: datagov_enable_postgresql_role is defined
+
+    - role: software/catalog/ckan-app
+      tags:
+        - app-deploy
+
+    - role: software/catalog/harvest
+
+    - role: software/catalog/pycsw-app
+      tags:
+        - pycsw
+
+    # TODO not sure why this is needed in harvester
+    - role: software/ckan/saml2
+      tags:
+        - saml2

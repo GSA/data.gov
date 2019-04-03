@@ -100,21 +100,16 @@ suites:
     provisioner:
       hosts:
         - catalog-web
-      playbook: catalog.yml
+      playbook: catalog-web.yml
       extra_vars:
         redis_password: fake-redis-password
         ckan_site_domain: http://test-kitchen-datagov.local
+        catalog_ckan_db_host: localhost
+        catalog_ckan_redis_host: localhost
+        catalog_ckan_solr_host: localhost
+        pycsw_db_server: localhost
       ansible_extra_flags: >-
         --tags=frontend,ami-fix,bsp --skip-tags=solr,db,cron,skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
-  - name: catalog-harvester
-    provisioner:
-      hosts:
-        - catalog-harvester
-      playbook: catalog.yml
-      extra_vars:
-        redis_password: fake-redis-password
-      ansible_extra_flags: >-
-        --tags=harvester,ami-fix,bsp --skip-tags=apache,solr,db,saml2,skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
   - name: crm-web
     provisioner:
       hosts:
@@ -163,6 +158,12 @@ suites:
     provisioner:
       hosts: inventory-web
       playbook: inventory.yml
+      extra_vars:
+        datastore_db_server: localhost
+        inventory_ckan_db_host: localhost
+        inventory_ckan_solr_host: localhost
+        inventory_ckan_bucket_name: s3bucket
+        inventory_ckan_bucket_prefix: s3bucket-prefix-
       ansible_extra_flags: >-
         --skip-tags="solr,db,deploy-rollback,skip_in_kitchen" <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
   - name: jekyll
@@ -209,9 +210,6 @@ suites:
 #  - name: trendmicro
 #    provisioner:
 #      playbook: trendmicro.yml
-  - name: web-proxy
-    provisioner:
-      playbook: web-proxy.yml
   - name: unattended-upgrades
     provisioner:
-      playbook: unattended-upgrades.yml     
+      playbook: unattended-upgrades.yml

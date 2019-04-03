@@ -1,10 +1,9 @@
 #!/bin/bash
-# Generates a CSR for the inventory hosts
-# suitable for GSA to sign through their
-# certificate program.
 #
-# The script should be run from your ansible directory and assumes
-# ansible-inventory, jq, and openssl are already installed and available.
+# https://github.com/GSA/datagov-deploy/wiki/TLS-SSL-Certificates
+#
+# Generates a CSR for a list of domains suitable for the GSA certificate
+# program. SANs are read from stdin.
 #
 # CSR requirements are described in Service Now
 # https://docs.google.com/document/d/1VzyUAf2LuaNCWGt-ZU94kqq4DWMexmIKxHtjj_JyGDA/edit
@@ -14,23 +13,20 @@ set -o pipefail
 set -o nounset
 
 RSA_KEY_LENGTH=2048
-output_dir=gen-csr-out
+# datagov-deploy/ansible/gen-csr-out
+output_dir="$(dirname "$0")/../gen-csr-out"
 
 function usage () {
   cat <<EOF
-$0: <ansible-inventory>
+$0: [certificate-name]
 
-Generates a CSR from ansible inventory.
+Generates a CSR from list of SANs from stdin.
 EOF
 }
 
 function check_requirements () {
-  if ! (command -v jq \
-    && command -v openssl \
-    && command -v ansible-inventory) &> /dev/null; then
-
-
-    echo "$0 requires ansible-inventory, jq, openssl to be installed." >&2
+  if ! (command -v openssl) &> /dev/null; then
+    echo "$0 requires openssl to be installed." >&2
     exit 1
   fi
 }
@@ -45,16 +41,8 @@ function san_hosts () {
   done
 }
 
-function ansible_hosts () {
-  # Get a flat list of hosts from the ansible inventory
-  local inventory=${1}
-  ansible-inventory -i "inventories/$inventory" --list | jq -r '.[].hosts[]?' | sort | uniq
-}
-
-
-inventory=${1:-''}
-
-if [ -z "$inventory" ]; then
+certificate_name=${1:-''}
+if [[ -z "$certificate_name" ]]; then
   usage >&2
   exit 1
 fi
@@ -66,17 +54,20 @@ check_requirements
 mkdir -p "$output_dir"
 
 # Generate a key
-key_file="$output_dir/data-gov-bsp-${inventory}.key"
+key_file="$output_dir/${certificate_name}.key"
 if [ ! -r "$key_file" ]; then
   openssl genrsa -out "$key_file" "$RSA_KEY_LENGTH"
 fi
 
+# Grab the first domain as the common name
+read common_name
+
 # Generate the CSR
-csr_file="$output_dir/data-gov-bsp-${inventory}.csr"
+csr_file="$output_dir/${certificate_name}.csr"
 openssl req -new -nodes -key "$key_file" -out "$csr_file" -config <(
 cat <<EOF
 [req]
-default_bits = 2048
+default_bits = "$RSA_KEY_LENGTH"
 prompt = no
 default_md = sha256
 req_extensions = req_ext
@@ -89,7 +80,7 @@ L=Washington
 O=General Services Administration
 OU=Technology Transformation Service
 emailAddress=datagovhelp@gsa.gov
-CN = $(ansible_hosts "$inventory" | head -n 1)
+CN = $common_name
 
 [ req_ext ]
 # Server Authentication (1.3.6.1.5.5.7.3.1) required by GSA
@@ -97,8 +88,8 @@ extendedKeyUsage = 1.3.6.1.5.5.7.3.1
 subjectAltName = @alt_names
 
 [ alt_names ]
-$(ansible_hosts "$inventory" | san_hosts)
+$(cat | san_hosts)
 EOF
 )
 
-echo "CSR and key files generated in $output_dir."
+echo "CSR and key files generated in $output_dir." >&2

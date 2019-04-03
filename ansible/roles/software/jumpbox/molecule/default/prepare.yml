@@ -1,6 +1,0 @@
----
-- name: Prepare
-  hosts: all
-  tasks:
-    - name: update apt
-      apt: update_cache=true

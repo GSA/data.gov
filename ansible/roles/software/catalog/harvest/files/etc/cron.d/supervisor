@@ -1,1 +1,0 @@
-@reboot root /sbin/initctl start supervisor

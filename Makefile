@@ -1,6 +1,5 @@
 KITCHEN_SUITES := \
   catalog-web \
-  catalog-harvester \
   crm-web \
   dashboard-web \
   efk-nginx \
@@ -8,12 +7,14 @@ KITCHEN_SUITES := \
   inventory-web \
   jekyll \
   logrotate \
-  web-proxy \
   unattended-upgrades
 
 MOLECULE_SUITES := \
   software/ci \
+  software/catalog/harvest \
+  software/catalog/www \
   software/ckan/native-login \
+  software/common/php-fixes \
   software/common/tls
 
 # Create test-kitchen-<suite> targets

@@ -2,4 +2,4 @@
 - name: Provision Jumpbox
   hosts: jumpbox
   roles:
-    - {role: software/jumpbox, tags: [jumpbox]}
+    - {role: gsa.datagov-deploy-jumpbox, tags: [jumpbox]}

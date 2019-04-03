@@ -1,0 +1,26 @@
+---
+version: 2
+jobs:
+  test:
+    machine:
+      python:
+        version: 2.7
+      services:
+        - docker
+    working_directory: ~/ansible-role-kibana
+    steps:
+      - checkout
+      - run:
+          name: Install pipenv
+          command: pip install pipenv
+      - run:
+          name: Install molecule
+          command: pipenv install --dev --system
+      - run:
+          name: Run molecule
+          command: pipenv run test
+workflows:
+  version: 2
+  test_molecule:
+    jobs:
+      - test
