@@ -23,7 +23,24 @@ def test_ntp_enabled(host):
     ntp = host.service('ntp')
 
     # For bionic, systemd is not available and this fails
-    #
     # assert ntp.is_running
 
     assert ntp.is_enabled
+
+
+def test_certificate(host):
+    f = host.file('/etc/ssl/certs/datagov_host.crt')
+
+    assert f.exists
+    assert f.mode == 0o644
+    assert f.user == 'root'
+    assert f.group == 'root'
+
+
+def test_key(host):
+    f = host.file('/etc/ssl/private/datagov_host.key')
+
+    assert f.exists
+    assert f.mode == 0o640
+    assert f.user == 'root'
+    assert f.group == 'ssl-cert'

@@ -4,24 +4,13 @@ common_os_packages:
   - atool
   - cron
   - git
+  - nano
   - htop
   - ntp
   - reboot-notifier
   - ruby
   - systemd
-
-  # TODO these should probably be moved to a more specific role, not sure why
-  # they are needed in common
-  - bison
-  - lib32z1-dev
-  - libbz2-dev
-  - libffi-dev
-  - libgeos-dev
-  - libpq-dev
-  - libssl-dev
-  - libxml2-dev
-  - libxslt1-dev
-  - postgresql-client
+  - software-properties-common
   - python-dev
   - python-pip
   - python-setuptools

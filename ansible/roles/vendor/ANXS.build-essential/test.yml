@@ -1,3 +1,0 @@
-- hosts: all
-  tasks:
-    - include: 'tasks/main.yml'

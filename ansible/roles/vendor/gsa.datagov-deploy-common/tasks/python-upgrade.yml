@@ -1,16 +1,20 @@
-# TODO this is only needed for ckan and python apps. Remove this and use
-# gsa.datagov-deploy-python-app in playbooks that need a custom python.
 ---
+# Upgrade python to 2.7.10
+# TODO This should be removed, use something like pyenv to manage python
+# installs and included in a python role
+
 - name: Check if python dir exists
-  stat: path=/{{ common_python_version_directory }}/bin/python
+  stat:
+    path: "/{{ common_python_version_directory }}/bin/python"
   register: python_dir
 
 - name: Check if python was built with shared library
-  stat: path=/{{ common_python_version_directory }}/lib/libpython{{ common_python_version_number[0:3] }}.so
+  stat:
+    path: "/{{ common_python_version_directory }}/lib/libpython{{ common_python_version_number[0:3] }}.so"
   register: python_shared_lib
 
 - name: check to python version
-  command: /{{ common_python_version_directory }}/bin/python --version
+  command: "/{{ common_python_version_directory }}/bin/python --version"
   register: python_version_check
   failed_when: ("Python " + common_python_version_number) not in python_version_check.stderr
   # Never report as changed for idempotence
@@ -27,20 +31,22 @@
   when: not python_dir.stat.exists or python_version_check is failed or not python_shared_lib.stat.exists
 
 - name: config new python
-  command: ./configure --prefix {{ common_python_version_directory }} --enable-ipv6 --enable-unicode=ucs4 --enable-shared
+  command: "./configure --prefix {{ common_python_version_directory }} --enable-ipv6 --enable-unicode=ucs4 --enable-shared"
   args:
-    chdir: /var/tmp/{{ common_python_version_name }}
+    chdir: "/var/tmp/{{ common_python_version_name }}"
   when: not python_dir.stat.exists or python_version_check is failed or not python_shared_lib.stat.exists
 
 - name: install new python
   shell: "umask 022; make && make install"
   args:
-    chdir: /var/tmp/{{ common_python_version_name }}
+    chdir: "/var/tmp/{{ common_python_version_name }}"
   when: not python_dir.stat.exists or python_version_check is failed or not python_shared_lib.stat.exists
 
 # TODO install python to a known prefix like /usr/local to avoid this
 - name: add python lib to ld.so.conf
-  template: src=etc/ld.so.conf.d/20python.conf dest=/etc/ld.so.conf.d/20python.conf
+  template:
+    src: etc/ld.so.conf.d/20python.conf
+    dest: /etc/ld.so.conf.d/20python.conf
   register: ubuntu_python_ld_so
 
 - name: update ld.so.cache

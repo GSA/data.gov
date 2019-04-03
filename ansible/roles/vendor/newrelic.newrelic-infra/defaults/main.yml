@@ -1,5 +1,0 @@
----
-nrinfraintegrations_state: "absent"
-nrinfragent_state: "latest"
-nrinfragent_config:
-  license_key: YOUR_LICENSE_KEY

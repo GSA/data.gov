@@ -27,13 +27,15 @@ def test_apache2(host):
 
 
 def test_http(host):
-    http = host.socket('tcp://80')
+    http = host.socket('tcp://0.0.0.0:80')
 
     assert http.is_listening
 
 
 def test_https(host):
-    https = host.socket('tcp://443')
+    # tcp://443 fails on bionic
+    # https://github.com/philpep/testinfra/issues/355
+    https = host.socket('tcp://0.0.0.0:443')
 
     assert https.is_listening
 
@@ -50,7 +52,9 @@ def test_no_indexes(host):
     # would remove the need for this.
     uri = host.ansible('uri', 'url="http://localhost:443/?M=A"', check=False)
 
-    assert uri['status'] == 403
+    # This results in 403 Forbidden on trusty but 404 on
+    # bionic. As long as its not 200, we're ok.
+    assert uri['status'] in [403, 404]
 
 
 def test_ssl_versions(host):

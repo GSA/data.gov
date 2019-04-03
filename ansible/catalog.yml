@@ -1,5 +1,5 @@
 ---
-- name: Install CKAN Stack
+- name: Provisioning Catalog CKAN Stack
   hosts: catalog-web:catalog-harvester
   serial: 1
   vars:
@@ -30,8 +30,6 @@
     - {role: software/catalog/pycsw-db-init, tags: ['frontend', 'harvester', 'pycsw','db', 'db-init']}
 
     - {role: software/ckan/saml2, tags: ['frontend', 'harvester', 'saml2']}
-
-    - {role: software/ckan/security-fix, tags: ['frontend', 'harvester', 'pycsw']}
 
     - {role: software/ckan/fix-ckan-tracking, tags: ['frontend']}
 

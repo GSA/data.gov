@@ -1,7 +1,0 @@
-# test file for postfix
----
-- hosts: localhost
-  connection: local
-  sudo: true
-  roles:
-    - ../../

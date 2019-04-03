@@ -6,8 +6,14 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: apache2
+  - name: apache2-trusty
     image: ubuntu:trusty
+  - name: apache2-bionic
+    image: ubuntu:bionic
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    capabilities:
+      - SYS_ADMIN
 provisioner:
   name: ansible
   lint:

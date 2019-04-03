@@ -16,6 +16,10 @@ Available variables are listed below, along with default values (see `defaults/m
 
 The name of the packge to install to get `pip` on the system. You can set to `python3-pip`, for example, when using Python 3 on Ubuntu.
 
+    pip_executable: pip
+
+The role will try to autodetect the pip executable based on the `pip_package` (e.g. `pip` for Python 2 and `pip3` for Python 3). You can also override this explicitly, e.g. `pip_executable: pip3.6`.
+
     pip_install_packages: []
 
 A list of packages to install with pip. Examples below:

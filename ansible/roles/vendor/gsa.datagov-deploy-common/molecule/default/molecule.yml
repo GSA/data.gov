@@ -1,14 +1,23 @@
 ---
 dependency:
   name: galaxy
+  options:
+    role-file: requirements.yml
 driver:
   name: docker
 lint:
   name: yamllint
+  enabled: true
 platforms:
-  - name: common-trusty
+  - name: trusty
     image: ubuntu:trusty
-  - name: common-bionic
+  - name: xenial
+    image: ubuntu:xenial
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    capabilities:
+      - SYS_ADMIN
+  - name: bionic
     image: ubuntu:bionic
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
@@ -18,6 +27,23 @@ provisioner:
   name: ansible
   lint:
     name: ansible-lint
+    enabled: true
+scenario:
+  name: default
+  test_sequence:
+    - lint
+    - cleanup
+    - destroy
+    - dependency
+    - syntax
+    - create
+    - prepare
+    - converge
+    # - idempotence  # to fix
+    # - side_effect  # optional
+    - verify
+    - cleanup
+    - destroy
 verifier:
   name: testinfra
   lint:

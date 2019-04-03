@@ -1,4 +1,0 @@
----
-- hosts: all
-  roles:
-    - gsa.ansible-os-ubuntu-14

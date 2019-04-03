@@ -1,10 +1,11 @@
 ---
 - name: make sure packages are installed
-  apt: pkg={{item}} state=present
-  with_items:
-    - apache2
-    - libapache2-mod-wsgi
-    - libapache2-modsecurity
+  apt: pkg={{ packages }} state=present
+  vars:
+    packages:
+      - apache2
+      - libapache2-mod-wsgi
+      - libapache2-mod-security2
   notify: restart apache
 
 - name: default apache site removed
@@ -27,11 +28,6 @@
   with_items:
     - security2
   notify: reload apache
-  tags:
-    - web_application_firewall
-    - CM-7
-    - SC-7
-    - SI-10
 
 - name: Configure mod_remoteip
   template: src=templates/etc/apache2/conf-enabled/mod_remoteip.conf dest=/etc/apache2/conf-enabled/mod_remoteip.conf mode=0644
@@ -44,6 +40,9 @@
     mode=0644
   when: apache2_disable_var_www_indexes
   notify: reload apache
+
+- name: Remove default html pages
+  file: dest=/var/www/html state=absent
 
 - name: Apache ServerTokens Prod
   lineinfile:
@@ -87,8 +86,11 @@
     line: SSLCipherSuite {{ apache2_ssl_ciphers }}
   notify: reload apache
 
+- name: ensure tmpfiles.d exists
+  file: dest=/etc/tmpfiles.d mode=0755 owner=root group=root state=directory
+
 - name: Create /var/run/apache2 with correct umask on startup
-  copy: src=usr_lib_tmpfiles_d_apache2.conf dest=/usr/lib/tmpfiles.d/apache2.conf mode=0644 owner=root group=root
+  copy: src=etc_tmpfiles_d_apache2.conf dest=/etc/tmpfiles.d/apache2.conf mode=0644 owner=root group=root
 
 - name: enable apache2 mod_wsgi config to use custom python
   template: src=etc/apache2/conf-enabled/wsgi-custom-python.conf.j2 dest=/etc/apache2/conf-enabled/wsgi-custom-python.conf mode=0644
@@ -98,3 +100,4 @@
   service:
     name: apache2
     enabled: yes
+    state: started

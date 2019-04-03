@@ -1,3 +1,0 @@
----
-- import_tasks: trendmicro.yml
-  when: trendmicro_disable is undefined

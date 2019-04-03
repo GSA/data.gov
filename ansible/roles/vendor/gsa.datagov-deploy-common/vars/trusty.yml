@@ -5,6 +5,7 @@ common_os_packages:
   - bison
   - cron
   - git
+  - nano
   - htop
   - lib32z1-dev
   - libbz2-dev
@@ -14,7 +15,7 @@ common_os_packages:
   - libssl-dev
   - libxml2-dev
   - libxslt1-dev
-  - ntp
+  - software-properties-common
   - postgresql-client
   - python-dev
   - python-pip

@@ -2,12 +2,9 @@ KITCHEN_SUITES := \
   catalog-web \
   crm-web \
   dashboard-web \
-  efk-nginx \
-  efk-stack \
   inventory-web \
   jekyll \
-  logrotate \
-  unattended-upgrades
+  logrotate
 
 MOLECULE_SUITES := \
   software/ci \
@@ -29,16 +26,16 @@ circleci-glob:
 	@echo $(KITCHEN_SUITE_TARGETS) $(MOLECULE_SUITE_TARGETS) | sed -e 's/ /\n/g'
 
 update-vendor:
-	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml
+	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml --ignore-certs
 
 update-vendor-verbose:
-	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml -vvv
+	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml -vvv --ignore-certs
 
 update-vendor-force:
-	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml --force
+	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml --force --ignore-certs
 
 update-vendor-force-verbose:
-	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml --force -vvv
+	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml --force -vvv --ignore-certs
 
 setup:
 	pip install -r requirements.txt

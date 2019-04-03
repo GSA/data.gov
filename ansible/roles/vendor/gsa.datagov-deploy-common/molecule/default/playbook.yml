@@ -3,3 +3,6 @@
   hosts: all
   roles:
     - role: datagov-deploy-common
+      vars:
+        common_reboot_notify_email: email@example.com
+        common_reboot_notify_from_email: no-reply@example.com

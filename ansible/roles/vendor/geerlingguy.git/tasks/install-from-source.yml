@@ -1,5 +1,4 @@
 ---
-
 - name: Include OS-specific variables (RedHat).
   include_vars: "{{ ansible_os_family }}.yml"
   when:
@@ -19,15 +18,10 @@
     git_install_from_source_dependencies: "{{ __git_install_from_source_dependencies | list }}"
   when: git_install_from_source_dependencies is not defined
 
-- name: Ensure git's dependencies are installed (RedHat).
-  package: "name={{ item }} state=present"
-  with_items: "{{ git_install_from_source_dependencies }}"
-  when: ansible_os_family == 'RedHat'
-
-- name: Ensure git's dependencies are installed (Debian).
-  apt: "name={{ item }} state=present"
-  with_items: "{{ git_install_from_source_dependencies }}"
-  when: ansible_os_family == 'Debian'
+- name: Ensure git's dependencies are installed.
+  package:
+    name: "{{ git_install_from_source_dependencies }}"
+    state: present
 
 - name: Get installed version.
   command: >
@@ -35,7 +29,7 @@
     warn=no
   changed_when: false
   failed_when: false
-  check_mode: no
+  check_mode: false
   register: git_installed_version
 
 - name: Force git install if the version numbers do not match.
@@ -56,7 +50,7 @@
     src: "{{ workspace }}/git-{{ git_version }}.tar.gz"
     dest: "{{ workspace }}"
     creates: "{{ workspace }}/git-{{ git_version }}/README"
-    copy: no
+    copy: false
   when: (git_installed_version.rc != 0) or git_reinstall_from_source
 
 - name: Build git.
@@ -67,4 +61,4 @@
     - all
     - install
   when: (git_installed_version.rc != 0) or git_reinstall_from_source
-  become: yes
+  become: true

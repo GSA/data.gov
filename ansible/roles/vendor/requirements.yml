@@ -4,48 +4,48 @@
 # using this file. Follow the instructions at http://docs.ansible.com/ansible/galaxy.html
 # to include any roles you want installed prior to running main.yml.
 
-- src: chusiang.vim-and-vi-mode
+- src: 'https://github.com/GSA/datagov-deploy-common'
+  version: master
+  name: gsa.datagov-deploy-common
+
+#- src: chusiang.vim-and-vi-mode
 - src: geerlingguy.composer
 - src: geerlingguy.git
 - src: geerlingguy.nginx
 - src: geerlingguy.php
 - src: geerlingguy.php-memcached
 - src: geerlingguy.php-mysql
-- src: sbaerlocher.wp-cli
 - src: geerlingguy.java
-- src: elastic.elasticsearch
 - src: geerlingguy.pip
-- src: ANXS.apt
-- src: ANXS.build-essential
-- src: dwcramer.upstart
-- src: oefenweb.logrotated
-- src: nickhammond.logrotate
+- src: sbaerlocher.wp-cli
+# - src: oefenweb.logrotated
 - src: nleutner.newrelic-php
-- src: newrelic.newrelic-infra
-  version: 0.6.1
-- src: jnv.unattended-upgrades
+- src: elastic.elasticsearch
+
 - src: rvm.ruby
   name: rvm.ruby
   version: v2.1.2
+
+- src: https://github.com/GSA/datagov-deploy-apache2
+  version: master
+  name: gsa.datagov-deploy-apache2
+
+- src: https://github.com/GSA/datagov-deploy-postgresql
+  version: master
+  name: gsa.datagov-deploy-postgresql
+
+- src: https://github.com/GSA/datagov-deploy-redis
+  version: master
+  name: gsa.datagov-deploy-redis
+
+- src: https://github.com/GSA/ansible-role-beats
+  version: master
+  name: gsa.ansible-role-beats
+
+- src: https://github.com/GSA/ansible-role-kibana
+  version: master
+  name: gsa.ansible-role-kibana
+
 - src: https://github.com/GSA/ansible-elastalert
   version: develop
   name: gsa.elastalert
-- src: https://github.com/GSA/ansible-os-ubuntu-14
-  name: gsa.ansible-os-ubuntu-14
-- src: 'https://github.com/GSA/datagov-deploy-apache2'
-  name: gsa.datagov-deploy-apache2
-  version: ssl-certificate
-- src: 'https://github.com/GSA/datagov-deploy-common'
-  version: v1.0.0
-  name: gsa.datagov-deploy-common
-- src: https://github.com/GSA/datagov-deploy-postgresql
-  version: v1.0.0
-  name: gsa.datagov-deploy-postgresql
-- src: 'https://github.com/GSA/datagov-deploy-redis'
-  version: master
-  name: gsa.datagov-deploy-redis
-- src: 'https://github.com/GSA/ansible-role-beats'
-  version: master
-  name: gsa.ansible-role-beats
-- src: 'https://github.com/GSA/ansible-role-kibana'
-  name: gsa.ansible-role-kibana  
