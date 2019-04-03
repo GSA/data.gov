@@ -1,18 +1,17 @@
 KITCHEN_SUITES := \
   catalog-web \
+  inventory-web \
   crm-web \
   dashboard-web \
-  inventory-web \
-  jekyll \
-  logrotate
+  datagov-web \
+  jekyll
 
 MOLECULE_SUITES := \
   software/ci \
   software/catalog/harvest \
   software/catalog/www \
   software/ckan/native-login \
-  software/common/php-fixes \
-  software/common/tls
+  software/common/php-fixes
 
 # Create test-kitchen-<suite> targets
 KITCHEN_SUITE_TARGETS := $(patsubst %,test-kitchen-%,$(KITCHEN_SUITES))
@@ -26,16 +25,16 @@ circleci-glob:
 	@echo $(KITCHEN_SUITE_TARGETS) $(MOLECULE_SUITE_TARGETS) | sed -e 's/ /\n/g'
 
 update-vendor:
-	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml --ignore-certs
+	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml
 
 update-vendor-verbose:
-	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml -vvv --ignore-certs
+	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml -vvv
 
 update-vendor-force:
-	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml --force --ignore-certs
+	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml --force
 
 update-vendor-force-verbose:
-	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml --force -vvv --ignore-certs
+	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml --force -vvv
 
 setup:
 	pip install -r requirements.txt
@@ -54,5 +53,7 @@ $(MOLECULE_SUITE_TARGETS):
 	molecule test --all
 
 test: $(KITCHEN_SUITE_TARGETS) $(MOLECULE_SUITE_TARGETS)
+test-kitchen-only: $(KITCHEN_SUITE_TARGETS)
+test-molecule-only: $(MOLECULE_SUITE_TARGETS)
 
 .PHONY: lint setup test $(KITCHEN_SUITE_TARGETS) $(MOLECULE_SUITE_TARGETS)

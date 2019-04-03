@@ -8,7 +8,6 @@
   version: master
   name: gsa.datagov-deploy-common
 
-#- src: chusiang.vim-and-vi-mode
 - src: geerlingguy.composer
 - src: geerlingguy.git
 - src: geerlingguy.nginx
@@ -18,7 +17,7 @@
 - src: geerlingguy.java
 - src: geerlingguy.pip
 - src: sbaerlocher.wp-cli
-# - src: oefenweb.logrotated
+- src: nickhammond.logrotate
 - src: nleutner.newrelic-php
 - src: elastic.elasticsearch
 
@@ -29,38 +28,24 @@
 - src: https://github.com/GSA/datagov-deploy-apache2
   version: master
   name: gsa.datagov-deploy-apache2
-<<<<<<< HEAD
-
-=======
-  version: ssl-certificate
-- src: 'https://github.com/GSA/datagov-deploy-common'
+- src: https://github.com/GSA/datagov-deploy-common
   version: v1.0.0
   name: gsa.datagov-deploy-common
-- src: 'https://github.com/GSA/datagov-deploy-jumpbox'
+- src: https://github.com/GSA/datagov-deploy-jumpbox
   version: v1.0.0
   name: gsa.datagov-deploy-jumpbox
->>>>>>> origin/develop
 - src: https://github.com/GSA/datagov-deploy-postgresql
-  version: master
+  version: v1.0.0
   name: gsa.datagov-deploy-postgresql
-
 - src: https://github.com/GSA/datagov-deploy-redis
   version: master
   name: gsa.datagov-deploy-redis
-
 - src: https://github.com/GSA/ansible-role-beats
   version: master
   name: gsa.ansible-role-beats
-<<<<<<< HEAD
-
 - src: https://github.com/GSA/ansible-role-kibana
   version: master
   name: gsa.ansible-role-kibana
-
 - src: https://github.com/GSA/ansible-elastalert
-  version: develop
+  version: master
   name: gsa.elastalert
-=======
-- src: 'https://github.com/GSA/ansible-role-kibana'
-  name: gsa.ansible-role-kibana
->>>>>>> origin/develop
