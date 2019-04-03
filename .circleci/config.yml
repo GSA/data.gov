@@ -8,6 +8,7 @@ jobs:
     steps:
       - checkout
       - run: echo 'password' > ~/ansible-secret.txt
+      - run: pip install ansible
       - run: make update-vendor-force
       - run: make lint
 
