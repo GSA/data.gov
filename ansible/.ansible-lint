@@ -1,7 +1,18 @@
 exclude_paths:
-  - roles/vendor
   - jekyll.yml
-
-
-skip_list: []
-# - ANSIBLE0010 
+  - roles/security/nessus-agent
+  - roles/software/catalog/ckan-app
+  - roles/software/catalog/harvest
+  - roles/software/catalog/pycsw-app
+  - roles/software/catalog/www
+  - roles/software/ci/meta/main.yml
+  - roles/software/ckan/common
+  - roles/software/ckan/postgresql
+  - roles/software/ckan/saml2
+  - roles/software/ckan/solr
+  - roles/software/common/ansible-postfix
+  - roles/software/common/tls/meta/main.yml
+  - roles/software/inventory/ckan-app
+  - roles/software/inventory/ckan-db-setup
+  - roles/software/jekyll
+  - roles/vendor

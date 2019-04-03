@@ -1,4 +1,5 @@
---- # Dashboard repo deployment & composer install
+---
+# Dashboard repo deployment & composer install
 
 - name: Check whether "{{ project_source_new_code_path }}" exists
   stat: path="{{ project_source_new_code_path }}"
@@ -100,7 +101,11 @@
     name: "campaign status cfo-act download cron job"
     minute: 15
     hour: 4
-    job: "/usr/bin/php {{ current_source_symlink }}/index.php campaign status cfo-act download | tee /var/log/dashboard-cron-cfo.log | mail -s 'LabsData - Dashboard (cfo-act download) - {{ real_ansible_env }} Cron Job' -a 'From: {{ default_email_from }}' {{ cron_to_emails }}"
+    job: >-
+      /usr/bin/php {{ current_source_symlink }}/index.php campaign status cfo-act download |
+      tee /var/log/dashboard-cron-cfo.log |
+      mail -s 'LabsData - Dashboard (cfo-act download) - {{ real_ansible_env }} Cron Job'
+      -a 'From: {{ default_email_from }}' {{ cron_to_emails }}
   when: crons_enabled
 
 - name: Set up campaign status cfo-act full-scan cron job to run @ 11:30pm EST nightly
@@ -108,5 +113,9 @@
     name: "campaign status cfo-act full-scan cron job"
     minute: 30
     hour: 4
-    job: "/usr/bin/php {{ current_source_symlink }}/index.php campaign status cfo-act full-scan | tee /var/log/dashboard-cron.log | mail -s 'LabsData - Dashboard (cfo-act full-scan) - {{ real_ansible_env }} Cron Job' -a 'From: {{ default_email_from }}' {{ cron_to_emails }}"
+    job: >-
+      /usr/bin/php {{ current_source_symlink }}/index.php campaign status cfo-act full-scan |
+      tee /var/log/dashboard-cron.log |
+      mail -s 'LabsData - Dashboard (cfo-act full-scan) - {{ real_ansible_env }} Cron Job'
+      -a 'From: {{ default_email_from }}' {{ cron_to_emails }}
   when: crons_enabled

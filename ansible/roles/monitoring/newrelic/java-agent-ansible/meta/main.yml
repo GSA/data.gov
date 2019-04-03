@@ -14,8 +14,7 @@ galaxy_info:
 
   - name: Ubuntu
     versions:
-    - all
-  categories:
-  - monitoring
+      - all
+  galaxy_tags:
+    - monitoring
 dependencies: []
-
