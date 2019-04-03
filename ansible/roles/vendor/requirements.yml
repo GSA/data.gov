@@ -29,7 +29,17 @@
 - src: https://github.com/GSA/datagov-deploy-apache2
   version: master
   name: gsa.datagov-deploy-apache2
+<<<<<<< HEAD
 
+=======
+  version: ssl-certificate
+- src: 'https://github.com/GSA/datagov-deploy-common'
+  version: v1.0.0
+  name: gsa.datagov-deploy-common
+- src: 'https://github.com/GSA/datagov-deploy-jumpbox'
+  version: v1.0.0
+  name: gsa.datagov-deploy-jumpbox
+>>>>>>> origin/develop
 - src: https://github.com/GSA/datagov-deploy-postgresql
   version: master
   name: gsa.datagov-deploy-postgresql
@@ -41,6 +51,7 @@
 - src: https://github.com/GSA/ansible-role-beats
   version: master
   name: gsa.ansible-role-beats
+<<<<<<< HEAD
 
 - src: https://github.com/GSA/ansible-role-kibana
   version: master
@@ -49,3 +60,7 @@
 - src: https://github.com/GSA/ansible-elastalert
   version: develop
   name: gsa.elastalert
+=======
+- src: 'https://github.com/GSA/ansible-role-kibana'
+  name: gsa.ansible-role-kibana
+>>>>>>> origin/develop

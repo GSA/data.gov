@@ -13,7 +13,6 @@
     - {role: software/ckan/solr, tags: ['solr']}
     - {role: software/inventory/ckan-app, tags: ['deploy']}
     - {role: software/ckan/saml2, tags: ['saml2']}
-    - software/ckan/security-fix
     - {role: software/inventory/ckan-db-setup, tags: ['db', 'db-setup']}
     - {role: software/inventory/ckan-db-init, tags: ['db', 'db-init']}
     - {role: software/common/datagov-deploy-rollback, tags: ['deploy-rollback']}

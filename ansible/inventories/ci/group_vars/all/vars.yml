@@ -32,7 +32,6 @@ default_tls_host_certificate: |-
   -----END CERTIFICATE-----
 
 
-fluentd_disable: true
 nessus_agent_disable: true
 trendmicro_disable: true
 

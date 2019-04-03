@@ -1,4 +1,5 @@
 ---
+<<<<<<< HEAD
 - name: Provisioning Catalog CKAN Stack
   hosts: catalog-web:catalog-harvester
   serial: 1
@@ -34,3 +35,12 @@
     - {role: software/ckan/fix-ckan-tracking, tags: ['frontend']}
 
     - {role: software/common/datagov-deploy-rollback, tags: ['deploy-rollback']}
+=======
+- import_playbook: catalog-web.yml
+  tags:
+    - web
+
+- import_playbook: catalog-worker.yml
+  tags:
+    - worker
+>>>>>>> origin/develop

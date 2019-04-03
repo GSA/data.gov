@@ -1,0 +1,17 @@
+---
+# Base node
+############
+
+# Run these first
+- import_playbook: hostname.yml
+- import_playbook: hardening.yml
+- import_playbook: common.yml
+
+- import_playbook: nessus.yml
+- import_playbook: newrelic-infrastructure.yml
+- import_playbook: unattended-upgrades.yml
+
+
+# App plays
+############
+- import_playbook: catalog.yml
