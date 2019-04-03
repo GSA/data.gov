@@ -42,7 +42,6 @@ jobs:
           key: v1-bundle-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
-      - run: make update-vendor-force
       - run:
           name: Run tests
           command: |
