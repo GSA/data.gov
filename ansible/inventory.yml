@@ -1,5 +1,5 @@
 ---
-- name: Provisioning Inventory CKAN Stack 
+- name: Provisioning Inventory CKAN Stack
   hosts: all
   serial: 1
   vars:
