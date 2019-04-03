@@ -8,7 +8,7 @@ set -o nounset
 [[ ! -x /var/run/reboot-required ]] && exit 0
 
 sendmail {{ datagov_team_email }} <<EOF
-From: root
+From: reboot-notify <no-reply+reboot-notify@data.gov>
 Subject: [reboot-notify] A reboot is required on $(hostname --fqdn)
 
 Hello Data.gov,
