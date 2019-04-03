@@ -1,0 +1,30 @@
+---
+- name: create database role for app
+  postgresql_user: >-
+    name={{ postgresql_role_name }}
+    password={{ postgresql_role_password }}
+    login_host={{ postgresql_login_host }}
+    login_user={{ postgresql_login_user }}
+    login_password={{ postgresql_login_password }}
+    state=present
+
+- name: create app database
+  postgresql_db: >-
+    name={{ postgresql_database_name }}
+    encoding=UTF-8
+    owner={{ postgresql_role_name }}
+    login_host={{ postgresql_login_host }}
+    login_user={{ postgresql_login_user }}
+    login_password={{ postgresql_login_password }}
+    template=template0
+    state=present
+
+- name: configure extensions
+  postgresql_ext: >-
+    name={{ item }}
+    db={{ postgresql_database_name }}
+    login_host={{ postgresql_login_host }}
+    login_user={{ postgresql_login_user }}
+    login_password={{ postgresql_login_password }}
+    state=present
+  with_items: "{{ postgresql_enable_extensions }}"

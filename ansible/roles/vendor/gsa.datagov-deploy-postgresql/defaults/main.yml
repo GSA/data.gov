@@ -1,0 +1,16 @@
+---
+postgresql_database_name: "{{ postgresql_app_name }}"
+postgresql_role_name: "{{ postgresql_app_name }}"
+postgresql_enable_extensions: []
+postgresql_connection_use_socket: false
+
+# Defaults for official Ansible postgresql modules
+postgresql_maintenance_db: postgres
+postgresql_login_user: postgres
+postgresql_login_host: localhost
+
+
+__postgres_login_local_options: ""
+__postgres_login_remote_options: >-
+
+__postgresql_connection_options: "{{ postgresql_connection_use_socket | ternary(__postgresql_login_remote_options, __postgres_login_local_options) }}"

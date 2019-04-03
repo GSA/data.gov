@@ -57,8 +57,8 @@ We use the [git flow framework](https://danielkummer.github.io/git-flow-cheatshe
 
 Branch | Deployed to | Frequency
 ------ | ----------- | ---------
-`develop` | AWS test-ci | manual
-`staging` | BSP dev | manual
+`develop` | AWS sandboxes | manual
+`staging`/`release-*` | BSP dev | manual
 `production` | BSP prod | manual
 
 

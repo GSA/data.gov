@@ -12,8 +12,8 @@ current_source_symlink: /usr/lib/ckan
 project_index_path: /usr/lib/ckan
 
 # other
-REDIS_SERVER: "localhost"
-SOLR_SERVER: "{{ vault_solr_server }}"
+catalog_ckan_redis_host: "localhost"
+catalog_ckan_solr_host: "{{ vault_solr_server }}"
 env: local
 redis_password: "{{ vault_redis_pass }}"
 

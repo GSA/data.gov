@@ -1,0 +1,56 @@
+---
+- name: include vars for distribution
+  include_vars: "{{ ansible_distribution_release }}.yml"
+
+- name: get information on newest versions of packages and their dependencies
+  apt: update_cache=yes cache_valid_time={{ 5 * 24 * 60 * 60 }}  # 5 days
+
+- name: make sure packages are installed
+  action: apt pkg={{ common_os_packages }} state=present
+
+# Upgrade python to 2.7.10
+# TODO This should be removed, use something like pyenv to manage python
+# installs and included in a python role
+- include: python-upgrade.yml
+
+- name: remove incorrectly installed reboot-notify script
+  file: dest=/usr/local/reboot-notify.sh state=absent
+
+- name: install reboot-notify script
+  template: src=reboot-notify.sh dest=/usr/local/bin/reboot-notify.sh mode=0755 owner=root group=root
+  when: ansible_distribution_release == "trusty"
+
+  # In xenial+ a new package reboot-notifier does this
+- name: notify when reboot is required
+  cron: >-
+    name="notifies when a reboot is required"
+    cron_file=reboot-notify
+    special_time=daily
+    state=present
+    job=/usr/local/bin/reboot-notify.sh
+    user=root
+  when: ansible_distribution_release == "trusty"
+
+- name: be sure ntpd is running and enabled
+  service: name=ntp state=started enabled=yes
+  tags:
+    - ntp
+    - AU-8
+
+# Prevent a bug in grub where update-grub hangs probing
+# devices
+- name: ensure grub os prober is disabled
+  lineinfile: >-
+    path=/etc/default/grub
+    line='GRUB_DISABLE_OS_PROBER=true'
+    state=present
+  tags:
+    - notest
+
+- name: install GSA CA certificates
+  copy: src=gsa.crt dest=/usr/local/share/ca-certificates/gsa.crt mode=0644 owner=root group=root
+  register: gsa_ca_certificate
+
+- name: update system certificates
+  command: update-ca-certificates
+  when: gsa_ca_certificate is changed

@@ -15,7 +15,7 @@ MAX_CONTENT_LENGTH = 650000000
 
 db_user = "{{ inventory_db_user }}"
 db_pass = "{{ inventory_db_pass }}"
-db_server = "localhost"
+db_server = "{{ inventory_ckan_db_host }}"
 db_database = "{{ inventory_datapusher_db_name }}"
 SQLALCHEMY_DATABASE_URI = "postgresql://" + db_user + ":" + db_pass + "@" + db_server + "/" + db_database
 # SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/job_store.db'

@@ -13,8 +13,7 @@
 - src: geerlingguy.php-mysql
 - src: sbaerlocher.wp-cli
 - src: geerlingguy.java
-- src: geerlingguy.elasticsearch
-- src: geerlingguy.kibana
+- src: elastic.elasticsearch
 - src: geerlingguy.pip
 - src: ANXS.apt
 - src: ANXS.build-essential
@@ -36,9 +35,20 @@
 - src: 'https://github.com/GSA/datagov-deploy-apache2'
   name: gsa.datagov-deploy-apache2
   version: v1.0.0
+- src: 'https://github.com/GSA/datagov-deploy-common'
+  version: v1.0.0
+  name: gsa.datagov-deploy-common
+- src: 'https://github.com/GSA/datagov-deploy-jumpbox'
+  version: v1.0.0
+  name: gsa.datagov-deploy-jumpbox
+- src: https://github.com/GSA/datagov-deploy-postgresql
+  version: v1.0.0
+  name: gsa.datagov-deploy-postgresql
 - src: 'https://github.com/GSA/datagov-deploy-redis'
   version: master
   name: gsa.datagov-deploy-redis
 - src: 'https://github.com/GSA/ansible-role-beats'
   version: master
   name: gsa.ansible-role-beats
+- src: 'https://github.com/GSA/ansible-role-kibana'
+  name: gsa.ansible-role-kibana

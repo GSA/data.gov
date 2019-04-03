@@ -1,0 +1,13 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: datagov-deploy-postgresql
+      vars:
+        postgresql_app_name: ckan
+        postgresql_role_password: ckanckan
+        postgresql_login_user: master_user
+        postgresql_login_password: masterpassword
+        postgresql_connection_use_socket: true
+        postgresql_enable_extensions:
+          - postgis

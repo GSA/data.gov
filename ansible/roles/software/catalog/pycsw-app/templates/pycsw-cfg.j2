@@ -37,7 +37,7 @@ contact_role=publisher,custodian
 [repository]
 db_user = {{ catalog_db_user }}
 db_pass = {{ catalog_db_pass }}
-db_server = localhost
+db_server = {{ pycsw_db_server }}
 db_database = {{ catalog_pycsw_db_name }}
 database=postgresql://%(db_user)s:%(db_pass)s@%(db_server)s/%(db_database)s
 table=records
