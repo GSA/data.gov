@@ -3,7 +3,6 @@ KITCHEN_SUITES := \
   inventory-web \
   crm-web \
   dashboard-web \
-  datagov-web \
   jekyll
 
 MOLECULE_SUITES := \

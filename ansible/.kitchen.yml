@@ -129,31 +129,6 @@ suites:
 #  - name: datagov-web
 #    provisioner:
 #      playbook: datagov-web.yml
-  - name: efk-nginx
-    provisioner:
-      hosts:
-        - efk_nginx
-      playbook: efk-nginx.yml
-  - name: efk-stack
-    provisioner:
-      hosts:
-        - efk_nginx
-      playbook: efk-stack.yml
-#  - name: elastalert
-#    provisioner:
-#      playbook: elastalert.yml
-#  - name: elasticsearch
-#    provisioner:
-#      playbook: elasticsearch.yml
-#  - name: fluentd
-#    provisioner:
-#      playbook: fluent.yml
-#  - name: hardening
-#    provisioner:
-#      playbook: hardening.yml
-#  - name: harvester
-#    provisioner:
-#      playbook: harvester.yml
   - name: inventory-web
     provisioner:
       hosts: inventory-web
@@ -180,36 +155,4 @@ suites:
             port: "8000"
             s3_bucket: fakebucket
             secret_key: testsecret
-#  - name: kibana
-#    provisioner:
-#      playbook: kibana.yml
-  - name: logrotate
-    provisioner:
-      playbook: logrotate.yml
-#  - name: nessus
-#    provisioner:
-#      playbook: nessus.yml
-#  - name: newrelic-infrastructure
-#    provisioner:
-#      playbook: newrelic-infrastructure.yml
-#  - name: newrelic-php
-#    provisioner:
-#      playbook: newrelic-php.yml
-#  - name: newrelic-python
-#    provisioner:
-#      playbook: newrelic-python.yml
-#  - name: postfix
-#    provisioner:
-#      playbook: postfix.yml
-#  - name: secops
-#    provisioner:
-#      playbook: secops.yml
-#  - name: solr
-#    provisioner:
-#      playbook: solr.yml
-#  - name: trendmicro
-#    provisioner:
-#      playbook: trendmicro.yml
-  - name: unattended-upgrades
-    provisioner:
-      playbook: unattended-upgrades.yml
+
