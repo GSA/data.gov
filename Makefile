@@ -12,6 +12,7 @@ KITCHEN_SUITES := \
 MOLECULE_SUITES := \
   software/ci \
   software/catalog/harvest \
+  software/catalog/www \
   software/ckan/native-login \
   software/common/php-fixes \
   software/common/tls

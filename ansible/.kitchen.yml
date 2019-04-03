@@ -100,7 +100,7 @@ suites:
     provisioner:
       hosts:
         - catalog-web
-      playbook: catalog.yml
+      playbook: catalog-web.yml
       extra_vars:
         redis_password: fake-redis-password
         ckan_site_domain: http://test-kitchen-datagov.local

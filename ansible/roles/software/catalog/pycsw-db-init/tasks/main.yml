@@ -1,5 +1,0 @@
----
-
-- name: Initialize pycsw db
-  action: command chdir=/usr/lib/ckan/bin/ ./pycsw-ckan.py -c setup_db -f /etc/ckan/pycsw-all.cfg
-  tags: skip_ansible_lint
