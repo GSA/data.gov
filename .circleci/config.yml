@@ -22,6 +22,35 @@ jobs:
       - run: make lint
 
 
+  molecule-tests:
+    docker:
+      - image: circleci/python:3.6
+    environment:
+      PIPENV_VENV_IN_PROJECT: 1
+    parallelism: 4
+    steps:
+      - checkout
+      # Restore cache and install python dependencies
+      - restore_cache:
+          keys:
+            - v1-pipfile-{{ checksum "Pipfile.lock" }}
+            - v1-pipfile-
+      - run:
+          name: python dependencies
+          command: |
+            pip install --user --upgrade pipenv
+            pipenv install --dev
+      - save_cache:
+          key: v1-pipfile-{{ checksum "Pipfile.lock" }}
+          paths:
+            - .venv
+      - run:
+          name: tests
+          command: |
+            TEST_TARGETS=$(make circleci-glob-molecule | circleci tests split)
+            make ${TEST_TARGETS}
+
+
   kitchen-tests:
     machine: true
     parallelism: 4
@@ -69,3 +98,4 @@ workflows:
     jobs:
       - lint
       - kitchen-tests
+      - molecule-tests
