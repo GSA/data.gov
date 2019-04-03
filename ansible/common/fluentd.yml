@@ -1,7 +1,0 @@
----
-- name: Configure fluentd log-shipping service
-  hosts: all
-  roles:
-    - {role: monitoring/fluentd/kernel, tags: [fluentd]}
-    - {role: monitoring/fluentd/limits, tags: [fluentd]}
-    - {role: monitoring/fluentd/td-agent, tags: [fluentd, skip_in_kitchen]}
