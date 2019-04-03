@@ -20,6 +20,7 @@
 - src: nickhammond.logrotate
 - src: nleutner.newrelic-php
 - src: elastic.elasticsearch
+  version: 6.3.1
 
 - src: rvm.ruby
   name: rvm.ruby
