@@ -10,7 +10,7 @@
   hosts: kibana
   serial: 1
   roles:
-  - gsa.ansible-role-kibana
+  - role: gsa.ansible-role-kibana
 
 - name: Install EFK nginx proxy
   hosts: efk_nginx
@@ -23,6 +23,4 @@
   hosts: elasticsearch
   serial: 1
   roles:
-    - role: ANXS.build-essential
-    - role: gsa.elastalert
-    - role: monitoring/elastalert
+  - role: gsa.elastalert

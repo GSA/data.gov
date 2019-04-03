@@ -1,7 +1,7 @@
 ---
 - hosts: all
   roles:
-    - franklinkim.php5-newrelic
+    - nleutner.newrelic-php
   vars:
     newrelic_license_key: "{{ vault_nrinfragent_license_key }}"
     php5_newrelic_appname: "{{ inventory_hostname_short }}"
