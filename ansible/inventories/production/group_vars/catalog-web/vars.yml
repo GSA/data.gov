@@ -1,4 +1,6 @@
 ---
+ckan_session_store_type: memory
+
 datagov_service: catalog
 
 # role url
