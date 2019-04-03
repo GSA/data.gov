@@ -28,6 +28,10 @@ jobs:
     parallelism: 4
     steps:
       - checkout
+      - run:
+          name: setup path
+          command: |
+            echo 'export PATH=~/.local/bin:$PATH' >> $BASH_ENV
       # Restore cache and install python dependencies
       - restore_cache:
           keys:
