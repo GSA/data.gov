@@ -7,6 +7,10 @@ jobs:
     working_directory: ~/repo
     steps:
       - run: ansible-lint --version
+      - run:
+          name: setup path
+          command: |
+            echo 'export PATH=~/.local/bin:$PATH' >> $BASH_ENV
       - checkout
       - run:
           name: dependencies
@@ -16,9 +20,7 @@ jobs:
       - run: echo 'password' > ~/ansible-secret.txt
       - run:
           name: lint
-          command: |
-            export PATH=~/.local/bin:$PATH
-            make lint
+          command: make lint
 
   test:
     machine: true
