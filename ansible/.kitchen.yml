@@ -93,7 +93,7 @@ platforms:
   - name: ubuntu-14.04
     driver_config:
       image: rndmh3ro/docker-ubuntu1404-ansible:latest
-      platform: ubuntu
+      platform: ubuntu  
 
 suites:
   - name: catalog-web
