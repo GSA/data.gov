@@ -1,2 +1,0 @@
- - include: unattended-upgrades.yml
-   tags: unattended

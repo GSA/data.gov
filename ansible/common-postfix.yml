@@ -1,6 +1,0 @@
----
-
-- name: Install postfix
-  hosts: all
-  roles:
-    - {role: software/common/ansible-postfix, tags: [postfix]}

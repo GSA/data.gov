@@ -1,3 +1,0 @@
----
-__unattended_origins_patterns:
-  - 'origin=Ubuntu,archive=${distro_codename}-security,label=Ubuntu'

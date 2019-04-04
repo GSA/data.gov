@@ -1,3 +1,0 @@
----
-- import_tasks: nessus-agent.yml
-  when: nessus_agent_disable is undefined

@@ -1,21 +1,16 @@
 KITCHEN_SUITES := \
   catalog-web \
+  inventory-web \
   crm-web \
   dashboard-web \
-  efk-nginx \
-  efk-stack \
-  inventory-web \
-  jekyll \
-  logrotate \
-  unattended-upgrades
+  jekyll
 
 MOLECULE_SUITES := \
   software/ci \
   software/catalog/harvest \
   software/catalog/www \
   software/ckan/native-login \
-  software/common/php-fixes \
-  software/common/tls
+  software/common/php-fixes
 
 # Create test-kitchen-<suite> targets
 KITCHEN_SUITE_TARGETS := $(patsubst %,test-kitchen-%,$(KITCHEN_SUITES))
@@ -57,5 +52,7 @@ $(MOLECULE_SUITE_TARGETS):
 	molecule test --all
 
 test: $(KITCHEN_SUITE_TARGETS) $(MOLECULE_SUITE_TARGETS)
+test-kitchen-only: $(KITCHEN_SUITE_TARGETS)
+test-molecule-only: $(MOLECULE_SUITE_TARGETS)
 
 .PHONY: lint setup test $(KITCHEN_SUITE_TARGETS) $(MOLECULE_SUITE_TARGETS)

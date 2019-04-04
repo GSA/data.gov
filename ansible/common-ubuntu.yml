@@ -1,6 +1,0 @@
----
-- name: Common tasks for Ubuntu hosts
-  hosts: all
-  roles:
-    - role: gsa.datagov-deploy-common
-      tags: common

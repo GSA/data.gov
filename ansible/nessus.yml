@@ -1,5 +1,0 @@
----
-- name: Install Nessus Agent
-  hosts: all
-  roles:
-    - {role: security/nessus-agent}

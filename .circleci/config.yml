@@ -6,9 +6,10 @@ jobs:
       - image: particlekit/ansible-lint
     working_directory: ~/repo
     steps:
-      - run: ansible-lint --version
       - checkout
       - run: echo 'password' > ~/ansible-secret.txt
+      - run: pip install ansible
+      - run: make update-vendor-force
       - run: make lint
 
   test:
@@ -41,7 +42,11 @@ jobs:
           key: v1-bundle-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
-
+      - run: 
+          name: Setup ansible-galaxy
+          command: |
+            . venv/bin/activate
+            make update-vendor-force      
       - run:
           name: Run tests
           command: |

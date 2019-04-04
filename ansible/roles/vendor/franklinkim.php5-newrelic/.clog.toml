@@ -1,4 +1,0 @@
-[clog]
-changelog = "CHANGELOG.md"
-repository = "https://github.com/weareinteractive/ansible-php5-newrelic"
-from-latest-tag = true
