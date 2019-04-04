@@ -1,5 +1,5 @@
 ---
-datagov_envrionment: production
+datagov_environment: production
 
 default_tls_host_key: "{{ vault_default_tls_host_key }}"
 default_tls_host_certificate: |-
