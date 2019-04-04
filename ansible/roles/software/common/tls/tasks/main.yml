@@ -1,3 +1,4 @@
+# This role is only for temporary testing purposes because https://github.com/gsa/datagov-deploy-common is too large to run as a pre-task 
 ---
 - name: assert common_tls_host_certificate role variables are set
   debug:
