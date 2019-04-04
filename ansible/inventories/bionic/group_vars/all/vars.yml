@@ -1,0 +1,76 @@
+---
+datagov_environment: bionic
+
+default_tls_host_key: "{{ vault_default_tls_host_key }}"
+default_tls_host_certificate: |-
+  -----BEGIN CERTIFICATE-----
+  MIIEZjCCA06gAwIBAgIJAOYrtazOX0ojMA0GCSqGSIb3DQEBCwUAMIHHMQswCQYD
+  VQQGEwJVUzELMAkGA1UECAwCREMxEzARBgNVBAcMCldhc2hpbmd0b24xKDAmBgNV
+  BAoMH0dlbmVyYWwgU2VydmljZXMgQWRtaW5pc3RyYXRpb24xKjAoBgNVBAsMIVRl
+  Y2hub2xvZ3kgVHJhbnNmb3JtYXRpb24gU2VydmljZTEcMBoGA1UEAwwTKi5iaW9u
+  aWMuZGF0YWdvdi51czEiMCAGCSqGSIb3DQEJARYTZGF0YWdvdmhlbHBAZ3NhLmdv
+  djAeFw0xOTAzMjkyMzQyMjNaFw0yMDAzMjgyMzQyMjNaMIHHMQswCQYDVQQGEwJV
+  UzELMAkGA1UECAwCREMxEzARBgNVBAcMCldhc2hpbmd0b24xKDAmBgNVBAoMH0dl
+  bmVyYWwgU2VydmljZXMgQWRtaW5pc3RyYXRpb24xKjAoBgNVBAsMIVRlY2hub2xv
+  Z3kgVHJhbnNmb3JtYXRpb24gU2VydmljZTEcMBoGA1UEAwwTKi5iaW9uaWMuZGF0
+  YWdvdi51czEiMCAGCSqGSIb3DQEJARYTZGF0YWdvdmhlbHBAZ3NhLmdvdjCCASIw
+  DQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKiV0g2WLzjeqJQHQAQ7XRPcIosL
+  NJGydkJB16A47rbaaNQbVPHCCK98sqkKrzWs76aQALC3kMwfoc43phzrfAMxMdMr
+  oRW+GhLD70Lmpwmu10eTVXl1gAIoV0e6Gz+Praqnp7mDgujOMT5QCitZ4HBhOmYC
+  rx9tDRODpIB/rt2n05GBjz+dhOvvOiPIT+e3Up3fnJqXjMnlDwbDZwa8CUG8CC30
+  oqeCesDdudJVPbKKXlxFTgG7EQTtojQj/dKhr8ONYeqTF1kTeDRcjRCcNtWecrbO
+  +pf+Qpth0qPEmhW+ULBu39MdpQbqwDONTrHZ7gc5oN4q7CwImkEouLGYA8MCAwEA
+  AaNTMFEwHQYDVR0OBBYEFE3d1KTCu14ig3GIq5P/3HL2I2trMB8GA1UdIwQYMBaA
+  FE3d1KTCu14ig3GIq5P/3HL2I2trMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcN
+  AQELBQADggEBAG+O6zUGChbYZWEwQsoYnKnPfOMv5lSQeQB2W9IvXjSJxc2/boS9
+  E6f23btIDU6CoEEt2nMNBbP21zrYs8VPlRxF1Pg16m6+3xLNIGDC6QE9Qnr6ZrGf
+  k0ELtL/xj7oJyHl97kI4nnadKiHhL5MvvQoNU4xES2xjfGZNKI1BPAxS4kptXI8K
+  LKNb5EXDq5ujKp0pdbvQAJoN3FSD1kCc4EgCtJnRRW8JFQOq0R7L9LZX9dWwPu+N
+  yVzn1bzmlCV6AQmC2rcaBQpunJzn5bZ3BSDzrorwXodLmAh9Rt44H0Q8agRZFtb3
+  Bbue8FC5sfTkY70oq6O17iUyTx0hgbDbm78=
+  -----END CERTIFICATE-----
+
+nessus_agent_disable: true
+fluentd_disable: true
+trendmicro_disable: true
+
+# public urls
+urls_public:
+  catalog: https://catalog.bionic.datagov.us
+urls_private:
+  catalog: https://catalog.bionic.datagov.us
+
+ckan_site_domain: "{{ urls_public.catalog }}"
+
+nrinfragent_license_key: "{{ vault_nrinfragent_license_key }}"
+
+# solr
+solr_master_server: datagovsolr1tf.internal.bionic.datagov.us
+
+# List of CodeIgniter pre-approved admin emails
+codeigniter_pre_approved_admins: "{{ vault_codeigniter_pre_approved_admins }}"
+
+# App environment
+web_app_env: production
+real_ansible_env: production
+
+# postfix
+postfix_relayhost: smtp.gsa.gov
+postfix_relayhost_port: 25
+postfix_sasl_auth_enable: false
+postfix_relaytls: true
+default_email_from: no-reply@datagov.us
+postfix_key: "{{ default_tls_host_key }}"
+postfix_pem: "{{ default_tls_host_certificate }}"
+
+# SAML
+saml2_idp_entry: login.test.max.gov
+saml2_idp_metadata_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
+saml_idp_cert_fprint: "7A43DACB95D67FB6A804FD37C8A7DCA5B0384939"
+saml2_sp_public_key: "{{ default_tls_host_key }}"
+saml2_sp_private_pem: "{{ default_tls_host_certificate }}"
+
+
+# ckan
+# Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
+who_secure: True
