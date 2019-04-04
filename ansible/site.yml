@@ -8,4 +8,5 @@
 
 # App plays
 ############
+- import_playbook: jumpbox.yml
 - import_playbook: catalog.yml
