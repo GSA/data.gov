@@ -5,15 +5,7 @@
 # Run these first
 - import_playbook: common.yml
 
-<<<<<<< HEAD
 
 # App plays
 ############
 - import_playbook: catalog.yml
-=======
-- import_playbook: nessus.yml
-- import_playbook: newrelic-infrastructure.yml
-- import_playbook: unattended-upgrades.yml
-
-- import_playbook: jumpbox.yml
->>>>>>> origin/master

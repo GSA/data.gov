@@ -2,10 +2,6 @@
 - name: Converge
   hosts: all
   roles:
-<<<<<<< HEAD:ansible/roles/software/catalog/www/molecule/default/playbook.yml
-    - role: www
-=======
     - role: common
       vars:
         datagov_team_email: team@example.com
->>>>>>> origin/master:ansible/roles/software/ubuntu/common/molecule/default/playbook.yml
