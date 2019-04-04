@@ -1,6 +1,11 @@
 ---
+<<<<<<< HEAD
 
 ckan_session_store_type: memory
+=======
+ckan_session_store_type: memory
+
+>>>>>>> origin/master
 datagov_service: catalog
 
 # role url
