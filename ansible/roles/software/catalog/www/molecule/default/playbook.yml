@@ -2,6 +2,6 @@
 - name: Converge
   hosts: all
   roles:
-    - role: common
+    - role: www
       vars:
         datagov_team_email: team@example.com
