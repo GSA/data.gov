@@ -10,8 +10,8 @@ current_source_symlink: /usr/lib/ckan
 project_index_path: /usr/lib/ckan
 
 # other
-REDIS_SERVER: localhost
-SOLR_SERVER: datagovsolr1tf.internal.ci.datagov.us
+catalog_ckan_redis_host: catalog-harvester1tf.internal.ci.datagov.us
+catalog_ckan_solr_host: datagovsolr1tf.internal.ci.datagov.us
 env: local
 redis_password: "{{ catalog_ckan_redis_pass }}"
 who_secure: "{{ catalog_ckan_who_secure }}"

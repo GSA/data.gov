@@ -17,7 +17,7 @@ project_index_path: /usr/lib/ckan
 catalog_ckan_redis_host: catalog-harvester1tf.internal.bionic.datagov.us
 catalog_ckan_solr_host: datagovsolr1tf.internal.bionic.datagov.us
 env: local
-redis_password: "{{ vault_redis_pass }}"
+redis_password: "{{ vault_redis_password }}"
 
 # max login
 saml2_site_url: https://catalog.bionic.datagov.us
