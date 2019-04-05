@@ -15,14 +15,6 @@ datagov-jump1p.prod-ocsit.bsp.gsa.gov
 datagovsolrm1p.prod-ocsit.bsp.gsa.gov
 datagovsolr[1:2]p.prod-ocsit.bsp.gsa.gov
 
-# These hosts are part of our solr upgrade but are not
-# associated with the current solr role. We include them
-# here so that we can keep track of them and keep them
-# updated.
-[solr5]
-datagovsolrm2p.prod-ocsit.bsp.gsa.gov
-datagovsolr[3:4]p.prod-ocsit.bsp.gsa.gov
-
 [inventory-web]
 inventory[1:2]p.prod-ocsit.bsp.gsa.gov
 
