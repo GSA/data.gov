@@ -1,4 +1,5 @@
 ---
+catalog_ckan_app_version: develop
 datagov_environment: staging
 
 default_tls_host_key: "{{ vault_default_tls_host_key }}"
