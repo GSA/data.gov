@@ -1,4 +1,6 @@
 ---
+common_newrelic_enabled: false
+
 datagov_environment: bionic
 
 default_tls_host_key: "{{ vault_default_tls_host_key }}"

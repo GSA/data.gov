@@ -1,4 +1,6 @@
 ---
+common_newrelic_enabled: false
+
 datagov_enable_postgresql_role: true
 datagov_sandbox_env: ci
 
