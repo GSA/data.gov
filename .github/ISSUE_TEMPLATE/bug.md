@@ -1,3 +1,8 @@
+---
+name: Bug
+about: Description of a bug or defect.
+---
+
 <!-- description of the issue, please including any relevant information:
   - version
   - environment
