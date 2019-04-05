@@ -1,4 +1,7 @@
 ---
+# catalog
+catalog_ckan_app_version: develop
+
 # common
 common_newrelic_enabled: true
 filebeat_enabled: true
