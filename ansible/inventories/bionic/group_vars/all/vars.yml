@@ -1,6 +1,8 @@
 ---
+catalog_ckan_app_version: feature/bionic
 common_newrelic_enabled: false
 
+datagov_enable_postgresql_role: true
 datagov_environment: bionic
 
 default_tls_host_key: "{{ vault_default_tls_host_key }}"
