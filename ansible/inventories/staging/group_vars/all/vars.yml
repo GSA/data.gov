@@ -102,6 +102,10 @@ jekyll_apps:
 
 # solr
 solr_master_server: tempdatagovsolrm1d.dev-ocsit.bsp.gsa.gov
+solr_java_packages:
+  - openjdk-8-jdk
+solr_xms: 8192m
+solr_xmx: 8192m
 
 # SecOps user
 secops_user: "{{ vault_secops_user }}"
@@ -148,6 +152,7 @@ nessus_agent_group: "{{ vault_nessus_agent_group }}"
 
 # saxon license
 saxon_license: "{{ vault_saxon_license }}"
+
 
 # ckan
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production

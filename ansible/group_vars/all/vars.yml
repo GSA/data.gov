@@ -47,6 +47,12 @@ php_opcache_conf_filename: "10-opcache.ini"
 php_webserver_daemon: nginx
 
 
+# solr
+solr_home: /data/solr5
+solr_version: 5.5.5
+solr_port: "8983"
+
+
 # new python version
 common_python_version_directory: /usr/local/lib/python{{ common_python_version_number }}
 python_home: "{{ common_python_version_directory }}"

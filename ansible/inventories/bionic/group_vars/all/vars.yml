@@ -58,8 +58,17 @@ ckan_site_domain: "{{ urls_public.catalog }}"
 
 nrinfragent_license_key: "{{ vault_nrinfragent_license_key }}"
 
+
 # solr
 solr_master_server: datagovsolr1tf.internal.bionic.datagov.us
+solr_java_packages:
+  - openjdk-8-jdk
+# TODO applications should initialize the cores instead of
+# it being in the platform.
+solr_cores:
+  - catalog
+  - inventory
+
 
 # List of CodeIgniter pre-approved admin emails
 codeigniter_pre_approved_admins: "{{ vault_codeigniter_pre_approved_admins }}"
