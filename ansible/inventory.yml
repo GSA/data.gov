@@ -9,7 +9,10 @@
     - {role: software/common/tls, tags: ['tls']}
     - software/ckan/common
     - {role: gsa.datagov-deploy-apache2, tags: ['apache']}
-    - {role: software/ckan/postgresql, tags: ['db', 'db-install']}
+    - role: gsa.datagov-deploy-postgresql
+      tags:
+        - database
+      when: datagov_enable_postgresql_role is defined
     - {role: software/ckan/solr, tags: ['solr']}
     - {role: software/inventory/ckan-app, tags: ['deploy']}
     - {role: software/ckan/saml2, tags: ['saml2']}
