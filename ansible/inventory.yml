@@ -1,6 +1,58 @@
 ---
+- name: Inventory databases
+  hosts: inventory-web
+  pre_tasks:
+    - name: install psycopg2 for postgresql ansible module
+      apt: name=python-psycopg2 state=present
+  roles:
+    - role: gsa.datagov-deploy-postgresql
+      vars:
+        postgresql_app_name: "{{ inventory_db_name }}"
+        postgresql_role_password: "{{ inventory_db_pass }}"
+      tags:
+        - database
+      run_once: true
+      when: datagov_enable_postgresql_role is defined
+    - role: gsa.datagov-deploy-postgresql
+      vars:
+        postgresql_app_name: "{{ inventory_datapusher_db_name }}"
+        postgresql_role_password: "{{ inventory_datapusher_db_pass }}"
+      tags:
+        - database
+      run_once: true
+      when: datagov_enable_postgresql_role is defined
+    - role: gsa.datagov-deploy-postgresql
+      vars:
+        postgresql_app_name: "{{ inventory_datastore_db_name }}"
+        postgresql_role_password: "{{ inventory_datastore_pass }}"
+      tags:
+        - database
+      run_once: true
+      when: datagov_enable_postgresql_role is defined
+    - role: gsa.datagov-deploy-postgresql
+      vars:
+        # TODO create a read-only user https://github.com/GSA/datagov-deploy-postgresql/issues/2
+        postgresql_app_name: "{{ inventory_datastore_db_name }}"
+      tags:
+        - database
+      run_once: true
+      when: datagov_enable_postgresql_role is defined
+  tasks:
+    # TODO create a read-only user as part of role https://github.com/GSA/datagov-deploy-postgresql/issues/2
+    - name: create read-only user for datastore
+      postgresql_user: >-
+        name={{ inventory_datastore_ro_user }}
+        password={{ inventory_datastore_ro_pass }}
+        db={{ inventory_datastore_db_name }}
+        priv=CONNECT/SELECT
+        login_host={{ postgresql_login_host }}
+        login_user={{ postgresql_login_user }}
+        login_password={{ postgresql_login_password }}
+        state=present
+      run_once: true
+
 - name: Provisioning Inventory CKAN Stack
-  hosts: all
+  hosts: inventory-web
   serial: 1
   vars:
     app_type: inventory
@@ -9,36 +61,6 @@
     - {role: software/common/tls, tags: ['tls']}
     - software/ckan/common
     - {role: gsa.datagov-deploy-apache2, tags: ['apache']}
-    - role: gsa.datagov-deploy-postgresql
-      vars:
-        postgresql_app_name: "{{ inventory_db_name }}"
-        postgresql_role_password: "{{ inventory_db_pass }}"
-      tags:
-        - database
-      when: datagov_enable_postgresql_role is defined
-    - role: gsa.datagov-deploy-postgresql
-      vars:
-        postgresql_app_name: "{{ inventory_datapusher_db_name }}"
-        postgresql_role_password: "{{ inventory_datapusher_db_pass }}"
-      tags:
-        - database
-      when: datagov_enable_postgresql_role is defined
-    - role: gsa.datagov-deploy-postgresql
-      vars:
-        postgresql_app_name: "{{ inventory_datastore_db_name }}"
-        postgresql_role_password: "{{ inventory_datastore_pass }}"
-      tags:
-        - database
-      when: datagov_enable_postgresql_role is defined
-    - role: gsa.datagov-deploy-postgresql
-      vars:
-        # TODO create a read-only user https://github.com/GSA/datagov-deploy-postgresql/issues/2
-        postgresql_app_name: "{{ inventory_datastore_db_name }}"
-        postgresql_role_name: "{{ inventory_datastore_ro_user }}"
-        postgresql_role_password: "{{ inventory_datastore_ro_pass }}"
-      tags:
-        - database
-      when: datagov_enable_postgresql_role is defined
     - {role: software/ckan/solr, tags: ['solr']}
     - {role: software/inventory/ckan-app, tags: ['deploy']}
     - {role: software/ckan/saml2, tags: ['saml2']}
