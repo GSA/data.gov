@@ -10,6 +10,32 @@
     - software/ckan/common
     - {role: gsa.datagov-deploy-apache2, tags: ['apache']}
     - role: gsa.datagov-deploy-postgresql
+      vars:
+        postgresql_app_name: "{{ inventory_db_name }}"
+        postgresql_role_password: "{{ inventory_db_pass }}"
+      tags:
+        - database
+      when: datagov_enable_postgresql_role is defined
+    - role: gsa.datagov-deploy-postgresql
+      vars:
+        postgresql_app_name: "{{ inventory_datapusher_db_name }}"
+        postgresql_role_password: "{{ inventory_datapusher_db_pass }}"
+      tags:
+        - database
+      when: datagov_enable_postgresql_role is defined
+    - role: gsa.datagov-deploy-postgresql
+      vars:
+        postgresql_app_name: "{{ inventory_datastore_db_name }}"
+        postgresql_role_password: "{{ inventory_datastore_pass }}"
+      tags:
+        - database
+      when: datagov_enable_postgresql_role is defined
+    - role: gsa.datagov-deploy-postgresql
+      vars:
+        # TODO create a read-only user https://github.com/GSA/datagov-deploy-postgresql/issues/2
+        postgresql_app_name: "{{ inventory_datastore_db_name }}"
+        postgresql_role_name: "{{ inventory_datastore_ro_user }}"
+        postgresql_role_password: "{{ inventory_datastore_ro_pass }}"
       tags:
         - database
       when: datagov_enable_postgresql_role is defined
