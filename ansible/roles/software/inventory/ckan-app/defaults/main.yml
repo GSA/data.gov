@@ -9,7 +9,7 @@ ckan_pkgs:
   - {
       name: "ckan",
       repo: "https://github.com/GSA/ckan",
-      branch: "inventory",
+      branch: "{{ inventory_ckan_app_version }}",
       requirements: "requirements.txt"
     }
   - {
@@ -49,6 +49,7 @@ datapusher_pkgs:
 # provide some default values to be overwritten later by group vars and host vars...
 ckan_instance_secret: a97df940-4ac1-4357-aac2-156d4f21d300
 ckan_instance_uuid: cf305c1a-1672-4451-9cc7-250629d6fdee
+inventory_ckan_app_version: inventory
 inventory_db_user: ckan
 inventory_db_pass: pass
 inventory_db_name: inventory
