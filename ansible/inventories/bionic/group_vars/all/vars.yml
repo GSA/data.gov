@@ -38,6 +38,10 @@ filebeat_enabled: false
 nessus_agent_enabled: false
 trendmicro_enabled: false
 
+
+inventory_ckan_app_version: inventory-bionic
+
+
 # public urls
 urls_public:
   catalog: https://catalog.bionic.datagov.us
