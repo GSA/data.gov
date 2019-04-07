@@ -44,6 +44,10 @@ default_tls_host_certificate: |-
   -----END CERTIFICATE-----
 
 
+
+inventory_ckan_app_version: inventory-bionic
+
+
 # public urls
 urls_public:
   catalog: https://catalog.bionic.datagov.us
