@@ -16,12 +16,12 @@ inventory_db_name: inventory
 datastore_db_server: "{{ postgresql_login_host }}"
 inventory_datapusher_db_name: datapusher
 inventory_datapusher_db_user: datapusher
-inventory_datapusher_db_pass: "{{ vault_inventory_datapusher_pass }}"
+inventory_datapusher_db_pass: "{{ vault_inventory_datapusher_db_pass }}"
 inventory_datastore_db_name: datastore
 inventory_datastore_user: datastore
-inventory_datastore_pass: "{{ vault_inventory_datastore_pass }}"
+inventory_datastore_pass: "{{ vault_inventory_datastore_db_pass }}"
 inventory_datastore_ro_user: datastore_ro
-inventory_datastore_ro_pass: "{{ vault_inventory_datastore_ro_pass }}"
+inventory_datastore_ro_pass: "{{ vault_inventory_datastore_ro_db_pass }}"
 
 # other
 inventory_ckan_solr_host: datagovsolr1tf.internal.bionic.datagov.us
