@@ -1,6 +1,4 @@
 ---
-common_python_version_number: 2.7.16
-
 datagov_service: catalog
 
 # project path

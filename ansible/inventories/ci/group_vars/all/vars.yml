@@ -1,5 +1,10 @@
 ---
+# common
 common_newrelic_enabled: false
+common_python_version_number: 2.7.16
+filebeat_enabled: false
+nessus_agent_enabled: false
+trendmicro_enabled: false
 
 datagov_enable_postgresql_role: true
 datagov_environment: ci
@@ -33,11 +38,6 @@ default_tls_host_certificate: |-
   a6iApABZqU0Aac0KNKxx7F8BvcTfems78jd0RhKrGKD77l4VTtFb+gU2C02Abbm+
   lo4YdL0A8Y/f
   -----END CERTIFICATE-----
-
-
-filebeat_enabled: false
-nessus_agent_enabled: false
-trendmicro_enabled: false
 
 
 # public urls

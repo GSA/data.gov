@@ -1,6 +1,14 @@
 ---
+# catalog
 catalog_ckan_app_version: feature/bionic
+
+# common
 common_newrelic_enabled: false
+common_python_version_number: 2.7.16
+filebeat_enabled: false
+nessus_agent_enabled: false
+trendmicro_enabled: false
+
 
 datagov_enable_postgresql_role: true
 datagov_environment: bionic
@@ -34,9 +42,6 @@ default_tls_host_certificate: |-
   Bbue8FC5sfTkY70oq6O17iUyTx0hgbDbm78=
   -----END CERTIFICATE-----
 
-filebeat_enabled: false
-nessus_agent_enabled: false
-trendmicro_enabled: false
 
 # public urls
 urls_public:

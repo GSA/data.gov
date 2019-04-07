@@ -48,7 +48,6 @@ php_webserver_daemon: nginx
 
 
 # new python version
-common_python_version_number: 2.7.10
 common_python_version_directory: /usr/local/lib/python{{ common_python_version_number }}
 python_home: "{{ common_python_version_directory }}"
 
