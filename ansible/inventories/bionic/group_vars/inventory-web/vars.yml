@@ -40,6 +40,6 @@ postgresql_enable_extensions:
 saml2_site_url: unset
 
 # secrets
-who_ini_secret: "{{ vault_who_ini_secret }}"
-ckan_instance_secret: "{{ vault_ckan_instance_secret }}"
-ckan_instance_uuid: "{{ vault_ckan_instance_secret }}"
+who_ini_secret: "{{ vault_inventory_ckan_who_ini_secret }}"
+ckan_instance_secret: "{{ vault_inventory_ckan_instance_secret }}"
+ckan_instance_uuid: "{{ vault_inventory_ckan_instance_uuid }}"

@@ -2,7 +2,7 @@
 - name: Provision Inventory databases
   hosts: inventory-web
   pre_tasks:
-		# Database initialization should be delegated to the jumpbox, however
+    # Database initialization should be delegated to the jumpbox, however
     # jumpbox does not have access to the application databases (firewall/security
     # group configuration), so we have to install dependencies on one of the
     # inventory hosts and delegate to that host instead.
