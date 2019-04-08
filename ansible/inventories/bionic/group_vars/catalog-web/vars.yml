@@ -12,8 +12,6 @@ current_source_symlink: /usr/lib/ckan
 project_index_path: /usr/lib/ckan
 
 # other
-catalog_ckan_redis_host: catalog-harvester1tf.internal.bionic.datagov.us
-catalog_ckan_solr_host: datagovsolr1tf.internal.bionic.datagov.us
 env: local
 redis_password: "{{ vault_redis_password }}"
 

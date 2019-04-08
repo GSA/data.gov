@@ -1,4 +1,24 @@
 ---
+- name: Provision Catalog databases
+  hosts: catalog-web
+  roles:
+    - role: gsa.datagov-deploy-postgresql
+      vars:
+        postgresql_app_name: catalog
+        postgresql_role_password: "{{ catalog_ckan_db_pass }}"
+      tags:
+        - database
+      when: datagov_enable_postgresql_role is defined
+    - role: gsa.datagov-deploy-postgresql
+      vars:
+        postgresql_app_name: pycsw
+        postgresql_role_password: "{{ catalog_pycsw_db_pass }}"
+      tags:
+        - database
+      when: datagov_enable_postgresql_role is defined
+
+
+
 - name: Catalog web stack
   hosts: catalog-web
   serial: 1
@@ -15,11 +35,6 @@
     - role: gsa.datagov-deploy-apache2
       tags:
         - apache
-
-    - role: gsa.datagov-deploy-postgresql
-      tags:
-        - database
-      when: datagov_enable_postgresql_role is defined
 
     - role: software/ckan/catalog/ckan-app
       vars:
