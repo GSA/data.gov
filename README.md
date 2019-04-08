@@ -269,7 +269,7 @@ creating/destroying the container every time.
 
 If you have multiple scenarios, you can specify them individually.
 
-    $ moelcule test -s <scenario>
+    $ molecule test -s <scenario>
 
 
 ### Testing with kitchen

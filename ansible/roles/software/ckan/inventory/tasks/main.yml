@@ -1,0 +1,6 @@
+---
+- include_tasks: install.yml
+- include_tasks: build-pkgs.yml
+- include_tasks: additional-tasks.yml
+- include_tasks: db-setup.yml
+- include_tasks: db-init.yml

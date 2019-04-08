@@ -14,7 +14,6 @@ jobs:
 
   test:
     machine: true
-    parallelism: 4
     steps:
       - checkout
       # Restore cache and install python dependencies

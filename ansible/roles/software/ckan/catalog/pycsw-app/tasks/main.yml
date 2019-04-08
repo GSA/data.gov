@@ -1,0 +1,47 @@
+---
+- name: get pycsw version
+  git: repo=https://github.com/GSA/pycsw.git dest=/usr/lib/ckan/src/pycsw version={{ pycsw_app_version }}
+
+- name: run setup build for pycsw
+  command: chdir=/usr/lib/ckan/src/pycsw/ python setup.py build
+  tags: skip_ansible_lint
+
+- name: run setup install for pycsw
+  command: chdir=/usr/lib/ckan/src/pycsw/ python setup.py install
+  tags: skip_ansible_lint
+
+- name: install pyproj
+  pip: name=pyproj version=1.9.3 virtualenv=/usr/lib/ckan/
+
+- name: install geolinks
+  pip: name=geolinks version=0.2.0 virtualenv=/usr/lib/ckan/
+
+- name: copy pycsw configuration files
+  copy: src={{ item }} dest=/{{ item }} mode=0644
+  with_items:
+    - etc/ckan/pycsw.wsgi
+    - usr/lib/ckan/bin/pycsw-load.sh
+
+- name: set facts1
+  set_fact:
+    csw_url_path: "{{ csw_url_path_all }}"
+    csw_abstract: "{{ csw_abstract_all }}"
+    csw_filter: "{{ csw_filter_all }}"
+
+- name: config pycsw-all.cfg
+  template: src=pycsw-cfg.j2 dest=/etc/ckan/pycsw-all.cfg
+
+- name: set facts2
+  set_fact:
+    csw_url_path: "{{ csw_url_path_collection }}"
+    csw_abstract: "{{ csw_abstract_collection }}"
+    csw_filter: "{{ csw_filter_collection }}"
+
+- name: config pycsw-collection.cfg
+  template: src=pycsw-cfg.j2 dest=/etc/ckan/pycsw-collection.cfg
+
+- name: copy pycsw configuration files
+  copy: src={{ item }} dest=/{{ item }} mode=0644
+  with_items:
+    - etc/cron.d/pycsw
+  tags: ['cron']

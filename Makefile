@@ -1,14 +1,14 @@
 KITCHEN_SUITES := \
-  catalog-web \
-  inventory-web \
   crm-web \
-  dashboard-web \
-  jekyll
+  dashboard-web
 
 MOLECULE_SUITES := \
   software/ci \
-  software/catalog/harvest \
-  software/catalog/www \
+  software/ckan/catalog/harvest \
+  software/ckan/catalog/www \
+  software/ckan/catalog/ckan-app \
+  software/ckan/catalog/pycsw \
+  software/ckan/catalog/inventory \
   software/ckan/native-login \
   software/common/php-fixes
 

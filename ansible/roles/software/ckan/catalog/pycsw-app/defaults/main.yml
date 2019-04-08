@@ -1,0 +1,14 @@
+---
+# provide some default values to be overwritten later by group vars and host vars...
+urls_public:
+  catalog: http://127.0.0.1
+urls_private:
+  catalog: http://127.0.0.1
+
+catalog_db_user: ckan
+catalog_db_pass: ckan
+catalog_pycsw_db_name: pycsw
+pycsw_db_server: pycsw
+pycsw_app_version: ckan
+
+datagov_support_email: team@example.com

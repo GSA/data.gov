@@ -11,8 +11,8 @@
     - {role: gsa.datagov-deploy-apache2, tags: ['apache']}
     - {role: software/ckan/postgresql, tags: ['db', 'db-install']}
     - {role: software/ckan/solr, tags: ['solr']}
-    - {role: software/inventory/ckan-app, tags: ['deploy']}
+    - {role: software/ckan/inventory/ckan-app, tags: ['deploy']}
     - {role: software/ckan/saml2, tags: ['saml2']}
-    - {role: software/inventory/ckan-db-setup, tags: ['db', 'db-setup']}
-    - {role: software/inventory/ckan-db-init, tags: ['db', 'db-init']}
+    - {role: software/ckan/inventory/ckan-db-setup, tags: ['db', 'db-setup']}
+    - {role: software/ckan/inventory/ckan-db-init, tags: ['db', 'db-init']}
     - {role: software/common/datagov-deploy-rollback, tags: ['deploy-rollback']}

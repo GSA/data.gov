@@ -13,13 +13,13 @@
         - database
       when: datagov_enable_postgresql_role is defined
 
-    - role: software/catalog/ckan-app
+    - role: software/ckan/catalog/ckan-app
       tags:
         - app-deploy
 
-    - role: software/catalog/harvest
+    - role: software/ckan/catalog/harvest
 
-    - role: software/catalog/pycsw-app
+    - role: software/ckan/catalog/pycsw-app
       tags:
         - pycsw
 

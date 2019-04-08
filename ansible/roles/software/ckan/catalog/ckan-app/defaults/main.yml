@@ -1,0 +1,31 @@
+---
+app_source_path: /tmp/catalog-app
+app_repo: https://github.com/GSA/catalog-app.git
+app_repo_branch: master
+
+# used in  production.ini/ckan_site_url and hosts
+ckan_site_domain: "http://127.0.0.1"
+
+# provide some default values to be overwritten later by group vars and host vars...
+project_source_rollback_path: /usr/lib/ckan-rollback
+project_source_new_code_path: /usr/lib/ckan-new
+current_source_symlink: /usr/lib/ckan
+url_readonly: http://127.0.0.1
+url_writable: http://127.0.0.1
+saml2_idp_entry: login.test.max.gov
+ckan_instance_secret: some-secret
+ckan_instance_uuid: a9778c33-ef82-4642-9099-d9d448635570
+catalog_db_user: ckan
+catalog_db_pass: ckan
+catalog_db_name: ckan
+catalog_ckan_db_host: localhost
+saml2_site_url: https://admin-catalog.data.gov/
+catalog_bucket_name: somebucketname
+env: local
+catalog_ckan_solr_host: localhost
+app_type: catalog
+# Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
+who_secure: False
+token_dat: placeholder-token
+catalog_ckan_redis_host: localhost
+redis_password: redis
