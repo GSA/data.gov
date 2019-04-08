@@ -13,7 +13,7 @@ project_index_path: /usr/lib/ckan
 
 # other
 env: local
-redis_password: "{{ vault_redis_password }}"
+redis_password: "{{ catalog_ckan_redis_pass }}"
 
 # max login
 saml2_site_url: https://catalog.bionic.datagov.us
@@ -26,3 +26,6 @@ ckan_instance_uuid: "{{ vault_ckan_instance_secret }}"
 # token_dat for Google Analytics
 token_dat : "{{ vault_token_dat }}"
 
+postgresql_login_host: "{{ catalog_postgresql_login_host }}"
+postgresql_login_password: "{{ catalog_postgresql_login_password }}"
+postgresql_login_user: "{{ catalog_postgresql_login_user }}"
