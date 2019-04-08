@@ -7,14 +7,14 @@ lint:
   name: yamllint
   enabled: false
 platforms:
-  - name: catalog-ckan-app-trusty
+  - name: ckan-catalog-app-trusty
     image: ubuntu:trusty
     # start-stop-daemon doesn't detect tomcat is running in docker and `service
     # start/stop` fails. SYS_PTRACE is needed.
     # https://stackoverflow.com/questions/29683231/tomcat7-fail-to-start-inside-ubuntu-docker-container/29686963#29686963
     capabilities:
       - SYS_PTRACE
-  - name: catalog-ckan-app-bionic
+  - name: ckan-catalog-app-bionic
     image: ubuntu:bionic
     # start-stop-daemon doesn't detect tomcat is running in docker and `service
     # start/stop` fails. SYS_PTRACE is needed.

@@ -77,7 +77,7 @@
 
 - name: point site_url in /etc/hosts to localhost
   action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ ckan_site_domain | regex_replace('https?\://','') }}"
-  tags: 
+  tags:
    - molecule-notest
 
 - name: Symlink current dir with new code

@@ -32,9 +32,10 @@
     pkg: "{{ ckan_pkgs }}"
     virtualenv: "{{ project_source_new_code_path }}"
 
-  # TODO move this upstream somewhere. Maybe ckan's requirements.txt.
-- name: install M2Crypto for pysaml2
-  pip: name=M2Crypto version=0.23.0 virtualenv="{{ project_source_new_code_path }}" state=present
+# TODO move this upstream somewhere. Maybe ckan's requirements.txt.
+# - name: install M2Crypto for pysaml2
+#  pip: name=M2Crypto version=0.23.0 virtualenv="{{ project_source_new_code_path }}" state=present
+#  when: ansible_distribution_release == "trusty"
 
 - name: Remove old datapusher code
   file: path="{{ datapusher_virtual_env }}" state=absent
@@ -84,4 +85,4 @@
 - name: point site_url in /etc/hosts to localhost
   action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ ckan_site_domain | regex_replace('https?\://','') }}"
   tags:
-    - skip_in_kitchen # Device or resource busy ranaming temp file
+    - molecule-notest # Device or resource busy ranaming temp file

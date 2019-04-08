@@ -17,7 +17,6 @@ Included in this Repository:
     - New Relic (Infrastructure Monitoring)
     - New Relic (Application Performance Monitoring)
     - Trendmicro (OSSEC-HIDS)
-    - OSQuery (TBD)
 
 
 ## Project Status

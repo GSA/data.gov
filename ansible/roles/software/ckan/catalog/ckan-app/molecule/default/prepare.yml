@@ -56,4 +56,17 @@
       become_user: postgres
 
     - name: create ckan config dir
-      action: file path=/etc/ckan state=directory owner=root group=www-data mode=0750 follow=yes
+      file:
+        path: /etc/ckan
+        state: directory
+        owner: root
+        group: www-data
+        mode: 0750
+
+    - name: create fake apache2 config dir
+      file:
+        path: /etc/apache2/sites-enabled
+        state: directory
+        owner: root
+        group: www-data
+        mode: 0750
