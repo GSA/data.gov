@@ -1,6 +1,9 @@
 ---
 # catalog
 catalog_ckan_app_version: develop
+catalog_pycsw_db_user: "{{ catalog_db_user }}"
+catalog_pycsw_db_host: "{{ catalog_db_server }}"
+catalog_pycsw_db_pass: "{{ catalog_db_pass }}"
 
 
 # common
