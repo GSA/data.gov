@@ -12,16 +12,18 @@
   roles:
     - role: gsa.datagov-deploy-postgresql
       vars:
-        postgresql_app_name: ckan
+        postgresql_role_name: "{{ catalog_ckan_db_user }}"
         postgresql_role_password: "{{ catalog_ckan_db_pass }}"
+        postgresql_db_name: "{{ catalog_ckan_db_name }}"
       tags:
         - database
       run_once: true
       when: datagov_enable_postgresql_role is defined
     - role: gsa.datagov-deploy-postgresql
       vars:
-        postgresql_app_name: pycsw
+        postgresql_role_name: "{{ catalog_pycsw_db_user }}"
         postgresql_role_password: "{{ catalog_pycsw_db_pass }}"
+        postgresql_db_name: "{{ catalog_pycsw_db_name }}"
       tags:
         - database
       run_once: true
