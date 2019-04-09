@@ -12,7 +12,7 @@
   roles:
     - role: gsa.datagov-deploy-postgresql
       vars:
-        postgresql_app_name: catalog
+        postgresql_app_name: ckan
         postgresql_role_password: "{{ catalog_ckan_db_pass }}"
       tags:
         - database
