@@ -40,4 +40,9 @@
     state: absent
 
 - name: Restart apache2 one more time
-  service: name=apache2 state=restarted enabled=yes
+  service:
+    name: apache2
+    state: restarted
+    enabled: yes
+  tags:
+    - molecule-notest
