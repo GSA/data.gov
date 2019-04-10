@@ -1,4 +1,11 @@
 ---
+# common
+common_newrelic_enabled: true
+filebeat_enabled: true
+nessus_agent_enabled: true
+trendmicro_enabled: true
+
+# data.gov-wide variables
 datagov_environment: production
 
 default_tls_host_key: "{{ vault_default_tls_host_key }}"
