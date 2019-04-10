@@ -1,0 +1,36 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+  enabled: true
+platforms:
+  - name: php-crm-trusty
+    image: ubuntu:trusty
+  - name: php-crm-bionic
+    image: ubuntu:bionic    
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+    enabled: true
+scenario:
+  name: default
+  test_sequence:
+    - lint
+    - destroy
+    - dependency
+    - syntax
+    - create
+    - prepare
+    - converge
+    - idempotence
+    - side_effect
+    - verify
+    - destroy  
+verifier:
+  name: testinfra
+  lint:
+    name: flake8
