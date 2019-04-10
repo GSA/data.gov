@@ -10,7 +10,7 @@ platforms:
   - name: php-crm-trusty
     image: ubuntu:trusty
   - name: php-crm-bionic
-    image: ubuntu:bionic    
+    image: ubuntu:bionic
 provisioner:
   name: ansible
   lint:
@@ -29,7 +29,7 @@ scenario:
     - idempotence
     - side_effect
     - verify
-    - destroy  
+    - destroy
 verifier:
   name: testinfra
   lint:

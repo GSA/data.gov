@@ -1,5 +1,12 @@
 ---
----
+# php common role
+php_app_user: crm
+php_app_git_repo: https://github.com/GSA/project-open-data-dashboard.git
+php_app_deployment_version: 'master'
+php_major_minor_version: "7.0"
+php_enable_php_fpm: true
+php_max_execution_time: 30
+php_webserver_daemon: nginx
 
 # Composer
 project_git_repo: https://github.com/GSA/open311-simple-crm.git

@@ -18,9 +18,9 @@
  ```yaml
 # requirements.yml
 ---
-- src: 'https://github.com/GSA/datagov-deploy-php'
+- src: 'https://github.com/GSA/datagov-deploy-php-common'
   version: master
-  name: gsa.datagov-deploy-php
+  name: gsa.datagov-deploy-php-common
  - src: 'https://github.com/GSA/datagov-deploy-mysql'
   version: master
   name: gsa.datagov-deploy-mysql

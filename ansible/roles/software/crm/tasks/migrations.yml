@@ -1,4 +1,4 @@
---- # CRM migration
+---
 
 - name: Temporarily disabling keeping sessions in DB
   replace:
