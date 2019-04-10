@@ -10,6 +10,7 @@ catalog-harvester[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [jumpbox]
 datagov-jump1d.dev-ocsit.bsp.gsa.gov
+datagov-jump2d.dev-ocsit.bsp.gsa.gov
 
 [kibana]
 
