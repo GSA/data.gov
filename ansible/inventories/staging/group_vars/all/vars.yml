@@ -1,12 +1,19 @@
 ---
+# catalog
+catalog_ckan_app_version: develop
+
+
 # common
 common_newrelic_enabled: true
+common_python_version_number: 2.7.10
 filebeat_enabled: true
 nessus_agent_enabled: true
 trendmicro_enabled: true
 
+
 # data.gov-wide variables
 datagov_environment: staging
+
 
 default_tls_host_key: "{{ vault_default_tls_host_key }}"
 default_tls_host_certificate: |-

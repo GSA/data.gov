@@ -37,7 +37,7 @@
   file: path="{{ project_source_new_code_path }}" state=absent
 
 - name: Clone CKAN app
-  git: repo="{{ app_repo }}" dest="{{ app_source_path }}" version=master
+  git: repo="{{ app_repo }}" dest="{{ app_source_path }}" version={{ catalog_ckan_app_version }}
 
 - name: Install CKAN app
   command: ./install.sh "{{ project_source_new_code_path }}" chdir={{ app_source_path }}
