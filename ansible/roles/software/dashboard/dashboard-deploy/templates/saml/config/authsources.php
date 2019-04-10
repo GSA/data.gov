@@ -31,5 +31,6 @@ $config = array(
         'privatekey' => '{{ saml_sp_private_key_path }}',
         'certificate' => '{{ saml_sp_cert_path }}',
         'NameIDFormat' => 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
+        'NameIDPolicy' => FALSE,
     ),
 );
