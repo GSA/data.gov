@@ -52,7 +52,7 @@
   version: v1.0.0
 - name: gsa.datagov-deploy-postgresql
   src: https://github.com/GSA/datagov-deploy-postgresql
-  version: v1.0.0
+  version: v1.1.0
 - name: gsa.datagov-deploy-redis
   src: https://github.com/GSA/datagov-deploy-redis
   version: v1.0.0
