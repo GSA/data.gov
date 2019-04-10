@@ -10,8 +10,9 @@ docker-py = "*"
 
 [packages]
 ansible = "~=2.6.7"
-molecule = "*"
-docker-py = "*"
 
 [requires]
 python_version = "3.6"
+
+[scripts]
+test = "molecule test --all"

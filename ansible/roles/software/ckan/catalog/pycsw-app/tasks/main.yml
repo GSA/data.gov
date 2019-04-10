@@ -1,23 +1,27 @@
 ---
-- name: get pycsw version
-  git: repo=https://github.com/GSA/pycsw.git dest=/usr/lib/ckan/src/pycsw version={{ pycsw_app_version }}
-
 - name: run setup build for pycsw
-  command: chdir=/usr/lib/ckan/src/pycsw/ python setup.py build
-  tags: skip_ansible_lint
-
-- name: run setup install for pycsw
-  command: chdir=/usr/lib/ckan/src/pycsw/ python setup.py install
-  tags: skip_ansible_lint
+  pip:
+    name: "git+{{ pycsw_git_url }}@{{ pycsw_app_version }}#egg=pycsw"
+    virtualenv: "{{ pycsw_virtualenv }}"
+    extra_args: -e
 
 - name: install pyproj
-  pip: name=pyproj version=1.9.3 virtualenv=/usr/lib/ckan/
+  pip:
+    name: pyproj
+    version: 1.9.3
+    virtualenv: "{{ pycsw_virtualenv }}"
 
 - name: install geolinks
-  pip: name=geolinks version=0.2.0 virtualenv=/usr/lib/ckan/
+  pip:
+    name: geolinks
+    version: 0.2.0
+    virtualenv: "{{ pycsw_virtualenv }}"
 
 - name: copy pycsw configuration files
-  copy: src={{ item }} dest=/{{ item }} mode=0644
+  copy:
+    src: "{{ item }}"
+    dest: "/{{ item }}"
+    mode: "0644"
   with_items:
     - etc/ckan/pycsw.wsgi
     - usr/lib/ckan/bin/pycsw-load.sh

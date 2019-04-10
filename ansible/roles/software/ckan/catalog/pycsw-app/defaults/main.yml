@@ -9,6 +9,9 @@ catalog_db_user: ckan
 catalog_db_pass: ckan
 catalog_pycsw_db_name: pycsw
 pycsw_db_server: pycsw
+
+pycsw_virtualenv: "/usr/lib/ckan/"
+pycsw_git_url: "https://github.com/GSA/pycsw"
 pycsw_app_version: ckan
 
 datagov_support_email: team@example.com
