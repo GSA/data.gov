@@ -1,5 +1,12 @@
 ---
----
+# php common role
+php_app_user: wordpress
+php_app_git_repo: https://github.com/GSA/datagov-wp-boilerplate
+php_app_deployment_version: master
+php_major_minor_version: "7.0"
+php_enable_php_fpm: true
+php_max_execution_time: 30
+php_webserver_daemon: nginx
 
 # Nginx: https://www.scalescale.com/tips/nginx/how-to-configure-nginx-gzip-compression/
 nginx_extra_http_options: |

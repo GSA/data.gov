@@ -2,6 +2,11 @@
 - name: Converge
   hosts: all
   roles:
-    - role: crm
+    - role: gsa.datagov-deploy-php
+    - role: geerlingguy.nginx
+    - role: geerlingguy.php-mysql
+    - role: geerlingguy.php-memcached
+    - role: geerlingguy.composer
+    - role: wordpress
       vars:
         some: thing

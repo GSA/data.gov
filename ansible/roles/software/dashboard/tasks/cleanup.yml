@@ -22,6 +22,8 @@
     - "{{ project_shared_path }}/archive/digitalstrategy"
     - "{{ project_shared_path }}/archive/datajson"
     - "{{ project_shared_path }}/archive/error_log"
+  tags:
+    - molecule-notest
 
 - name: Check files permissions
   file:
@@ -32,6 +34,8 @@
     - "/var/log/dashboard-cron.log"
     - "/var/log/dashboard-cron-cfo.log"
     - "{{ project_shared_path }}/archive/curl_header"
+  tags:
+    - molecule-notest
 
 # SERVICE MODULE WILL NOT WORK (checked Ansible versions till 2.3.1)
 # `service php7.0-fpm restart` itself will not start `php7.0-fpm` if it's not running

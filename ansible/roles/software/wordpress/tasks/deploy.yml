@@ -1,5 +1,4 @@
---- # Data.gov repo deployment & composer install
-
+---
 - name: Check whether new code dir exists
   stat: path="{{ project_source_new_code_path }}"
   register: p
@@ -29,7 +28,7 @@
     no-dev: "{{ 'yes' if web_app_env != 'development' else 'no' }}"
     working_dir: "{{ project_source_new_code_path }}"
   environment:
-      COMPOSER_DISCARD_CHANGES: "true"
+    COMPOSER_DISCARD_CHANGES: "true"
   register: composer_output
 
 - name: Composer output
@@ -151,7 +150,7 @@
     regexp: '\$value.*\$this->replace_urls\( \$value, \$url_pairs \);'
     state: absent
 
-#- name: Set up main wp cronjob
+# - name: Set up main wp cronjob
 #  cron:
 #    name: "Set up main wp cronjob"
 #    minute: "*/10"
