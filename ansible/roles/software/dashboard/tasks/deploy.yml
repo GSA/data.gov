@@ -1,5 +1,4 @@
---- # Dashboard repo deployment & composer install
-
+---
 - name: Check whether "{{ project_source_new_code_path }}" exists
   stat: path="{{ project_source_new_code_path }}"
   register: p
@@ -29,7 +28,7 @@
     arguments: "--ansi --no-dev --no-interaction --optimize-autoloader --no-scripts"
     working_dir: "{{ project_source_new_code_path }}"
   environment:
-        COMPOSER_DISCARD_CHANGES: "true"
+    COMPOSER_DISCARD_CHANGES: "true"
 
 - name: Ensuring required directories exist
   file:
@@ -73,7 +72,7 @@
       }
       $msgStr = base64_encode(str_replace("simplesaml/module.php/saml/sp/saml2-acs.php/max","user/acs",$msgStr));'
 
-#- name: Fixing SAML (allowing missing url)
+# - name: Fixing SAML (allowing missing url)
 #  replace:
 #    dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/simplesamlphp/lib/SimpleSAML/Auth/State.php"
 #    regexp: '\$allowMissing = FALSE'
@@ -102,6 +101,8 @@
     hour: 4
     job: "/usr/bin/php {{ current_source_symlink }}/index.php campaign status cfo-act download | tee /var/log/dashboard-cron-cfo.log | mail -s 'LabsData - Dashboard (cfo-act download) - {{ real_ansible_env }} Cron Job' -a 'From: {{ default_email_from }}' {{ cron_to_emails }}"
   when: crons_enabled
+  tags:
+    - skip_ansible_lint
 
 - name: Set up campaign status cfo-act full-scan cron job to run @ 11:30pm EST nightly
   cron:
@@ -110,3 +111,5 @@
     hour: 4
     job: "/usr/bin/php {{ current_source_symlink }}/index.php campaign status cfo-act full-scan | tee /var/log/dashboard-cron.log | mail -s 'LabsData - Dashboard (cfo-act full-scan) - {{ real_ansible_env }} Cron Job' -a 'From: {{ default_email_from }}' {{ cron_to_emails }}"
   when: crons_enabled
+  tags:
+    - skip_ansible_lint

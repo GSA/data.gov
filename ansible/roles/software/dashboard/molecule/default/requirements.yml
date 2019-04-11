@@ -5,3 +5,8 @@
 - src: 'https://github.com/GSA/datagov-deploy-mysql'
   version: master
   name: gsa.datagov-deploy-mysql
+- src: geerlingguy.php
+- src: geerlingguy.nginx
+- src: geerlingguy.php-mysql
+- src: geerlingguy.php-memcached
+- src: geerlingguy.composer

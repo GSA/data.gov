@@ -19,6 +19,9 @@
     - "{{ project_source_new_code_path }}/web/app/w3tc-config"
     - "{{ project_source_new_code_path }}/web/app/cache"
     - "{{ project_source_new_code_path }}/web/app/uploads"
+  tags:
+    - molecule-notest
+    # to fix
 
 - name: Check if cron log file is accessible
   file:

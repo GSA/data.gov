@@ -13,7 +13,6 @@ python_version = "3.6"
 
 [scripts]
 test = "molecule test"
-test-all-tags = "molecule test --tags db-init, migrate"
 debug = "molecule --debug test"
 converge = "molecule converge"
 cleanup = "molecule destroy"
