@@ -13,6 +13,8 @@ platforms:
     image: ubuntu:bionic
 provisioner:
   name: ansible
+  ansible_args:
+    - --tags=db-init,migrate
   lint:
     name: ansible-lint
     enabled: true

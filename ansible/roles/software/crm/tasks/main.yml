@@ -2,16 +2,16 @@
 - name: Run precheck tests
   include_tasks: precheck.yml
 
+- name: Initialize
+  include_tasks: init.yml
+  tags: [ 'never', 'db-init' ]
+
 - name: Run deployment tasks
   include_tasks: deploy.yml
 
-- name: Initialize database
-  include_tasks: init.yml
-  tags: [ 'never', 'db-init' ]
+- name: Run cleanup tasks
+  include_tasks: cleanup.yml
 
 - name: Run migration scripts
   include_tasks: migrations.yml
   tags: [ 'never', 'migrate' ]
-
-- name: Run cleanup tasks
-  include_tasks: cleanup.yml

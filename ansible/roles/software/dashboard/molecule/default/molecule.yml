@@ -7,12 +7,15 @@ lint:
   name: yamllint
   enabled: true
 platforms:
-  - name: php-crm-trusty
+  - name: php-dashboard-trusty
     image: ubuntu:trusty
-  - name: php-crm-bionic
+  - name: php-dashboard-bionic
     image: ubuntu:bionic    
 provisioner:
   name: ansible
+  config_options:
+    defaults:
+      tags_run: "db-init, migrate"
   lint:
     name: ansible-lint
     enabled: true

@@ -1,4 +1,14 @@
 ---
+# php common role
+php_app_user: dashboard
+php_app_git_repo: https://github.com/project-open-data/project-open-data-dashboard.git
+php_app_deployment_version: master
+php_major_minor_version: "7.0"
+php_enable_php_fpm: true
+php_max_execution_time: 30
+php_webserver_daemon: nginx
+
+# precheck
 dashboard_user: ubuntu
 
 # Enable crons only on specific hosts
@@ -24,7 +34,7 @@ env_db_pass: superpassword
 env_db_name: dashboard
 
 # AWS S3 bucket
-s3_bucket: dashboard-rei-test
+s3_bucket: dashboard-s3
 s3_prefix: datagov/dashboard/
 
 # App

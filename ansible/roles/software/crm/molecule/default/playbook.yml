@@ -10,6 +10,3 @@
     - role: crm
       vars:
         - some: thing
-      tags:
-        - db-init
-        - migrate
