@@ -1,38 +1,4 @@
 ---
-
-- name: Check whether new code dir exists
-  stat: path="{{ project_source_new_code_path }}"
-  register: p
-
-- name: Create rollback code
-  command: mv "{{ project_source_new_code_path }}" "{{ project_source_rollback_path }}"
-  when: p.stat.isdir is defined and p.stat.isdir
-
-- name: Symlink current dir with rollback code
-  file:
-    src: "{{ project_source_rollback_path }}"
-    path: "{{ current_source_symlink }}"
-    state: link
-  when: p.stat.isdir is defined and p.stat.isdir
-
-- name: Remove new code
-  file: path="{{ project_source_new_code_path }}" state=absent
-
-- name: Clone project files
-  git:
-    repo: "{{ project_git_repo }}"
-    dest: "{{ project_source_new_code_path }}"
-    version: "{{ project_git_version }}"
-    force: true
-
-- name: Composer install CRM
-  composer:
-    command: install
-    arguments: "--ansi --no-dev --no-interaction --optimize-autoloader --no-scripts"
-    working_dir: "{{ project_source_new_code_path }}"
-  environment:
-    COMPOSER_DISCARD_CHANGES: "true"
-
 - name: Copying index.php
   template:
     src: "index.php"
@@ -77,9 +43,3 @@
                 $msgStr = str_replace(".gov/simple",".gov/crm/simple", $msgStr);
         }
         $msgStr = base64_encode(str_replace("simplesaml/module.php/saml/sp/saml2-acs.php/max","auth/acs",$msgStr));'
-
-- name: Symlink current dir with new code
-  file:
-    src: "{{ project_source_new_code_path }}"
-    path: "{{ current_source_symlink }}"
-    state: link
