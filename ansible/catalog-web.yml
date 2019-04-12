@@ -14,7 +14,7 @@
       vars:
         postgresql_role_name: "{{ catalog_ckan_db_user }}"
         postgresql_role_password: "{{ catalog_ckan_db_pass }}"
-        postgresql_db_name: "{{ catalog_ckan_db_name }}"
+        postgresql_database_name: "{{ catalog_ckan_db_name }}"
       tags:
         - database
       run_once: true
@@ -23,7 +23,7 @@
       vars:
         postgresql_role_name: "{{ catalog_pycsw_db_user }}"
         postgresql_role_password: "{{ catalog_pycsw_db_pass }}"
-        postgresql_db_name: "{{ catalog_pycsw_db_name }}"
+        postgresql_database_name: "{{ catalog_pycsw_db_name }}"
       tags:
         - database
       run_once: true
