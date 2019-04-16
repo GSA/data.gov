@@ -9,7 +9,7 @@
 #30 5 * * * root supervisorctl start ckan-harvest-job-cleanup
 #30 4 * * * root supervisorctl start ckan-combine-feeds
 #2 2 * * * root supervisorctl start ckan-export-csv
-#0 5 * * * root supervisorctl start ckan-sitemap
+0 5 * * * root supervisorctl start ckan-sitemap
 
 ## jsonl export on 3rd day of each month at 2:01 AM
 #1 2 3 * * root supervisorctl start ckan-jsonl-export
