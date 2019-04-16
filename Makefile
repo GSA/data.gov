@@ -6,7 +6,6 @@ KITCHEN_SUITES := \
   jekyll
 
 MOLECULE_SUITES := \
-  software/ci \
   software/catalog/harvest \
   software/catalog/www \
   software/ckan/native-login \
