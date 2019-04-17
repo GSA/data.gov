@@ -29,3 +29,5 @@ token_dat : "{{ vault_token_dat }}"
 postgresql_login_host: "{{ catalog_postgresql_login_host }}"
 postgresql_login_password: "{{ catalog_postgresql_login_password }}"
 postgresql_login_user: "{{ catalog_postgresql_login_user }}"
+postgresql_enable_extensions:
+  - postgis
