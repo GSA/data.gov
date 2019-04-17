@@ -1,0 +1,34 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+job_name=harvest-report
+report_file=$(mktemp)
+day=$(date +%Y-%m-%d)
+
+function cleanup() {
+  rm -rf "$report_file"
+}
+
+trap cleanup EXIT
+
+psql -h {{ catalog_ckan_db_host }} -U {{ catalog_ckan_db_user }} --set ON_ERROR_STOP=1 {{ catalog_ckan_db_name }} <<SQL > $report_file
+SELECT * FROM harvest_job WHERE status <> 'Finished' ORDER BY created;
+SQL
+
+if [[ "$(wc -l "$report_file" | cut -d' ' -f1)" -lt 2 ]]; then
+  # no conent in the report, exit ok
+  exit 0
+fi
+
+mail -s "[$job_name] In-progress harvest job report for $day" -a "From: no-reply+${job_name}@data.gov" {{ datagov_team_email }} <<EOF
+Hello, this is a daily report for harvest jobs in progress on ${day}.
+
+$(cat "$report_file")
+
+--
+$(basename "$0") on $(hostname)
+https://github.com/GSA/datagov-deploy
+EOF
