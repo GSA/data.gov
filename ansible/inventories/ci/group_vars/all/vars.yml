@@ -11,6 +11,7 @@ catalog_ckan_solr_host: datagovsolr1tf.internal.ci.datagov.us
 catalog_postgresql_login_host: "{{ vault_catalog_postgresql_login_host }}"
 catalog_postgresql_login_password: "{{ vault_catalog_postgresql_login_password }}"
 catalog_postgresql_login_user: "{{ vault_catalog_postgresql_login_user }}"
+catalog_pycsw_db_host: "{{ catalog_postgresql_login_host }}"
 catalog_pycsw_db_name: pycsw
 catalog_pycsw_db_pass: "{{ vault_catalog_pycsw_db_pass }}"
 catalog_pycsw_db_user: pycsw
