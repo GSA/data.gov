@@ -9,12 +9,20 @@ lint:
 platforms:
   - name: ckan-inventory-app-trusty
     image: ubuntu:trusty
+    groups:
+      - trusty
   - name: ckan-inventory-app-bionic
     image: ubuntu:bionic
+    groups:
+      - bionic
 provisioner:
   name: ansible
   lint:
     name: ansible-lint
+  inventory:
+    group_vars:
+      bionic:
+        inventory_ckan_app_version: inventory-bionic
 scenario:
   name: default
   # to fix

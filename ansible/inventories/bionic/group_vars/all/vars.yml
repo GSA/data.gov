@@ -13,6 +13,7 @@ trendmicro_enabled: false
 datagov_enable_postgresql_role: true
 datagov_environment: bionic
 
+
 default_tls_host_key: "{{ vault_default_tls_host_key }}"
 default_tls_host_certificate: |-
   -----BEGIN CERTIFICATE-----
@@ -41,6 +42,10 @@ default_tls_host_certificate: |-
   yVzn1bzmlCV6AQmC2rcaBQpunJzn5bZ3BSDzrorwXodLmAh9Rt44H0Q8agRZFtb3
   Bbue8FC5sfTkY70oq6O17iUyTx0hgbDbm78=
   -----END CERTIFICATE-----
+
+
+
+inventory_ckan_app_version: inventory-bionic
 
 
 # public urls
