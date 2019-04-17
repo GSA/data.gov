@@ -1,18 +1,7 @@
 <?php
 
 
-$protocol = 'https';
-
-$default_host = '{{ default_host }} ';
-if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
-    $default_host = $_SERVER['HTTP_HOST'];
-}
-
-$base_url = $protocol . '://' . $default_host;
-
-if (0 === stripos($_SERVER['REQUEST_URI'], '/dashboard')){
-    $base_url .= '/dashboard';
-}
+$base_url = '{{ app_base_url }}';
 
 $config = array(
     // This is a authentication source which handles admin authentication.
