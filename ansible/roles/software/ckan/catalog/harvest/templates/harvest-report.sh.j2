@@ -14,7 +14,7 @@ function cleanup() {
 
 trap cleanup EXIT
 
-job_count=$(psql -At -h {{ catalog_ckan_db_host }} -U {{ catalog_ckan_db_user }} --set ON_ERROR_STOP=1 {{ catalog_ckan_db_name }} -c 'SELECT count(*) FROM harvest_job WHERE status = "Running";')
+job_count=$(psql -At -h {{ catalog_ckan_db_host }} -U {{ catalog_ckan_db_user }} --set ON_ERROR_STOP=1 {{ catalog_ckan_db_name }} -c $'SELECT count(*) FROM harvest_job WHERE status = \'Running\';')
 if [[ "$job_count" -eq 0 ]]; then
   # nothing to report, exit ok
   exit 0
