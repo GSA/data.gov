@@ -1,6 +1,6 @@
 ---
-name: Issue template
-about: Generic Issue
+name: User story
+about: Story about a new user feature
 title: ''
 labels: ''
 assignees: ''

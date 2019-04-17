@@ -10,6 +10,7 @@ docker-py = "*"
 
 [packages]
 ansible = "~=2.6.7"
+boto = "*"
 
 [requires]
 python_version = "3.6"

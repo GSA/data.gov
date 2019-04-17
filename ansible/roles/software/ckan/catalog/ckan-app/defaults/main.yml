@@ -1,4 +1,5 @@
 ---
+catalog_ckan_app_version: master
 app_source_path: /tmp/catalog-app
 app_repo: https://github.com/GSA/catalog-app.git
 app_repo_branch: master
