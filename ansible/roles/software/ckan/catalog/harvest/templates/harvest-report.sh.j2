@@ -33,7 +33,7 @@ UNION
 ORDER BY "#";
 
 
-SELECT j.id, s.title, s.description, j.created, j.gather_started, j.gather_finished, j.finished, j.status
+SELECT j.id, j.created, s.title, s.description, j.gather_started, j.gather_finished, j.finished, j.status
 FROM harvest_job as j, harvest_source as s
 WHERE j.status = 'Running' AND j.source_id = s.id
 ORDER BY created;
