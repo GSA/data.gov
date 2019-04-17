@@ -1,0 +1,8 @@
+---
+csw_url_path_all: "csw-all"
+csw_abstract_all: "This catalog contains all metadata records for data, services, and applications harvested from registered metadata collections with data.gov, including large numbers of products within several large homogeneous collections. Data may be referenced from federal, state, local, tribal, academic, commercial, or non-profit organizations."
+csw_filter_all: ""
+
+csw_url_path_collection: "csw"
+csw_abstract_collection: "This catalog contains metadata for all first-order data, services, and applications harvested from registered metadata collections with data.gov. Data may be referenced from federal, state, local, tribal, academic, commercial, or non-profit organizations."
+csw_filter_collection: "ckan_collection = '1'"
