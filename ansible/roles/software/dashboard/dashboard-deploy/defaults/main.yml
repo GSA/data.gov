@@ -28,6 +28,7 @@ s3_prefix: datagov/dashboard/
 
 # App
 web_app_env: development
+app_base_url: https://labs.data.gov/dashboard
 default_host: 'labs.data.gov/dashboard'
 env_content_protocol: http
 real_ansible_env: local

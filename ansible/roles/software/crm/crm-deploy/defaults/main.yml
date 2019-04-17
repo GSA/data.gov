@@ -18,6 +18,7 @@ env_db_name: crm
 
 # App
 web_app_env: development
+app_base_url: https://labs.data.gov/crm
 default_host: 'labs.data.gov/crm'
 env_content_protocol: http
 cookie_secure_only: 'FALSE'

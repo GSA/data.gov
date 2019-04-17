@@ -57,28 +57,6 @@
     src: "saml/metadata/{{ saml2_idp_entry }}/saml20-idp-remote.php"
     dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/simplesamlphp/metadata/saml20-idp-remote.php"
 
-- name: Fixing SAML (removing nameIdPolicy)
-  replace:
-    dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/saml2/src/SAML2/AuthnRequest.php"
-    regexp: '\$root->appendChild\(\$nameIdPolicy\);'
-    replace: '//$root->appendChild($nameIdPolicy) ;'
-
-- name: Fixing SAML (replacing saml2-acs.php)
-  replace:
-    dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/saml2/src/SAML2/HTTPPost.php"
-    regexp: '\$msgStr = base64_encode\(\$msgStr\);'
-    replace: '
-      if (0 === stripos($_SERVER["REQUEST_URI"], "/dashboard")){
-        $msgStr = str_replace(".gov/simple",".gov/dashboard/simple", $msgStr);
-      }
-      $msgStr = base64_encode(str_replace("simplesaml/module.php/saml/sp/saml2-acs.php/max","user/acs",$msgStr));'
-
-#- name: Fixing SAML (allowing missing url)
-#  replace:
-#    dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/simplesamlphp/lib/SimpleSAML/Auth/State.php"
-#    regexp: '\$allowMissing = FALSE'
-#    replace: '$allowMissing = TRUE'
-
 - name: Copying index.php
   template:
     src: "index.php"
