@@ -1,0 +1,4 @@
+---
+catalog_ckan_app_version: feature/bionic
+
+common_python_version_number: 2.7.16
