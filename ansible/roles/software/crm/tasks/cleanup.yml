@@ -1,10 +1,4 @@
 ---
-- name: Reverting /var/www/ permissions
-  file:
-    path: "/var/www"
-    state: directory
-    mode: 0755
-    recurse: yes
 
 # SERVICE MODULE WILL NOT WORK (checked Ansible versions till 2.3.1)
 # `service php7.0-fpm restart` itself will not start `php7.0-fpm` if it's not running
