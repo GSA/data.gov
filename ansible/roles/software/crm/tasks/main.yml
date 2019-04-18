@@ -1,5 +1,5 @@
 ---
-- name: Run precheck tests
+- name: Set php_app_deploy_version to timestamp
   include_tasks: precheck.yml
 
 - name: Initialize

@@ -1,6 +1,7 @@
 ---
 # php common role
 php_app_user: crm
+php_app_home: crm
 php_app_git_repo: https://github.com/GSA/open311-simple-crm.git
 php_app_git_version: master
 php_major_minor_version: "7.0"

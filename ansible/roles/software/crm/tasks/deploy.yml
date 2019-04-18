@@ -11,52 +11,52 @@
 
 - name: Ensuring config directory exists
   file:
-    path: "{{ php_app_deployment_dir }}/application/config/{{ web_app_env }}"
+    path: "{{ php_app_deployment_dir }}/src/application/config/{{ web_app_env }}"
     state: directory
 
 - name: Copying config files
   template:
     src: "{{ item }}"
-    dest: "{{ php_app_deployment_dir }}/application/config/{{ web_app_env }}/{{ item | basename }}"
+    dest: "{{ php_app_deployment_dir }}/src/application/config/{{ web_app_env }}/{{ item | basename }}"
   with_fileglob:
     - ../templates/config/*.php
 
 - name: Ensuring simplesamlphp/config directory exists
   file:
-    path: "{{ php_app_deployment_dir }}/vendor/simplesamlphp/simplesamlphp/config"
+    path: "{{ php_app_deployment_dir }}/src/vendor/simplesamlphp/simplesamlphp/config"
     state: directory
 
 - name: Copying SAML config files
   template:
     src: "{{ item }}"
-    dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/simplesamlphp/config/{{ item | basename }}"
+    dest: "{{ project_source_new_code_path }}/src/vendor/simplesamlphp/simplesamlphp/config/{{ item | basename }}"
   with_fileglob:
     - ../templates/saml/config/*.php
 
 - name: Ensuring simplesamlphp/metadata directory exists
   file:
-    path: "{{ php_app_deployment_dir }}/vendor/simplesamlphp/simplesamlphp/metadata"
+    path: "{{ php_app_deployment_dir }}/src/vendor/simplesamlphp/simplesamlphp/metadata"
     state: directory
 
 - name: Copying SAML metadata files
   template:
     src: "saml/metadata/{{ saml2_idp_entry }}/saml20-idp-remote.php"
-    dest: "{{ php_app_deployment_dir }}/vendor/simplesamlphp/simplesamlphp/metadata/saml20-idp-remote.php"
+    dest: "{{ php_app_deployment_dir }}/src/vendor/simplesamlphp/simplesamlphp/metadata/saml20-idp-remote.php"
 
 - name: Copying SAML config files
   template:
     src: "/saml/config/AuthnRequest.php"
-    dest: "{{ php_app_deployment_dir }}/vendor/simplesamlphp/saml2/src/SAML2/AuthnRequest.php"
+    dest: "{{ php_app_deployment_dir }}/src/vendor/simplesamlphp/saml2/src/SAML2/AuthnRequest.php"
 
 - name: Fixing SAML (removing nameIdPolicy)
   replace:
-    dest: "{{ php_app_deployment_dir }}/vendor/simplesamlphp/saml2/src/SAML2/AuthnRequest.php"
+    dest: "{{ php_app_deployment_dir }}/src/vendor/simplesamlphp/saml2/src/SAML2/AuthnRequest.php"
     regexp: '\$root->appendChild\(\$nameIdPolicy\);'
     replace: '//$root->appendChild($nameIdPolicy) ;'
 
 - name: Fixing SAML (replacing saml2-acs.php)
   replace:
-    dest: "{{ php_app_deployment_dir }}/vendor/simplesamlphp/saml2/src/SAML2/HTTPPost.php"
+    dest: "{{ php_app_deployment_dir }}/src/vendor/simplesamlphp/saml2/src/SAML2/HTTPPost.php"
     regexp: '\$msgStr = base64_encode\(\$msgStr\);'
     replace: '
         if (0 === stripos($_SERVER["REQUEST_URI"], "/crm")){

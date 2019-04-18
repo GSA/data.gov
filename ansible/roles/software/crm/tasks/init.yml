@@ -1,5 +1,14 @@
 ---
 # CRM prerequisites
+
+- name: Installing required packages
+  package:
+    name:
+      - mariadb-client-5.5
+      - php7.0-zip
+      - nginx-extras
+    state: present
+
 - name: Copying CRM configuration for Nginx
   template:
     src: "crm.nginx.conf"
