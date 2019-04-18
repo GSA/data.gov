@@ -28,8 +28,9 @@
     mode: 0644
 
 - name: Installing required packages
-  package: name={{ item }} state=installed
-  with_items:
-    - mariadb-client-5.5
-    - php7.0-zip
-    - nginx-extras
+  package:
+    name:
+      - mariadb-client-5.5
+      - php7.0-zip
+      - nginx-extras
+    state: present

@@ -3,10 +3,6 @@
   hosts: all
   roles:
     - role: gsa.datagov-deploy-php
-    - role: geerlingguy.nginx
-    - role: geerlingguy.php-mysql
-    - role: geerlingguy.php-memcached
-    - role: geerlingguy.composer
     - role: crm
       vars:
         - some: thing

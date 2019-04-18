@@ -1,22 +1,24 @@
 ---
 # php common role
 php_app_user: crm
-php_app_git_repo: https://github.com/GSA/project-open-data-dashboard.git
-php_app_deployment_version: 'master'
+php_app_git_repo: https://github.com/GSA/open311-simple-crm.git
+php_app_git_version: master
+php_app_deploy_version: "{{ ansible_date_time.epoch }}"
 php_major_minor_version: "7.0"
 php_enable_php_fpm: true
 php_max_execution_time: 30
 php_webserver_daemon: nginx
+php_app_deployment_dir: /var/www/crm/
 
 # Composer
-project_git_repo: https://github.com/GSA/open311-simple-crm.git
-project_git_version: master
+# project_git_repo: https://github.com/GSA/open311-simple-crm.git
+# project_git_version: master
 
 # Project path
-project_source_rollback_path: /var/www/crm/rollback
-project_source_new_code_path: /var/www/crm/new
-current_source_symlink: /var/www/crm/current
-project_index_path: /var/www/crm/current
+# project_source_rollback_path: /var/www/crm/rollback
+# project_source_new_code_path: /var/www/crm/current
+# current_source_symlink: /var/www/crm/current
+# project_index_path: /var/www/crm/current
 
 # MySQL credentials
 env_db_host: crm_db
