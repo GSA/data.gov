@@ -1,6 +1,23 @@
 ---
 # catalog
 catalog_ckan_app_version: feature/bionic
+catalog_ckan_db_host: "{{ catalog_postgresql_login_host }}"
+catalog_ckan_db_name: ckan
+catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
+catalog_ckan_db_user: ckan
+catalog_ckan_redis_host: catalog-harvester1tf.internal.bionic.datagov.us
+catalog_ckan_redis_pass: "{{ vault_catalog_ckan_redis_pass }}"
+catalog_ckan_solr_host: datagovsolr1tf.internal.bionic.datagov.us
+catalog_postgresql_login_host: "{{ vault_catalog_postgresql_login_host }}"
+catalog_postgresql_login_password: "{{ vault_catalog_postgresql_login_password }}"
+catalog_postgresql_login_user: "{{ vault_catalog_postgresql_login_user }}"
+catalog_pycsw_db_host: "{{ catalog_postgresql_login_host }}"
+catalog_pycsw_db_name: pycsw
+catalog_pycsw_db_pass: "{{ vault_catalog_pycsw_db_pass }}"
+catalog_pycsw_db_user: pycsw
+catalog_db_pass: "{{ catalog_ckan_db_pass }}"
+catalog_db_name: "{{ catalog_ckan_db_name }}"
+catalog_db_user: "{{ catalog_ckan_db_user }}"
 
 # common
 common_newrelic_enabled: false

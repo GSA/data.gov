@@ -8,6 +8,8 @@ urls_private:
 catalog_db_user: ckan
 catalog_db_pass: ckan
 catalog_pycsw_db_name: pycsw
+catalog_pycsw_db_user: pycsw
+catalog_pycsw_db_host: localhost
 pycsw_db_server: pycsw
 
 pycsw_virtualenv: "/usr/lib/ckan/"

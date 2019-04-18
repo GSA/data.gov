@@ -35,9 +35,9 @@ contact_instructions=Preferred method through email {{ datagov_support_email }} 
 contact_role=publisher,custodian
  
 [repository]
-db_user = {{ catalog_db_user }}
-db_pass = {{ catalog_db_pass }}
-db_server = {{ pycsw_db_server }}
+db_user = {{ catalog_pycsw_db_user }}
+db_pass = {{ catalog_pycsw_db_pass }}
+db_server = {{ catalog_pycsw_db_host }}
 db_database = {{ catalog_pycsw_db_name }}
 database=postgresql://%(db_user)s:%(db_pass)s@%(db_server)s/%(db_database)s
 table=records

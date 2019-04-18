@@ -1,4 +1,10 @@
 ---
+# catalog
+catalog_pycsw_db_user: "{{ catalog_db_user }}"
+catalog_pycsw_db_host: "{{ catalog_db_server }}"
+catalog_pycsw_db_pass: "{{ catalog_db_pass }}"
+
+
 # common
 common_newrelic_enabled: true
 common_python_version_number: 2.7.10
@@ -9,6 +15,7 @@ trendmicro_enabled: true
 
 # data.gov-wide variables
 datagov_environment: production
+
 
 default_tls_host_key: "{{ vault_default_tls_host_key }}"
 default_tls_host_certificate: |-

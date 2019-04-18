@@ -8,6 +8,7 @@
     # inventory hosts and delegate to that host instead.
     - name: install psycopg2 for postgresql ansible module
       apt: name=python-psycopg2 state=present
+      run_once: true
   roles:
     - role: gsa.datagov-deploy-postgresql
       vars:
