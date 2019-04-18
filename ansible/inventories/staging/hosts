@@ -1,12 +1,24 @@
+[catalog-harvester]
+catalog-harvester[1:2]d.dev-ocsit.bsp.gsa.gov
+
 [catalog-web]
 catalog-web[1:2]d.dev-ocsit.bsp.gsa.gov
 catalogpub-web1d.dev-ocsit.bsp.gsa.gov
 
-[catalog-harvester]
-catalog-harvester[1:2]d.dev-ocsit.bsp.gsa.gov
+[crm-web]
+crm-web[1:2]d.dev-ocsit.bsp.gsa.gov
+
+[dashboard-web]
+dashboard-web[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [efk_nginx]
 [elasticsearch]
+
+[inventory-web]
+inventory[1:2]d.dev-ocsit.bsp.gsa.gov
+
+[jekyll-web]
+static-web1d.dev-ocsit.bsp.gsa.gov
 
 [jumpbox]
 datagov-jump1d.dev-ocsit.bsp.gsa.gov
@@ -15,6 +27,10 @@ datagov-jump2d.dev-ocsit.bsp.gsa.gov
 [kibana]
 
 [solr]
+datagov-solrm1d.dev-ocsit.bsp.gsa.gov
+datagov-solr[1:2]d.dev-ocsit.bsp.gsa.gov is_solr_replica=true
+
+[solr4]
 tempdatagovsolrm1d.dev-ocsit.bsp.gsa.gov
 datagovsolr[1:2]d.dev-ocsit.bsp.gsa.gov
 
@@ -24,21 +40,6 @@ datagovsolr[1:2]d.dev-ocsit.bsp.gsa.gov
 [solr-retired]
 datagovsolrm1d.dev-ocsit.bsp.gsa.gov
 
-[inventory-web]
-inventory[1:2]d.dev-ocsit.bsp.gsa.gov
-
-[crm-web]
-crm-web[1:2]d.dev-ocsit.bsp.gsa.gov
-
-[dashboard-web]
-dashboard-web[1:2]d.dev-ocsit.bsp.gsa.gov
-
-[wordpress-web]
-wordpress-web[1:2]d.dev-ocsit.bsp.gsa.gov
-
-[jekyll-web]
-static-web1d.dev-ocsit.bsp.gsa.gov
-
 [web:children]
 catalog-web
 crm-web
@@ -46,3 +47,6 @@ dashboard-web
 inventory-web
 jekyll-web
 wordpress-web
+
+[wordpress-web]
+wordpress-web[1:2]d.dev-ocsit.bsp.gsa.gov

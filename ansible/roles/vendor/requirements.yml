@@ -56,6 +56,9 @@
 - name: gsa.datagov-deploy-redis
   src: https://github.com/GSA/datagov-deploy-redis
   version: v1.0.0
+- name: gsa.datagov-deploy-solr
+  src: https://github.com/GSA/datagov-deploy-solr.git
+  version: v1.0.0
 - name: gsa.elastalert
   src: https://github.com/GSA/ansible-elastalert
   version: master

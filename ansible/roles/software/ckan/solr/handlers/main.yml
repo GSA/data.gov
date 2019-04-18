@@ -1,7 +1,0 @@
----
-
-- name: restart tomcat service
-  action: service name=tomcat6 state=restarted
-
-- name: stop tomcat service
-  action: service name=tomcat6 state=stopped
