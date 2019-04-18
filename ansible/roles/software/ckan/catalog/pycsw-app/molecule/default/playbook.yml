@@ -3,3 +3,5 @@
   hosts: all
   roles:
     - role: pycsw-app
+      vars:
+        catalog_pycsw_db_pass: pass
