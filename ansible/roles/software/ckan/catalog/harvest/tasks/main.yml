@@ -64,6 +64,7 @@
   cron: >-
     cron_file=ckan
     job=/usr/local/bin/harvest-report.sh
-    disabled={{ !catalog_harvest_enable_harvest_report }}
+    disabled={{ not catalog_harvest_enable_harvest_report }}
     special_time=daily
+    user=root
     state=present
