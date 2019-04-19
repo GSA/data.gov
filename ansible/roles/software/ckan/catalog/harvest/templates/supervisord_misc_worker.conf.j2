@@ -85,7 +85,7 @@ autorestart=unexpected
 [program:qa-update]
 command=ckan --plugin=ckanext-qa qa update
 process_name=%(program_name)s-%(process_num)s
-numprocs=5
+numprocs={{ catalog_ckan_qa_update_process_count }}
 stdout_logfile=/var/log/qa-update.log
 redirect_stderr=true
 autostart=false

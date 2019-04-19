@@ -1,10 +1,13 @@
 ---
 # catalog
 catalog_ckan_app_version: master
+catalog_ckan_archiver_process_count: 3
 catalog_ckan_db_host: "{{ vault_catalog_ckan_db_host }}"
 catalog_ckan_db_name: "{{ vault_catalog_ckan_db_name }}"
 catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
 catalog_ckan_db_user: "{{ vault_catalog_ckan_db_user }}"
+catalog_ckan_harvest_fetch_process_count: 6
+catalog_ckan_qa_update_process_count: 5
 catalog_ckan_solr_port: "8080"
 catalog_pycsw_db_host: "{{ vault_catalog_pycsw_db_host }}"
 catalog_pycsw_db_name: "{{ vault_catalog_pycsw_db_name }}"
