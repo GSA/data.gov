@@ -1,14 +1,10 @@
 ---
+- name: include distribution release vars
+  include_vars: "{{ ansible_distribution_release }}.yml"
+
 - name: ensure necesary packages are installed
   apt: name={{ item }} state=present
-  with_items:
-    - git
-    - libbz2-dev
-    - libpq-dev
-    - libxml2-dev
-    - libxslt1-dev
-    - python-dev
-    - python-virtualenv
+  with_items: "{{ ckan_os_packages }}"
 
 - name: create ckan config dir
   action: file path=/etc/ckan state=directory owner=root group=www-data mode=0750 follow=yes
