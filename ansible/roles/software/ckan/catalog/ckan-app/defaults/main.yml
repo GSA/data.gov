@@ -24,6 +24,7 @@ saml2_site_url: https://admin-catalog.data.gov/
 catalog_bucket_name: somebucketname
 env: local
 catalog_ckan_solr_host: localhost
+catalog_ckan_solr_port: 8983
 app_type: catalog
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
 who_secure: False
