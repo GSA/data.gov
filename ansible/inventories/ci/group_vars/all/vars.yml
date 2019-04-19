@@ -23,7 +23,7 @@ catalog_db_user: "{{ catalog_ckan_db_user }}"
 
 # common
 common_newrelic_enabled: false
-common_python_version_number: 2.7.16
+common_python_version_number: 2.7.10
 filebeat_enabled: false
 nessus_agent_enabled: false
 trendmicro_enabled: false
