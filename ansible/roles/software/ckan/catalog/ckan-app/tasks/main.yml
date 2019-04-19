@@ -43,7 +43,7 @@
     version: '{{ app_repo_branch }}'
 
 - name: Install CKAN app
-  command: ./install.sh "{{ project_source_new_code_path }}" chdir={{ app_source_path }}
+  command: ./install.sh "{{ project_source_new_code_path }}" "{{ catalog_ckan_python_home }}" chdir={{ app_source_path }}
   tags: skip_ansible_lint
 
   # TODO instead of fixing the permissions after the fact, we should be using
