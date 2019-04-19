@@ -1,3 +1,6 @@
 ---
-
+catalog_ckan_db_host: localhost
+catalog_ckan_db_name: ckan
+catalog_ckan_db_user: ckan
+catalog_harvest_enable_harvest_report: false
 saxon_license: license

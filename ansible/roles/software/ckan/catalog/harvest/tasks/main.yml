@@ -46,3 +46,25 @@
   with_items:
     - usr/bin/celery-mem-check.sh
   when: worker_type == 'qa_worker'
+
+- name: install harvest-report script
+  template: src=harvest-report.sh.j2 dest=/usr/local/bin/harvest-report.sh owner=root group=root mode=0755
+
+- name: install pgpass file for harvest-report
+  copy:
+    content: |
+      {{ catalog_ckan_db_host }}:5432:{{ catalog_ckan_db_name }}:{{ catalog_ckan_db_user }}:{{ catalog_ckan_db_pass }}
+    # TODO should be an app user variable
+    dest: /root/.pgpass
+    mode: "0600"
+    owner: root
+    group: root
+
+- name: schedule harvest-report cron
+  cron: >-
+    cron_file=ckan
+    job=/usr/local/bin/harvest-report.sh
+    disabled={{ not catalog_harvest_enable_harvest_report }}
+    special_time=daily
+    user=root
+    state=present

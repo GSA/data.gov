@@ -3,3 +3,6 @@
   hosts: all
   roles:
     - role: harvest
+      vars:
+        catalog_ckan_db_pass: pass
+        datagov_team_email: team@example.com
