@@ -1,0 +1,9 @@
+---
+ckan_os_packages:
+  - git
+  - libbz2-dev
+  - libpq-dev
+  - libxml2-dev
+  - libxslt1-dev
+  - python-dev
+  - python-virtualenv

@@ -55,3 +55,8 @@
 
     - name: create ckan config dir
       action: file path=/etc/ckan state=directory owner=root group=www-data mode=0750 follow=yes
+
+    - name: create the ckan virtualenv
+      command: virtualenv /usr/lib/ckan
+      args:
+        creates: /usr/lib/ckan

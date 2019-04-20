@@ -1,5 +1,6 @@
 ---
 catalog_ckan_app_version: master
+catalog_ckan_python_home: /usr
 app_source_path: /tmp/catalog-app
 app_repo: https://github.com/GSA/catalog-app.git
 app_repo_branch: master
@@ -24,6 +25,7 @@ saml2_site_url: https://admin-catalog.data.gov/
 catalog_bucket_name: somebucketname
 env: local
 catalog_ckan_solr_host: localhost
+catalog_ckan_solr_port: 8983
 app_type: catalog
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
 who_secure: False

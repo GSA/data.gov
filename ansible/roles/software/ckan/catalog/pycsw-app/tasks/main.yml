@@ -1,9 +1,14 @@
 ---
+- name: get pycsw version
+  git: repo=https://github.com/GSA/pycsw.git dest=/usr/lib/ckan/src/pycsw version={{ pycsw_app_version }}
+
 - name: run setup build for pycsw
-  pip:
-    name: "git+{{ pycsw_git_url }}@{{ pycsw_app_version }}#egg=pycsw"
-    virtualenv: "{{ pycsw_virtualenv }}"
-    extra_args: -e
+  command: chdir=/usr/lib/ckan/src/pycsw/ /usr/lib/ckan/bin/python setup.py build
+  tags: skip_ansible_lint
+
+- name: run setup install for pycsw
+  command: chdir=/usr/lib/ckan/src/pycsw/ /usr/lib/ckan/bin/python setup.py install
+  tags: skip_ansible_lint
 
 - name: install pyproj
   pip:

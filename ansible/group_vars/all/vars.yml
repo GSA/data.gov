@@ -3,6 +3,11 @@
 # THESE ARE NOT DEFAULTS, THESE VARS OVERRIDE INVENTORY group_vars/*  !!!
 # https://docs.ansible.com/ansible/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable
 
+
+# catalog
+catalog_ckan_python_home: "{{ common_python_version_directory }}"
+
+
 # Default TLS/SSL certificate used for internal traffic to host.
 default_tls_host_certificate_filepath: /etc/ssl/certs/datagov_host.crt
 default_tls_host_key_filepath: /etc/ssl/private/datagov_host.key

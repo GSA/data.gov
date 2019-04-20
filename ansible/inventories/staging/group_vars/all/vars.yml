@@ -1,6 +1,7 @@
 ---
 # catalog
 catalog_ckan_app_version: develop
+catalog_ckan_solr_port: "8080"
 catalog_pycsw_db_user: "{{ catalog_db_user }}"
 catalog_pycsw_db_host: "{{ catalog_db_server }}"
 catalog_pycsw_db_pass: "{{ catalog_db_pass }}"
@@ -68,6 +69,9 @@ default_tls_host_certificate: |-
   msSdgzgMxgFQ/bRMJly6qX0O4rl7MR2JoMpDW/ubFs7UXE8UlZhP05Qmtotwvflr
   lEokro56zcAbHCzRv2v5
   -----END CERTIFICATE-----
+
+
+inventory_ckan_solr_port: "8080"
 
 
 # public urls
