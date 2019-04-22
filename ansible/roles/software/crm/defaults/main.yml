@@ -1,14 +1,14 @@
 ---
 # php common role
 php_app_user: crm
-php_app_home: crm
+php_app_home: /var/www/crm/
 php_app_git_repo: https://github.com/GSA/open311-simple-crm.git
 php_app_git_version: master
-php_major_minor_version: "7.0"
+php_major_minor_version: "7.2"
 php_enable_php_fpm: true
 php_max_execution_time: 30
 php_webserver_daemon: nginx
-php_app_deployment_dir: /var/www/crm/
+app_base_url: https://localhost
 
 # Composer
 # project_git_repo: https://github.com/GSA/open311-simple-crm.git
@@ -41,6 +41,10 @@ saml_admin_pass: "admin_pass"
 saml2_sp_public_key: "add-yours-to-inventory"
 saml2_sp_private_pem: "add-yours-to-inventory"
 
-# List of CodeIgniter pre-approved admin emails
+# CodeIgniter pre-approved admin emails
 codeigniter_pre_approved_admins: []
 env_encryption_key: some-key
+
+# use datagov-deploy-common TLS cert
+default_tls_host_certificate_filepath: /etc/ssl/certs/datagov_host.crt
+default_tls_host_key_filepath: /etc/ssl/private/datagov_host.key

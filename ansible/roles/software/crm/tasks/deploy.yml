@@ -29,7 +29,7 @@
 - name: Copying SAML config files
   template:
     src: "{{ item }}"
-    dest: "{{ project_source_new_code_path }}/src/vendor/simplesamlphp/simplesamlphp/config/{{ item | basename }}"
+    dest: "{{ php_app_deployment_dir }}/src/vendor/simplesamlphp/simplesamlphp/config/{{ item | basename }}"
   with_fileglob:
     - ../templates/saml/config/*.php
 
@@ -42,24 +42,3 @@
   template:
     src: "saml/metadata/{{ saml2_idp_entry }}/saml20-idp-remote.php"
     dest: "{{ php_app_deployment_dir }}/src/vendor/simplesamlphp/simplesamlphp/metadata/saml20-idp-remote.php"
-
-- name: Copying SAML config files
-  template:
-    src: "/saml/config/AuthnRequest.php"
-    dest: "{{ php_app_deployment_dir }}/src/vendor/simplesamlphp/saml2/src/SAML2/AuthnRequest.php"
-
-- name: Fixing SAML (removing nameIdPolicy)
-  replace:
-    dest: "{{ php_app_deployment_dir }}/src/vendor/simplesamlphp/saml2/src/SAML2/AuthnRequest.php"
-    regexp: '\$root->appendChild\(\$nameIdPolicy\);'
-    replace: '//$root->appendChild($nameIdPolicy) ;'
-
-- name: Fixing SAML (replacing saml2-acs.php)
-  replace:
-    dest: "{{ php_app_deployment_dir }}/src/vendor/simplesamlphp/saml2/src/SAML2/HTTPPost.php"
-    regexp: '\$msgStr = base64_encode\(\$msgStr\);'
-    replace: '
-        if (0 === stripos($_SERVER["REQUEST_URI"], "/crm")){
-                $msgStr = str_replace(".gov/simple",".gov/crm/simple", $msgStr);
-        }
-        $msgStr = base64_encode(str_replace("simplesaml/module.php/saml/sp/saml2-acs.php/max","auth/acs",$msgStr));'

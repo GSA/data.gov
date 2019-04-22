@@ -1,7 +1,0 @@
----
-
-- name: restart php-fpm
-  service:
-    name: "{{ php_fpm_service_name }}"
-    state: restarted
-  notify: restart nginx

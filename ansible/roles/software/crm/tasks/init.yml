@@ -4,15 +4,15 @@
 - name: Installing required packages
   package:
     name:
-      - mariadb-client-5.5
-      - php7.0-zip
+      - mariadb-client
+      - php-zip
       - nginx-extras
     state: present
 
 - name: Copying CRM configuration for Nginx
   template:
     src: "crm.nginx.conf"
-    dest: "/etc/nginx/sites-enabled/crm.nginx.conf"
+    dest: "/etc/nginx/sites-enabled/default.conf"
   notify:
     - reload nginx
 

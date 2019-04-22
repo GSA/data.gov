@@ -8,9 +8,6 @@
 - name: Run deployment tasks
   include_tasks: deploy.yml
 
-- name: Run cleanup tasks
-  include_tasks: cleanup.yml
-
 - name: Run migration scripts
   include_tasks: migrations.yml
   tags: [ 'never', 'migrate' ]

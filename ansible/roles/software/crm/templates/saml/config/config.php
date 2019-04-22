@@ -14,7 +14,7 @@ $protocol = 'https';
 //    $protocol = 'https';
 //}
 
-$default_host = '{{ default_host }} ';
+$default_host = '{{ app_base_url }} ';
 if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
     $default_host = $_SERVER['HTTP_HOST'];
 }
