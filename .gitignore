@@ -12,6 +12,9 @@ secrets.yml
 ansible-secret.txt
 ansible/*.retry
 
+# IDE
+.vscode/*
+
 # Ignoring symlinks
 #config/
 src/
