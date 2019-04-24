@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-$root_dir = '{{ current_source_symlink }}';
+$root_dir = '{{ php_app_home }}/current';
 require_once($root_dir . "/vendor/autoload.php");
 
 /**
@@ -11,8 +11,8 @@ if (file_exists($root_dir . '/.env')) {
     $dotenv->load();
 }
 
-$config['download_dir'] = '{{ project_shared_path }}/downloads';
-$config['archive_dir'] = '{{ project_shared_path }}/archive';
+$config['download_dir'] = '{{ php_app_home }}/current/downloads';
+$config['archive_dir'] = '{{ php_app_home }}/current/archive';
 $config['docs_path'] = 'https://raw.githubusercontent.com/GSA/project-open-data-dashboard/master/documentation/';
 
 $config['s3_bucket'] = '{{ s3_bucket }}';
@@ -28,7 +28,7 @@ $config['google_analytics_domain'] = ''; // domain.com
 // Set local time zone
 date_default_timezone_set('America/New_York');
 
-$config['tmp_csv_import'] = '{{ project_shared_path }}/downloads/import.csv';
+$config['tmp_csv_import'] = '{{ php_app_home }}/current/downloads/import.csv';
 $config['pre_approved_admins'] = explode(",", strtolower(getenv('PRE_APPROVED_ADMINS')));
 
 

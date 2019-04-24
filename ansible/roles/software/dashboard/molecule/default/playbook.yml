@@ -3,10 +3,11 @@
   hosts: all
   roles:
     - role: gsa.datagov-deploy-php
+    - role: geerlingguy.git
     - role: geerlingguy.nginx
     - role: geerlingguy.php-mysql
     - role: geerlingguy.php-memcached
     - role: geerlingguy.composer
     - role: dashboard
       vars:
-        some: thing
+        - php_app_deployment_dir: '{{ php_app_home }}/test'

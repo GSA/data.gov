@@ -1,6 +1,6 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-$root_dir = '{{ current_source_symlink }}';
+$root_dir = '{{ php_app_home }}/current';
 require_once($root_dir . "/vendor/autoload.php");
 
 /**

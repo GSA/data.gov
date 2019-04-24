@@ -2,11 +2,14 @@
 # php common role
 php_app_user: dashboard
 php_app_git_repo: https://github.com/project-open-data/project-open-data-dashboard.git
-php_app_deployment_version: master
+php_app_git_version: master
 php_major_minor_version: "7.0"
 php_enable_php_fpm: true
 php_max_execution_time: 30
 php_webserver_daemon: nginx
+
+php_app_home: /var/www/dashboard
+app_base_url: https://localhost
 
 # precheck
 dashboard_user: ubuntu
@@ -15,23 +18,38 @@ dashboard_user: ubuntu
 crons_enabled: false
 
 # Composer
-project_git_repo: https://github.com/project-open-data/project-open-data-dashboard.git
-project_git_version: master
+# project_git_repo: https://github.com/project-open-data/project-open-data-dashboard.git
+# project_git_version: master
 
 # Project path
-project_source_rollback_path: /var/www/dashboard/rollback
-project_source_new_code_path: /var/www/dashboard/new
-current_source_symlink: /var/www/dashboard/current
-project_index_path: /var/www/dashboard/current
+# project_source_rollback_path: /var/www/dashboard/rollback
+# project_source_new_code_path: /var/www/dashboard/new
+# current_source_symlink: /var/www/dashboard/current
+# project_index_path: /var/www/dashboard/current
 
 # Temp uploads
-project_shared_path: /var/www/dashboard/shared
+# project_shared_path: /var/www/dashboard/shared
 
-# MySQL credentials
+# nginx
+nginx_remove_default_vhost: true
+nginx_ppa_use: true
+nginx_ppa_version: stable
+
+# MySQL
 env_db_host: dashboard_db
-env_db_user: dashboard
-env_db_pass: superpassword
+env_db_user: "{{ php_app_user }}"
+env_db_pass: password
 env_db_name: dashboard
+
+mysql_app_name: "{{ php_app_user }}"
+mysql_database_name: "{{ env_db_host }}"
+mysql_user_name: "{{ php_app_user }}"
+mysql_enable_extensions: []
+mysql_connection_use_socket: false
+mysql_login_user: root
+mysql_login_host: localhost
+mysql_user_password: "{{ php_app_user }}"
+mysql_login_password: "{{ env_db_pass }}"
 
 # AWS S3 bucket
 s3_bucket: dashboard-s3
@@ -55,3 +73,7 @@ saml2_sp_private_pem: "add-yours-to-inventory"
 # List of CodeIgniter pre-approved admin emails
 codeigniter_pre_approved_admins: []
 env_encryption_key: some-key
+
+# use datagov-deploy-common TLS cert
+default_tls_host_certificate_filepath: /etc/ssl/certs/datagov_host.crt
+default_tls_host_key_filepath: /etc/ssl/private/datagov_host.key

@@ -26,20 +26,31 @@
     dest: "{{ saml_sp_private_key_path }}"
     mode: 0644
 
-- name: Installing required packages
-  package: name={{ item }} state=installed
-  with_items:
-    - mariadb-client-5.5
-    - php7.1-mcrypt
-    - php7.0-zip
-    - nginx-extras
+- name: Installing required trusty packages
+  apt:
+    name:
+      - mariadb-client-5.5
+      - mariadb-client
+      - php-zip
+      - nginx-extras
+    state: present
+    force: yes
+  when: ansible_distribution_release == "trusty"
 
-- name: Remove old rollback code
-  file: path="{{ project_source_rollback_path }}" state=absent
+- name: Installing required bionic packages
+  apt:
+    name:
+      - mariadb-client-10.1
+      - mariadb-client
+      - php-zip
+      - nginx-extras
+    state: present
+    force: yes
+  when: ansible_distribution_release == "bionic"
 
-- name: Empty shared folder to free up space
-  file:
-    path: "{{ item }}"
-    state: absent
-  with_items:
-    - "{{ project_shared_path }}"
+- name: Import nginx extra modules
+  lineinfile:
+    path: /etc/nginx/nginx.conf
+    line: 'include /etc/nginx/modules-enabled/*.conf;'
+    create: yes
+    insertbefore: BOF

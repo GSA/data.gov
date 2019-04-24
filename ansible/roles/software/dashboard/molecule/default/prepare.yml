@@ -2,6 +2,8 @@
 - name: Prepare
   hosts: all
   vars:
+    env_db_user: dashboard
+    env_db_pass: password
     common_tls_host_certificate: |-
       -----BEGIN CERTIFICATE-----
       MIIEGTCCAwGgAwIBAgIJAL+dmeInc15LMA0GCSqGSIb3DQEBCwUAMIGiMQswCQYD
@@ -103,3 +105,9 @@
         password={{ env_db_pass }}
         priv='*.*:ALL,GRANT'
         login_unix_socket=/var/run/mysqld/mysqld.sock
+
+    - name: Update apt cache
+      apt:
+        upgrade: dist
+        update_cache: yes
+        autoclean: yes

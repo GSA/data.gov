@@ -145,7 +145,7 @@ if (defined('ENVIRONMENT'))
 	if (defined('STDIN'))
 	{
 //		chdir(dirname(__FILE__));
-		chdir("{{ current_source_symlink }}");
+		chdir("{{ php_app_home }}/current");
 	}
 
 	if (realpath($system_path) !== FALSE)
@@ -180,7 +180,7 @@ if (defined('ENVIRONMENT'))
 
 	// Path to the front controller (this file)
 //	define('FCPATH', str_replace(SELF, '', __FILE__));
-	define('FCPATH', "{{ current_source_symlink }}".'/');
+	define('FCPATH', "{{ php_app_home }}/current".'/');
 
 	// Name of the "system folder"
 	define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
@@ -190,7 +190,7 @@ if (defined('ENVIRONMENT'))
 	if (is_dir($application_folder))
 	{
 		define('APPPATH', $application_folder.'/');
-	}
+	}{{ php_app_home }}/current
 	else
 	{
 		if ( ! is_dir(BASEPATH.$application_folder.'/'))

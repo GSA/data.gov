@@ -4,12 +4,11 @@
 
 - name: Initialize
   include_tasks: init.yml
-  tags: [ 'never', 'db-init' ]
 
 - name: Run deployment tasks
   include_tasks: deploy.yml
 
-- name: Run cleanup tasks
+- name: Symlink to new deployment
   include_tasks: cleanup.yml
 
 - name: Run migration scripts

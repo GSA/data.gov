@@ -5,9 +5,9 @@ import testinfra.utils.ansible_runner
 testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
 
-PHP_VERSION = "7.2"
-app_user = 'myapp'
-deployment_version = '20190308132800'
+PHP_VERSION = "7.0"
+app_user = 'crm'
+deployment_version = 'test'
 
 
 def test_hosts_file(host):

@@ -24,7 +24,7 @@ $protocol = '{{ env_content_protocol }}';
 //    $protocol = 'https';
 //}
 //
-$default_host = 'labs.data.gov/crm/';
+$default_host = '{{ app_base_url }}';
 
 if(isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
     $default_host = $_SERVER['HTTP_HOST'];
@@ -223,7 +223,7 @@ $config['directory_trigger'] 	= 'd'; // experimental not currently in use
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 4;
+$config['log_threshold'] = {{ app_logging_level }};
 
 /*
 |--------------------------------------------------------------------------
