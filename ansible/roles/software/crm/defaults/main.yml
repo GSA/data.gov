@@ -11,7 +11,7 @@ php_webserver_daemon: nginx
 app_base_url: https://localhost
 
 # Logging verbosity 1 = error only 2-4 for debugging
-app_logging_level: 1 
+app_logging_level: 1
 
 # Composer
 # project_git_repo: https://github.com/GSA/open311-simple-crm.git
@@ -25,8 +25,8 @@ app_logging_level: 1
 
 # MySQL credentials
 env_db_host: crm_db
-env_db_user: crm
-env_db_pass: superpassword
+env_db_user: "{{ php_app_user }}"
+env_db_pass: password
 env_db_name: crm
 
 mysql_app_name: "{{ php_app_user }}"

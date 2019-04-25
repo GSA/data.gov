@@ -2,14 +2,14 @@
 
 - name: Temporarily disabling keeping sessions in DB
   replace:
-    dest: "{{ current_source_symlink }}/application/config/{{ web_app_env }}/config.php"
+    dest: "{{ php_app_home }}/current/application/config/{{ web_app_env }}/config.php"
     regexp: '(sess_use_database[^=]+)= TRUE;'
     replace: '\1= FALSE;'
 
 - name: Run migrations
   command: php index.php migrate
   args:
-    chdir: "{{ current_source_symlink }}"
+    chdir: "{{ php_app_home }}/current"
   register: migrations_output
   tags:
     - skip_ansible_lint
@@ -20,6 +20,6 @@
 
 - name: Keeping sessions in DB again
   replace:
-    dest: "{{ current_source_symlink }}/application/config/{{ web_app_env }}/config.php"
+    dest: "{{ php_app_home }}/current/application/config/{{ web_app_env }}/config.php"
     regexp: '(sess_use_database[^=]+)= FALSE;'
     replace: '\1= TRUE;'

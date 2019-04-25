@@ -10,3 +10,4 @@
 - src: geerlingguy.php-mysql
 - src: geerlingguy.php-memcached
 - src: geerlingguy.composer
+- src: geerlingguy.git

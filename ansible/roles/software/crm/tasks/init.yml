@@ -1,14 +1,6 @@
 ---
 # CRM prerequisites
 
-- name: Installing required packages
-  package:
-    name:
-      - mariadb-client
-      - php-zip
-      - nginx-extras
-    state: present
-
 - name: Copying CRM configuration for Nginx
   template:
     src: "crm.nginx.conf"
@@ -35,3 +27,32 @@
     src: "mykey.pem"
     dest: "{{ saml_sp_private_key_path }}"
     mode: 0644
+
+- name: Installing required trusty packages
+  apt:
+    name:
+      - mariadb-client-5.5
+      - mariadb-client
+      - php-zip
+      - nginx-extras
+    state: present
+    force: yes
+  when: ansible_distribution_release == "trusty"
+
+- name: Installing required bionic packages
+  apt:
+    name:
+      - mariadb-client-10.1
+      - mariadb-client
+      - php-zip
+      - nginx-extras
+    state: present
+    force: yes
+  when: ansible_distribution_release == "bionic"
+
+- name: Import nginx extra modules
+  lineinfile:
+    path: /etc/nginx/nginx.conf
+    line: 'include /etc/nginx/modules-enabled/*.conf;'
+    create: yes
+    insertbefore: BOF
