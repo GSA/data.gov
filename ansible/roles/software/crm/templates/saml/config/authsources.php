@@ -1,21 +1,6 @@
 <?php
 
-<<<<<<< HEAD:ansible/roles/software/crm/templates/saml/config/authsources.php
-$protocol = 'https';
-
-$default_host = '{{ app_base_url }} ';
-if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
-    $default_host = $_SERVER['HTTP_HOST'];
-}
-
-$base_url = $protocol . '://' . $default_host;
-
-if (0 === stripos($_SERVER['REQUEST_URI'], '/crm')){
-    $base_url .= '/crm';
-}
-=======
 $base_url = '{{ app_base_url }}';
->>>>>>> origin/develop:ansible/roles/software/crm/crm-deploy/templates/saml/config/authsources.php
 
 $config = array(
     // This is a authentication source which handles admin authentication.

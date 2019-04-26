@@ -1,9 +1,4 @@
 ---
-- name: Ensuring php_app_deployment_dir src directory exists
-  file:
-    path: "{{ php_app_deployment_dir }}/src"
-    state: directory
-
 - name: Copying index.php
   template:
     src: "index.php"

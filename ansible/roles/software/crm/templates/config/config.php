@@ -280,7 +280,7 @@ $config['cache_path'] = '';
 |
 */
 $config['sess_cookie_name']		= 'ci_session_crm';
-$config['cookie_secure']	= {{ cookie_secure_only }};
+$config['cookie_secure']	= '{{ cookie_secure_only }}';
 $config['cookie_httponly'] 	= TRUE;
 $config['sess_expiration']		= 900;
 $config['sess_encrypt_cookie']	= FALSE;

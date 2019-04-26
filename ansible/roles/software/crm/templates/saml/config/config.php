@@ -4,29 +4,7 @@
  * 
  */
 
-<<<<<<< HEAD:ansible/roles/software/crm/templates/saml/config/config.php
-$protocol = 'https';
-
-//if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
-//    $protocol = 'https';
-//}
-//
-//if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
-//    $protocol = 'https';
-//}
-
-$default_host = '{{ app_base_url }} ';
-if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
-    $default_host = $_SERVER['HTTP_HOST'];
-}
-
-$_SERVER['HTTPS'] = 'on';
-$_SERVER['SERVER_PORT'] = '443';
-
-$base_url = $protocol . '://' . $default_host;
-=======
 $base_url = '{{ app_base_url }}';
->>>>>>> origin/develop:ansible/roles/software/crm/crm-deploy/templates/saml/config/config.php
 
 $config = array(
 
