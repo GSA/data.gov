@@ -1,15 +1,9 @@
 ---
-- name: Run precheck tests
-  include_tasks: precheck.yml
-
 - name: Initialize
   include_tasks: init.yml
 
 - name: Run deployment tasks
   include_tasks: deploy.yml
-
-- name: Symlink to new deployment
-  include_tasks: cleanup.yml
 
 - name: Run migration scripts
   include_tasks: migrations.yml

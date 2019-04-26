@@ -9,3 +9,5 @@
     - role: geerlingguy.php-memcached
     - role: geerlingguy.composer
     - role: crm
+      vars:
+        php_app_user: crm

@@ -1,6 +1,0 @@
----
-
-- name: Set php_app_deploy_version to timestamp
-  set_fact:
-    php_app_deploy_version: "{{ ansible_date_time.epoch }}"
-    cacheable: "true"

@@ -4,7 +4,7 @@
 - name: Copying CRM configuration for Nginx
   template:
     src: "crm.nginx.conf"
-    dest: "/etc/nginx/sites-enabled/default.conf"
+    dest: "/etc/nginx/sites-enabled/crm.nginx.conf"
   notify:
     - reload nginx
 

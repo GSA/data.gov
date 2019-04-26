@@ -1,15 +1,9 @@
 ---
-- name: Set php_app_deploy_version to timestamp
-  include_tasks: precheck.yml
-
 - name: Initialize
   include_tasks: init.yml
 
 - name: Run deployment tasks
   include_tasks: deploy.yml
-
-- name: Symlink the new deployment to current
-  include_tasks: cleanup.yml
 
 - name: Run migration scripts
   include_tasks: migrations.yml

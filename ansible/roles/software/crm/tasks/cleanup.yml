@@ -1,8 +1,0 @@
----
-- name: link (activate) the deployment
-  file:
-    src: "{{ php_app_deployment_dir }}/src"
-    dest: "{{ php_app_home }}/current"
-    owner: www-data
-    group: www-data
-    state: link

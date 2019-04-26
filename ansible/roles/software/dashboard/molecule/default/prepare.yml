@@ -2,8 +2,6 @@
 - name: Prepare
   hosts: all
   vars:
-    env_db_user: dashboard
-    env_db_pass: password
     common_tls_host_certificate: |-
       -----BEGIN CERTIFICATE-----
       MIIEGTCCAwGgAwIBAgIJAL+dmeInc15LMA0GCSqGSIb3DQEBCwUAMIGiMQswCQYD
@@ -61,12 +59,11 @@
       -----END PRIVATE KEY-----
   tasks:
     - name: Installing dependencies
-      package:
+      apt:
         name:
           - locate
           - nano
           - ssl-cert
-          - mysql-server
           - python-pip
         state: present
 
@@ -85,26 +82,6 @@
         mode: 0640
         owner: root
         group: ssl-cert
-
-    # service module succeeds, but mysql isn't actually
-    # started. Use the command module instead.
-    - name: start mysql
-      command: service mysql start
-      when: ansible_distribution_release == "trusty"
-
-    - name: start mysql
-      service: name=mysql state=started
-      when: ansible_distribution_release != "trusty"
-
-    - name: install ansible dependencies
-      pip: name=PyMySQL state=present
-
-    - name: set root password for remote login to mysql
-      mysql_user: >-
-        name={{ env_db_user }}
-        password={{ env_db_pass }}
-        priv='*.*:ALL,GRANT'
-        login_unix_socket=/var/run/mysqld/mysqld.sock
 
     - name: Update apt cache
       apt:

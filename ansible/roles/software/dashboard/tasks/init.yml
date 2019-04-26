@@ -30,6 +30,9 @@
   apt:
     name:
       - mariadb-client-5.5
+      - mariadb-client
+      - php-zip
+      - nginx-extras
     state: present
     force: yes
   when: ansible_distribution_release == "trusty"
@@ -38,19 +41,12 @@
   apt:
     name:
       - mariadb-client-10.1
-    state: present
-    force: yes
-  when: ansible_distribution_release == "bionic"
-
-- name: Installing required packages
-  apt:
-    name:
       - mariadb-client
       - php-zip
       - nginx-extras
     state: present
     force: yes
-    install_recommends: yes
+  when: ansible_distribution_release == "bionic"
 
 - name: Import nginx extra modules
   lineinfile:
