@@ -1,0 +1,90 @@
+---
+- name: Prepare
+  hosts: all
+  vars:
+    common_tls_host_certificate: |-
+      -----BEGIN CERTIFICATE-----
+      MIIEGTCCAwGgAwIBAgIJAL+dmeInc15LMA0GCSqGSIb3DQEBCwUAMIGiMQswCQYD
+      VQQGEwJVUzELMAkGA1UECAwCREMxEzARBgNVBAcMCldhc2hpbmd0b24xKDAmBgNV
+      BAoMH0dlbmVyYWwgU2VydmljZXMgQWRtaW5pc3RyYXRpb24xDDAKBgNVBAsMA1RU
+      UzEVMBMGA1UEAwwMZGF0YWdvdi50ZXN0MSIwIAYJKoZIhvcNAQkBFhNkYXRhZ292
+      aGVscEBnc2EuZ292MB4XDTE5MDIyMjAwNTAyM1oXDTIwMDIyMjAwNTAyM1owgaIx
+      CzAJBgNVBAYTAlVTMQswCQYDVQQIDAJEQzETMBEGA1UEBwwKV2FzaGluZ3RvbjEo
+      MCYGA1UECgwfR2VuZXJhbCBTZXJ2aWNlcyBBZG1pbmlzdHJhdGlvbjEMMAoGA1UE
+      CwwDVFRTMRUwEwYDVQQDDAxkYXRhZ292LnRlc3QxIjAgBgkqhkiG9w0BCQEWE2Rh
+      dGFnb3ZoZWxwQGdzYS5nb3YwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIB
+      AQC2vHGrABrdODX95iYCYykVenBdIYHGqrUuRNhgOOqm+L12NKw/0zrRGO34HIcw
+      yrpVL7zF+lDTvcjWjP7EJtbQ0k4W2bAkv2NxWhVxtlnxC4dJ0a2XhUwD2PfaK95G
+      uAPRKNZsNnoUAOWC8PAh5i5T0kXfWwSFb/oUBB8nMybcbL6y30G3fF/8liTwgh9Q
+      unyaz7vOajkvnHRW7d1R9Jlpb6zOwLNT/yvMeP68XGeQK1iGoaQ6jcfeAEwP/1mH
+      RDZTVg1haL9R/1eqJNbo6WBt5syhJ2pmauFINyqgT5eq+Uv4Yf6eYdRU+zP3MQtq
+      yY0Q09aXp2gieA42YYQ/WrbTAgMBAAGjUDBOMB0GA1UdDgQWBBSSiGn2sABS9OFg
+      J1thma17rfsEPjAfBgNVHSMEGDAWgBSSiGn2sABS9OFgJ1thma17rfsEPjAMBgNV
+      HRMEBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQCa+hxbQjd/BjywbpnmuWJo66wo
+      FMerIGny8YbWh8d06P6Fcx45u04jlJQbvSzA6PgWlZoBACQt9ZKFjDR06XXtapQo
+      wTit+d9dhbISgbntSckF0FqMynoZ/B6tXZ6JoHd7FyZ3KWRAbEL41DMG2AW46JBp
+      4TaVjRTxOe2PA6VNhZwcH+yRSppguqh3UNus5BzVl53avwXomrE2svjTNEu8hMYZ
+      nwZtkNpsn7jZ3EbFznxKysA1aXmxZYNOnkJHSYEMs9kpdo9ymikZTzE+r6j+qVEJ
+      iXN+eL6gQ9i1vWc6MbfAdR7Zib3dHZmEQtYyXbHqnmmPI9Y2ousd+c6HPu+z
+      -----END CERTIFICATE-----
+
+    common_tls_host_key: |-
+      -----BEGIN PRIVATE KEY-----
+      MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC2vHGrABrdODX9
+      5iYCYykVenBdIYHGqrUuRNhgOOqm+L12NKw/0zrRGO34HIcwyrpVL7zF+lDTvcjW
+      jP7EJtbQ0k4W2bAkv2NxWhVxtlnxC4dJ0a2XhUwD2PfaK95GuAPRKNZsNnoUAOWC
+      8PAh5i5T0kXfWwSFb/oUBB8nMybcbL6y30G3fF/8liTwgh9Qunyaz7vOajkvnHRW
+      7d1R9Jlpb6zOwLNT/yvMeP68XGeQK1iGoaQ6jcfeAEwP/1mHRDZTVg1haL9R/1eq
+      JNbo6WBt5syhJ2pmauFINyqgT5eq+Uv4Yf6eYdRU+zP3MQtqyY0Q09aXp2gieA42
+      YYQ/WrbTAgMBAAECggEADEeVi9wx8fO5DRrOKxLmy96ydk+uHN+T1UwjDjRE8Ht+
+      n9biTFexeCOouieQniLBasAOe29axx/VwzUuWZgSj23SeY6fW5jQ4ekfz8hlOuF/
+      ceJ5O9llRkzqOur/wNjUyNVps1Pl2DpHMglm2aBSNKfIsj23jA/+SiIMxeGWFvHK
+      liADcv5bQCqir74YR6iXpo+AUXYVE5PbWTGqPxd1Ccve/1UKv7rj453BKQboJ1Lj
+      CivxIvJDPtiu2XzFf2OK3N1D5TsuCvSoVsNMRbt5xj9nSu2WHcNCanja3WVcR+sG
+      iWIgg7BsRsg9FdJXNFK5/tfZsOHWp/IeJ541kM2ZAQKBgQDvm3V9reHCofdUGppH
+      2UeT2q1bI1JMGQOeXYUoI1dpLjbrNsikdlOTg/lctLpfAkirawJRqjDaadrfTfTQ
+      zDALgiu7vnIv6o2IUG7o8je8qPRaWL7Oc73Xi7khfoKSe923FROJwoZFUB3Vw6Fc
+      nUlWqnIf5cCslyee4AUm7mJkoQKBgQDDPO35znChoAhx1LKYHs9CFfthT1e4cXTb
+      ud+OTtWupak/blip6LxbrvFJvp56H/YR9VEBP3t+A5zW5D42LaYObS0QnpldDndu
+      bMxOoWAOKVNQ5cVSgsF9MjAQrJmJaUbrXC0YrUzLwHmgWUMgHZtINmBJmjZHpcap
+      1JiEb7Xy8wKBgQCbj83PA/Zf+/Hsy7zAywOarc4BLsR+nXro9YS/E3rr0dJcEdxg
+      UmZejr91/exGROBTUo1V4e4Hz9QHSMCaUwcaYa/tG29dRqYPC1GGscOYHAVRJu7y
+      cNifOZq/cThqzDqdY/SkawPrumE0aOe5jnCP8OdZaDwYkaZqkr0lkn2VIQKBgGOJ
+      +/aBpvDwS33lqExgYODbnjdloV6bEa443N6MGOua8GgzlSbDTs0bq08izV+MTgOn
+      4+3T9N0xcFQrOACdU21FglVX1u8XwhJdi+iG5Bc0QJMdInZHzehLny/RH9JsB0lV
+      zHQpXt7+ucPj3pJQJewyNPMxmXz76waJKl1TKxu7AoGBAOWmw6ob5XrTfOkqBQZ2
+      eJAyMh2KRBG5SD4QMTZcZ+/Qal5DvCb9eLD45OLX0Dob0TE9Fxa5dY3Oiqm0V43l
+      KtLS6UG/GI2y19z79DddVz0huaBh+5G/ga+Li5PcWQpNRa6Ytkqpv3pSIA1g858Q
+      fIV3Y1kH5D8tMuygZyavoRiP
+      -----END PRIVATE KEY-----
+  tasks:
+    - name: Installing dependencies
+      apt:
+        name:
+          - locate
+          - nano
+          - ssl-cert
+          - python-pip
+        state: present
+
+    - name: copy host certificate
+      copy:
+        dest: /etc/ssl/certs/datagov_host.crt
+        content: "{{ common_tls_host_certificate }}"
+        mode: 0644
+        owner: root
+        group: root
+
+    - name: copy host key
+      copy:
+        dest: /etc/ssl/private/datagov_host.key
+        content: "{{ common_tls_host_key }}"
+        mode: 0640
+        owner: root
+        group: ssl-cert
+
+    - name: Update apt cache
+      apt:
+        upgrade: dist
+        update_cache: yes
+        autoclean: yes

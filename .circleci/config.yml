@@ -30,18 +30,6 @@ jobs:
           key: v1-pip-{{ checksum "requirements.txt" }}
           paths:
             - venv
-      # Restore cache and install ruby dependencies
-      - restore_cache:
-          keys:
-            - v1-bundle-{{ checksum "Gemfile.lock" }}
-            - v1-bundle-
-      - run:
-          name: Install dependencies
-          command: bundle install --path vendor/bundle
-      - save_cache:
-          key: v1-bundle-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
       - run: 
           name: Setup ansible-galaxy
           command: |

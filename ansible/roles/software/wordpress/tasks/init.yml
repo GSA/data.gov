@@ -1,11 +1,4 @@
 ---
-- name: Copying Data.gov configuration for Nginx
-  template:
-    src: "datagov.nginx.conf"
-    dest: "/etc/nginx/sites-enabled/datagov.nginx.conf"
-  notify:
-    - reload nginx
-
 - name: Mkdir /var/www/
   file:
     path: "/var/www"
@@ -31,12 +24,38 @@
     cron_file: "wordpress-datagov"
   when: crons_enabled
 
-- name: Installing required packages
-  package: name={{ item }} state=installed
-  with_items:
-    - mariadb-client-5.5
-    - php7.0-zip
-    - nginx-extras
+- name: Installing required trusty packages
+  apt:
+    name:
+      - mariadb-client-5.5
+      - mariadb-client
+      - php-zip
+      - nginx-extras
+    state: present
+    force: yes
+  when: ansible_distribution_release == "trusty"
 
-- name: Remove previous deployment rollback folder
-  file: path="{{ project_source_rollback_path }}" state=absent
+- name: Installing required bionic packages
+  apt:
+    name:
+      - mariadb-client-10.1
+      - mariadb-client
+      - php-zip
+      - nginx-extras
+    state: present
+    force: yes
+  when: ansible_distribution_release == "bionic"
+
+- name: Import nginx extra modules
+  lineinfile:
+    path: /etc/nginx/nginx.conf
+    line: 'include /etc/nginx/modules-enabled/*.conf;'
+    create: yes
+    insertbefore: BOF
+
+- name: Copying Data.gov configuration for Nginx
+  template:
+    src: "datagov.nginx.conf"
+    dest: "/etc/nginx/sites-enabled/datagov.nginx.conf"
+  notify:
+    - reload nginx
