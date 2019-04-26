@@ -17,7 +17,6 @@ Included in this Repository:
     - New Relic (Infrastructure Monitoring)
     - New Relic (Application Performance Monitoring)
     - Trendmicro (OSSEC-HIDS)
-    - OSQuery (TBD)
 
 
 ## Project Status
@@ -269,7 +268,7 @@ creating/destroying the container every time.
 
 If you have multiple scenarios, you can specify them individually.
 
-    $ moelcule test -s <scenario>
+    $ molecule test -s <scenario>
 
 
 ### Testing with kitchen

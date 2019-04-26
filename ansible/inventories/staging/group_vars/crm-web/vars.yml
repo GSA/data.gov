@@ -1,5 +1,6 @@
 ---
 datagov_service: crm
+app_base_url: https://crm-datagov.dev-ocsit.bsp.gsa.gov
 
 # MySQL credentials
 env_db_host: "{{ vault_env_db_host }}"

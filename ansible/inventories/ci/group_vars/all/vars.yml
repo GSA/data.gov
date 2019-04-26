@@ -1,5 +1,36 @@
 ---
+# catalog
+catalog_ckan_app_version: develop
+catalog_ckan_db_host: "{{ catalog_postgresql_login_host }}"
+catalog_ckan_db_name: ckan
+catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
+catalog_ckan_db_user: ckan
+catalog_ckan_redis_host: catalog-harvester1tf.internal.ci.datagov.us
+catalog_ckan_redis_pass: "{{ vault_catalog_ckan_redis_pass }}"
+catalog_ckan_solr_host: datagovsolr1tf.internal.ci.datagov.us
+catalog_postgresql_login_host: "{{ vault_catalog_postgresql_login_host }}"
+catalog_postgresql_login_password: "{{ vault_catalog_postgresql_login_password }}"
+catalog_postgresql_login_user: "{{ vault_catalog_postgresql_login_user }}"
+catalog_pycsw_db_host: "{{ catalog_postgresql_login_host }}"
+catalog_pycsw_db_name: pycsw
+catalog_pycsw_db_pass: "{{ vault_catalog_pycsw_db_pass }}"
+catalog_pycsw_db_user: pycsw
+catalog_db_pass: "{{ catalog_ckan_db_pass }}"
+catalog_db_name: "{{ catalog_ckan_db_name }}"
+catalog_db_user: "{{ catalog_ckan_db_user }}"
+
+
+# common
+common_newrelic_enabled: false
+common_python_version_number: 2.7.16
+filebeat_enabled: false
+nessus_agent_enabled: false
+trendmicro_enabled: false
+
+
+# data.gov-wide variables
 datagov_enable_postgresql_role: true
+datagov_environment: ci
 datagov_sandbox_env: ci
 
 default_tls_host_key: "{{ vault_default_tls_host_key }}"
@@ -31,9 +62,6 @@ default_tls_host_certificate: |-
   lo4YdL0A8Y/f
   -----END CERTIFICATE-----
 
-
-nessus_agent_disable: true
-trendmicro_disable: true
 
 # public urls
 urls_public:
@@ -89,3 +117,5 @@ secops_user_public_key: "{{ vault_secops_user_public_key }}"
 
 # solr
 solr_master_server: datagovsolr1tf.internal.{{ datagov_sandbox_env }}.datagov.us
+solr_java_packages:
+  - openjdk-7-jdk

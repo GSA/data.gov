@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD:ansible/roles/software/crm/templates/saml/config/authsources.php
 $protocol = 'https';
 
 $default_host = '{{ app_base_url }} ';
@@ -12,6 +13,9 @@ $base_url = $protocol . '://' . $default_host;
 if (0 === stripos($_SERVER['REQUEST_URI'], '/crm')){
     $base_url .= '/crm';
 }
+=======
+$base_url = '{{ app_base_url }}';
+>>>>>>> origin/develop:ansible/roles/software/crm/crm-deploy/templates/saml/config/authsources.php
 
 $config = array(
     // This is a authentication source which handles admin authentication.
@@ -30,5 +34,6 @@ $config = array(
         'privatekey' => '{{ saml_sp_private_key_path }}',
         'certificate' => '{{ saml_sp_cert_path }}',
         'NameIDFormat' => 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
+        'NameIDPolicy' => FALSE,
     ),
 );

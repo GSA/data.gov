@@ -1,6 +1,61 @@
 ---
+- name: Provision Inventory databases
+  hosts: inventory-web
+  pre_tasks:
+    # Database initialization should be delegated to the jumpbox, however
+    # jumpbox does not have access to the application databases (firewall/security
+    # group configuration), so we have to install dependencies on one of the
+    # inventory hosts and delegate to that host instead.
+    - name: install psycopg2 for postgresql ansible module
+      apt: name=python-psycopg2 state=present
+      run_once: true
+  roles:
+    - role: gsa.datagov-deploy-postgresql
+      vars:
+        postgresql_app_name: "{{ inventory_db_name }}"
+        postgresql_role_password: "{{ inventory_db_pass }}"
+      tags:
+        - database
+      run_once: true
+      when: datagov_enable_postgresql_role is defined
+    - role: gsa.datagov-deploy-postgresql
+      vars:
+        postgresql_app_name: "{{ inventory_datapusher_db_name }}"
+        postgresql_role_password: "{{ inventory_datapusher_db_pass }}"
+      tags:
+        - database
+      run_once: true
+      when: datagov_enable_postgresql_role is defined
+    - role: gsa.datagov-deploy-postgresql
+      vars:
+        postgresql_app_name: "{{ inventory_datastore_db_name }}"
+        postgresql_role_password: "{{ inventory_datastore_pass }}"
+      tags:
+        - database
+      run_once: true
+      when: datagov_enable_postgresql_role is defined
+    - role: gsa.datagov-deploy-postgresql
+      vars:
+        # TODO create a read-only user https://github.com/GSA/datagov-deploy-postgresql/issues/2
+        postgresql_app_name: "{{ inventory_datastore_db_name }}"
+      tags:
+        - database
+      run_once: true
+      when: datagov_enable_postgresql_role is defined
+    - role: gsa.datagov-deploy-postgresql
+      vars:
+        postgresql_app_name: "{{ inventory_datastore_db_name }}"
+        postgresql_role_name: "{{ inventory_datastore_ro_user }}"
+        postgresql_role_password: "{{ inventory_datastore_ro_pass }}"
+        postgresql_priv: SELECT
+      tags:
+        - database
+      run_once: true
+      when: datagov_enable_postgresql_role is defined
+
+
 - name: Provisioning Inventory CKAN Stack
-  hosts: all
+  hosts: inventory-web
   serial: 1
   vars:
     app_type: inventory
@@ -9,10 +64,6 @@
     - {role: software/common/tls, tags: ['tls']}
     - software/ckan/common
     - {role: gsa.datagov-deploy-apache2, tags: ['apache']}
-    - {role: software/ckan/postgresql, tags: ['db', 'db-install']}
-    - {role: software/ckan/solr, tags: ['solr']}
-    - {role: software/inventory/ckan-app, tags: ['deploy']}
+    - {role: software/ckan/inventory, tags: ['deploy']}
     - {role: software/ckan/saml2, tags: ['saml2']}
-    - {role: software/inventory/ckan-db-setup, tags: ['db', 'db-setup']}
-    - {role: software/inventory/ckan-db-init, tags: ['db', 'db-init']}
     - {role: software/common/datagov-deploy-rollback, tags: ['deploy-rollback']}

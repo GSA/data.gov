@@ -1,5 +1,21 @@
 ---
+# catalog
+catalog_pycsw_db_user: "{{ catalog_db_user }}"
+catalog_pycsw_db_host: "{{ catalog_db_server }}"
+catalog_pycsw_db_pass: "{{ catalog_db_pass }}"
+
+
+# common
+common_newrelic_enabled: true
+common_python_version_number: 2.7.10
+filebeat_enabled: true
+nessus_agent_enabled: true
+trendmicro_enabled: true
+
+
+# data.gov-wide variables
 datagov_environment: production
+
 
 default_tls_host_key: "{{ vault_default_tls_host_key }}"
 default_tls_host_certificate: |-
@@ -98,6 +114,12 @@ jekyll_apps:
 
 # solr
 solr_master_server: datagovsolrm1p.prod-ocsit.bsp.gsa.gov
+solr_java_packages:
+  - openjdk-8-jdk
+solr_xms: 8192m
+solr_xmx: 8192m
+
+
 
 # SecOps user
 secops_user: "{{ vault_secops_user }}"
@@ -144,6 +166,7 @@ nessus_agent_group: "{{ vault_nessus_agent_group }}"
 
 # saxon license
 saxon_license: "{{ vault_saxon_license }}"
+
 
 # ckan
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production

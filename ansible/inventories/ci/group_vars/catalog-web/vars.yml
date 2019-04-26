@@ -10,8 +10,6 @@ current_source_symlink: /usr/lib/ckan
 project_index_path: /usr/lib/ckan
 
 # other
-REDIS_SERVER: localhost
-SOLR_SERVER: datagovsolr1tf.internal.ci.datagov.us
 env: local
 redis_password: "{{ catalog_ckan_redis_pass }}"
 who_secure: "{{ catalog_ckan_who_secure }}"
@@ -24,20 +22,14 @@ ckan_instance_uuid: "{{ catalog_ckan_instance_uuid }}"
 # token_dat for Google Analytics
 token_dat: "{{ catalog_ckan_token_dat }}"
 
-catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
 catalog_ckan_instance_secret: "{{ vault_catalog_ckan_instance_secret }}"
 catalog_ckan_instance_uuid: "{{ vault_catalog_ckan_instance_uuid }}"
-catalog_ckan_redis_pass: "{{ vault_catalog_ckan_redis_pass }}"
 catalog_ckan_token_dat: "{{ vault_catalog_ckan_token_dat }}"
 catalog_ckan_who_ini_secret: "{{ vault_catalog_ckan_who_ini_secret }}"
 catalog_ckan_who_secure: "true"
 
-catalog_db_host: "{{ vault_catalog_db_host }}"
-catalog_db_master_password: "{{ vault_catalog_db_master_password }}"
-catalog_db_master_user: "{{ vault_catalog_db_master_user }}"
-
-postgresql_app_name: catalog_ckan
-postgresql_login_host: "{{ catalog_db_server }}"
-postgresql_login_password: "{{ vault_postgresql_login_password }}"
-postgresql_login_user: "{{ catalog_db_master_user }}"
-postgresql_role_password: "{{ catalog_db_master_password }}"
+postgresql_login_host: "{{ catalog_postgresql_login_host }}"
+postgresql_login_password: "{{ catalog_postgresql_login_password }}"
+postgresql_login_user: "{{ catalog_postgresql_login_user }}"
+postgresql_enable_extensions:
+  - postgis

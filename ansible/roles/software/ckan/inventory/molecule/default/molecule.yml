@@ -1,0 +1,44 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+  enabled: false # to fix
+platforms:
+  - name: ckan-inventory-app-trusty
+    image: ubuntu:trusty
+    groups:
+      - trusty
+  - name: ckan-inventory-app-bionic
+    image: ubuntu:bionic
+    groups:
+      - bionic
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+  inventory:
+    group_vars:
+      bionic:
+        inventory_ckan_app_version: inventory-bionic
+scenario:
+  name: default
+  # to fix
+  test_sequence:
+    - lint
+    - destroy
+    - dependency
+    - syntax
+    - create
+    - prepare
+    - converge
+    # - idempotence
+    - side_effect
+    - verify
+    - destroy  
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

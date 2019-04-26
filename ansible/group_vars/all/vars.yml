@@ -47,9 +47,19 @@ php_opcache_conf_filename: "10-opcache.ini"
 php_webserver_daemon: nginx
 
 
+# solr
+solr_home: /data/solr5
+solr_version: 5.5.5
+solr_port: "8983"
+# TODO applications should initialize the cores instead of
+# it being in the platform.
+solr_cores:
+  - catalog
+  - inventory
+
+
 # new python version
-common_python_version_number: 2.7.10
-common_python_version_directory: /usr/local/lib/python{{ python_version_number }}
+common_python_version_directory: /usr/local/lib/python{{ common_python_version_number }}
 python_home: "{{ common_python_version_directory }}"
 
 # Disabling MySQL server (we need only client on this machine)

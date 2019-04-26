@@ -4,25 +4,7 @@
  * 
  */
 
-$protocol = 'https';
-//if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
-//    $protocol = 'https';
-//}
-//
-//if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
-//    $protocol = 'https';
-//}
-
-$_SERVER['HTTPS'] = 'on';
-$_SERVER['SERVER_PORT'] = '443';
-
-$default_host = '{{ default_host }} ';
-if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST']) {
-    $default_host = $_SERVER['HTTP_HOST'];
-}
-
-
-$base_url = $protocol . '://' . $default_host;
+$base_url = '{{ app_base_url }}';
 
 $config = array(
 
