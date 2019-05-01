@@ -9,6 +9,8 @@
     - name: install psycopg2 for postgresql ansible module
       apt: name=python-psycopg2 state=present
       run_once: true
+      tags:
+        - database
   roles:
     - role: gsa.datagov-deploy-postgresql
       vars:
