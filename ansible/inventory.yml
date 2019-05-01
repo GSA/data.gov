@@ -66,4 +66,3 @@
     - {role: gsa.datagov-deploy-apache2, tags: ['apache']}
     - {role: software/ckan/inventory, tags: ['deploy']}
     - {role: software/ckan/saml2, tags: ['saml2']}
-    - {role: software/common/datagov-deploy-rollback, tags: ['deploy-rollback']}
