@@ -25,6 +25,10 @@ provisioner:
   name: ansible
   lint:
     name: ansible-lint
+  inventory:
+    group_vars:
+      all:
+        catalog_ckan_solr_port: 8983
 scenario:
   name: default
   # Disable idempotence check

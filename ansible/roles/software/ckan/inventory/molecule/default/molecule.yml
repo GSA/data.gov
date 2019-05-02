@@ -21,6 +21,9 @@ provisioner:
     name: ansible-lint
   inventory:
     group_vars:
+      all:
+        python_home: /usr
+        inventory_ckan_solr_port: 8983
       bionic:
         inventory_ckan_app_version: inventory-bionic
 scenario:

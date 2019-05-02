@@ -23,6 +23,7 @@ provisioner:
         catalog_bucket_name: s3bucket
         catalog_ckan_redis_host: localhost
         catalog_ckan_solr_host: localhost
+        catalog_ckan_solr_port: 8983
         catalog_db_user: ckan
         catalog_db_name: ckan
         catalog_db_pass: ckandbpassword
