@@ -59,4 +59,4 @@
     - name: create the ckan virtualenv
       command: virtualenv /usr/lib/ckan
       args:
-        creates: /usr/lib/ckan
+        creates: /usr/lib/ckan/bin/python
