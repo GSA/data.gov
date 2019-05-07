@@ -1,10 +1,15 @@
 ---
 # catalog
 catalog_ckan_app_version: master
+catalog_ckan_db_host: "{{ vault_catalog_ckan_db_host }}"
+catalog_ckan_db_name: "{{ vault_catalog_ckan_db_name }}"
+catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
+catalog_ckan_db_user: "{{ vault_catalog_ckan_db_user }}"
 catalog_ckan_solr_port: "8080"
-catalog_pycsw_db_user: "{{ catalog_db_user }}"
-catalog_pycsw_db_host: "{{ catalog_db_server }}"
-catalog_pycsw_db_pass: "{{ catalog_db_pass }}"
+catalog_pycsw_db_host: "{{ vault_catalog_pycsw_db_host }}"
+catalog_pycsw_db_name: "{{ vault_catalog_pycsw_db_name }}"
+catalog_pycsw_db_pass: "{{ vault_catalog_pycsw_db_pass }}"
+catalog_pycsw_db_user: "{{ vault_catalog_pycsw_db_user }}"
 
 
 # common
@@ -131,6 +136,7 @@ secops_user: "{{ vault_secops_user }}"
 secops_user_public_key: "{{ vault_secops_user_public_key }}"
 
 # TrendMicro
+trendmicro_deb_url: https://dsm.sec.helix.gsa.gov/software/agent/Ubuntu_14.04/x86_64/
 trendmicro_policy_id_app: "{{ vault_trendmicro_policy_id_app }}"
 trendmicro_policy_id_web: "{{ vault_trendmicro_policy_id_web }}"
 

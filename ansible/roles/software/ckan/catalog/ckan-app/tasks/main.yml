@@ -12,7 +12,7 @@
     - swig
 
 - name: create directory for application logs
-  file: dest=/var/logs/ckan owner=www-data group=www-data mode=0755 state=directory
+  file: dest=/var/log/ckan owner=www-data group=www-data mode=0755 state=directory
 
 - name: Remove old rollback code
   file: path="{{ project_source_rollback_path }}" state=absent
@@ -45,17 +45,20 @@
 - name: Install CKAN app
   command: ./install.sh "{{ project_source_new_code_path }}" "{{ catalog_ckan_python_home }}" chdir={{ app_source_path }}
   tags: skip_ansible_lint
+  notify: reload apache2
 
   # TODO instead of fixing the permissions after the fact, we should be using
   # the pip module with `umask` to install the requirements-freeze.txt
 - name: Fix permissions on ckan install dir
   file: owner=root group=www-data dest={{ project_source_new_code_path }} state=directory recurse=yes
+  notify: reload apache2
 
 # Configure CKAN
 - name: Configure production.ini
   template: src=templates/{{ item }}.j2 dest=/{{ item }} owner=root group=www-data mode=0640
   with_items:
     - etc/ckan/production.ini
+  notify: reload apache2
 
 # Add token.dat file
 - name: Add token.dat file
@@ -65,6 +68,7 @@
     owner=root
     group=www-data
     mode=0640
+  notify: reload apache2
 
 - name: Configure who.ini
   copy:
@@ -74,6 +78,7 @@
     owner: root
     group: www-data
     mode: 0640
+  notify: reload apache2
 
 - name: point site_url in /etc/hosts to localhost
   action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ ckan_site_domain | regex_replace('https?\://','') }}"
@@ -85,3 +90,4 @@
     src: "{{ project_source_new_code_path }}"
     path: "{{ current_source_symlink }}"
     state: link
+  notify: reload apache2

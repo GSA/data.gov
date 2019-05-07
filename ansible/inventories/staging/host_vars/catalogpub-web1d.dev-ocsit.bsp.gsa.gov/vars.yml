@@ -6,12 +6,17 @@ readwrite_type: writable
 
 # db credentials
 ckan_db_server: "{{ vault_ckan_db_server }}"
-catalog_ckan_db_host: "{{ ckan_db_server }}"
 pycsw_db_server: "{{ vault_pycsw_db_server }}"
 catalog_db_user: "{{ vault_catalog_db_user }}"
 catalog_db_pass: "{{ vault_catalog_db_pass }}"
 catalog_db_name: "{{ vault_catalog_db_name }}"
 catalog_pycsw_db_name: "{{ vault_catalog_pycsw_db_name }}"
+
+catalog_ckan_db_host: "{{ vault_catalog_ckan_db_host }}"
+catalog_ckan_db_name: "{{ vault_catalog_ckan_db_name }}"
+catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
+catalog_ckan_db_user: "{{ vault_catalog_ckan_db_user }}"
+
 
 # other
 catalog_ckan_solr_host: "{{ solr_master_server }}"
