@@ -12,7 +12,7 @@
     - swig
 
 - name: create directory for application logs
-  file: dest=/var/logs/ckan owner=www-data group=www-data mode=0755 state=directory
+  file: dest=/var/log/ckan owner=www-data group=www-data mode=0755 state=directory
 
 - name: Remove old rollback code
   file: path="{{ project_source_rollback_path }}" state=absent
