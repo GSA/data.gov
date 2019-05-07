@@ -42,11 +42,11 @@ jobs:
           key: v1-bundle-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
-      - run: 
+      - run:
           name: Setup ansible-galaxy
           command: |
             . venv/bin/activate
-            make update-vendor-force      
+            make update-vendor-force
       - run:
           name: Run tests
           command: |
