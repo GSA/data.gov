@@ -33,6 +33,11 @@
     - etc/ckan/pycsw.wsgi
     - usr/lib/ckan/bin/pycsw-load.sh
 
+# TODO instead of fixing the permissions after the fact, we should be using
+# the pip module with `umask` to install the requirements-freeze.txt
+- name: Fix permissions on pycsw install dir
+  file: owner=root group=www-data dest={{ pycsw_virtualenv }} state=directory recurse=yes
+
 - name: set facts1
   set_fact:
     csw_url_path: "{{ csw_url_path_all }}"
