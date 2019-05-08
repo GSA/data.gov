@@ -14,11 +14,27 @@ catalog_pycsw_db_user: "{{ vault_catalog_pycsw_db_user }}"
 
 
 # common
+common_filebeat_logstash_output: "{{ vault_common_filebeat_logstash_output }}"
+common_filebeat_config:
+  filebeat.config.modules:
+    enabled: true
+    path: ${path.config}/modules.d/*.yml
+  filebeat.modules:
+    - module: system
+      syslog:
+        enabled: true
+  output.logstash:
+    hosts: ["{{ common_filebeat_logstash_output }}"]
+
 common_newrelic_enabled: true
 common_python_version_number: 2.7.10
 filebeat_enabled: true
 nessus_agent_enabled: true
 trendmicro_enabled: true
+# TODO prefix with common_
+filebeat_config: "{{ common_filebeat_config }}"
+products:
+  - filebeat
 
 
 # data.gov-wide variables
