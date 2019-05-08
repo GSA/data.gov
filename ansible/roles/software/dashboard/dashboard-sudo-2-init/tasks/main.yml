@@ -30,7 +30,7 @@
 - name: Installing required packages
   package: name={{ item }} state=installed
   with_items:
-    - mariadb-client-5.5
+    - mariadb-client
     - php7.1-mcrypt
     - php7.0-zip
     - nginx-extras
