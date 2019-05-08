@@ -5,6 +5,7 @@
     - name: ensure system packages are installed
       apt:
         name:
+          - apache2
           - git
           - libbz2-dev
           - libpq-dev
@@ -60,3 +61,6 @@
       command: virtualenv /usr/lib/ckan
       args:
         creates: /usr/lib/ckan/bin/python
+
+    - name: ensure apache2 is started
+      service: name=apache2 state=started

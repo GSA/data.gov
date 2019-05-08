@@ -5,6 +5,7 @@
     - name: ensure system packages are installed
       apt:
         name:
+        - apache2
         - git
         - libbz2-dev
         - libpq-dev
@@ -21,16 +22,16 @@
 
     - name: ensure python virtualenv is installed and configured
       pip:
-        name: virtualenv    
+        name: virtualenv
 
     - name: install postgis-scripts for trusty
-      apt: 
+      apt:
         name: postgresql-9.3-postgis-scripts
         state: present
       when: ansible_distribution_release == "trusty"
 
     - name: install postgis-scripts for bionic
-      apt: 
+      apt:
         name: postgresql-10-postgis-scripts
         state: present
       when: ansible_distribution_release == "bionic"
@@ -39,7 +40,7 @@
       service: name=postgresql state=started enabled=true
 
     - name: create a master db user for the test
-      postgresql_user: 
+      postgresql_user:
         name: "ckan"
         role_attr_flags: SUPERUSER
         password: "ckan"
@@ -63,10 +64,5 @@
         group: www-data
         mode: 0750
 
-    - name: create fake apache2 config dir
-      file:
-        path: /etc/apache2/sites-enabled
-        state: directory
-        owner: root
-        group: www-data
-        mode: 0750
+    - name: ensure apache2 is started
+      service: name=apache2 state=started
