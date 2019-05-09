@@ -19,6 +19,8 @@ catalogb-web[1:2]p.prod-ocsit.bsp.gsa.gov
 catalogpub-web1p.prod-ocsit.bsp.gsa.gov
 
 [catalog-web-v2]
+catalogweb[1:2]p.prod-ocsit.bsp.gsa.gov
+catalogbweb[1:2]p.prod-ocsit.bsp.gsa.gov
 
 [crm-web:children]
 crm-web-v1
