@@ -8,7 +8,7 @@ autostart=false
 [program:harvest-fetch]
 command=ckan --plugin=ckanext-harvest harvester fetch_consumer          
 process_name=%(program_name)s-%(process_num)s
-numprocs=6
+numprocs={{ catalog_ckan_harvest_fetch_process_count }}
 stdout_logfile=/var/log/fetch-consumer.log  
 redirect_stderr=true 
 autostart=true

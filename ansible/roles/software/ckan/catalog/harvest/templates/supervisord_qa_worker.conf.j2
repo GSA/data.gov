@@ -1,7 +1,7 @@
 [program:ckan-archiver]
 command=ckan --plugin=ckanext-archiver celeryd2 run bulk -c /etc/ckan/production.ini
 process_name=%(program_name)s-%(process_num)s
-numprocs=3
+numprocs={{ catalog_ckan_archiver_process_count }}
 stdout_logfile=/var/log/ckan-archiver.log
 redirect_stderr=true
 autostart=true
