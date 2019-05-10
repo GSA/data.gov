@@ -1,5 +1,0 @@
----
-- name: Install TrendMicro
-  hosts: all
-  roles:
-    - {role: software/common/trendmicro, tags: ['trendmicro', 'skip_in_kitchen']}

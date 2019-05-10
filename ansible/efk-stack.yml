@@ -4,15 +4,13 @@
   hosts: elasticsearch
   serial: 1
   roles:
-  - ANXS.apt
-  - geerlingguy.java
-  - geerlingguy.elasticsearch
+  - role: elastic.elasticsearch
 
 - name: Install Kibana
   hosts: kibana
   serial: 1
   roles:
-  - geerlingguy.kibana
+  - role: gsa.ansible-role-kibana
 
 - name: Install EFK nginx proxy
   hosts: efk_nginx
@@ -25,6 +23,4 @@
   hosts: elasticsearch
   serial: 1
   roles:
-    - role: ANXS.build-essential
-    - role: gsa.elastalert
-    - role: monitoring/elastalert
+  - role: gsa.elastalert

@@ -1,9 +1,20 @@
 ---
 
 #elasticsearch
-elasticsearch_network_host: 0.0.0.0
-
+es_instance_name: "{{ vault_elasticsearch_name }}"
+es_api_basic_auth_username: "{{ vault_kibana_elasticsearch_username }}"
+es_api_basic_auth_password: "{{ vault_kibana_elasticsearch_password }}"    
+es_heap_size: "16g"
+es_max_threads: "12288"
+es_config:
+  node.name: "{{ vault_elasticsearch_name }}"
+  node.master: true
+  http.port: "{{ elasticsearch_port }}"
+  network.host: "_site_"
+  node.master: true
+  bootstrap.memory_lock: true
+es_api_host: "{{ groups.elasticsearch.0 }}"
 
 #elastalert
-elastalert_version: v0.1.8
+elastalert_version: v0.1.38
 slack_webhook_url: "{{ vault_slack_webhook_url }}" 

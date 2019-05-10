@@ -1,0 +1,70 @@
+---
+- name: get pycsw version
+  git: repo=https://github.com/GSA/pycsw.git dest=/usr/lib/ckan/src/pycsw version={{ pycsw_app_version }} umask=0022
+
+- name: run setup build for pycsw
+  command: chdir=/usr/lib/ckan/src/pycsw/ /usr/lib/ckan/bin/python setup.py build
+  tags: skip_ansible_lint
+
+- name: run setup install for pycsw
+  command: chdir=/usr/lib/ckan/src/pycsw/ /usr/lib/ckan/bin/python setup.py install
+  notify: reload apache2
+  tags: skip_ansible_lint
+
+- name: install pyproj
+  pip:
+    name: pyproj
+    version: 1.9.3
+    virtualenv: "{{ pycsw_virtualenv }}"
+    umask: "0022"
+  notify: reload apache2
+
+- name: install geolinks
+  pip:
+    name: geolinks
+    version: 0.2.0
+    virtualenv: "{{ pycsw_virtualenv }}"
+    umask: "0022"
+  notify: reload apache2
+
+- name: copy pycsw configuration files
+  copy:
+    src: "{{ item }}"
+    dest: "/{{ item }}"
+    mode: "0644"
+  with_items:
+    - etc/ckan/pycsw.wsgi
+    - usr/lib/ckan/bin/pycsw-load.sh
+  notify: reload apache2
+
+# TODO instead of fixing the permissions after the fact, we should be using
+# the pip module with `umask` to install the requirements-freeze.txt
+- name: Fix permissions on pycsw install dir
+  file: owner=root group=www-data dest={{ pycsw_virtualenv }} state=directory recurse=yes
+  notify: reload apache2
+
+- name: set facts1
+  set_fact:
+    csw_url_path: "{{ csw_url_path_all }}"
+    csw_abstract: "{{ csw_abstract_all }}"
+    csw_filter: "{{ csw_filter_all }}"
+
+- name: config pycsw-all.cfg
+  template: src=pycsw-cfg.j2 dest=/etc/ckan/pycsw-all.cfg
+  notify: reload apache2
+
+- name: set facts2
+  set_fact:
+    csw_url_path: "{{ csw_url_path_collection }}"
+    csw_abstract: "{{ csw_abstract_collection }}"
+    csw_filter: "{{ csw_filter_collection }}"
+
+- name: config pycsw-collection.cfg
+  template: src=pycsw-cfg.j2 dest=/etc/ckan/pycsw-collection.cfg
+  notify: reload apache2
+
+- name: copy pycsw configuration files
+  copy: src={{ item }} dest=/{{ item }} mode=0644
+  with_items:
+    - etc/cron.d/pycsw
+  tags: ['cron']

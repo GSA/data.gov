@@ -7,3 +7,5 @@
 
   roles:
     - role: gsa.ansible-role-kibana
+      vars:
+        kibana_version: "6.6"

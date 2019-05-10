@@ -14,3 +14,4 @@
 - name: make plate of spaghetti
   shell: cd /tmp && tar -xf /tmp/js.tgz -C /
   when: (inventory_hostname != "catalogpub-web1p.prod-ocsit.bsp.gsa.gov") and (current_env == "production")
+  notify: reload apache2

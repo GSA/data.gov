@@ -1,4 +1,0 @@
-solr_url: https://archive.apache.org/dist/lucene/solr/4.2.1/solr-4.2.1.tgz
-
-# provide some default values to be overwritten later by group vars and host vars...
-solr_master_server: 127.0.0.1

@@ -93,17 +93,21 @@ platforms:
   - name: ubuntu-14.04
     driver_config:
       image: rndmh3ro/docker-ubuntu1404-ansible:latest
-      platform: ubuntu
+      platform: ubuntu  
 
 suites:
   - name: catalog-web
     provisioner:
       hosts:
         - catalog-web
-      playbook: catalog.yml
+      playbook: catalog-web.yml
       extra_vars:
         redis_password: fake-redis-password
         ckan_site_domain: http://test-kitchen-datagov.local
+        catalog_ckan_db_host: localhost
+        catalog_ckan_redis_host: localhost
+        catalog_ckan_solr_host: localhost
+        pycsw_db_server: localhost
       ansible_extra_flags: >-
         --tags=frontend,ami-fix,bsp --skip-tags=solr,db,cron,skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
   - name: crm-web
@@ -125,35 +129,19 @@ suites:
 #  - name: datagov-web
 #    provisioner:
 #      playbook: datagov-web.yml
-  - name: efk-nginx
-    provisioner:
-      hosts:
-        - efk_nginx
-      playbook: efk-nginx.yml
-  - name: efk-stack
-    provisioner:
-      hosts:
-        - efk_nginx
-      playbook: efk-stack.yml
-#  - name: elastalert
-#    provisioner:
-#      playbook: elastalert.yml
-#  - name: elasticsearch
-#    provisioner:
-#      playbook: elasticsearch.yml
-#  - name: fluentd
-#    provisioner:
-#      playbook: fluent.yml
-#  - name: hardening
-#    provisioner:
-#      playbook: hardening.yml
-#  - name: harvester
-#    provisioner:
-#      playbook: harvester.yml
   - name: inventory-web
     provisioner:
       hosts: inventory-web
       playbook: inventory.yml
+      extra_vars:
+        datastore_db_server: localhost
+        inventory_ckan_db_host: localhost
+        inventory_ckan_solr_host: localhost
+        inventory_ckan_bucket_name: s3bucket
+        inventory_ckan_bucket_prefix: s3bucket-prefix-
+        inventory_datapusher_db_name: datapusher
+        inventory_datapusher_db_user: datapusher
+        inventory_datapusher_db_pass: secretpass
       ansible_extra_flags: >-
         --skip-tags="solr,db,deploy-rollback,skip_in_kitchen" <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
   - name: jekyll
@@ -170,36 +158,4 @@ suites:
             port: "8000"
             s3_bucket: fakebucket
             secret_key: testsecret
-#  - name: kibana
-#    provisioner:
-#      playbook: kibana.yml
-  - name: logrotate
-    provisioner:
-      playbook: logrotate.yml
-#  - name: nessus
-#    provisioner:
-#      playbook: nessus.yml
-#  - name: newrelic-infrastructure
-#    provisioner:
-#      playbook: newrelic-infrastructure.yml
-#  - name: newrelic-php
-#    provisioner:
-#      playbook: newrelic-php.yml
-#  - name: newrelic-python
-#    provisioner:
-#      playbook: newrelic-python.yml
-#  - name: postfix
-#    provisioner:
-#      playbook: postfix.yml
-#  - name: secops
-#    provisioner:
-#      playbook: secops.yml
-#  - name: solr
-#    provisioner:
-#      playbook: solr.yml
-#  - name: trendmicro
-#    provisioner:
-#      playbook: trendmicro.yml
-  - name: unattended-upgrades
-    provisioner:
-      playbook: unattended-upgrades.yml
+

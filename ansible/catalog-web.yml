@@ -1,0 +1,71 @@
+---
+- name: Provision Catalog databases
+  hosts: catalog-web
+  pre_tasks:
+    # Database initialization should be delegated to the jumpbox, however
+    # jumpbox does not have access to the application databases (firewall/security
+    # group configuration), so we have to install dependencies on one of the
+    # hosts and delegate to that host instead.
+    - name: install psycopg2 for postgresql ansible module
+      apt: name=python-psycopg2 state=present
+      run_once: true
+  roles:
+    - role: gsa.datagov-deploy-postgresql
+      vars:
+        postgresql_role_name: "{{ catalog_ckan_db_user }}"
+        postgresql_role_password: "{{ catalog_ckan_db_pass }}"
+        postgresql_database_name: "{{ catalog_ckan_db_name }}"
+      tags:
+        - database
+      run_once: true
+      when: datagov_enable_postgresql_role is defined
+    - role: gsa.datagov-deploy-postgresql
+      vars:
+        postgresql_role_name: "{{ catalog_pycsw_db_user }}"
+        postgresql_role_password: "{{ catalog_pycsw_db_pass }}"
+        postgresql_database_name: "{{ catalog_pycsw_db_name }}"
+      tags:
+        - database
+      run_once: true
+      when: datagov_enable_postgresql_role is defined
+
+
+
+- name: Catalog web stack
+  hosts: catalog-web
+  serial: 1
+  vars:
+      app_type: catalog
+
+  roles:
+    - role: software/common/tls
+      tags:
+        - tls
+
+    - role: software/ckan/common
+
+    - role: gsa.datagov-deploy-apache2
+      tags:
+        - apache
+
+    - role: software/ckan/catalog/ckan-app
+      vars:
+        app_repo_branch: "{{ catalog_ckan_app_version }}"
+      tags:
+        - app-deploy
+
+    - role: software/ckan/catalog/www
+      tags:
+        - apache2
+
+    - role: software/ckan/catalog/pycsw-app
+      tags:
+        - pycsw
+
+    - role: software/ckan/saml2
+      tags:
+        - saml2
+
+    - role: software/ckan/fix-ckan-tracking
+      tags:
+        - frontend

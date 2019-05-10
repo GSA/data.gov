@@ -1,5 +1,0 @@
----
-
-- include: td-agent.yml
-- include: plugins.yml
-- include: templates.yml

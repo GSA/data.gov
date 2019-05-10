@@ -1,6 +1,6 @@
 ---
-ckan_session_store_type: memory
 
+ckan_session_store_type: memory
 datagov_service: catalog
 
 # role url
@@ -14,8 +14,7 @@ current_source_symlink: /usr/lib/ckan
 project_index_path: /usr/lib/ckan
 
 # other
-REDIS_SERVER: "localhost"
-SOLR_SERVER: "{{ vault_solr_server }}"
+catalog_ckan_redis_host: "localhost"
 env: local
 redis_password: "{{ vault_redis_pass }}"
 

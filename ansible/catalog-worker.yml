@@ -1,0 +1,25 @@
+---
+- name: Catalog worker (harvester) stack
+  hosts: catalog-harvester
+  vars:
+      app_type: catalog
+
+  roles:
+    - role: software/ckan/common
+
+    - role: software/ckan/catalog/ckan-app
+      vars:
+        app_repo_branch: "{{ catalog_ckan_app_version }}"
+      tags:
+        - app-deploy
+
+    - role: software/ckan/catalog/harvest
+
+    - role: software/ckan/catalog/pycsw-app
+      tags:
+        - pycsw
+
+    # TODO not sure why this is needed in harvester
+    - role: software/ckan/saml2
+      tags:
+        - saml2

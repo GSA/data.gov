@@ -1,0 +1,72 @@
+---
+- name: set worker type
+  set_fact:
+    worker_type: "{{ hostvars[inventory_hostname]['usage'] | default('main_worker') }}"
+  tags:
+    - redis
+    - fgdc2iso
+
+- include: fgdc2iso.yml
+  tags: ['fgdc2iso']
+  when: worker_type == 'main_worker'
+
+- include: redis.yml
+  tags: ['redis']
+  when: worker_type == 'main_worker'
+
+- name: Remove pip installed supervisor
+  pip: name=supervisor virtualenv=/usr/lib/ckan/ state=absent
+  tags:
+    - notest
+
+- name: remove supervisor.conf init
+  file: dest=/etc/init/supervisor.conf state=absent
+
+- name: install supervisor
+  apt: name=supervisor state=present
+
+- name: copy supervisord config
+  copy: src=etc/supervisord_{{ worker_type }}.conf dest=/etc/supervisor/conf.d/catalog-harvest.conf mode=0644
+  notify: reload supervisor
+
+- name: enable supervisor service
+  service: name=supervisor state=started enabled=yes
+
+- name: remove supervisor cron job
+  file: dest=/etc/cron.d/supervisor state=absent
+  tags:
+    - notest
+
+- name: copy worker cron job, if any
+  copy: src=etc/cron.d/ckan_{{ worker_type }} dest=/etc/cron.d/ckan mode=0644
+  tags: ['cron']
+
+- name: copy qa worker executables
+  action: copy src={{item}} dest=/{{item}} mode=0755
+  with_items:
+    - usr/bin/celery-mem-check.sh
+  when: worker_type == 'qa_worker'
+
+- name: install harvest-report script
+  template: src=harvest-report.sh.j2 dest=/usr/local/bin/harvest-report.sh owner=root group=root mode=0755
+
+- name: install pgpass file for harvest-report
+  copy:
+    content: |
+      {{ catalog_ckan_db_host }}:5432:{{ catalog_ckan_db_name }}:{{ catalog_ckan_db_user }}:{{ catalog_ckan_db_pass }}
+    # TODO should be an app user variable
+    dest: /root/.pgpass
+    mode: "0600"
+    owner: root
+    group: root
+
+- name: schedule harvest-report cron
+  cron: >-
+    cron_file=ckan
+    job=/usr/local/bin/harvest-report.sh
+    disabled={{ not catalog_harvest_enable_harvest_report }}
+    minute=0
+    hour=10
+    weekday=1-5
+    user=root
+    state=present

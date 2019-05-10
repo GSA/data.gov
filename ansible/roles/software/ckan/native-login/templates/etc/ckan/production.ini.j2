@@ -22,7 +22,7 @@ host = 0.0.0.0
 port = 5000
 
 [app:celery]
-REDIS_HOST = {{ REDIS_SERVER }}
+REDIS_HOST = {{ catalog_ckan_redis_host }}
 BROKER_BACKEND = redis
 BROKER_HOST = redis://%(REDIS_HOST)s/1
 CELERY_RESULT_BACKEND = redis
@@ -64,7 +64,7 @@ who.secure = {{ who_secure }}
 ## Database Settings
 db_user = {{ catalog_db_user }}
 db_pass = {{ catalog_db_pass }}
-db_server = {{ CKAN_DB_SERVER }}
+db_server = {{ catalog_ckan_db_host }}
 db_database = {{ catalog_db_name }}
 sqlalchemy.url = postgresql://%(db_user)s:%(db_pass)s@%(db_server)s/%(db_database)s
 
@@ -99,8 +99,8 @@ ckan.auth.roles_that_cascade_to_sub_groups = admin
 
 ckan.site_id = geo.gov
 
-solr_server = {{ SOLR_SERVER }}
-solr_url = http://%(solr_server)s:8080/solr/{{ app_type }}
+solr_server = {{ catalog_ckan_solr_host }}
+solr_url = http://%(solr_server)s:{{ catalog_ckan_solr_port }}/solr/{{ app_type }}
 
 #ckan.simple_search = 1
 search.facets.default = 5
@@ -203,8 +203,8 @@ smtp.mail_from = no-reply@data.gov
 ckan.tracking_enabled = True
 set debug = False
 ckan.harvest.mq.type = redis
-ckan.harvest.mq.hostname = localhost
-ckan.harvest.mq.password = T35tr3d1sp@ss
+ckan.harvest.mq.hostname = {{ catalog_ckan_redis_host }}
+ckan.harvest.mq.password = {{ redis_pass }}
 ckanext.harvest.email = on
 ckan.resource_proxy_enabled = 1
 ckan.spatial.validator.profiles = iso19139ngdc
@@ -225,7 +225,7 @@ ckanext.geodatagov.bureau_csv.url = https://project-open-data.cio.gov/data/omb_b
 ckanext.geodatagov.doi.url = https://data.doi.gov/
 
 ckanext.geodatagov.aws_use_ami_role = true
-ckanext.geodatagov.aws_bucket_name = bsp-ocsit-prod-east-data-site-filestore
+ckanext.geodatagov.aws_bucket_name = {{ catalog_bucket_name }}
 ckanext.geodatagov.aws_access_key_id = _placeholder
 ckanext.geodatagov.aws_secret_access_key = _placeholder
 

@@ -6,8 +6,6 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: php-fixes-trusty
-    image: ubuntu:trusty
   - name: php-fixes-bionic
     image: ubuntu:bionic
 provisioner:

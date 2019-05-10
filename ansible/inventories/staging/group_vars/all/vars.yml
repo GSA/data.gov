@@ -1,5 +1,45 @@
 ---
+# catalog
+# read-only database variables
+catalog_ckan_app_version: develop
+catalog_ckan_db_host: "{{ vault_catalog_ckan_db_host }}"
+catalog_ckan_db_name: "{{ vault_catalog_ckan_db_name }}"
+catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
+catalog_ckan_db_user: "{{ vault_catalog_ckan_db_user }}"
+catalog_ckan_solr_port: "8080"
+catalog_pycsw_db_host: "{{ vault_catalog_pycsw_db_host }}"
+catalog_pycsw_db_name: "{{ vault_catalog_pycsw_db_name }}"
+catalog_pycsw_db_pass: "{{ vault_catalog_pycsw_db_pass }}"
+catalog_pycsw_db_user: "{{ vault_catalog_pycsw_db_user }}"
+
+
+# common
+common_filebeat_logstash_output: "{{ vault_common_filebeat_logstash_output }}"
+common_filebeat_config:
+  filebeat.config.modules:
+    enabled: true
+    path: ${path.config}/modules.d/*.yml
+  filebeat.modules:
+    - module: system
+      syslog:
+        enabled: true
+  output.logstash:
+    hosts: ["{{ common_filebeat_logstash_output }}"]
+
+common_newrelic_enabled: true
+common_python_version_number: 2.7.10
+filebeat_enabled: true
+nessus_agent_enabled: true
+trendmicro_enabled: true
+# TODO prefix with common_
+filebeat_config: "{{ common_filebeat_config }}"
+products:
+  - filebeat
+
+
+# data.gov-wide variables
 datagov_environment: staging
+
 
 default_tls_host_key: "{{ vault_default_tls_host_key }}"
 default_tls_host_certificate: |-
@@ -53,6 +93,9 @@ default_tls_host_certificate: |-
   -----END CERTIFICATE-----
 
 
+inventory_ckan_solr_port: "8080"
+
+
 # public urls
 urls_public:
   catalog: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
@@ -60,14 +103,45 @@ urls_private:
   catalog: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
 ckan_site_domain: "{{ urls_public.catalog }}"
 
+jekyll_apps:
+  - name: sdg-indicators-usa
+    repo: https://github.com/GSA/sdg-indicators-usa/
+    config: _config.yml
+    branch: prod-pages
+    port: 8000
+    s3_bucket: "{{ s3_bucket_sdg | default('') }}"
+    secret_key: "{{ jekyll_webhook_secret | default('') }}"
+
+  - name: data-federation
+    repo: https://github.com/GSA/us-data-federation
+    config: _config_prod.yml
+    branch: staging
+    port: 8001
+    s3_bucket: "{{ s3_bucket_federation | default('') }}"
+    secret_key: "{{ jekyll_webhook_secret | default('') }}"
+
+  - name: data-strategy
+    repo: https://github.com/GSA/data-strategy
+    config: _config_staging.yml
+    branch: develop
+    port: 8002
+    s3_bucket: "{{ s3_bucket_strategy | default('') }}"
+    secret_key: "{{ jekyll_webhook_secret | default('') }}"
+
+
 # solr
 solr_master_server: tempdatagovsolrm1d.dev-ocsit.bsp.gsa.gov
+solr_java_packages:
+  - openjdk-8-jdk
+solr_xms: 8192m
+solr_xmx: 8192m
 
 # SecOps user
 secops_user: "{{ vault_secops_user }}"
 secops_user_public_key: "{{ vault_secops_user_public_key }}"
 
 # TrendMicro
+trendmicro_deb_url: https://dsm.sec.helix.gsa.gov/software/agent/Ubuntu_14.04/x86_64/
 trendmicro_policy_id_app: "{{ vault_trendmicro_policy_id_app }}"
 trendmicro_policy_id_web: "{{ vault_trendmicro_policy_id_web }}"
 
@@ -109,9 +183,6 @@ nessus_agent_group: "{{ vault_nessus_agent_group }}"
 # saxon license
 saxon_license: "{{ vault_saxon_license }}"
 
-# FluentD
-fluentd_aws_access_key_id: "{{ vault_fluentd_aws_access_key_id }}"
-fluentd_aws_secret_access_key: "{{ vault_fluentd_aws_secret_access_key }}"
 
 # ckan
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production

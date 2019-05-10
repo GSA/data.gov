@@ -3,6 +3,4 @@
   hosts: elasticsearch
   serial: 1
   roles:
-    - { role: ANXS.build-essential }
-    - { role: gsa.elastalert }
-    - { role: monitoring/elastalert }
+    - role: gsa.elastalert

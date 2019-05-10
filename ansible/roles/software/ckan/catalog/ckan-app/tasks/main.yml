@@ -1,0 +1,93 @@
+---
+
+- name: make sure ckanext-saml2 dependency packages are installed
+  action: apt pkg={{ item }} state=installed
+  with_items:
+    - memcached
+
+- name: build dependencies
+  apt: name={{ item }} state=present
+  with_items:
+    - xmlsec1
+    - swig
+
+- name: create directory for application logs
+  file: dest=/var/log/ckan owner=www-data group=www-data mode=0755 state=directory
+
+- name: Remove old rollback code
+  file: path="{{ project_source_rollback_path }}" state=absent
+
+- name: Check whether new code dir exists
+  stat: path="{{ project_source_new_code_path }}"
+  register: p
+
+- name: Create rollback code
+  command: cp --recursive --preserve "{{ project_source_new_code_path }}" "{{ project_source_rollback_path }}"
+  when: p.stat.isdir is defined and p.stat.isdir
+  tags: skip_ansible_lint
+
+- name: Symlink current dir with rollback code
+  file:
+    src: "{{ project_source_rollback_path }}"
+    path: "{{ current_source_symlink }}"
+    state: link
+  when: p.stat.isdir is defined and p.stat.isdir
+
+- name: Remove new code
+  file: path="{{ project_source_new_code_path }}" state=absent
+
+- name: Clone CKAN app
+  git:
+    repo: '{{ app_repo }}'
+    dest: '{{ app_source_path }}'
+    version: '{{ app_repo_branch }}'
+
+- name: Install CKAN app
+  command: ./install.sh "{{ project_source_new_code_path }}" "{{ catalog_ckan_python_home }}" chdir={{ app_source_path }}
+  tags: skip_ansible_lint
+  notify: reload apache2
+
+  # TODO instead of fixing the permissions after the fact, we should be using
+  # the pip module with `umask` to install the requirements-freeze.txt
+- name: Fix permissions on ckan install dir
+  file: owner=root group=www-data dest={{ project_source_new_code_path }} state=directory recurse=yes
+  notify: reload apache2
+
+# Configure CKAN
+- name: Configure production.ini
+  template: src=templates/{{ item }}.j2 dest=/{{ item }} owner=root group=www-data mode=0640
+  with_items:
+    - etc/ckan/production.ini
+  notify: reload apache2
+
+# Add token.dat file
+- name: Add token.dat file
+  copy:
+    content="{{ token_dat }}"
+    dest=/etc/ckan/token.dat
+    owner=root
+    group=www-data
+    mode=0640
+  notify: reload apache2
+
+- name: Configure who.ini
+  copy:
+    src: "{{ app_source_path }}/config/environments/{{ env }}/saml2/who.ini"
+    dest: /etc/ckan
+    remote_src: true
+    owner: root
+    group: www-data
+    mode: 0640
+  notify: reload apache2
+
+- name: point site_url in /etc/hosts to localhost
+  action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ ckan_site_domain | regex_replace('https?\://','') }}"
+  tags:
+   - molecule-notest
+
+- name: Symlink current dir with new code
+  file:
+    src: "{{ project_source_new_code_path }}"
+    path: "{{ current_source_symlink }}"
+    state: link
+  notify: reload apache2

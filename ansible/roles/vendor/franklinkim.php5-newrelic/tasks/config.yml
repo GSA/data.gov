@@ -1,9 +1,0 @@
----
-
-- name: Configuring module
-  template:
-    src: "etc/php5/mods-available/newrelic.ini.j2"
-    dest: "{{ php5_newrelic_config_dest }}/newrelic.ini"
-    owner: "root"
-    group: "root"
-    mode: "0644"
