@@ -1,17 +1,40 @@
 ---
 # catalog
+# read-only database variables
 catalog_ckan_app_version: develop
-catalog_pycsw_db_user: "{{ catalog_db_user }}"
-catalog_pycsw_db_host: "{{ catalog_db_server }}"
-catalog_pycsw_db_pass: "{{ catalog_db_pass }}"
+catalog_ckan_db_host: "{{ vault_catalog_ckan_db_host }}"
+catalog_ckan_db_name: "{{ vault_catalog_ckan_db_name }}"
+catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
+catalog_ckan_db_user: "{{ vault_catalog_ckan_db_user }}"
+catalog_ckan_solr_port: "8080"
+catalog_pycsw_db_host: "{{ vault_catalog_pycsw_db_host }}"
+catalog_pycsw_db_name: "{{ vault_catalog_pycsw_db_name }}"
+catalog_pycsw_db_pass: "{{ vault_catalog_pycsw_db_pass }}"
+catalog_pycsw_db_user: "{{ vault_catalog_pycsw_db_user }}"
 
 
 # common
+common_filebeat_logstash_output: "{{ vault_common_filebeat_logstash_output }}"
+common_filebeat_config:
+  filebeat.config.modules:
+    enabled: true
+    path: ${path.config}/modules.d/*.yml
+  filebeat.modules:
+    - module: system
+      syslog:
+        enabled: true
+  output.logstash:
+    hosts: ["{{ common_filebeat_logstash_output }}"]
+
 common_newrelic_enabled: true
 common_python_version_number: 2.7.10
 filebeat_enabled: true
 nessus_agent_enabled: true
 trendmicro_enabled: true
+# TODO prefix with common_
+filebeat_config: "{{ common_filebeat_config }}"
+products:
+  - filebeat
 
 
 # data.gov-wide variables
@@ -70,6 +93,9 @@ default_tls_host_certificate: |-
   -----END CERTIFICATE-----
 
 
+inventory_ckan_solr_port: "8080"
+
+
 # public urls
 urls_public:
   catalog: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
@@ -115,6 +141,7 @@ secops_user: "{{ vault_secops_user }}"
 secops_user_public_key: "{{ vault_secops_user_public_key }}"
 
 # TrendMicro
+trendmicro_deb_url: https://dsm.sec.helix.gsa.gov/software/agent/Ubuntu_14.04/x86_64/
 trendmicro_policy_id_app: "{{ vault_trendmicro_policy_id_app }}"
 trendmicro_policy_id_web: "{{ vault_trendmicro_policy_id_web }}"
 

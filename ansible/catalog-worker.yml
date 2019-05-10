@@ -1,7 +1,6 @@
 ---
 - name: Catalog worker (harvester) stack
   hosts: catalog-harvester
-  serial: 1
   vars:
       app_type: catalog
 

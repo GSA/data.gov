@@ -1,4 +1,6 @@
 ---
+catalog_app_type: web
+
 # provide some default values to be overwritten later by group vars and host vars...
 urls_public:
   catalog: http://127.0.0.1

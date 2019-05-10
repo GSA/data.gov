@@ -34,7 +34,8 @@
   version: master
 - name: gsa.ansible-os-ubuntu-16
   src: https://github.com/GSA/ansible-os-ubuntu-16
-  version: master
+  # https://github.com/GSA/ansible-os-ubuntu-16/issues/16
+  version: 5d44ce03dff5f5670eda310049ab80b4721e5651
 - name: gsa.ansible-role-beats
   src: https://github.com/GSA/ansible-role-beats
   version: master
@@ -46,7 +47,7 @@
   version: v1.1.0
 - name: gsa.datagov-deploy-common
   src: https://github.com/GSA/datagov-deploy-common
-  version: v2.2.0
+  version: v2.2.1
 - name: gsa.datagov-deploy-jumpbox
   src: https://github.com/GSA/datagov-deploy-jumpbox
   version: v1.0.0

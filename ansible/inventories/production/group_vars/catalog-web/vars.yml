@@ -15,7 +15,6 @@ project_index_path: /usr/lib/ckan
 
 # other
 catalog_ckan_redis_host: "localhost"
-catalog_ckan_solr_host: "{{ vault_solr_server }}"
 env: local
 redis_password: "{{ vault_redis_pass }}"
 

@@ -5,19 +5,20 @@
     dest: "{{ virtualenv }}/src/{{ item.name }}"
     version: "{{ item.branch | default('master') }}"
     force: yes
+    umask: "0022"
   with_items: "{{ pkg }}"
 
 - name: install requirements
   pip:
     requirements: "{{ virtualenv }}/src/{{ item.name }}/{{ item.requirements }}"
     virtualenv: "{{ virtualenv }}"
-    virtualenv_site_packages: yes
-    # virtualenv_python: "{{ python_home }}/bin/python"
+    virtualenv_python: "{{ python_home }}/bin/python"
+    umask: "0022"
   with_items: "{{ pkg }}"
   when: item.requirements is defined
 
 - name: run setup
-  command: chdir={{ virtualenv }}/src/{{ item.name }}/ python setup.py develop
+  command: chdir={{ virtualenv }}/src/{{ item.name }} {{ virtualenv }}/bin/python setup.py develop
   with_items: "{{ pkg }}"
   tags:
     - skip_ansible_lint

@@ -1,4 +1,6 @@
 ---
+catalog_app_type: worker
+
 datagov_service: catalog
 
 # project path
