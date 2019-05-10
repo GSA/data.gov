@@ -1,4 +1,5 @@
 ---
+catalog_app_type: web # either web or worker
 catalog_ckan_app_version: master
 catalog_ckan_python_home: /usr
 app_source_path: /tmp/catalog-app

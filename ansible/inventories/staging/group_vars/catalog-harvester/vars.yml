@@ -1,6 +1,7 @@
 ---
 datagov_service: catalog
 
+catalog_app_type: worker
 catalog_ckan_db_host: "{{ vault_catalog_ckan_db_host }}"
 catalog_ckan_db_name: "{{ vault_catalog_ckan_db_name }}"
 catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
