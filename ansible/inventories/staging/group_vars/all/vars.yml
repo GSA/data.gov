@@ -98,6 +98,9 @@ default_tls_host_certificate: |-
   -----END CERTIFICATE-----
 
 
+jumpbox_operators: "{{ vault_jumpbox_operators }}"
+
+
 inventory_ckan_solr_host: datagov-solrm1d.dev-ocsit.bsp.gsa.gov
 inventory_ckan_solr_port: "8983"
 
