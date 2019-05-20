@@ -20,7 +20,7 @@
 - name: geerlingguy.java
   version: 1.9.5
 - name: geerlingguy.nginx
-  version: 2.6.2
+  version: 2.6.3
 - name: geerlingguy.php
   version: 3.7.0
 - name: geerlingguy.php-memcached
@@ -66,13 +66,13 @@
 - name: jnv.unattended-upgrades
   version: v1.7.0
 - name: newrelic.newrelic-infra
-  version: 0.6.2
+  version: 0.7.0
 - name: nickhammond.logrotate
   version: v0.0.5
 - name: nleutner.newrelic-php
   version: 1.0.0
 - name: oefenweb.postfix
-  version: v2.7.0
+  version: v2.7.1
 - name: rvm.ruby
   version: v2.1.2
 - name: sbaerlocher.wp-cli
