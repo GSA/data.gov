@@ -24,7 +24,6 @@ inventory_datastore_ro_user: "{{ vault_inventory_datastore_ro_user }}"
 inventory_datastore_ro_pass: "{{ vault_inventory_datastore_ro_pass }}"
 
 # other
-inventory_ckan_solr_host: "{{ vault_solr_server }}"
 inventory_ckan_bucket_name: "{{ vault_bucket_name }}"
 inventory_ckan_bucket_prefix: "{{ vault_bucket_prefix }}"
 ckan_site_domain: "{{ vault_ckan_site_domain }}"
