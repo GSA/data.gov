@@ -27,7 +27,6 @@ crm-web-v1
 crm-web-v2
 
 [crm-web-v1]
-crm-web[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [crm-web-v2]
 crmweb[1:2]d.dev-ocsit.bsp.gsa.gov
@@ -37,7 +36,6 @@ dashboard-web-v1
 dashboard-web-v2
 
 [dashboard-web-v1]
-dashboard-web[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [dashboard-web-v2]
 dashboardweb[1:2]d.dev-ocsit.bsp.gsa.gov
@@ -120,7 +118,6 @@ wordpress-web-v1
 wordpress-web-v2
 
 [wordpress-web-v1]
-wordpress-web[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [wordpress-web-v2]
 wordpressweb[1:2]d.dev-ocsit.bsp.gsa.gov
