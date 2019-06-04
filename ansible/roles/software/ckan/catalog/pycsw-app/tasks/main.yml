@@ -77,8 +77,14 @@
     - reload apache2
     - reload supervisor
 
-- name: copy pycsw configuration files
+- name: install pycsw cron
   copy: src={{ item }} dest=/{{ item }} mode=0644
   with_items:
     - etc/cron.d/pycsw
-  tags: ['cron']
+  when: catalog_pycsw_cron_enabled
+  tags: [cron]
+
+- name: uninstall pyscw cron
+  file: path=/etc/cron.d/pycsw state=absent
+  when: not catalog_pycsw_cron_enabled
+  tags: [cron]

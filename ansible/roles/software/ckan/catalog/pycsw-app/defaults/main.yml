@@ -1,5 +1,6 @@
 ---
 catalog_app_type: web
+catalog_pycsw_cron_enabled: false
 
 # provide some default values to be overwritten later by group vars and host vars...
 urls_public:
