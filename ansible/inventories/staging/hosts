@@ -7,6 +7,8 @@ catalog-harvester1d.dev-ocsit.bsp.gsa.gov usage=main_worker
 catalog-harvester2d.dev-ocsit.bsp.gsa.gov usage=misc_worker
 
 [catalog-harvester-v2]
+catalogharvester1d.dev-ocsit.bsp.gsa.gov usage=main_worker
+catalogharvester2d.dev-ocsit.bsp.gsa.gov usage=misc_worker
 
 [catalog-web:children]
 catalog-web-v1
@@ -25,18 +27,18 @@ crm-web-v1
 crm-web-v2
 
 [crm-web-v1]
-crm-web[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [crm-web-v2]
+crmweb[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [dashboard-web:children]
 dashboard-web-v1
 dashboard-web-v2
 
 [dashboard-web-v1]
-dashboard-web[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [dashboard-web-v2]
+dashboardweb[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [efk_nginx]
 [elasticsearch]
@@ -49,6 +51,7 @@ inventory-web-v2
 inventory[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [inventory-web-v2]
+inventory-[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [jekyll-web]
 static-web1d.dev-ocsit.bsp.gsa.gov
@@ -115,6 +118,6 @@ wordpress-web-v1
 wordpress-web-v2
 
 [wordpress-web-v1]
-wordpress-web[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [wordpress-web-v2]
+wordpressweb[1:2]d.dev-ocsit.bsp.gsa.gov
