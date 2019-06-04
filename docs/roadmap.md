@@ -4,9 +4,8 @@ These are the near-term priorities for us:
 
 - Keep our ansible playbooks and roles under version control with continuous
   integration tests
-- Deploy to all of our environments (sandbox, dev, production, etc) via Ansible
+- Deploy to all of our environments (sandbox, staging, production, etc) via Ansible
 - Deploy services as docker containers instead of configured instances
-- Leverage Ansible Playbook Bundles to broker services automatically
 
 
 Milestone | Status
@@ -14,7 +13,6 @@ Milestone | Status
 Continuous integration   | <img src="https://img.shields.io/badge/status-started-yellow.svg" />
 Ansible deploy           | <img src="https://img.shields.io/badge/status-started-yellow.svg" />
 Dockerize services       | <img src="https://img.shields.io/badge/status-not_started-lightgrey.svg" />
-Ansible Playbook Bundles | <img src="https://img.shields.io/badge/status-not_started-lightgrey.svg" />
 
 
 ## Continuous Integration
@@ -23,11 +21,15 @@ Ansible Playbook Bundles | <img src="https://img.shields.io/badge/status-not_sta
 difficult to develop on. We're breaking out roles into individual repos that can
 are easier to develop and test.
 
-We're using [Kitchen](https://kitchen.ci/) to develop and test these roles
+We're using [Molecule](https://molecule.readthedocs.io/en/stable/) to develop and test these roles
 locally and on CI.
 
 
 ## Ansible deploy
+
+We use [Ansible](https://www.ansible.com/) to deploy our platform and the Data.gov applications that run on top. Deployment of the platform should work from a single command/playbook.
+
+Deployment of individual applications can be done with playbook or Ansible tag.
 
 
 ## Dockerize services
@@ -37,10 +39,3 @@ already. These docker images are published to [Docker
 Hub](https://hub.docker.com/) where they can be composed together but are
 currently for development only. We plan to move to a Docker-centric workflow
 that allows us to deploy production services as Docker containers.
-
-
-## Ansible Playbook Bundles
-
-In the far distant future, we'd like to leverage [Ansible Playbook
-Bundles](https://github.com/ansibleplaybookbundle/ansible-playbook-bundle) in
-order to broker services automatically.

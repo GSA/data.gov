@@ -97,7 +97,8 @@ default_tls_host_certificate: |-
   -----END CERTIFICATE-----
 
 
-inventory_ckan_solr_port: "8080"
+inventory_ckan_solr_host: datagov-solrm1d.dev-ocsit.bsp.gsa.gov
+inventory_ckan_solr_port: "8983"
 
 
 # public urls
