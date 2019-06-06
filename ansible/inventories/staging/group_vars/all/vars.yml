@@ -158,14 +158,18 @@ web_app_env: production
 real_ansible_env: staging
 
 # postfix
+default_email_from: "{{ vault_default_email_from }}"
+postfix_raw_options:
+  - |
+    smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
+    smtpd_tls_mandatory_ciphers = high
+    smtpd_tls_mandatory_exclude_ciphers = aNULL, MD5
 postfix_relayhost: smtp.gsa.gov
 postfix_relayhost_port: 25
-postfix_sasl_auth_enable: false
 postfix_relaytls: true
-default_email_from: "{{ vault_default_email_from }}"
-postfix_key: "{{ vault_postfix_key }}"
-postfix_pem: "{{ vault_postfix_pem }}"
-
+postfix_sasl_auth_enable: false
+postfix_smtpd_tls_cert_file: /etc/ssl/certs/datagov_host.crt
+postfix_smtpd_tls_key_file: /etc/ssl/certs/datagov_host.key
 # SAML
 saml2_idp_entry: login.test.max.gov
 saml2_idp_metadata_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
