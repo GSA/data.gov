@@ -9,7 +9,8 @@ catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
 catalog_ckan_db_user: "{{ vault_catalog_ckan_db_user }}"
 catalog_ckan_harvest_fetch_process_count: 6
 catalog_ckan_qa_update_process_count: 5
-catalog_ckan_solr_port: "8080"
+catalog_ckan_solr_host: datagov-solr1d.dev-ocsit.bsp.gsa.gov
+catalog_ckan_solr_port: "8983"
 # read-only database variables
 catalog_pycsw_db_host: "{{ vault_catalog_pycsw_db_host }}"
 catalog_pycsw_db_name: "{{ vault_catalog_pycsw_db_name }}"

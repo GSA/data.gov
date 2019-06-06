@@ -19,4 +19,4 @@ catalog_ckan_db_user: "{{ vault_catalog_ckan_db_user }}"
 
 
 # other
-catalog_ckan_solr_host: "{{ solr_master_server }}"
+catalog_ckan_solr_host: datagov-solrm1d.dev-ocsit.bsp.gsa.gov
