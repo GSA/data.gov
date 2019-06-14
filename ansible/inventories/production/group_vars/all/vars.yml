@@ -106,6 +106,10 @@ inventory_ckan_solr_host: datagov-solrm1p.prod-ocsit.bsp.gsa.gov
 inventory_ckan_solr_port: "8983"
 
 
+# Newrelic
+nrinfragent_license_key: "{{ vault_nrinfragent_license_key }}"
+
+
 # public urls
 urls_public:
   catalog: https://catalog.data.gov
