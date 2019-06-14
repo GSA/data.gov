@@ -12,3 +12,8 @@
 - import_playbook: solr.yml
 - import_playbook: inventory.yml
 - import_playbook: catalog.yml
+
+# Misc plays
+#############
+#TODO integrate newrelic into the applications
+- import_playbook: newrelic-python.yml
