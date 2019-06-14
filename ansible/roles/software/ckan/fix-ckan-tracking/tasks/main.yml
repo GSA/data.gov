@@ -1,17 +1,14 @@
 ---
-
-# spaghetti js fix
-- name: set env
-  set_fact:
-    current_env: "{{ inventory_dir | basename }}"
-
-- name: copy spaghetti to /tmp folder
+# TODO move this to catalog application
+# The catalog-web hosts are configured with a read-only database connection so
+# they cannot write the tracking information. when the /_tracking endpoint is
+# hit.  This JS bundle changes the tracking url to the admin-catalog.data.gov
+# (hard-coded) so visits to catalog.data.gov will still be tracked.
+- name: copy tracking fix to /tmp folder
   copy:
     src: js.tgz
     dest: /tmp/js.tgz
-  when: (inventory_hostname != "catalogpub-web1p.prod-ocsit.bsp.gsa.gov") and (current_env == "production")
 
-- name: make plate of spaghetti
+- name: install tracking fix
   shell: cd /tmp && tar -xf /tmp/js.tgz -C /
-  when: (inventory_hostname != "catalogpub-web1p.prod-ocsit.bsp.gsa.gov") and (current_env == "production")
   notify: reload apache2

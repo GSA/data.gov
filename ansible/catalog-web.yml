@@ -30,7 +30,6 @@
       when: datagov_enable_postgresql_role is defined
 
 
-
 - name: Catalog web stack
   hosts: catalog-web
   serial: 1
@@ -66,9 +65,15 @@
       tags:
         - saml2
 
+
+- name: Fix tracking
+  hosts: catalog-web,!catalog-admin
+  roles:
     - role: software/ckan/fix-ckan-tracking
+      when: catalog_tracking_fix_enabled
       tags:
         - frontend
+
 
 - name: NewRelic
   hosts: catalog-web,!catalog-admin
@@ -76,6 +81,7 @@
     newrelic_app_name: catalog
   roles:
     - monitoring/newrelic/python-agent-ansible
+
 
 - name: NewRelic
   hosts: catalog-admin
