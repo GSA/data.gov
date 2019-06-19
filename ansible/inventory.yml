@@ -63,3 +63,10 @@
     - {role: gsa.datagov-deploy-apache2, tags: ['apache']}
     - {role: software/ckan/inventory, tags: ['deploy']}
     - {role: software/ckan/saml2, tags: ['saml2']}
+
+- name: NewRelic
+  hosts: inventory-web
+  vars:
+    newrelic_app_name: inventory
+  roles:
+    - monitoring/newrelic/python-agent-ansible
