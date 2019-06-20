@@ -1,12 +1,17 @@
 ---
 # catalog
-# read-only database variables
 catalog_ckan_app_version: develop
+catalog_ckan_archiver_process_count: 3
+# read-only database variables
 catalog_ckan_db_host: "{{ vault_catalog_ckan_db_host }}"
 catalog_ckan_db_name: "{{ vault_catalog_ckan_db_name }}"
 catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
 catalog_ckan_db_user: "{{ vault_catalog_ckan_db_user }}"
-catalog_ckan_solr_port: "8080"
+catalog_ckan_harvest_fetch_process_count: 6
+catalog_ckan_qa_update_process_count: 5
+catalog_ckan_solr_host: datagov-solr1d.dev-ocsit.bsp.gsa.gov
+catalog_ckan_solr_port: "8983"
+# read-only database variables
 catalog_pycsw_db_host: "{{ vault_catalog_pycsw_db_host }}"
 catalog_pycsw_db_name: "{{ vault_catalog_pycsw_db_name }}"
 catalog_pycsw_db_pass: "{{ vault_catalog_pycsw_db_pass }}"
@@ -97,6 +102,10 @@ inventory_ckan_solr_host: datagov-solrm1d.dev-ocsit.bsp.gsa.gov
 inventory_ckan_solr_port: "8983"
 
 
+# Newrelic
+nrinfragent_license_key: "{{ vault_nrinfragent_license_key }}"
+
+
 # public urls
 urls_public:
   catalog: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
@@ -154,14 +163,18 @@ web_app_env: production
 real_ansible_env: staging
 
 # postfix
+default_email_from: "{{ vault_default_email_from }}"
+postfix_raw_options:
+  - |
+    smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
+    smtpd_tls_mandatory_ciphers = high
+    smtpd_tls_mandatory_exclude_ciphers = aNULL, MD5
 postfix_relayhost: smtp.gsa.gov
 postfix_relayhost_port: 25
-postfix_sasl_auth_enable: false
 postfix_relaytls: true
-default_email_from: "{{ vault_default_email_from }}"
-postfix_key: "{{ vault_postfix_key }}"
-postfix_pem: "{{ vault_postfix_pem }}"
-
+postfix_sasl_auth_enable: false
+postfix_smtpd_tls_cert_file: /etc/ssl/certs/datagov_host.crt
+postfix_smtpd_tls_key_file: /etc/ssl/certs/datagov_host.key
 # SAML
 saml2_idp_entry: login.test.max.gov
 saml2_idp_metadata_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"

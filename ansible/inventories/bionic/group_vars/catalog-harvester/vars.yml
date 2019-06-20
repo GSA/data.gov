@@ -1,6 +1,8 @@
 ---
 catalog_app_type: worker
 
+catalog_pycsw_cron_enabled: true
+
 datagov_service: catalog
 
 # project path

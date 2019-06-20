@@ -13,17 +13,27 @@ catalogharvester2p.prod-ocsit.bsp.gsa.gov usage=qa_worker
 catalogharvester[3:6]p.prod-ocsit.bsp.gsa.gov usage=qa_worker
 
 [catalog-web:children]
+catalog-admin-v1
+catalog-admin-v2
 catalog-web-v1
 catalog-web-v2
 
 [catalog-web-v1]
 catalog-web[1:2]p.prod-ocsit.bsp.gsa.gov
 catalogb-web[1:2]p.prod-ocsit.bsp.gsa.gov
-catalogpub-web1p.prod-ocsit.bsp.gsa.gov
 
 [catalog-web-v2]
 catalogweb[1:2]p.prod-ocsit.bsp.gsa.gov
 catalogbweb[1:2]p.prod-ocsit.bsp.gsa.gov
+
+[catalog-admin:children]
+catalog-admin-v1
+catalog-admin-v2
+
+[catalog-admin-v1]
+catalogpub-web1p.prod-ocsit.bsp.gsa.gov
+
+[catalog-admin-v2]
 catalogpubweb1p.prod-ocsit.bsp.gsa.gov
 
 [crm-web:children]
@@ -67,7 +77,6 @@ jumpbox-v1
 jumpbox-v2
 
 [jumpbox-v1]
-datagov-jump1p.prod-ocsit.bsp.gsa.gov
 
 [jumpbox-v2]
 datagov-jump2p.prod-ocsit.bsp.gsa.gov
