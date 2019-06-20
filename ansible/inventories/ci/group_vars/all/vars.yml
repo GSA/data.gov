@@ -64,6 +64,9 @@ default_tls_host_certificate: |-
   -----END CERTIFICATE-----
 
 
+jumpbox_operators: "{{ vault_jumpbox_operators }}"
+
+
 inventory_ckan_solr_port: "{{ solr_port }}"
 
 
