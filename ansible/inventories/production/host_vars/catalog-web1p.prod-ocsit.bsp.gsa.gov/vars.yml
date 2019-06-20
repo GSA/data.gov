@@ -14,4 +14,4 @@ catalog_pycsw_db_host: "{{ vault_catalog_pycsw_db_host }}"
 catalog_pycsw_db_pass: "{{ vault_catalog_pycsw_db_pass }}"
 
 # other
-catalog_ckan_solr_host: datagovsolr1p.prod-ocsit.bsp.gsa.gov
+catalog_ckan_solr_host: datagov-solr1p.prod-ocsit.bsp.gsa.gov
