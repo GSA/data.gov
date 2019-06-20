@@ -11,5 +11,5 @@ application = loadapp('config:%s' % config_filepath)
 
 # wrap the WSGI application object 
 import newrelic.agent
-newrelic.agent.initialize('{{ newrelic_config_path }}/newrelic.ini')
+newrelic.agent.initialize('{{ newrelic_config_path }}/newrelic.ini', environment='{{ newrelic_environment }}')
 application = newrelic.agent.WSGIApplicationWrapper(application)
