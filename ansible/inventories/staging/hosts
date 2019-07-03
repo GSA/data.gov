@@ -11,15 +11,25 @@ catalogharvester1d.dev-ocsit.bsp.gsa.gov usage=main_worker
 catalogharvester2d.dev-ocsit.bsp.gsa.gov usage=misc_worker
 
 [catalog-web:children]
+catalog-admin-v1
+catalog-admin-v2
 catalog-web-v1
 catalog-web-v2
 
 [catalog-web-v1]
 catalog-web[1:2]d.dev-ocsit.bsp.gsa.gov
-catalogpub-web1d.dev-ocsit.bsp.gsa.gov
 
 [catalog-web-v2]
 catalogweb[1:2]d.dev-ocsit.bsp.gsa.gov
+
+[catalog-admin:children]
+catalog-admin-v1
+catalog-admin-v2
+
+[catalog-admin-v1]
+catalogpub-web1d.dev-ocsit.bsp.gsa.gov
+
+[catalog-admin-v2]
 catalogpubweb1d.dev-ocsit.bsp.gsa.gov
 
 [crm-web:children]
@@ -61,7 +71,6 @@ jumpbox-v1
 jumpbox-v2
 
 [jumpbox-v1]
-datagov-jump1d.dev-ocsit.bsp.gsa.gov
 
 [jumpbox-v2]
 datagov-jump2d.dev-ocsit.bsp.gsa.gov
@@ -72,16 +81,6 @@ datagov-jump2d.dev-ocsit.bsp.gsa.gov
 datagov-solrm1d.dev-ocsit.bsp.gsa.gov
 datagov-solr[1:2]d.dev-ocsit.bsp.gsa.gov is_solr_replica=true
 
-[solr4]
-tempdatagovsolrm1d.dev-ocsit.bsp.gsa.gov
-datagovsolr[1:2]d.dev-ocsit.bsp.gsa.gov
-
-# This group is not associated with any particular role
-# but allows us to keep track of retired hosts until they
-# are actually terminated from the environment
-[solr-retired]
-datagovsolrm1d.dev-ocsit.bsp.gsa.gov
-
 # trusty stack
 [v1:children]
 catalog-harvester-v1
@@ -91,7 +90,6 @@ dashboard-web-v1
 inventory-web-v1
 jekyll-web
 jumpbox-v1
-solr4
 wordpress-web-v1
 
 # bionic stack

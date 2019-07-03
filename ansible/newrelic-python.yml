@@ -1,4 +1,0 @@
----
-- hosts: all
-  roles:
-    - monitoring/newrelic/python-agent-ansible
