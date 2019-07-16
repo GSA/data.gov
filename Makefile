@@ -35,7 +35,7 @@ update-vendor-force-verbose:
 	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml --force -vvv
 
 setup:
-	pip install -r requirements.txt
+	pipenv install --dev
 	bundle install
 
 lint:
