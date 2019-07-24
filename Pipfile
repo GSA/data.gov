@@ -5,11 +5,11 @@ verify_ssl = true
 
 [dev-packages]
 ansible-lint = "~=3.4.23"
-molecule = "*"
+molecule = "~=2.19.0"
 docker-py = "*"
 
 [packages]
-ansible = "~=2.8.2"
+ansible = "~=2.6.0"
 boto = "*"
 
 [requires]

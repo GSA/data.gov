@@ -32,13 +32,13 @@ jobs:
       # Restore cache and install python dependencies
       - restore_cache:
           keys:
-            - v1-pipenv-{{ checksum "Pipfile.lock" }}
-            - v1-pipenv-
+            - v2-pipenv-{{ checksum "Pipfile.lock" }}
+            - v2-pipenv-
       - run:
           name: install python dependencies
-          command: pipenv install --dev
+          command: pipenv sync --dev
       - save_cache:
-          key: v1-pipenv-{{ checksum "Pipfile.lock" }}
+          key: v2-pipenv-{{ checksum "Pipfile.lock" }}
           paths:
             - .venv
       # Restore cache and install ruby dependencies
