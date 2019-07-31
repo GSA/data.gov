@@ -15,21 +15,32 @@ jobs:
   test:
     machine: true
     parallelism: 5
+    environment:
+      PIPENV_VENV_IN_PROJECT: 1
     steps:
       - checkout
+      # TODO once kitchen is removed, we can use a python docker instance
+      # without having to manually install python.
+      - run:
+          name: install python
+          command: |
+            cd /opt/circleci/.pyenv/plugins/python-build/../.. && git pull && cd -
+            pyenv install
+      - run:
+          name: install pipenv
+          command: pip install -U pipenv
       # Restore cache and install python dependencies
       - restore_cache:
           keys:
-            - v1-pip-{{ checksum "requirements.txt" }}
-            - v1-pip-
-      - run: |
-          virtualenv venv
-          . venv/bin/activate
-          pip install -r requirements.txt
+            - v2-pipenv-{{ checksum "Pipfile.lock" }}
+            - v2-pipenv-
+      - run:
+          name: install python dependencies
+          command: pipenv sync --dev
       - save_cache:
-          key: v1-pip-{{ checksum "requirements.txt" }}
+          key: v2-pipenv-{{ checksum "Pipfile.lock" }}
           paths:
-            - venv
+            - .venv
       # Restore cache and install ruby dependencies
       - restore_cache:
           keys:
@@ -44,15 +55,12 @@ jobs:
             - vendor/bundle
       - run:
           name: Setup ansible-galaxy
-          command: |
-            . venv/bin/activate
-            make update-vendor-force
+          command: pipenv run make update-vendor-force
       - run:
           name: Run tests
           command: |
-            . venv/bin/activate
             TEST_TARGETS=$(make circleci-glob | circleci tests split)
-            make ${TEST_TARGETS}
+            pipenv run make ${TEST_TARGETS}
 
 
 workflows:

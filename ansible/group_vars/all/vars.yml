@@ -17,6 +17,7 @@ apache2_ssl_certificate_file: "{{ default_tls_host_certificate_filepath }}"
 apache2_ssl_certificate_key_file: "{{ default_tls_host_key_filepath }}"
 
 # common roles
+common_reboot_notify_email: "{{ datagov_team_email }}"
 common_tls_host_key: "{{ default_tls_host_key }}"
 common_tls_host_certificate: "{{ default_tls_host_certificate }}"
 

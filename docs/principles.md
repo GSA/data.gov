@@ -25,7 +25,7 @@ Ruby
 Node
 * package.json
 Python
-* requirements.txt
+* Pipfile
 Makefile
 Maven
 
