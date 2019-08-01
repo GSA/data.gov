@@ -1,4 +1,12 @@
 ---
+- name: Set the deploy version
+  hosts: catalog-web,catalog-harvester
+  tasks:
+    - name: Set deploy version
+      set_fact:
+        pycsw_deploy_version: "{{ '%Y%m%d%H%M%SZ' | strftime(ansible_date_time.epoch) }}"
+  tags: always
+
 - name: Provision Catalog databases
   hosts: catalog-web
   pre_tasks:
@@ -21,9 +29,9 @@
       when: datagov_enable_postgresql_role is defined
     - role: gsa.datagov-deploy-postgresql
       vars:
-        postgresql_role_name: "{{ catalog_pycsw_db_user }}"
-        postgresql_role_password: "{{ catalog_pycsw_db_pass }}"
-        postgresql_database_name: "{{ catalog_pycsw_db_name }}"
+        postgresql_role_name: "{{ pycsw_db_user }}"
+        postgresql_role_password: "{{ pycsw_db_password }}"
+        postgresql_database_name: "{{ pycsw_db_name }}"
       tags:
         - database
       run_once: true
@@ -58,7 +66,8 @@
       tags:
         - apache2
 
-    - role: software/ckan/catalog/pycsw-app
+    - role: gsa.datagov-deploy-pycsw
+      pycsw_role: web
       tags:
         - pycsw
 

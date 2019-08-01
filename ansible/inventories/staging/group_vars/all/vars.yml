@@ -113,6 +113,15 @@ inventory_ckan_solr_port: "8983"
 nrinfragent_license_key: "{{ vault_nrinfragent_license_key }}"
 
 
+pycsw_app_version: datagov/pin-dependencies
+pycsw_base_url: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
+pycsw_catalog_url: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
+pycsw_db_host: "{{ catalog_pycsw_db_host }}"
+pycsw_db_name: "{{ catalog_pycsw_db_name }}"
+pycsw_db_password: "{{ catalog_pycsw_db_pass }}"
+pycsw_db_user: "{{ catalog_pycsw_db_user }}"
+
+
 # public urls
 urls_public:
   catalog: https://catalog-datagov.dev-ocsit.bsp.gsa.gov

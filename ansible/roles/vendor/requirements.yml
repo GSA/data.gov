@@ -4,10 +4,15 @@
 # using this file. Follow the instructions at http://docs.ansible.com/ansible/galaxy.html
 # to include any roles you want installed prior to running main.yml.
 
+- name: ansistrano.deploy
+  version: 3.2.0
 - name: ANXS.apt
   version: v2.0.0
 - name: ANXS.build-essential
   version: v2.0.0
+- name: avanov.pyenv
+  version: 1.1.0
+  src: https://github.com/avanov/ansible-galaxy-pyenv.git
 - name: davidwittman.redis
   version: 1.2.6
 # TODO this is no longer supported, switch to upstream https://github.com/telus/ansible-upstart
@@ -56,6 +61,9 @@
 - name: gsa.datagov-deploy-postgresql
   src: https://github.com/GSA/datagov-deploy-postgresql
   version: v1.1.0
+- name: gsa.datagov-deploy-pycsw
+  src: https://github.com/GSA/datagov-deploy-pycsw
+  version: v1.0.1
 - name: gsa.datagov-deploy-redis
   src: https://github.com/GSA/datagov-deploy-redis
   version: v1.0.1

@@ -107,7 +107,6 @@ suites:
         catalog_ckan_db_host: localhost
         catalog_ckan_redis_host: localhost
         catalog_ckan_solr_host: localhost
-        pycsw_db_server: localhost
       ansible_extra_flags: >-
         --tags=frontend,ami-fix,bsp --skip-tags=solr,db,cron,skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
   - name: crm-web
