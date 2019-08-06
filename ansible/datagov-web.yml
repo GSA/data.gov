@@ -53,7 +53,7 @@
         - issue
         - story
       register: contact_forms
-    - name: assert location is not /contact
+    - name: assert Location header contains /contact
       fail:
         msg: "Expected Location {{ expected_url }} to be in {{ item.location }}"
       when: expected_url not in item.location
