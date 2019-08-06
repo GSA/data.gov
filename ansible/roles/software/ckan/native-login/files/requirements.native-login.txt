@@ -21,7 +21,7 @@ chardet==2.3.0
 -e git+https://github.com/GSA/ckanext-spatial@2a25f8d60c31add77e155c4136f2c0d4e3b86385#egg=ckanext_spatial
 decorator==3.4.0
 fanstatic==0.12
-Flask==0.8
+Flask==1.0
 FormEncode==1.2.6
 gdata==2.0.18
 Genshi==0.6
