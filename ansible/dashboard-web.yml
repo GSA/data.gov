@@ -40,3 +40,15 @@
   become: no
   roles:
   - { role: software/dashboard/dashboard-db-migrations, tags: [provision, deploy, migrate] }
+
+- name: Tests
+  hosts: dashboard-web
+  tasks:
+    - name: flush handlers
+      meta: flush_handlers
+    - name: access to simplesaml admin is forbidden
+      uri:
+        url: https://localhost/simplesaml/module.php/core/loginuserpass.php
+        status_code: 403
+        validate_certs: false
+      tags: [deploy,provision]
