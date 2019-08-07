@@ -70,7 +70,7 @@ python-magic==0.4.12
 python-memcached==1.48
 pytz==2016.1
 pyutilib.component.core==4.5.3
-PyYAML==3.11
+PyYAML==5.1
 -e git+https://github.com/asl2/PyZ3950.git@c2282c73182cef2beca0f65b1eb7699c9b24512e#egg=PyZ3950
 redis==2.10.1
 repoze.lru==0.6
