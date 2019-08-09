@@ -50,7 +50,7 @@
   version: v2.2.2
 - name: gsa.datagov-deploy-jumpbox
   src: https://github.com/GSA/datagov-deploy-jumpbox
-  version: v1.0.0
+  version: v1.1.1
 - name: gsa.datagov-deploy-postgresql
   src: https://github.com/GSA/datagov-deploy-postgresql
   version: v1.1.0

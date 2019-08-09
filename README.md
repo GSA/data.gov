@@ -33,16 +33,13 @@ Moved to [datagov-infrastructure-live](https://github.com/gsa/datagov-infrastruc
 - ansible-secret.txt: `export ANSIBLE_VAULT_PASSWORD_FILE=~/ansible-secret.txt`
 - run all provisioning/app deployment commands from repo's `ansible` folder
 - to update `ansible/roles/vendor` roles run there: `ansible-galaxy install -r requirements.yml`
-- `{{ inventory }}` can be:
-  - inventories/staging/hosts
-  - inventories/production/hosts
-  - inventories/local/hosts
+
 
 ## Common plays
 
 Update/deploy all data.gov assets.
 
-    $ ansible-playbook -i {{ inventory }} site.yml
+    $ ansible-playbook site.yml
 
 _Note: the above playbook is incomplete. There are a few playbooks that must be
 run with specific parameters. For that we include them in `site.sh`:_
@@ -52,27 +49,36 @@ run with specific parameters. For that we include them in `site.sh`:_
 If the playbooks failed to apply to a few hosts, you can address the failures
 and then retry with the `--limit` parameter and the retry file.
 
-    $ ansible-playbook -i {{ inventory }} site.yml --limit @site.retry
+    $ ansible-playbook site.yml --limit @site.retry
 
-Reboot the hosts after emergency patching. _Note: this takes a while since we only reboot one host at a time._
+Reboot any hosts requiring reboot after an update. _Note: this takes a while since we only reboot one host at a time._
 
-    $ ansible-playbook -i {{ inventory }} actions/reboot.yml
+    $ ansible-playbook actions/reboot.yml
+
+Force reboot hosts even if no reboot is required. Use this if you just need to
+reboot hosts for any reason.
+
+    $ ansible-playbook actions/reboot.yml -e force_reboot=true
 
 Install the trendmicro agent.
 
-    $ ansible-playbook -i {{ inventory }} trendmicro.yml
+    $ ansible-playbook trendmicro.yml
 
 Upgrade OS packages as a one-off command on all hosts.
 
-    $ ansible -i {{ inventory }} -m apt -a 'update_cache=yes upgrade=dist' all
+    $ ansible -m apt -a 'update_cache=yes upgrade=dist' all
 
-Restart the apache2 service for catalog.
+Reload the apache2 service for catalog.
 
-    $ ansible-playbook -i {{ inventory }} -m service -a 'name=apache2 state=restarted' catalog-web
+    $ ansible-playbook -m service -a 'name=apache2 state=reload' catalog-web-v1
 
 Run a one-off shell command.
 
-    $ ansible -i {{ inventory }} -m shell -a "/usr/bin/killall dhclient && dhclient -1 -v -pf /run/dhclient.eth0.pid -lf /var/lib/dhcp/dhclient.eth0.leases eth0" all
+    $ ansible -m shell -a "/usr/bin/killall dhclient && dhclient -1 -v -pf /run/dhclient.eth0.pid -lf /var/lib/dhcp/dhclient.eth0.leases eth0" all
+
+Tail the logs using `dsh`.
+
+    $ dsh -g catalog-web-v1 -M -c tail -f /var/log/apache2/ckan.custom.log
 
 
 ## Provision apps
@@ -85,73 +91,68 @@ See example(s) below
 
 ### Wordpress:
 
-**provision vm & deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="provision" --limit wordpress-web`
+**provision vm & deploy app:** `ansible-playbook datagov-web.yml --tags="provision" --limit wordpress-web`
 
-**deploy app:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy" --limit wordpress-web`
+**deploy app:** `ansible-playbook datagov-web.yml --tags="deploy" --limit wordpress-web`
 
-**deploy rollback:** `ansible-playbook datagov-web.yml -i {{ inventory }} --tags="deploy-rollback" --limit wordpress-web`
+**deploy rollback:** `ansible-playbook datagov-web.yml --tags="deploy-rollback" --limit wordpress-web`
 
 - You can override branch to be deployed via `-e project_git_version=develop`
 
-  ***e.g.*** `ansible-playbook datagov-web.yml -i inventories/staging/hosts --tags=deploy --limit wordpress-web -e project_git_version=develop`
+  ***e.g.*** `ansible-playbook datagov-web.yml --tags=deploy --limit wordpress-web -e project_git_version=develop`
 
 ### Dashboard
 
-**provision vm & deploy app:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="provision" --limit dashboard-web`
+**provision vm & deploy app:** `ansible-playbook dashboard-web.yml --tags="provision" --limit dashboard-web`
 
-**deploy app:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="deploy"`
+**deploy app:** `ansible-playbook dashboard-web.yml --tags="deploy"`
 
-**deploy rollback:** `ansible-playbook dashboard-web.yml -i {{ inventory }} --tags="deploy-rollback"`
+**deploy rollback:** `ansible-playbook dashboard-web.yml --tags="deploy-rollback"`
 
 ### CRM
 
-**provision vm & deploy app:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="provision" --limit crm-web`
+**provision vm & deploy app:** `ansible-playbook crm-web.yml --tags="provision" --limit crm-web`
 
-**deploy app:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="deploy"`
+**deploy app:** `ansible-playbook crm-web.yml --tags="deploy"`
 
-**deploy rollback:** `ansible-playbook crm-web.yml -i {{ inventory }} --tags="deploy-rollback"`
+**deploy rollback:** `ansible-playbook crm-web.yml --tags="deploy-rollback"`
 
 ### Catalog:
 
-**provision vm - web:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="frontend,ami-fix,bsp" --skip-tags="solr,db,cron" --limit catalog-web`
+**provision vm - web:** `ansible-playbook catalog.yml --tags="frontend,ami-fix,bsp" --skip-tags="solr,db,cron" --limit catalog-web`
 
-**provision vm - harvester:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="harvester,ami-fix,bsp" --skip-tags="apache,solr,db,saml2" --limit catalog-harvester`
+**provision vm - harvester:** `ansible-playbook catalog.yml --tags="harvester,ami-fix,bsp" --skip-tags="apache,solr,db,saml2" --limit catalog-harvester`
 
-**provision vm - solr:** `ansible-playbook catalog.yml -i {{ inventory }} --tags="solr,ami-fix,bsp" --limit solr`
+**provision vm - solr:** `ansible-playbook catalog.yml --tags="solr,ami-fix,bsp" --limit solr`
 
 ### Inventory
 
-**provision vm && deploy app:** `ansible-playbook inventory.yml -i {{ inventory }} --skip-tags="solr,db,deploy-rollback" --limit inventory-web`
+**provision vm && deploy app:** `ansible-playbook inventory.yml --skip-tags="solr,db,deploy-rollback" --limit inventory-web`
 
-**provision vm - solr:** `ansible-playbook inventory.yml -i {{ inventory }} --tags="solr,ami-fix,bsp" --limit solr`
+**provision vm - solr:** `ansible-playbook inventory.yml --tags="solr,ami-fix,bsp" --limit solr`
 
 ### Jekyll
 
-**provision vm && deploy app:** `ansible-playbook jekyll.yml -i {{ inventory }} --limit jekyll-web`
+**provision vm && deploy app:** `ansible-playbook jekyll.yml --limit jekyll-web`
 
 ### ElasticSearch
 
-**provision vm && deploy app:** `ansible-playbook elasticsearch.yml -i {{ inventory }}`
+**provision vm && deploy app:** `ansible-playbook elasticsearch.yml`
 
 ### Kibana
 
-**provision vm && deploy app:** `ansible-playbook kibana.yml -i {{ inventory }}`
+**provision vm && deploy app:** `ansible-playbook kibana.yml`
 
 ### EFK nginx
 
-**provision vm && deploy app:** `ansible-playbook efk_nginx.yml -i {{ inventory }}`
+**provision vm && deploy app:** `ansible-playbook efk_nginx.yml`
 
 
 ## Troubleshooting:
-**dpkg errors**:
 
-`sed -i '/postdrop/d' /var/lib/dpkg/statoverride`
-
-`sed -i '/ssl-cert/d' /var/lib/dpkg/statoverride`
-
-**ntpd issues**: `apt-get remove ntp && apt-get purge ntp && apt-get autoclean && apt-get autoremove`
-
-**Unable to resolve host IP**: `echo 127.0.0.1 $(hostname) >> /etc/hosts`
+The CIS hardening benchmark sets a `027` umask, which means by default files are
+not world-readble. This is often a source of problems, where a service cannot
+read a configuration file.
 
 
 ## Inventory
@@ -219,6 +220,19 @@ Kibana hosts in mgmt vpc only.
 **efk_nginx**
 
 EFK hosts in mgmt vpc only.
+
+
+**v1**
+
+v1 hosts. These hosts run Ubuntu Trusty. Each group name will have a `-v1` suffix e.g.
+`catalog-web-v1`.
+This helps us transition between stacks.
+
+
+**v2**
+
+v2 hosts. These hosts run Ubuntu Bionic. Each group name will have a -v2 suffix e.g.
+`catalog-web-v2`. This helps us transition between stacks.
 
 
 **web**
