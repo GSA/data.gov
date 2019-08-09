@@ -11,16 +11,20 @@ catalogharvester1d.dev-ocsit.bsp.gsa.gov usage=main_worker
 catalogharvester2d.dev-ocsit.bsp.gsa.gov usage=misc_worker
 
 [catalog-web:children]
-catalog-admin-v1
-catalog-admin-v2
 catalog-web-v1
 catalog-web-v2
 
 [catalog-web-v1]
 catalog-web[1:2]d.dev-ocsit.bsp.gsa.gov
 
+[catalog-web-v1:children]
+catalog-admin-v1
+
 [catalog-web-v2]
 catalogweb[1:2]d.dev-ocsit.bsp.gsa.gov
+
+[catalog-web-v2:children]
+catalog-admin-v2
 
 [catalog-admin:children]
 catalog-admin-v1
