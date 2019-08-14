@@ -68,13 +68,6 @@ redirect_stderr=true
 autostart=false
 autorestart=false
 
-[program:pycsw-load]
-command=sh /usr/lib/ckan/bin/pycsw-load.sh
-stdout_logfile=/var/log/pycsw_load.log
-redirect_stderr=true
-autostart=false
-autorestart=false
-
 [program:qa-update-sel]
 command=ckan --plugin=ckanext-qa qa update_sel
 stdout_logfile=/var/log/ckan_qa.log
