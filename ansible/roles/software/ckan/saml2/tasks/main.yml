@@ -7,6 +7,7 @@
 
 - name: copy all needed files
   action: copy src=etc/ckan/saml2/ dest=/etc/ckan/saml2/ mode=0644 owner=root group=www-data
+  notify: reload apache2
 
 - name: template all needed files
   action: template src=etc/ckan/{{item}} dest=/etc/ckan/{{item}} mode=0640 owner=root group=www-data
@@ -14,9 +15,11 @@
     - saml2/pki/mycert.pem
     - saml2/pki/mykey.pem
     - who.ini
+  notify: reload apache2
 
 - name: Downloads idp metadata
   get_url:
     url: "{{ saml2_idp_metadata_url }}"
     dest: /etc/ckan/saml2/idp.xml
     mode: 0644
+  notify: reload apache2

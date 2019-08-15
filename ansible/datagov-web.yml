@@ -31,3 +31,33 @@
   roles:
   - { role: software/common/php-fixes, tags: [php, provision, deploy] }
   - { role: software/wordpress/datagov-sudo-3-cleanup, tags: [provision, deploy, deploy-rollback, cleanup] }
+
+- name: Smoke tests
+  hosts: wordpress-web
+  tasks:
+    - name: flush handlers
+      meta: flush_handlers
+    - name: assert access to simplesaml admin is forbidden
+      uri:
+        url: https://localhost/app/plugins/saml-20-single-sign-on/saml/www/module.php/core/loginuserpass.php
+        status_code: 403
+        validate_certs: false
+    - name: assert CRM forms should redirect to general contact form
+      uri:
+        url: https://{{ ansible_fqdn }}/{{ item }}
+        follow_redirects: none
+        status_code: 302
+        validate_certs: false
+      loop:
+        - data-request
+        - issue
+        - story
+      register: contact_forms
+    - name: assert Location header contains /contact
+      fail:
+        msg: "Expected Location {{ expected_url }} to be in {{ item.location }}"
+      when: expected_url not in item.location
+      vars:
+        expected_url: "{{ ansible_fqdn }}/contact"
+      loop: "{{ contact_forms.results }}"
+  tags: [deploy,provision]

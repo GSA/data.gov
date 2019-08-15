@@ -139,6 +139,9 @@ suites:
         inventory_ckan_solr_host: localhost
         inventory_ckan_bucket_name: s3bucket
         inventory_ckan_bucket_prefix: s3bucket-prefix-
+        inventory_datapusher_db_name: datapusher
+        inventory_datapusher_db_user: datapusher
+        inventory_datapusher_db_pass: secretpass
       ansible_extra_flags: >-
         --skip-tags="solr,db,deploy-rollback,skip_in_kitchen" <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
   - name: jekyll

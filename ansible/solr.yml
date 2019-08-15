@@ -1,6 +1,8 @@
 ---
-
-- name: Install Solr
-  hosts: all
+- name: Solr
+  hosts: solr
   roles:
-  - role: software/ckan/solr
+    - role: geerlingguy.java
+      vars:
+        java_packages: "{{ solr_java_packages }}"
+    - role: gsa.datagov-deploy-solr

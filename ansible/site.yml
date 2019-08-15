@@ -9,4 +9,6 @@
 # App plays
 ############
 - import_playbook: jumpbox.yml
+- import_playbook: solr.yml
+- import_playbook: inventory.yml
 - import_playbook: catalog.yml

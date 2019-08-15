@@ -1,34 +1,115 @@
-[catalog-web]
-catalog-web[1:2]p.prod-ocsit.bsp.gsa.gov
-catalogb-web[1:2]p.prod-ocsit.bsp.gsa.gov
-catalogpub-web1p.prod-ocsit.bsp.gsa.gov
+[catalog-harvester:children]
+catalog-harvester-v1
+catalog-harvester-v2
 
-[catalog-harvester]
+[catalog-harvester-v1]
 catalog-harvester1p.prod-ocsit.bsp.gsa.gov usage=main_worker
 catalog-harvester2p.prod-ocsit.bsp.gsa.gov usage=misc_worker
 catalog-harvester[3:6]p.prod-ocsit.bsp.gsa.gov usage=qa_worker
 
-[jumpbox]
-datagov-jump1p.prod-ocsit.bsp.gsa.gov
+[catalog-harvester-v2]
+catalogharvester1p.prod-ocsit.bsp.gsa.gov usage=qa_worker
+catalogharvester2p.prod-ocsit.bsp.gsa.gov usage=qa_worker
+catalogharvester[3:6]p.prod-ocsit.bsp.gsa.gov usage=qa_worker
 
-[solr]
-datagovsolrm1p.prod-ocsit.bsp.gsa.gov
-datagovsolr[1:2]p.prod-ocsit.bsp.gsa.gov
+[catalog-web:children]
+catalog-web-v1
+catalog-web-v2
 
-[inventory-web]
+[catalog-web-v1]
+catalog-web[1:2]p.prod-ocsit.bsp.gsa.gov
+catalogb-web[1:2]p.prod-ocsit.bsp.gsa.gov
+
+[catalog-web-v1:children]
+catalog-admin-v1
+
+[catalog-web-v2]
+catalogweb[1:2]p.prod-ocsit.bsp.gsa.gov
+catalogbweb[1:2]p.prod-ocsit.bsp.gsa.gov
+
+[catalog-web-v2:children]
+catalog-admin-v2
+
+[catalog-admin:children]
+catalog-admin-v1
+catalog-admin-v2
+
+[catalog-admin-v1]
+catalogpub-web1p.prod-ocsit.bsp.gsa.gov
+
+[catalog-admin-v2]
+catalogpubweb1p.prod-ocsit.bsp.gsa.gov
+
+[crm-web:children]
+crm-web-v1
+crm-web-v2
+
+[crm-web-v1]
+
+[crm-web-v2]
+crmweb[1:2]p.prod-ocsit.bsp.gsa.gov
+
+[dashboard-web:children]
+dashboard-web-v1
+dashboard-web-v2
+
+[dashboard-web-v1]
+
+[dashboard-web-v2]
+dashboardweb[1:2]p.prod-ocsit.bsp.gsa.gov
+
+[efk_nginx]
+[elasticsearch]
+
+[inventory-web:children]
+inventory-web-v1
+inventory-web-v2
+
+[inventory-web-v1]
 inventory[1:2]p.prod-ocsit.bsp.gsa.gov
 
-[crm-web]
-crm-web[1:2]p.prod-ocsit.bsp.gsa.gov
-
-[dashboard-web]
-dashboard-web[1:2]p.prod-ocsit.bsp.gsa.gov
+[inventory-web-v2]
+inventory-[1:2]p.prod-ocsit.bsp.gsa.gov
 
 [jekyll-web]
 static-web1p.prod-ocsit.bsp.gsa.gov
 
-[wordpress-web]
-wordpress-web[1:2]p.prod-ocsit.bsp.gsa.gov
+[jumpbox:children]
+jumpbox-v1
+jumpbox-v2
+
+[jumpbox-v1]
+
+[jumpbox-v2]
+datagov-jump2p.prod-ocsit.bsp.gsa.gov
+
+[kibana]
+
+[solr]
+datagov-solrm1p.prod-ocsit.bsp.gsa.gov
+datagov-solr[1:2]p.prod-ocsit.bsp.gsa.gov is_solr_replica=true
+
+# trusty stack
+[v1:children]
+catalog-harvester-v1
+catalog-web-v1
+crm-web-v1
+dashboard-web-v1
+inventory-web-v1
+jekyll-web
+jumpbox-v1
+wordpress-web-v1
+
+# bionic stack
+[v2:children]
+catalog-harvester-v2
+catalog-web-v2
+crm-web-v2
+dashboard-web-v2
+inventory-web-v2
+jumpbox-v2
+solr
+wordpress-web-v2
 
 [web:children]
 catalog-web
@@ -37,3 +118,12 @@ dashboard-web
 inventory-web
 jekyll-web
 wordpress-web
+
+[wordpress-web:children]
+wordpress-web-v1
+wordpress-web-v2
+
+[wordpress-web-v1]
+
+[wordpress-web-v2]
+wordpressweb[1:2]p.prod-ocsit.bsp.gsa.gov

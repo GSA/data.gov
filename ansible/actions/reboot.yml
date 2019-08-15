@@ -7,7 +7,9 @@
       register: reboot_required
 
     - name: Reboot host
-      command: reboot
+      shell: "sleep 1 && reboot"
+      async: 1
+      poll: 0
       when: force_reboot is defined or reboot_required.stat.exists
       register: rebooted
 

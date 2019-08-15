@@ -31,6 +31,9 @@ default_tls_host_certificate: |-
   -----END CERTIFICATE-----
 
 
+jumpbox_operators: "{{ vault_jumpbox_operators }}"
+
+
 # public urls
 urls_public:
   catalog: http://catalog-web-test.datagov.us

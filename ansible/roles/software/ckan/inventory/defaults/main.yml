@@ -1,0 +1,77 @@
+---
+# used in  production.ini/ckan_site_url and hosts
+ckan_site_domain: https://inventory.data.gov
+ckan_virtual_env: "{{virtual_env}}"
+datapusher_virtual_env: /usr/lib/datapusher
+app_type: inventory
+
+# packages to install ckan app
+ckan_pkgs:
+  - {
+      name: "ckan",
+      repo: "https://github.com/GSA/ckan",
+      branch: "{{ inventory_ckan_app_version }}",
+      requirements: "requirements.txt"
+    }
+  - {
+      name: "ckanext-harvest",
+      repo: "https://github.com/ckan/ckanext-harvest",
+      branch: "13dbb1e",
+      requirements: "pip-requirements.txt"
+    }
+  - {
+      name: "ckanext-datajson",
+      repo: "https://github.com/GSA/ckanext-datajson",
+      requirements: "pip-requirements.txt"
+    }
+  - {
+      name: "ckanext-usmetadata",
+      repo: "https://github.com/GSA/USMetadata",
+      requirements: "requirements.txt"
+    }
+  - {
+      name: "ckanext-googleanalyticsbasic",
+      repo: "https://github.com/GSA/ckanext-googleanalyticsbasic"
+    }
+  - {
+      name: "ckanext-saml2",
+      repo: "https://github.com/GSA/ckanext-saml2",
+      branch: "max",
+      requirements: "requirements.txt"
+    }
+
+datapusher_pkgs:
+  - {
+      name: "datapusher",
+      repo: "https://github.com/GSA/datapusher",
+      requirements: "requirements.txt"
+    }
+
+# provide some default values to be overwritten later by group vars and host vars...
+project_source_rollback_path: /usr/lib/ckan-rollback
+project_source_new_code_path: /usr/lib/ckan-new
+current_source_symlink: /usr/lib/ckan
+ckan_instance_secret: a97df940-4ac1-4357-aac2-156d4f21d300
+ckan_instance_uuid: cf305c1a-1672-4451-9cc7-250629d6fdee
+
+datastore_db_server: localhost
+inventory_ckan_app_version: inventory
+inventory_ckan_bucket_name: bucket
+inventory_ckan_bucket_prefix: prefix
+inventory_ckan_db_host: localhost
+inventory_ckan_solr_host: localhost
+inventory_ckan_solr_port: 8983
+inventory_datapusher_db_name: datapusher
+inventory_datapusher_db_user: datapusher
+inventory_datastore_db_name: datastore
+inventory_datastore_ro_user: ckan_datastore_ro
+inventory_datastore_user: ckan_datastore
+inventory_db_name: ckan
+inventory_db_user: ckan
+
+saml2_site_url: https://inventory.data.gov/
+saml2_idp_entry: login.test.max.gov
+saml2_idp_metadata_url: https://{{ saml2_idp_entry }}/idp/shibboleth
+
+# Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
+who_secure: False

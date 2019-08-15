@@ -1,14 +1,45 @@
 ---
 # catalog
 catalog_ckan_app_version: develop
+catalog_ckan_archiver_process_count: 3
+# read-only database variables
+catalog_ckan_db_host: "{{ vault_catalog_ckan_db_host }}"
+catalog_ckan_db_name: "{{ vault_catalog_ckan_db_name }}"
+catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
+catalog_ckan_db_user: "{{ vault_catalog_ckan_db_user }}"
+catalog_ckan_harvest_fetch_process_count: 6
+catalog_ckan_qa_update_process_count: 5
+catalog_ckan_solr_host: datagov-solr1d.dev-ocsit.bsp.gsa.gov
+catalog_ckan_solr_port: "8983"
+# read-only database variables
+catalog_pycsw_db_host: "{{ vault_catalog_pycsw_db_host }}"
+catalog_pycsw_db_name: "{{ vault_catalog_pycsw_db_name }}"
+catalog_pycsw_db_pass: "{{ vault_catalog_pycsw_db_pass }}"
+catalog_pycsw_db_user: "{{ vault_catalog_pycsw_db_user }}"
 
 
 # common
+common_filebeat_logstash_output: "{{ vault_common_filebeat_logstash_output }}"
+common_filebeat_config:
+  filebeat.config.modules:
+    enabled: true
+    path: ${path.config}/modules.d/*.yml
+  filebeat.modules:
+    - module: system
+      syslog:
+        enabled: true
+  output.logstash:
+    hosts: ["{{ common_filebeat_logstash_output }}"]
+
 common_newrelic_enabled: true
 common_python_version_number: 2.7.10
 filebeat_enabled: true
 nessus_agent_enabled: true
 trendmicro_enabled: true
+# TODO prefix with common_
+filebeat_config: "{{ common_filebeat_config }}"
+products:
+  - filebeat
 
 
 # data.gov-wide variables
@@ -18,53 +49,68 @@ datagov_environment: staging
 default_tls_host_key: "{{ vault_default_tls_host_key }}"
 default_tls_host_certificate: |-
   -----BEGIN CERTIFICATE-----
-  MIIIezCCB2OgAwIBAgIKFiKPZwACAAA8xzANBgkqhkiG9w0BAQsFADBvMRMwEQYK
+  MIIJMjCCCBqgAwIBAgIKXV+8ZgACAACUMDANBgkqhkiG9w0BAQsFADBvMRMwEQYK
   CZImiZPyLGQBGRYDZ292MRMwEQYKCZImiZPyLGQBGRYDZ3NhMRIwEAYKCZImiZPy
   LGQBGRYCZHMxEzARBgoJkiaJk/IsZAEZFgNlbnQxGjAYBgNVBAMTEUVDT0gyUy1J
-  U1NDQTAxKDEpMB4XDTE5MDIwNjE4MDY0MloXDTIyMDIwNTE4MDY0MlowgesxCzAJ
+  U1NDQTAxKDEpMB4XDTE5MDcxNzEzMDk1MFoXDTIyMDcxNjEzMDk1MFowge8xCzAJ
   BgNVBAYTAlVTMR0wGwYDVQQIExREaXN0cmljdCBvZiBDb2x1bWJpYTETMBEGA1UE
   BxMKV2FzaGluZ3RvbjEoMCYGA1UEChMfR2VuZXJhbCBTZXJ2aWNlcyBBZG1pbmlz
   dHJhdGlvbjEqMCgGA1UECxMhVGVjaG5vbG9neSBUcmFuc2Zvcm1hdGlvbiBTZXJ2
   aWNlMTIwMAYDVQQDEyljYXRhbG9nLWhhcnZlc3RlcjFkLmRldi1vY3NpdC5ic3Au
-  Z3NhLmdvdjEeMBwGCSqGSIb3DQEJARYPZGF0YWdvdkBnc2EuZ292MIIBIjANBgkq
-  hkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1mrTopJAN9kdYFd7pjCTtuc/OGJAdUA2
-  L0O4r77zAwibzWu4awnoS7fdTzSaWStRqJWLYj/TbK88vVXiWZ9bC4wuNgp73IIj
-  hi39zPz92WNWBzGBbm4dlv/g2UkKlJDvAbzZa4fw5w0dBzSgAuaiUXF4H2c6au1/
-  6/woFcvsC7TEYHpgRuwTcia0Or8b4bN5HJ5/dW1uDOVkZdWU3vi9yeg1v23jZ/9P
-  oWdzSZl7RRMArbcencmsUnaJX6pbfq6zkoW0BgVBv04IAGgZirRQzUhN/mNyDIjA
-  uW8ZwuKySfA/MP4DWQSpDHNMvfdr8FoPoiEsem6uPIZFZhaBa8ocZwIDAQABo4IE
-  mjCCBJYwEwYDVR0lBAwwCgYIKwYBBQUHAwEwggLdBgNVHREEggLUMIIC0IIpY2F0
-  YWxvZy1oYXJ2ZXN0ZXIxZC5kZXYtb2NzaXQuYnNwLmdzYS5nb3aCKWNhdGFsb2ct
-  aGFydmVzdGVyMmQuZGV2LW9jc2l0LmJzcC5nc2EuZ292giZjYXRhbG9ncHViLXdl
-  YjFkLmRldi1vY3NpdC5ic3AuZ3NhLmdvdoIjY2F0YWxvZy13ZWIxZC5kZXYtb2Nz
-  aXQuYnNwLmdzYS5nb3aCI2NhdGFsb2ctd2ViMmQuZGV2LW9jc2l0LmJzcC5nc2Eu
-  Z292gh9jcm0td2ViMWQuZGV2LW9jc2l0LmJzcC5nc2EuZ292gh9jcm0td2ViMmQu
-  ZGV2LW9jc2l0LmJzcC5nc2EuZ292giVkYXNoYm9hcmQtd2ViMWQuZGV2LW9jc2l0
-  LmJzcC5nc2EuZ292giVkYXNoYm9hcmQtd2ViMmQuZGV2LW9jc2l0LmJzcC5nc2Eu
-  Z292giRkYXRhZ292LWp1bXAxZC5kZXYtb2NzaXQuYnNwLmdzYS5nb3aCI2RhdGFn
-  b3Zzb2xyMWQuZGV2LW9jc2l0LmJzcC5nc2EuZ292giNkYXRhZ292c29scjJkLmRl
-  di1vY3NpdC5ic3AuZ3NhLmdvdoIkZGF0YWdvdnNvbHJtMWQuZGV2LW9jc2l0LmJz
-  cC5nc2EuZ292giFpbnZlbnRvcnkxZC5kZXYtb2NzaXQuYnNwLmdzYS5nb3aCIWlu
-  dmVudG9yeTJkLmRldi1vY3NpdC5ic3AuZ3NhLmdvdoIic3RhdGljLXdlYjFkLmRl
-  di1vY3NpdC5ic3AuZ3NhLmdvdoIodGVtcGRhdGFnb3Zzb2xybTFkLmRldi1vY3Np
-  dC5ic3AuZ3NhLmdvdoIld29yZHByZXNzLXdlYjFkLmRldi1vY3NpdC5ic3AuZ3Nh
-  LmdvdoIld29yZHByZXNzLXdlYjJkLmRldi1vY3NpdC5ic3AuZ3NhLmdvdjAdBgNV
-  HQ4EFgQUrrtYboI6+nAyum2FhJPoQn4Y2eMwHwYDVR0jBBgwFoAUSUzJ8P9khZrH
-  Yiv+yyi0KExFIhgwTAYDVR0fBEUwQzBBoD+gPYY7aHR0cDovL2dzYXBraS5lbnQu
-  ZHMuZ3NhLmdvdi9nc2FjZXJ0cy9FQ09IMlMtSVNTQ0EwMSgyKS5jcmwwgacGCCsG
-  AQUFBwEBBIGaMIGXMGUGCCsGAQUFBzAChllodHRwOi8vZ3NhcGtpLmVudC5kcy5n
-  c2EuZ292L2dzYWNlcnRzL0VDT0gyUy1JU1NDQTAxLmVudC5kcy5nc2EuZ292X0VD
-  T0gyUy1JU1NDQTAxKDIpLmNydDAuBggrBgEFBQcwAYYiaHR0cDovL2dzYW9jc3Au
-  ZW50LmRzLmdzYS5nb3Yvb2NzcDALBgNVHQ8EBAMCBaAwPAYJKwYBBAGCNxUHBC8w
-  LQYlKwYBBAGCNxUIg4mvL4WeoH2C+YMPhrCODYSflxE+geqcNYTvZgIBZAIBETAb
-  BgkrBgEEAYI3FQoEDjAMMAoGCCsGAQUFBwMBMA0GCSqGSIb3DQEBCwUAA4IBAQCt
-  bUayOYe/6NWUrqv7FLdS6WsOjSkhoUsn5YIbHDVbHfpgJZ7X0TGK0bN3huO8QIyw
-  sG9Byt/84EDuNEGA/0ECOfQiOaFEBxwtzYn7o9U5fgwdeIC5N74RQLqDU8QrVhfn
-  NgRzI4RFnrAgiFowfMMURGmhPc8p9h7wxtoS4fBpYLV8gwVTl5kbTrecGdV7lk/A
-  YXmtNybLZwlD80fPDvQ0L2oG5b5V3Wd3izeHjENGn4jDalgJmLT3AO2lFCVawgF0
-  msSdgzgMxgFQ/bRMJly6qX0O4rl7MR2JoMpDW/ubFs7UXE8UlZhP05Qmtotwvflr
-  lEokro56zcAbHCzRv2v5
+  Z3NhLmdvdjEiMCAGCSqGSIb3DQEJARYTZGF0YWdvdmhlbHBAZ3NhLmdvdjCCASIw
+  DQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMKfcByVCAPjqPXtQq0LxvjhTSsB
+  el1oAepxz1kqG+7eJ2izekCSi89gQDEQDXQYRLz6R9+mO5YGAQNQXw5VoxKWufyP
+  4ejBTdLYY7vPinQjikzX1Z04Rx/6NcU7RVEDpfFg6NEKo6DRivwMSHCUFNNGF5QT
+  ndSqauWOWB8rxIuEtaqWMkmaWnCxwKnqY/5mcz57e6FttJCP8iHHZEtRTimfe5CA
+  QeIyS3hv639qPHwe9M0D+KMw+aTWF2KYpaD24jIEaWD51f0D83Bat/0CUwOv2UG1
+  5Y55wo8uLcLc01zI7oMPk0en9kb9litNw+i92DJ9h9sse2l4Wl1u68cx64sCAwEA
+  AaOCBU0wggVJMBMGA1UdJQQMMAoGCCsGAQUFBwMBMIIDkAYDVR0RBIIDhzCCA4OC
+  KGNhdGFsb2doYXJ2ZXN0ZXIxZC5kZXYtb2NzaXQuYnNwLmdzYS5nb3aCKWNhdGFs
+  b2ctaGFydmVzdGVyMmQuZGV2LW9jc2l0LmJzcC5nc2EuZ292gihjYXRhbG9naGFy
+  dmVzdGVyMmQuZGV2LW9jc2l0LmJzcC5nc2EuZ292giZjYXRhbG9ncHViLXdlYjFk
+  LmRldi1vY3NpdC5ic3AuZ3NhLmdvdoIlY2F0YWxvZ3B1YndlYjFkLmRldi1vY3Np
+  dC5ic3AuZ3NhLmdvdoIjY2F0YWxvZy13ZWIxZC5kZXYtb2NzaXQuYnNwLmdzYS5n
+  b3aCImNhdGFsb2d3ZWIxZC5kZXYtb2NzaXQuYnNwLmdzYS5nb3aCI2NhdGFsb2ct
+  d2ViMmQuZGV2LW9jc2l0LmJzcC5nc2EuZ292giJjYXRhbG9nd2ViMmQuZGV2LW9j
+  c2l0LmJzcC5nc2EuZ292gh5jcm13ZWIxZC5kZXYtb2NzaXQuYnNwLmdzYS5nb3aC
+  HmNybXdlYjJkLmRldi1vY3NpdC5ic3AuZ3NhLmdvdoIkZGFzaGJvYXJkd2ViMWQu
+  ZGV2LW9jc2l0LmJzcC5nc2EuZ292giRkYXNoYm9hcmR3ZWIyZC5kZXYtb2NzaXQu
+  YnNwLmdzYS5nb3aCJGRhdGFnb3YtanVtcDJkLmRldi1vY3NpdC5ic3AuZ3NhLmdv
+  doIkZGF0YWdvdi1zb2xyMWQuZGV2LW9jc2l0LmJzcC5nc2EuZ292giRkYXRhZ292
+  LXNvbHIyZC5kZXYtb2NzaXQuYnNwLmdzYS5nb3aCJWRhdGFnb3Ytc29scm0xZC5k
+  ZXYtb2NzaXQuYnNwLmdzYS5nb3aCImludmVudG9yeS0xZC5kZXYtb2NzaXQuYnNw
+  LmdzYS5nb3aCIWludmVudG9yeTFkLmRldi1vY3NpdC5ic3AuZ3NhLmdvdoIiaW52
+  ZW50b3J5LTJkLmRldi1vY3NpdC5ic3AuZ3NhLmdvdoIhaW52ZW50b3J5MmQuZGV2
+  LW9jc2l0LmJzcC5nc2EuZ292giJzdGF0aWMtd2ViMWQuZGV2LW9jc2l0LmJzcC5n
+  c2EuZ292giR3b3JkcHJlc3N3ZWIxZC5kZXYtb2NzaXQuYnNwLmdzYS5nb3aCJHdv
+  cmRwcmVzc3dlYjJkLmRldi1vY3NpdC5ic3AuZ3NhLmdvdjAdBgNVHQ4EFgQUlHDb
+  +zUd2OydPf88LVkR9svGdqkwHwYDVR0jBBgwFoAUSUzJ8P9khZrHYiv+yyi0KExF
+  IhgwTAYDVR0fBEUwQzBBoD+gPYY7aHR0cDovL2dzYXBraS5lbnQuZHMuZ3NhLmdv
+  di9nc2FjZXJ0cy9FQ09IMlMtSVNTQ0EwMSgyKS5jcmwwgacGCCsGAQUFBwEBBIGa
+  MIGXMGUGCCsGAQUFBzAChllodHRwOi8vZ3NhcGtpLmVudC5kcy5nc2EuZ292L2dz
+  YWNlcnRzL0VDT0gyUy1JU1NDQTAxLmVudC5kcy5nc2EuZ292X0VDT0gyUy1JU1ND
+  QTAxKDIpLmNydDAuBggrBgEFBQcwAYYiaHR0cDovL2dzYW9jc3AuZW50LmRzLmdz
+  YS5nb3Yvb2NzcDALBgNVHQ8EBAMCBaAwPAYJKwYBBAGCNxUHBC8wLQYlKwYBBAGC
+  NxUIg4mvL4WeoH2C+YMPhrCODYSflxE+geqcNYTvZgIBZAIBETAbBgkrBgEEAYI3
+  FQoEDjAMMAoGCCsGAQUFBwMBMA0GCSqGSIb3DQEBCwUAA4IBAQAO6ilfEN9E2CuC
+  wjRONNLnVOb1krGJ9Ev4GlyEK46apMWlQ4BY60AoV75O3bBT7NlcpxhSeFFiPXz2
+  rfNJ+zKZwiS9jL1yKCtEMxpEstu52C9hyxamih4Mya27Fammm6Y6ikOvKWkMM0Ay
+  eKCN79ERjjUbbAzRNXoLDEVB3jhHeMqe9C+3cZBarbSp6VZybfxDyq9Q6K73qlMY
+  zi0AXE/orjaurHTcb6yiDj9Y1XhLLjFM84CFopteL+fgR1dFOMdHaOpCYHwUvtiv
+  ATGM1T6+nS8aNRxwmz0RrXMdNz8r2uScwwkYk7Qc7+ugubdvrMeM9H3EsjUqmIdQ
+  GanS/mr/
   -----END CERTIFICATE-----
+
+
+jumpbox_operators: "{{ vault_jumpbox_operators }}"
+
+
+inventory_ckan_solr_host: datagov-solrm1d.dev-ocsit.bsp.gsa.gov
+inventory_ckan_solr_port: "8983"
+
+
+# Newrelic
+nrinfragent_license_key: "{{ vault_nrinfragent_license_key }}"
 
 
 # public urls
@@ -102,12 +148,17 @@ jekyll_apps:
 
 # solr
 solr_master_server: tempdatagovsolrm1d.dev-ocsit.bsp.gsa.gov
+solr_java_packages:
+  - openjdk-8-jdk
+solr_xms: 8192m
+solr_xmx: 8192m
 
 # SecOps user
 secops_user: "{{ vault_secops_user }}"
 secops_user_public_key: "{{ vault_secops_user_public_key }}"
 
 # TrendMicro
+trendmicro_deb_url: https://dsm.sec.helix.gsa.gov/software/agent/Ubuntu_14.04/x86_64/
 trendmicro_policy_id_app: "{{ vault_trendmicro_policy_id_app }}"
 trendmicro_policy_id_web: "{{ vault_trendmicro_policy_id_web }}"
 
@@ -119,14 +170,18 @@ web_app_env: production
 real_ansible_env: staging
 
 # postfix
+default_email_from: "{{ vault_default_email_from }}"
+postfix_raw_options:
+  - |
+    smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
+    smtpd_tls_mandatory_ciphers = high
+    smtpd_tls_mandatory_exclude_ciphers = aNULL, MD5
 postfix_relayhost: smtp.gsa.gov
 postfix_relayhost_port: 25
-postfix_sasl_auth_enable: false
 postfix_relaytls: true
-default_email_from: "{{ vault_default_email_from }}"
-postfix_key: "{{ vault_postfix_key }}"
-postfix_pem: "{{ vault_postfix_pem }}"
-
+postfix_sasl_auth_enable: false
+postfix_smtpd_tls_cert_file: /etc/ssl/certs/datagov_host.crt
+postfix_smtpd_tls_key_file: /etc/ssl/certs/datagov_host.key
 # SAML
 saml2_idp_entry: login.test.max.gov
 saml2_idp_metadata_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
@@ -148,6 +203,7 @@ nessus_agent_group: "{{ vault_nessus_agent_group }}"
 
 # saxon license
 saxon_license: "{{ vault_saxon_license }}"
+
 
 # ckan
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production

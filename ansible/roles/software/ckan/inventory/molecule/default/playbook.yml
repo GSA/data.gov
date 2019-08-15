@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    #- role: gsa.datagov-deploy-apache2
+    - role: inventory
+      vars:
+        inventory_db_pass: pass
+        inventory_datastore_pass: pass
+        inventory_datastore_ro_pass: pass
+        inventory_datapusher_db_pass: pass

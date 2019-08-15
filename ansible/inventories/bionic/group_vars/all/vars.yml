@@ -1,6 +1,24 @@
 ---
 # catalog
 catalog_ckan_app_version: feature/bionic
+catalog_ckan_db_host: "{{ catalog_postgresql_login_host }}"
+catalog_ckan_db_name: ckan
+catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
+catalog_ckan_db_user: ckan
+catalog_ckan_redis_host: catalog-harvester1tf.internal.bionic.datagov.us
+catalog_ckan_redis_pass: "{{ vault_catalog_ckan_redis_pass }}"
+catalog_ckan_solr_host: datagovsolr1tf.internal.bionic.datagov.us
+catalog_ckan_solr_port: "{{ solr_port }}"
+catalog_postgresql_login_host: "{{ vault_catalog_postgresql_login_host }}"
+catalog_postgresql_login_password: "{{ vault_catalog_postgresql_login_password }}"
+catalog_postgresql_login_user: "{{ vault_catalog_postgresql_login_user }}"
+catalog_pycsw_db_host: "{{ catalog_postgresql_login_host }}"
+catalog_pycsw_db_name: pycsw
+catalog_pycsw_db_pass: "{{ vault_catalog_pycsw_db_pass }}"
+catalog_pycsw_db_user: pycsw
+catalog_db_pass: "{{ catalog_ckan_db_pass }}"
+catalog_db_name: "{{ catalog_ckan_db_name }}"
+catalog_db_user: "{{ catalog_ckan_db_user }}"
 
 # common
 common_newrelic_enabled: false
@@ -12,6 +30,7 @@ trendmicro_enabled: false
 
 datagov_enable_postgresql_role: true
 datagov_environment: bionic
+
 
 default_tls_host_key: "{{ vault_default_tls_host_key }}"
 default_tls_host_certificate: |-
@@ -43,6 +62,13 @@ default_tls_host_certificate: |-
   -----END CERTIFICATE-----
 
 
+jumpbox_operators: "{{ vault_jumpbox_operators }}"
+
+
+inventory_ckan_app_version: inventory-bionic
+inventory_ckan_solr_port: "{{ solr_port }}"
+
+
 # public urls
 urls_public:
   catalog: https://catalog.bionic.datagov.us
@@ -53,8 +79,12 @@ ckan_site_domain: "{{ urls_public.catalog }}"
 
 nrinfragent_license_key: "{{ vault_nrinfragent_license_key }}"
 
+
 # solr
 solr_master_server: datagovsolr1tf.internal.bionic.datagov.us
+solr_java_packages:
+  - openjdk-8-jdk
+
 
 # List of CodeIgniter pre-approved admin emails
 codeigniter_pre_approved_admins: "{{ vault_codeigniter_pre_approved_admins }}"

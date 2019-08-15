@@ -1,13 +1,13 @@
 KITCHEN_SUITES := \
-  catalog-web \
-  inventory-web \
   crm-web \
-  dashboard-web \
-  jekyll
+  dashboard-web
 
 MOLECULE_SUITES := \
-  software/catalog/harvest \
-  software/catalog/www \
+  software/ckan/catalog/harvest \
+  software/ckan/catalog/www \
+  software/ckan/catalog/ckan-app \
+  software/ckan/catalog/pycsw-app \
+  software/ckan/inventory \
   software/ckan/native-login \
   software/common/php-fixes
 
@@ -20,7 +20,7 @@ MOLECULE_SUITE_TARGETS := $(patsubst %,test-molecule-%,$(MOLECULE_SUITES))
 # Used for parallelization on CircleCI. See `circleci tests glob`.
 # https://circleci.com/docs/2.0/parallelism-faster-jobs/
 circleci-glob:
-	@echo $(KITCHEN_SUITE_TARGETS) $(MOLECULE_SUITE_TARGETS) | sed -e 's/ /\n/g'
+	@echo $(MOLECULE_SUITE_TARGETS) | sed -e 's/ /\n/g'
 
 update-vendor:
 	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml
@@ -35,7 +35,7 @@ update-vendor-force-verbose:
 	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml --force -vvv
 
 setup:
-	pip install -r requirements.txt
+	pipenv install --dev
 	bundle install
 
 lint:
