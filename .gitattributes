@@ -2,4 +2,4 @@
 #     $ git config --global diff.ansible-vault.textconv "ansible-vault view"
 vault.yml diff=ansible-vault merge=binary
 
-Pipfile.lock binary linguist-generated
+Pipfile.lock merge=binary linguist-generated
