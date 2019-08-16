@@ -1,8 +1,11 @@
+[efk_nginx]
+nginx1.mgmt-ocsit.bsp.gsa.gov
+
 [elasticsearch]
-elastic-search1.mgmt-ocsit.bsp.gsa.gov
+elastic-search[1:3].mgmt-ocsit.bsp.gsa.gov
+
+[jumpbox]
+datagov-jump1m.mgmt-ocsit.bsp.gsa.gov
 
 [kibana]
 kibana1.mgmt-ocsit.bsp.gsa.gov
-
-[efk_nginx]
-nginx1.mgmt-ocsit.bsp.gsa.gov
