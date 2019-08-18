@@ -73,6 +73,47 @@ default_tls_host_certificate: |-
   -----END CERTIFICATE-----
 
 
+jenkins_admin_password: "{{ vault_jenkins_admin_password }}"
+jenkins_hostname: jenkins1tf.internal.ci.datagov.us
+jenkins_tls_key: "{{ vault_jenkins_tls_key }}"
+jenkins_tls_cert: |
+  -----BEGIN CERTIFICATE-----
+  MIIF5zCCA8+gAwIBAgIJAPGalCzW7H32MA0GCSqGSIb3DQEBCwUAMIGJMQswCQYD
+  VQQGEwJVUzELMAkGA1UECAwCREMxEzARBgNVBAcMCldhc2hpbmd0b24xKjAoBgNV
+  BAoMIVRlY2hub2xvZ3kgVHJhbnNmb3JtYXRpb24gU2VydmljZTERMA8GA1UECwwI
+  RGF0YS5nb3YxGTAXBgNVBAMMEGNpLmNpLmRhdGFnb3YudXMwHhcNMTkwODE4MDY0
+  MjExWhcNMjAwODE3MDY0MjExWjCBiTELMAkGA1UEBhMCVVMxCzAJBgNVBAgMAkRD
+  MRMwEQYDVQQHDApXYXNoaW5ndG9uMSowKAYDVQQKDCFUZWNobm9sb2d5IFRyYW5z
+  Zm9ybWF0aW9uIFNlcnZpY2UxETAPBgNVBAsMCERhdGEuZ292MRkwFwYDVQQDDBBj
+  aS5jaS5kYXRhZ292LnVzMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA
+  yf3hvZucOevPQZq9J1Xxq77NLDM9lLV3q6JvjzS2Kjx6xhHvTct54hpXKa1Ue+li
+  NFOXJfuVAxN4HLU53ZvsSPcroraUIzs/D1X+5J62TfKmNA/duoOtWj+l55mCX7UL
+  n4x+aTklbbu0g9Ca1tA3u+spykBBf4tY5y+YbTaoD+JFkdh9GoZUgFWee2jq8WYK
+  b8EDhx4KXWuZbGE+40pMSBEqiK7/dwsPZ21an/VXf7i0KEGmQg0mVr/4XJjsYUUo
+  DgHc/ztadaMKpeZUS7p4pRH/Hs2xkw7uXNDRu7lL9sywnY36rdIR3mgIwqbxgEmm
+  rHRF1IE8+f+DHxfJihJjDLipxP3FLY/yZcMFofVONxWptBaww6nrzXugYoXFkfeN
+  TjvhLgi1RmN079TzhvfpxfTFe/E3+7TTJmG1G9eLpguJT7p7/MjMjBq1d5QnCT/v
+  xsmhnNb2ndAjwChHz1NB4Q4kyqnAZ5TKFMWK/lKp6fV8ca0zASYRce0DkO8AOq85
+  zLaO0VPTcjJ3oc514tvv8qwg9V+cZ85LQpV9/miGxvG0ajzbqedJhJUetoPYgtDv
+  +I18ZTJV6SGzJwyveRPzREHFheV2ZhxImc4KEkZHuICoR6WtUUx/OST483YFJRIP
+  r0tED44wzUc08T/lx5DsCq8Um0iewTdI8nc3qrdNO+UCAwEAAaNQME4wHQYDVR0O
+  BBYEFC9oB6LocUJBiIA57poqyefCwJUgMB8GA1UdIwQYMBaAFC9oB6LocUJBiIA5
+  7poqyefCwJUgMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQELBQADggIBAFLNJ1c6
+  CFoNYOyxvgSReFYxclJDzmZ+KYHFeYzzzjQCx8VyUCnHKGVhOcoI+JtaN/YgRHxV
+  420wLJfKoK6gFC3cF9hPmMVCYLNHMN76Tjbzi59KhyJl/QCYJPN5JB1targz9hYa
+  6CSvrw+Fj9EbkeJJ3zoAApKVIxdrzS+c4qx+Av7YVehKBBFvUQNfelW4Cesm7EC+
+  8VRv0XY0/e7lV9qD3hrp71ubIhi34hbPqGedLg5N4Fp3qUwmXeWygCPGnMOXYXwg
+  LYcx6MqXXV7REJGxbOSUwkd9gkXuXn2rhvceXR0o4XSsxqJz6Qp1JSDQ9VUQI6Yh
+  OWYf4n4dUHhuCOWziEub3F7tXvuNfao8NIp/3Zo4t42DfPd4EY52HMS2tA/MlDeq
+  XKfKqXyjUvuD8GNhcR6d9NVa2FLVRIMdE2RLOHz+4FL9bMZ69h0cIP1mM5A6nOaC
+  VhbIUZM+GnLnzmrTrISKLhMxbZNFLX+cunG/zslPRtNJ/wqvtQHaLPMm7/rkQTsQ
+  jzJNh6aeWMsDa/FNNeKNCNNxgvHTEofQgjwlhCBOy/iCanLLMqvQNaC/4u50SZnd
+  tZR5O+m3zP2oUaoiMP0SbxaI/IjlIIhpmDA7ixjKjvewoKtd3Aab8L61o2WZxmIs
+  n00mcY+HqnIWpl6uTgqCcexzzNwVa4xJJwF5
+  -----END CERTIFICATE-----
+jenkins_url: https://ci.ci.datagov.us
+
+
 jumpbox_operators: "{{ datagov_operators_test }}"
 
 
