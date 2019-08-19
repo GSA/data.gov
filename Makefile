@@ -6,7 +6,6 @@ MOLECULE_SUITES := \
   software/ckan/catalog/harvest \
   software/ckan/catalog/www \
   software/ckan/catalog/ckan-app \
-  software/ckan/catalog/pycsw-app \
   software/ckan/inventory \
   software/ckan/native-login \
   software/common/php-fixes

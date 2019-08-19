@@ -15,7 +15,8 @@
 
     - role: software/ckan/catalog/harvest
 
-    - role: software/ckan/catalog/pycsw-app
+    - role: gsa.datagov-deploy-pycsw
+      pycsw_role: worker
       tags:
         - pycsw
 

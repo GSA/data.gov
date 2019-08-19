@@ -68,6 +68,14 @@ jumpbox_operators: "{{ vault_jumpbox_operators }}"
 inventory_ckan_app_version: inventory-bionic
 inventory_ckan_solr_port: "{{ solr_port }}"
 
+pycsw_app_version: datagov/v2.4.x
+pycsw_base_url: https://catalog.bionic.datagov.us
+pycsw_catalog_url: https://catalog.bionic.datagov.us
+pycsw_db_host: "{{ catalog_pycsw_db_host }}"
+pycsw_db_name: "{{ catalog_pycsw_db_name }}"
+pycsw_db_password: "{{ catalog_pycsw_db_pass }}"
+pycsw_db_user: "{{ catalog_pycsw_db_user }}"
+
 
 # public urls
 urls_public:
