@@ -12,9 +12,6 @@ catalog-harvester2t.datagov.us
 catalog-harvester3t.datagov.us
 catalog-harvester6t.datagov.us
 
-[jekyll-web]
-static-web1t.datagov.us
-
 [jumpbox]
 datagov-jump1t.datagov.us
 
@@ -44,5 +41,4 @@ catalog-web
 crm-web
 dashboard-web
 inventory-web
-jekyll-web
 wordpress-web

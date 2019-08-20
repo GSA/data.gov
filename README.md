@@ -131,10 +131,6 @@ See example(s) below
 
 **provision vm - solr:** `ansible-playbook inventory.yml --tags="solr,ami-fix,bsp" --limit solr`
 
-### Jekyll
-
-**provision vm && deploy app:** `ansible-playbook jekyll.yml --limit jekyll-web`
-
 ### ElasticSearch
 
 **provision vm && deploy app:** `ansible-playbook elasticsearch.yml`
@@ -216,11 +212,6 @@ Solr hosts.
 **wordpress-web**
 
 Web hosts for the datagov/wordpress app.
-
-
-**jekyll-web**
-
-Web hosts for the static/jekyll app.
 
 
 **elasticsearch**
