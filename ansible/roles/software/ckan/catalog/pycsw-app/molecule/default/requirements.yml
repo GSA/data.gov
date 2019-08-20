@@ -1,4 +1,0 @@
----
-- src: 'https://github.com/GSA/datagov-deploy-postgresql'
-  version: master
-  name: gsa.datagov-deploy-postgresql

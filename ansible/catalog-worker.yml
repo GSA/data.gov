@@ -15,10 +15,6 @@
 
     - role: software/ckan/catalog/harvest
 
-    - role: software/ckan/catalog/pycsw-app
-      tags:
-        - pycsw
-
     # TODO not sure why this is needed in harvester
     - role: software/ckan/saml2
       tags:

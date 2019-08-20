@@ -4,20 +4,16 @@ SSLEngine on
 </VirtualHost>
 
 <VirtualHost 0.0.0.0:80>
-    ServerName ckan 
+    ServerName ckan
 
-    # CSW endpoint provided by pycsw
-    # use one wsgi script and set configuration
+    # CSW endpoints provided by pycsw
     # based on request URI
 
-    # default CSW, collection level metadata
-    WSGIScriptAlias /csw /etc/ckan/pycsw.wsgi
-    SetEnvIf Request_URI "/csw" PYCSW_CONFIG=/etc/ckan/pycsw-collection.cfg
-
     # full CSW, all metadata
-    WSGIScriptAlias /csw-all /etc/ckan/pycsw.wsgi
-    SetEnvIf Request_URI "/csw-all" PYCSW_CONFIG=/etc/ckan/pycsw-all.cfg
+    ProxyPass /csw-all http://localhost:8001
 
+    # default CSW, collection level metadata
+    ProxyPass /csw http://localhost:8000
 
     WSGIScriptAlias / /etc/ckan/apache.wsgi
 

@@ -1,5 +1,5 @@
 ---
-- name: Converge
+- name: Prepare
   hosts: all
   vars:
     tls_certificate_path: /catalog-www-cert.pem
@@ -15,6 +15,8 @@
       apache2_module: name={{ item }} state=present
       with_items:
         - headers
+        - proxy
+        - proxy_http
         - rewrite
         - ssl
         - wsgi

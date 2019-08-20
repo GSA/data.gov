@@ -1,9 +1,0 @@
-## refresh pycsw server keywords weekly
-0  0 * * 0 root /usr/lib/ckan/bin/pycsw-ckan.py -c set_keywords -f /etc/ckan/pycsw-all.cfg >> /var/log/pycsw_keywords.log 2>&1
-10 0 * * 0 root /usr/lib/ckan/bin/pycsw-ckan.py -c set_keywords -f /etc/ckan/pycsw-collection.cfg >> /var/log/pycsw_keywords.log 2>&1
-
-## sync metadata records daily at 0400h
-0 4 * * * root supervisorctl start pycsw-load
-
-## reindex FTS GIN every Sunday at 0600h
-0 5 * * 0 root /usr/lib/ckan/bin/pycsw-db-admin.py reindex_fts /etc/ckan/pycsw-all.cfg >> /var/log/pycsw_fts.log 2>&1

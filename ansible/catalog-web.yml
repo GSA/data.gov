@@ -21,9 +21,9 @@
       when: datagov_enable_postgresql_role is defined
     - role: gsa.datagov-deploy-postgresql
       vars:
-        postgresql_role_name: "{{ catalog_pycsw_db_user }}"
-        postgresql_role_password: "{{ catalog_pycsw_db_pass }}"
-        postgresql_database_name: "{{ catalog_pycsw_db_name }}"
+        postgresql_role_name: "{{ pycsw_db_user }}"
+        postgresql_role_password: "{{ pycsw_db_password }}"
+        postgresql_database_name: "{{ pycsw_db_name }}"
       tags:
         - database
       run_once: true
@@ -57,10 +57,6 @@
     - role: software/ckan/catalog/www
       tags:
         - apache2
-
-    - role: software/ckan/catalog/pycsw-app
-      tags:
-        - pycsw
 
     - role: software/ckan/saml2
       tags:
