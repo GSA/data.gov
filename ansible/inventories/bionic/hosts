@@ -44,6 +44,12 @@ tag_group_jumpbox
 [kibana:children]
 tag_group_kibana
 
+[pycsw-web:children]
+tag_group_catalog_web
+
+[pycsw-worker:children]
+tag_group_catalog_harvester
+
 [solr:children]
 tag_group_solr
 

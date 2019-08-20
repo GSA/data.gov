@@ -15,11 +15,6 @@
 
     - role: software/ckan/catalog/harvest
 
-    - role: gsa.datagov-deploy-pycsw
-      pycsw_role: worker
-      tags:
-        - pycsw
-
     # TODO not sure why this is needed in harvester
     - role: software/ckan/saml2
       tags:

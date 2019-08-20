@@ -10,10 +10,10 @@ SSLEngine on
     # based on request URI
 
     # full CSW, all metadata
-    ProxyPass /csw-all http://localhost:8001/
+    ProxyPass /csw-all http://localhost:8001
 
     # default CSW, collection level metadata
-    ProxyPass /csw http://localhost:8000/
+    ProxyPass /csw http://localhost:8000
 
 
     WSGIScriptAlias / /etc/ckan/apache.wsgi

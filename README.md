@@ -162,29 +162,20 @@ defined.
 
 ### Groups
 
+**catalog-admin**
+
+Web hosts for the catalog admin app (subset of catalog-web). This is CKAN
+with a write configuration.
+
+
 **catalog-web**
 
-Web hosts for the catalog app.
+Web hosts for the catalog app. CKAN is configured read-only.
 
 
 **catalog-harvester**
 
 Worker hosts for the catalog app.
-
-
-**jumpbox**
-
-Jumpbox host where Ansible playbooks are executed from.
-
-
-**solr**
-
-Solr hosts.
-
-
-**inventory-web**
-
-Web hosts for the inventory app.
 
 
 **crm-web**
@@ -195,6 +186,31 @@ Web hosts for the CRM app.
 **dashboard-web**
 
 Web hosts for the Dashboard app.
+
+
+**inventory-web**
+
+Web hosts for the inventory app.
+
+
+**jumpbox**
+
+Jumpbox host where Ansible playbooks are executed from.
+
+
+**pycsw-web**
+
+Web hosts running the PyCSW application.
+
+
+**pycsw-worker**
+
+Worker hosts running the PyCSW jobs.
+
+
+**solr**
+
+Solr hosts.
 
 
 **wordpress-web**
