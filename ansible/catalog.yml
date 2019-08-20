@@ -6,3 +6,7 @@
 - import_playbook: catalog-worker.yml
   tags:
     - worker
+
+- import_playbook: pycsw.yml
+  tags:
+    - pycsw

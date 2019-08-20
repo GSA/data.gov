@@ -1,0 +1,47 @@
+---
+- name: Set the deploy version
+  hosts: pycsw-web,pycsw-worker
+  tasks:
+    - name: Set deploy version
+      set_fact:
+        pycsw_deploy_version: "{{ '%Y%m%d%H%M%SZ' | strftime(ansible_date_time.epoch) }}"
+      run_once: true
+  tags: always
+
+- name: Provision databases
+  hosts: pycsw-web,pycsw-worker
+  pre_tasks:
+    # Database initialization should be delegated to the jumpbox, however
+    # jumpbox does not have access to the application databases (firewall/security
+    # group configuration), so we have to install dependencies on one of the
+    # hosts and delegate to that host instead.
+    - name: install psycopg2 for postgresql ansible module
+      apt: name=python-psycopg2 state=present
+      run_once: true
+  roles:
+    - role: gsa.datagov-deploy-postgresql
+      vars:
+        postgresql_role_name: "{{ pycsw_db_user }}"
+        postgresql_role_password: "{{ pycsw_db_password }}"
+        postgresql_database_name: "{{ pycsw_db_name }}"
+      run_once: true
+      when: datagov_enable_postgresql_role is defined
+  tags:
+    - database
+
+- name: CSW web
+  hosts: pycsw-web
+  serial: 1
+  roles:
+    - role: gsa.datagov-deploy-pycsw
+      pycsw_role: web
+  tags:
+    - pycsw
+
+- name: CSW worker
+  hosts: pycsw-worker
+  roles:
+    - role: gsa.datagov-deploy-pycsw
+      pycsw_role: worker
+  tags:
+    - pycsw
