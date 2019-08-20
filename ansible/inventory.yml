@@ -70,3 +70,17 @@
     newrelic_app_name: inventory
   roles:
     - monitoring/newrelic/python-agent-ansible
+
+- name: Smoke test inventory
+  hosts: inventory-web
+  tasks:
+    - name: flush handlers
+      meta: flush_handlers
+    - name: assert app is up
+      uri:
+        url: http://{{ ansible_fqdn }}/
+        status_code: 200
+        # TODO enable cert validation. Staging and production hosts have GSA
+        # signed certs which should be valid.
+        # https://github.com/GSA/datagov-deploy/issues/900
+        validate_certs: false

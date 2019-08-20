@@ -79,3 +79,46 @@
     newrelic_app_name: catalog-admin
   roles:
     - monitoring/newrelic/python-agent-ansible
+
+- name: Smoke test catalog
+  hosts: catalog-web,!catalog-admin
+  tasks:
+    - name: flush handlers
+      meta: flush_handlers
+    - name: assert catalog is up
+      uri:
+        url: http://{{ ansible_fqdn }}/
+        status_code: 200
+        # TODO enable cert validation. Staging and production hosts have GSA
+        # signed certs which should be valid.
+        # https://github.com/GSA/datagov-deploy/issues/900
+        validate_certs: false
+    - name: assert csw-collection is up
+      uri:
+        url: http://{{ ansible_fqdn }}/csw?service=CSW&version=2.0.2&request=GetCapabilities
+        status_code: 200
+        return_content: true
+        # TODO enable cert validation. Staging and production hosts have GSA
+        # signed certs which should be valid.
+        # https://github.com/GSA/datagov-deploy/issues/900
+        validate_certs: false
+      register: csw_collection
+    - name: assert csw-collection response has title
+      fail:
+        msg: csw-collection response did not contain ows:Title attribute
+      when: csw_collection.content is not search("<ows:Title>CSW interface for catalog.data.gov</ows:Title>")
+
+    - name: assert csw-all is up
+      uri:
+        url: http://{{ ansible_fqdn }}/csw-all?service=CSW&version=2.0.2&request=GetCapabilities
+        status_code: 200
+        return_content: true
+        # TODO enable cert validation. Staging and production hosts have GSA
+        # signed certs which should be valid.
+        # https://github.com/GSA/datagov-deploy/issues/900
+        validate_certs: false
+      register: csw_all
+    - name: assert csw-all response has title
+      fail:
+        msg: csw-all response did not contain ows:Title attribute
+      when: csw_all.content is not search("<ows:Title>CSW interface for catalog.data.gov</ows:Title>")
