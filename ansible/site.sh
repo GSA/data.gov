@@ -34,6 +34,3 @@ ansible-playbook -i "$inventory" datagov-web.yml --tags="provision,deploy" --lim
 
 # crm
 ansible-playbook -i "$inventory" crm-web.yml --tags="provision,deploy" --limit crm-web
-
-# jekyll
-ansible-playbook -i "$inventory" jekyll.yml --limit jekyll-web

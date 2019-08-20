@@ -143,18 +143,3 @@ suites:
         inventory_datapusher_db_pass: secretpass
       ansible_extra_flags: >-
         --skip-tags="solr,db,deploy-rollback,skip_in_kitchen" <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
-  - name: jekyll
-    provisioner:
-      hosts:
-        - jekyll-web
-      playbook: jekyll.yml
-      extra_vars:
-        jekyll_apps:
-          - name: sdg-indicators
-            repo: https://github.com/GSA/sdg-indicators/
-            config: _config_prod.yml
-            branch: master
-            port: "8000"
-            s3_bucket: fakebucket
-            secret_key: testsecret
-

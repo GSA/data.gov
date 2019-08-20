@@ -67,9 +67,6 @@ inventory[1:2]d.dev-ocsit.bsp.gsa.gov
 [inventory-web-v2]
 inventory-[1:2]d.dev-ocsit.bsp.gsa.gov
 
-[jekyll-web]
-static-web1d.dev-ocsit.bsp.gsa.gov
-
 [jumpbox:children]
 jumpbox-v1
 jumpbox-v2
@@ -116,7 +113,6 @@ catalog-web-v1
 crm-web-v1
 dashboard-web-v1
 inventory-web-v1
-jekyll-web
 jumpbox-v1
 wordpress-web-v1
 
@@ -136,7 +132,6 @@ catalog-web
 crm-web
 dashboard-web
 inventory-web
-jekyll-web
 wordpress-web
 
 [wordpress-web:children]

@@ -1,5 +1,0 @@
-- name: restart jekyll
-  supervisorctl:
-    name: "jekyll-{{ item.name }}"
-    state: restarted
-  with_items: "{{ jekyll_apps }}"
