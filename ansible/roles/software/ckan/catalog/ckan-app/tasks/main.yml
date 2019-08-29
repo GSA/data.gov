@@ -90,8 +90,9 @@
     - reload apache2
     - reload supervisor
 
-- name: point site_url in /etc/hosts to localhost
-  action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ ckan_site_domain | regex_replace('https?\://','') }}"
+# TODO remove this after production deploy
+- name: undo point site_url in /etc/hosts to localhost
+  action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ ckan_site_domain | regex_replace('https?\://','') }}" state=absent
   tags:
    - molecule-notest
 
