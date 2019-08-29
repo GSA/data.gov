@@ -26,7 +26,7 @@
 - name: geerlingguy.git
   version: 2.0.4
 - name: geerlingguy.java
-  version: 1.9.5
+  version: 1.9.6
 - name: geerlingguy.nginx
   version: 2.6.3
 - name: geerlingguy.php
