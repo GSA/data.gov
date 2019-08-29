@@ -3,3 +3,7 @@
   hosts: all
   roles:
     - role: gsa.datagov-deploy-common
+
+- name: Log rotation
+  import_playbook: logrotate.yml
+  tags: logrotate
