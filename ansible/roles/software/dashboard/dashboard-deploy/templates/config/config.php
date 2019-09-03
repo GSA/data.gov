@@ -1,5 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
+// config.php from Ansible
+
 $root_dir = '{{ current_source_symlink }}';
 require_once($root_dir . "/vendor/autoload.php");
 

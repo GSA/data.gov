@@ -5,7 +5,7 @@ crons_enabled: false
 
 # Composer
 project_git_repo: https://github.com/project-open-data/project-open-data-dashboard.git
-project_git_version: master
+project_git_version: pdb/docker-compose-no-templating
 
 # Project path
 project_source_rollback_path: /var/www/dashboard/rollback
@@ -27,7 +27,6 @@ s3_bucket: dashboard-rei-test
 s3_prefix: datagov/dashboard/
 
 # App
-web_app_env: development
 app_base_url: https://labs.data.gov/dashboard
 default_host: 'labs.data.gov/dashboard'
 env_content_protocol: http
