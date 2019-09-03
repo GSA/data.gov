@@ -6,6 +6,9 @@ driver:
 transport:
   max_ssh_sessions: 5
 
+verifier:
+  name: inspec
+
 provisioner:
   name: ansible_playbook
   hosts: all
