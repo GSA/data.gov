@@ -89,11 +89,12 @@ provisioner:
   #ansible_verbosity: 2
 
 platforms:
- # Ubuntu Trusty with Upstart
-  - name: ubuntu-14.04
+ # Ubuntu XX with Upstart
+  - name: ubuntu-18.04
     driver_config:
-      image: rndmh3ro/docker-ubuntu1404-ansible:latest
-      platform: ubuntu  
+      image: rndmh3ro/docker-ubuntu1804-ansible:latest
+      platform: ubuntu
+      provision_command: mkdir -p /run/sshd
 
 suites:
   - name: catalog-web
