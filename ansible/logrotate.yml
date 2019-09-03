@@ -7,39 +7,41 @@
         - name: nginx
           path: "/var/log/nginx/*.log"
           options:
-            - daily
+            - weekly
             - missingok
             - compress
             - delaycompress
             - copytruncate
-            - size 100M
-            - rotate 7
+            - rotate 4
           scripts:
             postrotate: "[ -s /run/nginx.pid ] && kill -USR1 `cat /run/nginx.pid`"
 
-        - name: apache
+        - name: apache2
           path: "/var/log/apache2/*.log"
           options:
-            - daily
+            - weekly
             - missingok
             - compress
             - delaycompress
             - copytruncate
-            - size 100M
-            - rotate 7
+            - rotate 4
           scripts:
             postrotate: "/etc/init.d/apache2 reload > /dev/null"
 
         - name: audit-log
           path: "/var/log/audit/audit.log"
           options:
-            - daily
+            - weekly
             - missingok
             - compress
             - delaycompress
             - copytruncate
-            - size 250M
-            - rotate 5
+            - rotate 4
+
+  tasks:
+    # apache2 has it's own config in /etc/logrotate.d/apache2, which we want to override
+    - name: remove duplicate apache logrotate config
+      file: path=/etc/logrotate.d/apache state=absent
 
 #/var/log/harvester_run.log
 #/var/log/fetch-consumer.log
