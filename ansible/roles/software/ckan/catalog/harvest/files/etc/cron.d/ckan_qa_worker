@@ -1,1 +1,1 @@
-*/5 * * * * root supervosorctl start celery-mem-check
+*/5 * * * * root supervosorctl start celery-mem-check > /dev/null
