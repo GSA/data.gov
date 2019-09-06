@@ -5,19 +5,26 @@
     - name: ensure system packages are installed
       apt:
         name:
-        - apache2
-        - git
-        - libbz2-dev
-        - libpq-dev
-        - libxml2-dev
-        - libxslt1-dev
-        - libssl-dev
-        - python-dev
-        - python-pip
-        - postgresql
-        - postgis
-        - python-psycopg2
+          - apache2
+          - git
+          - libbz2-dev
+          - libpq-dev
+          - libxml2-dev
+          - libxslt1-dev
+          - libssl-dev
+          - python-dev
+          - python-pip
         update_cache: yes
+        state: present
+
+    # This is split out to avoid having a long running apt install and hitting
+    # the 10m timeout on CI
+    - name: install database dependencies for test
+      apt:
+        name:
+          - python-psycopg2
+          - postgresql
+          - postgis
         state: present
 
     - name: ensure python virtualenv is installed and configured
