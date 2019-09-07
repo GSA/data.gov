@@ -20,13 +20,15 @@
 - name: dwcramer.upstart
   version: 0.1.0
 - name: elastic.elasticsearch
-  version: 6.6.0
+  version: 7.1.1
 - name: geerlingguy.composer
   version: 1.7.6
 - name: geerlingguy.git
   version: 2.0.4
 - name: geerlingguy.java
   version: 1.9.6
+- name: geerlingguy.kibana
+  version: 3.2.1
 - name: geerlingguy.nginx
   version: 2.6.3
 - name: geerlingguy.php
@@ -50,9 +52,6 @@
 - name: gsa.datagov-deploy-ci
   src: https://github.com/GSA/datagov-deploy-ci
   version: master
-- name: gsa.ansible-role-kibana
-  src: https://github.com/GSA/ansible-role-kibana
-  version: v2.0.1+datagov-r1
 - name: gsa.datagov-deploy-apache2
   src: https://github.com/GSA/datagov-deploy-apache2
   version: v1.2.2
