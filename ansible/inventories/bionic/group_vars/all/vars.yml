@@ -1,6 +1,6 @@
 ---
 # catalog
-catalog_ckan_app_version: feature/bionic
+catalog_ckan_app_version: feature/bionic-m2crypto
 catalog_ckan_db_host: "{{ catalog_postgresql_login_host }}"
 catalog_ckan_db_name: ckan
 catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
