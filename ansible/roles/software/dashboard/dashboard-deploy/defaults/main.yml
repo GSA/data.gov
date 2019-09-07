@@ -21,6 +21,7 @@ env_db_host: dashboard_db
 env_db_user: dashboard
 env_db_pass: superpassword
 env_db_name: dashboard
+env_db_debug: FALSE
 
 # AWS S3 bucket
 s3_bucket: dashboard-rei-test
@@ -43,3 +44,4 @@ saml_admin_pass: "admin_pass"
 # List of CodeIgniter pre-approved admin emails
 codeigniter_pre_approved_admins: []
 env_encryption_key: some-key
+
