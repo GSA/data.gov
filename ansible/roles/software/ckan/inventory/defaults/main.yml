@@ -36,7 +36,7 @@ ckan_pkgs:
   - {
       name: "ckanext-saml2",
       repo: "https://github.com/GSA/ckanext-saml2",
-      branch: "max",
+      branch: "bionic-m2crypto",
       requirements: "requirements.txt"
     }
 
