@@ -14,6 +14,10 @@ catalog_pycsw_db_host: "{{ vault_catalog_pycsw_db_host }}"
 catalog_pycsw_db_name: "{{ vault_catalog_pycsw_db_name }}"
 catalog_pycsw_db_pass: "{{ vault_catalog_pycsw_db_pass }}"
 catalog_pycsw_db_user: "{{ vault_catalog_pycsw_db_user }}"
+# TODO replace these variables with the longer more descriptive name e.g. catalog_ckan_db_host
+catalog_db_name: "{{ catalog_ckan_db_name }}"
+catalog_db_pass: "{{ catalog_ckan_db_pass }}"
+catalog_db_user: "{{ catalog_ckan_db_user }}"
 
 
 # common
