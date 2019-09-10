@@ -67,7 +67,7 @@
   version: v1.1.0
 - name: gsa.datagov-deploy-pycsw
   src: https://github.com/GSA/datagov-deploy-pycsw
-  version: v1.0.2
+  version: v1.0.3
 - name: gsa.datagov-deploy-redis
   src: https://github.com/GSA/datagov-deploy-redis
   version: v1.0.1
