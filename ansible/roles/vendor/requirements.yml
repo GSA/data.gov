@@ -5,7 +5,7 @@
 # to include any roles you want installed prior to running main.yml.
 
 - name: ansistrano.deploy
-  version: 3.2.0
+  version: 3.2.1
 - name: ANXS.apt
   version: v2.0.0
 - name: ANXS.build-essential
