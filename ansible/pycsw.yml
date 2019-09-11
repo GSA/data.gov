@@ -1,6 +1,6 @@
 ---
 - name: Set the deploy version
-  hosts: pycsw-web,pycsw-worker
+  hosts: pycsw-web,pycsw-worker,!v2
   tasks:
     - name: Set deploy version
       set_fact:
@@ -30,7 +30,7 @@
     - database
 
 - name: CSW web
-  hosts: pycsw-web
+  hosts: pycsw-web,!v2
   serial: 1
   roles:
     - role: gsa.datagov-deploy-pycsw
@@ -39,7 +39,7 @@
     - pycsw
 
 - name: CSW worker
-  hosts: pycsw-worker
+  hosts: pycsw-worker,!v2
   roles:
     - role: gsa.datagov-deploy-pycsw
       pycsw_role: worker
