@@ -120,6 +120,7 @@ inventory_ckan_solr_port: "8983"
 
 # Newrelic
 nrinfragent_license_key: "{{ vault_nrinfragent_license_key }}"
+newrelic_environment: production
 
 
 pycsw_app_version: datagov/v2.4.x

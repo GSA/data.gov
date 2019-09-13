@@ -108,6 +108,7 @@ datagov-solr[1:2]d.dev-ocsit.bsp.gsa.gov is_solr_replica=true
 
 # trusty stack
 [v1:children]
+catalog-admin-v1
 catalog-harvester-v1
 catalog-web-v1
 crm-web-v1
@@ -118,6 +119,7 @@ wordpress-web-v1
 
 # bionic stack
 [v2:children]
+catalog-admin-v2
 catalog-harvester-v2
 catalog-web-v2
 crm-web-v2
