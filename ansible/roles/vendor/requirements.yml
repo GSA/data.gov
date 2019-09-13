@@ -42,7 +42,7 @@
   version: master
 - name: gsa.ansible-os-ubuntu-16
   src: https://github.com/GSA/ansible-os-ubuntu-16
-  version: v1.0.4
+  version: 1.0.4
 - name: gsa.ansible-role-beats
   src: https://github.com/GSA/ansible-role-beats
   version: master
