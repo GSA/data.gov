@@ -42,6 +42,8 @@ filebeat_config: "{{ common_filebeat_config }}"
 products:
   - filebeat
 
+# crm
+crm_service_url: https://crm-datagov.dev-ocsit.bsp.gsa.gov
 
 # data.gov-wide variables
 datagov_environment: staging

@@ -29,6 +29,10 @@ nessus_agent_enabled: false
 trendmicro_enabled: false
 
 
+# crm
+crm_service_url: https://crm.bionic.datagov.us
+
+
 datagov_enable_postgresql_role: true
 datagov_environment: bionic
 

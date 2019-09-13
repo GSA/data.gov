@@ -41,6 +41,10 @@ products:
   - filebeat
 
 
+# crm
+crm_service_url: https://labs.data.gov/crm
+
+
 # data.gov-wide variables
 datagov_environment: production
 

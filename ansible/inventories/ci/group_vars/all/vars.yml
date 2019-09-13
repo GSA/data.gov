@@ -30,6 +30,10 @@ nessus_agent_enabled: false
 trendmicro_enabled: false
 
 
+# crm
+crm_service_url: https://crm.ci.datagov.us
+
+
 # data.gov-wide variables
 datagov_enable_postgresql_role: true
 datagov_environment: ci
