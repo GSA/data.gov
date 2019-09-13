@@ -1,6 +1,6 @@
 ---
 - name: Catalog worker (harvester) stack
-  hosts: catalog-harvester
+  hosts: catalog-harvester,!v2
   vars:
       app_type: catalog
 
@@ -21,7 +21,7 @@
         - saml2
 
 - name: logrotate configuration
-  hosts: catalog-harvester
+  hosts: catalog-harvester,!v2
   roles:
     - role: nickhammond.logrotate
       logrotate_scripts:

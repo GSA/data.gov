@@ -1,6 +1,6 @@
 ---
 - name: Provision Catalog databases
-  hosts: catalog-web
+  hosts: catalog-web,!v2
   pre_tasks:
     # Database initialization should be delegated to the jumpbox, however
     # jumpbox does not have access to the application databases (firewall/security
@@ -32,7 +32,7 @@
 
 
 - name: Catalog web stack
-  hosts: catalog-web
+  hosts: catalog-web,!v2
   serial: 1
   vars:
       app_type: catalog
@@ -67,21 +67,21 @@
         - frontend
 
 - name: NewRelic
-  hosts: catalog-web,!catalog-admin
+  hosts: catalog-web,!catalog-admin,!v2
   vars:
     newrelic_app_name: catalog
   roles:
     - monitoring/newrelic/python-agent-ansible
 
 - name: NewRelic
-  hosts: catalog-admin
+  hosts: catalog-admin,!v2
   vars:
-    newrelic_app_name: catalog-admin
+    newrelic_app_name: catalog-admin,!v2
   roles:
     - monitoring/newrelic/python-agent-ansible
 
 - name: Smoke test catalog
-  hosts: catalog-web,!catalog-admin
+  hosts: catalog-web,!catalog-admin,!v2
   tasks:
     - name: flush handlers
       meta: flush_handlers
