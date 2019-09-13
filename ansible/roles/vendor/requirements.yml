@@ -5,7 +5,7 @@
 # to include any roles you want installed prior to running main.yml.
 
 - name: ansistrano.deploy
-  version: 3.2.0
+  version: 3.2.1
 - name: ANXS.apt
   version: v2.0.0
 - name: ANXS.build-essential
@@ -42,8 +42,7 @@
   version: master
 - name: gsa.ansible-os-ubuntu-16
   src: https://github.com/GSA/ansible-os-ubuntu-16
-  # https://github.com/GSA/ansible-os-ubuntu-16/issues/16
-  version: 5d44ce03dff5f5670eda310049ab80b4721e5651
+  version: 1.0.4
 - name: gsa.ansible-role-beats
   src: https://github.com/GSA/ansible-role-beats
   version: master
@@ -67,7 +66,7 @@
   version: v1.1.0
 - name: gsa.datagov-deploy-pycsw
   src: https://github.com/GSA/datagov-deploy-pycsw
-  version: v1.0.2
+  version: v1.0.3
 - name: gsa.datagov-deploy-redis
   src: https://github.com/GSA/datagov-deploy-redis
   version: v1.0.1
