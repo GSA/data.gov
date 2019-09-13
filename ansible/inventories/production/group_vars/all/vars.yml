@@ -215,3 +215,6 @@ who_secure: True
 ci_inventory: inventories/production
 ci_ssh_config_host: '*.prod-ocsit.bsp.gsa.gov'
 ci_deploy_version: master
+
+
+wordpress_service_url: https://www.data.gov

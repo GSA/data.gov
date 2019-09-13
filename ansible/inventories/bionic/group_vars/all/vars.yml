@@ -123,3 +123,6 @@ saml2_sp_private_pem: "{{ default_tls_host_certificate }}"
 # ckan
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
 who_secure: True
+
+# wordpress
+wordpress_service_url: https://wordpress.bionic.data.gov

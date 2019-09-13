@@ -137,3 +137,7 @@ secops_user_public_key: "{{ vault_secops_user_public_key }}"
 solr_master_server: datagovsolr1tf.internal.{{ datagov_sandbox_env }}.datagov.us
 solr_java_packages:
   - openjdk-7-jdk
+
+
+# wordpress
+wordpress_service_url: https://wordpress.ci.datagov.us
