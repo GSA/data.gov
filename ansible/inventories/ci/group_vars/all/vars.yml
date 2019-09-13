@@ -7,6 +7,7 @@ catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
 catalog_ckan_db_user: ckan
 catalog_ckan_redis_host: catalog-harvester1tf.internal.ci.datagov.us
 catalog_ckan_redis_pass: "{{ vault_catalog_ckan_redis_pass }}"
+catalog_ckan_service_url: https://catalog.ci.datagov.us
 catalog_ckan_solr_host: datagovsolr1tf.internal.ci.datagov.us
 catalog_ckan_solr_port: "{{ solr_port }}"
 catalog_postgresql_login_host: "{{ vault_catalog_postgresql_login_host }}"
@@ -67,6 +68,7 @@ default_tls_host_certificate: |-
 jumpbox_operators: "{{ vault_jumpbox_operators }}"
 
 
+inventory_ckan_service_url: https://inventory.ci.datagov.us
 inventory_ckan_solr_port: "{{ solr_port }}"
 
 

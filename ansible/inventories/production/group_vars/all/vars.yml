@@ -8,6 +8,7 @@ catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
 catalog_ckan_db_user: "{{ vault_catalog_ckan_db_user }}"
 catalog_ckan_harvest_fetch_process_count: 6
 catalog_ckan_qa_update_process_count: 5
+catalog_ckan_service_url: https://catalog.data.gov
 catalog_ckan_solr_port: "8983"
 catalog_ckan_solr_host: datagov-solr1p.prod-ocsit.bsp.gsa.gov
 catalog_pycsw_db_host: "{{ vault_catalog_pycsw_db_host }}"
@@ -114,6 +115,7 @@ default_tls_host_certificate: |-
 jumpbox_operators: "{{ vault_jumpbox_operators }}"
 
 
+inventory_ckan_service_url: https://inventory.data.gov
 inventory_ckan_solr_host: datagov-solrm1p.prod-ocsit.bsp.gsa.gov
 inventory_ckan_solr_port: "8983"
 

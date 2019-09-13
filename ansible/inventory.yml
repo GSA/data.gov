@@ -64,6 +64,22 @@
     - {role: software/ckan/inventory, tags: ['deploy']}
     - {role: software/ckan/saml2, tags: ['saml2']}
 
+  # Host-level smoke tests
+  tasks:
+    - name: flush handlers
+      meta: flush_handlers
+
+    - name: assert app is up
+      uri:
+        url: http://{{ ansible_fqdn }}/api/action/status_show
+        follow_redirects: none
+        status_code: 200
+        # TODO enable cert validation. Staging and production hosts have GSA
+        # signed certs which should be valid.
+        # https://github.com/GSA/datagov-deploy/issues/900
+        validate_certs: false
+
+
 - name: NewRelic
   hosts: inventory-web,!v2
   vars:
@@ -71,16 +87,24 @@
   roles:
     - monitoring/newrelic/python-agent-ansible
 
-- name: Smoke test inventory
+
+- name: Service-level smoke tests
   hosts: inventory-web,!v2
   tasks:
     - name: flush handlers
       meta: flush_handlers
-    - name: assert app is up
+
+    - name: assert inventory service is available
       uri:
-        url: http://{{ ansible_fqdn }}/
+        url: "{{ inventory_ckan_service_url }}/api/action/status_show"
+        follow_redirects: none
         status_code: 200
         # TODO enable cert validation. Staging and production hosts have GSA
         # signed certs which should be valid.
         # https://github.com/GSA/datagov-deploy/issues/900
         validate_certs: false
+        headers:
+          # Avoid login redirect
+          Cookie: auth_tkt=1
+      run_once: true
+      delegate_to: localhost

@@ -7,6 +7,7 @@ catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
 catalog_ckan_db_user: ckan
 catalog_ckan_redis_host: catalog-harvester1tf.internal.bionic.datagov.us
 catalog_ckan_redis_pass: "{{ vault_catalog_ckan_redis_pass }}"
+catalog_ckan_service_url: https://catalog.bionic.datagov.us
 catalog_ckan_solr_host: datagovsolr1tf.internal.bionic.datagov.us
 catalog_ckan_solr_port: "{{ solr_port }}"
 catalog_postgresql_login_host: "{{ vault_catalog_postgresql_login_host }}"
@@ -66,6 +67,7 @@ jumpbox_operators: "{{ vault_jumpbox_operators }}"
 
 
 inventory_ckan_app_version: inventory-bionic
+inventory_ckan_service_url: https://inventory.bionic.datagov.us
 inventory_ckan_solr_port: "{{ solr_port }}"
 
 pycsw_app_version: datagov/v2.4.x
