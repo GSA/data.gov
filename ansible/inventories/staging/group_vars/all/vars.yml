@@ -45,6 +45,9 @@ products:
 # crm
 crm_service_url: https://crm-datagov.dev-ocsit.bsp.gsa.gov
 
+# dashboard
+dashboard_service_url: https://dashboard-datagov.dev-ocsit.bsp.gsa.gov
+
 # data.gov-wide variables
 datagov_environment: staging
 

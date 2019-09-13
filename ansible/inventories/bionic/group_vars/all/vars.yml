@@ -33,6 +33,10 @@ trendmicro_enabled: false
 crm_service_url: https://crm.bionic.datagov.us
 
 
+# dashboard
+dashboard_service_url: https://dashboard.bionic.datagov.us
+
+
 datagov_enable_postgresql_role: true
 datagov_environment: bionic
 

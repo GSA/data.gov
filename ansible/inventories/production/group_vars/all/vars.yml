@@ -45,6 +45,10 @@ products:
 crm_service_url: https://labs.data.gov/crm
 
 
+# dashboard
+dashboard_service_url: https://labs.data.gov/dashboard
+
+
 # data.gov-wide variables
 datagov_environment: production
 
