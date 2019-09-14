@@ -96,6 +96,6 @@ WebError==0.10.3
 WebHelpers==1.3
 WebOb==1.0.8
 WebTest==1.4.3
-Werkzeug==0.11.4
+Werkzeug==0.15.3
 xlrd==1.0.0
 zope.interface==4.5.0

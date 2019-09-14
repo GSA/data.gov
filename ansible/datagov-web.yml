@@ -1,6 +1,6 @@
 ---
 - name: Deploy Wordpress
-  hosts:  "{{ datagov_web_hosts | default('wordpress-web') }}"
+  hosts: wordpress-web
   serial: 1
   roles:
   # TODO remove the die-no-tags role. You should be able to run a role playbook
@@ -37,9 +37,18 @@
   tasks:
     - name: flush handlers
       meta: flush_handlers
+    - name: assert app is up
+      uri:
+        url: https://{{ ansible_fqdn }}/
+        status_code: 200
+        # TODO enable cert validation. Staging and production hosts have GSA
+        # signed certs which should be valid.
+        # https://github.com/GSA/datagov-deploy/issues/900
+        validate_certs: false
+      tags: [deploy,provision]
     - name: assert access to simplesaml admin is forbidden
       uri:
-        url: https://localhost/app/plugins/saml-20-single-sign-on/saml/www/module.php/core/loginuserpass.php
+        url: https://{{ ansible_fqdn }}/app/plugins/saml-20-single-sign-on/saml/www/module.php/core/loginuserpass.php
         status_code: 403
         validate_certs: false
     - name: assert CRM forms should redirect to general contact form
