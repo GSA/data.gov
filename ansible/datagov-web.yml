@@ -1,6 +1,6 @@
 ---
 - name: Deploy Wordpress
-  hosts:  "{{ datagov_web_hosts | default('wordpress-web') }}"
+  hosts: wordpress-web
   serial: 1
   roles:
   # TODO remove the die-no-tags role. You should be able to run a role playbook
