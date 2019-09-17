@@ -28,11 +28,12 @@ See our [Roadmap](docs/roadmap.md).
 Moved to [datagov-infrastructure-live](https://github.com/gsa/datagov-infrastructure-live)
 
 ## Requirements for Software Provisioning
-- Ansible > 1.10
+- Ansible 2.6
 - SSH access (via keypair) to remote instances
-- ansible-secret.txt: `export ANSIBLE_VAULT_PASSWORD_FILE=~/ansible-secret.txt`
+- copy the Ansible Vault key to `/etc/datagov/ansible-secret.txt`
 - run all provisioning/app deployment commands from repo's `ansible` folder
-- to update `ansible/roles/vendor` roles run there: `ansible-galaxy install -r requirements.yml`
+- to update third-party roles, run `ansible-galaxy install -r requirements.yml`
+  from `ansible/`
 
 
 ## Common plays

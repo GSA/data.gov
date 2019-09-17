@@ -17,13 +17,6 @@ provisioner:
     echo fake-password > ~/ansible-secret.txt
   ansible_extra_flags: >-
     --skip-tags=skip_in_kitchen <%= ENV['ANSIBLE_EXTRA_FLAGS'] %>
-  # kitchen-ansible sets ANSIBLE_ROLE_PATH which ignores our ansible.cfg
-  # role_path. To work around, we override the env variable so roles/vendor is
-  # included.
-  # https://github.com/neillturner/kitchen-ansible/issues/284
-  env_vars:
-    ANSIBLE_ROLES_PATH: /tmp/kitchen/roles:/tmp/kitchen/roles/vendor
-
   extra_vars:
     default_tls_host_certificate: |-
       -----BEGIN CERTIFICATE-----

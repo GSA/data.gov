@@ -59,7 +59,3 @@ ansible/inventories/mgmt-ocsit
 __pycache__
 
 gen-csr-out
-
-# ansible-galaxy vendored roles
-ansible/roles/vendor/*
-!ansible/roles/vendor/requirements.yml

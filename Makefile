@@ -10,6 +10,30 @@ MOLECULE_SUITES := \
   software/ckan/native-login \
   software/common/php-fixes
 
+PLAYBOOKS := \
+  ansible/actions/reboot.yml \
+  ansible/catalog-web.yml \
+  ansible/catalog-worker.yml \
+  ansible/catalog.yml \
+  ansible/ci.yml \
+  ansible/ckan-native-login.yml \
+  ansible/common.yml \
+  ansible/crm-web.yml \
+  ansible/dashboard-web.yml \
+  ansible/datagov-web.yml \
+  ansible/efk-nginx.yml \
+  ansible/efk-stack.yml \
+  ansible/elastalert.yml \
+  ansible/elasticsearch.yml \
+  ansible/inventory.yml \
+  ansible/jumpbox.yml \
+  ansible/kibana.yml \
+  ansible/newrelic-java.yml \
+  ansible/newrelic-php.yml \
+  ansible/pycsw.yml \
+  ansible/site.yml \
+  ansible/solr.yml
+
 # Create test-kitchen-<suite> targets
 KITCHEN_SUITE_TARGETS := $(patsubst %,test-kitchen-%,$(KITCHEN_SUITES))
 
@@ -22,24 +46,28 @@ circleci-glob:
 	@echo $(MOLECULE_SUITE_TARGETS) | sed -e 's/ /\n/g'
 
 update-vendor:
-	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml
+	cd ansible && \
+	ansible-galaxy install -r requirements.yml
 
 update-vendor-verbose:
-	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml -vvv
+	cd ansible && \
+	ansible-galaxy install -r requirements.yml -vvv
 
 update-vendor-force:
-	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml --force
+	cd ansible && \
+	ansible-galaxy install -r requirements.yml --force
 
 update-vendor-force-verbose:
-	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml --force -vvv
+	cd ansible && \
+	ansible-galaxy install -r requirements.yml --force -vvv
 
 setup:
 	pipenv install --dev
 	bundle install
 
 lint:
-	ansible-playbook --syntax-check ansible/*.yml
-	ansible-lint -v -x ANSIBLE0010 --exclude=ansible/roles/vendor ansible/*.yml
+	ansible-playbook -i ansible/inventories/production --syntax-check $(PLAYBOOKS)
+	ansible-lint -v -x ANSIBLE0010 --exclude ~/.ansible $(PLAYBOOKS)
 
 $(KITCHEN_SUITE_TARGETS):
 	cd ansible && \
