@@ -168,6 +168,16 @@ postfix_relaytls: true
 postfix_sasl_auth_enable: false
 postfix_smtpd_tls_cert_file: /etc/ssl/certs/datagov_host.crt
 postfix_smtpd_tls_key_file: /etc/ssl/certs/datagov_host.key
+postfix_aliases:
+  - user: postmaster
+    alias: root
+  - user: root
+    alias: "{{ datagov_team_email }}"
+postfix_sender_canonical_maps:
+  - sender: root
+    rewrite: no-reply+{{ ansible_fqdn }}@data.gov
+
+
 # SAML
 saml2_idp_entry: login.test.max.gov
 saml2_idp_metadata_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
