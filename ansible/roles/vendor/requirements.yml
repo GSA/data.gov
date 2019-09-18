@@ -14,8 +14,7 @@
   version: 1.1.0
   src: https://github.com/avanov/ansible-galaxy-pyenv.git
 - name: davidwittman.redis
-  src: https://github.com/adborden/ansible-redis.git
-  version: fix-initscript
+  version: 1.2.7
 # TODO this is no longer supported, switch to upstream https://github.com/telus/ansible-upstart
 - name: dwcramer.upstart
   version: 0.1.0
