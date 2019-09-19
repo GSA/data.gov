@@ -7,6 +7,7 @@ catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
 catalog_ckan_db_user: ckan
 catalog_ckan_redis_host: catalog-harvester1tf.internal.bionic.datagov.us
 catalog_ckan_redis_pass: "{{ vault_catalog_ckan_redis_pass }}"
+catalog_ckan_service_url: https://catalog.bionic.datagov.us
 catalog_ckan_solr_host: datagovsolr1tf.internal.bionic.datagov.us
 catalog_ckan_solr_port: "{{ solr_port }}"
 catalog_postgresql_login_host: "{{ vault_catalog_postgresql_login_host }}"
@@ -26,6 +27,14 @@ common_python_version_number: 2.7.16
 filebeat_enabled: false
 nessus_agent_enabled: false
 trendmicro_enabled: false
+
+
+# crm
+crm_service_url: https://crm.bionic.datagov.us
+
+
+# dashboard
+dashboard_service_url: https://dashboard.bionic.datagov.us
 
 
 datagov_enable_postgresql_role: true
@@ -66,6 +75,7 @@ jumpbox_operators: "{{ vault_jumpbox_operators }}"
 
 
 inventory_ckan_app_version: inventory-bionic
+inventory_ckan_service_url: https://inventory.bionic.datagov.us
 inventory_ckan_solr_port: "{{ solr_port }}"
 
 pycsw_app_version: datagov/v2.4.x
@@ -121,3 +131,6 @@ saml2_sp_private_pem: "{{ default_tls_host_certificate }}"
 # ckan
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
 who_secure: True
+
+# wordpress
+wordpress_service_url: https://wordpress.bionic.data.gov

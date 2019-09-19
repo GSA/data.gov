@@ -9,6 +9,7 @@ catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
 catalog_ckan_db_user: "{{ vault_catalog_ckan_db_user }}"
 catalog_ckan_harvest_fetch_process_count: 6
 catalog_ckan_qa_update_process_count: 5
+catalog_ckan_service_url: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
 catalog_ckan_solr_host: datagov-solr1d.dev-ocsit.bsp.gsa.gov
 catalog_ckan_solr_port: "8983"
 # read-only database variables
@@ -41,6 +42,11 @@ filebeat_config: "{{ common_filebeat_config }}"
 products:
   - filebeat
 
+# crm
+crm_service_url: https://crm-datagov.dev-ocsit.bsp.gsa.gov
+
+# dashboard
+dashboard_service_url: https://dashboard-datagov.dev-ocsit.bsp.gsa.gov
 
 # data.gov-wide variables
 datagov_environment: staging
@@ -105,6 +111,7 @@ default_tls_host_certificate: |-
 jumpbox_operators: "{{ vault_jumpbox_operators }}"
 
 
+inventory_ckan_service_url: https://inventory-datagov.dev-ocsit.bsp.gsa.gov
 inventory_ckan_solr_host: datagov-solrm1d.dev-ocsit.bsp.gsa.gov
 inventory_ckan_solr_port: "8983"
 
@@ -212,3 +219,5 @@ users: "{{ vault_users }}"
 ci_inventory: inventories/staging
 ci_ssh_config_host: '*.dev-ocsit.bsp.gsa.gov'
 ci_deploy_version: develop
+
+wordpress_service_url: https://wordpress-datagov.dev-ocsit.bsp.gsa.gov
