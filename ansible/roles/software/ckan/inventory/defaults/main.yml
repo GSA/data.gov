@@ -5,6 +5,12 @@ ckan_virtual_env: "{{virtual_env}}"
 datapusher_virtual_env: /usr/lib/datapusher
 app_type: inventory
 
+inventory_log_dir: /var/log/inventory
+inventory_ckan_error_log: "{{ inventory_log_dir }}/ckan.error.log"
+inventory_ckan_access_log: "{{ inventory_log_dir }}/ckan.access.log"
+inventory_datapusher_error_log: "{{ inventory_log_dir }}/datapusher.error.log"
+inventory_datapusher_access_log: "{{ inventory_log_dir }}/datapusher.access.log"
+
 # packages to install ckan app
 ckan_pkgs:
   - {

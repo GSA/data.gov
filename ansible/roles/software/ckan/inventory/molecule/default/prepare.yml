@@ -5,6 +5,7 @@
     - name: ensure system packages are installed
       apt:
         name:
+          - apache2
           - git
           - libbz2-dev
           - libpq-dev
@@ -68,12 +69,3 @@
         owner: root
         group: www-data
         mode: 0750
-
-    - name: create fake apache2 config dir
-      file:
-        path: /etc/apache2/sites-enabled
-        state: directory
-        owner: root
-        group: www-data
-        mode: 0750
-

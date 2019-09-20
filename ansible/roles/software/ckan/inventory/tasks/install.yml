@@ -6,6 +6,9 @@
     - swig
     - xmlsec1
 
+- name: Create log directory
+  file: path={{ inventory_log_dir }} state=directory owner=root group=www-data mode=0750
+
 - name: Remove old rollback code
   file: path="{{ project_source_rollback_path }}" state=absent
 
@@ -56,14 +59,15 @@
     - etc/ckan/who.ini
     - etc/ckan/apache.wsgi
     - etc/ckan/datapusher.wsgi
-    - etc/apache2/sites-enabled/ckan.conf
-    - etc/apache2/sites-enabled/datapusher.conf
 
 - name: Configure production.ini
-  template: src=templates/{{ item }} dest=/{{ item }} owner=root group=www-data mode=0640
+  template: src={{ item }} dest=/{{ item }} owner=root group=www-data mode=0640
   with_items:
     - etc/ckan/production.ini
     - etc/ckan/datapusher_settings.py
+    - etc/apache2/sites-enabled/ckan.conf
+    - etc/apache2/sites-enabled/datapusher.conf
+
 
 - include: additional-tasks.yml
   virtualenv: "{{ project_source_new_code_path }}"
