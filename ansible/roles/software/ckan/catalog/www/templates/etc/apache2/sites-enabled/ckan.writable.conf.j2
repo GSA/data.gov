@@ -32,12 +32,8 @@ SSLEngine on
       Require all granted
     </Directory>
 
-    ErrorLog /var/log/apache2/ckan.error.log
-
-    LogFormat "\"%{True-Client-IP}i\" %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" trueip
-    SetEnvIf True-Client-IP "^.*\..*\..*\..*" akamai
-    CustomLog /var/log/apache2/ckan.custom.log combined env=!akamai
-    CustomLog /var/log/apache2/ckan.custom.log trueip env=akamai
+    ErrorLog {{ catalog_ckan_error_log }}
+    CustomLog {{ catalog_ckan_access_log }} combined
 
     # fix Cross-Frame Scripting (XFS) vulnerability
     Header set X-Frame-Options "SAMEORIGIN"

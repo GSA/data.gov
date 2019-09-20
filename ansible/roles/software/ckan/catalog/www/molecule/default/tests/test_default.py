@@ -22,3 +22,4 @@ def test_apache2_site(host):
     assert f.user == 'root'
     assert f.group == 'www-data'
     assert f.mode == 0o644
+    assert f.contains('ErrorLog /var/log/ckan/ckan.error.log')

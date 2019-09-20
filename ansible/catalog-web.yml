@@ -118,6 +118,23 @@
       when: csw_all.content is not search("<ows:Title>CSW interface for catalog.data.gov</ows:Title>")
 
 
+- name: logrotate configuration
+  hosts: catalog-web,!v2
+  roles:
+    - role: nickhammond.logrotate
+      logrotate_scripts:
+        - name: inventory
+          paths:
+            - /var/log/ckan/ckan.error.log
+            - /var/log/ckan/ckan.access.log
+          options:
+            - compress
+            - copytruncate
+            - size 512M
+            - missingok
+            - rotate 8
+
+
 - name: NewRelic
   hosts: catalog-web,!catalog-admin,!v2
   vars:
