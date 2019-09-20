@@ -73,7 +73,7 @@ default_tls_host_certificate: |-
   -----END CERTIFICATE-----
 
 
-jumpbox_operators: "{{ vault_jumpbox_operators }}"
+jumpbox_operators: "{{ datagov_operators_test }}"
 
 
 inventory_ckan_service_url: https://inventory.ci.datagov.us
