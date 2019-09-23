@@ -80,6 +80,22 @@
         validate_certs: false
 
 
+- name: logrotate configuration
+  hosts: inventory-web,!v2
+  roles:
+    - role: nickhammond.logrotate
+      logrotate_scripts:
+        - name: inventory
+          paths:
+            - /var/log/inventory/*
+          options:
+            - compress
+            - copytruncate
+            - weekly
+            - missingok
+            - rotate 8
+
+
 - name: NewRelic
   hosts: inventory-web,!v2
   vars:
