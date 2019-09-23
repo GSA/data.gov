@@ -1,0 +1,56 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yml
+driver:
+  name: docker
+lint:
+  name: yamllint
+  enabled: false
+platforms:
+  - name: inventory-ckan-trusty
+    image: ubuntu:trusty
+    groups:
+      - trusty
+  - name: inventory-ckan-bionic
+    image: ubuntu:bionic
+    groups:
+      - bionic
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    capabilities:
+      - SYS_ADMIN
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+  playbooks:
+    prepare: ../resources/prepare.yml
+    converge: ../resources/playbook.yml
+  inventory:
+    group_vars:
+      all:
+        datagov_in_service: false
+        python_home: /usr
+        inventory_ckan_solr_port: 8983
+      bionic:
+        inventory_ckan_app_version: inventory-bionic
+scenario:
+  name: in_service
+  test_sequence:
+    - lint
+    - destroy
+    - dependency
+    - syntax
+    - create
+    - prepare
+    - converge
+    # - idempotence
+    - side_effect
+    - verify
+    - destroy
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

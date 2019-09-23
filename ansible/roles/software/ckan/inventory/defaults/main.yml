@@ -1,4 +1,6 @@
 ---
+datagov_in_service: true
+
 # used in  production.ini/ckan_site_url and hosts
 ckan_site_domain: https://inventory.data.gov
 ckan_virtual_env: "{{virtual_env}}"

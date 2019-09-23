@@ -86,3 +86,6 @@
   action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ ckan_site_domain | regex_replace('https?\://','') }}" state=absent
   tags:
     - molecule-notest # Device or resource busy ranaming temp file
+
+- name: Ensure apache2 is started and enabled
+  service: name=apache2 enabled={{ datagov_in_service | ternary('true', 'false') }} state={{ datagov_in_service | ternary('started', 'stopped') }}
