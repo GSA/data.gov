@@ -17,7 +17,7 @@
   version: 1.2.7
 # TODO this is no longer supported, switch to upstream https://github.com/telus/ansible-upstart
 - name: dwcramer.upstart
-  version: 0.1.0
+  version: 0.2.0
 - name: elastic.elasticsearch
   version: 6.6.0
 - name: geerlingguy.composer
