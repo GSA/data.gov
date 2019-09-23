@@ -5,7 +5,8 @@ driver:
   name: docker
 lint:
   name: yamllint
-  enabled: false # to fix
+  # TODO fix linting
+  enabled: false
 platforms:
   - name: ckan-inventory-app-trusty
     image: ubuntu:trusty
@@ -28,7 +29,7 @@ provisioner:
         inventory_ckan_app_version: inventory-bionic
 scenario:
   name: default
-  # to fix
+  # TODO fix idempotency
   test_sequence:
     - lint
     - destroy
@@ -40,7 +41,7 @@ scenario:
     # - idempotence
     - side_effect
     - verify
-    - destroy  
+    - destroy
 verifier:
   name: testinfra
   lint:
