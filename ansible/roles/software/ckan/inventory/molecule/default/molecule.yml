@@ -1,6 +1,8 @@
 ---
 dependency:
   name: galaxy
+  options:
+    role-file: requirements.yml
 driver:
   name: docker
 lint:
@@ -16,10 +18,17 @@ platforms:
     image: ubuntu:bionic
     groups:
       - bionic
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    capabilities:
+      - SYS_ADMIN
 provisioner:
   name: ansible
   lint:
     name: ansible-lint
+  playbooks:
+    prepare: ../resources/prepare.yml
+    converge: ../resources/playbook.yml
   inventory:
     group_vars:
       all:
