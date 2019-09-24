@@ -4,5 +4,6 @@ catalog_ckan_app_version: feature/bionic
 common_python_version_number: 2.7.16
 
 inventory_ckan_app_version: inventory-bionic
+inventory_ckan_ckanext_saml2_version: bionic-m2crypto
 
 trendmicro_deb_url: https://dsm.sec.helix.gsa.gov/software/agent/Ubuntu_18.04/x86_64/

@@ -36,6 +36,7 @@ provisioner:
         inventory_ckan_solr_port: 8983
       bionic:
         inventory_ckan_app_version: inventory-bionic
+        inventory_ckan_ckanext_saml2_version: bionic-m2crypto
 scenario:
   name: in_service
   test_sequence:
