@@ -4,8 +4,8 @@ saml2_site_url: https://uat-catalog-fe-data.reisys.com/
 saml2_idp_metadata_url: https://login.test.max.gov/idp/shibboleth
 
 # saml2 max shibboleth
-saml2_sp_public_key: "add-yours-to-inventory"
-saml2_sp_private_pem: "add-yours-to-inventory"
+saml2_sp_public_certificate: "add-yours-to-inventory"
+saml2_sp_private_key: "add-yours-to-inventory"
 
 # provide some default values to be overwritten later by group vars and host vars...
 project_source_new_code_path: /usr/lib/ckan-new

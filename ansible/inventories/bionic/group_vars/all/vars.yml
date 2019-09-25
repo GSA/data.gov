@@ -124,8 +124,8 @@ postfix_pem: "{{ default_tls_host_certificate }}"
 saml2_idp_entry: login.test.max.gov
 saml2_idp_metadata_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
 saml_idp_cert_fprint: "7A43DACB95D67FB6A804FD37C8A7DCA5B0384939"
-saml2_sp_public_key: "{{ default_tls_host_certificate }}"
-saml2_sp_private_pem: "{{ default_tls_host_key }}"
+saml2_sp_public_certificate: "{{ default_tls_host_certificate }}"
+saml2_sp_private_key: "{{ default_tls_host_key }}"
 
 
 # ckan
