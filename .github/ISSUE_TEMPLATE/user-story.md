@@ -7,6 +7,8 @@ assignees: ''
 ---
 ## User Story
 
+As a [user description], I want [behavior description] so that [goal].
+
 
 ## Details
 
