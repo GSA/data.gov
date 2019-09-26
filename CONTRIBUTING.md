@@ -5,6 +5,10 @@ Hello! Thank you for considering a contribution to
 and workflow and includes any tips for making contributions to our GitHub
 repositories.
 
+We want to ensure a welcoming environment for all of our projects. Our staff follow
+the [GSA Code of Conduct](https://github.com/GSA/open-source-policy/blob/master/CODE_OF_CONDUCT.md)
+and expect all contributors to do the same.
+
 Data.gov is a small team that is asked to cover a lot of diverse topics and
 projects and work across a very broad spectrum of stakeholders. So it is
 critical to discuss and communicate often and expectations and preferences for
