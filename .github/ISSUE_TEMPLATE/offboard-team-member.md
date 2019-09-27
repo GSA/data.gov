@@ -21,3 +21,5 @@ These tasks are performed by an Admin unless noted as an action for the outgoing
 - [ ] Remove team member from [New Relic](https://newrelic.com)
 - [ ] Remove team member from [Docker Hub](https://cloud.docker.com/orgs/datagov/teams)
 - [ ] Remove team member from [Data.gov admin accesses](https://github.com/GSA/datagov-account-management) following procedure
+- [ ] Remove team member from TTS Bug Bounty access [#bug-bounty-partners](https://gsa-tts.slack.com/messages/C5JQCD9PH)
+- [ ] Rotate [Ansible Vault](https://github.com/GSA/datagov-deploy/wiki/Keypair-Rotation#ansible-vault) key
