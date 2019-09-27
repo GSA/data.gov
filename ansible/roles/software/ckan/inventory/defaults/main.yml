@@ -1,4 +1,6 @@
 ---
+datagov_in_service: true
+
 # used in  production.ini/ckan_site_url and hosts
 ckan_site_domain: https://inventory.data.gov
 ckan_virtual_env: "{{virtual_env}}"
@@ -42,7 +44,7 @@ ckan_pkgs:
   - {
       name: "ckanext-saml2",
       repo: "https://github.com/GSA/ckanext-saml2",
-      branch: "max",
+      branch: "{{ inventory_ckan_ckanext_saml2_version }}",
       requirements: "requirements.txt"
     }
 
@@ -64,6 +66,7 @@ datastore_db_server: localhost
 inventory_ckan_app_version: inventory
 inventory_ckan_bucket_name: bucket
 inventory_ckan_bucket_prefix: prefix
+inventory_ckan_ckanext_saml2_version: max
 inventory_ckan_db_host: localhost
 inventory_ckan_solr_host: localhost
 inventory_ckan_solr_port: 8983

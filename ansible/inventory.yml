@@ -1,6 +1,6 @@
 ---
 - name: Provision Inventory databases
-  hosts: inventory-web,!v2
+  hosts: inventory-web
   pre_tasks:
     # Database initialization should be delegated to the jumpbox, however
     # jumpbox does not have access to the application databases (firewall/security
@@ -52,7 +52,7 @@
 
 
 - name: Provisioning Inventory CKAN Stack
-  hosts: inventory-web,!v2
+  hosts: inventory-web
   serial: 1
   vars:
     app_type: inventory
@@ -97,7 +97,7 @@
 
 
 - name: NewRelic
-  hosts: inventory-web,!v2
+  hosts: inventory-web
   vars:
     newrelic_app_name: inventory
   roles:
@@ -105,7 +105,7 @@
 
 
 - name: Service-level smoke tests
-  hosts: inventory-web,!v2
+  hosts: inventory-web
   tasks:
     - name: flush handlers
       meta: flush_handlers

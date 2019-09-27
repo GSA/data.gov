@@ -30,3 +30,10 @@ def test_apache2_sites(host):
     assert datapusher.mode == 0o640
     assert datapusher.contains(
         'ErrorLog /var/log/inventory/datapusher.error.log')
+
+
+def test_apache2(host):
+    apache2 = host.service('apache2')
+
+    assert apache2.is_enabled
+    assert apache2.is_running

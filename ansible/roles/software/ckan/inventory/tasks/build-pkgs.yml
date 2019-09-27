@@ -7,6 +7,7 @@
     force: yes
     umask: "0022"
   with_items: "{{ pkg }}"
+  notify: restart apache2
 
 - name: install requirements
   pip:
@@ -16,9 +17,11 @@
     umask: "0022"
   with_items: "{{ pkg }}"
   when: item.requirements is defined
+  notify: restart apache2
 
 - name: run setup
   command: chdir={{ virtualenv }}/src/{{ item.name }} {{ virtualenv }}/bin/python setup.py develop
   with_items: "{{ pkg }}"
   tags:
     - skip_ansible_lint
+  notify: restart apache2
