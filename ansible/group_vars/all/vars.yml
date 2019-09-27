@@ -3,6 +3,11 @@
 # THESE ARE NOT DEFAULTS, THESE VARS OVERRIDE INVENTORY group_vars/*  !!!
 # https://docs.ansible.com/ansible/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable
 
+# Operators for production and staging environments (GSA environments)
+datagov_operators_production: "{{ vault_datagov_operators_production }}"
+# Operators for test and sandbox environments
+datagov_operators_test: "{{ vault_datagov_operators_test }}"
+
 
 # catalog
 catalog_ckan_python_home: "{{ common_python_version_directory }}"
@@ -17,6 +22,7 @@ apache2_ssl_certificate_file: "{{ default_tls_host_certificate_filepath }}"
 apache2_ssl_certificate_key_file: "{{ default_tls_host_key_filepath }}"
 
 # common roles
+common_operators: "{{ jumpbox_operators }}"  # This is inherited from inventory variables
 common_reboot_notify_email: "{{ datagov_team_email }}"
 common_tls_host_key: "{{ default_tls_host_key }}"
 common_tls_host_certificate: "{{ default_tls_host_certificate }}"

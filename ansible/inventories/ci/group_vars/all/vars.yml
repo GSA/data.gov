@@ -7,6 +7,7 @@ catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
 catalog_ckan_db_user: ckan
 catalog_ckan_redis_host: catalog-harvester1tf.internal.ci.datagov.us
 catalog_ckan_redis_pass: "{{ vault_catalog_ckan_redis_pass }}"
+catalog_ckan_service_url: https://catalog.ci.datagov.us
 catalog_ckan_solr_host: datagovsolr1tf.internal.ci.datagov.us
 catalog_ckan_solr_port: "{{ solr_port }}"
 catalog_postgresql_login_host: "{{ vault_catalog_postgresql_login_host }}"
@@ -27,6 +28,14 @@ common_python_version_number: 2.7.10
 filebeat_enabled: false
 nessus_agent_enabled: false
 trendmicro_enabled: false
+
+
+# crm
+crm_service_url: https://crm.ci.datagov.us
+
+
+# dashboard
+dashboard_service_url: https://dashboard.ci.datagov.us
 
 
 # data.gov-wide variables
@@ -64,9 +73,10 @@ default_tls_host_certificate: |-
   -----END CERTIFICATE-----
 
 
-jumpbox_operators: "{{ vault_jumpbox_operators }}"
+jumpbox_operators: "{{ datagov_operators_test }}"
 
 
+inventory_ckan_service_url: https://inventory.ci.datagov.us
 inventory_ckan_solr_port: "{{ solr_port }}"
 
 
@@ -117,8 +127,8 @@ postfix_pem: "{{ vault_postfix_pem }}"
 saml2_idp_entry: login.test.max.gov
 saml2_idp_metadata_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
 saml_idp_cert_fprint: "67:76:BB:87:FE:76:D6:4A:BE:19:3F:E2:B6:1A:49:06:AE:56:06:B8"
-saml2_sp_public_key: "{{ vault_saml2_sp_public_key }}"
-saml2_sp_private_pem: "{{ vault_saml2_sp_private_pem }}"
+saml2_sp_public_certificate: "{{ vault_saml2_sp_public_certificate }}"
+saml2_sp_private_key: "{{ vault_saml2_sp_private_key }}"
 
 
 # fgdc2iso service on catalog-harvester
@@ -135,3 +145,7 @@ secops_user_public_key: "{{ vault_secops_user_public_key }}"
 solr_master_server: datagovsolr1tf.internal.{{ datagov_sandbox_env }}.datagov.us
 solr_java_packages:
   - openjdk-7-jdk
+
+
+# wordpress
+wordpress_service_url: https://wordpress.ci.datagov.us

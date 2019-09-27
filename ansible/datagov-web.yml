@@ -28,29 +28,33 @@
 - name: Cleanup
   hosts: wordpress-web
   serial: 1
+  tags: [provision, deploy]
   roles:
-  - { role: software/common/php-fixes, tags: [php, provision, deploy] }
-  - { role: software/wordpress/datagov-sudo-3-cleanup, tags: [provision, deploy, deploy-rollback, cleanup] }
+  - { role: software/common/php-fixes, tags: [php] }
+  - { role: software/wordpress/datagov-sudo-3-cleanup, tags: [deploy-rollback, cleanup] }
 
-- name: Smoke tests
-  hosts: wordpress-web
+  # TODO these should happen closer to the deploy play
+  # Host-level smoke tests
   tasks:
     - name: flush handlers
       meta: flush_handlers
+
     - name: assert app is up
       uri:
         url: https://{{ ansible_fqdn }}/
+        follow_redirects: none
         status_code: 200
         # TODO enable cert validation. Staging and production hosts have GSA
         # signed certs which should be valid.
         # https://github.com/GSA/datagov-deploy/issues/900
         validate_certs: false
-      tags: [deploy,provision]
+
     - name: assert access to simplesaml admin is forbidden
       uri:
         url: https://{{ ansible_fqdn }}/app/plugins/saml-20-single-sign-on/saml/www/module.php/core/loginuserpass.php
         status_code: 403
         validate_certs: false
+
     - name: assert CRM forms should redirect to general contact form
       uri:
         url: https://{{ ansible_fqdn }}/{{ item }}
@@ -62,6 +66,7 @@
         - issue
         - story
       register: contact_forms
+
     - name: assert Location header contains /contact
       fail:
         msg: "Expected Location {{ expected_url }} to be in {{ item.location }}"
@@ -69,4 +74,23 @@
       vars:
         expected_url: "{{ ansible_fqdn }}/contact"
       loop: "{{ contact_forms.results }}"
+
+
+- name: Service-level smoke tests
+  hosts: wordpress-web
   tags: [deploy,provision]
+  tasks:
+    - name: flush handlers
+      meta: flush_handlers
+
+    - name: assert app is up
+      uri:
+        url: "{{ wordpress_service_url }}/"
+        follow_redirects: none
+        status_code: 200
+        # TODO enable cert validation. Staging and production hosts have GSA
+        # signed certs which should be valid.
+        # https://github.com/GSA/datagov-deploy/issues/900
+        validate_certs: false
+      run_once: true
+      delegate_to: localhost

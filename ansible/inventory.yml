@@ -1,6 +1,6 @@
 ---
 - name: Provision Inventory databases
-  hosts: inventory-web,!v2
+  hosts: inventory-web
   pre_tasks:
     # Database initialization should be delegated to the jumpbox, however
     # jumpbox does not have access to the application databases (firewall/security
@@ -52,7 +52,7 @@
 
 
 - name: Provisioning Inventory CKAN Stack
-  hosts: inventory-web,!v2
+  hosts: inventory-web
   serial: 1
   vars:
     app_type: inventory
@@ -64,23 +64,63 @@
     - {role: software/ckan/inventory, tags: ['deploy']}
     - {role: software/ckan/saml2, tags: ['saml2']}
 
-- name: NewRelic
-  hosts: inventory-web,!v2
-  vars:
-    newrelic_app_name: inventory
-  roles:
-    - monitoring/newrelic/python-agent-ansible
-
-- name: Smoke test inventory
-  hosts: inventory-web,!v2
+  # Host-level smoke tests
   tasks:
     - name: flush handlers
       meta: flush_handlers
+
     - name: assert app is up
       uri:
-        url: http://{{ ansible_fqdn }}/
+        url: http://{{ ansible_fqdn }}/api/action/status_show
+        follow_redirects: none
         status_code: 200
         # TODO enable cert validation. Staging and production hosts have GSA
         # signed certs which should be valid.
         # https://github.com/GSA/datagov-deploy/issues/900
         validate_certs: false
+
+
+- name: logrotate configuration
+  hosts: inventory-web,!v2
+  roles:
+    - role: nickhammond.logrotate
+      logrotate_scripts:
+        - name: inventory
+          paths:
+            - /var/log/inventory/*
+          options:
+            - compress
+            - copytruncate
+            - weekly
+            - missingok
+            - rotate 8
+
+
+- name: NewRelic
+  hosts: inventory-web
+  vars:
+    newrelic_app_name: inventory
+  roles:
+    - monitoring/newrelic/python-agent-ansible
+
+
+- name: Service-level smoke tests
+  hosts: inventory-web
+  tasks:
+    - name: flush handlers
+      meta: flush_handlers
+
+    - name: assert inventory service is available
+      uri:
+        url: "{{ inventory_ckan_service_url }}/api/action/status_show"
+        follow_redirects: none
+        status_code: 200
+        # TODO enable cert validation. Staging and production hosts have GSA
+        # signed certs which should be valid.
+        # https://github.com/GSA/datagov-deploy/issues/900
+        validate_certs: false
+        headers:
+          # Avoid login redirect
+          Cookie: auth_tkt=1
+      run_once: true
+      delegate_to: localhost

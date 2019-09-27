@@ -7,14 +7,13 @@ driver:
   name: docker
 lint:
   name: yamllint
-  # TODO fix linting
   enabled: false
 platforms:
-  - name: ckan-inventory-app-trusty
+  - name: inventory-ckan-trusty
     image: ubuntu:trusty
     groups:
       - trusty
-  - name: ckan-inventory-app-bionic
+  - name: inventory-ckan-bionic
     image: ubuntu:bionic
     groups:
       - bionic
@@ -32,14 +31,14 @@ provisioner:
   inventory:
     group_vars:
       all:
+        datagov_in_service: false
         python_home: /usr
         inventory_ckan_solr_port: 8983
       bionic:
         inventory_ckan_app_version: inventory-bionic
         inventory_ckan_ckanext_saml2_version: bionic-m2crypto
 scenario:
-  name: default
-  # TODO fix idempotency
+  name: in_service
   test_sequence:
     - lint
     - destroy

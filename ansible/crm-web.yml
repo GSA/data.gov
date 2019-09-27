@@ -28,9 +28,34 @@
 - name: Cleanup
   hosts: crm-web
   serial: 1
+  tags: [deploy,provision]
   roles:
-  - { role: software/common/php-fixes, tags: [php, provision, deploy] }
-  - { role: software/crm/crm-sudo-3-cleanup, tags: [provision, deploy, deploy-rollback] }
+  - { role: software/common/php-fixes, tags: [php] }
+  - { role: software/crm/crm-sudo-3-cleanup, tags: [deploy-rollback] }
+
+  # TODO this should be closer to the deploy play
+  # Host-level smoke tests
+  tasks:
+    - name: flush handlers
+      meta: flush_handlers
+
+    - name: assert app is up
+      uri:
+        url: https://{{ ansible_fqdn }}/
+        follow_redirects: none
+        status_code: 200
+        # TODO enable cert validation. Staging and production hosts have GSA
+        # signed certs which should be valid.
+        # https://github.com/GSA/datagov-deploy/issues/900
+        validate_certs: false
+
+    - name: access to simplesaml admin is forbidden
+      uri:
+        url: https://{{ ansible_fqdn }}/simplesaml/module.php/core/loginuserpass.php
+        follow_redirects: none
+        status_code: 403
+        validate_certs: false
+
 
 - name: CRM Migration
   hosts: crm-web
@@ -39,23 +64,21 @@
   roles:
   - { role: software/crm/crm-migrations, tags: [provision, deploy, migrate] }
 
-- name: Smoke test CRM
+- name: Service-level smoke tests
   hosts: crm-web
+  tags: [deploy,provision]
   tasks:
     - name: flush handlers
       meta: flush_handlers
+
     - name: assert app is up
       uri:
-        url: https://{{ ansible_fqdn }}/
+        url: "{{ crm_service_url }}/"
+        follow_redirects: none
         status_code: 200
         # TODO enable cert validation. Staging and production hosts have GSA
         # signed certs which should be valid.
         # https://github.com/GSA/datagov-deploy/issues/900
         validate_certs: false
-      tags: [deploy,provision]
-    - name: access to simplesaml admin is forbidden
-      uri:
-        url: https://{{ ansible_fqdn }}/simplesaml/module.php/core/loginuserpass.php
-        status_code: 403
-        validate_certs: false
-      tags: [deploy,provision]
+      run_once: true
+      delegate_to: localhost
