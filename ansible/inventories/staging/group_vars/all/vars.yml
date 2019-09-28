@@ -108,7 +108,7 @@ default_tls_host_certificate: |-
   -----END CERTIFICATE-----
 
 
-jumpbox_operators: "{{ vault_jumpbox_operators }}"
+jumpbox_operators: "{{ datagov_operators_production }}"
 
 
 inventory_ckan_service_url: https://inventory-datagov.dev-ocsit.bsp.gsa.gov
@@ -189,8 +189,8 @@ postfix_sender_canonical_maps:
 saml2_idp_entry: login.test.max.gov
 saml2_idp_metadata_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
 saml_idp_cert_fprint: "7A43DACB95D67FB6A804FD37C8A7DCA5B0384939"
-saml2_sp_public_key: "{{ vault_saml2_sp_public_key }}"
-saml2_sp_private_pem: "{{ vault_saml2_sp_private_pem }}"
+saml2_sp_public_certificate: "{{ vault_saml2_sp_public_certificate }}"
+saml2_sp_private_key: "{{ vault_saml2_sp_private_key }}"
 
 # td-agent
 elasticsearch_endpoint: "{{ vault_elasticsearch_endpoint }}"

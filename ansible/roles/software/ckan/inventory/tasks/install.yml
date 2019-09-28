@@ -5,6 +5,7 @@
     - memcached
     - swig
     - xmlsec1
+  notify: restart apache2
 
 - name: Create log directory
   file: path={{ inventory_log_dir }} state=directory owner=root group=www-data mode=0750
@@ -35,11 +36,6 @@
     pkg: "{{ ckan_pkgs }}"
     virtualenv: "{{ project_source_new_code_path }}"
 
-# TODO move this upstream somewhere. Maybe ckan's requirements.txt.
-- name: install M2Crypto for pysaml2
-  pip: name=M2Crypto version=0.23.0 virtualenv="{{ project_source_new_code_path }}" state=present umask=0022
-  when: ansible_distribution_release == "trusty"
-
 - name: Remove old datapusher code
   file: path="{{ datapusher_virtual_env }}" state=absent
 
@@ -59,6 +55,7 @@
     - etc/ckan/who.ini
     - etc/ckan/apache.wsgi
     - etc/ckan/datapusher.wsgi
+  notify: restart apache2
 
 - name: Configure production.ini
   template: src={{ item }} dest=/{{ item }} owner=root group=www-data mode=0640
@@ -67,7 +64,7 @@
     - etc/ckan/datapusher_settings.py
     - etc/apache2/sites-enabled/ckan.conf
     - etc/apache2/sites-enabled/datapusher.conf
-
+  notify: restart apache2
 
 - include: additional-tasks.yml
   virtualenv: "{{ project_source_new_code_path }}"
@@ -83,13 +80,12 @@
     src: "{{ project_source_new_code_path }}"
     path: "{{ current_source_symlink }}"
     state: link
-
-- name: restart apache
-  action: service name=apache2 state=restarted
-  tags:
-    - molecule-notest
+  notify: restart apache2
 
 - name: point site_url in /etc/hosts to localhost
-  action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ ckan_site_domain | regex_replace('https?\://','') }}"
+  action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ ckan_site_domain | regex_replace('https?\://','') }}" state=absent
   tags:
     - molecule-notest # Device or resource busy ranaming temp file
+
+- name: Ensure apache2 is started and enabled
+  service: name=apache2 enabled={{ datagov_in_service | ternary('true', 'false') }} state={{ datagov_in_service | ternary('started', 'stopped') }}

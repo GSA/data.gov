@@ -62,7 +62,7 @@ dashboardweb[1:2]p.prod-ocsit.bsp.gsa.gov
 [elasticsearch]
 
 [inventory-web:children]
-inventory-web-v1
+inventory-web-v1 datagov_in_service=false
 inventory-web-v2
 
 [inventory-web-v1]
