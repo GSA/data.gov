@@ -1,3 +1,8 @@
+INVENTORY_ENVIRONMENTS := \
+  mgmt \
+  production \
+  staging
+
 MOLECULE_SUITES := \
   software/ckan/catalog/ckan-app \
   software/ckan/inventory \
@@ -22,6 +27,9 @@ ANSIBLE_PLAYBOOKS := \
   site.yml \
   solr.yml
 
+# Create lint-<inventory> targets
+LINT_TARGETS := $(patsubst %,lint-%,$(INVENTORY_ENVIRONMENTS))
+
 # Create test-molecule-<suite> targets
 MOLECULE_SUITE_TARGETS := $(patsubst %,test-molecule-%,$(MOLECULE_SUITES))
 
@@ -36,9 +44,14 @@ vendor:
 setup:
 	pipenv install --dev
 
-lint:
+lint: $(LINT_TARGETS)
 	cd ansible && ansible-playbook --syntax-check $(ANSIBLE_PLAYBOOKS)
 	cd ansible && ansible-lint -v -x ANSIBLE0010 --exclude=roles/vendor *.yml
+
+$(LINT_TARGETS):
+	ANSIBLE_INVENTORY_ANY_UNPARSED_IS_FAILED=1 ansible-playbook -i ansible/inventories/$(subst lint-,,$@) --syntax-check ansible/*.yml
+
+	ansible-lint -v -x ANSIBLE0010 --exclude=ansible/roles/vendor ansible/*.yml
 
 $(MOLECULE_SUITE_TARGETS):
 	cd ansible/roles/$(subst test-molecule-,,$@) && \
