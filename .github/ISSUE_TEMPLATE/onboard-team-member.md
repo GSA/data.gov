@@ -3,11 +3,7 @@ name: Onboard team member
 about: Checklist for onboarding a new team member to Data.gov
 title: "[Onboard] <email>"
 ---
-Welcome! [The Onboarding
-wiki](https://github.com/GSA/datagov-deploy/wiki/Onboarding-Offboarding)
-describes the onboarding process for new team members on Data.gov. You’ll learn
-mostly from pairing and interaction with your teammates but these are some handy
-resources to get you started.
+Welcome! [The Onboarding wiki](https://github.com/GSA/datagov-deploy/wiki/Onboarding-Offboarding) describes the onboarding process for new team members on Data.gov. You’ll learn mostly from pairing and interaction with your teammates but these are some handy resources to get you started.
 
 Below are the tasks that will drive the onboarding process.
 
