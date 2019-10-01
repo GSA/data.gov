@@ -17,21 +17,29 @@ Below are the tasks that will drive the onboarding process.
 - [ ] Add team member to [TTS Slack](https://handbook.18f.gov/slack/#tts-staff)
 - [ ] Add team member to #datagov-pmo (PMO only)
 - [ ] Add team member to Data.gov slack channels
-  - [ ] #bug-bounty
-  - [ ] #bug-bounty-partners
-  - [ ] #datagov-alerts
-  - [ ] #datagov-ckan-multi
-  - [ ] #datagov-comms
-  - [ ] #datagov-devsecops
-  - [ ] #datagov-notifications
-  - [ ] #opp-data-analytics
+  - #bug-bounty
+  - #bug-bounty-partners
+  - #datagov-alerts
+  - #datagov-ckan-multi
+  - #datagov-comms
+  - #datagov-devsecops
+  - #datagov-notifications
+  - #opp-data-analytics
+- [ ] Invite team member to calendar events
+  - Daily sync
+  - Sprint planning
+  - Retro
+  - CKAN-multi project syncs
+  - FGDC meeting
+  - CKAN Gov Working group
 - [ ] Add new team member to email lists
-  - [ ] [Data.gov support list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagov)
-  - [ ] [Data.gov team list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagovhelp)
+  - [Data.gov support list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagov)
+  - [Data.gov team list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagovhelp)
+  - [Inventory help list](https://groups.google.com/a/gsa.gov/forum/#!aboutgroup/inventory-help)
 - [ ] Make sure team member has 2FA enabled for their GitHub account and [request](https://github.com/GSA/GitHub-Administration/blob/master/README.md#requesting-access-to-the-gsa-organization) membership to GSA GitHub org
 - [ ] Add team member to GitHub teams
-  - [ ] [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members) (PMO only)
-  - [ ] [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members) (non-PMO)
+  - [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members) (PMO only)
+  - [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members) (non-PMO)
 - [ ] Request TTS Bug Bounty access [#bug-bounty-partners](https://gsa-tts.slack.com/messages/C5JQCD9PH)
 - [ ] Share Ansible vault keys with team member
 - [ ] Add team member to monthly CKAN US working group calls
