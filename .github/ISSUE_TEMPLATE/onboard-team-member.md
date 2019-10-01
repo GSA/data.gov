@@ -25,6 +25,13 @@ Below are the tasks that will drive the onboarding process.
   - #datagov-devsecops
   - #datagov-notifications
   - #opp-data-analytics
+- [ ] Invite team member to calendar events
+  - Daily sync
+  - Sprint planning
+  - Retro
+  - CKAN-multi project syncs
+  - FGDC meeting
+  - CKAN Gov Working group
 - [ ] Add new team member to email lists
   - [Data.gov support list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagov)
   - [Data.gov team list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagovhelp)
