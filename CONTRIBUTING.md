@@ -118,8 +118,8 @@ Work that we are planning on doing and will groom and schedule into a sprint.
 - Indicate the intended benefit and who the story is for in the "as a ..., I want
   ..., so that ..." form.
 - Acceptance criteria is defined.
-- If necessary, the story includes a security testing plan. For example, the
-  acceptance criteria include automated tests and alerts for unexpected behavior.
+- If necessary, the story includes a security testing plan and any tasks from
+  that plan are included as acceptance criteria.
 
 
 #### Sprint backlog
