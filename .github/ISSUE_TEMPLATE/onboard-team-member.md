@@ -15,9 +15,6 @@ Below are the tasks that will drive the onboarding process.
   - Daily sync
   - Sprint planning
   - Retro
-  - CKAN-multi project syncs
-  - FGDC meeting
-  - CKAN Gov Working group
 - [ ] Add new team member to email lists
   - [Data.gov support list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagov)
   - [Data.gov team list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagovhelp)
@@ -49,6 +46,10 @@ For new Project Management Office team members, follow these additional steps:
   - #datagov-notifications
   - #opp-data-analytics
 - [ ] Add team member to [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members) GitHub team
+- [ ] Invite team member to calendar events
+  - CKAN-multi project syncs
+  - FGDC meeting
+  - CKAN Gov Working group
 
 
 ### Tasks for new team member
