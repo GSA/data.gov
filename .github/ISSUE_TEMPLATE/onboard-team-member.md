@@ -18,7 +18,7 @@ Below are the tasks that will drive the onboarding process.
 - [ ] Add new team member to email lists
   - [Data.gov support list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagov)
   - [Data.gov team list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagovhelp)
-  - [Inventory help list](https://groups.google.com/a/gsa.gov/forum/#!aboutgroup/inventory-help)
+  - [Inventory help list](https://groups.google.com/a/gsa.gov/forum/#!forum/inventory-help)
 - [ ] Make sure team member has 2FA enabled for their GitHub account and [request](https://github.com/GSA/GitHub-Administration/blob/master/README.md#requesting-access-to-the-gsa-organization) membership to GSA GitHub org
 - [ ] Add team member to [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members) GitHub team
 - [ ] Request TTS Bug Bounty access [#bug-bounty-partners](https://gsa-tts.slack.com/messages/C5JQCD9PH)
