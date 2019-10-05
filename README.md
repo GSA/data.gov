@@ -409,6 +409,24 @@ Re-run the playbook from a particular step.
 Refer to [kitchen](https://kitchen.ci/) commands for more information.
 
 
+### Editing Vault secrets
+
+If you have the Ansible Vault key (`~/ansible-secret.txt`), you can review and
+edit secrets with `ansible-vault`.
+
+Review secrets in a vault.
+
+    $ ansible-vault view ansible/inventories/staging/group_vars/all/vault.yml
+
+Edit secrets in a vault.
+
+    $ ansible-vault edit ansible/inventories/staging/group_vars/all/vault.yml
+
+You can configure git to automatically decrypt Vault files for reviewing diffs.
+
+    $ git config --global diff.ansible-vault.textconv "ansible-vault view"
+
+
 ## Troubleshooting
 
 The CIS hardening benchmark sets a `027` umask, which means by default files are
