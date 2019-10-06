@@ -10,32 +10,17 @@ Below are the tasks that will drive the onboarding process.
 
 ### Tasks for admin or onboarding buddy
 
-- [ ] Add team member to [TTS Slack](https://handbook.18f.gov/slack/#tts-staff)
-- [ ] Add team member to #datagov-pmo (PMO only)
-- [ ] Add team member to Data.gov slack channels
-  - #bug-bounty
-  - #bug-bounty-partners
-  - #datagov-alerts
-  - #datagov-ckan-multi
-  - #datagov-comms
-  - #datagov-devsecops
-  - #datagov-notifications
-  - #opp-data-analytics
+- [ ] Add team member to [TTS Slack](https://handbook.18f.gov/slack/#tts-staff) and #datagov-devsecops
 - [ ] Invite team member to calendar events
   - Daily sync
   - Sprint planning
   - Retro
-  - CKAN-multi project syncs
-  - FGDC meeting
-  - CKAN Gov Working group
 - [ ] Add new team member to email lists
   - [Data.gov support list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagov)
   - [Data.gov team list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagovhelp)
-  - [Inventory help list](https://groups.google.com/a/gsa.gov/forum/#!aboutgroup/inventory-help)
+  - [Inventory help list](https://groups.google.com/a/gsa.gov/forum/#!forum/inventory-help)
 - [ ] Make sure team member has 2FA enabled for their GitHub account and [request](https://github.com/GSA/GitHub-Administration/blob/master/README.md#requesting-access-to-the-gsa-organization) membership to GSA GitHub org
-- [ ] Add team member to GitHub teams
-  - [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members) (PMO only)
-  - [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members) (non-PMO)
+- [ ] Add team member to [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members) GitHub team
 - [ ] Request TTS Bug Bounty access [#bug-bounty-partners](https://gsa-tts.slack.com/messages/C5JQCD9PH)
 - [ ] Share Ansible vault keys with team member
 - [ ] Grant access to AWS OPP account
@@ -47,6 +32,24 @@ Below are the tasks that will drive the onboarding process.
 - [ ] Introduce new team member to OMB team
 - [ ] Introduce new team member to the Federal Geospatial Data Community
 - [ ] Introduce new team member to government Open Data community at monthly meeting
+
+For new Project Management Office team members, follow these additional steps:
+
+- [ ] Add team member to #datagov-pmo (PMO only)
+- [ ] Add team member to Data.gov slack channels
+  - #bug-bounty
+  - #bug-bounty-partners
+  - #datagov-alerts
+  - #datagov-ckan-multi
+  - #datagov-comms
+  - #datagov-devsecops
+  - #datagov-notifications
+  - #opp-data-analytics
+- [ ] Add team member to [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members) GitHub team
+- [ ] Invite team member to calendar events
+  - CKAN-multi project syncs
+  - FGDC meeting
+  - CKAN Gov Working group
 
 
 ### Tasks for new team member
