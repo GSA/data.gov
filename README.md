@@ -83,7 +83,9 @@ Once you're SSH'd into the jumpbox, follow these steps for deploy.
 1. Run the playbook from the ansible directory.
 
        $ cd ansible
-       $ pipenv run ansible-playbook site.yml
+       $ pipenv run ansible-playbook site.yml --skip-tags filebeat
+       
+   _Note: we skip filebeat on deploys due to a version lock (https://github.com/GSA/datagov-deploy-common/issues/24)._
 
 
 ### Common plays
