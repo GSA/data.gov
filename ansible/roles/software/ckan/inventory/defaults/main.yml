@@ -1,9 +1,17 @@
 ---
+datagov_in_service: true
+
 # used in  production.ini/ckan_site_url and hosts
 ckan_site_domain: https://inventory.data.gov
 ckan_virtual_env: "{{virtual_env}}"
 datapusher_virtual_env: /usr/lib/datapusher
 app_type: inventory
+
+inventory_log_dir: /var/log/inventory
+inventory_ckan_error_log: "{{ inventory_log_dir }}/ckan.error.log"
+inventory_ckan_access_log: "{{ inventory_log_dir }}/ckan.access.log"
+inventory_datapusher_error_log: "{{ inventory_log_dir }}/datapusher.error.log"
+inventory_datapusher_access_log: "{{ inventory_log_dir }}/datapusher.access.log"
 
 # packages to install ckan app
 ckan_pkgs:
@@ -36,7 +44,7 @@ ckan_pkgs:
   - {
       name: "ckanext-saml2",
       repo: "https://github.com/GSA/ckanext-saml2",
-      branch: "max",
+      branch: "{{ inventory_ckan_ckanext_saml2_version }}",
       requirements: "requirements.txt"
     }
 
@@ -58,6 +66,7 @@ datastore_db_server: localhost
 inventory_ckan_app_version: inventory
 inventory_ckan_bucket_name: bucket
 inventory_ckan_bucket_prefix: prefix
+inventory_ckan_ckanext_saml2_version: max
 inventory_ckan_db_host: localhost
 inventory_ckan_solr_host: localhost
 inventory_ckan_solr_port: 8983

@@ -1,7 +1,7 @@
 ---
-- include_tasks: install.yml
+- import_tasks: install.yml
 
-- include_tasks: db-setup.yml
+- import_tasks: db-setup.yml
   tags: [ 'never', 'db-setup' ]
-- include_tasks: db-init.yml
+- import_tasks: db-init.yml
   tags: [ 'never', 'db-init' ]

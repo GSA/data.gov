@@ -7,6 +7,7 @@ catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
 catalog_ckan_db_user: ckan
 catalog_ckan_redis_host: catalog-harvester1tf.internal.bionic.datagov.us
 catalog_ckan_redis_pass: "{{ vault_catalog_ckan_redis_pass }}"
+catalog_ckan_service_url: https://catalog.bionic.datagov.us
 catalog_ckan_solr_host: datagovsolr1tf.internal.bionic.datagov.us
 catalog_ckan_solr_port: "{{ solr_port }}"
 catalog_postgresql_login_host: "{{ vault_catalog_postgresql_login_host }}"
@@ -26,6 +27,14 @@ common_python_version_number: 2.7.16
 filebeat_enabled: false
 nessus_agent_enabled: false
 trendmicro_enabled: false
+
+
+# crm
+crm_service_url: https://crm.bionic.datagov.us
+
+
+# dashboard
+dashboard_service_url: https://dashboard.bionic.datagov.us
 
 
 datagov_enable_postgresql_role: true
@@ -62,10 +71,11 @@ default_tls_host_certificate: |-
   -----END CERTIFICATE-----
 
 
-jumpbox_operators: "{{ vault_jumpbox_operators }}"
+jumpbox_operators: "{{ datagov_operators_test }}"
 
 
 inventory_ckan_app_version: inventory-bionic
+inventory_ckan_service_url: https://inventory.bionic.datagov.us
 inventory_ckan_solr_port: "{{ solr_port }}"
 
 pycsw_app_version: datagov/v2.4.x
@@ -114,10 +124,13 @@ postfix_pem: "{{ default_tls_host_certificate }}"
 saml2_idp_entry: login.test.max.gov
 saml2_idp_metadata_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
 saml_idp_cert_fprint: "7A43DACB95D67FB6A804FD37C8A7DCA5B0384939"
-saml2_sp_public_key: "{{ default_tls_host_key }}"
-saml2_sp_private_pem: "{{ default_tls_host_certificate }}"
+saml2_sp_public_certificate: "{{ default_tls_host_certificate }}"
+saml2_sp_private_key: "{{ default_tls_host_key }}"
 
 
 # ckan
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
 who_secure: True
+
+# wordpress
+wordpress_service_url: https://wordpress.bionic.data.gov

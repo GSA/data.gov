@@ -9,6 +9,7 @@ catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
 catalog_ckan_db_user: "{{ vault_catalog_ckan_db_user }}"
 catalog_ckan_harvest_fetch_process_count: 6
 catalog_ckan_qa_update_process_count: 5
+catalog_ckan_service_url: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
 catalog_ckan_solr_host: datagov-solr1d.dev-ocsit.bsp.gsa.gov
 catalog_ckan_solr_port: "8983"
 # read-only database variables
@@ -31,7 +32,7 @@ common_filebeat_config:
   output.logstash:
     hosts: ["{{ common_filebeat_logstash_output }}"]
 
-common_newrelic_enabled: true
+common_newrelic_enabled: "{{ datagov_in_service | default(true) }}"
 common_python_version_number: 2.7.10
 filebeat_enabled: true
 nessus_agent_enabled: true
@@ -41,6 +42,11 @@ filebeat_config: "{{ common_filebeat_config }}"
 products:
   - filebeat
 
+# crm
+crm_service_url: https://crm-datagov.dev-ocsit.bsp.gsa.gov
+
+# dashboard
+dashboard_service_url: https://dashboard-datagov.dev-ocsit.bsp.gsa.gov
 
 # data.gov-wide variables
 datagov_environment: staging
@@ -102,9 +108,10 @@ default_tls_host_certificate: |-
   -----END CERTIFICATE-----
 
 
-jumpbox_operators: "{{ vault_jumpbox_operators }}"
+jumpbox_operators: "{{ datagov_operators_production }}"
 
 
+inventory_ckan_service_url: https://inventory-datagov.dev-ocsit.bsp.gsa.gov
 inventory_ckan_solr_host: datagov-solrm1d.dev-ocsit.bsp.gsa.gov
 inventory_ckan_solr_port: "8983"
 
@@ -168,12 +175,22 @@ postfix_relaytls: true
 postfix_sasl_auth_enable: false
 postfix_smtpd_tls_cert_file: /etc/ssl/certs/datagov_host.crt
 postfix_smtpd_tls_key_file: /etc/ssl/certs/datagov_host.key
+postfix_aliases:
+  - user: postmaster
+    alias: root
+  - user: root
+    alias: "{{ datagov_team_email }}"
+postfix_sender_canonical_maps:
+  - sender: "@{{ ansible_fqdn }}"
+    rewrite: no-reply+{{ ansible_fqdn }}@data.gov
+
+
 # SAML
 saml2_idp_entry: login.test.max.gov
 saml2_idp_metadata_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
 saml_idp_cert_fprint: "7A43DACB95D67FB6A804FD37C8A7DCA5B0384939"
-saml2_sp_public_key: "{{ vault_saml2_sp_public_key }}"
-saml2_sp_private_pem: "{{ vault_saml2_sp_private_pem }}"
+saml2_sp_public_certificate: "{{ vault_saml2_sp_public_certificate }}"
+saml2_sp_private_key: "{{ vault_saml2_sp_private_key }}"
 
 # td-agent
 elasticsearch_endpoint: "{{ vault_elasticsearch_endpoint }}"
@@ -202,3 +219,5 @@ users: "{{ vault_users }}"
 ci_inventory: inventories/staging
 ci_ssh_config_host: '*.dev-ocsit.bsp.gsa.gov'
 ci_deploy_version: develop
+
+wordpress_service_url: https://wordpress-datagov.dev-ocsit.bsp.gsa.gov

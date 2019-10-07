@@ -31,7 +31,7 @@ default_tls_host_certificate: |-
   -----END CERTIFICATE-----
 
 
-jumpbox_operators: "{{ vault_jumpbox_operators }}"
+jumpbox_operators: "{{ datagov_operators_test }}"
 
 
 # public urls
@@ -75,8 +75,8 @@ postfix_pem: "{{ vault_postfix_pem }}"
 saml2_idp_entry: login.max.gov
 saml2_idp_metadata_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
 saml_idp_cert_fprint: "67:76:BB:87:FE:76:D6:4A:BE:19:3F:E2:B6:1A:49:06:AE:56:06:B8"
-saml2_sp_public_key: "{{ vault_saml2_sp_public_key }}"
-saml2_sp_private_pem: "{{ vault_saml2_sp_private_pem }}"
+saml2_sp_public_certificate: "{{ vault_saml2_sp_public_certificate }}"
+saml2_sp_private_key: "{{ vault_saml2_sp_private_key }}"
 
 # td-agent
 elasticsearch_endpoint: "{{ vault_elasticsearch_endpoint }}"

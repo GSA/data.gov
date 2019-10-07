@@ -32,6 +32,28 @@
   - { role: software/common/php-fixes, tags: [php, provision, deploy] }
   - { role: software/dashboard/dashboard-sudo-3-cleanup, tags: [provision, deploy, deploy-rollback] }
 
+  # TODO move these closer to the deploy play
+  # Host-level smoke tests
+  tasks:
+    - name: flush handlers
+      meta: flush_handlers
+
+    - name: assert app is up
+      uri:
+        url: https://{{ ansible_fqdn }}/offices/qa
+        follow_redirects: none
+        status_code: 200
+        # TODO enable cert validation. Staging and production hosts have GSA
+        # signed certs which should be valid.
+        # https://github.com/GSA/datagov-deploy/issues/900
+        validate_certs: false
+
+    - name: access to simplesaml admin is forbidden
+      uri:
+        url: https://{{ ansible_fqdn }}/simplesaml/module.php/core/loginuserpass.php
+        follow_redirects: none
+        status_code: 403
+        validate_certs: false
 
 
 - name: Dashboard DB Migration
@@ -41,23 +63,21 @@
   roles:
   - { role: software/dashboard/dashboard-db-migrations, tags: [provision, deploy, migrate] }
 
-- name: Smoke test dashboard
+- name: Service-level smoke tests for dashboard
   hosts: dashboard-web
+  tags: [deploy,provision]
   tasks:
     - name: flush handlers
       meta: flush_handlers
+
     - name: assert app is up
       uri:
-        url: https://{{ ansible_fqdn }}/
+        url: "{{ dashboard_service_url }}/offices/qa"
+        follow_redirects: none
         status_code: 200
         # TODO enable cert validation. Staging and production hosts have GSA
         # signed certs which should be valid.
         # https://github.com/GSA/datagov-deploy/issues/900
         validate_certs: false
-      tags: [deploy,provision]
-    - name: access to simplesaml admin is forbidden
-      uri:
-        url: https://{{ ansible_fqdn }}/simplesaml/module.php/core/loginuserpass.php
-        status_code: 403
-        validate_certs: false
-      tags: [deploy,provision]
+      run_once: true
+      delegate_to: localhost
