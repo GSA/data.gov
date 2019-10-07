@@ -181,7 +181,7 @@ postfix_aliases:
   - user: root
     alias: "{{ datagov_team_email }}"
 postfix_sender_canonical_maps:
-  - sender: root
+  - sender: "@{{ ansible_fqdn }}"
     rewrite: no-reply+{{ ansible_fqdn }}@data.gov
 
 
