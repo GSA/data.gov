@@ -42,9 +42,8 @@
 - name: gsa.ansible-os-ubuntu-16
   src: https://github.com/GSA/ansible-os-ubuntu-16
   version: 1.0.4
-- name: gsa.ansible-role-beats
-  src: https://github.com/GSA/ansible-role-beats
-  version: master
+- name: jobscore.beats
+  version: v1.0.0
 - name: gsa.datagov-deploy-ci
   src: https://github.com/GSA/datagov-deploy-ci
   version: master
