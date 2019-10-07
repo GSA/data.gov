@@ -145,7 +145,7 @@
 - name: NewRelic
   hosts: catalog-admin,!v2
   vars:
-    newrelic_app_name: catalog-admin,!v2
+    newrelic_app_name: catalog-admin
   roles:
     - monitoring/newrelic/python-agent-ansible
 
