@@ -78,6 +78,7 @@
         # signed certs which should be valid.
         # https://github.com/GSA/datagov-deploy/issues/900
         validate_certs: false
+      when: datagov_in_service | default(true)
 
 
 - name: logrotate configuration
@@ -102,6 +103,8 @@
     newrelic_app_name: inventory
   roles:
     - monitoring/newrelic/python-agent-ansible
+  tags:
+    - newrelic
 
 
 - name: Service-level smoke tests
