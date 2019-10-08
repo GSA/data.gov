@@ -84,7 +84,7 @@ Once you're SSH'd into the jumpbox, follow these steps for deploy.
 
        $ cd ansible
        $ pipenv run ansible-playbook site.yml --skip-tags filebeat
-       
+
    _Note: we skip filebeat on deploys due to a version lock (https://github.com/GSA/datagov-deploy-common/issues/24)._
 
 
@@ -125,7 +125,11 @@ dist-upgrade.
 Force a reboot even if no reboot is required. Use this if you just need to
 reboot hosts for any reason.
 
-    $ ansible-playbook actions/reboot.yml -e force_reboot=true --limit ${host}
+    $ ansible-playbook actions/reboot.yml -e '{"force_reboot": true}' --limit ${host}
+
+_Note: for Ansible to parse boolean values in
+[`--extra-vars`](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#passing-variables-on-the-command-line)
+we use the JSON syntax in the above example._
 
 Install the common Services.
 
