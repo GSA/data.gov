@@ -56,7 +56,7 @@
   version: v1.2.2
 - name: gsa.datagov-deploy-common
   src: https://github.com/GSA/datagov-deploy-common
-  version: v2.2.3
+  version: v2.3.0
 - name: gsa.datagov-deploy-jumpbox
   src: https://github.com/GSA/datagov-deploy-jumpbox
   version: v2.0.0

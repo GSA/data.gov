@@ -1,6 +1,8 @@
 ---
 name: Bug
-about: Description of a bug or defect.
+about: Description of a bug or defect
+labels:
+  - bug
 ---
 
 <!-- description of the issue, please including any relevant information:
