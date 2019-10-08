@@ -98,13 +98,6 @@ Deploy the entire Platform, including Applications, into a consistent state.
 
     $ ansible-playbook site.yml
 
-_Note: the above playbook is
-[incomplete](https://github.com/GSA/datagov-deploy/issues/506). There are a few
-playbooks that must be run with specific parameters. For that we include them in
-`site.sh`. It's probably best just to run those playbooks as one-offs._
-
-    $ ./site.sh ${inventory}
-
 If the playbooks failed to apply to a few hosts, you can address the failures
 and then retry with the `--limit` parameter and the retry file.
 
