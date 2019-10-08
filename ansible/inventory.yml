@@ -103,6 +103,8 @@
     newrelic_app_name: inventory
   roles:
     - monitoring/newrelic/python-agent-ansible
+  tags:
+    - newrelic
 
 
 - name: Service-level smoke tests
