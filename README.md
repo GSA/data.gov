@@ -36,12 +36,13 @@ formerly BSP). Our sandbox environments are provisioned by
 
 GSA VPN access is required to access production and staging.
 
-Environment | Deployed from      | Jumpbox
------------ | -------------      | -------
-production  | `master` (manual)  | datagov-jump2p.prod-ocsit.bsp.gsa.gov
-staging     | `release/*` (manual)  | datagov-jump2d.dev-ocsit.bsp.gsa.gov
-bionic      | `develop` (manual) | jump.bionic.datagov.us
-ci          | `develop` (manual) | jump.ci.datagov.us
+Environment | Deployed from      | ISP | Jumpbox
+----------- | -------------      | --- | ----
+production  | `master` (manual)  | BSP | datagov-jump2p.prod-ocsit.bsp.gsa.gov
+staging     | `release/*` (manual)  | BSP | datagov-jump2d.dev-ocsit.bsp.gsa.gov
+bionic      | `develop` (manual) | AWS sandbox | jump.bionic.datagov.us
+ci          | `develop` (manual) | AWS sandbox | jump.ci.datagov.us
+local       | feature branches   | laptop  | localhost
 
 
 ## Usage
