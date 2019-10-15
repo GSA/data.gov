@@ -29,7 +29,7 @@
     arguments: "--ansi --no-dev --no-interaction --optimize-autoloader --no-scripts"
     working_dir: "{{ project_source_new_code_path }}"
   environment:
-        COMPOSER_DISCARD_CHANGES: "true"
+    COMPOSER_DISCARD_CHANGES: "true"
 
 - name: Ensuring required directories exist
   file:

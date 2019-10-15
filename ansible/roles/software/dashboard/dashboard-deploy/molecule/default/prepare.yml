@@ -1,0 +1,28 @@
+---
+- name: Prepare
+  hosts: all
+  pre_tasks:
+    - name: Add repository for PHP
+      apt_repository:
+        repo: "ppa:ondrej/php"
+      register: ppa
+    - name: Update Apt
+      apt: update_cache=yes
+      when: ppa is changed
+
+  roles:
+    - role: geerlingguy.nginx
+    - role: geerlingguy.php
+      php_webserver_daemon: nginx
+    - role: geerlingguy.composer
+
+  tasks:
+    - name: Create ubuntu user
+      user: name=ubuntu state=present
+
+    - name: Install OS dependencies
+      apt: name={{ packages }} state=present update_cache=yes cache_valid_time={{ 24 * 60 * 60 }}
+      vars:
+        packages:
+          - cron
+          - git
