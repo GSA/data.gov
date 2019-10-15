@@ -1,4 +1,7 @@
---- # Dashboard repo deployment & composer install
+---
+- name: Create log dir
+  file: path=/var/log/dashboard state=directory owner=ubuntu group=ubuntu mode=0755
+  become: yes
 
 - name: Check whether "{{ project_source_new_code_path }}" exists
   stat: path="{{ project_source_new_code_path }}"
@@ -73,18 +76,48 @@
     path: "{{ current_source_symlink }}"
     state: link
 
+# Remove old crons. These have moved to supervisor.
 - name: Set up campaign status cfo-act download cron job to run @ 11:15pm EST nightly
   cron:
     name: "campaign status cfo-act download cron job"
     minute: 15
     hour: 4
     job: "/usr/bin/php {{ current_source_symlink }}/index.php campaign status cfo-act download | tee /var/log/dashboard-cron-cfo.log | mail -s 'LabsData - Dashboard (cfo-act download) - {{ real_ansible_env }} Cron Job' -a 'From: {{ default_email_from }}' {{ cron_to_emails }}"
-  when: crons_enabled
+    state: absent
 
+# Remove old crons. These have moved to supervisor.
 - name: Set up campaign status cfo-act full-scan cron job to run @ 11:30pm EST nightly
   cron:
     name: "campaign status cfo-act full-scan cron job"
     minute: 30
     hour: 4
     job: "/usr/bin/php {{ current_source_symlink }}/index.php campaign status cfo-act full-scan | tee /var/log/dashboard-cron.log | mail -s 'LabsData - Dashboard (cfo-act full-scan) - {{ real_ansible_env }} Cron Job' -a 'From: {{ default_email_from }}' {{ cron_to_emails }}"
-  when: crons_enabled
+    state: absent
+
+- name: Configure supervisor tasks
+  template: src=etc_supervisor_conf.d_dashboard.conf.j2 dest=/etc/supervisor/conf.d/dashboard owner=root group=root mode=0644
+  become: yes
+
+- name: Enable campaign status cfo-act download cron
+  cron:
+    cron_file: dashboard
+    name: "campaign status cfo-act download cron job"
+    user: root
+    minute: 15
+    hour: 4
+    job: supervisorctl start dashboard-cfo-act-download
+    disabled: "{{ not crons_enabled }}"
+    state: present
+  become: yes
+
+- name: Enable campaign status cfo-act full-scan cron
+  cron:
+    cron_file: dashboard
+    name: "campaign status cfo-act full-scan cron job"
+    user: root
+    minute: 30
+    hour: 4
+    job: supervisorctl start dashboard-cfo-act-full-scan
+    disabled: "{{ not crons_enabled }}"
+    state: present
+  become: yes
