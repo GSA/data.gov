@@ -62,6 +62,6 @@ For new Project Management Office team members, follow these additional steps:
 - [ ] Read through the [required reading list](https://github.com/GSA/datagov-deploy/wiki/Onboarding-Offboarding#reading-list)
 - [ ] [Request access](https://docs.google.com/forms/d/e/1FAIpQLSetStmwqrbMWDz_WIlh1trjhP0PFCjKXHzshsJveYmtIvlG2Q/viewform) to Data.gov systems; select “Catalog Admin” for the system, and “Data.gov team member” for justification
 - [ ] Add yourself for [AWS sandbox access](https://github.com/GSA/datagov-infrastructure-live/tree/master/iam#new-users)
-- [ ] Add yourself for [jumpbox access](https://github.com/GSA/datagov-deploy/blob/develop/ansible/group_vars/all/vault.yml)
+- [ ] Follow the [ansible-vault instructions](https://github.com/GSA/datagov-deploy#editing-vault-secrets) to add your public SSH key to the [jumpbox vault](https://github.com/GSA/datagov-deploy/blob/develop/ansible/group_vars/all/vault.yml)
 - [ ] Join the international [CKAN Government Working Group](https://docs.google.com/document/d/1d04ZmvSCjb3zhsIZW01wSkoRSzIiLyWen5Z8iwfzhIU/edit)
 - [ ] Join [Open Data](https://digital.gov/communities/open-data/) community list
