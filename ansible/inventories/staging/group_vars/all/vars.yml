@@ -32,7 +32,7 @@ common_filebeat_config:
   output.logstash:
     hosts: ["{{ common_filebeat_logstash_output }}"]
 
-common_newrelic_enabled: true
+common_newrelic_enabled: "{{ datagov_in_service | default(true) }}"
 common_python_version_number: 2.7.10
 filebeat_enabled: true
 nessus_agent_enabled: true
@@ -181,7 +181,7 @@ postfix_aliases:
   - user: root
     alias: "{{ datagov_team_email }}"
 postfix_sender_canonical_maps:
-  - sender: root
+  - sender: "@{{ ansible_fqdn }}"
     rewrite: no-reply+{{ ansible_fqdn }}@data.gov
 
 
