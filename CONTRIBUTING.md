@@ -104,9 +104,7 @@ Task has been applied to production and is considered done.
 ## Managing deployment
 
 We use the [git flow
-framework](https://danielkummer.github.io/git-flow-cheatsheet/) for managing our
-deploys.  _Note: we don't use the git flow program itself, although you are
-welcome to install and use it._
+pattern](https://danielkummer.github.io/git-flow-cheatsheet/) to coordinate delivery of features and bugfixes between branches. Generally, new features will arrive in the `develop` branch, then periodically be gathered up and deployed into staging via `release/*` branches, then deployed into production via the `production` branch.  _Note: we don't use the git-flow program itself since work must be merged via pull-requests, which that tool doesn't support._
 
 Branch | Deployed to | Frequency
 ------ | ----------- | ---------
