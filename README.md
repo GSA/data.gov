@@ -419,11 +419,11 @@ edit secrets with `ansible-vault`.
 
 Review secrets in a vault.
 
-    $ ansible-vault view ansible/inventories/staging/group_vars/all/vault.yml
+    $ ansible-vault view [path-to-vault.yml]
 
 Edit secrets in a vault.
 
-    $ ansible-vault edit ansible/inventories/staging/group_vars/all/vault.yml
+    $ ansible-vault edit [path-to-vault.yml]
 
 You can configure git to automatically decrypt Vault files for reviewing diffs.
 
