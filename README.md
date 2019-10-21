@@ -393,15 +393,20 @@ from test-kitchen in favor of molecule._
 
 We use [Kitchen](https://kitchen.ci/) for testing playbooks.
 
+Ensure any required Ansible roles are availabile locally.
+
+    $ make update-vendor-force
+
+
 Run a single suite.
 
     $ cd ansible
-    $ bundle exec kitchen test catalog
+    $ bundle exec kitchen test [catalog|dashboard]
 
 Log into the instance to debug.
 
     $ cd ansible
-    $ bundle exec kitchen login catalog
+    $ bundle exec kitchen login [catalog|dashboard]
 
 Re-run the playbook from a particular step.
 
