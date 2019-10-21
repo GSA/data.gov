@@ -35,21 +35,21 @@
     - "{{ project_shared_path }}/archive/curl_header"
 
 # SERVICE MODULE WILL NOT WORK (checked Ansible versions till 2.3.1)
-# `service php7.0-fpm restart` itself will not start `php7.0-fpm` if it's not running
-- name: php7.0-fpm status
-  command: /etc/init.d/php7.0-fpm status
+# `service php7.3-fpm restart` itself will not start `php7.3-fpm` if it's not running
+- name: php7.3-fpm status
+  command: /etc/init.d/php7.3-fpm status
   ignore_errors: yes
   register: php_fpm_status
   tags: skip_ansible_lint
 
-- name: Start php7.0-fpm
-  command: /etc/init.d/php7.0-fpm start
+- name: Start php7.3-fpm
+  command: /etc/init.d/php7.3-fpm start
   when: '"is not running" in php_fpm_status.stdout'
   tags: skip_ansible_lint
   notify: restart nginx
 
-- name: ReStart php7.0-fpm
-  command: /etc/init.d/php7.0-fpm restart
+- name: ReStart php7.3-fpm
+  command: /etc/init.d/php7.3-fpm restart
   when: '"is running" in php_fpm_status.stdout'
   tags: skip_ansible_lint
   notify: restart nginx

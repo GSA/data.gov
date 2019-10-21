@@ -1,2 +1,2 @@
 #!/bin/bash
-service php7.0-fpm reload
+service php7.3-fpm reload

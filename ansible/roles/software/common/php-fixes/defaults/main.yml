@@ -7,4 +7,4 @@ php_cli_memory_limit: 2048M
 php_fpm_service_name: php{{ php_major_minor_version }}-fpm
 
 # Major/minor version of PHP
-php_major_minor_version: "7.0"
+php_major_minor_version: "7.3"

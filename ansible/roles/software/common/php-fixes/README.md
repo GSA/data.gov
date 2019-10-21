@@ -12,7 +12,7 @@ This role is a work in progress that provides PHP for web applications.
     - role: geerlingguy.nginx
     - role: geerlingguy.php
       vars:
-        php_default_version_debian: "7.0"
+        php_default_version_debian: "7.3"
         php_enable_php_fpm: true
         php_webserver_daemon: nginx
     - software/common/php-fixes
