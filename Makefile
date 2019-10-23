@@ -8,7 +8,8 @@ MOLECULE_SUITES := \
   software/ckan/catalog/ckan-app \
   software/ckan/inventory \
   software/ckan/native-login \
-  software/common/php-fixes
+  software/common/php-fixes \
+  software/dashboard/dashboard-deploy
 
 # Create test-kitchen-<suite> targets
 KITCHEN_SUITE_TARGETS := $(patsubst %,test-kitchen-%,$(KITCHEN_SUITES))
