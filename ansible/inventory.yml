@@ -1,6 +1,8 @@
 ---
 - name: Provision Inventory databases
   hosts: inventory-web
+  tags:
+    - database
   pre_tasks:
     # Database initialization should be delegated to the jumpbox, however
     # jumpbox does not have access to the application databases (firewall/security
@@ -11,45 +13,34 @@
       run_once: true
       tags:
         - database
+      when: datagov_enable_postgresql_role is defined
   roles:
+    # ckan database
     - role: gsa.datagov-deploy-postgresql
       vars:
         postgresql_database_name: "{{ inventory_db_name }}"
         postgresql_role_name: "{{ inventory_db_name }}"
         postgresql_role_password: "{{ inventory_db_pass }}"
-      tags:
-        - database
       run_once: true
       when: datagov_enable_postgresql_role is defined
-    - role: gsa.datagov-deploy-postgresql
-      vars:
-        postgresql_database_name: "{{ inventory_datapusher_db_name }}"
-        postgresql_role_name: "{{ inventory_datapusher_db_name }}"
-        postgresql_role_password: "{{ inventory_datapusher_db_pass }}"
-      tags:
-        - database
-      run_once: true
-      when: datagov_enable_postgresql_role is defined
+    # datastore db, owned by ckan user
     - role: gsa.datagov-deploy-postgresql
       vars:
         postgresql_database_name: "{{ inventory_datastore_db_name }}"
-        postgresql_role_name: "{{ inventory_datastore_db_name }}"
-        postgresql_role_password: "{{ inventory_datastore_pass }}"
-      tags:
-        - database
+        postgresql_role_name: "{{ inventory_db_name }}"
+        postgresql_role_password: "{{ inventory_db_pass }}"
       run_once: true
       when: datagov_enable_postgresql_role is defined
-    - role: gsa.datagov-deploy-postgresql
-      vars:
-        postgresql_database_name: "{{ inventory_datastore_db_name }}"
-        postgresql_role_name: "{{ inventory_datastore_ro_user }}"
-        postgresql_role_password: "{{ inventory_datastore_ro_pass }}"
-        postgresql_priv: SELECT
-      tags:
-        - database
-      run_once: true
+  tasks:
+    - name: create datastore (read-only) db user
+      postgresql_user: >-
+        name={{ inventory_datastore_ro_user }}
+        password={{ inventory_datastore_ro_pass }}
+        login_host={{ postgresql_login_host }}
+        login_user={{ postgresql_login_user }}
+        login_password={{ postgresql_login_password }}
+        state=present
       when: datagov_enable_postgresql_role is defined
-
 
 - name: Provisioning Inventory CKAN Stack
   hosts: inventory-web
