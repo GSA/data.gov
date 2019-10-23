@@ -62,7 +62,7 @@
   version: v2.0.0
 - name: gsa.datagov-deploy-postgresql
   src: https://github.com/GSA/datagov-deploy-postgresql
-  version: v1.1.0
+  version: feature/db-owner
 - name: gsa.datagov-deploy-pycsw
   src: https://github.com/GSA/datagov-deploy-pycsw
   version: v1.0.3
