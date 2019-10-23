@@ -34,6 +34,7 @@
   tasks:
     - name: create datastore (read-only) db user
       postgresql_user: >-
+        db=postgres
         name={{ inventory_datastore_ro_user }}
         password={{ inventory_datastore_ro_pass }}
         login_host={{ postgresql_login_host }}
