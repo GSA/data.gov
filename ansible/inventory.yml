@@ -78,6 +78,10 @@
         # signed certs which should be valid.
         # https://github.com/GSA/datagov-deploy/issues/900
         validate_certs: false
+      retries: 3
+      delay: 10
+      register: result
+      until: not result.failed
       when: datagov_in_service | default(true)
 
 
@@ -127,3 +131,7 @@
           Cookie: auth_tkt=1
       run_once: true
       delegate_to: localhost
+      retries: 3
+      delay: 10
+      register: result
+      until: not result.failed
