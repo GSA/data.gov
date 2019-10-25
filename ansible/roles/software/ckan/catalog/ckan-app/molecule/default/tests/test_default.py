@@ -86,3 +86,4 @@ def test_apache(host):
     apache = host.service('apache2')
 
     assert apache.is_running
+    assert apache.is_enabled
