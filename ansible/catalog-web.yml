@@ -76,6 +76,10 @@
         headers:
           # For catalog-admin hosts
           Cookie: auth_tkt=1
+      retries: 3
+      delay: 10
+      register: result
+      until: not result.failed
 
     - name: assert csw-collection is up
       uri:
@@ -91,6 +95,9 @@
           # For catalog-admin hosts
           Cookie: auth_tkt=1
       register: csw_collection
+      retries: 3
+      delay: 10
+      until: not csw_collection.failed
 
     - name: assert csw-collection response has title
       fail:
@@ -111,6 +118,9 @@
           # For catalog-admin hosts
           Cookie: auth_tkt=1
       register: csw_all
+      retries: 3
+      delay: 10
+      until: not csw_all.failed
 
     - name: assert csw-all response has title
       fail:
