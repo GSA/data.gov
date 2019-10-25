@@ -110,7 +110,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  kitchen-ansible (>= 0.48.6)
+  kitchen-ansible (>= 0.48.7)
   kitchen-docker (>= 2.7.0)
   kitchen-sync (>= 2.2.1)
   test-kitchen (>= 1.23.2)

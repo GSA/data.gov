@@ -89,3 +89,27 @@
       retries: 3
       delay: 10
       until: not result.failed
+
+- name: Configure Logrotate
+  hosts: dashboard-web
+  vars:
+    dashboard_logrotate_options:
+      - compress
+      - daily
+      - delaycompress
+      - mail {{ datagov_team_email }}
+      - mailfirst
+      - missingok
+      - rotate 60
+  roles:
+    - role: nickhammond.logrotate
+      logrotate_scripts:
+        # We keep these separate so that we get two distinct emails
+        - name: dashboard-cfo-act-download
+          paths:
+            - /var/log/dashboard/cfo-act-download.log
+          options: "{{ dashboard_logrotate_options }}"
+        - name: dashboard-cfo-act-full-scan
+          paths:
+            - /var/log/dashboard/cfo-act-full-scan.log
+          options: "{{ dashboard_logrotate_options }}"

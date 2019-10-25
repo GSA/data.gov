@@ -1,2 +1,3 @@
 ---
 datagov_service: dashboard
+cron_to_emails: "{{ datagov_team_email }}"

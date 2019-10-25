@@ -1,70 +1,141 @@
-# Data.gov Deploy
 [![CircleCI](https://circleci.com/gh/GSA/datagov-deploy.svg?style=svg)](https://circleci.com/gh/GSA/datagov-deploy)
 
-This main repository for Data.gov's stack deployment onto AWS Infrastructure. The repository is broken into the following roles all created/provisioned using [Ansible](http://docs.ansible.com/ansible/intro_installation.html):
+# datagov-deploy
 
-Included in this Repository:
-  - Software
-    - Data.gov (Wordpress)
-    - Catalog.data.gov (CKAN 2.3)
-    - Inventory.data.gov (CKAN 2.5)
-    - Labs.data.gov/CRM (Open311 CRM)
-    - Labs.data.gov/Dashboard (Project Open Data Dashboard)
-  - Security
-    - Baseline OS Hardening
-    - GSA IT Security Agents
-    - Fluentd (Logging)
-    - New Relic (Infrastructure Monitoring)
-    - New Relic (Application Performance Monitoring)
-    - Trendmicro (OSSEC-HIDS)
+This is the main repository for the Data.gov Platform. We use this repository to
+[track our team's work](https://app.zenhub.com/workspaces/datagov-devsecops-579a2532d1d6ea9c3fcf5cfa/board)
+and for our [Ansible](https://www.ansible.com) playbooks that deploy all the
+[Data.gov site components](https://github.com/GSA/datagov-deploy/wiki/Site-components):
 
+  - www.data.gov (WordPress)
+  - catalog.data.gov (CKAN 2.3)
+  - inventory.data.gov (CKAN 2.5)
+  - labs.data.gov/crm (Open311 CRM)
+  - labs.data.gov/dashboard (Project Open Data Dashboard)
 
-## Project Status
+Additionally, each host is configured with common Services:
 
-See our [Roadmap](docs/roadmap.md).
-
-
-## Provision Infrastructure
-Moved to [datagov-infrastructure-live](https://github.com/gsa/datagov-infrastructure-live)
-
-## Requirements for Software Provisioning
-- Ansible > 1.10
-- SSH access (via keypair) to remote instances
-- ansible-secret.txt: `export ANSIBLE_VAULT_PASSWORD_FILE=~/ansible-secret.txt`
-- run all provisioning/app deployment commands from repo's `ansible` folder
-- to update `ansible/roles/vendor` roles run there: `ansible-galaxy install -r requirements.yml`
+  - Baseline OS Hardening
+  - GSA IT Security Agents
+  - TLS host certificates
+  - Postfix email server
+  - Filebeat (Logging)
+  - New Relic (Infrastructure Monitoring)
+  - Trendmicro (OSSEC-HIDS)
+  - [and more...](https://github.com/GSA/datagov-deploy-common)
 
 
-## Common plays
+See our [Roadmap](docs/roadmap.md) for where we're taking Data.gov.
 
-Update/deploy all data.gov assets.
+
+## Environments
+
+Production and staging environments are deployed to FAS Cloud Services (FCS,
+formerly BSP). Our sandbox environments are provisioned by
+[datagov-infrastructure-live](https://github.com/gsa/datagov-infrastructure-live).
+
+GSA VPN access is required to access production and staging.
+
+Environment | Deployed from      | ISP | Jumpbox
+----------- | -------------      | --- | ----
+production  | `master` (manual)  | BSP | datagov-jump2p.prod-ocsit.bsp.gsa.gov
+staging     | `release/*` (manual)  | BSP | datagov-jump2d.dev-ocsit.bsp.gsa.gov
+bionic      | `develop` (manual) | AWS sandbox | jump.bionic.datagov.us
+ci          | `develop` (manual) | AWS sandbox | jump.ci.datagov.us
+local       | feature branches   | laptop  | localhost
+
+
+## Usage
+
+All deployments are done from the Jumpbox. They are already configured with
+these requirements:
+
+- [Python](https://www.python.org) 3.6 or [pyenv](https://github.com/pyenv/pyenv)
+- [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) key (ansible-secret.txt)
+- [Pipenv](https://pipenv.org/)
+
+
+### Running playbooks
+
+Once you're SSH'd into the jumpbox, follow these steps for deploy.
+
+1. Assume the `ubuntu` user.
+
+       $ sudo su -l ubuntu
+
+1. Switch to the datagov-deploy directory.
+
+       $ cd datagov-deploy
+
+1. Check you are on the correct branch and up-to-date. The branch depends on the
+   [environment](#environments) you're working with.
+
+       $ git status
+       $ git pull
+
+1. Update python dependencies.
+
+       $ pipenv sync
+
+1. Update Ansible role dependencies.
+
+       $ pipenv run make update-vendor-force
+
+1. Run the playbook from the ansible directory.
+
+       $ cd ansible
+       $ pipenv run ansible-playbook site.yml --skip-tags filebeat
+       
+   _Note: we skip filebeat on deploys due to a version lock (https://github.com/GSA/datagov-deploy-common/issues/24)._
+
+
+### Common plays
+
+_These commands assume you've activated the virtualenv with `pipenv shell` or you can
+prefix each command with `pipenv run` e.g. `pipenv run ansible`._
+
+Deploy the entire Platform, including Applications, into a consistent state.
 
     $ ansible-playbook site.yml
 
-_Note: the above playbook is incomplete. There are a few playbooks that must be
-run with specific parameters. For that we include them in `site.sh`:_
+_Note: the above playbook is
+[incomplete](https://github.com/GSA/datagov-deploy/issues/506). There are a few
+playbooks that must be run with specific parameters. For that we include them in
+`site.sh`. It's probably best just to run those playbooks as one-offs._
 
-    $ ./site.sh {{ inventory }}
+    $ ./site.sh ${inventory}
 
 If the playbooks failed to apply to a few hosts, you can address the failures
 and then retry with the `--limit` parameter and the retry file.
 
     $ ansible-playbook site.yml --limit @site.retry
 
-Reboot any hosts requiring reboot after an update. _Note: this takes a while since we only reboot one host at a time._
+Or use `--limit` if you just want to focus on a single host or group.
+
+    $ ansible-playbook site.yml --limit catalog-web
+
+Deploy the Catalog application.
+
+    $ ansible-playbook catalog.yml
+
+Reboot any hosts, one by one, that require one e.g. after an apt-get
+dist-upgrade.
 
     $ ansible-playbook actions/reboot.yml
 
-Force reboot hosts even if no reboot is required. Use this if you just need to
+Force a reboot even if no reboot is required. Use this if you just need to
 reboot hosts for any reason.
 
-    $ ansible-playbook actions/reboot.yml -e force_reboot=true
+    $ ansible-playbook actions/reboot.yml -e force_reboot=true --limit ${host}
 
-Install the trendmicro agent.
+Install the common Services.
 
-    $ ansible-playbook trendmicro.yml
+    $ ansible-playbook common.yml
 
-Upgrade OS packages as a one-off command on all hosts.
+Upgrade OS packages as a one-off command on all hosts. _Note: If you find you're
+doing one-off ansible commands often, then you should consider creating
+a [situational
+playbook](https://github.com/GSA/datagov-deploy/tree/develop/ansible/actions)._
 
     $ ansible -m apt -a 'update_cache=yes upgrade=dist' all
 
@@ -72,198 +143,223 @@ Reload the apache2 service for catalog.
 
     $ ansible-playbook -m service -a 'name=apache2 state=reload' catalog-web-v1
 
-Run a one-off shell command.
+Run a one-off shell command. Just an example, don't ever run this ;)
 
     $ ansible -m shell -a "/usr/bin/killall dhclient && dhclient -1 -v -pf /run/dhclient.eth0.pid -lf /var/lib/dhcp/dhclient.eth0.leases eth0" all
 
 Tail the logs using `dsh`.
 
-    $ dsh -g catalog-web-v1 -M -c tail -f /var/log/apache2/ckan.custom.log
+    $ dsh -g catalog-web-v1 -M -c tail -f /var/log/ckan/ckan.custom.log
 
 
-## Provision apps
+### Application playbooks
 
-`cd ansible`
+Application playbooks deploy a single Application and its Services (e.g.
+apache2). We document supported tags and common variables here, but you should
+refer to the individual roles for the complete documentation.
 
-`ansible-playbook --help`
+_These commands assume you've activated the virtualenv with `pipenv shell` or you can
+prefix each command with `pipenv run` e.g. `pipenv run ansible`._
 
-See example(s) below
 
-### Wordpress:
+#### Catalog
 
-**provision vm & deploy app:** `ansible-playbook datagov-web.yml --tags="provision" --limit wordpress-web`
+Provisions the Catalog app (catalog.data.gov).
 
-**deploy app:** `ansible-playbook datagov-web.yml --tags="deploy" --limit wordpress-web`
+    $ ansible-playbook catalog.yml
 
-**deploy rollback:** `ansible-playbook datagov-web.yml --tags="deploy-rollback" --limit wordpress-web`
+Provision only catalog-web.
 
-- You can override branch to be deployed via `-e project_git_version=develop`
+    $ ansible-playbook catalog-web.yml
 
-  ***e.g.*** `ansible-playbook datagov-web.yml --tags=deploy --limit wordpress-web -e project_git_version=develop`
+Provision only catalog-workers (harvesters).
 
-### Dashboard
+    $ ansible-playbook catalog-worker.yml
 
-**provision vm & deploy app:** `ansible-playbook dashboard-web.yml --tags="provision" --limit dashboard-web`
 
-**deploy app:** `ansible-playbook dashboard-web.yml --tags="deploy"`
+##### Common variables
 
-**deploy rollback:** `ansible-playbook dashboard-web.yml --tags="deploy-rollback"`
+Variable | Description
+-------- | -----------
+`catalog_ckan_app_version` | Tag, branch, or commit of catalog-app to deploy
 
-### CRM
 
-**provision vm & deploy app:** `ansible-playbook crm-web.yml --tags="provision" --limit crm-web`
+##### Supported tags
 
-**deploy app:** `ansible-playbook crm-web.yml --tags="deploy"`
+Tag      | Description
+---      | -----------
+pycsw    | Deploys only the PyCSW application
+database | Configure the database with CKAN and PyCSW users
 
-**deploy rollback:** `ansible-playbook crm-web.yml --tags="deploy-rollback"`
 
-### Catalog:
+#### CRM
 
-**provision vm - web:** `ansible-playbook catalog.yml --tags="frontend,ami-fix,bsp" --skip-tags="solr,db,cron" --limit catalog-web`
+Deploy the Help Desk CRM application.
 
-**provision vm - harvester:** `ansible-playbook catalog.yml --tags="harvester,ami-fix,bsp" --skip-tags="apache,solr,db,saml2" --limit catalog-harvester`
+    $ ansible-playbook crm-web.yml --tags=provision,deploy
 
-**provision vm - solr:** `ansible-playbook catalog.yml --tags="solr,ami-fix,bsp" --limit solr`
+##### Common variables
 
-### Inventory
+Variable | Description
+-------- | -----------
+`project_git_version` | Tag, branch, or commit to deploy
 
-**provision vm && deploy app:** `ansible-playbook inventory.yml --skip-tags="solr,db,deploy-rollback" --limit inventory-web`
 
-**provision vm - solr:** `ansible-playbook inventory.yml --tags="solr,ami-fix,bsp" --limit solr`
+#### Dashboard
 
-### ElasticSearch
+Deploy the Project Open Data Dashboard.
 
-**provision vm && deploy app:** `ansible-playbook elasticsearch.yml`
+    $ ansible-playbook dashboard-web.yml --tags=provision,deploy
 
-### Kibana
 
-**provision vm && deploy app:** `ansible-playbook kibana.yml`
+##### Common variables
 
-### EFK nginx
+Variable | Description
+-------- | -----------
+`project_git_version` | Tag, branch, or commit to deploy
 
-**provision vm && deploy app:** `ansible-playbook efk_nginx.yml`
 
+#### Inventory
 
-## Troubleshooting:
+Deploy inventory.data.gov.
 
-The CIS hardening benchmark sets a `027` umask, which means by default files are
-not world-readble. This is often a source of problems, where a service cannot
-read a configuration file.
+    $ ansible-playbook inventory.yml
 
 
-## Inventory
+##### Common variables
 
-This section describes how the Ansible inventories are organized and variables
-defined.
+Variable | Description
+-------- | -----------
+`inventory_ckan_app_version` | Tag, branch, or commit of ckan to deploy
 
-### Groups
 
-**catalog-admin**
+#### PyCSW
 
-Web hosts for the catalog admin app (subset of catalog-web). This is CKAN
-with a write configuration.
+PyCSW is our implementation of the Catalog Service for Web (CSW).
 
+    $ ansible-playbook pycsw.yml
 
-**catalog-web**
+_Note: PyCSW is currently deployed as part of catalog.data.gov but probably
+should be deployed and scaled independently._
 
-Web hosts for the catalog app. CKAN is configured read-only.
 
+##### Common variables
 
-**catalog-harvester**
+Variable | Description
+-------- | -----------
+`pycsw_app_version` | Tag, branch, or commit of pycsw to deploy
 
-Worker hosts for the catalog app.
 
+##### Supported tags
 
-**crm-web**
+Tag      | Description
+---      | -----------
+database | Configure the database with PyCSW user
 
-Web hosts for the CRM app.
 
+#### Solr
 
-**dashboard-web**
+Deploy Solr.
 
-Web hosts for the Dashboard app.
+    $ ansible-playbook solr.yml
 
 
-**inventory-web**
+#### WordPress
 
-Web hosts for the inventory app.
+Deploys the www.data.gov (WordPress) application.
 
+    $ ansible-playbook datagov-web.yml --tags=provision,deploy
 
-**jumpbox**
 
-Jumpbox host where Ansible playbooks are executed from.
+##### Common variables
 
+Variable | Description
+-------- | -----------
+`project_git_version` | Tag, branch, or commit to deploy
 
-**pycsw-web**
 
-Web hosts running the PyCSW application.
+## Ansible inventory groups
 
+We use several cross-cutting groups that allow us to deploy to different hosts
+and set inventory variables based on different dimensions of our hosts.
 
-**pycsw-worker**
 
-Worker hosts running the PyCSW jobs.
+### Stacks
 
+These groups represent different major configurations of the base image.
 
-**solr**
+- **v1** Ubuntu Trusty 14.04
+- **v2** Ubuntu Bionic 18.04
 
-Solr hosts.
+Additionally, the application groups have a `-v1` suffix e.g. `catalog-web-v1`.
+This helps us transition between stacks incrementally.
 
 
-**wordpress-web**
+### Application processes
 
-Web hosts for the datagov/wordpress app.
+These groups represent different processes of applications, e.g. web and worker
+processes which might be slightly different configurations of the same
+application.
 
+- **catalog-admin** web hosts for the catalog admin app (subset of **catalog-web**). This is CKAN
+  with database write permissions.
+- **catalog-web** web hosts for the catalog app. CKAN is configured read-only.
+- **catalog-harvester** worker hosts for the catalog app.
+- **crm-web** web hosts for the CRM app.
+- **dashboard-web** web hosts for the Dashboard app.
+- **inventory-web** web hosts for the inventory app.
+- **pycsw-web** web hosts running the PyCSW application.
+- **pycsw-worker** worker hosts running the PyCSW jobs.
+- **wordpress-web** web hosts for the datagov/wordpress app.
 
-**elasticsearch**
 
-Elasticsearch hosts in mgmt vpc only.
+### Service groups
 
+- **jumpbox** host where Ansible playbooks are executed from.
+- **solr** Solr hosts.
+- **elasticsearch** Elasticsearch hosts in mgmt vpc only.
+- **kibana** Kibana hosts in mgmt vpc only.
+- **efk_nginx** EFK Nginx hosts in mgmt vpc only.
 
-**kibana**
+### Meta groups
 
-Kibana hosts in mgmt vpc only.
-
-
-**efk_nginx**
-
-EFK hosts in mgmt vpc only.
-
-
-**v1**
-
-v1 hosts. These hosts run Ubuntu Trusty. Each group name will have a `-v1` suffix e.g.
-`catalog-web-v1`.
-This helps us transition between stacks.
-
-
-**v2**
-
-v2 hosts. These hosts run Ubuntu Bionic. Each group name will have a -v2 suffix e.g.
-`catalog-web-v2`. This helps us transition between stacks.
-
-
-**web**
-
-Meta group containing any hosts with a web server (e.g. apache2 or nginx).
+- **web** meta group containing any hosts with a web server (e.g. apache2 or nginx).
 
 
 ## Development
 
-Install the dependencies (from a python virtualenv).
+Most development happens in the role repositories using
+[molecule](https://molecule.readthedocs.io/en/stable/). There are still a few
+roles here that you can develop on individually.
+
+
+### Requirements
+
+- [Docker Engine](https://docs.docker.com/engine/)
+- [Python](https://www.python.org) 3.6 or [pyenv](https://github.com/pyenv/pyenv)
+- [Pipenv](https://pipenv.org/)
+- Ansible Vault key for editing secrets in inventory
+
+
+### Setup
+
+We use [pipenv](https://pipenv.org) to manage the Python virtualenv and
+dependencies. Install the dependencies with make.
 
     $ make setup
 
-Run the playbooks locally.
+Run the molecule and kitchen test suites locally. You probably don't want to do
+this since it takes a long time and let [CI](./.circleci/config.yml) do it
+instead. See below for more on how to work with individual test suites. Both
+molecule and kitchen suites rely on docker for running tests in containerized
+hosts.
 
-    $ make test
+    $ pipenv run make test
 
 You can set the concurrency parameter with make's `-j` parameter.
 
-    $ make -j4 test
+    $ pipenv run make -j4 test
 
-This runs all the suites, both molecule and kitchen tests. See below for more on
-how to work with individual suites. Both suites rely on docker for running tests
-within containers.
 
 Lint your work.
 
@@ -294,8 +390,10 @@ If you have multiple scenarios, you can specify them individually.
 
 ### Testing with kitchen
 
-We use [Kitchen](https://kitchen.ci/) for testing playbooks, although we are
-moving suites to molecule.
+_Note: we are [moving away](https://github.com/GSA/datagov-deploy/issues/581)
+from test-kitchen in favor of molecule._
+
+We use [Kitchen](https://kitchen.ci/) for testing playbooks.
 
 Run a single suite.
 
@@ -312,3 +410,28 @@ Re-run the playbook from a particular step.
     $ ANSIBLE_EXTRA_FLAGS='--start-at-task="software/ckan/apache : make sure postgresql packages are installed"' bundle exec kitchen converge catalog
 
 Refer to [kitchen](https://kitchen.ci/) commands for more information.
+
+
+### Editing Vault secrets
+
+If you have the Ansible Vault key (`~/ansible-secret.txt`), you can review and
+edit secrets with `ansible-vault`.
+
+Review secrets in a vault.
+
+    $ ansible-vault view [path-to-vault.yml]
+
+Edit secrets in a vault.
+
+    $ ansible-vault edit [path-to-vault.yml]
+
+You can configure git to automatically decrypt Vault files for reviewing diffs.
+
+    $ git config --global diff.ansible-vault.textconv "ansible-vault view"
+
+
+## Troubleshooting
+
+The CIS hardening benchmark sets a `027` umask, which means by default files are
+not world-readble. This is often a source of problems, where a service cannot
+read a configuration file.
