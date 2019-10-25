@@ -47,6 +47,10 @@
         # signed certs which should be valid.
         # https://github.com/GSA/datagov-deploy/issues/900
         validate_certs: false
+      register: result
+      retries: 3
+      delay: 10
+      until: not result.failed
 
     - name: access to simplesaml admin is forbidden
       uri:
@@ -81,3 +85,7 @@
         validate_certs: false
       run_once: true
       delegate_to: localhost
+      register: result
+      retries: 3
+      delay: 10
+      until: not result.failed
