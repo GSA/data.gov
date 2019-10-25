@@ -8,7 +8,6 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 virtualenv_path = '/usr/lib/ckan'
 
-
 def test_production_ini(host):
     production_ini = host.file('/etc/ckan/production.ini')
 
@@ -52,3 +51,4 @@ def test_apache(host):
     apache = host.service('apache2')
 
     assert apache.is_running
+    assert apache2.is_enabled
