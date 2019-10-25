@@ -13,7 +13,7 @@
   - { role: geerlingguy.php-mysql, tags: [php, php-mysql, provision] }
   - { role: geerlingguy.php-memcached, tags: [php, php-memcached, provision] }
   - { role: geerlingguy.composer, tags: [php, provision] }
-  - { role: software/crm/crm-sudo-2-init, tags: [provision, deploy, deploy-rollback] }
+  - { role: software/crm/crm-sudo-2-init, tags: [provision, deploy] }
 
 
 - name: Deploying crm
@@ -22,7 +22,6 @@
   become: no
   roles:
   - { role: software/crm/crm-deploy, tags: [provision, deploy] }
-  - { role: software/common/datagov-deploy-rollback, tags: [deploy-rollback] }
 
 
 - name: Cleanup
@@ -31,7 +30,7 @@
   tags: [deploy,provision]
   roles:
   - { role: software/common/php-fixes, tags: [php] }
-  - { role: software/crm/crm-sudo-3-cleanup, tags: [deploy-rollback] }
+  - { role: software/crm/crm-sudo-3-cleanup }
 
   # TODO this should be closer to the deploy play
   # Host-level smoke tests
@@ -48,6 +47,10 @@
         # signed certs which should be valid.
         # https://github.com/GSA/datagov-deploy/issues/900
         validate_certs: false
+      register: result
+      retries: 3
+      delay: 10
+      until: not result.failed
 
     - name: access to simplesaml admin is forbidden
       uri:
@@ -82,3 +85,7 @@
         validate_certs: false
       run_once: true
       delegate_to: localhost
+      register: result
+      retries: 3
+      delay: 10
+      until: not result.failed

@@ -14,7 +14,7 @@
   - { role: geerlingguy.php-memcached, tags: [php, php-memcached, provision] }
   - { role: sbaerlocher.wp-cli, tags: [php, cli, provision] }
   - { role: geerlingguy.composer, tags: [php, provision] }
-  - { role: software/wordpress/datagov-sudo-2-init, tags: [provision, deploy, deploy-rollback] }
+  - { role: software/wordpress/datagov-sudo-2-init, tags: [provision, deploy] }
 
 - name: Deploying Data.gov
   hosts: wordpress-web
@@ -22,7 +22,6 @@
   become: no
   roles:
   - { role: software/wordpress/datagov-deploy, tags: [deploy, provision] }
-  - { role: software/common/datagov-deploy-rollback, tags: [deploy-rollback] }
 
 
 - name: Cleanup
@@ -31,7 +30,7 @@
   tags: [provision, deploy]
   roles:
   - { role: software/common/php-fixes, tags: [php] }
-  - { role: software/wordpress/datagov-sudo-3-cleanup, tags: [deploy-rollback, cleanup] }
+  - { role: software/wordpress/datagov-sudo-3-cleanup, tags: [cleanup] }
 
   # TODO these should happen closer to the deploy play
   # Host-level smoke tests
@@ -48,12 +47,20 @@
         # signed certs which should be valid.
         # https://github.com/GSA/datagov-deploy/issues/900
         validate_certs: false
+      register: result
+      retries: 3
+      delay: 10
+      until: not result.failed
 
     - name: assert access to simplesaml admin is forbidden
       uri:
         url: https://{{ ansible_fqdn }}/app/plugins/saml-20-single-sign-on/saml/www/module.php/core/loginuserpass.php
         status_code: 403
         validate_certs: false
+      register: result
+      retries: 3
+      delay: 10
+      until: not result.failed
 
     - name: assert CRM forms should redirect to general contact form
       uri:
@@ -66,6 +73,9 @@
         - issue
         - story
       register: contact_forms
+      retries: 3
+      delay: 10
+      until: not contact_forms.failed
 
     - name: assert Location header contains /contact
       fail:
@@ -94,3 +104,7 @@
         validate_certs: false
       run_once: true
       delegate_to: localhost
+      register: result
+      retries: 3
+      delay: 10
+      until: not result.failed
