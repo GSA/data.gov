@@ -1,14 +1,19 @@
 ---
-# Base node
-############
-
-# Run these first
+# Platform plays
+#################
 - import_playbook: common.yml
 
 
-# App plays
-############
+# Service plays
+################
 - import_playbook: jumpbox.yml
 - import_playbook: solr.yml
-- import_playbook: inventory.yml
+
+
+# Application plays
+####################
 - import_playbook: catalog.yml
+- import_playbook: crm-web.yml
+- import_playbook: dashboard-web.yml
+- import_playbook: datagov-web.yml
+- import_playbook: inventory.yml
