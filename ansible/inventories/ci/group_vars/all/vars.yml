@@ -28,7 +28,7 @@ common_python_version_number: 2.7.10
 filebeat_enabled: false
 nessus_agent_enabled: false
 trendmicro_enabled: false
-
+project_git_version: develop
 
 # crm
 crm_service_url: https://crm.ci.datagov.us
