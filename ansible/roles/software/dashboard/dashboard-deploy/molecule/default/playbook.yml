@@ -1,0 +1,8 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: dashboard-deploy
+      crons_enabled: true
+      default_email_from: team@example.com
+      cron_to_emails: team@example.com

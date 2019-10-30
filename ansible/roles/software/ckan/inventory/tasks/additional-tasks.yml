@@ -31,13 +31,6 @@
     replace: 'application/x-www-form-urlencoded'
   notify: restart apache2
 
-- name: "Datapusher https to http temp fix (local https is unreachable now)"
-  replace:
-    dest: /usr/lib/datapusher/lib/python2.7/site-packages/ckanserviceprovider/web.py
-    regexp: 'result_url,'
-    replace: "result_url.replace('https://','http://'),"
-  notify: restart apache2
-
 - name: "Remove compiled web.pyc"
   file:
     path: /usr/lib/datapusher/lib/python2.7/site-packages/ckanserviceprovider/web.pyc

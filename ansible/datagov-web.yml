@@ -14,7 +14,7 @@
   - { role: geerlingguy.php-memcached, tags: [php, php-memcached, provision] }
   - { role: sbaerlocher.wp-cli, tags: [php, cli, provision] }
   - { role: geerlingguy.composer, tags: [php, provision] }
-  - { role: software/wordpress/datagov-sudo-2-init, tags: [provision, deploy, deploy-rollback] }
+  - { role: software/wordpress/datagov-sudo-2-init, tags: [provision, deploy] }
 
 - name: Deploying Data.gov
   hosts: wordpress-web
@@ -22,7 +22,6 @@
   become: no
   roles:
   - { role: software/wordpress/datagov-deploy, tags: [deploy, provision] }
-  - { role: software/common/datagov-deploy-rollback, tags: [deploy-rollback] }
 
 
 - name: Cleanup
@@ -31,7 +30,7 @@
   tags: [provision, deploy]
   roles:
   - { role: software/common/php-fixes, tags: [php] }
-  - { role: software/wordpress/datagov-sudo-3-cleanup, tags: [deploy-rollback, cleanup] }
+  - { role: software/wordpress/datagov-sudo-3-cleanup, tags: [cleanup] }
 
   # TODO these should happen closer to the deploy play
   # Host-level smoke tests

@@ -17,7 +17,8 @@
   version: 1.2.7
 # TODO this is no longer supported, switch to upstream https://github.com/telus/ansible-upstart
 - name: dwcramer.upstart
-  version: 0.1.0
+  src: https://github.com/dwcramer/ansible-upstart.git
+  version: 0.2.0
 - name: elastic.elasticsearch
   version: 6.6.0
 - name: geerlingguy.composer
@@ -53,10 +54,10 @@
   version: v2.0.1+datagov-r1
 - name: gsa.datagov-deploy-apache2
   src: https://github.com/GSA/datagov-deploy-apache2
-  version: v1.2.2
+  version: v1.3.0
 - name: gsa.datagov-deploy-common
   src: https://github.com/GSA/datagov-deploy-common
-  version: v2.2.3
+  version: v2.3.0
 - name: gsa.datagov-deploy-jumpbox
   src: https://github.com/GSA/datagov-deploy-jumpbox
   version: v2.0.0
