@@ -134,7 +134,7 @@ playbook](https://github.com/GSA/datagov-deploy/tree/develop/ansible/actions)._
 
 Reload the apache2 service for catalog.
 
-    $ ansible-playbook -m service -a 'name=apache2 state=reload' catalog-web-v1
+    $ ansible -m service -a 'name=apache2 state=reload' catalog-web-v1
 
 Run a one-off shell command. Just an example, don't ever run this ;)
 
