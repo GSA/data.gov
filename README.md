@@ -59,9 +59,14 @@ these requirements:
 
 Once you're SSH'd into the jumpbox, follow these steps for deploy.
 
-1. Assume the `ubuntu` user.
+1. Assume the `ubuntu` user and start a tmux session to prevent disconnects.
 
        $ sudo su -l ubuntu
+       $ tmux attach
+       
+   Or if there are no existing tmux sessions, start a new one.
+   
+       $ tmux
 
 1. Switch to the datagov-deploy directory.
 
