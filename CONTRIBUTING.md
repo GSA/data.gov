@@ -36,7 +36,7 @@ We follow two week sprints with the following rituals.
 
 - Daily standup (daily)
 - Sprint planning (first Monday of the sprint)
-- Sprint review and retrospective (last Friday of the sprint)
+- Sprint review and retrospective (last Thursday of the sprint)
 
 
 ## Story lifecycle
@@ -56,6 +56,7 @@ and progress through these columns.
 - Blocked
 - Ready for deploy
 - Done
+- Closed
 
 For Project Management Office and security compliance related tasks, see our
 [Incident Response repo](https://github.com/GSA/datagov-incident-response).
@@ -186,11 +187,21 @@ environments.
 
 #### Done
 
-Task has been applied to production and is considered done.
+Task has been applied to production and is considered done and should be reviewed with the team as part of the Sprint Review.
 
 ##### Exit criteria
 
 - The work is user-visible and announceable at any time.
+- The work has been demoed at the Spring Review.
+
+
+#### Closed
+
+Task is done and has been reviewed by the team as part of Sprint Review.
+
+##### Exit criteria
+
+- GitHub issue is marked Closed.
 
 
 ## Managing deployment
