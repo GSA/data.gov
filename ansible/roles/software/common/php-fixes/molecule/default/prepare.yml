@@ -13,9 +13,12 @@
 
   roles:
     - role: geerlingguy.nginx
+    - role: geerlingguy.php-versions
+      vars:
+        php_version: 7.3
     - role: geerlingguy.php
       vars:
-        php_default_version_debian: "7.3"
+        php_default_version_debian: "{{ php_version }}"
         php_enable_php_fpm: true
         php_max_execution_time: 30
         php_webserver_daemon: nginx

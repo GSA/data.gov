@@ -57,8 +57,9 @@ php_max_execution_time: 300
 php_memory_limit: 2048M
 php_opcache_conf_filename: "10-opcache.ini"
 php_webserver_daemon: nginx
-php_default_version_debian: "7.3"
-php_mysql_package: php7.3-mysqli
+php_version: 7.3
+php_default_version_debian: "{{ php_version }}"
+php_mysql_package: "php{{ php_version }}-mysql"
 
 # solr
 solr_home: /data/solr5

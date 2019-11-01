@@ -19,8 +19,8 @@
     name: unzip
     state: present
 
-- name: Cron hourly php7.x-fpm reload
+- name: Cron hourly php-fpm reload
   copy:
-    src: php7reload
-    dest: /etc/cron.hourly/php7reload
+    src: phpreload
+    dest: /etc/cron.hourly/phpreload
     mode: 0700

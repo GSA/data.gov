@@ -1,0 +1,2 @@
+#!/bin/bash
+service php{{ php_version }}-fpm reload
