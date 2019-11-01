@@ -192,7 +192,7 @@ Task has been applied to production and is considered done and should be reviewe
 ##### Exit criteria
 
 - The work is user-visible and announceable at any time.
-- The work has been demoed at the Spring Review.
+- The work has been demoed at the Sprint Review.
 
 
 #### Closed
