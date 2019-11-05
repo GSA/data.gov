@@ -220,4 +220,5 @@ ci_inventory: inventories/staging
 ci_ssh_config_host: '*.dev-ocsit.bsp.gsa.gov'
 ci_deploy_version: develop
 
+wordpress_nginx_server_name: wordpress-datagov.dev-ocsit.bsp.gsa.gov $hostname
 wordpress_service_url: https://wordpress-datagov.dev-ocsit.bsp.gsa.gov

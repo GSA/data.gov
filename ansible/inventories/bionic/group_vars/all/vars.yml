@@ -133,4 +133,5 @@ saml2_sp_private_key: "{{ default_tls_host_key }}"
 who_secure: True
 
 # wordpress
+wordpress_nginx_server_name: wordpress.bionic.datagov.us $hostname
 wordpress_service_url: https://wordpress.bionic.data.gov

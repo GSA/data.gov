@@ -233,4 +233,5 @@ ci_ssh_config_host: '*.prod-ocsit.bsp.gsa.gov'
 ci_deploy_version: master
 
 
+wordpress_nginx_server_name: www.data.gov data.gov wp-bsp.data.gov $hostname
 wordpress_service_url: https://www.data.gov

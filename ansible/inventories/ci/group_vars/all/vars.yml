@@ -148,4 +148,5 @@ solr_java_packages:
 
 
 # wordpress
+wordpress_nginx_server_name: wordpress.ci.datagov.us $hostname
 wordpress_service_url: https://wordpress.ci.datagov.us
