@@ -109,6 +109,7 @@
   args:
     chdir: "{{ project_source_new_code_path }}"
   run_once: true
+  when: wordpress_s3_enabled
   tags:
     - skip_ansible_lint
     - wp-cli
@@ -118,6 +119,7 @@
   args:
     chdir: "{{ project_source_new_code_path }}"
   run_once: true
+  when: wordpress_saml2_enabled
   tags:
     - skip_ansible_lint
     - wp-cli
