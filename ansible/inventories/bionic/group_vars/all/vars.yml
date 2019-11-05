@@ -30,6 +30,7 @@ trendmicro_enabled: false
 
 
 # crm
+crm_nginx_server_name: crm.bionic.datagov.us $hostname
 crm_service_url: https://crm.bionic.datagov.us
 
 

@@ -43,6 +43,7 @@ products:
   - filebeat
 
 # crm
+crm_nginx_server_name: crm-datagov.dev-ocsit.bsp.gsa.gov $hostname
 crm_service_url: https://crm-datagov.dev-ocsit.bsp.gsa.gov
 
 # dashboard

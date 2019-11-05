@@ -31,6 +31,7 @@ trendmicro_enabled: false
 
 
 # crm
+crm_nginx_server_name: crm.ci.datagov.us $hostname
 crm_service_url: https://crm.ci.datagov.us
 
 

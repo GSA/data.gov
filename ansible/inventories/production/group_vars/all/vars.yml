@@ -42,6 +42,7 @@ products:
 
 
 # crm
+crm_nginx_server_name: labs.data.gov labs-bsp.data.gov crm-bsp.data.gov $hostname
 crm_service_url: https://labs.data.gov/crm
 
 
