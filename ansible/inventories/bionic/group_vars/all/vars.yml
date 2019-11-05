@@ -35,6 +35,7 @@ crm_service_url: https://crm.bionic.datagov.us
 
 
 # dashboard
+dashboard_nginx_server_name: dashboard.bionic.datagov.us $hostname
 dashboard_service_url: https://dashboard.bionic.datagov.us
 
 

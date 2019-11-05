@@ -36,6 +36,7 @@ crm_service_url: https://crm.ci.datagov.us
 
 
 # dashboard
+dashboard_nginx_server_name: dashboard.ci.datagov.us $hostname
 dashboard_service_url: https://dashboard.ci.datagov.us
 
 
