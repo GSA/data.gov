@@ -42,12 +42,14 @@ products:
 
 
 # crm
-crm_nginx_server_name: labs.data.gov labs-bsp.data.gov crm-bsp.data.gov $hostname
+# hostname needed for smoke test, IP address needed for ALB health check
+crm_nginx_server_name: labs.data.gov labs-bsp.data.gov crm-bsp.data.gov $hostname {{ ansible_default_ipv4.address }}
 crm_service_url: https://labs.data.gov/crm
 
 
 # dashboard
-dashboard_nginx_server_name: labs.data.gov labs-bsp.data.gov dashboard-bsp.data.gov $hostname
+# hostname needed for smoke test, IP address needed for ALB health check
+dashboard_nginx_server_name: labs.data.gov labs-bsp.data.gov dashboard-bsp.data.gov $hostname {{ ansible_default_ipv4.address }}
 dashboard_service_url: https://labs.data.gov/dashboard
 
 
@@ -235,5 +237,7 @@ ci_ssh_config_host: '*.prod-ocsit.bsp.gsa.gov'
 ci_deploy_version: master
 
 
-wordpress_nginx_server_name: www.data.gov data.gov wp-bsp.data.gov $hostname
+# wordpress
+# hostname needed for smoke test, IP address needed for ALB health check
+wordpress_nginx_server_name: www.data.gov data.gov wp-bsp.data.gov $hostname {{ ansible_default_ipv4.address }}
 wordpress_service_url: https://www.data.gov
