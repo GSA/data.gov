@@ -1,4 +1,5 @@
 ---
+dashboard_nginx_server_name: localhost
 
 # Project path
 project_source_rollback_path: /var/www/dashboard/rollback
