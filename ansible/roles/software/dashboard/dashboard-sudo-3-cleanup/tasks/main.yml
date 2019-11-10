@@ -37,19 +37,19 @@
 # SERVICE MODULE WILL NOT WORK (checked Ansible versions till 2.3.1)
 # `service phpX.Y-fpm restart` itself will not start `phpX.Y-fpm` if it's not running
 - name: php-fpm status
-  command: /etc/init.d/php{{ php_version }}-fpm status
+  command: /etc/init.d/php{{ php_major_minor_version }}-fpm status
   ignore_errors: yes
   register: php_fpm_status
   tags: skip_ansible_lint
 
 - name: Start php-fpm
-  command: /etc/init.d/php{{ php_version }}-fpm start
+  command: /etc/init.d/php{{ php_major_minor_version }}-fpm start
   when: '"is not running" in php_fpm_status.stdout'
   tags: skip_ansible_lint
   notify: restart nginx
 
 - name: ReStart php-fpm
-  command: /etc/init.d/php{{ php_version }}-fpm restart
+  command: /etc/init.d/php{{ php_major_minor_version }}-fpm restart
   when: '"is running" in php_fpm_status.stdout'
   tags: skip_ansible_lint
   notify: restart nginx

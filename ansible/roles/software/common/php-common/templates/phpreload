@@ -1,2 +1,2 @@
 #!/bin/bash
-service php{{ php_version }}-fpm reload
+service php{{ php_major_minor_version }}-fpm reload
