@@ -20,7 +20,7 @@
     state: present
 
 - name: Cron hourly php-fpm reload
-  copy:
+  template:
     src: phpreload
     dest: /etc/cron.hourly/phpreload
     mode: 0700
