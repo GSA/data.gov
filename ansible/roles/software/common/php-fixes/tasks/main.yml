@@ -1,5 +1,5 @@
 ---
-# Additinal php configs
+# Additional php configs
 
 - name: Configure secure cookie sessions
   copy: >-
@@ -22,7 +22,7 @@
 
 - name: Configure php-fpm pool
   lineinfile:
-    dest: "/etc/php/{{ php_major_minor_version }}/fpm/pool.d/www.conf"
+    dest: /etc/php/{{ php_major_minor_version }}/fpm/pool.d/www.conf
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     state: present
