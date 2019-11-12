@@ -8,4 +8,6 @@ php_fpm_service_name: "php{{ php_major_minor_version }}-fpm"
 
 # Major/minor version of PHP
 php_major_minor_version: 7.3
-php_version: "{{ php_major_minor_version }}" # for php-versions role
+
+# for php-versions role
+php_version: "{{ php_major_minor_version }}" 
