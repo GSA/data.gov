@@ -65,6 +65,8 @@ Install the third-party Ansible roles.
 
     $ pipenv run make update-vendor-force
     
+Any commands mentioned within this README should be run within the virtualenv. You can activate the virtual with `pipenv shell` or you can run one-off commands with `pipenv run <command>`.
+    
 
 ### Running playbooks
 
