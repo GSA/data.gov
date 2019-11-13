@@ -51,7 +51,7 @@ All deployments are done from the Jumpbox. They are already configured with
 these requirements:
 
 - [pyenv](https://github.com/pyenv/pyenv) (recommended) or [Python](https://www.python.org) 3.6
-- [Pipenv](https://pipenv.org/)
+- [Pipenv](https://pipenv.readthedocs.io/en/latest/)
 - ansible-secret.txt ([Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) key)
 
 
