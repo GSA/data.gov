@@ -55,6 +55,17 @@ these requirements:
 - [Pipenv](https://pipenv.org/)
 
 
+### Setup
+
+Install the python dependencies, pipenv will create a virtualenv and select the correct version of python for you. If the version is missing, pipenv will use pyenv to install the correct version of python.
+
+    $ pipenv install --dev
+    
+Install the third-party Ansible roles.
+
+    $ pipenv run make update-vendor-force
+    
+
 ### Running playbooks
 
 Once you're SSH'd into the jumpbox, follow these steps for deploy.
