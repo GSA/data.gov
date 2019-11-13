@@ -50,9 +50,9 @@ local       | feature branches   | laptop  | localhost
 All deployments are done from the Jumpbox. They are already configured with
 these requirements:
 
-- [Python](https://www.python.org) 3.6 or [pyenv](https://github.com/pyenv/pyenv)
-- [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) key (ansible-secret.txt)
+- [pyenv](https://github.com/pyenv/pyenv) (recommended) or [Python](https://www.python.org) 3.6
 - [Pipenv](https://pipenv.org/)
+- ansible-secret.txt ([Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) key
 
 
 ### Setup
