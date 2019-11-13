@@ -52,6 +52,7 @@ SSLEngine on
     Header set Access-Control-Allow-Headers "X-CKAN-API-KEY, Authorization, Content-Type"
 
     RewriteEngine On
+    RewriteCond %{REQUEST_URI}     !^/api/action/status_show
     RewriteCond %{REQUEST_URI}     !^/user/(login|logged_in|_logout|logged_out|logged_out_redirect)
     RewriteCond %{REQUEST_URI}     !^/login_generic
     RewriteCond %{REQUEST_URI}     !^/_tracking
