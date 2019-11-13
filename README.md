@@ -338,6 +338,7 @@ roles here that you can develop on individually.
 - [Bundler](https://bundler.io/)
 - [pyenv](https://github.com/pyenv/pyenv) (recommended) or [Python](https://www.python.org) 3.6
 - [Pipenv](https://pipenv.org/)
+- [Vagrant](https://www.vagrantup.com/)
 - ansible-secret.txt Ansible Vault key for editing secrets in inventory
 
 
@@ -425,6 +426,42 @@ Re-run the playbook from a particular step.
     $ ANSIBLE_EXTRA_FLAGS='--start-at-task="software/ckan/apache : make sure postgresql packages are installed"' bundle exec kitchen converge catalog
 
 Refer to [kitchen](https://kitchen.ci/) commands for more information.
+
+
+### Manual testing with Vagrant
+
+_This is a work in progress. The Vagrant setup does not include the mysql
+or postgres databases. The local Ansible inventory is also incomplete._
+
+Where possible, you should use Docker and Molecule for developing and testing
+your roles. There are some scenarios that you might want to manually test in
+a virtual machine with Vagrant. For example, some tasks are captured in
+a playbook instead of a role and playbooks are not tested with Molecule.
+
+Initialize the vagrant environment.
+
+    $ vagrant up
+
+Test that you can connect to the vagrant instance with Ansible.
+
+    $ ansible -i inventories/local -m ping all
+
+Connect to the VM for debugging.
+
+    $ vagrant ssh
+
+Run the wordpress playbooks locally.
+
+    $ ansible-playbook -i inventories/local common.yml datagov-web.yml
+
+The local VM is considered to be in _all_ Ansible groups, so running the
+`site.yml` playbook will apply every app and role to the VM, likely failing in
+unexpected ways. For this reason, you should avoid running the `site.yml`
+playbook and instead run `common.yml` with the application playbook.
+
+Clean up the VM after your test.
+
+    $ vagrant destroy
 
 
 ### Editing Vault secrets
