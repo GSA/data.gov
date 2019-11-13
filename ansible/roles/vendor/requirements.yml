@@ -22,6 +22,8 @@
   version: 2.0.4
 - name: geerlingguy.java
   version: 1.9.6
+- name: geerlingguy.jenkins
+  version: 3.8.0
 - name: geerlingguy.nginx
   version: 2.6.3
 - name: geerlingguy.php
@@ -55,6 +57,9 @@
 - name: gsa.datagov-deploy-common
   src: https://github.com/GSA/datagov-deploy-common
   version: v2.3.0
+- name: gsa.datagov-deploy-jenkins
+  src: https://github.com/GSA/datagov-deploy-jenkins
+  version: master
 - name: gsa.datagov-deploy-jumpbox
   src: https://github.com/GSA/datagov-deploy-jumpbox
   version: v2.0.0
