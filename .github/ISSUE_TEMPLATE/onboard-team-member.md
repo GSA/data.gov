@@ -11,7 +11,7 @@ Below are the tasks that will drive the onboarding process.
 ### Tasks for admin or onboarding buddy
 
 - [ ] Add team member to [TTS Slack](https://handbook.18f.gov/slack/#tts-staff) and #datagov-devsecops
-- [ ] Invite team member to calendar events
+- [ ] Invite team member to [Data.gov calendar](https://calendar.google.com/calendar/r/settings/calendar/Z3NhLmdvdl9zcjZ0NG52YjRhOTNjNnNzdHRxYXAzbjZtMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t) and events
   - Daily sync
   - Sprint planning
   - Retro
@@ -28,14 +28,10 @@ Below are the tasks that will drive the onboarding process.
 - [ ] Request TTS Bug Bounty access [#bug-bounty-partners](https://gsa-tts.slack.com/messages/C5JQCD9PH)
 - [ ] Share Ansible vault keys with team member
 - [ ] Grant access to AWS OPP account
-- [ ] Add team member to monthly CKAN US working group calls
 - [ ] Add team member to Uptrends via [email](https://docs.google.com/spreadsheets/d/1Z9Zpr1mpx-65i_fH2VTbVofPtidpLZs5cnkO0Jz53Vc/edit#gid=0)
 - [ ] Add team member to [New Relic](https://newrelic.com)
 - [ ] Add team member to [Docker Hub](https://cloud.docker.com/orgs/datagov/teams)
-- [ ] Introduce team member at next TTS-Solutions meeting
-- [ ] Introduce new team member to OMB team
-- [ ] Introduce new team member to the Federal Geospatial Data Community
-- [ ] Introduce new team member to government Open Data community at monthly meeting
+
 
 For new Project Management Office team members, follow these additional steps:
 
