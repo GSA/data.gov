@@ -50,9 +50,9 @@ local       | feature branches   | laptop  | localhost
 All deployments are done from the Jumpbox. They are already configured with
 these requirements:
 
-- [Python](https://www.python.org) 3.6 or [pyenv](https://github.com/pyenv/pyenv)
-- [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) key (ansible-secret.txt)
+- [pyenv](https://github.com/pyenv/pyenv) (recommended) or [Python](https://www.python.org) 3.6
 - [Pipenv](https://pipenv.org/)
+- ansible-secret.txt ([Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) key)
 
 
 ### Running playbooks
@@ -333,10 +333,12 @@ roles here that you can develop on individually.
 
 ### Requirements
 
+- [GNU Make](https://www.gnu.org/software/make/)
 - [Docker Engine](https://docs.docker.com/engine/)
-- [Python](https://www.python.org) 3.6 or [pyenv](https://github.com/pyenv/pyenv)
+- [Bundler](https://bundler.io/)
+- [pyenv](https://github.com/pyenv/pyenv) (recommended) or [Python](https://www.python.org) 3.6
 - [Pipenv](https://pipenv.org/)
-- Ansible Vault key for editing secrets in inventory
+- ansible-secret.txt Ansible Vault key for editing secrets in inventory
 
 
 ### Setup
@@ -345,6 +347,17 @@ We use [pipenv](https://pipenv.org) to manage the Python virtualenv and
 dependencies. Install the dependencies with make.
 
     $ make setup
+
+Install third-party Ansible roles.
+
+    $ pipenv run make update-vendor-force
+
+Any commands mentioned within this README should be run within the virtualenv.
+You can activate the virtual with `pipenv shell` or you can run one-off commands
+with `pipenv run <command>`.
+
+
+### Tests
 
 Run the molecule and kitchen test suites locally. You probably don't want to do
 this since it takes a long time and let [CI](./.circleci/config.yml) do it
@@ -357,7 +370,6 @@ hosts.
 You can set the concurrency parameter with make's `-j` parameter.
 
     $ pipenv run make -j4 test
-
 
 Lint your work.
 
