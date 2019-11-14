@@ -1,6 +1,9 @@
 ---
 - name: Prepare
   hosts: all
+  vars:
+    php_version: "7.3"
+    php_default_version_debian: "7.3"
   pre_tasks:
     - name: Add repository for PHP
       apt_repository:
