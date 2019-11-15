@@ -7,6 +7,7 @@
 [tag_group_efk_nginx]
 [tag_group_elasticsearch]
 [tag_group_inventory_web]
+[tag_group_jenkins]
 [tag_group_jumpbox]
 [tag_group_kibana]
 [tag_group_solr]
@@ -33,6 +34,9 @@ tag_group_elasticsearch
 
 [inventory-web:children]
 tag_group_inventory_web
+
+[jenkins:children]
+tag_group_jenkins
 
 [jumpbox:children]
 tag_group_jumpbox

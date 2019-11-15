@@ -50,18 +50,23 @@ local       | feature branches   | laptop  | localhost
 All deployments are done from the Jumpbox. They are already configured with
 these requirements:
 
-- [Python](https://www.python.org) 3.6 or [pyenv](https://github.com/pyenv/pyenv)
-- [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) key (ansible-secret.txt)
+- [pyenv](https://github.com/pyenv/pyenv) (recommended) or [Python](https://www.python.org) 3.6
 - [Pipenv](https://pipenv.org/)
+- ansible-secret.txt ([Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) key)
 
 
 ### Running playbooks
 
 Once you're SSH'd into the jumpbox, follow these steps for deploy.
 
-1. Assume the `ubuntu` user.
+1. Assume the `ubuntu` user and start a tmux session to prevent disconnects.
 
        $ sudo su -l ubuntu
+       $ tmux attach
+       
+   Or if there are no existing tmux sessions, start a new one.
+   
+       $ tmux
 
 1. Switch to the datagov-deploy directory.
 
@@ -134,7 +139,7 @@ playbook](https://github.com/GSA/datagov-deploy/tree/develop/ansible/actions)._
 
 Reload the apache2 service for catalog.
 
-    $ ansible-playbook -m service -a 'name=apache2 state=reload' catalog-web-v1
+    $ ansible -m service -a 'name=apache2 state=reload' catalog-web-v1
 
 Run a one-off shell command. Just an example, don't ever run this ;)
 
@@ -328,10 +333,13 @@ roles here that you can develop on individually.
 
 ### Requirements
 
+- [GNU Make](https://www.gnu.org/software/make/)
 - [Docker Engine](https://docs.docker.com/engine/)
-- [Python](https://www.python.org) 3.6 or [pyenv](https://github.com/pyenv/pyenv)
+- [Bundler](https://bundler.io/)
+- [pyenv](https://github.com/pyenv/pyenv) (recommended) or [Python](https://www.python.org) 3.6
 - [Pipenv](https://pipenv.org/)
-- Ansible Vault key for editing secrets in inventory
+- [Vagrant](https://www.vagrantup.com/)
+- ansible-secret.txt Ansible Vault key for editing secrets in inventory
 
 
 ### Setup
@@ -340,6 +348,17 @@ We use [pipenv](https://pipenv.org) to manage the Python virtualenv and
 dependencies. Install the dependencies with make.
 
     $ make setup
+
+Install third-party Ansible roles.
+
+    $ pipenv run make update-vendor-force
+
+Any commands mentioned within this README should be run within the virtualenv.
+You can activate the virtual with `pipenv shell` or you can run one-off commands
+with `pipenv run <command>`.
+
+
+### Tests
 
 Run the molecule and kitchen test suites locally. You probably don't want to do
 this since it takes a long time and let [CI](./.circleci/config.yml) do it
@@ -352,7 +371,6 @@ hosts.
 You can set the concurrency parameter with make's `-j` parameter.
 
     $ pipenv run make -j4 test
-
 
 Lint your work.
 
@@ -388,21 +406,62 @@ from test-kitchen in favor of molecule._
 
 We use [Kitchen](https://kitchen.ci/) for testing playbooks.
 
+Ensure any required Ansible roles are availabile locally.
+
+    $ make update-vendor-force
+
+
 Run a single suite.
 
     $ cd ansible
-    $ bundle exec kitchen test catalog
+    $ bundle exec kitchen test [catalog|dashboard]
 
 Log into the instance to debug.
 
     $ cd ansible
-    $ bundle exec kitchen login catalog
+    $ bundle exec kitchen login [catalog|dashboard]
 
 Re-run the playbook from a particular step.
 
     $ ANSIBLE_EXTRA_FLAGS='--start-at-task="software/ckan/apache : make sure postgresql packages are installed"' bundle exec kitchen converge catalog
 
 Refer to [kitchen](https://kitchen.ci/) commands for more information.
+
+
+### Manual testing with Vagrant
+
+_This is a work in progress. The Vagrant setup does not include the mysql
+or postgres databases. The local Ansible inventory is also incomplete._
+
+Where possible, you should use Docker and Molecule for developing and testing
+your roles. There are some scenarios that you might want to manually test in
+a virtual machine with Vagrant. For example, some tasks are captured in
+a playbook instead of a role and playbooks are not tested with Molecule.
+
+Initialize the vagrant environment.
+
+    $ vagrant up
+
+Test that you can connect to the vagrant instance with Ansible.
+
+    $ ansible -i inventories/local -m ping all
+
+Connect to the VM for debugging.
+
+    $ vagrant ssh
+
+Run the wordpress playbooks locally.
+
+    $ ansible-playbook -i inventories/local common.yml datagov-web.yml
+
+The local VM is considered to be in _all_ Ansible groups, so running the
+`site.yml` playbook will apply every app and role to the VM, likely failing in
+unexpected ways. For this reason, you should avoid running the `site.yml`
+playbook and instead run `common.yml` with the application playbook.
+
+Clean up the VM after your test.
+
+    $ vagrant destroy
 
 
 ### Editing Vault secrets

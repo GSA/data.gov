@@ -1,0 +1,5 @@
+---
+- name: Install jenkins
+  hosts: jenkins
+  roles:
+    - gsa.datagov-deploy-jenkins

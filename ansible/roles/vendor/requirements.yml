@@ -1,8 +1,3 @@
-# Install Ansible Roles
-# ---------------------
-# When making the Conductor image `ansible-galaxy install -r requirements.yml` is executed
-# using this file. Follow the instructions at http://docs.ansible.com/ansible/galaxy.html
-# to include any roles you want installed prior to running main.yml.
 
 - name: ansistrano.deploy
   version: 3.2.1
@@ -27,10 +22,14 @@
   version: 2.0.4
 - name: geerlingguy.java
   version: 1.9.6
+- name: geerlingguy.jenkins
+  version: 3.8.0
 - name: geerlingguy.nginx
   version: 2.6.3
 - name: geerlingguy.php
   version: 3.7.0
+- name: geerlingguy.php-versions
+  version: 3.1.1
 - name: geerlingguy.php-memcached
   version: 2.0.2
 - name: geerlingguy.php-mysql
@@ -57,7 +56,10 @@
   version: v1.3.0
 - name: gsa.datagov-deploy-common
   src: https://github.com/GSA/datagov-deploy-common
-  version: v2.3.0
+  version: v2.3.1
+- name: gsa.datagov-deploy-jenkins
+  src: https://github.com/GSA/datagov-deploy-jenkins
+  version: master
 - name: gsa.datagov-deploy-jumpbox
   src: https://github.com/GSA/datagov-deploy-jumpbox
   version: v2.0.0

@@ -1,8 +1,8 @@
 ---
-datagov_service: www
+datagov_service: wordpress-web1tf.internal.ci.datagov.us
 
 # WordPress env
-env_content_protocol: http
+env_content_protocol: https
 
 # MySQL credentials
 env_db_host: "{{ vault_env_db_host }}"
@@ -11,15 +11,15 @@ env_db_pass: "{{ vault_env_db_pass }}"
 env_db_name: "{{ vault_env_db_name }}"
 
 # s3
-s3_bucket: bsp-ocsit-prod-east-appdata
-s3_prefix: datagov/wordpress/
+# s3_bucket: bsp-ocsit-prod-east-appdata
+# s3_prefix: datagov/wordpress/
 
 # SAML
 saml_idp_id: "https://{{ saml2_idp_entry }}/idp/shibboleth"
 saml_idp_sso: "https://{{ saml2_idp_entry }}/idp/profile/SAML2/POST/SSO"
 saml_idp_slo: "https://{{ saml2_idp_entry }}/idp/profile/SAML2/POST/SLO"
-saml_auth_adminpassword: "{{ vault_saml_auth_adminpassword }}"
-saml_secretsalt: "{{ vault_saml_secretsalt }}"
+# saml_auth_adminpassword: "{{ vault_saml_auth_adminpassword }}"
+# saml_secretsalt: "{{ vault_saml_secretsalt }}"
 
 # Generate your keys here: https://roots.io/salts.html
 auth_key: "{{ vault_auth_key }}"

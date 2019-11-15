@@ -1,6 +1,7 @@
 ---
 - hosts: '!jumpbox'
   serial: 1
+  gather_facts: false
   tasks:
     - name: Check if reboot is required
       stat: path=/var/run/reboot-required

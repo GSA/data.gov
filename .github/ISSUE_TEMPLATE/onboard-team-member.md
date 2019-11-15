@@ -11,7 +11,7 @@ Below are the tasks that will drive the onboarding process.
 ### Tasks for admin or onboarding buddy
 
 - [ ] Add team member to [TTS Slack](https://handbook.18f.gov/slack/#tts-staff) and #datagov-devsecops
-- [ ] Invite team member to calendar events
+- [ ] Invite team member to [Data.gov calendar](https://calendar.google.com/calendar/r/settings/calendar/Z3NhLmdvdl9zcjZ0NG52YjRhOTNjNnNzdHRxYXAzbjZtMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t) and events
   - Daily sync
   - Sprint planning
   - Retro
@@ -28,14 +28,10 @@ Below are the tasks that will drive the onboarding process.
 - [ ] Request TTS Bug Bounty access [#bug-bounty-partners](https://gsa-tts.slack.com/messages/C5JQCD9PH)
 - [ ] Share Ansible vault keys with team member
 - [ ] Grant access to AWS OPP account
-- [ ] Add team member to monthly CKAN US working group calls
 - [ ] Add team member to Uptrends via [email](https://docs.google.com/spreadsheets/d/1Z9Zpr1mpx-65i_fH2VTbVofPtidpLZs5cnkO0Jz53Vc/edit#gid=0)
 - [ ] Add team member to [New Relic](https://newrelic.com)
 - [ ] Add team member to [Docker Hub](https://cloud.docker.com/orgs/datagov/teams)
-- [ ] Introduce team member at next TTS-Solutions meeting
-- [ ] Introduce new team member to OMB team
-- [ ] Introduce new team member to the Federal Geospatial Data Community
-- [ ] Introduce new team member to government Open Data community at monthly meeting
+
 
 For new Project Management Office team members, follow these additional steps:
 
@@ -62,6 +58,11 @@ For new Project Management Office team members, follow these additional steps:
 - [ ] Read through the [required reading list](https://github.com/GSA/datagov-deploy/wiki/Onboarding-Offboarding#reading-list)
 - [ ] [Request access](https://docs.google.com/forms/d/e/1FAIpQLSetStmwqrbMWDz_WIlh1trjhP0PFCjKXHzshsJveYmtIvlG2Q/viewform) to Data.gov systems; select “Catalog Admin” for the system, and “Data.gov team member” for justification
 - [ ] Add yourself for [AWS sandbox access](https://github.com/GSA/datagov-infrastructure-live/tree/master/iam#new-users)
-- [ ] Follow the [ansible-vault instructions](https://github.com/GSA/datagov-deploy#editing-vault-secrets) to add your public SSH key to the [jumpbox vault](https://github.com/GSA/datagov-deploy/blob/develop/ansible/group_vars/all/vault.yml)
+- [ ] Add your public SSH key to the Ansible vault
+  - Clone the [datagov-deploy](https://github.com/GSA/datagov-deploy) repo
+    locally
+  - Follow the setup instructions for [development](https://github.com/GSA/datagov-deploy/blob/develop/README.md#development)
+  - Follow the [ansible-vault instructions](https://github.com/GSA/datagov-deploy#editing-vault-secrets)
+  - Edit the vault file `pipenv run ansible-vault edit ansible/group_vars/all/vault.yml` and add your public SSH key
 - [ ] Join the international [CKAN Government Working Group](https://docs.google.com/document/d/1d04ZmvSCjb3zhsIZW01wSkoRSzIiLyWen5Z8iwfzhIU/edit)
 - [ ] Join [Open Data](https://digital.gov/communities/open-data/) community list
