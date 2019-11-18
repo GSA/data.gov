@@ -51,7 +51,7 @@ All deployments are done from the Jumpbox. They are already configured with
 these requirements:
 
 - [pyenv](https://github.com/pyenv/pyenv) (recommended) or [Python](https://www.python.org) 3.6
-- [Pipenv](https://pipenv.org/)
+- [Pipenv](https://pipenv.readthedocs.io/en/latest/)
 - ansible-secret.txt ([Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) key)
 
 
@@ -337,14 +337,14 @@ roles here that you can develop on individually.
 - [Docker Engine](https://docs.docker.com/engine/)
 - [Bundler](https://bundler.io/)
 - [pyenv](https://github.com/pyenv/pyenv) (recommended) or [Python](https://www.python.org) 3.6
-- [Pipenv](https://pipenv.org/)
+- [Pipenv](https://pipenv.readthedocs.io/en/latest/)
 - [Vagrant](https://www.vagrantup.com/)
 - ansible-secret.txt Ansible Vault key for editing secrets in inventory
 
 
 ### Setup
 
-We use [pipenv](https://pipenv.org) to manage the Python virtualenv and
+We use [pipenv](https://pipenv.readthedocs.io/en/latest/) to manage the Python virtualenv and
 dependencies. Install the dependencies with make.
 
     $ make setup
