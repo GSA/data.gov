@@ -29,6 +29,7 @@ Below are the tasks that will drive the onboarding process.
 - [ ] Add team member to Uptrends via [email](https://docs.google.com/spreadsheets/d/1Z9Zpr1mpx-65i_fH2VTbVofPtidpLZs5cnkO0Jz53Vc/edit#gid=0)
 - [ ] Add team member to [New Relic](https://newrelic.com)
 - [ ] Add team member to [Docker Hub](https://cloud.docker.com/orgs/datagov/teams)
+- [ ] Add team member to [Snyk](https://app.snyk.io/org/data.gov/manage/members)
 
 
 For new Project Management Office team members, follow these additional steps:
