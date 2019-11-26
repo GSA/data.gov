@@ -194,7 +194,7 @@ database | Configure the database with CKAN and PyCSW users
 
 Deploy the Help Desk CRM application.
 
-    $ ansible-playbook crm-web.yml --tags=provision,deploy
+    $ ansible-playbook crm-web.yml
 
 ##### Common variables
 
@@ -207,7 +207,7 @@ Variable | Description
 
 Deploy the Project Open Data Dashboard.
 
-    $ ansible-playbook dashboard-web.yml --tags=provision,deploy
+    $ ansible-playbook dashboard-web.yml
 
 
 ##### Common variables
@@ -266,7 +266,7 @@ Deploy Solr.
 
 Deploys the www.data.gov (WordPress) application.
 
-    $ ansible-playbook datagov-web.yml --tags=provision,deploy
+    $ ansible-playbook datagov-web.yml
 
 
 ##### Common variables
