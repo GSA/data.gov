@@ -39,7 +39,7 @@ GSA VPN access is required to access production and staging.
 Environment | Deployed from      | ISP | Jumpbox
 ----------- | -------------      | --- | ----
 production  | `master` (manual)  | BSP | datagov-jump2p.prod-ocsit.bsp.gsa.gov
-staging     | `release/*` (manual)  | BSP | datagov-jump2d.dev-ocsit.bsp.gsa.gov
+staging     | `release/*` or `master` (manual)  | BSP | datagov-jump2d.dev-ocsit.bsp.gsa.gov
 bionic      | `develop` (manual) | AWS sandbox | jump.bionic.datagov.us
 ci          | `develop` (manual) | AWS sandbox | jump.ci.datagov.us
 local       | feature branches   | laptop  | localhost
