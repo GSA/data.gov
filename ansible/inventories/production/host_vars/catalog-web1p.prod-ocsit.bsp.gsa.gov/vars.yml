@@ -14,3 +14,6 @@ catalog_pycsw_db_pass: "{{ vault_catalog_pycsw_db_pass }}"
 
 # other
 catalog_ckan_solr_host: datagov-solr1p.prod-ocsit.bsp.gsa.gov
+
+
+common_audit_report_enabled: true
