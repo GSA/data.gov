@@ -9,3 +9,9 @@ local
 
 [wordpress-web]
 local
+
+[catalog-web]
+local
+
+[v1]
+local

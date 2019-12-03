@@ -454,6 +454,9 @@ Run the wordpress playbooks locally.
 
     $ ansible-playbook -i inventories/local common.yml datagov-web.yml
 
+Run catalog playbooks locally.
+    $ ansible-playbook -i inventories/local common.yml catalog-web.yml -c paramiko 
+
 The local VM is considered to be in _all_ Ansible groups, so running the
 `site.yml` playbook will apply every app and role to the VM, likely failing in
 unexpected ways. For this reason, you should avoid running the `site.yml`

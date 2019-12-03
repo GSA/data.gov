@@ -42,3 +42,5 @@ web_app_env: production
 wordpress_s3_enabled: false
 wordpress_saml2_enabled: false
 wordpress_service_url: https://localhost:8080
+jumpbox_operators: []
+common_python_version_number: 2.7.10
