@@ -18,6 +18,7 @@ catalog_pycsw_db_user: "{{ vault_catalog_pycsw_db_user }}"
 
 
 # common
+common_audit_report_enabled: false
 common_filebeat_logstash_output: "{{ vault_common_filebeat_logstash_output }}"
 common_filebeat_config:
   filebeat.config.modules:

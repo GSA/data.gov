@@ -26,11 +26,10 @@ Below are the tasks that will drive the onboarding process.
 - [ ] Make sure team member has 2FA enabled for their GitHub account and [request](https://github.com/GSA/GitHub-Administration/blob/master/README.md#requesting-access-to-the-gsa-organization) membership to GSA GitHub org
 - [ ] Add team member to [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members) GitHub team
 - [ ] Request TTS Bug Bounty access [#bug-bounty-partners](https://gsa-tts.slack.com/messages/C5JQCD9PH)
-- [ ] Share Ansible vault keys with team member
-- [ ] Grant access to AWS OPP account
 - [ ] Add team member to Uptrends via [email](https://docs.google.com/spreadsheets/d/1Z9Zpr1mpx-65i_fH2VTbVofPtidpLZs5cnkO0Jz53Vc/edit#gid=0)
 - [ ] Add team member to [New Relic](https://newrelic.com)
 - [ ] Add team member to [Docker Hub](https://cloud.docker.com/orgs/datagov/teams)
+- [ ] Add team member to [Snyk](https://app.snyk.io/org/data.gov/manage/members)
 
 
 For new Project Management Office team members, follow these additional steps:
@@ -58,7 +57,9 @@ For new Project Management Office team members, follow these additional steps:
 - [ ] Read through the [required reading list](https://github.com/GSA/datagov-deploy/wiki/Onboarding-Offboarding#reading-list)
 - [ ] [Request access](https://docs.google.com/forms/d/e/1FAIpQLSetStmwqrbMWDz_WIlh1trjhP0PFCjKXHzshsJveYmtIvlG2Q/viewform) to Data.gov systems; select “Catalog Admin” for the system, and “Data.gov team member” for justification
 - [ ] Add yourself for [AWS sandbox access](https://github.com/GSA/datagov-infrastructure-live/tree/master/iam#new-users)
+- [ ] Request access to AWS OPP account from team member
 - [ ] Add your public SSH key to the Ansible vault
+  - Request the Ansible Vault keys from team member
   - Clone the [datagov-deploy](https://github.com/GSA/datagov-deploy) repo
     locally
   - Follow the setup instructions for [development](https://github.com/GSA/datagov-deploy/blob/develop/README.md#development)
