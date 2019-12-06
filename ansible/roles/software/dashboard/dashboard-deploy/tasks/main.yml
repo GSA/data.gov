@@ -34,20 +34,6 @@
   environment:
     COMPOSER_DISCARD_CHANGES: "true"
 
-- name: Ensuring required directories exist
-  file:
-    path: "{{ item }}"
-    state: directory
-  with_items:
-    - "{{ project_source_new_code_path }}/application/config/{{ web_app_env }}"
-
-- name: Copying config files
-  template:
-    src: "{{ item }}"
-    dest: "{{ project_source_new_code_path }}/application/config/{{ web_app_env }}/{{ item | basename }}"
-  with_fileglob:
-    - ../templates/config/*.php
-
 - name: Copying SAML config files
   template:
     src: "{{ item }}"
@@ -59,11 +45,6 @@
   template:
     src: "saml/metadata/{{ saml2_idp_entry }}/saml20-idp-remote.php"
     dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/simplesamlphp/metadata/saml20-idp-remote.php"
-
-- name: Copying index.php
-  template:
-    src: "index.php"
-    dest: "{{ project_source_new_code_path }}/public/index.php"
 
 - name: Adding .env
   template:

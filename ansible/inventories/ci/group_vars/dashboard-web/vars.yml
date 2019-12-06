@@ -1,6 +1,7 @@
 ---
 datagov_service: dashboard
 app_base_url: https://dashboard.ci.datagov.us
+default_host: dashboard.ci.datagov.us
 
 # MySQL credentials
 env_db_host: "{{ vault_env_db_host }}"
