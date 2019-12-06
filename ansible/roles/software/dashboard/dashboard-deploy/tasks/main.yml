@@ -23,6 +23,7 @@
     repo: "{{ project_git_repo }}"
     dest: "{{ project_source_new_code_path }}"
     version: "{{ project_git_version }}"
+    umask: "0022"
     force: true
     recursive: no
 
