@@ -63,7 +63,7 @@
 - name: Copying index.php
   template:
     src: "index.php"
-    dest: "{{ project_source_new_code_path }}/index.php"
+    dest: "{{ project_source_new_code_path }}/public/index.php"
 
 - name: Adding .env
   template:
@@ -75,24 +75,6 @@
     src: "{{ project_source_new_code_path }}"
     path: "{{ current_source_symlink }}"
     state: link
-
-# Remove old crons. These have moved to supervisor.
-- name: Set up campaign status cfo-act download cron job to run @ 11:15pm EST nightly
-  cron:
-    name: "campaign status cfo-act download cron job"
-    minute: 15
-    hour: 4
-    job: "/usr/bin/php {{ current_source_symlink }}/index.php campaign status cfo-act download | tee /var/log/dashboard-cron-cfo.log | mail -s 'LabsData - Dashboard (cfo-act download) - {{ real_ansible_env }} Cron Job' -a 'From: {{ default_email_from }}' {{ cron_to_emails }}"
-    state: absent
-
-# Remove old crons. These have moved to supervisor.
-- name: Set up campaign status cfo-act full-scan cron job to run @ 11:30pm EST nightly
-  cron:
-    name: "campaign status cfo-act full-scan cron job"
-    minute: 30
-    hour: 4
-    job: "/usr/bin/php {{ current_source_symlink }}/index.php campaign status cfo-act full-scan | tee /var/log/dashboard-cron.log | mail -s 'LabsData - Dashboard (cfo-act full-scan) - {{ real_ansible_env }} Cron Job' -a 'From: {{ default_email_from }}' {{ cron_to_emails }}"
-    state: absent
 
 - name: Configure supervisor tasks
   template: src=etc_supervisor_conf.d_dashboard.conf.j2 dest=/etc/supervisor/conf.d/dashboard owner=root group=root mode=0644

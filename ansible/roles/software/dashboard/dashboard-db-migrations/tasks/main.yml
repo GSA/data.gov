@@ -7,7 +7,7 @@
     replace: '\1= FALSE;'
 
 - name: Run migrations
-  command: php index.php migrate
+  command: php public/index.php migrate
   args:
     chdir: "{{ current_source_symlink }}"
   register: migrations_output
