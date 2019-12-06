@@ -19,7 +19,7 @@ def test_log_dir(host):
 
 
 def test_supervisor_conf(host):
-    supervisor = host.file('/etc/supervisor/conf.d/dashboard')
+    supervisor = host.file('/etc/supervisor/conf.d/dashboard.conf')
 
     assert supervisor.exists
     assert supervisor.user == 'root'
