@@ -30,3 +30,6 @@
           - cron
           - git
           - supervisor
+
+    - name: Start supervisor
+      service: name=supervisor state=started enabled=true

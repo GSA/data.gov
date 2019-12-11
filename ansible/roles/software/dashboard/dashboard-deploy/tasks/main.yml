@@ -94,8 +94,13 @@
     job: "/usr/bin/php {{ current_source_symlink }}/index.php campaign status cfo-act full-scan | tee /var/log/dashboard-cron.log | mail -s 'LabsData - Dashboard (cfo-act full-scan) - {{ real_ansible_env }} Cron Job' -a 'From: {{ default_email_from }}' {{ cron_to_emails }}"
     state: absent
 
+- name: Remove invalid supervisor conf
+  file: path=/etc/supervisor/conf.d/dashboard state=absent
+  become: yes
+
 - name: Configure supervisor tasks
-  template: src=etc_supervisor_conf.d_dashboard.conf.j2 dest=/etc/supervisor/conf.d/dashboard owner=root group=root mode=0644
+  template: src=etc_supervisor_conf.d_dashboard.conf.j2 dest=/etc/supervisor/conf.d/dashboard.conf owner=root group=root mode=0644
+  notify: supervisor reload
   become: yes
 
 - name: Enable campaign status cfo-act download cron

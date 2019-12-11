@@ -1,0 +1,6 @@
+---
+- name: supervisor reload
+  shell: supervisorctl reread && supervisorctl update
+  become: yes
+  tags:
+    - skip_ansible_lint
