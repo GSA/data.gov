@@ -25,14 +25,6 @@
   - { role: software/dashboard/dashboard-deploy, tags: [deploy, provision] }
 
 
-- name: Dashboard DB Migration
-  hosts: dashboard-web
-  serial: 1
-  become: no
-  roles:
-  - { role: software/dashboard/dashboard-db-migrations, tags: [provision, deploy, migrate] }
-
-
 - name: Cleanup
   hosts: dashboard-web
   serial: 1
