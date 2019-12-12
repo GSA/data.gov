@@ -20,6 +20,7 @@
     - "{{ project_shared_path }}/uploads"
     - "{{ project_shared_path }}/downloads"
     - "{{ project_shared_path }}/archive"
+    - "{{ project_shared_path }}/application/cache"
 
 - name: Check files permissions
   file:
