@@ -54,13 +54,13 @@
   with_items:
     - etc/ckan/who.ini
     - etc/ckan/apache.wsgi
-    - etc/ckan/datapusher.wsgi
   notify: restart apache2
 
 - name: Configure production.ini
   template: src={{ item }} dest=/{{ item }} owner=root group=www-data mode=0640
   with_items:
     - etc/ckan/production.ini
+    - etc/ckan/datapusher.wsgi
     - etc/ckan/datapusher_settings.py
     - etc/apache2/sites-enabled/ckan.conf
     - etc/apache2/sites-enabled/datapusher.conf
