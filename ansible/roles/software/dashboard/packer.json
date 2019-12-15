@@ -1,0 +1,31 @@
+{
+  "variables": {
+    "source_ami": "{{ env `PACKER_BASE_AMI` }}",
+    "instance_type": "m3.medium",
+    "ami_name": "dashboard-ami {{timestamp}}"
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}",
+      "region": "us-east-1",
+      "source_ami": "{{ user `source_ami` }}",
+      "instance_type": "{{ user `instance_type` }}",
+      "ssh_username": "ubuntu",
+      "ami_name": "{{ user `ami_name` }}"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "dashboard-web.yml",
+      "groups": "dashboard-web",
+      "ansible_env_vars": [
+        "ANSIBLE_HOST_KEY_CHECKING=False",
+        "ANSIBLE_SSH_ARGS='-o ForwardAgent=yes -o ControlMaster=auto -o ControlPersist=60s'",
+        "ANSIBLE_NOCOLOR=True"
+      ]
+    }
+  ]
+}

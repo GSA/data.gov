@@ -1,6 +1,5 @@
 ---
 datagov_service: dashboard
-default_host: dashboard-datagov.dev-ocsit.bsp.gsa.gov
 app_base_url: https://dashboard-datagov.dev-ocsit.bsp.gsa.gov
 
 # MySQL credentials

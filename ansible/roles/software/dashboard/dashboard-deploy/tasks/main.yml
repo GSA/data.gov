@@ -23,7 +23,6 @@
     repo: "{{ project_git_repo }}"
     dest: "{{ project_source_new_code_path }}"
     version: "{{ project_git_version }}"
-    umask: "0022"
     force: true
     recursive: no
 
@@ -34,6 +33,20 @@
     working_dir: "{{ project_source_new_code_path }}"
   environment:
     COMPOSER_DISCARD_CHANGES: "true"
+
+- name: Ensuring required directories exist
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ project_source_new_code_path }}/application/config/{{ web_app_env }}"
+
+- name: Copying config files
+  template:
+    src: "{{ item }}"
+    dest: "{{ project_source_new_code_path }}/application/config/{{ web_app_env }}/{{ item | basename }}"
+  with_fileglob:
+    - ../templates/config/*.php
 
 - name: Copying SAML config files
   template:
@@ -47,6 +60,11 @@
     src: "saml/metadata/{{ saml2_idp_entry }}/saml20-idp-remote.php"
     dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/simplesamlphp/metadata/saml20-idp-remote.php"
 
+- name: Copying index.php
+  template:
+    src: "index.php"
+    dest: "{{ project_source_new_code_path }}/index.php"
+
 - name: Adding .env
   template:
     src: ".env"
@@ -57,6 +75,24 @@
     src: "{{ project_source_new_code_path }}"
     path: "{{ current_source_symlink }}"
     state: link
+
+# Remove old crons. These have moved to supervisor.
+- name: Set up campaign status cfo-act download cron job to run @ 11:15pm EST nightly
+  cron:
+    name: "campaign status cfo-act download cron job"
+    minute: 15
+    hour: 4
+    job: "/usr/bin/php {{ current_source_symlink }}/index.php campaign status cfo-act download | tee /var/log/dashboard-cron-cfo.log | mail -s 'LabsData - Dashboard (cfo-act download) - {{ real_ansible_env }} Cron Job' -a 'From: {{ default_email_from }}' {{ cron_to_emails }}"
+    state: absent
+
+# Remove old crons. These have moved to supervisor.
+- name: Set up campaign status cfo-act full-scan cron job to run @ 11:30pm EST nightly
+  cron:
+    name: "campaign status cfo-act full-scan cron job"
+    minute: 30
+    hour: 4
+    job: "/usr/bin/php {{ current_source_symlink }}/index.php campaign status cfo-act full-scan | tee /var/log/dashboard-cron.log | mail -s 'LabsData - Dashboard (cfo-act full-scan) - {{ real_ansible_env }} Cron Job' -a 'From: {{ default_email_from }}' {{ cron_to_emails }}"
+    state: absent
 
 - name: Remove invalid supervisor conf
   file: path=/etc/supervisor/conf.d/dashboard state=absent

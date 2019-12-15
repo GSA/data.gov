@@ -60,6 +60,13 @@
         validate_certs: false
 
 
+- name: Dashboard DB Migration
+  hosts: dashboard-web
+  serial: 1
+  become: no
+  roles:
+  - { role: software/dashboard/dashboard-db-migrations, tags: [provision, deploy, migrate] }
+
 - name: Service-level smoke tests for dashboard
   hosts: dashboard-web
   tags: [deploy,provision]
