@@ -39,7 +39,7 @@ GSA VPN access is required to access production and staging.
 Environment | Deployed from      | ISP | Jumpbox
 ----------- | -------------      | --- | ----
 production  | `master` (manual)  | BSP | datagov-jump2p.prod-ocsit.bsp.gsa.gov
-staging     | `release/*` or `master` (manual)  | BSP | datagov-jump2d.dev-ocsit.bsp.gsa.gov
+staging     | `release/*` (manual)  | BSP | datagov-jump2d.dev-ocsit.bsp.gsa.gov
 bionic      | `develop` (manual) | AWS sandbox | jump.bionic.datagov.us
 ci          | `develop` (manual) | AWS sandbox | jump.ci.datagov.us
 local       | feature branches   | laptop  | localhost
@@ -194,7 +194,7 @@ database | Configure the database with CKAN and PyCSW users
 
 Deploy the Help Desk CRM application.
 
-    $ ansible-playbook crm-web.yml
+    $ ansible-playbook crm-web.yml --tags=provision,deploy
 
 ##### Common variables
 
@@ -207,7 +207,7 @@ Variable | Description
 
 Deploy the Project Open Data Dashboard.
 
-    $ ansible-playbook dashboard-web.yml
+    $ ansible-playbook dashboard-web.yml --tags=provision,deploy
 
 
 ##### Common variables
@@ -266,7 +266,7 @@ Deploy Solr.
 
 Deploys the www.data.gov (WordPress) application.
 
-    $ ansible-playbook datagov-web.yml
+    $ ansible-playbook datagov-web.yml --tags=provision,deploy
 
 
 ##### Common variables
