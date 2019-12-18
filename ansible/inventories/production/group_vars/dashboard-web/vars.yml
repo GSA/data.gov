@@ -1,5 +1,6 @@
 ---
 datagov_service: dashboard
+default_host: labs.data.gov/dashboard
 
 # MySQL credentials
 env_db_host: "{{ vault_env_db_host }}"
