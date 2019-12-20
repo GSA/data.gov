@@ -74,7 +74,7 @@
     user: root
     minute: 15
     hour: 4
-    job: supervisorctl start dashboard-cfo-act-download
+    job: supervisorctl start dashboard-cfo-act-download > /dev/null
     disabled: "{{ not crons_enabled }}"
     state: present
   become: yes
@@ -86,7 +86,7 @@
     user: root
     minute: 30
     hour: 4
-    job: supervisorctl start dashboard-cfo-act-full-scan
+    job: supervisorctl start dashboard-cfo-act-full-scan > /dev/null
     disabled: "{{ not crons_enabled }}"
     state: present
   become: yes
