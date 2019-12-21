@@ -19,10 +19,6 @@
     name: unzip
     state: present
 
-# TODO remove this after next deploy
-- name: Remove old cron script
-  file: path=/etc/cron.hourly/php7reload state=absent
-
 - name: Cron hourly php-fpm reload
   template:
     src: phpreload
