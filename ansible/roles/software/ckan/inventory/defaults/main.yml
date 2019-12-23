@@ -1,5 +1,9 @@
 ---
 datagov_in_service: true
+inventory_ckan_python_home: /usr
+app_source_path: /tmp/inventory-app
+app_repo: https://github.com/GSA/inventory-app.git
+app_repo_branch: master
 
 # used in  production.ini/ckan_site_url and hosts
 ckan_site_domain: https://inventory.data.gov
@@ -13,41 +17,6 @@ inventory_ckan_error_log: "{{ inventory_log_dir }}/ckan.error.log"
 inventory_ckan_access_log: "{{ inventory_log_dir }}/ckan.access.log"
 inventory_datapusher_error_log: "{{ inventory_log_dir }}/datapusher.error.log"
 inventory_datapusher_access_log: "{{ inventory_log_dir }}/datapusher.access.log"
-
-# packages to install ckan app
-ckan_pkgs:
-  - {
-      name: "ckan",
-      repo: "https://github.com/GSA/ckan",
-      branch: "{{ inventory_ckan_app_version }}",
-      requirements: "requirements.txt"
-    }
-  - {
-      name: "ckanext-harvest",
-      repo: "https://github.com/ckan/ckanext-harvest",
-      branch: "13dbb1e",
-      requirements: "pip-requirements.txt"
-    }
-  - {
-      name: "ckanext-datajson",
-      repo: "https://github.com/GSA/ckanext-datajson",
-      requirements: "pip-requirements.txt"
-    }
-  - {
-      name: "ckanext-usmetadata",
-      repo: "https://github.com/GSA/USMetadata",
-      requirements: "requirements.txt"
-    }
-  - {
-      name: "ckanext-googleanalyticsbasic",
-      repo: "https://github.com/GSA/ckanext-googleanalyticsbasic"
-    }
-  - {
-      name: "ckanext-saml2",
-      repo: "https://github.com/GSA/ckanext-saml2",
-      branch: "{{ inventory_ckan_ckanext_saml2_version }}",
-      requirements: "requirements.txt"
-    }
 
 datapusher_pkgs:
   - name: datapusher

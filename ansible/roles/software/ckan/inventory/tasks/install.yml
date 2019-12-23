@@ -31,10 +31,18 @@
 - name: Remove new code
   file: path="{{ project_source_new_code_path }}" state=absent
 
-- include: build-pkgs.yml
-  vars:
-    pkg: "{{ ckan_pkgs }}"
-    virtualenv: "{{ project_source_new_code_path }}"
+- name: Clone Inventory app
+  git:
+    repo: '{{ app_repo }}'
+    dest: '{{ app_source_path }}'
+    version: '{{ app_repo_branch }}'
+
+- name: Install Inventory app
+  command: ./start.sh "{{ project_source_new_code_path }}" "{{ inventory_ckan_python_home }}" chdir={{ app_source_path }}
+  tags: skip_ansible_lint
+  notify:
+  - reload apache2
+  - reload supervisor
 
 - name: Remove old datapusher code
   file: path="{{ datapusher_virtual_env }}" state=absent
