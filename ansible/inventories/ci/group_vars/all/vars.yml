@@ -118,7 +118,9 @@ jenkins_tls_cert: |-
   iqmUG4lFFNeBYMYt5wPR3I+e6Bn2tk/a5McVhCQt6uVBWfgiPnxrU+pef2EgQ7J9
   VzQrATk1ZB3jBepMlhLBl7I=
   -----END CERTIFICATE-----
-jenkins_url: https://ci.ci.datagov.us
+#TODO remove jenkins_url which was renamed to jenkins_host
+jenkins_url: ci.ci.datagov.us
+jenkins_host: ci.ci.datagov.us
 
 
 jumpbox_operators: "{{ datagov_operators_test }}"
