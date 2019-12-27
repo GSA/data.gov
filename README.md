@@ -31,9 +31,9 @@ Moved to [datagov-infrastructure-live](https://github.com/gsa/datagov-infrastruc
 - Ansible 2.6
 - SSH access (via keypair) to remote instances
 - copy the Ansible Vault key to `/etc/datagov/ansible-secret.txt`
+  (with permissions root:operators 0640)
 - run all provisioning/app deployment commands from repo's `ansible` folder
-- to update third-party roles, run `ansible-galaxy install -r requirements.yml`
-  from `ansible/`
+- to update third-party roles, run `make update-vendor-force`
 
 
 ## Common plays
