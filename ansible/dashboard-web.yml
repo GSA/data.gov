@@ -80,7 +80,7 @@
       delegate_to: localhost
       register: result
       retries: 3
-      delay: 10
+      delay: 20
       until: not result.failed
 
 - name: Configure Logrotate
