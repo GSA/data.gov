@@ -21,7 +21,7 @@
   serial: 1
   become: no
   roles:
-  - { role: software/dashboard/dashboard-deploy, tags: [deploy, provision] }
+  - { role: software/dashboard, tags: [deploy, provision] }
 
 
 - name: Cleanup

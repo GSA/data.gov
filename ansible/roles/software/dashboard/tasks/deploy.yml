@@ -49,7 +49,7 @@
 
 - name: Adding .env
   template:
-    src: ".env"
+    src: "env.j2"
     dest: "{{ project_source_new_code_path }}/.env"
 
 - name: Symlink current dir with new code
