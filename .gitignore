@@ -55,8 +55,6 @@ ansible/inventories/mgmt-ocsit
 *.tfstate.backup
 *.lock.info
 
-# Kitchen
-.kitchen
 __pycache__
 
 gen-csr-out
