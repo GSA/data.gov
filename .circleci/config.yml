@@ -36,6 +36,7 @@ jobs:
           key: v3-pipenv-{{ checksum "Pipfile.lock" }}
           paths:
             - .venv
+            - ansible/roles/vendor
       - run:
           name: Setup ansible-galaxy
           command: pipenv run make update-vendor-force
