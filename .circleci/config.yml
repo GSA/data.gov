@@ -13,19 +13,14 @@ jobs:
       - run: make lint
 
   test:
-    machine: true
+    docker:
+      - image: circleci/python:3.6
     parallelism: 5
     environment:
       PIPENV_VENV_IN_PROJECT: 1
     steps:
       - checkout
-      # TODO once kitchen is removed, we can use a python docker instance
-      # without having to manually install python.
-      - run:
-          name: install python
-          command: |
-            cd /opt/circleci/.pyenv/plugins/python-build/../.. && git pull && cd -
-            pyenv install
+      - setup_remote_docker
       - run:
           name: install pipenv
           command: pip install -U pipenv
