@@ -13,46 +13,30 @@ jobs:
       - run: make lint
 
   test:
-    machine: true
+    docker:
+      - image: circleci/python:3.6
     parallelism: 5
     environment:
       PIPENV_VENV_IN_PROJECT: 1
     steps:
       - checkout
-      # TODO once kitchen is removed, we can use a python docker instance
-      # without having to manually install python.
-      - run:
-          name: install python
-          command: |
-            cd /opt/circleci/.pyenv/plugins/python-build/../.. && git pull && cd -
-            pyenv install
+      - setup_remote_docker
       - run:
           name: install pipenv
           command: pip install -U pipenv
       # Restore cache and install python dependencies
       - restore_cache:
           keys:
-            - v2-pipenv-{{ checksum "Pipfile.lock" }}
-            - v2-pipenv-
+            - v3-pipenv-{{ checksum "Pipfile.lock" }}
+            - v3-pipenv-
       - run:
           name: install python dependencies
           command: pipenv sync --dev
       - save_cache:
-          key: v2-pipenv-{{ checksum "Pipfile.lock" }}
+          key: v3-pipenv-{{ checksum "Pipfile.lock" }}
           paths:
             - .venv
-      # Restore cache and install ruby dependencies
-      - restore_cache:
-          keys:
-            - v1-bundle-{{ checksum "Gemfile.lock" }}
-            - v1-bundle-
-      - run:
-          name: Install dependencies
-          command: bundle install --path vendor/bundle
-      - save_cache:
-          key: v1-bundle-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
+            - ansible/roles/vendor
       - run:
           name: Setup ansible-galaxy
           command: pipenv run make update-vendor-force

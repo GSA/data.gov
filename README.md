@@ -339,7 +339,6 @@ roles here that you can develop on individually.
 
 - [GNU Make](https://www.gnu.org/software/make/)
 - [Docker Engine](https://docs.docker.com/engine/)
-- [Bundler](https://bundler.io/)
 - [pyenv](https://github.com/pyenv/pyenv) (recommended) or [Python](https://www.python.org) 3.6
 - [Pipenv](https://pipenv.readthedocs.io/en/latest/)
 - [Vagrant](https://www.vagrantup.com/)
@@ -364,11 +363,10 @@ with `pipenv run <command>`.
 
 ### Tests
 
-Run the molecule and kitchen test suites locally. You probably don't want to do
-this since it takes a long time and let [CI](./.circleci/config.yml) do it
-instead. See below for more on how to work with individual test suites. Both
-molecule and kitchen suites rely on docker for running tests in containerized
-hosts.
+Run the molecule test suites locally. You probably don't want to do this since
+it takes a long time and let [CI](./.circleci/config.yml) do it instead. See
+below for more on how to work with individual test suites. Molecule tests rely
+on docker for running tests in containerized hosts.
 
     $ pipenv run make test
 
@@ -401,35 +399,6 @@ creating/destroying the container every time.
 If you have multiple scenarios, you can specify them individually.
 
     $ molecule test -s <scenario>
-
-
-### Testing with kitchen
-
-_Note: we are [moving away](https://github.com/GSA/datagov-deploy/issues/581)
-from test-kitchen in favor of molecule._
-
-We use [Kitchen](https://kitchen.ci/) for testing playbooks.
-
-Ensure any required Ansible roles are availabile locally.
-
-    $ make update-vendor-force
-
-
-Run a single suite.
-
-    $ cd ansible
-    $ bundle exec kitchen test [catalog|dashboard]
-
-Log into the instance to debug.
-
-    $ cd ansible
-    $ bundle exec kitchen login [catalog|dashboard]
-
-Re-run the playbook from a particular step.
-
-    $ ANSIBLE_EXTRA_FLAGS='--start-at-task="software/ckan/apache : make sure postgresql packages are installed"' bundle exec kitchen converge catalog
-
-Refer to [kitchen](https://kitchen.ci/) commands for more information.
 
 
 ### Manual testing with Vagrant

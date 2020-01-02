@@ -1,7 +1,3 @@
-KITCHEN_SUITES := \
-  crm-web \
-  dashboard-web
-
 MOLECULE_SUITES := \
   software/ckan/catalog/harvest \
   software/ckan/catalog/www \
@@ -10,9 +6,6 @@ MOLECULE_SUITES := \
   software/ckan/native-login \
   software/common/php-fixes \
   software/dashboard/dashboard-deploy
-
-# Create test-kitchen-<suite> targets
-KITCHEN_SUITE_TARGETS := $(patsubst %,test-kitchen-%,$(KITCHEN_SUITES))
 
 # Create test-molecule-<suite> targets
 MOLECULE_SUITE_TARGETS := $(patsubst %,test-molecule-%,$(MOLECULE_SUITES))
@@ -36,22 +29,16 @@ update-vendor-force-verbose:
 
 setup:
 	pipenv install --dev
-	bundle install
 
 lint:
 	ansible-playbook --syntax-check ansible/*.yml
 	ansible-lint -v -x ANSIBLE0010 --exclude=ansible/roles/vendor ansible/*.yml
 
-$(KITCHEN_SUITE_TARGETS):
-	cd ansible && \
-	bundle exec kitchen test $(subst test-kitchen-,,$@)
-
 $(MOLECULE_SUITE_TARGETS):
 	cd ansible/roles/$(subst test-molecule-,,$@) && \
 	molecule test --all
 
-test: $(KITCHEN_SUITE_TARGETS) $(MOLECULE_SUITE_TARGETS)
-test-kitchen-only: $(KITCHEN_SUITE_TARGETS)
+test: $(MOLECULE_SUITE_TARGETS)
 test-molecule-only: $(MOLECULE_SUITE_TARGETS)
 
-.PHONY: lint setup test $(KITCHEN_SUITE_TARGETS) $(MOLECULE_SUITE_TARGETS)
+.PHONY: lint setup test $(MOLECULE_SUITE_TARGETS)
