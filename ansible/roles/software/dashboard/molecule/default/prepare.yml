@@ -14,7 +14,11 @@
       when: ppa is changed
 
   roles:
+    - role: geerlingguy.git
     - role: geerlingguy.nginx
+      nginx_extra_conf_options: |-
+        include /etc/nginx/modules-enabled/*.conf;
+    - role: geerlingguy.php-versions
     - role: geerlingguy.php
       php_webserver_daemon: nginx
     - role: geerlingguy.composer
@@ -29,7 +33,112 @@
         packages:
           - cron
           - git
+          - ssl-cert
           - supervisor
+
+    - name: Install TLS host certificate
+      copy:
+        content: |-
+          -----BEGIN CERTIFICATE-----
+          MIIGFTCCA/2gAwIBAgIUF90EaL5mKCYBCupS4tWiBp78BWMwDQYJKoZIhvcNAQEL
+          BQAwgZkxCzAJBgNVBAYTAlVTMQswCQYDVQQIDAJEQzETMBEGA1UEBwwKV2FzaGlu
+          Z3RvbjEqMCgGA1UECgwhVGVjaG5vbG9neSBUcmFuc2Zvcm1hdGlvbiBTZXJ2aWNl
+          MSgwJgYDVQQLDB9HZW5lcmFsIFNlcnZpY2VzIEFkbWluaXN0cmF0aW9uMRIwEAYD
+          VQQDDAlsb2NhbGhvc3QwHhcNMjAwMTAzMDQxMzIzWhcNMjkxMjMxMDQxMzIzWjCB
+          mTELMAkGA1UEBhMCVVMxCzAJBgNVBAgMAkRDMRMwEQYDVQQHDApXYXNoaW5ndG9u
+          MSowKAYDVQQKDCFUZWNobm9sb2d5IFRyYW5zZm9ybWF0aW9uIFNlcnZpY2UxKDAm
+          BgNVBAsMH0dlbmVyYWwgU2VydmljZXMgQWRtaW5pc3RyYXRpb24xEjAQBgNVBAMM
+          CWxvY2FsaG9zdDCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAKS60CJq
+          xifQ5JUulXbHYPbd9oldIMPq+il/GLSSrRPVRmpUA1TYEGUm1ZIJrrZgRIe9IHr4
+          4w8xqw50Pv1oU5ocEIYAQbQzGJKFQYrPK3q/RalHx8tmPFYcj3K4/HUsHL7DtdUc
+          63Z7F9YfA6vWEzVr9C2/pQshRUaXsqbKFDdWNZvtPUZoRJiZezzQpMTaZkQLWVYw
+          IYyOU9qp3+hDuEj8Rsjuka6XFSv01LbFUo0fkn7REFgijXPc44GktFN9SVqIYldV
+          noP6gUYtJvrTqihIucnn9fVaQFxPv9wzL4yRDyt4BFfUGRjOFGiZflWjzRrH517H
+          v1OxcouicTjXTkMAa1mxmbNeiolpS4z4kzhXXemJwKfbLnGogVIuq3E96GDOf6yU
+          g/PTJpFVJimwD8j+EEB17DK6XHC71KDYqpmX2NTb+lgJDTN6LkQAUQ7iJGMkOsYl
+          88YYfN6qW91kBmzOv9jie5f64aWr0o+As/B6It7zxc1/rQxGWBFOESzaUbTtOOgg
+          y+gasq4j6lp5MRJCxsavdQw1bcXUIIcsGuIfIzy9Jn2wkpRbOZzD3WBe8rW2alRU
+          YS9K/gSa5qiMRcOJMj2toibswTjnaW1jfN69GJLVq5uZv44BGXuR1soLJnvZcy6L
+          nwFAg9y/oQVnNJGMZH7sEf9E3L6/QgxY2NDNAgMBAAGjUzBRMB0GA1UdDgQWBBSx
+          s8peT/H+g6ZObkuQv1G5375TZTAfBgNVHSMEGDAWgBSxs8peT/H+g6ZObkuQv1G5
+          375TZTAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4ICAQAD7gS/VBLn
+          9CLQnJZ7jM/q/EwFDiqkWnIKFQ4RlvbV37V/if5hIYA3U8QI0KHUh0We8WJRbbjl
+          g/9sPyG1z30Dl3Sx0W87g4KYm2J+dnUK4AHhHBNDinRmz2fgO0bWpFtr8MAwox/n
+          TynyyB82iBqsQLvgAR4WnJ4hgik6KwW0CNg7P7g1XE60KxJSSMm/90JAKdRtxA5Q
+          8fbObiAq3mosXnwK2jEoM0AY8jh5GgxK5S+G20Ti7QoSKYwzYT/tsOEtOETm/CDA
+          Upi8hUZMTAZ9CnhVXDsRMBp3lLKkVcI8/Z7o9q+tw6NU52X0zG1RVncFdKh/y2po
+          e8eiihBIwKyu1eTjNCfxZFpp+pPNr+QR2owSIJJo3cCyeE/VVlhUjBtM58kWl8dT
+          vNPV9TdEVrXc19LA6/wuDtX3U6ABpKfqX1RvHcmXGi1tg8DalFfl7qS6joBPKAqF
+          ZGob50FNnGegmcIOshOnqv5rOOjFUxyxroEs4M7ZtI03VgCbRyq4Ar9m5KxYuIN6
+          Av7yIrbgoxZjWRQ+XJhpsCyKXTtsdS5/d6L5pJ06WhAgUul+GaSxG+ETApblainz
+          TF/kGsOXsHfV2D7z1V0BoMSOS9fB5LpQeGq/Z6zhBsHKeTWYHFQSTbVhpPUXYcwN
+          l6+Uawz2PMFfPbBQst/q4EaHmoHXBfuKQw==
+          -----END CERTIFICATE-----
+        dest: /etc/ssl/certs/datagov_host.crt
+        owner: root
+        group: ssl-cert
+        mode: 0644
+
+    - name: Install TLS host key
+      copy:
+        # This key is only used for testing, DO NOT use in any other environment
+        content: |-
+          -----BEGIN PRIVATE KEY-----
+          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
+          Ep43/tdl5cyMa0BH1mcXDjBkbh3Hj7U=
+          -----END PRIVATE KEY-----
+        dest: /etc/ssl/private/datagov_host.key
+        owner: root
+        group: ssl-cert
+        mode: 0640
 
     - name: Start supervisor
       service: name=supervisor state=started enabled=true

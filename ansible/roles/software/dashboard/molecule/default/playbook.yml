@@ -4,5 +4,6 @@
   roles:
     - role: dashboard
       crons_enabled: true
-      default_email_from: team@example.com
       cron_to_emails: team@example.com
+      default_email_from: team@example.com
+      php_major_minor_version: "7.3"

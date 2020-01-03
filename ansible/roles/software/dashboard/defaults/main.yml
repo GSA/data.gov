@@ -2,6 +2,11 @@
 # Enable crons only on specific hosts
 crons_enabled: false
 
+dashboard_nginx_server_name: localhost
+dashboard_tls_certificate_filepath: /etc/ssl/certs/datagov_host.crt
+dashboard_tls_key_filepath: /etc/ssl/private/datagov_host.key
+dashboard_user: ubuntu
+
 # Composer
 project_git_repo: https://github.com/project-open-data/project-open-data-dashboard.git
 project_git_version: master
@@ -26,8 +31,6 @@ s3_bucket: dashboard-rei-test
 s3_prefix: datagov/dashboard/
 
 # App
-dashboard_nginx_server_name: localhost
-dashboard_user: ubuntu
 web_app_env: development
 app_base_url: https://labs.data.gov/dashboard
 default_host: 'labs.data.gov/dashboard'
