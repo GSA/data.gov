@@ -20,6 +20,11 @@ jobs:
       - image: circleci/python:3.6-node
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - v3-pipenv-{{ checksum "Pipfile.lock" }}
+            - v3-pipenv-
+      - run: pipenv sync --dev
       - run:
           name: install snyk
           command: sudo npm install -g snyk
@@ -30,6 +35,11 @@ jobs:
       - image: circleci/python:3.6-node
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - v3-pipenv-{{ checksum "Pipfile.lock" }}
+            - v3-pipenv-
+      - run: pipenv sync --dev
       - run:
           name: install snyk
           command: sudo npm install -g snyk
