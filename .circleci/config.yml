@@ -17,7 +17,7 @@ jobs:
   # `master`, since it represents the state of shipped dependencies.
   snyk-monitor:
     docker:
-      - image: circleci/node
+      - image: circleci/python:3.6-node
     steps:
       - checkout
       - run:
@@ -27,7 +27,7 @@ jobs:
 
   snyk-test:
     docker:
-      - image: circleci/node
+      - image: circleci/python:3.6-node
     steps:
       - checkout
       - run:
