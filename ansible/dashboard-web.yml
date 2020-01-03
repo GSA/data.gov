@@ -13,7 +13,6 @@
   - { role: geerlingguy.php-memcached, tags: [php, php-memcached, provision] }
   - { role: software/common/php-fixes, tags: [php, provision] }
   - { role: geerlingguy.composer, tags: [php, provision] }
-  - { role: software/dashboard/dashboard-sudo-2-init, tags: [provision, deploy] }
 
 
 - name: Deploying Dashboard

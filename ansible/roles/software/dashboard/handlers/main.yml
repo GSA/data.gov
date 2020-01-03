@@ -4,3 +4,6 @@
   become: yes
   tags:
     - skip_ansible_lint
+
+- name: reload nginx
+  service: name=nginx state=reloaded
