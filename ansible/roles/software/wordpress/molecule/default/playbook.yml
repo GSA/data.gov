@@ -3,3 +3,4 @@
   hosts: all
   roles:
     - role: wordpress
+      datagov_team_email: team@example.com

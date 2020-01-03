@@ -108,6 +108,9 @@
   run_once: true
   tags: wp-cli
 
+# TODO this should probably be a separate play so that it's not run on multipe
+# hosts. Since we're running serial 1, it will be run by each play (and on
+# every host).
 - name: update s3 options
   shell: wp option update tantan_wordpress_s3 --format=json < s3.json
   args:
@@ -156,10 +159,3 @@
     path: "{{ project_source_new_code_path }}/web/app/plugins/amazon-s3-and-cloudfront/classes/as3cf-filter.php"
     regexp: '\$value.*\$this->replace_urls\( \$value, \$url_pairs \);'
     state: absent
-
-#- name: Set up main wp cronjob
-#  cron:
-#    name: "Set up main wp cronjob"
-#    minute: "*/10"
-#    job: "/usr/bin/php {{ current_source_symlink }}/web/wp/wp-cron.php >> /var/log/wp-cron.log 2>&1" #todo: Use SES to send this to a recipient list
-#  run_once: true
