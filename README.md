@@ -76,7 +76,7 @@ Once you're SSH'd into the jumpbox, follow these steps for deploy.
    [environment](#environments) you're working with.
 
        $ git status
-       $ git pull
+       $ git pull --ff-only
 
 1. Update python dependencies.
 
