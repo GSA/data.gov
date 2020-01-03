@@ -21,7 +21,7 @@
   serial: 1
   become: no
   roles:
-  - { role: software/wordpress/datagov-deploy, tags: [deploy, provision] }
+  - { role: software/wordpress, tags: [deploy, provision] }
 
 
 - name: Cleanup

@@ -15,12 +15,16 @@
     state: link
   when: p.stat.isdir is defined and p.stat.isdir
 
+- name: Ensure new app directory exists
+  file: path={{ project_source_new_code_path }} state=directory owner={{ wordpress_app_user }} group={{ wordpress_app_user }} mode=0755
+
 - name: Clone project files to {{ project_source_new_code_path }}
   git:
     repo: "{{ project_git_repo }}"
     dest: "{{ project_source_new_code_path }}"
     version: "{{ project_git_version }}"
     force: true
+    umask: "0022"
 
 - name: Composer install Data.gov Wordpress and plugins to {{ project_source_new_code_path }}
   composer:
@@ -38,7 +42,7 @@
 
 - name: Adding Bedrock .env to {{ project_source_new_code_path }}/.env
   template:
-    src: ".env"
+    src: "env.j2"
     dest: "{{ project_source_new_code_path }}/.env"
 
 - name: Copy W3 Total Cache files
