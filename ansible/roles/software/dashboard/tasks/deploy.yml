@@ -1,6 +1,6 @@
 ---
 - name: Create log dir
-  file: path=/var/log/dashboard state=directory owner=ubuntu group=ubuntu mode=0755
+  file: path=/var/log/dashboard state=directory owner={{ dashboard_user }} group={{ dashboard_user }} mode=0755
 
 - name: Check whether "{{ project_source_new_code_path }}" exists
   stat: path="{{ project_source_new_code_path }}"
@@ -18,7 +18,7 @@
   when: p.stat.isdir is defined and p.stat.isdir
 
 - name: Create "new" directory
-  file: path={{ project_source_new_code_path }} state=directory owner=ubuntu group=ubuntu mode=0755
+  file: path={{ project_source_new_code_path }} state=directory owner={{ dashboard_user }} group={{ dashboard_user }} mode=0755
 
 - name: Clone project files to {{ project_source_new_code_path }}
   git:
@@ -28,7 +28,7 @@
     umask: "0022"
     force: true
     recursive: no
-  become_user: ubuntu
+  become_user: "{{ dashboard_user }}"
 
 - name: Composer install Dashboard
   composer:
@@ -37,13 +37,13 @@
     working_dir: "{{ project_source_new_code_path }}"
   environment:
     COMPOSER_DISCARD_CHANGES: "true"
-  become_user: ubuntu
+  become_user: "{{ dashboard_user }}"
 
 - name: Copying SAML config files
   template:
     src: "{{ item }}"
     dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/simplesamlphp/config/{{ item | basename }}"
-    owner: ubuntu
+    owner: "{{ dashboard_user }}"
     group: www-data
     mode: "0640"
   with_fileglob:
@@ -53,16 +53,15 @@
   template:
     src: "saml/metadata/{{ saml2_idp_entry }}/saml20-idp-remote.php"
     dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/simplesamlphp/metadata/saml20-idp-remote.php"
-    owner: ubuntu
-    group: ubuntu
+    owner: "{{ dashboard_user }}"
+    group: "{{ dashboard_user }}"
     mode: "0644"
-  become_user: ubuntu
 
 - name: Adding .env
   template:
     src: "env.j2"
     dest: "{{ project_source_new_code_path }}/.env"
-    owner: ubuntu
+    owner: "{{ dashboard_user }}"
     group: www-data
     mode: "0640"
 
