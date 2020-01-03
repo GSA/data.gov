@@ -12,6 +12,29 @@ jobs:
       - run: make update-vendor-force
       - run: make lint
 
+  # Snapshots the dependencies. Snyk will send notifications if any new
+  # vulnerabilities appear for this snapshot. This should only be run on
+  # `master`, since it represents the state of shipped dependencies.
+  snyk-monitor:
+    docker:
+      - image: circleci/node
+    steps:
+      - checkout
+      - run:
+          name: install snyk
+          command: sudo npm install -g snyk
+      - run: snyk monitor
+
+  snyk-test:
+    docker:
+      - image: circleci/node
+    steps:
+      - checkout
+      - run:
+          name: install snyk
+          command: sudo npm install -g snyk
+      - run: snyk test
+
   test:
     docker:
       - image: circleci/python:3.6
@@ -52,4 +75,10 @@ workflows:
   commit:
     jobs:
       - lint
+      - snyk-test
       - test
+      - snyk-monitor:
+          filters:
+            branches:
+              only:
+                - master
