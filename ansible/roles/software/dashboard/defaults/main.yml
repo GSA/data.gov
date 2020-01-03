@@ -2,6 +2,7 @@
 # Enable crons only on specific hosts
 crons_enabled: false
 
+dashboard_php_major_minor_version: "7.3"
 dashboard_nginx_server_name: localhost
 dashboard_tls_certificate_filepath: /etc/ssl/certs/datagov_host.crt
 dashboard_tls_key_filepath: /etc/ssl/private/datagov_host.key

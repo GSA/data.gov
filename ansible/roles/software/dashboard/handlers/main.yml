@@ -6,7 +6,7 @@
     - skip_ansible_lint
 
 - name: restart php-fpm
-  service: name=php{{ php_major_minor_version }}-fpm state=restarted
+  service: name=php{{ dashboard_php_major_minor_version }}-fpm state=restarted
 
 - name: reload nginx
   service: name=nginx state=reloaded
