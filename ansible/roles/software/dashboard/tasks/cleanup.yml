@@ -1,13 +1,6 @@
 ---
 # Cleanup after deployment
 
-- name: Reverting /var/www/ permissions
-  file:
-    path: "/var/www"
-    state: directory
-    mode: 0755
-    recurse: yes
-
 - name: Check "{{ project_shared_path }}" permissions
   file:
     path: "{{ item }}"

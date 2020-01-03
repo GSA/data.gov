@@ -8,34 +8,31 @@
   notify:
     - reload nginx
 
-- name: Mkdir /var/www/
-  file:
-    path: "/var/www"
-    state: directory
-    owner: "www-data"
-    group: "www-data"
-    mode: 0777
-
+# TODO use the host tls certificate
 - name: Copy SAML crt
   copy:
     content: |-
       {{ saml2_sp_public_certificate }}
     dest: "{{ saml_sp_cert_path }}"
+    owner: root
+    group: ssl-cert
     mode: 0644
 
+# TODO use the host tls key
 - name: Copy SAML key
   copy:
     content: |-
       {{ saml2_sp_private_key }}
     dest: "{{ saml_sp_private_key_path }}"
-    mode: 0644
+    owner: root
+    group: ssl-cert
+    mode: 0640
 
 - name: Installing required packages
-  package: name={{ item }} state=installed
+  package: name={{ item }} state=present
   with_items:
     - mariadb-client
-    - php7.1-mcrypt
-    - php7.0-zip
+    - php{{ php_major_minor_version }}-zip
     - nginx-extras
 
 - name: Remove old rollback code

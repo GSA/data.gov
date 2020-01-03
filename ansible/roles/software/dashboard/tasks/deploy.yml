@@ -28,6 +28,7 @@
     umask: "0022"
     force: true
     recursive: no
+  become: true
   become_user: "{{ dashboard_user }}"
 
 - name: Composer install Dashboard
@@ -37,6 +38,7 @@
     working_dir: "{{ project_source_new_code_path }}"
   environment:
     COMPOSER_DISCARD_CHANGES: "true"
+  become: true
   become_user: "{{ dashboard_user }}"
 
 - name: Copying SAML config files
