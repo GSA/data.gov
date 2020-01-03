@@ -27,6 +27,7 @@ s3_prefix: datagov/dashboard/
 
 # App
 dashboard_nginx_server_name: localhost
+dashboard_user: ubuntu
 web_app_env: development
 app_base_url: https://labs.data.gov/dashboard
 default_host: 'labs.data.gov/dashboard'

@@ -1,3 +1,4 @@
 ---
 - import_tasks: init.yml
 - import_tasks: deploy.yml
+- import_tasks: cleanup.yml

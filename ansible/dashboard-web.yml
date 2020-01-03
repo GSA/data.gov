@@ -20,15 +20,6 @@
   serial: 1
   roles:
   - { role: software/dashboard, tags: [deploy, provision] }
-
-
-- name: Cleanup
-  hosts: dashboard-web
-  serial: 1
-  roles:
-  - { role: software/dashboard/dashboard-sudo-3-cleanup, tags: [provision, deploy] }
-
-  # TODO move these closer to the deploy play
   # Host-level smoke tests
   tasks:
     - name: flush handlers
