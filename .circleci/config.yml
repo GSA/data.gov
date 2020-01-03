@@ -12,6 +12,39 @@ jobs:
       - run: make update-vendor-force
       - run: make lint
 
+  # Snapshots the dependencies. Snyk will send notifications if any new
+  # vulnerabilities appear for this snapshot. This should only be run on
+  # `master`, since it represents the state of shipped dependencies.
+  snyk-monitor:
+    docker:
+      - image: circleci/python:3.6-node
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v3-pipenv-{{ checksum "Pipfile.lock" }}
+            - v3-pipenv-
+      - run: pipenv sync --dev
+      - run:
+          name: install snyk
+          command: sudo npm install -g snyk
+      - run: snyk monitor
+
+  snyk-test:
+    docker:
+      - image: circleci/python:3.6-node
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v3-pipenv-{{ checksum "Pipfile.lock" }}
+            - v3-pipenv-
+      - run: pipenv sync --dev
+      - run:
+          name: install snyk
+          command: sudo npm install -g snyk
+      - run: snyk test
+
   test:
     docker:
       - image: circleci/python:3.6
@@ -21,9 +54,6 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run:
-          name: install pipenv
-          command: pip install -U pipenv
       # Restore cache and install python dependencies
       - restore_cache:
           keys:
@@ -32,14 +62,14 @@ jobs:
       - run:
           name: install python dependencies
           command: pipenv sync --dev
+      - run:
+          name: Setup ansible-galaxy
+          command: pipenv run make update-vendor-force
       - save_cache:
           key: v3-pipenv-{{ checksum "Pipfile.lock" }}
           paths:
             - .venv
             - ansible/roles/vendor
-      - run:
-          name: Setup ansible-galaxy
-          command: pipenv run make update-vendor-force
       - run:
           name: Run tests
           command: |
@@ -52,4 +82,10 @@ workflows:
   commit:
     jobs:
       - lint
+      - snyk-test
       - test
+      - snyk-monitor:
+          filters:
+            branches:
+              only:
+                - master
