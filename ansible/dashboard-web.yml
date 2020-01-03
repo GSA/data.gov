@@ -19,7 +19,6 @@
 - name: Deploying Dashboard
   hosts: dashboard-web
   serial: 1
-  become: no
   roles:
   - { role: software/dashboard, tags: [deploy, provision] }
 

@@ -1,7 +1,6 @@
 ---
 - name: Create log dir
   file: path=/var/log/dashboard state=directory owner=ubuntu group=ubuntu mode=0755
-  become: yes
 
 - name: Check whether "{{ project_source_new_code_path }}" exists
   stat: path="{{ project_source_new_code_path }}"
@@ -18,6 +17,9 @@
     state: link
   when: p.stat.isdir is defined and p.stat.isdir
 
+- name: Create "new" directory
+  file: path={{ project_source_new_code_path }} state=directory owner=ubuntu group=ubuntu mode=0755
+
 - name: Clone project files to {{ project_source_new_code_path }}
   git:
     repo: "{{ project_git_repo }}"
@@ -26,6 +28,7 @@
     umask: "0022"
     force: true
     recursive: no
+  become_user: ubuntu
 
 - name: Composer install Dashboard
   composer:
@@ -34,11 +37,15 @@
     working_dir: "{{ project_source_new_code_path }}"
   environment:
     COMPOSER_DISCARD_CHANGES: "true"
+  become_user: ubuntu
 
 - name: Copying SAML config files
   template:
     src: "{{ item }}"
     dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/simplesamlphp/config/{{ item | basename }}"
+    owner: ubuntu
+    group: www-data
+    mode: "0640"
   with_fileglob:
     - ../templates/saml/config/*.php
 
@@ -46,11 +53,18 @@
   template:
     src: "saml/metadata/{{ saml2_idp_entry }}/saml20-idp-remote.php"
     dest: "{{ project_source_new_code_path }}/vendor/simplesamlphp/simplesamlphp/metadata/saml20-idp-remote.php"
+    owner: ubuntu
+    group: ubuntu
+    mode: "0644"
+  become_user: ubuntu
 
 - name: Adding .env
   template:
     src: "env.j2"
     dest: "{{ project_source_new_code_path }}/.env"
+    owner: ubuntu
+    group: www-data
+    mode: "0640"
 
 - name: Symlink current dir with new code
   file:
@@ -60,12 +74,10 @@
 
 - name: Remove invalid supervisor conf
   file: path=/etc/supervisor/conf.d/dashboard state=absent
-  become: yes
 
 - name: Configure supervisor tasks
   template: src=etc_supervisor_conf.d_dashboard.conf.j2 dest=/etc/supervisor/conf.d/dashboard.conf owner=root group=root mode=0644
   notify: supervisor reload
-  become: yes
 
 - name: Enable campaign status cfo-act download cron
   cron:
@@ -77,7 +89,6 @@
     job: supervisorctl start dashboard-cfo-act-download > /dev/null
     disabled: "{{ not crons_enabled }}"
     state: present
-  become: yes
 
 - name: Enable campaign status cfo-act full-scan cron
   cron:
@@ -89,4 +100,3 @@
     job: supervisorctl start dashboard-cfo-act-full-scan > /dev/null
     disabled: "{{ not crons_enabled }}"
     state: present
-  become: yes
