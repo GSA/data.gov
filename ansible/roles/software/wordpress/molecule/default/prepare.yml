@@ -1,0 +1,10 @@
+---
+- name: Prepare
+  hosts: all
+  roles:
+    - role: geerlingguy.git
+    - role: geerlingguy.nginx
+    - role: geerlingguy.php-versions
+    - role: geerlingguy.php
+    - role: geerlingguy.composer
+    - role: sbaerlocher.wp-cli
