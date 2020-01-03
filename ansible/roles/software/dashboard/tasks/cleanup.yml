@@ -28,3 +28,11 @@
 
 - name: start and enable php-fpm
   service: name=php{{ php_major_minor_version }}-fpm state=started enabled=true
+
+# Not sure why the service module doesn't actually start php-fpm. Running
+# `service` seems to work.
+- name: start and enable php-fpm (work-around)
+  command: service php{{ php_major_minor_version }}-fpm start
+  ignore_errors: true
+  tags:
+    - skip_ansible_lint
