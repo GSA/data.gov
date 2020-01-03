@@ -1,3 +1,4 @@
+---
 # Cleanup after deployment
 
 - name: Reverting /var/www/ permissions

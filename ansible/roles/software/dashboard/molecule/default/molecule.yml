@@ -5,7 +5,6 @@ driver:
   name: docker
 lint:
   name: yamllint
-  enabled: false
 platforms:
   - name: bionic
     image: ubuntu:bionic
