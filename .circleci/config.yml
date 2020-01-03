@@ -54,9 +54,6 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run:
-          name: install pipenv
-          command: pip install -U pipenv
       # Restore cache and install python dependencies
       - restore_cache:
           keys:
@@ -65,14 +62,14 @@ jobs:
       - run:
           name: install python dependencies
           command: pipenv sync --dev
+      - run:
+          name: Setup ansible-galaxy
+          command: pipenv run make update-vendor-force
       - save_cache:
           key: v3-pipenv-{{ checksum "Pipfile.lock" }}
           paths:
             - .venv
             - ansible/roles/vendor
-      - run:
-          name: Setup ansible-galaxy
-          command: pipenv run make update-vendor-force
       - run:
           name: Run tests
           command: |
