@@ -3,8 +3,6 @@
   hosts: wordpress-web
   serial: 1
   roles:
-  # TODO remove the die-no-tags role. You should be able to run a role playbook
-  # with no tags and have it be idempotent.
   - { role: software/common/tls, tags: [provision, tls] }
   - { role: software/common/php-common, tags: [provision] }
   - { role: geerlingguy.git, tags: [git, provision] }
@@ -13,8 +11,9 @@
   - { role: geerlingguy.php, tags: [php, provision] }
   - { role: geerlingguy.php-mysql, tags: [php, php-mysql, provision] }
   - { role: geerlingguy.php-memcached, tags: [php, php-memcached, provision] }
-  - { role: sbaerlocher.wp-cli, tags: [php, cli, provision] }
+  - { role: software/common/php-fixes, tags: [php, provision] }
   - { role: geerlingguy.composer, tags: [php, provision] }
+  - { role: sbaerlocher.wp-cli, tags: [php, cli, provision] }
   - { role: software/wordpress/datagov-sudo-2-init, tags: [provision, deploy] }
 
 - name: Deploying Data.gov
@@ -30,7 +29,6 @@
   serial: 1
   tags: [provision, deploy]
   roles:
-  - { role: software/common/php-fixes, tags: [php] }
   - { role: software/wordpress/datagov-sudo-3-cleanup, tags: [cleanup] }
 
   # TODO these should happen closer to the deploy play
