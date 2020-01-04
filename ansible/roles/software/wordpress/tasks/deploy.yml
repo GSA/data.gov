@@ -94,6 +94,7 @@
 - name: Copy SAML key
   template:
     src: "mykey.pem"
+    # TODO can this be installed _not_ in the web root?
     dest: "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc/certs/1/1.key"
     owner: "{{ wordpress_app_user }}"
     group: www-data

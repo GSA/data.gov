@@ -70,6 +70,13 @@
         expected_url: "{{ ansible_fqdn }}/contact"
       loop: "{{ contact_forms.results }}"
 
+    - name: assert saml2 TLS key is not published
+      uri:
+        url: https://{{ ansible_fqdn }}/app/uploads/saml-20-single-sign-on/etc/certs/1/1.key
+        follow_redirects: none
+        status_code: 404
+        validate_certs: false
+
 
 - name: Service-level smoke tests
   hosts: wordpress-web
