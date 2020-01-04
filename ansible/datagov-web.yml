@@ -3,34 +3,23 @@
   hosts: wordpress-web
   serial: 1
   roles:
-  - { role: software/common/tls, tags: [provision, tls] }
-  - { role: software/common/php-common, tags: [provision] }
-  - { role: geerlingguy.git, tags: [git, provision] }
-  - { role: geerlingguy.nginx, tags: [nginx, provision] }
-  - { role: geerlingguy.php-versions, tags: [php, provision] }
-  - { role: geerlingguy.php, tags: [php, provision] }
-  - { role: geerlingguy.php-mysql, tags: [php, php-mysql, provision] }
-  - { role: geerlingguy.php-memcached, tags: [php, php-memcached, provision] }
-  - { role: software/common/php-fixes, tags: [php, provision] }
-  - { role: geerlingguy.composer, tags: [php, provision] }
-  - { role: sbaerlocher.wp-cli, tags: [php, cli, provision] }
+    - { role: software/common/tls, tags: [provision, tls] }
+    - { role: software/common/php-common, tags: [provision] }
+    - { role: geerlingguy.git, tags: [git, provision] }
+    - { role: geerlingguy.nginx, tags: [nginx, provision] }
+    - { role: geerlingguy.php-versions, tags: [php, provision] }
+    - { role: geerlingguy.php, tags: [php, provision] }
+    - { role: geerlingguy.php-mysql, tags: [php, php-mysql, provision] }
+    - { role: geerlingguy.php-memcached, tags: [php, php-memcached, provision] }
+    - { role: software/common/php-fixes, tags: [php, provision] }
+    - { role: geerlingguy.composer, tags: [php, provision] }
+    - { role: sbaerlocher.wp-cli, tags: [php, cli, provision] }
 
 - name: Deploying Data.gov
   hosts: wordpress-web
   serial: 1
   roles:
-  - { role: software/wordpress, tags: [deploy, provision] }
-
-
-- name: Cleanup
-  hosts: wordpress-web
-  serial: 1
-  tags: [provision, deploy]
-  roles:
-  - { role: software/wordpress/datagov-sudo-3-cleanup, tags: [cleanup] }
-
-  # TODO these should happen closer to the deploy play
-  # Host-level smoke tests
+    - { role: software/wordpress, tags: [deploy, provision] }
   tasks:
     - name: flush handlers
       meta: flush_handlers

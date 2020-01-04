@@ -40,10 +40,8 @@
   command: /etc/init.d/php{{ php_major_minor_version }}-fpm start
   when: '"is not running" in php_fpm_status.stdout'
   tags: skip_ansible_lint
-  notify: restart nginx
 
 - name: ReStart php-fpm
   command: /etc/init.d/php{{ php_major_minor_version }}-fpm restart
   when: '"is running" in php_fpm_status.stdout'
   tags: skip_ansible_lint
-  notify: restart nginx
