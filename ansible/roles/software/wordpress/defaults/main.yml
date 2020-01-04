@@ -62,3 +62,5 @@ wordpress_app_user: ubuntu
 wordpress_nginx_server_name: localhost
 wordpress_s3_enabled: true
 wordpress_saml2_enabled: true
+wordpress_tls_host_certificate_filepath: /etc/ssl/certs/datagov_host.crt
+wordpress_tls_host_key_filepath: /etc/ssl/private/datagov_host.key
