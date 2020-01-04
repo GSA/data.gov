@@ -27,6 +27,10 @@ common_reboot_notify_email: "{{ datagov_team_email }}"
 common_tls_host_key: "{{ default_tls_host_key }}"
 common_tls_host_certificate: "{{ default_tls_host_certificate }}"
 
+
+dashboard_php_major_minor_version: "{{ php_major_minor_version }}"
+
+
 # site-wide datagov variables
 datagov_support_email: datagov@gsa.gov
 datagov_team_email: datagovhelp@gsa.gov

@@ -6,7 +6,7 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: bionic
+  - name: dashboard-bionic
     image: ubuntu:bionic
 provisioner:
   name: ansible
@@ -28,5 +28,7 @@ scenario:
     - destroy
 verifier:
   name: testinfra
+  options:
+    v: true
   lint:
     name: flake8

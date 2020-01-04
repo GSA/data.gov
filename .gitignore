@@ -34,7 +34,6 @@ synced_folders/*
 vendor
 authorized_keys
 *.retry
-!.env.j2
 ansible/inventories/ocsit
 ansible/inventories/mgmt-ocsit
 

@@ -5,7 +5,7 @@ MOLECULE_SUITES := \
   software/ckan/inventory \
   software/ckan/native-login \
   software/common/php-fixes \
-  software/dashboard/dashboard-deploy
+  software/dashboard
 
 # Create test-molecule-<suite> targets
 MOLECULE_SUITE_TARGETS := $(patsubst %,test-molecule-%,$(MOLECULE_SUITES))

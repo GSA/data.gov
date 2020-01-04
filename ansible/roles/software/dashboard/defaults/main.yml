@@ -1,7 +1,12 @@
 ---
-
 # Enable crons only on specific hosts
 crons_enabled: false
+
+dashboard_php_major_minor_version: "7.3"
+dashboard_nginx_server_name: localhost
+dashboard_tls_certificate_filepath: /etc/ssl/certs/datagov_host.crt
+dashboard_tls_key_filepath: /etc/ssl/private/datagov_host.key
+dashboard_user: ubuntu
 
 # Composer
 project_git_repo: https://github.com/project-open-data/project-open-data-dashboard.git
@@ -37,6 +42,12 @@ real_ansible_env: local
 saml2_idp_entry: "login.test.max.gov"
 saml_sp_private_key_path: /etc/dashboard-saml-sp-private.pem
 saml_sp_cert_path: /etc/dashboard-saml-sp-cert.crt
+saml2_sp_public_certificate: "add-yours-to-inventory"
+saml2_sp_private_key: "add-yours-to-inventory"
+
+# TODO these should not be defaults and silently fail when they are
+# misconfigured. Instead, make them required by testing for them within the
+# tasks.
 saml_sp_private_key: "private_key"
 saml_admin_pass: "admin_pass"
 

@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: dashboard
+      crons_enabled: true
+      cron_to_emails: team@example.com
+      default_email_from: team@example.com
+      dashboard_php_major_minor_version: "7.3"

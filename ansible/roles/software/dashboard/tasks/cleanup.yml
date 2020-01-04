@@ -1,0 +1,38 @@
+---
+# Cleanup after deployment
+
+- name: Check "{{ project_shared_path }}" permissions
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0775
+    owner: "{{ dashboard_user }}"
+    group: "www-data"
+    recurse: yes
+  with_items:
+    - "{{ project_shared_path }}"
+    - "{{ project_shared_path }}/uploads"
+    - "{{ project_shared_path }}/downloads"
+    - "{{ project_shared_path }}/archive"
+    - "{{ project_shared_path }}/application/cache"
+
+- name: Check files permissions
+  file:
+    path: "{{ item }}"
+    state: touch
+    mode: 0666
+  with_items:
+    - "/var/log/dashboard-cron.log"
+    - "/var/log/dashboard-cron-cfo.log"
+    - "{{ project_shared_path }}/archive/curl_header"
+
+- name: start and enable php-fpm
+  service: name=php{{ dashboard_php_major_minor_version }}-fpm state=started enabled=true
+
+# Not sure why the service module doesn't actually start php-fpm. Running
+# `service` seems to work.
+- name: start and enable php-fpm (work-around)
+  command: service php{{ dashboard_php_major_minor_version }}-fpm start
+  ignore_errors: true
+  tags:
+    - skip_ansible_lint
