@@ -51,10 +51,6 @@ def test_app_env(host):
         "DB_PASSWORD='superpassword'"
     )
 
-    assert env.contains(
-        "PRE_APPROVED_ADMINS=''"
-    )
-
 
 def test_log_dir(host):
     log_dir = host.file('/var/log/wordpress')
@@ -73,7 +69,7 @@ def test_saml2_certificate(host):
 
     assert certificate.exists
     assert certificate.user == wordpress_user
-    assert certificate.group == wordpress_user
+    assert certificate.group == 'www-data'
     assert certificate.mode == 0o644
 
 
@@ -85,7 +81,7 @@ def test_saml2_key(host):
 
     assert key.exists
     assert key.user == wordpress_user
-    assert key.group == wordpress_user
+    assert key.group == 'www-data'
     assert key.mode == 0o644  # :sob:
 
 
@@ -97,7 +93,7 @@ def test_saml2_ini(host):
 
     assert ini.exists
     assert ini.user == wordpress_user
-    assert ini.group == wordpress_user
+    assert ini.group == 'www-data'
     assert ini.mode == 0o644
 
 

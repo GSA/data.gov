@@ -21,6 +21,7 @@
     - role: geerlingguy.php-versions
     - role: geerlingguy.php
       php_webserver_daemon: nginx
+    - role: geerlingguy.php-mysql
     - role: geerlingguy.composer
     - role: sbaerlocher.wp-cli
 

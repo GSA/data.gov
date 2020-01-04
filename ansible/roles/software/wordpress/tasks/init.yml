@@ -39,10 +39,10 @@
   when: crons_enabled
 
 - name: Installing required packages
-  package: name={{ item }} state=installed
+  package: name={{ item }} state=present
   with_items:
     - mariadb-client
-    - php7.0-zip
+    - php{{ wordpress_php_major_minor_version }}-zip
     - nginx-extras
 
 - name: Remove previous deployment rollback folder

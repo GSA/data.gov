@@ -4,4 +4,5 @@
 - src: geerlingguy.nginx
 - src: geerlingguy.php
 - src: geerlingguy.php-versions
+- src: geerlingguy.php-mysql
 - src: sbaerlocher.wp-cli

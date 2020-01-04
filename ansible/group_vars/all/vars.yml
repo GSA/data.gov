@@ -85,3 +85,5 @@ python_home: "{{ common_python_version_directory }}"
 
 # Disabling MySQL server (we need only client on this machine)
 mysql_enabled_on_startup: false
+
+wordpress_php_major_minor_version: "{{ php_major_minor_version }}"

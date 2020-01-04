@@ -1,19 +1,13 @@
 ---
 # Cleanup after deployment
 
-- name: Reverting /var/www/ permissions
-  file:
-    path: "/var/www"
-    state: directory
-    mode: 0755
-    recurse: true
-  register: chmod_www
-
 - name: Ensuring required directories exist and have write permissions
   file:
     path: "{{ item }}"
     state: directory
-    mode: 0777
+    owner: "{{ wordpress_app_user }}"
+    group: www-data
+    mode: 0775
     recurse: true
   with_items:
     - "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc"
@@ -25,24 +19,17 @@
   file:
     path: "{{ item }}"
     state: touch
-    mode: 0666
+    mode: 0664
   with_items:
     - "/var/log/wp-cron.log"
 
-# SERVICE MODULE WILL NOT WORK (checked Ansible versions till 2.3.1)
-# `service phpX.Y-fpm restart` itself will not start `phpX.Y-fpm` if it's not running
-- name: php-fpm status
-  command: /etc/init.d/php{{ php_major_minor_version }}-fpm status
-  register: php_fpm_status
-  tags: skip_ansible_lint
+- name: start and enable php-fpm
+  service: name=php{{ wordpress_php_major_minor_version }}-fpm state=started enabled=true
+
+# Not sure why the service module doesn't actually start php-fpm. Running
+# `service` seems to work.
+- name: start and enable php-fpm (work-around)
+  command: service php{{ wordpress_php_major_minor_version }}-fpm start
   ignore_errors: true
-
-- name: Start php-fpm
-  command: /etc/init.d/php{{ php_major_minor_version }}-fpm start
-  when: '"is not running" in php_fpm_status.stdout'
-  tags: skip_ansible_lint
-
-- name: ReStart php-fpm
-  command: /etc/init.d/php{{ php_major_minor_version }}-fpm restart
-  when: '"is running" in php_fpm_status.stdout'
-  tags: skip_ansible_lint
+  tags:
+    - skip_ansible_lint

@@ -16,6 +16,9 @@
     state: link
   when: p.stat.isdir is defined and p.stat.isdir
 
+- name: Ensure app home directory exists
+  file: path=/var/www/datagov state=directory owner={{ wordpress_app_user }} group={{ wordpress_app_user }} mode=0755
+
 - name: Ensure new app directory exists
   file: path={{ project_source_new_code_path }} state=directory owner={{ wordpress_app_user }} group={{ wordpress_app_user }} mode=0755
 
@@ -35,7 +38,6 @@
     no-scripts: true
     no-dev: "{{ web_app_env != 'development' }}"
     working_dir: "{{ project_source_new_code_path }}"
-    umask: 0022
   environment:
     COMPOSER_DISCARD_CHANGES: "true"
   register: composer_output
@@ -155,6 +157,7 @@
   become_user: "{{ wordpress_app_user }}"
   when: wordpress_s3_enabled
   tags:
+    - molecule-notest
     - skip_ansible_lint
     - wp-cli
 
@@ -167,6 +170,7 @@
   become_user: "{{ wordpress_app_user }}"
   when: wordpress_saml2_enabled
   tags:
+    - molecule-notest
     - skip_ansible_lint
     - wp-cli
 
