@@ -33,9 +33,7 @@
       vars:
         packages:
           - cron
-          - git
           - ssl-cert
-          - subversion
 
     - name: Install TLS host certificate
       copy:

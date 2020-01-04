@@ -1,4 +1,6 @@
 ---
+# Enable crons only on specific hosts
+crons_enabled: false
 
 # Nginx: https://www.scalescale.com/tips/nginx/how-to-configure-nginx-gzip-compression/
 nginx_extra_http_options: |
@@ -24,7 +26,7 @@ project_git_version: master
 project_source_rollback_path: /var/www/datagov/rollback
 project_source_new_code_path: /var/www/datagov/new
 current_source_symlink: /var/www/datagov/current
-project_index_path: /var/www/datagov/current/web
+project_index_path: /var/www/datagov/current/web  # TODO: rename to webroot
 
 # MySQL credentials
 env_db_host: wpdb
@@ -57,5 +59,6 @@ s3_bucket: bsp-ocsit-dev-east-appdata
 s3_prefix: datagov/wordpress/
 
 wordpress_app_user: ubuntu
+wordpress_nginx_server_name: localhost
 wordpress_s3_enabled: true
 wordpress_saml2_enabled: true

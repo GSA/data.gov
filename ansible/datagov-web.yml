@@ -14,7 +14,6 @@
   - { role: software/common/php-fixes, tags: [php, provision] }
   - { role: geerlingguy.composer, tags: [php, provision] }
   - { role: sbaerlocher.wp-cli, tags: [php, cli, provision] }
-  - { role: software/wordpress/datagov-sudo-2-init, tags: [provision, deploy] }
 
 - name: Deploying Data.gov
   hosts: wordpress-web
