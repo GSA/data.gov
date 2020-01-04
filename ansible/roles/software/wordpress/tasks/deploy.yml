@@ -25,6 +25,8 @@
     version: "{{ project_git_version }}"
     force: true
     umask: "0022"
+  become: true
+  become_user: "{{ wordpress_app_user }}"
 
 - name: Composer install Data.gov Wordpress and plugins to {{ project_source_new_code_path }}
   composer:
@@ -32,67 +34,96 @@
     no-scripts: yes
     no-dev: "{{ 'yes' if web_app_env != 'development' else 'no' }}"
     working_dir: "{{ project_source_new_code_path }}"
+    umask: 0022
   environment:
       COMPOSER_DISCARD_CHANGES: "true"
   register: composer_output
-
-- name: Composer output
-  debug:
-    msg: "{{ composer_output.stdout_lines }}"
+  become: true
+  become_user: "{{ wordpress_app_user }}"
 
 - name: Adding Bedrock .env to {{ project_source_new_code_path }}/.env
   template:
     src: "env.j2"
     dest: "{{ project_source_new_code_path }}/.env"
+    owner: "{{ wordpress_app_user }}"
+    group: www-data
+    mode: 0640
 
 - name: Copy W3 Total Cache files
   template:
     src: "w3tc-wp-loader.php"
     dest: "{{ project_source_new_code_path }}/web/app/plugins/w3tc-wp-loader.php"
+    owner: "{{ wordpress_app_user }}"
+    group: "{{ wordpress_app_user }}"
+    mode: 0644
 
 - name: Making sure saml config directory exists
   file:
     dest: "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc/config"
     state: directory
-    recurse: yes
+    owner: "{{ wordpress_app_user }}"
+    group: "{{ wordpress_app_user }}"
+    mode: 0755
+    recurse: true
 
 - name: Copy saml20-idp-remote ini
   template:
     src: "saml20-idp-remote.ini"
     dest: "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc/config/saml20-idp-remote.ini"
+    owner: "{{ wordpress_app_user }}"
+    group: "{{ wordpress_app_user }}"
+    mode: 0644
 
 - name: Making sure saml config directory exists
   file:
     dest: "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc/certs/1"
     state: directory
+    owner: "{{ wordpress_app_user }}"
+    group: "{{ wordpress_app_user }}"
+    mode: 0755
     recurse: yes
 
 - name: Copy SAML crt
   template:
     src: "mycert.pem"
     dest: "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc/certs/1/1.cer"
+    owner: "{{ wordpress_app_user }}"
+    group: "{{ wordpress_app_user }}"
     mode: 0644
 
 - name: Copy SAML key
   template:
     src: "mykey.pem"
     dest: "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc/certs/1/1.key"
-    mode: 0644
+    owner: "{{ wordpress_app_user }}"
+    group: www-data
+    mode: 0640
 
+# TODO this could be a temporary file
 - name: Copy saml_authentication_options json
   template:
     src: "saml.json"
     dest: "{{ project_source_new_code_path }}/saml.json"
+    owner: "{{ wordpress_app_user }}"
+    group: "{{ wordpress_app_user }}"
+    mode: 0644
 
 - name: Copy saml-20-single-sign-on config
   template:
     src: "saml-config.php"
     dest: "{{ project_source_new_code_path }}/web/app/plugins/saml-20-single-sign-on/saml/config/config.php"
+    owner: "{{ wordpress_app_user }}"
+    group: www-data
+    mode: 0640
 
+# TODO this could be a temporary file
 - name: Copy s3 tantan_wordpress_s3 config json
   template:
     src: "s3.json"
     dest: "{{ project_source_new_code_path }}/s3.json"
+    owner: "{{ wordpress_app_user }}"
+    group: "{{ wordpress_app_user }}"
+    mode: 0644
 
 - name: Symlink current dir with new code
   file:
@@ -106,6 +137,8 @@
     chdir: "{{ project_source_new_code_path }}"
   when: "'development' == web_app_env"
   run_once: true
+  become: true
+  become_user: "{{ wordpress_app_user }}"
   tags: wp-cli
 
 # TODO this should probably be a separate play so that it's not run on multipe
@@ -116,6 +149,8 @@
   args:
     chdir: "{{ project_source_new_code_path }}"
   run_once: true
+  become: true
+  become_user: "{{ wordpress_app_user }}"
   when: wordpress_s3_enabled
   tags:
     - skip_ansible_lint
@@ -126,6 +161,8 @@
   args:
     chdir: "{{ project_source_new_code_path }}"
   run_once: true
+  become: true
+  become_user: "{{ wordpress_app_user }}"
   when: wordpress_saml2_enabled
   tags:
     - skip_ansible_lint
@@ -137,6 +174,8 @@
     chdir: "{{ project_source_new_code_path }}"
   when: "'development' == web_app_env"
   run_once: true
+  become: true
+  become_user: "{{ wordpress_app_user }}"
   tags:
     - wp-cli
 
@@ -146,6 +185,8 @@
     chdir: "{{ project_source_new_code_path }}"
   when: "'development' == web_app_env"
   run_once: true
+  become: true
+  become_user: "{{ wordpress_app_user }}"
   tags:
     - wp-cli
 

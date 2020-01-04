@@ -19,7 +19,6 @@
 - name: Deploying Data.gov
   hosts: wordpress-web
   serial: 1
-  become: no
   roles:
   - { role: software/wordpress, tags: [deploy, provision] }
 

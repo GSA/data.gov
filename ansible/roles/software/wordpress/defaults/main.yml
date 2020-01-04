@@ -56,5 +56,6 @@ saml2_sp_private_key: "add-yours-to-inventory"
 s3_bucket: bsp-ocsit-dev-east-appdata
 s3_prefix: datagov/wordpress/
 
+wordpress_app_user: ubuntu
 wordpress_s3_enabled: true
 wordpress_saml2_enabled: true
