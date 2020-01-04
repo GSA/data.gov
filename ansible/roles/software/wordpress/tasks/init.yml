@@ -1,4 +1,6 @@
---- # Data.gov prerequisites
+---
+# Data.gov prerequisites
+
 # TODO this doesn't really belong here. And we shouldn't be installing from
 # subversion.
 - name: install subversion for composer dependencies
@@ -9,7 +11,7 @@
     src: "datagov.nginx.conf"
     dest: "/etc/nginx/sites-enabled/datagov.nginx.conf"
   notify:
-      - reload nginx
+    - reload nginx
 
 - name: Mkdir /var/www/
   file:

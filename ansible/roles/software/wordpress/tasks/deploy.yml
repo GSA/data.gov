@@ -1,4 +1,5 @@
---- # Data.gov repo deployment & composer install
+---
+# Data.gov repo deployment & composer install
 
 - name: Check whether new code dir exists
   stat: path="{{ project_source_new_code_path }}"
@@ -31,12 +32,12 @@
 - name: Composer install Data.gov Wordpress and plugins to {{ project_source_new_code_path }}
   composer:
     arguments: "--no-ansi --no-interaction --profile -v"
-    no-scripts: yes
-    no-dev: "{{ 'yes' if web_app_env != 'development' else 'no' }}"
+    no-scripts: true
+    no-dev: "{{ web_app_env != 'development' }}"
     working_dir: "{{ project_source_new_code_path }}"
     umask: 0022
   environment:
-      COMPOSER_DISCARD_CHANGES: "true"
+    COMPOSER_DISCARD_CHANGES: "true"
   register: composer_output
   become: true
   become_user: "{{ wordpress_app_user }}"
@@ -81,7 +82,7 @@
     owner: "{{ wordpress_app_user }}"
     group: "{{ wordpress_app_user }}"
     mode: 0755
-    recurse: yes
+    recurse: true
 
 - name: Copy SAML crt
   template:

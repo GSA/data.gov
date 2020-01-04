@@ -1,3 +1,4 @@
+---
 # Cleanup after deployment
 
 - name: Reverting /var/www/ permissions
@@ -5,7 +6,7 @@
     path: "/var/www"
     state: directory
     mode: 0755
-    recurse: yes
+    recurse: true
   register: chmod_www
 
 - name: Ensuring required directories exist and have write permissions
@@ -13,7 +14,7 @@
     path: "{{ item }}"
     state: directory
     mode: 0777
-    recurse: yes
+    recurse: true
   with_items:
     - "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc"
     - "{{ project_source_new_code_path }}/web/app/w3tc-config"
