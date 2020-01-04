@@ -13,7 +13,6 @@
     - { role: geerlingguy.php-memcached, tags: [php, php-memcached, provision] }
     - { role: software/common/php-fixes, tags: [php, provision] }
     - { role: geerlingguy.composer, tags: [php, provision] }
-    - { role: sbaerlocher.wp-cli, tags: [php, cli, provision] }
 
 - name: Deploying Data.gov
   hosts: wordpress-web
