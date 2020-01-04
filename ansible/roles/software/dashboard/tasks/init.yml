@@ -32,7 +32,7 @@
   package: name={{ item }} state=present
   with_items:
     - mariadb-client
-    - php{{ php_major_minor_version }}-zip
+    - php{{ dashboard_php_major_minor_version }}-zip
     - nginx-extras
 
 - name: Remove old rollback code
