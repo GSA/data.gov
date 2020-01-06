@@ -9,7 +9,6 @@ project_index_path: /usr/lib/ckan
 
 # db credentials
 ckan_db_server: "{{ postgresql_login_host }}"
-inventory_app_repo_branch: bionic
 inventory_ckan_db_host: "{{ ckan_db_server }}"
 inventory_db_user: inventory
 inventory_db_pass: "{{ vault_inventory_db_pass }}"
