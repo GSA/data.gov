@@ -33,13 +33,15 @@
 
 - name: Clone Inventory app
   git:
-    repo: '{{ app_repo }}'
-    dest: '{{ app_source_path }}'
-    version: '{{ app_repo_branch }}'
+    force: yes
+    umask: "0022"
+    repo: '{{ inventory_app_repo }}'
+    dest: '{{ inventory_app_source_path }}'
+    version: '{{ inventory_app_repo_branch }}'
 
 - name: install inventory app from requirements
   pip:
-    requirements: "{{ app_source_path }}/requirements-freeze.txt"
+    requirements: "{{ inventory_app_source_path }}/requirements-freeze.txt"
     virtualenv: '{{ project_source_new_code_path }}'
     virtualenv_python: "{{ inventory_ckan_python_home }}/bin/python"
     umask: "0022"
