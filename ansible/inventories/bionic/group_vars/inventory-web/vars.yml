@@ -11,6 +11,7 @@ project_index_path: /usr/lib/ckan
 ckan_db_server: "{{ postgresql_login_host }}"
 inventory_ckan_app_version: inventory-bionic
 inventory_ckan_ckanext_saml2_version: bionic-m2crypto
+inventory_app_repo_branch: bionic
 inventory_ckan_db_host: "{{ ckan_db_server }}"
 inventory_db_user: inventory
 inventory_db_pass: "{{ vault_inventory_db_pass }}"
