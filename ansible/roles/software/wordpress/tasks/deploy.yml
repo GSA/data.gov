@@ -205,3 +205,21 @@
     path: "{{ project_source_new_code_path }}/web/app/plugins/amazon-s3-and-cloudfront/classes/as3cf-filter.php"
     regexp: '\$value.*\$this->replace_urls\( \$value, \$url_pairs \);'
     state: absent
+
+- name: install supervisor configuration
+  template:
+    src: etc_supervisor_conf.d_wordpress.conf.j2
+    dest: /etc/supervisor/conf.d/wordpress.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: cron
+  cron:
+    name: "Data.gov WordPress cron"
+    minute: "*/15"
+    user: root
+    job: supervisorctl start wordpress-cron > /dev/null
+    cron_file: wordpress
+    disabled: "{{ not crons_enabled }}"
+    state: present

@@ -35,6 +35,7 @@
         packages:
           - cron
           - ssl-cert
+          - supervisor
 
     - name: Install TLS host certificate
       copy:

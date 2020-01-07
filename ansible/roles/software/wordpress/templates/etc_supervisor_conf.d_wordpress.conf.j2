@@ -1,0 +1,8 @@
+[program:wordpress-cron]
+command=wp cron event run --due-now
+directory={{ current_source_symlink }}
+stdout_logfile=/var/log/wordpress/wp-cron.log
+redirect_stderr=true
+autorestart=false
+autostart=false
+user={{ wordpress_app_user }}

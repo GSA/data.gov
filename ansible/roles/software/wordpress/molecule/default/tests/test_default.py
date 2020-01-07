@@ -172,6 +172,31 @@ def test_swfupload_removed(host):
     assert not swfupload.exists
 
 
+def test_cron(host):
+    cron = host.file('/etc/cron.d/wordpress')
+
+    assert cron.exists
+    assert cron.user == 'root'
+    assert cron.group == 'root'
+    assert cron.mode == 0o644
+
+    # Verify the cron job is not commented out
+    assert cron.contains(
+        '^[^#].*supervisorctl start wordpress-cron > /dev/null'
+    )
+
+
+def test_supervisor(host):
+    supervisor = host.file('/etc/supervisor/conf.d/wordpress.conf')
+
+    assert supervisor.exists
+    assert supervisor.user == 'root'
+    assert supervisor.group == 'root'
+    assert supervisor.mode == 0o644
+
+    assert supervisor.contains(r'\[program:wordpress-cron\]')
+
+
 def test_nginx(host):
     nginx = host.service('nginx')
 
