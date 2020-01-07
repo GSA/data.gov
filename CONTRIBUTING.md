@@ -206,11 +206,66 @@ Task is done and has been reviewed by the team as part of Sprint Review.
 
 ## Managing deployment
 
-We use the [git flow
-pattern](https://danielkummer.github.io/git-flow-cheatsheet/) to coordinate delivery of features and bugfixes between branches. Generally, new features will arrive in the `develop` branch, then periodically be gathered up and deployed into staging via `release/*` branches, then deployed into production via the `master` branch.  _Note: we don't use the git-flow program itself since work must be merged via pull-requests, which that tool doesn't support._
+Deployment works a little differently between the platform
+([datagov-deploy][datagov-deploy]) and the application repos (e.g.
+[catalog-app](https://github.com/GSA/catalog-app)).
+
+In general, the `master` branch should be in a deployable state at all
+times.
+
+
+### Application deployment
+
+On any change to `master`, the application should be sequentially deployed to
+sandbox, staging, and then production. If there's an issue with the deploy along
+the way, the deploy should be halted and then the issue addressed (following the
+usual PR workflow) before starting a new deploy. See [application
+release](https://github.com/GSA/datagov-deploy/wiki/Releases#application-release)
+for detailed manual deployment steps.
+
+
+### Platform deployment (datagov-deploy)
+
+We use `develop` as the default branch and stage releases with a release branch
+(`release/*`). The BSP environment can be hard to test in, so having a staged
+release allows us to debug and fix BSP issues without slowing down sprint
+development.
+
+For [datagov-deploy][datagov-deploy], we use the [git flow
+pattern](https://danielkummer.github.io/git-flow-cheatsheet/) to coordinate
+delivery of features and bugfixes between branches. Generally, new features will
+arrive in the `develop` branch, then periodically be gathered up and deployed
+into staging via `release/*` branches, then deployed into production via the
+`master` branch.  _Note: we don't use the git-flow program itself since work
+must be merged via pull-requests, which that tool doesn't support._
 
 Branch | Deployed to | Frequency
 ------ | ----------- | ---------
 `develop` | AWS sandboxes | manual
-`release/*` | BSP dev | manual
+`release/*` | BSP dev (staging) | manual
 `master` | BSP prod | manual
+
+See [Releases](https://github.com/GSA/datagov-deploy/wiki/Releases) for details
+on the platform deployment steps.
+
+
+#### Hotfixes
+
+Occasionally for the platform, we need to skip the usual development workflow to
+address an urgent issue. This is because `develop` requires a lot of manual
+testing and might not always be in a deployable state (even though we try).
+`hotfix/*` branches are created from the `master` branch and allow us to do the
+manual testing and validation on a small set of isolated changes.
+
+Use your discretion when creating a hotfix. These are some reasons to create
+a hotfix:
+- Resolve a significant site outage
+- Fix a major bug
+- Change to the Ansible inventory (new/removed hosts)
+- Removing operator access
+
+Once the hotfix PR is merged, you should create a backmerge PR into develop (merge
+the `hotfix/*` branch into `develop).
+
+
+[datagov-deploy]: https://github.com/GSA/datagov-deploy
