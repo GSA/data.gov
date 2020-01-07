@@ -16,6 +16,9 @@
   roles:
     - role: geerlingguy.git
     - role: geerlingguy.nginx
+      nginx_remove_default_vhost: true
+      nginx_ppa_use: true
+      nginx_ppa_version: stable
       nginx_extra_conf_options: |-
         include /etc/nginx/modules-enabled/*.conf;
     - role: geerlingguy.php-versions
