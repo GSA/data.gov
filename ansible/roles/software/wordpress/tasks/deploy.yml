@@ -74,7 +74,7 @@
     src: "saml20-idp-remote.ini"
     dest: "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc/config/saml20-idp-remote.ini"
     owner: "{{ wordpress_app_user }}"
-    group: "{{ wordpress_app_user }}"
+    group: www-data
     mode: 0644
 
 - name: Making sure saml config directory exists
@@ -84,14 +84,13 @@
     owner: "{{ wordpress_app_user }}"
     group: "{{ wordpress_app_user }}"
     mode: 0755
-    recurse: true
 
 - name: Copy SAML crt
   template:
     src: "mycert.pem"
     dest: "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc/certs/1/1.cer"
     owner: "{{ wordpress_app_user }}"
-    group: "{{ wordpress_app_user }}"
+    group: www-data
     mode: 0644
 
 - name: Copy SAML key

@@ -8,7 +8,6 @@
     owner: "{{ wordpress_app_user }}"
     group: www-data
     mode: 0775
-    recurse: true
   with_items:
     - "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc"
     - "{{ project_source_new_code_path }}/web/app/w3tc-config"

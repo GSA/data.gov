@@ -52,6 +52,44 @@ def test_app_env(host):
     )
 
 
+def test_app_saml_config_dir(host):
+    saml_config_dir = host.file(
+        '%s/web/app/uploads/saml-20-single-sign-on/etc' % wordpress_app_dir
+    )
+
+    assert saml_config_dir.exists
+    assert saml_config_dir.user == wordpress_user
+    assert saml_config_dir.group == 'www-data'
+    assert saml_config_dir.mode == 0o775
+
+
+def test_app_w3tc_config_dir(host):
+    w3tc_config_dir = host.file('%s/web/app/w3tc-config' % wordpress_app_dir)
+
+    assert w3tc_config_dir.exists
+    assert w3tc_config_dir.user == wordpress_user
+    assert w3tc_config_dir.group == 'www-data'
+    assert w3tc_config_dir.mode == 0o775
+
+
+def test_app_cache_dir(host):
+    cache_dir = host.file('%s/web/app/cache' % wordpress_app_dir)
+
+    assert cache_dir.exists
+    assert cache_dir.user == wordpress_user
+    assert cache_dir.group == 'www-data'
+    assert cache_dir.mode == 0o775
+
+
+def test_app_uploads_dir(host):
+    uploads_dir = host.file('%s/web/app/uploads' % wordpress_app_dir)
+
+    assert uploads_dir.exists
+    assert uploads_dir.user == wordpress_user
+    assert uploads_dir.group == 'www-data'
+    assert uploads_dir.mode == 0o775
+
+
 def test_log_dir(host):
     log_dir = host.file('/var/log/wordpress')
 
@@ -82,7 +120,7 @@ def test_saml2_key(host):
     assert key.exists
     assert key.user == wordpress_user
     assert key.group == 'www-data'
-    assert key.mode == 0o644  # :sob:
+    assert key.mode == 0o640
 
 
 def test_saml2_ini(host):
