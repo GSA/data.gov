@@ -78,7 +78,7 @@ default_tls_host_certificate: |-
 jumpbox_operators: "{{ datagov_operators_test }}"
 
 
-inventory_ckan_app_version: inventory-bionic
+inventory_app_repo_branch: bionic
 inventory_ckan_service_url: https://inventory.bionic.datagov.us
 inventory_ckan_solr_port: "{{ solr_port }}"
 
