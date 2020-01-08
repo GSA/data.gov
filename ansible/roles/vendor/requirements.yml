@@ -48,6 +48,9 @@
 - name: gsa.datagov-deploy-ci
   src: https://github.com/GSA/datagov-deploy-ci
   version: master
+- name: gsa.datagov-deploy-dashboard
+  src: https://github.com/GSA/datagov-deploy-dashboard
+  version: v1.0.0
 - name: gsa.ansible-role-kibana
   src: https://github.com/GSA/ansible-role-kibana
   version: v2.0.1+datagov-r1
