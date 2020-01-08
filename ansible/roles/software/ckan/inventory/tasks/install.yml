@@ -1,10 +1,11 @@
 ---
 - name: Install build dependencies
-  apt: name={{ item }} state=present
-  with_items:
-    - memcached
-    - swig
-    - xmlsec1
+  apt: name={{ packages }} state=present
+  vars:
+    packages:
+      - memcached
+      - swig
+      - xmlsec1
   notify: restart apache2
 
 - name: Create log directory
@@ -70,7 +71,7 @@
 - name: Remove old datapusher code
   file: path="{{ datapusher_virtual_env }}" state=absent
 
-- include: build-pkgs.yml
+- include_tasks: build-pkgs.yml
   vars:
     pkg: "{{ datapusher_pkgs }}"
     virtualenv: "{{ datapusher_virtual_env }}"
@@ -97,8 +98,9 @@
     - etc/apache2/sites-enabled/datapusher.conf
   notify: restart apache2
 
-- include: additional-tasks.yml
-  virtualenv: "{{ project_source_new_code_path }}"
+- include_tasks: additional-tasks.yml
+  vars:
+    virtualenv: "{{ project_source_new_code_path }}"
 
 - name: fix virtualenv permissions
   file: path={{ item }} state=directory group=www-data recurse=yes
