@@ -3,23 +3,23 @@
   hosts: dashboard-web
   serial: 1
   roles:
-  - { role: software/common/tls, tags: [provision, tls] }
-  - { role: software/common/php-common, tags: [provision] }
-  - { role: geerlingguy.git, tags: [provision] }
-  - { role: geerlingguy.nginx, tags: [nginx, provision] }
-  - { role: geerlingguy.php-versions, tags: [php, provision] }
-  - { role: geerlingguy.php, tags: [php, provision] }
-  - { role: geerlingguy.php-mysql, tags: [php, php-mysql, provision] }
-  - { role: geerlingguy.php-memcached, tags: [php, php-memcached, provision] }
-  - { role: software/common/php-fixes, tags: [php, provision] }
-  - { role: geerlingguy.composer, tags: [php, provision] }
+    - { role: software/common/tls, tags: [provision, tls] }
+    - { role: software/common/php-common, tags: [provision] }
+    - { role: geerlingguy.git, tags: [provision] }
+    - { role: geerlingguy.nginx, tags: [nginx, provision] }
+    - { role: geerlingguy.php-versions, tags: [php, provision] }
+    - { role: geerlingguy.php, tags: [php, provision] }
+    - { role: geerlingguy.php-mysql, tags: [php, php-mysql, provision] }
+    - { role: geerlingguy.php-memcached, tags: [php, php-memcached, provision] }
+    - { role: software/common/php-fixes, tags: [php, provision] }
+    - { role: geerlingguy.composer, tags: [php, provision] }
 
 
 - name: Deploying Dashboard
   hosts: dashboard-web
   serial: 1
   roles:
-  - { role: software/dashboard, tags: [deploy, provision] }
+    - { role: gsa.datagov-deploy-dashboard, tags: [deploy, provision] }
   # Host-level smoke tests
   tasks:
     - name: flush handlers

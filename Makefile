@@ -5,7 +5,6 @@ MOLECULE_SUITES := \
   software/ckan/inventory \
   software/ckan/native-login \
   software/common/php-fixes \
-  software/dashboard \
   software/wordpress
 
 # Create test-molecule-<suite> targets
