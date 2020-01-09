@@ -24,7 +24,9 @@
     - role: geerlingguy.php-versions
     - role: geerlingguy.php
       php_webserver_daemon: nginx
+    - role: geerlingguy.php-mysql
     - role: geerlingguy.composer
+    - role: sbaerlocher.wp-cli
 
   tasks:
     - name: Create ubuntu user
@@ -35,7 +37,6 @@
       vars:
         packages:
           - cron
-          - git
           - ssl-cert
           - supervisor
 
@@ -142,6 +143,3 @@
         owner: root
         group: ssl-cert
         mode: 0640
-
-    - name: Start supervisor
-      service: name=supervisor state=started enabled=true

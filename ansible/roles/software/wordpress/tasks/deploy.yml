@@ -1,4 +1,5 @@
---- # Data.gov repo deployment & composer install
+---
+# Data.gov repo deployment & composer install
 
 - name: Check whether new code dir exists
   stat: path="{{ project_source_new_code_path }}"
@@ -15,80 +16,117 @@
     state: link
   when: p.stat.isdir is defined and p.stat.isdir
 
+- name: Ensure app home directory exists
+  file: path=/var/www/datagov state=directory owner={{ wordpress_app_user }} group={{ wordpress_app_user }} mode=0755
+
+- name: Ensure new app directory exists
+  file: path={{ project_source_new_code_path }} state=directory owner={{ wordpress_app_user }} group={{ wordpress_app_user }} mode=0755
+
 - name: Clone project files to {{ project_source_new_code_path }}
   git:
     repo: "{{ project_git_repo }}"
     dest: "{{ project_source_new_code_path }}"
     version: "{{ project_git_version }}"
     force: true
+    umask: "0022"
+  become: true
+  become_user: "{{ wordpress_app_user }}"
 
 - name: Composer install Data.gov Wordpress and plugins to {{ project_source_new_code_path }}
   composer:
     arguments: "--no-ansi --no-interaction --profile -v"
-    no-scripts: yes
-    no-dev: "{{ 'yes' if web_app_env != 'development' else 'no' }}"
+    no-scripts: true
+    no-dev: "{{ web_app_env != 'development' }}"
     working_dir: "{{ project_source_new_code_path }}"
   environment:
-      COMPOSER_DISCARD_CHANGES: "true"
+    COMPOSER_DISCARD_CHANGES: "true"
   register: composer_output
-
-- name: Composer output
-  debug:
-    msg: "{{ composer_output.stdout_lines }}"
+  become: true
+  become_user: "{{ wordpress_app_user }}"
 
 - name: Adding Bedrock .env to {{ project_source_new_code_path }}/.env
   template:
-    src: ".env"
+    src: "env.j2"
     dest: "{{ project_source_new_code_path }}/.env"
+    owner: "{{ wordpress_app_user }}"
+    group: www-data
+    mode: 0640
 
 - name: Copy W3 Total Cache files
   template:
     src: "w3tc-wp-loader.php"
     dest: "{{ project_source_new_code_path }}/web/app/plugins/w3tc-wp-loader.php"
+    owner: "{{ wordpress_app_user }}"
+    group: "{{ wordpress_app_user }}"
+    mode: 0644
 
 - name: Making sure saml config directory exists
   file:
     dest: "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc/config"
     state: directory
-    recurse: yes
+    owner: "{{ wordpress_app_user }}"
+    group: "{{ wordpress_app_user }}"
+    mode: 0755
+    recurse: true
 
 - name: Copy saml20-idp-remote ini
   template:
     src: "saml20-idp-remote.ini"
     dest: "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc/config/saml20-idp-remote.ini"
+    owner: "{{ wordpress_app_user }}"
+    group: www-data
+    mode: 0644
 
 - name: Making sure saml config directory exists
   file:
     dest: "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc/certs/1"
     state: directory
-    recurse: yes
+    owner: "{{ wordpress_app_user }}"
+    group: "{{ wordpress_app_user }}"
+    mode: 0755
 
 - name: Copy SAML crt
   template:
     src: "mycert.pem"
     dest: "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc/certs/1/1.cer"
+    owner: "{{ wordpress_app_user }}"
+    group: www-data
     mode: 0644
 
 - name: Copy SAML key
   template:
     src: "mykey.pem"
+    # TODO can this be installed _not_ in the web root?
     dest: "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc/certs/1/1.key"
-    mode: 0644
+    owner: "{{ wordpress_app_user }}"
+    group: www-data
+    mode: 0640
 
+# TODO this could be a temporary file
 - name: Copy saml_authentication_options json
   template:
     src: "saml.json"
     dest: "{{ project_source_new_code_path }}/saml.json"
+    owner: "{{ wordpress_app_user }}"
+    group: "{{ wordpress_app_user }}"
+    mode: 0644
 
 - name: Copy saml-20-single-sign-on config
   template:
     src: "saml-config.php"
     dest: "{{ project_source_new_code_path }}/web/app/plugins/saml-20-single-sign-on/saml/config/config.php"
+    owner: "{{ wordpress_app_user }}"
+    group: www-data
+    mode: 0640
 
+# TODO this could be a temporary file
 - name: Copy s3 tantan_wordpress_s3 config json
   template:
     src: "s3.json"
     dest: "{{ project_source_new_code_path }}/s3.json"
+    owner: "{{ wordpress_app_user }}"
+    group: "{{ wordpress_app_user }}"
+    mode: 0644
 
 - name: Symlink current dir with new code
   file:
@@ -102,15 +140,23 @@
     chdir: "{{ project_source_new_code_path }}"
   when: "'development' == web_app_env"
   run_once: true
+  become: true
+  become_user: "{{ wordpress_app_user }}"
   tags: wp-cli
 
+# TODO this should probably be a separate play so that it's not run on multipe
+# hosts. Since we're running serial 1, it will be run by each play (and on
+# every host).
 - name: update s3 options
   shell: wp option update tantan_wordpress_s3 --format=json < s3.json
   args:
     chdir: "{{ project_source_new_code_path }}"
   run_once: true
+  become: true
+  become_user: "{{ wordpress_app_user }}"
   when: wordpress_s3_enabled
   tags:
+    - molecule-notest
     - skip_ansible_lint
     - wp-cli
 
@@ -119,8 +165,11 @@
   args:
     chdir: "{{ project_source_new_code_path }}"
   run_once: true
+  become: true
+  become_user: "{{ wordpress_app_user }}"
   when: wordpress_saml2_enabled
   tags:
+    - molecule-notest
     - skip_ansible_lint
     - wp-cli
 
@@ -130,6 +179,8 @@
     chdir: "{{ project_source_new_code_path }}"
   when: "'development' == web_app_env"
   run_once: true
+  become: true
+  become_user: "{{ wordpress_app_user }}"
   tags:
     - wp-cli
 
@@ -139,6 +190,8 @@
     chdir: "{{ project_source_new_code_path }}"
   when: "'development' == web_app_env"
   run_once: true
+  become: true
+  become_user: "{{ wordpress_app_user }}"
   tags:
     - wp-cli
 
@@ -153,9 +206,20 @@
     regexp: '\$value.*\$this->replace_urls\( \$value, \$url_pairs \);'
     state: absent
 
-#- name: Set up main wp cronjob
-#  cron:
-#    name: "Set up main wp cronjob"
-#    minute: "*/10"
-#    job: "/usr/bin/php {{ current_source_symlink }}/web/wp/wp-cron.php >> /var/log/wp-cron.log 2>&1" #todo: Use SES to send this to a recipient list
-#  run_once: true
+- name: install supervisor configuration
+  template:
+    src: etc_supervisor_conf.d_wordpress.conf.j2
+    dest: /etc/supervisor/conf.d/wordpress.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: cron
+  cron:
+    name: "Data.gov WordPress cron"
+    minute: "*/15"
+    user: root
+    job: supervisorctl start wordpress-cron > /dev/null
+    cron_file: wordpress
+    disabled: "{{ not crons_enabled }}"
+    state: present

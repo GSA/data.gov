@@ -1,0 +1,34 @@
+---
+# Cleanup after deployment
+
+- name: Ensuring required directories exist and have write permissions
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ wordpress_app_user }}"
+    group: www-data
+    mode: 0775
+  with_items:
+    - "{{ project_source_new_code_path }}/web/app/uploads/saml-20-single-sign-on/etc"
+    - "{{ project_source_new_code_path }}/web/app/w3tc-config"
+    - "{{ project_source_new_code_path }}/web/app/cache"
+    - "{{ project_source_new_code_path }}/web/app/uploads"
+
+- name: Check if cron log file is accessible
+  file:
+    path: "{{ item }}"
+    state: touch
+    mode: 0664
+  with_items:
+    - "/var/log/wp-cron.log"
+
+- name: start and enable php-fpm
+  service: name=php{{ wordpress_php_major_minor_version }}-fpm state=started enabled=true
+
+# Not sure why the service module doesn't actually start php-fpm. Running
+# `service` seems to work.
+- name: start and enable php-fpm (work-around)
+  command: service php{{ wordpress_php_major_minor_version }}-fpm start
+  ignore_errors: true
+  tags:
+    - skip_ansible_lint

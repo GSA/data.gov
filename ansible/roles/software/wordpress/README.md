@@ -1,12 +1,32 @@
+# datagov-deploy-wordpress
 
-- Development with [Docker for Mac](https://www.docker.com/products/docker)
-    - `cp ~/.ssh/id_rsa.pub authorized_keys`
-    - `docker build -t datagov/wp .`
-    - `docker-compose up -d`
-    - Get fresh sql dump of Data.gov WordPress
-    - `mysql -P 3333 -u datagov -h 127.0.0.1 -psuperpassword datagov < datagov.sql`
-    - `cd ../../..`
-    - `ansible-playbook datagov-web.yml -i inventories/local/hosts --tags provision --skip secops,trendmicro,postfix`
-    - Open [http://localhost:8000/](http://localhost:8000/) 
-    , default `admin` password is `password`, SAML is disalbed on local
-    - To get a `phpmyadmin`, run `docker run --name phpmyadmin -d -e PMA_HOST=docker.for.mac.localhost -e PMA_PORT=3333 -e PMA_USER=datagov -e PMA_PASSWORD=superpassword -p 8998:80 phpmyadmin/phpmyadmin`, then open [http://localhost:8998](http://localhost:8998) in your browser  
+Ansible role to deploy WordPress on the Data.gov platform.
+
+
+## Usage
+
+Example playbook.
+
+```yaml
+---
+- name: Deploy wordpress
+  hosts: all
+  roles:
+    - role: geerlingguy.git
+    - role: geerlingguy.nginx
+    - role: geerlingguy.php-versions
+    - role: geerlingguy.php
+    - role: geerlingguy.php-mysql
+    - role: geerlingguy.php-memcached
+    - role: software/common/php-fixes
+    - role: geerlingguy.composer
+    - role: gsa.datagov-deploy-wordpress
+      datagov_team_email: team@example.com
+```
+
+
+### Variables
+
+#### `datagov_team_email` **required**
+
+Email address for the Data.gov team. Reports are sent to this address.
