@@ -268,4 +268,23 @@ Once the hotfix PR is merged, you should create a backmerge PR into develop (mer
 the `hotfix/*` branch into `develop).
 
 
+## Pull requests
+
+Developers should feel empowered to review each others code, even if you're not
+an expert on a particular application or feature. Any developers on the team can
+review any PR.
+
+What should you do when you review a PR?
+
+- Review the code for quality and consistency
+- Call out any breaking changes
+- Assert the **Definition of Done** is met
+  - Tests are written and passing in CI
+  - Documentation is written, if applicable
+  - Code is in a deployable state
+
+If approved, you may merge immediately or leave it to the author. A single
+approval is all that is needed to merge.
+
+
 [datagov-deploy]: https://github.com/GSA/datagov-deploy
