@@ -42,6 +42,15 @@
     dest: '{{ app_source_path }}'
     version: '{{ app_repo_branch }}'
 
+- name: setup virtualenv for new deployment
+  pip:
+    name:
+      - pip>=19.3.0
+      - setuptools>=44.0.0
+    virtualenv: '{{ project_source_new_code_path }}'
+    virtualenv_python: "{{ catalog_ckan_python_home }}/bin/python"
+    umask: "0022"
+
 - name: install requirements
   pip:
     requirements: "{{ app_source_path }}/requirements-freeze.txt"
