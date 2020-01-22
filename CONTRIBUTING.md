@@ -271,7 +271,7 @@ the `hotfix/*` branch into `develop).
 ## Pull requests
 
 Developers should feel empowered to review each others code, even if you're not
-an expert on a particular application or feature. Any developers on the team can
+an expert on a particular application or feature. Any developer on the team can
 review any PR.
 
 What should you do when you review a PR?
