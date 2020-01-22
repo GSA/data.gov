@@ -157,7 +157,7 @@ Work that is currently in progress.
 - The deployment must follow our Configuration Management plan. If not possible,
   contact the Program Management team to modify the story or discuss how to
   update the Configuration Management plan.
-- Task has been merged to develop and should be applied to the AWS sandbox environments.
+- Task has been merged to develop/master and should be applied to the AWS sandbox environments.
 
 #### Blocked
 
@@ -173,7 +173,7 @@ occasional nudging to get it unblocked.
 
 #### Ready for deploy
 
-Task has been merged to develop and applied to the sandbox environments
+Task has been merged to develop/master and applied to the sandbox environments
 (AWS via terraform) and ready to be deployed BSP staging and production
 environments.
 
