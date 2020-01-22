@@ -1,6 +1,6 @@
 ---
 # catalog
-catalog_ckan_app_version: develop
+catalog_ckan_app_version: master
 catalog_ckan_db_host: "{{ catalog_postgresql_login_host }}"
 catalog_ckan_db_name: ckan
 catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
@@ -28,7 +28,7 @@ common_python_version_number: 2.7.10
 filebeat_enabled: false
 nessus_agent_enabled: false
 trendmicro_enabled: false
-project_git_version: develop
+project_git_version: master
 
 # crm
 # hostname needed for smoke test, IP address needed for ALB health check
