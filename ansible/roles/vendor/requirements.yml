@@ -79,7 +79,7 @@
   src: https://github.com/GSA/ansible-elastalert
   version: master
 - name: jnv.unattended-upgrades
-  version: v1.7.0
+  version: v1.8.0
 - name: newrelic.newrelic-infra
   version: 0.7.0
 - name: nickhammond.logrotate
