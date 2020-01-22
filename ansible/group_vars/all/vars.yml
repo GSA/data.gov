@@ -86,4 +86,7 @@ python_home: "{{ common_python_version_directory }}"
 # Disabling MySQL server (we need only client on this machine)
 mysql_enabled_on_startup: false
 
+# Disable ipv6 checks in gsa.ansible-os-ubuntu-16 which is not configured
+ubu16gsa_ipv6_configured: false
+
 wordpress_php_major_minor_version: "{{ php_major_minor_version }}"
