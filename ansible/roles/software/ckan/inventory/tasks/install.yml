@@ -1,10 +1,11 @@
 ---
 - name: Install build dependencies
-  apt: name={{ item }} state=present
-  with_items:
-    - memcached
-    - swig
-    - xmlsec1
+  apt: name={{ packages }} state=present
+  vars:
+    packages:
+      - memcached
+      - swig
+      - xmlsec1
   notify: restart apache2
 
 - name: Create log directory
@@ -31,15 +32,46 @@
 - name: Remove new code
   file: path="{{ project_source_new_code_path }}" state=absent
 
-- include: build-pkgs.yml
-  vars:
-    pkg: "{{ ckan_pkgs }}"
-    virtualenv: "{{ project_source_new_code_path }}"
+- name: Clone Inventory app
+  git:
+    force: yes
+    umask: "0022"
+    repo: '{{ inventory_app_repo }}'
+    dest: '{{ inventory_app_source_path }}'
+    version: '{{ inventory_app_repo_branch }}'
+
+- name: setup virtualenv for new deployment
+  pip:
+    name:
+      - pip>=19.3.0
+      - setuptools>=44.0.0,<45.0.0  # setuptools 45+ requires python 3.5, keep pinned below, but still modern version
+    virtualenv: '{{ project_source_new_code_path }}'
+    virtualenv_python: "{{ inventory_ckan_python_home }}/bin/python"
+    umask: "0022"
+  notify: restart apache2
+
+#- name: setup virtualenv for new deployment
+#  shell: umask 0022 && virtualenv -p "{{ inventory_ckan_python_home }}/bin/python" "{{ project_source_new_code_path }}"
+#  args:
+#    creates: "{{ project_source_new_code_path }}"
+#
+#- name: after vitualenv is setup, upgrade pip
+#  shell: umask 0022 && {{ project_source_new_code_path }}/bin/pip install -U pip
+#  tags:
+#    - skip_ansible_lint
+
+- name: install inventory app from requirements
+  pip:
+    requirements: "{{ inventory_app_source_path }}/requirements-freeze.txt"
+    virtualenv: '{{ project_source_new_code_path }}'
+    virtualenv_python: "{{ inventory_ckan_python_home }}/bin/python"
+    umask: "0022"
+  notify: restart apache2
 
 - name: Remove old datapusher code
   file: path="{{ datapusher_virtual_env }}" state=absent
 
-- include: build-pkgs.yml
+- include_tasks: build-pkgs.yml
   vars:
     pkg: "{{ datapusher_pkgs }}"
     virtualenv: "{{ datapusher_virtual_env }}"
@@ -66,8 +98,9 @@
     - etc/apache2/sites-enabled/datapusher.conf
   notify: restart apache2
 
-- include: additional-tasks.yml
-  virtualenv: "{{ project_source_new_code_path }}"
+- include_tasks: additional-tasks.yml
+  vars:
+    virtualenv: "{{ project_source_new_code_path }}"
 
 - name: fix virtualenv permissions
   file: path={{ item }} state=directory group=www-data recurse=yes

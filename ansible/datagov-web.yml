@@ -3,38 +3,22 @@
   hosts: wordpress-web
   serial: 1
   roles:
-  # TODO remove the die-no-tags role. You should be able to run a role playbook
-  # with no tags and have it be idempotent.
-  - { role: software/common/tls, tags: [provision, tls] }
-  - { role: software/common/php-common, tags: [provision] }
-  - { role: geerlingguy.git, tags: [git, provision] }
-  - { role: geerlingguy.nginx, tags: [nginx, provision] }
-  - { role: geerlingguy.php-versions, tags: [php, provision] }
-  - { role: geerlingguy.php, tags: [php, provision] }
-  - { role: geerlingguy.php-mysql, tags: [php, php-mysql, provision] }
-  - { role: geerlingguy.php-memcached, tags: [php, php-memcached, provision] }
-  - { role: sbaerlocher.wp-cli, tags: [php, cli, provision] }
-  - { role: geerlingguy.composer, tags: [php, provision] }
-  - { role: software/wordpress/datagov-sudo-2-init, tags: [provision, deploy] }
+    - { role: software/common/tls, tags: [provision, tls] }
+    - { role: software/common/php-common, tags: [provision] }
+    - { role: geerlingguy.git, tags: [git, provision] }
+    - { role: geerlingguy.nginx, tags: [nginx, provision] }
+    - { role: geerlingguy.php-versions, tags: [php, provision] }
+    - { role: geerlingguy.php, tags: [php, provision] }
+    - { role: geerlingguy.php-mysql, tags: [php, php-mysql, provision] }
+    - { role: geerlingguy.php-memcached, tags: [php, php-memcached, provision] }
+    - { role: software/common/php-fixes, tags: [php, provision] }
+    - { role: geerlingguy.composer, tags: [php, provision] }
 
 - name: Deploying Data.gov
   hosts: wordpress-web
   serial: 1
-  become: no
   roles:
-  - { role: software/wordpress/datagov-deploy, tags: [deploy, provision] }
-
-
-- name: Cleanup
-  hosts: wordpress-web
-  serial: 1
-  tags: [provision, deploy]
-  roles:
-  - { role: software/common/php-fixes, tags: [php] }
-  - { role: software/wordpress/datagov-sudo-3-cleanup, tags: [cleanup] }
-
-  # TODO these should happen closer to the deploy play
-  # Host-level smoke tests
+    - { role: gsa.datagov-deploy-wordpress, tags: [deploy, provision] }
   tasks:
     - name: flush handlers
       meta: flush_handlers
@@ -85,6 +69,13 @@
       vars:
         expected_url: "{{ ansible_fqdn }}/contact"
       loop: "{{ contact_forms.results }}"
+
+    - name: assert saml2 TLS key is not published
+      uri:
+        url: https://{{ ansible_fqdn }}/app/uploads/saml-20-single-sign-on/etc/certs/1/1.key
+        follow_redirects: none
+        status_code: 404
+        validate_certs: false
 
 
 - name: Service-level smoke tests

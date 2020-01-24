@@ -78,6 +78,7 @@ default_tls_host_certificate: |-
 
 
 jenkins_admin_password: "{{ vault_jenkins_admin_password }}"
+jenkins_home: /data/jenkins
 jenkins_hostname: jenkins1tf.internal.ci.datagov.us
 jenkins_tls_key: "{{ vault_jenkins_tls_key }}"
 jenkins_tls_cert: |

@@ -35,8 +35,7 @@ provisioner:
         python_home: /usr
         inventory_ckan_solr_port: 8983
       bionic:
-        inventory_ckan_app_version: inventory-bionic
-        inventory_ckan_ckanext_saml2_version: bionic-m2crypto
+        inventory_app_repo_branch: bionic
 scenario:
   name: in_service
   test_sequence:

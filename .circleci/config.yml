@@ -12,50 +12,64 @@ jobs:
       - run: make update-vendor-force
       - run: make lint
 
+  # Snapshots the dependencies. Snyk will send notifications if any new
+  # vulnerabilities appear for this snapshot. This should only be run on
+  # `master`, since it represents the state of shipped dependencies.
+  snyk-monitor:
+    docker:
+      - image: circleci/python:3.6-node
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v3-pipenv-{{ checksum "Pipfile.lock" }}
+            - v3-pipenv-
+      - run: pipenv sync --dev
+      - run:
+          name: install snyk
+          command: sudo npm install -g snyk
+      - run: snyk monitor
+
+  snyk-test:
+    docker:
+      - image: circleci/python:3.6-node
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v3-pipenv-{{ checksum "Pipfile.lock" }}
+            - v3-pipenv-
+      - run: pipenv sync --dev
+      - run:
+          name: install snyk
+          command: sudo npm install -g snyk
+      - run: snyk test
+
   test:
-    machine: true
+    docker:
+      - image: circleci/python:3.6
     parallelism: 5
     environment:
       PIPENV_VENV_IN_PROJECT: 1
     steps:
       - checkout
-      # TODO once kitchen is removed, we can use a python docker instance
-      # without having to manually install python.
-      - run:
-          name: install python
-          command: |
-            cd /opt/circleci/.pyenv/plugins/python-build/../.. && git pull && cd -
-            pyenv install
-      - run:
-          name: install pipenv
-          command: pip install -U pipenv
+      - setup_remote_docker
       # Restore cache and install python dependencies
       - restore_cache:
           keys:
-            - v2-pipenv-{{ checksum "Pipfile.lock" }}
-            - v2-pipenv-
+            - v3-pipenv-{{ checksum "Pipfile.lock" }}
+            - v3-pipenv-
       - run:
           name: install python dependencies
           command: pipenv sync --dev
-      - save_cache:
-          key: v2-pipenv-{{ checksum "Pipfile.lock" }}
-          paths:
-            - .venv
-      # Restore cache and install ruby dependencies
-      - restore_cache:
-          keys:
-            - v1-bundle-{{ checksum "Gemfile.lock" }}
-            - v1-bundle-
-      - run:
-          name: Install dependencies
-          command: bundle install --path vendor/bundle
-      - save_cache:
-          key: v1-bundle-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
       - run:
           name: Setup ansible-galaxy
           command: pipenv run make update-vendor-force
+      - save_cache:
+          key: v3-pipenv-{{ checksum "Pipfile.lock" }}
+          paths:
+            - .venv
+            - ansible/roles/vendor
       - run:
           name: Run tests
           command: |
@@ -68,4 +82,10 @@ workflows:
   commit:
     jobs:
       - lint
+      - snyk-test
       - test
+      - snyk-monitor:
+          filters:
+            branches:
+              only:
+                - master

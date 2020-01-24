@@ -42,17 +42,21 @@
     dest: '{{ app_source_path }}'
     version: '{{ app_repo_branch }}'
 
-- name: Install CKAN app
-  command: ./install.sh "{{ project_source_new_code_path }}" "{{ catalog_ckan_python_home }}" chdir={{ app_source_path }}
-  tags: skip_ansible_lint
-  notify:
-    - reload apache2
-    - reload supervisor
+- name: setup virtualenv for new deployment
+  pip:
+    name:
+      - pip>=19.3.0
+      - setuptools>=44.0.0,<45.0.0  # setuptools 45+ requires python 3.5, keep pinned below, but still modern version
+    virtualenv: '{{ project_source_new_code_path }}'
+    virtualenv_python: "{{ catalog_ckan_python_home }}/bin/python"
+    umask: "0022"
 
-  # TODO instead of fixing the permissions after the fact, we should be using
-  # the pip module with `umask` to install the requirements-freeze.txt
-- name: Fix permissions on ckan install dir
-  file: owner=root group=www-data dest={{ project_source_new_code_path }} state=directory recurse=yes
+- name: install requirements
+  pip:
+    requirements: "{{ app_source_path }}/requirements-freeze.txt"
+    virtualenv: "{{ project_source_new_code_path }}"
+    virtualenv_python: "{{ catalog_ckan_python_home }}/bin/python"
+    umask: "0022"
   notify:
     - reload apache2
     - reload supervisor

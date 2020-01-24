@@ -3,36 +3,23 @@
   hosts: dashboard-web
   serial: 1
   roles:
-  # TODO remove the die-no-tags role. You should be able to run a role playbook
-  # with no tags and have it be idempotent.
-  - { role: software/common/tls, tags: [provision, tls] }
-  - { role: software/common/php-common, tags: [provision] }
-  - { role: geerlingguy.git, tags: [provision] }
-  - { role: geerlingguy.nginx, tags: [nginx, provision] }
-  - { role: geerlingguy.php-versions, tags: [php, provision] }
-  - { role: geerlingguy.php, tags: [php, provision] }
-  - { role: geerlingguy.php-mysql, tags: [php, php-mysql, provision] }
-  - { role: geerlingguy.php-memcached, tags: [php, php-memcached, provision] }
-  - { role: geerlingguy.composer, tags: [php, provision] }
-  - { role: software/dashboard/dashboard-sudo-2-init, tags: [provision, deploy] }
+    - { role: software/common/tls, tags: [provision, tls] }
+    - { role: software/common/php-common, tags: [provision] }
+    - { role: geerlingguy.git, tags: [provision] }
+    - { role: geerlingguy.nginx, tags: [nginx, provision] }
+    - { role: geerlingguy.php-versions, tags: [php, provision] }
+    - { role: geerlingguy.php, tags: [php, provision] }
+    - { role: geerlingguy.php-mysql, tags: [php, php-mysql, provision] }
+    - { role: geerlingguy.php-memcached, tags: [php, php-memcached, provision] }
+    - { role: software/common/php-fixes, tags: [php, provision] }
+    - { role: geerlingguy.composer, tags: [php, provision] }
 
 
 - name: Deploying Dashboard
   hosts: dashboard-web
   serial: 1
-  become: no
   roles:
-  - { role: software/dashboard/dashboard-deploy, tags: [deploy, provision] }
-
-
-- name: Cleanup
-  hosts: dashboard-web
-  serial: 1
-  roles:
-  - { role: software/common/php-fixes, tags: [php, provision, deploy] }
-  - { role: software/dashboard/dashboard-sudo-3-cleanup, tags: [provision, deploy] }
-
-  # TODO move these closer to the deploy play
+    - { role: gsa.datagov-deploy-dashboard, tags: [deploy, provision] }
   # Host-level smoke tests
   tasks:
     - name: flush handlers
