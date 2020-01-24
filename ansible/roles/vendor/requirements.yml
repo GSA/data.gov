@@ -80,7 +80,7 @@
   version: v1.0.0
 - name: gsa.datagov-deploy-wordpress
   src: https://github.com/GSA/datagov-deploy-wordpress.git
-  version: v1.0.2
+  version: v1.0.3
 - name: gsa.elastalert
   src: https://github.com/GSA/ansible-elastalert
   version: master
