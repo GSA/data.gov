@@ -106,12 +106,12 @@ Work that has been de-prioritized.
 ##### Exit criteria
 
 - When reviewing priorities, we may pull items out of the Icebox.
-- Items move to Product backlog for grooming.
+- Items are sorted into Product backlog for grooming.
 
 
 #### Product Backlog
 
-Work that we are planning on doing and will groom and schedule into a sprint.
+Work sorted by value that we are planning on doing and will groom and schedule into a sprint.
 
 
 ##### Exit criteria
