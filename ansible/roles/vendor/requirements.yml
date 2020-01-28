@@ -74,7 +74,7 @@
   version: v1.0.3
 - name: gsa.datagov-deploy-redis
   src: https://github.com/GSA/datagov-deploy-redis
-  version: v1.0.1
+  version: v1.0.2
 - name: gsa.datagov-deploy-solr
   src: https://github.com/GSA/datagov-deploy-solr.git
   version: v1.0.0
