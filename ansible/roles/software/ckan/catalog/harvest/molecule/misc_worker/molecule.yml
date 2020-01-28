@@ -25,6 +25,11 @@ provisioner:
   name: ansible
   lint:
     name: ansible-lint
+  inventory:
+    group_vars:
+      all:
+        # https://github.com/DavidWittman/ansible-redis/blob/21b0b6f9030275a2586baf591f322ce3348b2b2d/tasks/install.yml#L9
+        redis_travis_ci: true
 scenario:
   name: misc_worker
   # Disable idempotence check
