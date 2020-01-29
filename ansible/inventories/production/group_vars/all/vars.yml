@@ -11,6 +11,7 @@ catalog_ckan_qa_update_process_count: 5
 catalog_ckan_service_url: https://catalog.data.gov
 catalog_ckan_solr_port: "8983"
 catalog_ckan_solr_host: datagov-solr1p.prod-ocsit.bsp.gsa.gov
+catalog_ckan_wsgi_processes: 6
 catalog_pycsw_db_host: "{{ vault_catalog_pycsw_db_host }}"
 catalog_pycsw_db_name: "{{ vault_catalog_pycsw_db_name }}"
 catalog_pycsw_db_pass: "{{ vault_catalog_pycsw_db_pass }}"
