@@ -22,7 +22,7 @@ SSLEngine on
     WSGIPassAuthorization On
 
     # Deploy as a daemon (avoids conflicts between CKAN instances).
-    WSGIDaemonProcess ckan display-name=ckan processes=2 threads=15
+    WSGIDaemonProcess ckan display-name=ckan processes={{ catalog_ckan_wsgi_processes }} threads=15
 
     WSGIProcessGroup ckan
 
