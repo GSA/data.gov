@@ -6,6 +6,32 @@ MOLECULE_SUITES := \
   software/ckan/native-login \
   software/common/php-fixes
 
+ANSIBLE_PLAYBOOKS := \
+  actions/reboot.yml \
+  actions/uninstall-fluentd.yml \
+  catalog-web.yml \
+  catalog-worker.yml \
+  catalog.yml \
+  ci.yml \
+  ckan-native-login.yml \
+  common.yml \
+  crm-web.yml \
+  dashboard-web.yml \
+  datagov-web.yml \
+  efk-nginx.yml \
+  efk-stack.yml \
+  elastalert.yml \
+  elasticsearch.yml \
+  inventory.yml \
+  jenkins.yml \
+  jumpbox.yml \
+  kibana.yml \
+  newrelic-java.yml \
+  newrelic-php.yml \
+  pycsw.yml \
+  site.yml \
+  solr.yml
+
 # Create test-molecule-<suite> targets
 MOLECULE_SUITE_TARGETS := $(patsubst %,test-molecule-%,$(MOLECULE_SUITES))
 
@@ -21,8 +47,8 @@ setup:
 	pipenv install --dev
 
 lint:
-	ansible-playbook --syntax-check ansible/*.yml
-	ansible-lint -v -x ANSIBLE0010 --exclude=ansible/roles/vendor ansible/*.yml
+	cd ansible && ansible-playbook --syntax-check $(ANSIBLE_PLAYBOOKS)
+	cd ansible && ansible-lint -v -x ANSIBLE0010 --exclude=roles/vendor *.yml
 
 $(MOLECULE_SUITE_TARGETS):
 	cd ansible/roles/$(subst test-molecule-,,$@) && \

@@ -2,15 +2,18 @@ version: 2
 jobs:
   lint:
     docker:
-      # specify the version you desire here
-      - image: particlekit/ansible-lint
-    working_directory: ~/repo
+      - image: circleci/python:3.6
+    environment:
+      PIPENV_VENV_IN_PROJECT: 1
     steps:
       - checkout
-      - run: echo 'password' > ~/ansible-secret.txt
-      - run: pip install ansible
-      - run: make vendor
-      - run: make lint
+      - restore_cache:
+          keys:
+            - v3-pipenv-{{ checksum "Pipfile.lock" }}
+            - v3-pipenv-
+      - run: pipenv sync --dev
+      - run: pipenv run make vendor
+      - run: pipenv run make lint
 
   # Snapshots the dependencies. Snyk will send notifications if any new
   # vulnerabilities appear for this snapshot. This should only be run on
