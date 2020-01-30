@@ -9,7 +9,7 @@ jobs:
       - checkout
       - run: echo 'password' > ~/ansible-secret.txt
       - run: pip install ansible
-      - run: make update-vendor-force
+      - run: make vendor
       - run: make lint
 
   # Snapshots the dependencies. Snyk will send notifications if any new
@@ -66,7 +66,7 @@ jobs:
             pipenv sync --dev
       - run:
           name: Setup ansible-galaxy
-          command: pipenv run make update-vendor-force
+          command: pipenv run make vendor
       - save_cache:
           key: v3-pipenv-{{ checksum "Pipfile.lock" }}
           paths:

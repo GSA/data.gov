@@ -59,6 +59,5 @@ __pycache__
 gen-csr-out
 
 # ansible-galaxy vendored roles
-ansible/roles/vendor/*
-!ansible/roles/vendor/requirements.yml
+ansible/roles/vendor
 .vscode/settings.json

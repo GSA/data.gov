@@ -14,17 +14,8 @@ MOLECULE_SUITE_TARGETS := $(patsubst %,test-molecule-%,$(MOLECULE_SUITES))
 circleci-glob:
 	@echo $(MOLECULE_SUITE_TARGETS) | sed -e 's/ /\n/g'
 
-update-vendor:
-	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml
-
-update-vendor-verbose:
-	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml -vvv
-
-update-vendor-force:
-	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml --force
-
-update-vendor-force-verbose:
-	ansible-galaxy install -p ansible/roles/vendor -r ansible/roles/vendor/requirements.yml --force -vvv
+vendor:
+	ansible-galaxy install -p ansible/roles/vendor -r ansible/requirements.yml --force
 
 setup:
 	pipenv install --dev

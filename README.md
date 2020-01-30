@@ -83,7 +83,7 @@ Once you're SSH'd into the jumpbox, follow these steps for deploy.
 
 1. Update Ansible role dependencies.
 
-       $ pipenv run make update-vendor-force
+       $ pipenv run make vendor
 
 1. Run the playbook from the ansible directory.
 
@@ -339,7 +339,7 @@ dependencies. Install the dependencies with make.
 
 Install third-party Ansible roles.
 
-    $ pipenv run make update-vendor-force
+    $ pipenv run make vendor
 
 Any commands mentioned within this README should be run within the virtualenv.
 You can activate the virtual with `pipenv shell` or you can run one-off commands
