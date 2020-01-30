@@ -51,7 +51,7 @@ these requirements:
 
 - [pyenv](https://github.com/pyenv/pyenv) (recommended) or [Python](https://www.python.org) 3.6
 - [Pipenv](https://pipenv.readthedocs.io/en/latest/)
-- ansible-secret.txt ([Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) key)
+- [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) key (ask a team member)
 
 
 ### Running playbooks
@@ -327,7 +327,7 @@ roles here that you can develop on individually.
 - [pyenv](https://github.com/pyenv/pyenv) (recommended) or [Python](https://www.python.org) 3.6
 - [Pipenv](https://pipenv.readthedocs.io/en/latest/)
 - [Vagrant](https://www.vagrantup.com/)
-- ansible-secret.txt Ansible Vault key for editing secrets in inventory
+- Ansible Vault key for editing secrets in inventory
 
 
 ### Setup
@@ -422,9 +422,39 @@ Clean up the VM after your test.
     $ vagrant destroy
 
 
-### Editing Vault secrets
+### Ansible Vault
 
-If you have the Ansible Vault key (`~/ansible-secret.txt`), you can review and
+Inventory secrets are stored encrypted within the git repository using [Ansible
+Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html). In order
+to decrypt them for editing or review, you'll need the Ansible Vault password.
+
+
+#### Setup the vault password
+
+On invocations, you'll be prompted for the vault password. You should add the
+password to a file and configure Ansible so that it reads the password from
+file.
+
+    $ mkdir -m 0700 .secrets
+    $ touch .secrets/ansible-secret.txt
+
+Open `.secrets/ansible-secret.txt` and add the password. Then, set
+`DEFAULT_VAULT_PASSWORD_FILE` to the password file's path.
+
+    $ cat <<EOF >> .env
+    DEFAULT_VAULT_PASSWORD_FILE=.secrets/ansible-secret.txt
+    EOF
+
+`pipenv` will load this `.env` file automatically.
+
+On jumpbox hosts, the vault password file should be installed to
+`/etc/datagov/ansible-secret.txt` (group readable by operators). This is
+a manual step for initial jumpbox provisioning.
+
+
+#### Editing Vault secrets
+
+If you have the Ansible Vault password (ask a team member), you can review and
 edit secrets with `ansible-vault`.
 
 Review secrets in a vault.

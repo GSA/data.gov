@@ -8,6 +8,8 @@
 pkg/
 
 .DS_Store
+.env
+.secrets/
 .vagrant
 secrets.yml
 ansible-secret.txt
