@@ -9,7 +9,7 @@ molecule = "~=2.19.0"
 docker-py = "*"
 
 [packages]
-ansible = "~=2.6.0"
+ansible = "~=2.7.0"
 boto = "*"
 
 [requires]
