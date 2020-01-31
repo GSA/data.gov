@@ -439,10 +439,10 @@ file.
     $ touch .secrets/ansible-secret.txt
 
 Open `.secrets/ansible-secret.txt` and add the password. Then, set
-`DEFAULT_VAULT_PASSWORD_FILE` to the password file's path.
+`ANSIBLE_VAULT_PASSWORD_FILE` to the password file's path.
 
     $ cat <<EOF >> .env
-    DEFAULT_VAULT_PASSWORD_FILE=.secrets/ansible-secret.txt
+    ANSIBLE_VAULT_PASSWORD_FILE=.secrets/ansible-secret.txt
     EOF
 
 `pipenv` will load this `.env` file automatically.
@@ -468,6 +468,34 @@ Edit secrets in a vault.
 You can configure git to automatically decrypt Vault files for reviewing diffs.
 
     $ git config --global diff.ansible-vault.textconv "ansible-vault view"
+
+
+## Deployment
+
+_Note: this is a work in progress._
+
+Currently, deployment to BSP environments is done manually by running Ansible
+playbooks from the jumpbox hosts. We are moving to automated continuous deployment via Jenkins CI server.
+
+We still use CircleCI for majority of CI needs. Any tasks requiring access to
+the GSA network (like deployment) are handed over to Jenkins (via the Jenkins
+API).
+
+
+### Setup
+
+Add the following environment variables to CI configuration. These are required
+for the `bin/jenkins_build` script. Secret variables should be entered in the
+[UI configuration only](https://circleci.com/gh/GSA/datagov-deploy/edit#env-vars).
+
+Variable | Description | Secret
+`JENKINS_USER` | The Jenkins user with access to the API. | Y
+`JENKINS_API_TOKEN` | The API token for the Jenkins user. | Y
+`JENKINS_JOB_TOKEN` | The job token specified in the job configuration. | Y
+`JENKINS_URL` | The URL to the Jenkins instance. | N
+
+In the CI job configuration (`.circleci/config.yml`), run the `bin/jenkins_build
+<job-name>` script.
 
 
 ## Troubleshooting

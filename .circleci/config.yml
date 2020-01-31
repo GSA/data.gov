@@ -81,6 +81,18 @@ jobs:
             TEST_TARGETS=$(make circleci-glob | circleci tests split)
             pipenv run make ${TEST_TARGETS}
 
+  deploy-ci:
+    docker:
+      - image: circleci/python:3.6
+    environment:
+      JENKINS_URL: https://ci.ci.datagov.us
+    steps:
+      - checkout
+      - deploy:
+          name: Trigger Jenkins deploy
+          # TODO update the job name to deploy-ci-platform or similar
+          command: bin/jenkins_build datagov-deploy2
+
 
 workflows:
   version: 2
@@ -94,3 +106,13 @@ workflows:
             branches:
               only:
                 - master
+
+      # TODO re-enable once secrets are updated and IR gives us the go ahead
+      #- deploy-ci:
+      #    requires:
+      #      - lint
+      #      - test
+      #      - snyk-test
+      #    filters:
+      #      branches:
+      #        only: develop
