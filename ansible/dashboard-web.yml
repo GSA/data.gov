@@ -87,9 +87,9 @@
         # We keep these separate so that we get two distinct emails
         - name: dashboard-cfo-act-download
           paths:
-            - /var/log/dashboard/cfo-act-download.log
+            - /var/log/dashboard/campaign-status-download.log
           options: "{{ dashboard_logrotate_options }}"
         - name: dashboard-cfo-act-full-scan
           paths:
-            - /var/log/dashboard/cfo-act-full-scan.log
+            - /var/log/dashboard/campaign-status-full-scan.log
           options: "{{ dashboard_logrotate_options }}"
