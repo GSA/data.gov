@@ -90,8 +90,7 @@ jobs:
       - checkout
       - deploy:
           name: Trigger Jenkins deploy
-          # TODO update the job name to deploy-ci-platform or similar
-          command: bin/jenkins_build datagov-deploy2
+          command: bin/jenkins_build deploy-ci-platform
 
 
 workflows:
