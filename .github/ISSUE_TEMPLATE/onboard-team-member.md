@@ -17,10 +17,8 @@ Below are the tasks that will drive the onboarding process.
   - Retro
 - [ ] Add team member to Google Drive
   - [Data.gov](https://drive.google.com/drive/folders/0AMRwhrSyJ5R4Uk9PVA)
-  - [CKAN Mutli](https://drive.google.com/drive/folders/0ALb0g1S27SJPUk9PVA)
   - [DevSecOps](https://drive.google.com/drive/folders/1Ac1dUmzTLTsDv8A8TSyLzrXo1a7hm4NF)
 - [ ] Add team member to email lists
-  - [Data.gov support list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagov)
   - [Data.gov team list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagovhelp)
   - [Inventory help list](https://groups.google.com/a/gsa.gov/forum/#!forum/inventory-help)
 - [ ] Make sure team member has 2FA enabled for their GitHub account and [request](https://github.com/GSA/GitHub-Administration/blob/master/README.md#requesting-access-to-the-gsa-organization) membership to GSA GitHub org
@@ -34,6 +32,10 @@ Below are the tasks that will drive the onboarding process.
 
 For new Project Management Office team members, follow these additional steps:
 
+- [ ] Add team member to Google Drive
+  - [CKAN Mutli](https://drive.google.com/drive/folders/0ALb0g1S27SJPUk9PVA)
+- [ ] Add team member to email lists
+  - [Data.gov support list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagov)
 - [ ] Add team member to #datagov-pmo (PMO only)
 - [ ] Add team member to Data.gov slack channels
   - #bug-bounty

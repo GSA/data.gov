@@ -59,7 +59,7 @@
   version: v1.3.0
 - name: gsa.datagov-deploy-common
   src: https://github.com/GSA/datagov-deploy-common
-  version: v2.5.0
+  version: v2.5.1
 - name: gsa.datagov-deploy-jenkins
   src: https://github.com/GSA/datagov-deploy-jenkins
   version: master
@@ -74,7 +74,7 @@
   version: v1.0.3
 - name: gsa.datagov-deploy-redis
   src: https://github.com/GSA/datagov-deploy-redis
-  version: v1.0.1
+  version: v1.0.2
 - name: gsa.datagov-deploy-solr
   src: https://github.com/GSA/datagov-deploy-solr.git
   version: v1.0.0
@@ -93,6 +93,6 @@
 - name: nleutner.newrelic-php
   version: 1.0.0
 - name: oefenweb.postfix
-  version: v2.10.0
+  version: v2.10.1
 - name: sbaerlocher.wp-cli
   version: 1.3.1

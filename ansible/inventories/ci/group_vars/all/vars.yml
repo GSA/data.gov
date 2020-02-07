@@ -1,6 +1,6 @@
 ---
 # catalog
-catalog_ckan_app_version: develop
+catalog_ckan_app_version: master
 catalog_ckan_db_host: "{{ catalog_postgresql_login_host }}"
 catalog_ckan_db_name: ckan
 catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
@@ -28,7 +28,7 @@ common_python_version_number: 2.7.10
 filebeat_enabled: false
 nessus_agent_enabled: false
 trendmicro_enabled: false
-project_git_version: develop
+project_git_version: master
 
 # crm
 # hostname needed for smoke test, IP address needed for ALB health check
@@ -81,42 +81,46 @@ jenkins_admin_password: "{{ vault_jenkins_admin_password }}"
 jenkins_home: /data/jenkins
 jenkins_hostname: jenkins1tf.internal.ci.datagov.us
 jenkins_tls_key: "{{ vault_jenkins_tls_key }}"
-jenkins_tls_cert: |
+jenkins_tls_cert: |-
   -----BEGIN CERTIFICATE-----
-  MIIF5zCCA8+gAwIBAgIJAPGalCzW7H32MA0GCSqGSIb3DQEBCwUAMIGJMQswCQYD
-  VQQGEwJVUzELMAkGA1UECAwCREMxEzARBgNVBAcMCldhc2hpbmd0b24xKjAoBgNV
-  BAoMIVRlY2hub2xvZ3kgVHJhbnNmb3JtYXRpb24gU2VydmljZTERMA8GA1UECwwI
-  RGF0YS5nb3YxGTAXBgNVBAMMEGNpLmNpLmRhdGFnb3YudXMwHhcNMTkwODE4MDY0
-  MjExWhcNMjAwODE3MDY0MjExWjCBiTELMAkGA1UEBhMCVVMxCzAJBgNVBAgMAkRD
-  MRMwEQYDVQQHDApXYXNoaW5ndG9uMSowKAYDVQQKDCFUZWNobm9sb2d5IFRyYW5z
-  Zm9ybWF0aW9uIFNlcnZpY2UxETAPBgNVBAsMCERhdGEuZ292MRkwFwYDVQQDDBBj
-  aS5jaS5kYXRhZ292LnVzMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA
-  yf3hvZucOevPQZq9J1Xxq77NLDM9lLV3q6JvjzS2Kjx6xhHvTct54hpXKa1Ue+li
-  NFOXJfuVAxN4HLU53ZvsSPcroraUIzs/D1X+5J62TfKmNA/duoOtWj+l55mCX7UL
-  n4x+aTklbbu0g9Ca1tA3u+spykBBf4tY5y+YbTaoD+JFkdh9GoZUgFWee2jq8WYK
-  b8EDhx4KXWuZbGE+40pMSBEqiK7/dwsPZ21an/VXf7i0KEGmQg0mVr/4XJjsYUUo
-  DgHc/ztadaMKpeZUS7p4pRH/Hs2xkw7uXNDRu7lL9sywnY36rdIR3mgIwqbxgEmm
-  rHRF1IE8+f+DHxfJihJjDLipxP3FLY/yZcMFofVONxWptBaww6nrzXugYoXFkfeN
-  TjvhLgi1RmN079TzhvfpxfTFe/E3+7TTJmG1G9eLpguJT7p7/MjMjBq1d5QnCT/v
-  xsmhnNb2ndAjwChHz1NB4Q4kyqnAZ5TKFMWK/lKp6fV8ca0zASYRce0DkO8AOq85
-  zLaO0VPTcjJ3oc514tvv8qwg9V+cZ85LQpV9/miGxvG0ajzbqedJhJUetoPYgtDv
-  +I18ZTJV6SGzJwyveRPzREHFheV2ZhxImc4KEkZHuICoR6WtUUx/OST483YFJRIP
-  r0tED44wzUc08T/lx5DsCq8Um0iewTdI8nc3qrdNO+UCAwEAAaNQME4wHQYDVR0O
-  BBYEFC9oB6LocUJBiIA57poqyefCwJUgMB8GA1UdIwQYMBaAFC9oB6LocUJBiIA5
-  7poqyefCwJUgMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQELBQADggIBAFLNJ1c6
-  CFoNYOyxvgSReFYxclJDzmZ+KYHFeYzzzjQCx8VyUCnHKGVhOcoI+JtaN/YgRHxV
-  420wLJfKoK6gFC3cF9hPmMVCYLNHMN76Tjbzi59KhyJl/QCYJPN5JB1targz9hYa
-  6CSvrw+Fj9EbkeJJ3zoAApKVIxdrzS+c4qx+Av7YVehKBBFvUQNfelW4Cesm7EC+
-  8VRv0XY0/e7lV9qD3hrp71ubIhi34hbPqGedLg5N4Fp3qUwmXeWygCPGnMOXYXwg
-  LYcx6MqXXV7REJGxbOSUwkd9gkXuXn2rhvceXR0o4XSsxqJz6Qp1JSDQ9VUQI6Yh
-  OWYf4n4dUHhuCOWziEub3F7tXvuNfao8NIp/3Zo4t42DfPd4EY52HMS2tA/MlDeq
-  XKfKqXyjUvuD8GNhcR6d9NVa2FLVRIMdE2RLOHz+4FL9bMZ69h0cIP1mM5A6nOaC
-  VhbIUZM+GnLnzmrTrISKLhMxbZNFLX+cunG/zslPRtNJ/wqvtQHaLPMm7/rkQTsQ
-  jzJNh6aeWMsDa/FNNeKNCNNxgvHTEofQgjwlhCBOy/iCanLLMqvQNaC/4u50SZnd
-  tZR5O+m3zP2oUaoiMP0SbxaI/IjlIIhpmDA7ixjKjvewoKtd3Aab8L61o2WZxmIs
-  n00mcY+HqnIWpl6uTgqCcexzzNwVa4xJJwF5
+  MIIGPTCCBCWgAwIBAgIUMAK4Lb3eFwwu9Lp5/zO7+PMBCMgwDQYJKoZIhvcNAQEL
+  BQAwga0xCzAJBgNVBAYTAlVTMQswCQYDVQQIDAJEQzETMBEGA1UEBwwKV2FzaGlu
+  Z3RvbjERMA8GA1UECgwIRGF0YS5nb3YxKjAoBgNVBAsMIVRlY2hub2xvZ3kgVHJh
+  bnNmb3JtYXRpb24gU2VydmljZTEZMBcGA1UEAwwQY2kuY2kuZGF0YWdvdi51czEi
+  MCAGCSqGSIb3DQEJARYTZGF0YWdvdmhlbHBAZ3NhLmdvdjAeFw0xOTEyMjcwMTE3
+  NTBaFw0yMDEyMjYwMTE3NTBaMIGtMQswCQYDVQQGEwJVUzELMAkGA1UECAwCREMx
+  EzARBgNVBAcMCldhc2hpbmd0b24xETAPBgNVBAoMCERhdGEuZ292MSowKAYDVQQL
+  DCFUZWNobm9sb2d5IFRyYW5zZm9ybWF0aW9uIFNlcnZpY2UxGTAXBgNVBAMMEGNp
+  LmNpLmRhdGFnb3YudXMxIjAgBgkqhkiG9w0BCQEWE2RhdGFnb3ZoZWxwQGdzYS5n
+  b3YwggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQC7z+cbvDyScuGkF5pu
+  F5SWR7A9QCU6cBb1MZsNmkMbOvakO+Z4oWZVdwLcKiWzC0pv5JKM5ekno4Zl/OP+
+  CKVu4larCoxHTtpbSE2XH5TVOQwrn4yeqtuEH4RQVgt8ZbgPLlzBtw84vGT9p9u2
+  r/Dn7FaQzdGNLzEpT+nynz59nvhcWrghI54UxOJLjeMzJaz5xzC0TpsxEnEs+luo
+  H5KrWX0b+zyvHjy9X8BgtGYp4g2tzVJ5N/PjZmhO4aWdnPx9blft8XpRe4KpFfue
+  rD4roIJQG6Auus5ZAcjDVDF3xZaEB6pxD2OmxbFPrkVdJGHVGYsst9tdc6HQ9T6M
+  Zd9yR/LDgIY9HHGBlW2NxafrsTnZiYdNDNRqfHJ1SiYhudCQ6EfQNhnPQ6Gl5rmg
+  zxQgp9EAicWLu7Or4Q3KHeJ49MiZB1S7/ogfEjlBE3fx0RgB18f+LG8BtHz0ixpL
+  lcc+1kKZaLA1g4Zsl/Wx/GgtI2cvrlJ00NwV+CdsCQgVt1NGXbjTDJiyZr3y3WaD
+  +S94hppPlqiuARjtwkb2bj1ZFtaKOsvP4TiVH0k4plG9eIQcGB8/Z+KCiKE5XrnJ
+  9RmnCLWKtWL+lXsSxVaykpYtDrZItLOlp3XGvRtHWItfrPa/05UFzFRIMrskIH5U
+  9HyhxSbWQp8YSiFPvmZrI5lR9wIDAQABo1MwUTAdBgNVHQ4EFgQUR5W2BCJd592A
+  /mMiMPoDontGFOgwHwYDVR0jBBgwFoAUR5W2BCJd592A/mMiMPoDontGFOgwDwYD
+  VR0TAQH/BAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAgEAI3phfgZuTLSgRJRWI/a2
+  4efNzcgM78shulLwoQ0d0GNBRrDmB1zK8Q9a/YWQmZO1j8vqUe2912sSCvxsNt/t
+  Skh5Q4inokJVil99mLwoQXxo7zEaCAD1tVI0DFczWr6W9fznxbKXx8Aps7oJ30zJ
+  Wu94esj41lBigYCde4znae4UGucvwg6I7TSoR+ezbBxltcCuif4xzpmIiX5x14Ra
+  zeG8vUHDN34L3VU4+qudohpyhpt+dVaOUyoeKjWT5pOMO5gaU7RFsEG2CZtd76rH
+  7BeGjPDtiyTGIo/VyPdtcqUfEr8zIepCSyPdPtlU5bQOFtCEW0m77zX946yGLJk9
+  kh/4oSphmXUDqEUGqno6yfgfAmuAmr/iRAny59J92Y3hgGHwEtJiFVYdX8k2S+So
+  +XeUcbZCF7KMiByy56JxwMxNXL37WtSuRAys686Xve9D/AIARx+A5b0CH8quNTPX
+  B3M2e62DBk7V+vuuGj0vMPUJPbttQBO7oBEiXl79YI7lUyC8HvZ3JACNvTDVoBsC
+  tk1qBk5lXvRzl51ZMlxBTSa/nUbzUlnlpvuqYV7IjGeC+XFyndtzc2yN7ayiDN6b
+  iqmUG4lFFNeBYMYt5wPR3I+e6Bn2tk/a5McVhCQt6uVBWfgiPnxrU+pef2EgQ7J9
+  VzQrATk1ZB3jBepMlhLBl7I=
   -----END CERTIFICATE-----
-jenkins_url: https://ci.ci.datagov.us
+#TODO remove jenkins_url which was renamed to jenkins_host
+jenkins_url: ci.ci.datagov.us
+jenkins_host: ci.ci.datagov.us
 
 
 jumpbox_operators: "{{ datagov_operators_test }}"
