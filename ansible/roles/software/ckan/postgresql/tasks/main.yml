@@ -1,8 +1,0 @@
-- name: make sure postgresql packages are installed
-  action: apt pkg={{item}} state=installed
-  with_items:
-    - postgresql
-    - postgis
-    - postgresql-9.3-postgis-2.1
-    - python-psycopg2
-  notify: reload postgres
