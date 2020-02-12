@@ -104,8 +104,7 @@
         state: present
 
     - name: ensure python virtualenv is installed and configured
-      pip:
-        name: virtualenv
+      apt: name=python-virtualenv state=present
 
     - name: install postgis-scripts for trusty
       apt:
