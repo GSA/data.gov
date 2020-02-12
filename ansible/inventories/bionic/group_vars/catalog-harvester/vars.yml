@@ -5,6 +5,10 @@ catalog_pycsw_cron_enabled: true
 
 datagov_service: catalog
 
+postgresql_login_host: "{{ catalog_postgresql_login_host }}"
+postgresql_login_password: "{{ catalog_postgresql_login_password }}"
+postgresql_login_user: "{{ catalog_postgresql_login_user }}"
+
 # project path
 project_source_rollback_path: /usr/lib/ckan-rollback
 project_source_new_code_path: /usr/lib/ckan-new
