@@ -2,7 +2,6 @@
 # See github.com/GSA/datagov-infrastructure-modules and github.com/GSA/datagov-infrastructure-live
 [tag_group_catalog_harvester]
 [tag_group_catalog_web]
-[tag_group_crm_web]
 [tag_group_dashboard_web]
 [tag_group_efk_nginx]
 [tag_group_elasticsearch]
@@ -19,9 +18,6 @@ tag_group_catalog_harvester
 
 [catalog-web:children]
 tag_group_catalog_web
-
-[crm-web:children]
-tag_group_crm_web
 
 [dashboard-web:children]
 tag_group_dashboard_web

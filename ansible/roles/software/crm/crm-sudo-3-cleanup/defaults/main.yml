@@ -1,7 +1,0 @@
----
-
-# Project path
-project_source_rollback_path: /var/www/crm/rollback
-project_source_new_code_path: /var/www/crm/new
-current_source_symlink: /var/www/crm/current
-project_index_path: /var/www/crm/current

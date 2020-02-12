@@ -10,7 +10,6 @@ and for our [Ansible](https://www.ansible.com) playbooks that deploy all the
   - www.data.gov (WordPress)
   - catalog.data.gov (CKAN 2.3)
   - inventory.data.gov (CKAN 2.5)
-  - labs.data.gov/crm (Open311 CRM)
   - labs.data.gov/dashboard (Project Open Data Dashboard)
 
 Additionally, each host is configured with common Services:
@@ -196,19 +195,6 @@ pycsw    | Deploys only the PyCSW application
 database | Configure the database with CKAN and PyCSW users
 
 
-#### CRM
-
-Deploy the Help Desk CRM application.
-
-    $ ansible-playbook crm-web.yml
-
-##### Common variables
-
-Variable | Description
--------- | -----------
-`project_git_version` | Tag, branch, or commit to deploy
-
-
 #### Dashboard
 
 Deploy the Project Open Data Dashboard.
@@ -309,7 +295,6 @@ application.
   with database write permissions.
 - **catalog-web** web hosts for the catalog app. CKAN is configured read-only.
 - **catalog-harvester** worker hosts for the catalog app.
-- **crm-web** web hosts for the CRM app.
 - **dashboard-web** web hosts for the Dashboard app.
 - **inventory-web** web hosts for the inventory app.
 - **pycsw-web** web hosts running the PyCSW application.
