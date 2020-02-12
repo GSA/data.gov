@@ -45,9 +45,6 @@
 - name: gsa.ansible-role-beats
   src: https://github.com/GSA/ansible-role-beats
   version: master
-- name: gsa.datagov-deploy-ci
-  src: https://github.com/GSA/datagov-deploy-ci
-  version: master
 - name: gsa.datagov-deploy-dashboard
   src: https://github.com/GSA/datagov-deploy-dashboard
   version: v1.0.2
