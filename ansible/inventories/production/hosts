@@ -40,15 +40,6 @@ catalogpub-web1p.prod-ocsit.bsp.gsa.gov
 [catalog-admin-v2]
 catalogpubweb1p.prod-ocsit.bsp.gsa.gov
 
-[crm-web:children]
-crm-web-v1
-crm-web-v2
-
-[crm-web-v1]
-
-[crm-web-v2]
-crmweb[1:2]p.prod-ocsit.bsp.gsa.gov
-
 [dashboard-web:children]
 dashboard-web-v1
 dashboard-web-v2
@@ -115,7 +106,6 @@ datagov-solr[1:2]p.prod-ocsit.bsp.gsa.gov is_solr_replica=true
 catalog-admin-v1
 catalog-harvester-v1
 catalog-web-v1
-crm-web-v1
 dashboard-web-v1
 inventory-web-v1
 jumpbox-v1
@@ -126,7 +116,6 @@ wordpress-web-v1
 catalog-admin-v2
 catalog-harvester-v2
 catalog-web-v2
-crm-web-v2
 dashboard-web-v2
 inventory-web-v2
 jumpbox-v2
@@ -135,7 +124,6 @@ wordpress-web-v2
 
 [web:children]
 catalog-web
-crm-web
 dashboard-web
 inventory-web
 wordpress-web
