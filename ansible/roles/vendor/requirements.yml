@@ -42,9 +42,6 @@
 - name: gsa.ansible-os-ubuntu-16
   src: https://github.com/GSA/ansible-os-ubuntu-16
   version: 1.0.4
-- name: gsa.ansible-role-beats
-  src: https://github.com/GSA/ansible-role-beats
-  version: master
 - name: gsa.datagov-deploy-dashboard
   src: https://github.com/GSA/datagov-deploy-dashboard
   version: v1.0.2
@@ -56,7 +53,7 @@
   version: v1.3.0
 - name: gsa.datagov-deploy-common
   src: https://github.com/GSA/datagov-deploy-common
-  version: v2.5.1
+  version: v3.0.0
 - name: gsa.datagov-deploy-jenkins
   src: https://github.com/GSA/datagov-deploy-jenkins
   version: master
@@ -83,6 +80,8 @@
   version: master
 - name: jnv.unattended-upgrades
   version: v1.8.0
+- name: jobscore.beats
+  version: v1.0.0
 - name: newrelic.newrelic-infra
   version: 0.7.0
 - name: nickhammond.logrotate
