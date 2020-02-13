@@ -61,7 +61,9 @@ jobs:
             - v3-pipenv-
       - run:
           name: install python dependencies
-          command: pipenv sync --dev
+          command: |
+            pipenv clean
+            pipenv sync --dev
       - run:
           name: Setup ansible-galaxy
           command: pipenv run make update-vendor-force
