@@ -12,10 +12,8 @@ ANSIBLE_PLAYBOOKS := \
   catalog-web.yml \
   catalog-worker.yml \
   catalog.yml \
-  ci.yml \
   ckan-native-login.yml \
   common.yml \
-  crm-web.yml \
   dashboard-web.yml \
   datagov-web.yml \
   efk-nginx.yml \
