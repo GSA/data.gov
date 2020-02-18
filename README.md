@@ -51,7 +51,7 @@ these requirements:
 
 - [pyenv](https://github.com/pyenv/pyenv) (recommended) or [Python](https://www.python.org) 3.6
 - [Pipenv](https://pipenv.readthedocs.io/en/latest/)
-- ansible-secret.txt ([Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) key)
+- [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) key (ask a team member)
 
 
 ### Running playbooks
@@ -83,7 +83,7 @@ Once you're SSH'd into the jumpbox, follow these steps for deploy.
 
 1. Update Ansible role dependencies.
 
-       $ pipenv run make update-vendor-force
+       $ pipenv run make vendor
 
 1. Run the playbook from the ansible directory.
 
@@ -327,7 +327,7 @@ roles here that you can develop on individually.
 - [pyenv](https://github.com/pyenv/pyenv) (recommended) or [Python](https://www.python.org) 3.6
 - [Pipenv](https://pipenv.readthedocs.io/en/latest/)
 - [Vagrant](https://www.vagrantup.com/)
-- ansible-secret.txt Ansible Vault key for editing secrets in inventory
+- Ansible Vault key for editing secrets in inventory
 
 
 ### Setup
@@ -339,7 +339,7 @@ dependencies. Install the dependencies with make.
 
 Install third-party Ansible roles.
 
-    $ pipenv run make update-vendor-force
+    $ pipenv run make vendor
 
 Any commands mentioned within this README should be run within the virtualenv.
 You can activate the virtual with `pipenv shell` or you can run one-off commands
@@ -422,9 +422,39 @@ Clean up the VM after your test.
     $ vagrant destroy
 
 
-### Editing Vault secrets
+### Ansible Vault
 
-If you have the Ansible Vault key (`~/ansible-secret.txt`), you can review and
+Inventory secrets are stored encrypted within the git repository using [Ansible
+Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html). In order
+to decrypt them for editing or review, you'll need the Ansible Vault password.
+
+
+#### Setup the vault password
+
+On invocations, you'll be prompted for the vault password. You should add the
+password to a file and configure Ansible so that it reads the password from
+file.
+
+    $ mkdir -m 0700 .secrets
+    $ touch .secrets/ansible-secret.txt
+
+Open `.secrets/ansible-secret.txt` and add the password. Then, set
+`ANSIBLE_VAULT_PASSWORD_FILE` to the password file's path.
+
+    $ cat <<EOF >> .env
+    ANSIBLE_VAULT_PASSWORD_FILE=.secrets/ansible-secret.txt
+    EOF
+
+`pipenv` will load this `.env` file automatically.
+
+On jumpbox hosts, the vault password file should be installed to
+`/etc/datagov/ansible-secret.txt` (group readable by operators). This is
+a manual step for initial jumpbox provisioning.
+
+
+#### Editing Vault secrets
+
+If you have the Ansible Vault password (ask a team member), you can review and
 edit secrets with `ansible-vault`.
 
 Review secrets in a vault.
@@ -438,6 +468,34 @@ Edit secrets in a vault.
 You can configure git to automatically decrypt Vault files for reviewing diffs.
 
     $ git config --global diff.ansible-vault.textconv "ansible-vault view"
+
+
+## Deployment
+
+_Note: this is a work in progress._
+
+Currently, deployment to BSP environments is done manually by running Ansible
+playbooks from the jumpbox hosts. We are moving to automated continuous deployment via Jenkins CI server.
+
+We still use CircleCI for majority of CI needs. Any tasks requiring access to
+the GSA network (like deployment) are handed over to Jenkins (via the Jenkins
+API).
+
+
+### Setup
+
+Add the following environment variables to CI configuration. These are required
+for the `bin/jenkins_build` script. Secret variables should be entered in the
+[UI configuration only](https://circleci.com/gh/GSA/datagov-deploy/edit#env-vars).
+
+Variable | Description | Secret
+`JENKINS_USER` | The Jenkins user with access to the API. | Y
+`JENKINS_API_TOKEN` | The API token for the Jenkins user. | Y
+`JENKINS_JOB_TOKEN` | The job token specified in the job configuration. | Y
+`JENKINS_URL` | The URL to the Jenkins instance. | N
+
+In the CI job configuration (`.circleci/config.yml`), run the `bin/jenkins_build
+<job-name>` script.
 
 
 ## Troubleshooting

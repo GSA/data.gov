@@ -2,15 +2,18 @@ version: 2
 jobs:
   lint:
     docker:
-      # specify the version you desire here
-      - image: particlekit/ansible-lint
-    working_directory: ~/repo
+      - image: circleci/python:3.6
+    environment:
+      PIPENV_VENV_IN_PROJECT: 1
     steps:
       - checkout
-      - run: echo 'password' > ~/ansible-secret.txt
-      - run: pip install ansible
-      - run: make update-vendor-force
-      - run: make lint
+      - restore_cache:
+          keys:
+            - v3-pipenv-{{ checksum "Pipfile.lock" }}
+            - v3-pipenv-
+      - run: pipenv sync --dev
+      - run: pipenv run make vendor
+      - run: pipenv run make lint
 
   # Snapshots the dependencies. Snyk will send notifications if any new
   # vulnerabilities appear for this snapshot. This should only be run on
@@ -66,7 +69,7 @@ jobs:
             pipenv sync --dev
       - run:
           name: Setup ansible-galaxy
-          command: pipenv run make update-vendor-force
+          command: pipenv run make vendor
       - save_cache:
           key: v3-pipenv-{{ checksum "Pipfile.lock" }}
           paths:
@@ -77,6 +80,17 @@ jobs:
           command: |
             TEST_TARGETS=$(make circleci-glob | circleci tests split)
             pipenv run make ${TEST_TARGETS}
+
+  deploy-ci:
+    docker:
+      - image: circleci/python:3.6
+    environment:
+      JENKINS_URL: https://ci.ci.datagov.us
+    steps:
+      - checkout
+      - deploy:
+          name: Trigger Jenkins deploy
+          command: bin/jenkins_build deploy-ci-platform
 
 
 workflows:
@@ -91,3 +105,13 @@ workflows:
             branches:
               only:
                 - master
+
+      # TODO re-enable once secrets are updated and IR gives us the go ahead
+      #- deploy-ci:
+      #    requires:
+      #      - lint
+      #      - test
+      #      - snyk-test
+      #    filters:
+      #      branches:
+      #        only: develop
