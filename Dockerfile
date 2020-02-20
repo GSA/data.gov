@@ -29,5 +29,7 @@ RUN pip install pipenv && pipenv sync
 RUN pipenv run make vendor
 
 RUN addgroup -S -g $APP_GID app && adduser -S -G app -u $APP_UID app
+RUN chown app:app /app/ansible
+
 USER app
 WORKDIR /app/ansible
