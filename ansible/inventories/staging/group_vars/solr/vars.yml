@@ -5,3 +5,6 @@ datagov_service: solr
 # master. Once the solr cluster is loaded, this can be hoisted up to
 # inventory/group_vars/all level
 solr_master_server: datagov-solrm1d.dev-ocsit.bsp.gsa.gov
+
+# Trendmicro firewall policy
+trendmicro_policy_id: "{{ trendmicro_policy_id_app }}"
