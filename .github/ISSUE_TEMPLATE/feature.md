@@ -13,4 +13,4 @@ assignees: ''
 - [benefit B]
 
 ## Measurements/metrics
-- [description of a thing that can be monitored or tested to meansure and validate when the outcome has been achieved]
+- [description of a thing that can be monitored or tested to measure and validate when the outcome has been achieved]
