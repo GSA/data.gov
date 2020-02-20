@@ -70,11 +70,15 @@
 
 - name: Remove old datapusher code
   file: path="{{ datapusher_virtual_env }}" state=absent
+  tags:
+    - datapusher
 
 - include_tasks: build-pkgs.yml
   vars:
     pkg: "{{ datapusher_pkgs }}"
     virtualenv: "{{ datapusher_virtual_env }}"
+  tags:
+    - datapusher
 
 - name: create directories
   action: file path={{ item }} state=directory owner="www-data" group="www-data" mode=0755
