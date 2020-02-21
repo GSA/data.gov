@@ -24,3 +24,6 @@ env_content_protocol: https
 # MAX SAML
 saml_sp_private_key: "{{ vault_saml_private_key }}"
 saml_admin_pass: "{{ vault_saml_admin_pass }}"
+
+# Trendmicro firewall policy
+trendmicro_policy_id: "{{ trendmicro_policy_id_web }}"
