@@ -52,7 +52,7 @@
   version: v1.3.0
 - name: gsa.datagov-deploy-common
   src: https://github.com/GSA/datagov-deploy-common
-  version: v3.0.0
+  version: v4.0.0
 - name: gsa.datagov-deploy-jenkins
   src: https://github.com/GSA/datagov-deploy-jenkins
   version: master
