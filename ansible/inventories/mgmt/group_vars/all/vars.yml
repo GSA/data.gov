@@ -2,6 +2,7 @@
 jumpbox_operators: "{{ datagov_operators_production }}"
 
 # TrendMicro
+trendmicro_policy_id_jumpbox: "{{ vault_trendmicro_policy_id_jumpbox }}"
 trendmicro_policy_id_mgmt_app: "{{ vault_trendmicro_policy_id_mgmt_app }}"
 trendmicro_policy_id_mgmt_web: "{{ vault_trendmicro_policy_id_mgmt_web }}"
 

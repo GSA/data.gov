@@ -168,6 +168,7 @@ secops_user_public_key: "{{ vault_secops_user_public_key }}"
 # TrendMicro
 trendmicro_deb_url: https://dsm.sec.helix.gsa.gov/software/agent/Ubuntu_14.04/x86_64/
 trendmicro_policy_id_app: "{{ vault_trendmicro_policy_id_app }}"
+trendmicro_policy_id_jumpbox: "{{ vault_trendmicro_policy_id_jumpbox }}"
 trendmicro_policy_id_web: "{{ vault_trendmicro_policy_id_web }}"
 
 # List of CodeIgniter pre-approved admin emails
