@@ -8,7 +8,7 @@ catalog_ckan_db_user: ckan
 catalog_ckan_redis_host: catalog-harvester1tf.internal.bionic.datagov.us
 catalog_ckan_redis_pass: "{{ vault_catalog_ckan_redis_pass }}"
 catalog_ckan_service_url: https://catalog.bionic.datagov.us
-catalog_ckan_solr_host: datagovsolr1tf.internal.bionic.datagov.us
+catalog_ckan_solr_host: datagov-solr1tf.internal.bionic.datagov.us
 catalog_ckan_solr_port: "{{ solr_port }}"
 catalog_postgresql_login_host: "{{ vault_catalog_postgresql_login_host }}"
 catalog_postgresql_login_password: "{{ vault_catalog_postgresql_login_password }}"
@@ -27,12 +27,6 @@ common_python_version_number: 2.7.16
 filebeat_enabled: false
 nessus_agent_enabled: false
 trendmicro_enabled: false
-
-
-# crm
-# hostname needed for smoke test, IP address needed for ALB health check
-crm_nginx_server_name: crm.bionic.datagov.us $hostname {{ ansible_default_ipv4.address }}
-crm_service_url: https://crm.bionic.datagov.us
 
 
 # dashboard
@@ -103,7 +97,7 @@ nrinfragent_license_key: "{{ vault_nrinfragent_license_key }}"
 
 
 # solr
-solr_master_server: datagovsolr1tf.internal.bionic.datagov.us
+solr_master_server: datagov-solr1tf.internal.bionic.datagov.us
 solr_java_packages:
   - openjdk-8-jdk
 

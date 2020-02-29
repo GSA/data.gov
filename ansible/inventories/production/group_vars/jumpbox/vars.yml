@@ -1,0 +1,4 @@
+---
+# Work-around for https://github.com/GSA/datagov-deploy/issues/1397
+# Disable trendmicro until a policy id is set.
+trendmicro_enabled: false

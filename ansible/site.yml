@@ -13,7 +13,6 @@
 # Application plays
 ####################
 - import_playbook: catalog.yml
-- import_playbook: crm-web.yml
 - import_playbook: dashboard-web.yml
 - import_playbook: datagov-web.yml
 - import_playbook: inventory.yml

@@ -42,7 +42,7 @@
   tags: ['cron']
 
 - name: copy qa worker executables
-  action: copy src={{item}} dest=/{{item}} mode=0755
+  action: copy src={{ item }} dest=/{{ item }} mode=0755
   with_items:
     - usr/bin/celery-mem-check.sh
   when: worker_type == 'qa_worker'

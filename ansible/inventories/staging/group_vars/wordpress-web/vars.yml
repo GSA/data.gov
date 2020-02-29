@@ -31,3 +31,5 @@ secure_auth_salt: "{{ vault_secure_auth_salt }}"
 logged_in_salt: "{{ vault_logged_in_salt }}"
 nonce_salt: "{{ vault_nonce_salt }}"
 
+# Trendmicro firewall policy
+trendmicro_policy_id: "{{ trendmicro_policy_id_web }}"

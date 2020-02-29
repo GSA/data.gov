@@ -43,10 +43,6 @@ filebeat_config: "{{ common_filebeat_config }}"
 products:
   - filebeat
 
-# crm
-# hostname needed for smoke test, IP address needed for ALB health check
-crm_nginx_server_name: crm-datagov.dev-ocsit.bsp.gsa.gov $hostname {{ ansible_default_ipv4.address }}
-crm_service_url: https://crm-datagov.dev-ocsit.bsp.gsa.gov
 
 # dashboard
 # hostname needed for smoke test, IP address needed for ALB health check

@@ -8,14 +8,14 @@
     mode=0755
 
 - name: Copy all needed files
-  action: copy src={{item}} dest=/{{item}} mode=0644 owner=root group=www-data
+  copy: src={{ item }} dest=/{{ item }} mode=0644 owner=root group=www-data
   with_items:
     - etc/ckan/apache.wsgi
   notify: reload apache2
 
 - name: Configure ckan.conf
   template: >-
-    src=etc/apache2/sites-enabled/ckan.{{readwrite_type|default('default')}}.conf.j2
+    src=etc/apache2/sites-enabled/ckan.{{ readwrite_type|default('default') }}.conf.j2
     dest=/etc/apache2/sites-enabled/ckan.conf
     mode=0644
     owner=root

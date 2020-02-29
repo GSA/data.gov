@@ -24,7 +24,7 @@ inventory_datastore_ro_user: datastore_ro
 inventory_datastore_ro_pass: "{{ vault_inventory_datastore_ro_db_pass }}"
 
 # other
-inventory_ckan_solr_host: datagovsolr1tf.internal.ci.datagov.us
+inventory_ckan_solr_host: datagov-solr1tf.internal.ci.datagov.us
 inventory_ckan_bucket_name: unset
 inventory_ckan_bucket_prefix: unset
 ckan_site_domain: https://inventory.ci.datagov.us

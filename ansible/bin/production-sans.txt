@@ -16,8 +16,6 @@ consumer.data.gov
 consumers.data.gov
 coop.smallbusiness.data.gov
 counties.data.gov
-crm-bsp.data.gov
-crm-labs.data.gov
 dashboard-bsp.data.gov
 dashboard-labs.data.gov
 developer.data.gov
