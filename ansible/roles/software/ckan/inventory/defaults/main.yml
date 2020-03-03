@@ -21,7 +21,7 @@ inventory_datapusher_access_log: "{{ inventory_log_dir }}/datapusher.access.log"
 datapusher_pkgs:
   - name: datapusher
     repo: https://github.com/GSA/datapusher
-    requirements: requirements.txt
+    requirements: requirements-freeze.txt
 
 # provide some default values to be overwritten later by group vars and host vars...
 project_source_rollback_path: /usr/lib/ckan-rollback
