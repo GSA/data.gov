@@ -5,6 +5,9 @@ title: ''
 labels: ''
 assignees: ''
 ---
+
+[NOTE: For individual stories, [use the user story template](https://github.com/GSA/datagov-deploy/issues/new?assignees=&labels=&template=user-story.md&title=)! Only use this template for larger things that will likely break down into a series of smaller stories over time.]
+
 ## Feature/what we're after
 [A brief, one-sentence description of the outcome we're trying to achieve]
 
