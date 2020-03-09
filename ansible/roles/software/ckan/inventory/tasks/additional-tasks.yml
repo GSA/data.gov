@@ -57,12 +57,21 @@
         group: root
 
     - name: schedule beaker-cache-cleanup cron
-      cron: >-
-        cron_file=ckan
-        job=/usr/local/bin/beaker-cache-cleanup.sh
-        minute=5
-        hour=11
-        user=root
-        state=present
+      cron:
+        name: "clean beaker cache in db"
+        cron_file: ckan
+        job: /usr/local/bin/beaker-cache-cleanup.sh
+        minute: "5"
+        hour: "11"
+        user: root
+        state: present
   when: usage_type == 'with_cron'
+  tags: ['cron']
+
+- name: "remove beaker cache cleanup cron job"
+  cron:
+    name: "clean beaker cache in db"
+    cron_file: ckan
+    state: absent
+  when: usage_type != 'with_cron'
   tags: ['cron']
