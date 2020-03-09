@@ -28,3 +28,5 @@ ckan_instance_uuid: "{{ vault_ckan_instance_secret }}"
 # token_dat for Google Analytics
 token_dat : "{{ vault_token_dat }}"
 
+# Trendmicro firewall policy
+trendmicro_policy_id: "{{ trendmicro_policy_id_web }}"
