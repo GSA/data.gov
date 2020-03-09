@@ -92,7 +92,7 @@
       logrotate_scripts:
         - name: inventory
           paths:
-            - /var/log/inventory/*
+            - /var/log/inventory/*.log
           options:
             - compress
             - copytruncate
