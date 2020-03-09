@@ -69,6 +69,18 @@
     - name: flush handlers
       meta: flush_handlers
 
+    - name: assert datapusher is up
+      uri:
+        url: http://localhost:8800
+        follow_redirects: none
+        status_code: 200
+        validate_certs: false
+      retries: 3
+      delay: 10
+      register: result
+      until: not result.failed
+      when: datagov_in_service | default(true)
+
     - name: assert app is up
       uri:
         url: http://{{ ansible_fqdn }}/api/action/status_show
