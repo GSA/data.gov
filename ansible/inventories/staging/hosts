@@ -53,10 +53,12 @@ inventory-web-v1
 inventory-web-v2
 
 [inventory-web-v1]
-inventory[1:2]d.dev-ocsit.bsp.gsa.gov
+inventory1d.dev-ocsit.bsp.gsa.gov usage=with_cron
+inventory2d.dev-ocsit.bsp.gsa.gov
 
 [inventory-web-v2]
-inventory-[1:2]d.dev-ocsit.bsp.gsa.gov
+inventory-1d.dev-ocsit.bsp.gsa.gov usage=with_cron
+inventory-2d.dev-ocsit.bsp.gsa.gov
 
 [jumpbox:children]
 jumpbox-v1
