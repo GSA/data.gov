@@ -17,4 +17,20 @@ ignore:
           trusted inputs and templates on hosts with access restricted to
           operators only.
         expires: 2020-04-29T00:00:00.000Z
+  SNYK-PYTHON-ANSIBLE-559099:
+    - '*':
+        reason: review with data.gov team
+        expires: 2020-06-07T06:00:00.000Z
+  SNYK-PYTHON-ANSIBLE-559165:
+    - '*':
+        reason: review with data.gov team
+        expires: 2020-06-07T06:00:00.000Z
+  SNYK-PYTHON-ANSIBLE-559542:
+    - '*':
+        reason: review with data.gov team
+        expires: 2020-06-07T06:00:00.000Z
+  SNYK-PYTHON-PYYAML-559098:
+    - '*':
+        reason: review with data.gov team
+        expires: 2020-06-07T06:00:00.000Z
 patch: {}

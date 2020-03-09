@@ -9,8 +9,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v3-pipenv-{{ checksum "Pipfile.lock" }}
-            - v3-pipenv-
+            - v4-pipenv-{{ checksum "Pipfile.lock" }}
+            - v4-pipenv-
       - run: pipenv sync --dev
       - run: pipenv run make vendor
       - run: pipenv run make lint
@@ -25,8 +25,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v3-pipenv-{{ checksum "Pipfile.lock" }}
-            - v3-pipenv-
+            - v4-pipenv-{{ checksum "Pipfile.lock" }}
+            - v4-pipenv-
       - run: pipenv sync --dev
       - run:
           name: install snyk
@@ -40,8 +40,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v3-pipenv-{{ checksum "Pipfile.lock" }}
-            - v3-pipenv-
+            - v4-pipenv-{{ checksum "Pipfile.lock" }}
+            - v4-pipenv-
       - run: pipenv sync --dev
       - run:
           name: install snyk
@@ -60,8 +60,8 @@ jobs:
       # Restore cache and install python dependencies
       - restore_cache:
           keys:
-            - v3-pipenv-{{ checksum "Pipfile.lock" }}
-            - v3-pipenv-
+            - v4-pipenv-{{ checksum "Pipfile.lock" }}
+            - v4-pipenv-
       - run:
           name: install python dependencies
           command: |
@@ -71,7 +71,7 @@ jobs:
           name: Setup ansible-galaxy
           command: pipenv run make vendor
       - save_cache:
-          key: v3-pipenv-{{ checksum "Pipfile.lock" }}
+          key: v4-pipenv-{{ checksum "Pipfile.lock" }}
           paths:
             - .venv
             - ansible/roles/vendor
