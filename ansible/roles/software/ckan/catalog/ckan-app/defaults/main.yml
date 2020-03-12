@@ -1,7 +1,37 @@
 ---
 catalog_app_type: web # either web or worker
 catalog_ckan_app_version: master
+catalog_ckan_plugins_additional: []
+catalog_ckan_plugins_default:
+  - stats
+  - geodatagov
+  - datagov_harvest
+  - ckan_harvester
+  - geodatagov_geoportal_harvester
+  - z3950_harvester
+  - arcgis_harvester
+  - waf_harvester_collection
+  - geodatagov_csw_harvester
+  - geodatagov_doc_harvester
+  - geodatagov_waf_harvester
+  - geodatagov_miscs
+  - spatial_metadata
+  - spatial_query
+  - resource_proxy
+  - spatial_harvest_metadata_api
+  - datagovtheme
+  - datajson_harvest
+  - datajson
+  - archiver
+  - qa
+  - googleanalyticsbasic
+  - ga-report
+  - extlink
+  - report
+  - broken_link_report
+
 catalog_ckan_python_home: /usr
+catalog_ckan_saml2_enabled: false
 app_source_path: /tmp/catalog-app
 app_repo: https://github.com/GSA/catalog-app.git
 app_repo_branch: master
@@ -22,6 +52,7 @@ catalog_db_user: ckan
 catalog_db_pass: ckan
 catalog_db_name: ckan
 catalog_ckan_db_host: localhost
+saml2_idp_metadata_url: https://login.test.max.gov/idp/shibboleth
 saml2_site_url: https://admin-catalog.data.gov/
 catalog_bucket_name: somebucketname
 env: local
