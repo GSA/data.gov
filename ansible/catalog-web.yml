@@ -21,9 +21,6 @@
     - role: software/ckan/catalog/www
       tags:
         - apache2
-    - role: software/ckan/saml2
-      tags:
-        - saml2
     - role: software/ckan/fix-ckan-tracking
       tags:
         - frontend
