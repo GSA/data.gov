@@ -1,5 +1,5 @@
 ---
-catalog_app_type: web # either web or worker
+catalog_app_type: web  # either web or worker
 catalog_ckan_app_version: master
 catalog_ckan_plugins_additional: []
 catalog_ckan_plugins_default:
@@ -60,7 +60,7 @@ catalog_ckan_solr_host: localhost
 catalog_ckan_solr_port: 8983
 app_type: catalog
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
-who_secure: False
+who_secure: "False"
 token_dat: placeholder-token
 catalog_ckan_redis_host: localhost
 redis_password: redis

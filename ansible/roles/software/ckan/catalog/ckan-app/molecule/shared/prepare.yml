@@ -14,7 +14,7 @@
           - libssl-dev
           - python-dev
           - python-pip
-        update_cache: yes
+        update_cache: true
         state: present
 
     # This is split out to avoid having a long running apt install and hitting
