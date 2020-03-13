@@ -50,6 +50,12 @@
     owner: root
     group: root
 
+# need this manual start to pass molecule test?
+- name: start supervisor
+  service:
+    name: supervisor
+    state: started
+
 - name: copy supervisord config
   copy:
     src: beaker-cache-cleanup.conf
@@ -57,7 +63,11 @@
     mode: "0644"
     owner: root
     group: root
-  notify: reload supervisor
+
+- name: add beaker-cache-cleanup program
+  supervisorctl:
+    name: beaker-cache-cleanup
+    state: present
 
 - name: schedule beaker-cache-cleanup cron
   cron:
