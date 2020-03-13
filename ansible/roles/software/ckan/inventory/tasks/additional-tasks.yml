@@ -1,8 +1,4 @@
 ---
-- name: set usage type
-  set_fact:
-    usage_type: "{{ hostvars[inventory_hostname]['usage'] | default('') }}"
-
 - include: build-pkgs.yml
   vars:
     pkg:
@@ -41,37 +37,36 @@
     state: absent
   notify: restart apache2
 
-- name: "set up cron job for beaker cache cleanup"
-  block:
-    - name: install beaker cache cleanup script
-      template: src=beaker-cache-cleanup.sh.j2 dest=/usr/local/bin/beaker-cache-cleanup.sh owner=root group=root mode=0755
+- name: install beaker cache cleanup script
+  template: src=beaker-cache-cleanup.sh.j2 dest=/usr/local/bin/beaker-cache-cleanup.sh owner=root group=root mode=0755
 
-    - name: install pgpass file for beaker-cache-cleanup
-      copy:
-        content: |
-          {{ inventory_ckan_db_host }}:5432:{{ inventory_db_name }}:{{ inventory_db_user }}:{{ inventory_db_pass }}
-        # TODO should be an app user variable
-        dest: /root/.pgpass
-        mode: "0600"
-        owner: root
-        group: root
+- name: install pgpass file for beaker-cache-cleanup
+  copy:
+    content: |
+      {{ inventory_ckan_db_host }}:5432:{{ inventory_db_name }}:{{ inventory_db_user }}:{{ inventory_db_pass }}
+    # TODO should be an app user variable
+    dest: /root/.pgpass
+    mode: "0600"
+    owner: root
+    group: root
 
-    - name: schedule beaker-cache-cleanup cron
-      cron:
-        name: "clean beaker cache in db"
-        cron_file: ckan
-        job: /usr/local/bin/beaker-cache-cleanup.sh
-        minute: "5"
-        hour: "11"
-        user: root
-        state: present
-  when: usage_type == 'with_cron'
-  tags: ['cron']
+- name: copy supervisord config
+  copy:
+    src: beaker-cache-cleanup.conf
+    dest: /etc/supervisor/conf.d/beaker-cache-cleanup.conf
+    mode: "0644"
+    owner: root
+    group: root
+  notify: reload supervisor
 
-- name: "remove beaker cache cleanup cron job"
+- name: schedule beaker-cache-cleanup cron
   cron:
     name: "clean beaker cache in db"
     cron_file: ckan
-    state: absent
-  when: usage_type != 'with_cron'
-  tags: ['cron']
+    job: supervisorctl start beaker-cache-cleanup
+    minute: "5"
+    hour: "11"
+    user: root
+    disabled: "{{ not crons_enabled }}"
+    state: present
+tags: ['cron']
