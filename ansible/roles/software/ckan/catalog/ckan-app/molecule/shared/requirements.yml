@@ -9,4 +9,4 @@
 
 - src: 'https://github.com/GSA/datagov-deploy-solr'
   version: master
-  name: gsa.datagov-deploy-solr  
+  name: gsa.datagov-deploy-solr
