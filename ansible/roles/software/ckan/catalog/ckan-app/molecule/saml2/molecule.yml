@@ -6,7 +6,6 @@ driver:
   name: docker
 lint:
   name: yamllint
-  enabled: false
 platforms:
   - name: ckan-catalog-app-trusty
     image: ubuntu:trusty
@@ -35,10 +34,8 @@ provisioner:
   playbooks:
     prepare: ../shared/prepare.yml
 scenario:
-  name: default
+  name: saml2
   # Disable idempotence check
-  # davidwittman.redis is not idempotent
-  # https://github.com/DavidWittman/ansible-redis/pull/202
   test_sequence:
     - lint
     - destroy
@@ -47,7 +44,7 @@ scenario:
     - create
     - prepare
     - converge
-    #- idempotence
+    # - idempotence
     - side_effect
     - verify
     - destroy
