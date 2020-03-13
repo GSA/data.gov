@@ -69,4 +69,4 @@
     user: root
     disabled: "{{ not crons_enabled }}"
     state: present
-tags: ['cron']
+  tags: ['cron']
