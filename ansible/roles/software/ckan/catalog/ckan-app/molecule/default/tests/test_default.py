@@ -7,6 +7,9 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
 
 
+virtualenv_path = '/usr/lib/ckan'
+
+
 def test_var_lib_ckan(host):
     var_lib_ckan = host.file('/var/lib/ckan')
 
@@ -65,3 +68,21 @@ def test_who_ini(host):
     )
 
     assert not who_ini.contains('saml2auth')
+
+
+def test_compatible_repoze_who(host):
+    packages = host.pip_package.get_packages(
+        pip_path=('%s/bin/pip' % virtualenv_path)
+    )
+
+    assert 'repoze.who' in packages
+    assert 'Paste' in packages
+
+    assert '2.0' == packages['repoze.who'].get('version')
+    assert '1.7.5.1' == packages['Paste'].get('version')
+
+
+def test_apache(host):
+    apache = host.service('apache2')
+
+    assert apache.is_running

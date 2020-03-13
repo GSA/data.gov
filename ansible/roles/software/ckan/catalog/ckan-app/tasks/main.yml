@@ -84,6 +84,19 @@
     - reload apache2
     - reload supervisor
 
+# https://github.com/GSA/catalog-app/issues/78
+# Work-around repoze.who issue for environments where saml2 is not configured.
+- name: install compatible version of repoze.who
+  pip:
+    name: repoze.who==2.0.0
+    virtualenv: "{{ project_source_new_code_path }}"
+    umask: '0022'
+    state: present
+  when: not catalog_ckan_saml2_enabled
+  notify:
+    - reload apache2
+    - reload supervisor
+
 # Configure CKAN
 - name: Configure production.ini
   template: src=etc_ckan_production.ini.j2 dest=/etc/ckan/production.ini owner=root group=www-data mode=0640
