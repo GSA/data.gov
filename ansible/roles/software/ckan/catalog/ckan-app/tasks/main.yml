@@ -94,6 +94,9 @@
   notify:
     - reload apache2
 
+- include_tasks: saml2.yml
+  when: catalog_ckan_saml2_enabled
+
 - name: Symlink current dir with new code
   file:
     src: "{{ project_source_new_code_path }}"
