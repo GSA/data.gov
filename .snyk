@@ -33,4 +33,12 @@ ignore:
     - '*':
         reason: review with data.gov team
         expires: 2020-06-07T06:00:00.000Z
+  SNYK-PYTHON-ANSIBLE-559860:
+    - '*':
+        reason: playbooks are only run from/on trusted hosts.
+        expires: 2020-06-13T06:00:00.000Z
+  SNYK-PYTHON-ANSIBLE-560128:
+    - '*':
+        reason: svn module is not used.
+        expires: 2020-06-13T06:00:00.000Z
 patch: {}
