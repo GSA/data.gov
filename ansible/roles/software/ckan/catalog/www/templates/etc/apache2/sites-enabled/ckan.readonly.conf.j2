@@ -37,8 +37,6 @@ SSLEngine on
     # fix Cross-Frame Scripting (XFS) vulnerability
     Header set X-Frame-Options "SAMEORIGIN"
 
-    Header set Pragma "no-cache"
-    Header set Expires "-1"
     Header set X-XSS-Protection "1; mode=block"
     Header set X-Content-Type-Options "nosniff"
 
