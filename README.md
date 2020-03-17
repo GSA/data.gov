@@ -72,7 +72,8 @@ Once you're SSH'd into the jumpbox, follow these steps for deploy.
        $ cd datagov-deploy
 
 1. Check you are on the correct branch and up-to-date. The branch depends on the
-   [environment](#environments) you're working with.
+   [environment](#environments) you're working with. When doing a release, you
+   should be on `release/YYYYMMDD`
 
        $ git status
        $ git pull --ff-only
@@ -445,11 +446,13 @@ Open `.secrets/ansible-secret.txt` and add the password. Then, set
     ANSIBLE_VAULT_PASSWORD_FILE=.secrets/ansible-secret.txt
     EOF
 
-`pipenv` will load this `.env` file automatically.
+`pipenv` will load this `.env` file automatically if included at the root of
+the project.
 
 On jumpbox hosts, the vault password file should be installed to
 `/etc/datagov/ansible-secret.txt` (group readable by operators). This is
-a manual step for initial jumpbox provisioning.
+a manual step for initial jumpbox provisioning. Ubuntu may need to be added
+to the `operators` group.
 
 
 #### Editing Vault secrets
