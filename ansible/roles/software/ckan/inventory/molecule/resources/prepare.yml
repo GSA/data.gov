@@ -91,6 +91,7 @@
           - libssl-dev
           - python-dev
           - python-pip
+          - supervisor
         state: present
 
     # This is split out to avoid having a long running apt install and hitting

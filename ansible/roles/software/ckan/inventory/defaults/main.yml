@@ -23,6 +23,9 @@ datapusher_pkgs:
     repo: https://github.com/GSA/datapusher
     requirements: requirements-freeze.txt
 
+# Enable crons only on specific hosts
+crons_enabled: false
+
 # provide some default values to be overwritten later by group vars and host vars...
 project_source_rollback_path: /usr/lib/ckan-rollback
 project_source_new_code_path: /usr/lib/ckan-new
