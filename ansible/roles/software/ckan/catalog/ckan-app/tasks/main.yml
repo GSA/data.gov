@@ -11,8 +11,11 @@
 - name: create directory for application logs
   file: dest=/var/log/ckan owner=www-data group=www-data mode=0755 state=directory
 
-- name: create temp directory
+- name: create CKAN temp directory
   file: path=/var/tmp/ckan owner=www-data group=www-data mode=0755 state=directory
+
+- name: create CKAN storage directory
+  file: path=/var/lib/ckan owner=www-data group=www-data mode=0755 state=directory
 
 - name: Remove old rollback code
   file: path="{{ project_source_rollback_path }}" state=absent
