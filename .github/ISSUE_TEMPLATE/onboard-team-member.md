@@ -46,6 +46,7 @@ For new Project Management Office team members, follow these additional steps:
   - #datagov-devsecops
   - #datagov-notifications
   - #opp-data-analytics
+- [ ] Add team member to [the GCP project](https://console.cloud.google.com/iam-admin/iam?project=tts-datagov)
 - [ ] Add team member to [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members) GitHub team
 - [ ] Invite team member to calendar events
   - CKAN-multi project syncs
