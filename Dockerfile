@@ -6,6 +6,9 @@ ARG APP_GID=1000
 # Configure pipenv to install to the project directory
 ENV PIPENV_VENV_IN_PROJECT=1
 
+# Ignore host keys
+ENV ANSIBLE_HOST_KEY_CHECKING=False
+
 # Install build dependencies
 RUN apk add \
   gcc \
@@ -26,5 +29,7 @@ RUN pip install pipenv && pipenv sync
 RUN pipenv run make vendor
 
 RUN addgroup -S -g $APP_GID app && adduser -S -G app -u $APP_UID app
+RUN chown app:app /app/ansible
+
 USER app
 WORKDIR /app/ansible

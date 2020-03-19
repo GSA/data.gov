@@ -37,3 +37,22 @@ def test_apache2(host):
 
     assert apache2.is_enabled
     assert apache2.is_running
+
+
+def test_beaker_cache_cleanup(host):
+    script = host.file('/usr/local/bin/beaker-cache-cleanup.sh')
+    supervisor_conf = host.file(
+        '/etc/supervisor/conf.d/beaker-cache-cleanup.conf')
+
+    assert script.exists
+    assert script.user == 'root'
+    assert script.group == 'root'
+    assert script.mode == 0o755
+    assert script.contains('age_in_days')
+
+    assert supervisor_conf.exists
+    assert supervisor_conf.user == 'root'
+    assert supervisor_conf.group == 'root'
+    assert supervisor_conf.mode == 0o644
+    assert supervisor_conf.contains(
+        '/usr/local/bin/beaker-cache-cleanup.sh')

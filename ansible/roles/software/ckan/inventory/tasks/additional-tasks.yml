@@ -36,3 +36,47 @@
     path: /usr/lib/datapusher/lib/python2.7/site-packages/ckanserviceprovider/web.pyc
     state: absent
   notify: restart apache2
+
+- name: install beaker cache cleanup script
+  template: src=beaker-cache-cleanup.sh.j2 dest=/usr/local/bin/beaker-cache-cleanup.sh owner=root group=root mode=0755
+
+- name: install pgpass file for beaker-cache-cleanup
+  copy:
+    content: |
+      {{ inventory_ckan_db_host }}:5432:{{ inventory_db_name }}:{{ inventory_db_user }}:{{ inventory_db_pass }}
+    # TODO should be an app user variable
+    dest: /root/.pgpass
+    mode: "0600"
+    owner: root
+    group: root
+
+# need this manual start to pass molecule test?
+- name: start supervisor
+  service:
+    name: supervisor
+    state: started
+
+- name: copy supervisord config
+  copy:
+    src: beaker-cache-cleanup.conf
+    dest: /etc/supervisor/conf.d/beaker-cache-cleanup.conf
+    mode: "0644"
+    owner: root
+    group: root
+
+- name: add beaker-cache-cleanup program
+  supervisorctl:
+    name: beaker-cache-cleanup
+    state: present
+
+- name: schedule beaker-cache-cleanup cron
+  cron:
+    name: "clean beaker cache in db"
+    cron_file: ckan
+    job: supervisorctl start beaker-cache-cleanup
+    minute: "5"
+    hour: "11"
+    user: root
+    disabled: "{{ not crons_enabled }}"
+    state: present
+  tags: ['cron']

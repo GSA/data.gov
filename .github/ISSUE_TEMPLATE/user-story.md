@@ -10,8 +10,9 @@ assignees: ''
 As a [user description], I want [behavior description] so that [goal].
 
 
-## Details
-
-
 ## Acceptance Criteria
 - [ ] 
+
+
+## Details
+
