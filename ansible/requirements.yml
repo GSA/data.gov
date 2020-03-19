@@ -49,7 +49,7 @@
   version: v2.0.1+datagov-r1
 - name: gsa.datagov-deploy-apache2
   src: https://github.com/GSA/datagov-deploy-apache2
-  version: v1.3.0
+  version: v1.3.1
 - name: gsa.datagov-deploy-common
   src: https://github.com/GSA/datagov-deploy-common
   version: v4.0.1
