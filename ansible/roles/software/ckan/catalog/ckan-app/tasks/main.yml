@@ -23,7 +23,13 @@
 
 # Work-around https://github.com/GSA/catalog-app/issues/76
 - name: pre-populate menu.json for ckanext-datagovtheme
-  copy: src=menu.json dest=/var/tmp/ckan/dynamic_menu/menu.json owner=www-data group=www-data mode=0644
+  copy: src=menu.json dest=/var/tmp/ckan/dynamic_menu/menu.json owner=www-data group=www-data mode=0644 force=false
+  register: menu_json
+
+# Work-around https://github.com/GSA/catalog-app/issues/76
+- name: set menu.json as stale (old modification time)
+  file: path=/var/tmp/ckan/dynamic_menu/menu.json modification_time=202001010000.00 state=file
+  when: menu_json is changed
 
 - name: Remove old rollback code
   file: path="{{ project_source_rollback_path }}" state=absent
