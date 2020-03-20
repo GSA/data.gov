@@ -44,7 +44,7 @@
   when: worker_type == 'qa_worker'
 
 - name: copy worker cron job, if any
-  copy: src=etc/cron.d/ckan_{{ worker_type }} dest=/etc/cron.d/ckan mode=0644 state
+  copy: src=etc/cron.d/ckan_{{ worker_type }} dest=/etc/cron.d/ckan mode=0644 owner=root group=root
   tags: ['cron']
 
 - name: CKAN harvest-run crontab
