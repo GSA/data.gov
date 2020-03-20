@@ -90,8 +90,6 @@ Once you're SSH'd into the jumpbox, follow these steps for deploy.
 
        $ cd ansible
        $ pipenv run ansible-playbook site.yml
-   
-   For sandbox environment, use `--skip-tags database` due to buggy gsa.datagov-deploy-postgresql role (see [#1336](https://github.com/GSA/datagov-deploy/issues/1336)).
 
 
 ### Common plays
