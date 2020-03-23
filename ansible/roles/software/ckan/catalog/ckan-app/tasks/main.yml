@@ -11,6 +11,26 @@
 - name: create directory for application logs
   file: dest=/var/log/ckan owner=www-data group=www-data mode=0755 state=directory
 
+# Work-around https://github.com/GSA/catalog-app/issues/76
+- name: create dynamic_menu dir for ckanext-datagovtheme
+  file: path=/var/tmp/ckan/dynamic_menu owner=www-data group=www-data mode=0755 state=directory
+
+- name: create CKAN temp directory
+  file: path=/var/tmp/ckan owner=www-data group=www-data mode=0755 state=directory
+
+- name: create CKAN storage directory
+  file: path=/var/lib/ckan owner=www-data group=www-data mode=0755 state=directory
+
+# Work-around https://github.com/GSA/catalog-app/issues/76
+- name: pre-populate menu.json for ckanext-datagovtheme
+  copy: src=menu.json dest=/var/tmp/ckan/dynamic_menu/menu.json owner=www-data group=www-data mode=0644 force=false
+  register: menu_json
+
+# Work-around https://github.com/GSA/catalog-app/issues/76
+- name: set menu.json as stale (old modification time)
+  file: path=/var/tmp/ckan/dynamic_menu/menu.json modification_time=202001010000.00 state=file
+  when: menu_json is changed
+
 - name: Remove old rollback code
   file: path="{{ project_source_rollback_path }}" state=absent
 
