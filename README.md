@@ -37,6 +37,7 @@ GSA [VPN access](https://github.com/GSA/datagov-deploy/wiki/Horizon-Desktop) is 
 
 Environment | Deployed from      | ISP | Jumpbox
 ----------- | -------------      | --- | ----
+mgmt        | `master`           | BSP | datagovjump1m.mgmt-ocsit.bsp.gsa.gov
 production  | `master` (manual)  | BSP | datagov-jump2p.prod-ocsit.bsp.gsa.gov
 staging     | `release/*` or `master` (manual)  | BSP | datagov-jump2d.dev-ocsit.bsp.gsa.gov
 bionic      | `develop` (manual) | AWS sandbox | jump.bionic.datagov.us
