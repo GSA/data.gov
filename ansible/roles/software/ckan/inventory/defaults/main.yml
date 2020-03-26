@@ -2,7 +2,7 @@
 datagov_in_service: true
 inventory_ckan_python_home: /usr
 inventory_app_source_path: /tmp/inventory-app
-inventory_app_repo: https://github.com/GSA/inventory-app.git
+inventory_app_repo: https://github.com/GSA/inventory-app/tree/inventory_ckan_2.8
 inventory_app_repo_branch: master
 
 # used in  production.ini/ckan_site_url and hosts
