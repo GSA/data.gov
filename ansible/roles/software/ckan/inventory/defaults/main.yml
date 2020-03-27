@@ -21,7 +21,7 @@ inventory_datapusher_access_log: "{{ inventory_log_dir }}/datapusher.access.log"
 datapusher_pkgs:
   - name: datapusher
     repo: https://github.com/ckan/datapusher
-    requirements: requirements-freeze.txt
+    requirements: requirements.txt
 
 # Enable crons only on specific hosts
 crons_enabled: false
