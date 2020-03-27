@@ -73,9 +73,9 @@
   tags:
     - datapusher
 
-- name: install datapusher
-  pip:
-    name: datapusher~=0.0.16
+- include_tasks: build-pkgs.yml
+  vars:
+    pkg: "{{ datapusher_pkgs }}"
     virtualenv: "{{ datapusher_virtual_env }}"
   tags:
     - datapusher
