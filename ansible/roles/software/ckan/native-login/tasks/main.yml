@@ -6,11 +6,12 @@
     mode: 0644
   notify: reload apache
 
-- name: replace ckan config
-  replace:
-    path: /etc/ckan/production.ini
-    regexp: ' saml2 '
-    replace: ' '
+- name: install ckan config
+  template:
+    src: /etc/ckan/production.ini.j2
+    dest: /etc/ckan/production.ini
+    mode: 0640
+    group: www-data
   notify: reload apache
 
 - name: install ckan who.ini config
