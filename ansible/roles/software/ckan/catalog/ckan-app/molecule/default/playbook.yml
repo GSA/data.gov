@@ -2,8 +2,6 @@
 - name: Converge
   hosts: all
   roles:
-    #- role: gsa.datagov-deploy-apache2
     - role: ckan-app
       vars:
-        - app_repo_branch: feature/bionic
-
+        who_ini_secret: e45cfed3-40f1-41c0-8e92-77eda7ddd9f3

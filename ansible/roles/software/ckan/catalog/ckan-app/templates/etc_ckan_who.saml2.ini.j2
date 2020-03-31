@@ -1,0 +1,27 @@
+[plugin:auth_tkt]
+use = ckan.lib.auth_tkt:make_plugin
+secret = {{ who_ini_secret }}
+
+[plugin:saml2auth]
+use = s2repoze.plugins.sp:make_plugin
+saml_conf = ckanext.saml2.config_max.sp_config
+rememberer_name = auth_tkt
+sid_store = outstanding
+identity_cache = memcached
+
+[general]
+request_classifier = repoze.who.classifiers:default_request_classifier
+challenge_decider = repoze.who.classifiers:default_challenge_decider
+
+[identifiers]
+plugins =
+    saml2auth
+    auth_tkt
+
+[authenticators]
+plugins =
+    saml2auth
+
+[challengers]
+plugins =
+    saml2auth
