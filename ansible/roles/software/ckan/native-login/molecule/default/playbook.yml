@@ -1,8 +1,0 @@
----
-- name: Converge
-  hosts: all
-  vars:
-    catalog_ckan_db_host: localhost
-    catalog_ckan_solr_host: localhost
-  roles:
-    - role: native-login
