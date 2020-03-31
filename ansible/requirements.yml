@@ -13,8 +13,6 @@
 - name: dwcramer.upstart
   src: https://github.com/dwcramer/ansible-upstart.git
   version: 0.2.0
-- name: elastic.elasticsearch
-  version: 6.6.0
 - name: geerlingguy.composer
   version: 1.7.6
 - name: geerlingguy.git
@@ -44,9 +42,6 @@
 - name: gsa.datagov-deploy-dashboard
   src: https://github.com/GSA/datagov-deploy-dashboard
   version: v1.0.2
-- name: gsa.ansible-role-kibana
-  src: https://github.com/GSA/ansible-role-kibana
-  version: v2.0.1+datagov-r1
 - name: gsa.datagov-deploy-apache2
   src: https://github.com/GSA/datagov-deploy-apache2
   version: v1.3.1
@@ -71,9 +66,6 @@
 - name: gsa.datagov-deploy-wordpress
   src: https://github.com/GSA/datagov-deploy-wordpress.git
   version: v1.0.4
-- name: gsa.elastalert
-  src: https://github.com/GSA/ansible-elastalert
-  version: master
 - name: jnv.unattended-upgrades
   version: v1.8.0
 - name: jobscore.beats
