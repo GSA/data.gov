@@ -1,5 +1,4 @@
 MOLECULE_SUITES := \
-  software/ckan/catalog/harvest \
   software/ckan/catalog/ckan-app \
   software/ckan/inventory \
   software/common/php-fixes

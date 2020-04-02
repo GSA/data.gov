@@ -141,3 +141,6 @@
 
 - include_tasks: web.yml
   when: catalog_app_type == "web"
+
+- include_tasks: worker.yml
+  when: catalog_app_type == "worker"

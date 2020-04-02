@@ -18,6 +18,7 @@
           - libssl-dev
           - python-dev
           - python-pip
+          - supervisor
         update_cache: true
         state: present
 
@@ -162,3 +163,6 @@
 
     - name: ensure apache2 is started
       service: name=apache2 state=started
+
+    - name: ensure supervisor is started
+      service: name=supervisor state=started

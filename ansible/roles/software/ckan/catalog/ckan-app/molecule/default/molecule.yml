@@ -28,6 +28,9 @@ provisioner:
   name: ansible
   inventory:
     group_vars:
+      all:
+        # https://github.com/DavidWittman/ansible-redis/blob/21b0b6f9030275a2586baf591f322ce3348b2b2d/tasks/install.yml#L9
+        redis_travis_ci: true
       v2:
         app_repo_branch: bionic
   lint:

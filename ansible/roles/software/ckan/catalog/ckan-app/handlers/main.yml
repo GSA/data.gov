@@ -1,9 +1,9 @@
 ---
-- name: reload apache2
-  service: name=apache2 state=reloaded
-  when:
-    - catalog_app_type == "web"
-    - datagov_in_service | default(true)
+- name: restart redis
+  service: name=redis-server state=restarted
+
+- name: restart tomcat
+  service: name={{ catalog_harvester_tomcat_service }} state=restarted
 
 - name: reload supervisor
   command: supervisorctl reload
@@ -12,3 +12,9 @@
     - datagov_in_service | default(true)
   tags:
     - skip_ansible_lint
+
+- name: reload apache2
+  service: name=apache2 state=reloaded
+  when:
+    - catalog_app_type == "web"
+    - datagov_in_service | default(true)

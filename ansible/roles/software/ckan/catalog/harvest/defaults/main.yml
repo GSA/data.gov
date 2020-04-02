@@ -1,8 +1,0 @@
----
-catalog_ckan_db_host: localhost
-catalog_ckan_db_name: ckan
-catalog_ckan_db_user: ckan
-catalog_harvest_enable_harvest_report: false
-catalog_ckan_harvest_fetch_process_count: 1
-catalog_ckan_archiver_process_count: 1
-saxon_license: license

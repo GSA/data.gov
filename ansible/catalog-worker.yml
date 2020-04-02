@@ -13,8 +13,6 @@
       tags:
         - app-deploy
 
-    - role: software/ckan/catalog/harvest
-
 - name: logrotate configuration
   hosts: catalog-harvester,!v2
   roles:

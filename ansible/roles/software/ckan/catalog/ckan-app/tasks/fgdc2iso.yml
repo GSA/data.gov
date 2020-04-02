@@ -17,6 +17,8 @@
   notify: restart tomcat
 
 - name: copy saxon-license.lic
-  action: template src={{ item }} dest=/{{ item }} mode=0644
-  with_items:
-    - etc/saxon-license.lic
+  copy:
+    content: |
+      {{ saxon_license }}
+    dest: /etc/saxon-license.lic
+    mode: "0644"
