@@ -1,5 +1,6 @@
 ---
 # catalog
+catalog_ckan_allow_login_routes: true
 catalog_ckan_app_version: bionic
 catalog_ckan_db_host: "{{ catalog_postgresql_login_host }}"
 catalog_ckan_db_name: ckan

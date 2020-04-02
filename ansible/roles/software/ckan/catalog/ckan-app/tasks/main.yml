@@ -15,7 +15,7 @@
       - xmlsec1
 
 - name: create directory for application logs
-  file: dest=/var/log/ckan owner=www-data group=www-data mode=0755 state=directory
+  file: dest={{ catalog_log_dir }} owner=www-data group=www-data mode=0755 state=directory
 
 # Work-around https://github.com/GSA/catalog-app/issues/76
 - name: create dynamic_menu dir for ckanext-datagovtheme
@@ -138,3 +138,6 @@
   notify:
     - reload apache2
     - reload supervisor
+
+- include_tasks: web.yml
+  when: catalog_app_type == "web"

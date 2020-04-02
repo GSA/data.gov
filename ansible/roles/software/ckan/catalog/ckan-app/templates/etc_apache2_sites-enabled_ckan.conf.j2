@@ -38,20 +38,19 @@ SSLEngine on
     # fix Cross-Frame Scripting (XFS) vulnerability
     Header set X-Frame-Options "SAMEORIGIN"
 
-    Header set Pragma "no-cache"
-    Header set Expires "-1"
     Header set X-XSS-Protection "1; mode=block"
     Header set X-Content-Type-Options "nosniff"
-
-    Header set Referrer-Policy "origin"
-
-    # Header set Content-Security-Policy "default-src 'self'"
 
     Header set Access-Control-Allow-Origin "*"
     Header set Access-Control-Allow-Methods "POST, PUT, GET, DELETE, OPTIONS"
     Header set Access-Control-Allow-Headers "X-CKAN-API-KEY, Authorization, Content-Type"
 
+    Header set Referrer-Policy "origin"
+
+    # Header set Content-Security-Policy "default-src 'self'"
+
     RewriteEngine On
+{% if catalog_ckan_allow_login_routes %}
     RewriteCond %{REQUEST_URI}     !^/api/action/status_show
     RewriteCond %{REQUEST_URI}     !^/user/(login|logged_in|_logout|logged_out|logged_out_redirect)
     RewriteCond %{REQUEST_URI}     !^/login_generic
@@ -59,7 +58,12 @@ SSLEngine on
     RewriteCond %{HTTP_REFERER}    !{{saml2_idp_entry}} [NC]
     RewriteCond %{HTTP_COOKIE}     !auth_tkt
     RewriteRule ^(.*)$ {{ url_readonly }}$1 [R,L]
-
+{% else %}
+    RewriteRule   "^(/en)?/user/login"  "{{ url_writable }}/user/login" [R,L]
+    RewriteRule   "^(/en)?/user/_logout"  "{{ url_writable }}/user/_logout"  [R,L]
+    RewriteRule   "^(/en)?/user/logged_in"  "{{ url_writable }}/user/logged_in"  [R,L]
+    RewriteRule   "^(/en)?/login_generic"  "{{ url_writable }}/login_generic"  [R,L]
+{% endif %}
 
     RewriteRule ^/api/rest/dataset$ api/action/package_search [R]
     RewriteRule ^/api/1/rest/dataset$ api/3/action/package_search [R]

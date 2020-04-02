@@ -1,6 +1,12 @@
 ---
+datagov_team_email: team@example.com
+
 catalog_app_type: web  # either web or worker
+catalog_ckan_access_log: "{{ catalog_log_dir }}/ckan.access.log"
+catalog_ckan_allow_login_routes: false
 catalog_ckan_app_version: master
+catalog_ckan_error_log: "{{ catalog_log_dir }}/ckan.error.log"
+catalog_ckan_wsgi_processes: 2
 catalog_ckan_plugins_additional: []
 catalog_ckan_plugins_default:
   - stats
@@ -32,6 +38,7 @@ catalog_ckan_plugins_default:
 
 catalog_ckan_python_home: /usr
 catalog_ckan_saml2_enabled: false
+catalog_log_dir: /var/log/ckan
 app_source_path: /tmp/catalog-app
 app_repo: https://github.com/GSA/catalog-app.git
 app_repo_branch: master

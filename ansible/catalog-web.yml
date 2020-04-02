@@ -18,9 +18,6 @@
         app_repo_branch: "{{ catalog_ckan_app_version }}"
       tags:
         - app-deploy
-    - role: software/ckan/catalog/www
-      tags:
-        - apache2
     - role: software/ckan/fix-ckan-tracking
       tags:
         - frontend
