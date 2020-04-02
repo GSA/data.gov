@@ -8,27 +8,6 @@
       run_once: true
   tags: always
 
-- name: Provision databases
-  hosts: pycsw-web,pycsw-worker
-  pre_tasks:
-    # Database initialization should be delegated to the jumpbox, however
-    # jumpbox does not have access to the application databases (firewall/security
-    # group configuration), so we have to install dependencies on one of the
-    # hosts and delegate to that host instead.
-    - name: install psycopg2 for postgresql ansible module
-      apt: name=python-psycopg2 state=present
-      run_once: true
-  roles:
-    - role: gsa.datagov-deploy-postgresql
-      vars:
-        postgresql_role_name: "{{ pycsw_db_user }}"
-        postgresql_role_password: "{{ pycsw_db_password }}"
-        postgresql_database_name: "{{ pycsw_db_name }}"
-      run_once: true
-      when: datagov_enable_postgresql_role is defined
-  tags:
-    - database
-
 - name: CSW web
   hosts: pycsw-web,!v2
   serial: 1
@@ -37,6 +16,56 @@
       pycsw_role: web
   tags:
     - pycsw
+  tasks:
+    - name: flush handlers
+      meta: flush_handlers
+
+    - name: assert csw-collection is up
+      uri:
+        url: http://{{ ansible_fqdn }}/csw?service=CSW&version=2.0.2&request=GetCapabilities
+        follow_redirects: none
+        status_code: 200
+        return_content: true
+        # TODO enable cert validation. Staging and production hosts have GSA
+        # signed certs which should be valid.
+        # https://github.com/GSA/datagov-deploy/issues/900
+        validate_certs: false
+        headers:
+          # For catalog-admin hosts
+          Cookie: auth_tkt=1
+      register: csw_collection
+      retries: 3
+      delay: 10
+      until: not csw_collection.failed
+
+    - name: assert csw-collection response has title
+      fail:
+        msg: csw-collection response did not contain ows:Title attribute
+      when: csw_collection.content is not search("<ows:Title>CSW interface for catalog.data.gov</ows:Title>")
+
+    - name: assert csw-all is up
+      uri:
+        url: http://{{ ansible_fqdn }}/csw-all?service=CSW&version=2.0.2&request=GetCapabilities
+        follow_redirects: none
+        status_code: 200
+        return_content: true
+        # TODO enable cert validation. Staging and production hosts have GSA
+        # signed certs which should be valid.
+        # https://github.com/GSA/datagov-deploy/issues/900
+        validate_certs: false
+        headers:
+          # For catalog-admin hosts
+          Cookie: auth_tkt=1
+      register: csw_all
+      retries: 3
+      delay: 10
+      until: not csw_all.failed
+
+    - name: assert csw-all response has title
+      fail:
+        msg: csw-all response did not contain ows:Title attribute
+      when: csw_all.content is not search("<ows:Title>CSW interface for catalog.data.gov</ows:Title>")
+
 
 - name: CSW worker
   hosts: pycsw-worker,!v2
@@ -45,3 +74,52 @@
       pycsw_role: worker
   tags:
     - pycsw
+
+
+- name: Service-level smoke tests
+  hosts: pycsw-web,!v2
+  tasks:
+    - name: flush handlers
+      meta: flush_handlers
+
+    - name: assert csw-collection is up
+      uri:
+        url: "{{ catalog_ckan_service_url }}/csw?service=CSW&version=2.0.2&request=GetCapabilities"
+        follow_redirects: none
+        status_code: 200
+        return_content: true
+        # TODO enable cert validation. Staging and production hosts have GSA
+        # signed certs which should be valid.
+        # https://github.com/GSA/datagov-deploy/issues/900
+        validate_certs: false
+      register: csw_collection
+      run_once: true
+      delegate_to: localhost
+
+    - name: assert csw-collection response has title
+      fail:
+        msg: csw-collection response did not contain ows:Title attribute
+      when: csw_collection.content is not search("<ows:Title>CSW interface for catalog.data.gov</ows:Title>")
+      run_once: true
+      delegate_to: localhost
+
+    - name: assert csw-all is up
+      uri:
+        url: "{{ catalog_ckan_service_url }}/csw-all?service=CSW&version=2.0.2&request=GetCapabilities"
+        follow_redirects: none
+        status_code: 200
+        return_content: true
+        # TODO enable cert validation. Staging and production hosts have GSA
+        # signed certs which should be valid.
+        # https://github.com/GSA/datagov-deploy/issues/900
+        validate_certs: false
+      register: csw_all
+      run_once: true
+      delegate_to: localhost
+
+    - name: assert csw-all response has title
+      fail:
+        msg: csw-all response did not contain ows:Title attribute
+      when: csw_all.content is not search("<ows:Title>CSW interface for catalog.data.gov</ows:Title>")
+      run_once: true
+      delegate_to: localhost

@@ -15,11 +15,6 @@
 
     - role: software/ckan/catalog/harvest
 
-    # TODO not sure why this is needed in harvester
-    - role: software/ckan/saml2
-      tags:
-        - saml2
-
 - name: logrotate configuration
   hosts: catalog-harvester,!v2
   roles:

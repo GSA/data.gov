@@ -27,8 +27,6 @@ education.data.gov
 energy.data.gov
 ethics.data.gov
 explore.data.gov
-federation.data.gov
-federation-bsp.data.gov
 filestore.data.gov
 finance.data.gov
 food.data.gov
@@ -60,8 +58,6 @@ rural.data.gov
 safety.data.gov
 sbx.data.gov
 science.data.gov
-sdg.data.gov
-sdg-bsp.data.gov
 search.data.gov
 semantic.data.gov
 services.data.gov
@@ -70,9 +66,6 @@ skills.data.gov
 smallbusiness.data.gov
 smartdisclosure.data.gov
 states.data.gov
-static.data.gov
-static-bsp.data.gov
-strategy.data.gov
 supplychain.data.gov
 vocab.data.gov
 weather.data.gov

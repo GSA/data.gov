@@ -59,12 +59,9 @@
 - name: gsa.datagov-deploy-jumpbox
   src: https://github.com/GSA/datagov-deploy-jumpbox
   version: v2.0.0
-- name: gsa.datagov-deploy-postgresql
-  src: https://github.com/GSA/datagov-deploy-postgresql
-  version: v1.1.0
 - name: gsa.datagov-deploy-pycsw
   src: https://github.com/GSA/datagov-deploy-pycsw
-  version: v1.0.3
+  version: v1.0.4
 - name: gsa.datagov-deploy-redis
   src: https://github.com/GSA/datagov-deploy-redis
   version: v1.0.2

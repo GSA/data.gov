@@ -37,6 +37,7 @@ GSA [VPN access](https://github.com/GSA/datagov-deploy/wiki/Horizon-Desktop) is 
 
 Environment | Deployed from      | ISP | Jumpbox
 ----------- | -------------      | --- | ----
+mgmt        | `master`           | BSP | datagovjump1m.mgmt-ocsit.bsp.gsa.gov
 production  | `master` (manual)  | BSP | datagov-jump2p.prod-ocsit.bsp.gsa.gov
 staging     | `release/*` or `master` (manual)  | BSP | datagov-jump2d.dev-ocsit.bsp.gsa.gov
 bionic      | `develop` (manual) | AWS sandbox | jump.bionic.datagov.us
@@ -90,8 +91,6 @@ Once you're SSH'd into the jumpbox, follow these steps for deploy.
 
        $ cd ansible
        $ pipenv run ansible-playbook site.yml
-   
-   For sandbox environment, use `--skip-tags database` due to buggy gsa.datagov-deploy-postgresql role (see [#1336](https://github.com/GSA/datagov-deploy/issues/1336)).
 
 
 ### Common plays
