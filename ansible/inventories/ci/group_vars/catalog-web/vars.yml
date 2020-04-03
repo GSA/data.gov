@@ -15,7 +15,7 @@ redis_password: "{{ catalog_ckan_redis_pass }}"
 who_secure: "{{ catalog_ckan_who_secure }}"
 
 # secrets
-who_ini_secret: "{{ catalog_ckan_who_ini_secret }}"
+catalog_ckan_who_ini_secret: "{{ catalog_ckan_who_ini_secret }}"
 ckan_instance_secret: "{{ catalog_ckan_instance_secret }}"
 ckan_instance_uuid: "{{ catalog_ckan_instance_uuid }}"
 

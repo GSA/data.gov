@@ -10,4 +10,4 @@ postgresql_login_password: "{{ catalog_postgresql_login_password }}"
 postgresql_login_user: "{{ catalog_postgresql_login_user }}"
 
 # secrets
-who_ini_secret: "{{ catalog_ckan_who_ini_secret }}"
+catalog_ckan_who_ini_secret: "{{ catalog_ckan_who_ini_secret }}"
