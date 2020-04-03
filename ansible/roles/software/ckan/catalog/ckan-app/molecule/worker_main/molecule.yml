@@ -1,0 +1,65 @@
+---
+dependency:
+  name: galaxy
+  requirements: ../shared/requirements.yml
+driver:
+  name: docker
+lint:
+  name: yamllint
+  enabled: false
+platforms:
+  - name: ckan-catalog-app-trusty
+    image: ubuntu:trusty
+    # start-stop-daemon doesn't detect tomcat is running in docker and `service
+    # start/stop` fails. SYS_PTRACE is needed.
+    # https://stackoverflow.com/questions/29683231/tomcat7-fail-to-start-inside-ubuntu-docker-container/29686963#29686963
+    capabilities:
+      - SYS_PTRACE
+  - name: ckan-catalog-app-bionic
+    image: ubuntu:bionic
+    # start-stop-daemon doesn't detect tomcat is running in docker and `service
+    # start/stop` fails. SYS_PTRACE is needed.
+    # https://stackoverflow.com/questions/29683231/tomcat7-fail-to-start-inside-ubuntu-docker-container/29686963#29686963
+    capabilities:
+      - SYS_PTRACE
+    groups:
+      - v2
+provisioner:
+  name: ansible
+  inventory:
+    group_vars:
+      all:
+        catalog_ckan_db_host: db
+        catalog_ckan_db_name: ckan
+        catalog_ckan_db_pass: ckan
+        catalog_ckan_db_user: ckan
+        catalog_ckan_who_ini_secret: e45cfed3-40f1-41c0-8e92-77eda7ddd9f3
+        # https://github.com/DavidWittman/ansible-redis/blob/21b0b6f9030275a2586baf591f322ce3348b2b2d/tasks/install.yml#L9
+        redis_travis_ci: true
+      v2:
+        app_repo_branch: bionic
+  lint:
+    name: ansible-lint
+  playbooks:
+    prepare: ../shared/prepare.yml
+scenario:
+  name: worker_main
+  # Disable idempotence check
+  # davidwittman.redis is not idempotent
+  # https://github.com/DavidWittman/ansible-redis/pull/202
+  test_sequence:
+    - lint
+    - destroy
+    - dependency
+    - syntax
+    - create
+    - prepare
+    - converge
+    # - idempotence
+    - side_effect
+    - verify
+    - destroy
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

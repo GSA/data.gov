@@ -68,7 +68,7 @@
 
 - name: schedule harvest-report cron
   cron: >-
-    cron_file=ckan
+    cron_file=harvest-report
     job=/usr/local/bin/harvest-report.sh
     disabled={{ not (datagov_in_service | default(true)) }}
     minute=0
