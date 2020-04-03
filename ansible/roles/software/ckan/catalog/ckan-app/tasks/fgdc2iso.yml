@@ -1,4 +1,9 @@
 ---
+- name: assert saxon_license exists
+  fail:
+    msg: saxon_license is required but has not been defined.
+  when: saxon_license is undefined
+
 - name: include distribution-specific variables
   include_vars: "{{ ansible_distribution_release }}.yml"
 

@@ -7,3 +7,4 @@
         catalog_app_type: worker
         catalog_ckan_worker_type: main_worker
         catalog_harvest_enable_harvest_report: true
+        saxon_license: blah blah blah fake saxon license
