@@ -1,18 +1,11 @@
 ---
-- name: set worker type
-  set_fact:
-    worker_type: "{{ hostvars[inventory_hostname]['usage'] | default('main_worker') }}"
-  tags:
-    - redis
-    - fgdc2iso
-
 - include: fgdc2iso.yml
   tags: ['fgdc2iso']
-  when: worker_type == 'main_worker'
+  when: catalog_ckan_worker_type == 'main_worker'
 
 - include: redis.yml
   tags: ['redis']
-  when: worker_type == 'main_worker'
+  when: catalog_ckan_worker_type == 'main_worker'
 
 - name: Remove pip installed supervisor
   pip: name=supervisor virtualenv=/usr/lib/ckan/ state=absent
@@ -31,7 +24,7 @@
   apt: name=supervisor state=present
 
 - name: copy supervisord config
-  template: src=supervisord_{{ worker_type }}.conf.j2 dest=/etc/supervisor/conf.d/catalog-harvest.conf mode=0644 owner=root group=root
+  template: src=supervisord_{{ catalog_ckan_worker_type }}.conf.j2 dest=/etc/supervisor/conf.d/catalog-harvest.conf mode=0644 owner=root group=root
   notify: reload supervisor
 
 - name: enable supervisor service
@@ -41,10 +34,10 @@
   action: copy src={{ item }} dest=/{{ item }} mode=0755
   with_items:
     - usr/bin/celery-mem-check.sh
-  when: worker_type == 'qa_worker'
+  when: catalog_ckan_worker_type == 'qa_worker'
 
 - name: install worker cron jobs
-  copy: src=etc/cron.d/ckan_{{ worker_type }} dest=/etc/cron.d/ckan mode=0644 owner=root group=root
+  copy: src=etc/cron.d/ckan_{{ catalog_ckan_worker_type }} dest=/etc/cron.d/ckan mode=0644 owner=root group=root
   tags: ['cron']
   when: datagov_in_service | default(true)
 

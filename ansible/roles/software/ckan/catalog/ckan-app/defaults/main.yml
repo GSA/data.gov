@@ -8,6 +8,7 @@ catalog_ckan_app_version: master
 catalog_ckan_error_log: "{{ catalog_log_dir }}/ckan.error.log"
 catalog_ckan_harvest_fetch_process_count: 2
 catalog_ckan_wsgi_processes: 2
+catalog_ckan_worker_type: main_worker  # Choices: main_worker misc_worker qa_worker
 catalog_ckan_plugins_additional: []
 catalog_ckan_plugins_default:
   - stats
