@@ -27,6 +27,8 @@ provisioner:
   name: ansible
   inventory:
     group_vars:
+      all:
+        catalog_ckan_who_ini_secret: e45cfed3-40f1-41c0-8e92-77eda7ddd9f3
       v2:
         app_repo_branch: bionic
   lint:

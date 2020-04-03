@@ -6,7 +6,6 @@
       vars:
         catalog_ckan_saml2_enabled: true
         catalog_ckan_plugins_additional: [saml2]
-        catalog_ckan_who_ini_secret: e45cfed3-40f1-41c0-8e92-77eda7ddd9f3
         saml2_sp_public_certificate: |-
           -----BEGIN CERTIFICATE-----
           MIIEGTCCAwGgAwIBAgIJAL+dmeInc15LMA0GCSqGSIb3DQEBCwUAMIGiMQswCQYD
