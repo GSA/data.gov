@@ -3,7 +3,7 @@ datagov_in_service: true
 inventory_ckan_python_home: /usr
 inventory_app_source_path: /tmp/inventory-app
 inventory_app_repo: https://github.com/GSA/inventory-app.git
-inventory_app_repo_branch: inventory_ckan_2.8
+inventory_app_repo_branch: master
 
 # used in  production.ini/ckan_site_url and hosts
 ckan_site_domain: https://inventory.data.gov
@@ -20,8 +20,8 @@ inventory_datapusher_access_log: "{{ inventory_log_dir }}/datapusher.access.log"
 
 datapusher_pkgs:
   - name: datapusher
-    repo: https://github.com/ckan/datapusher
-    requirements: requirements.txt
+    repo: https://github.com/GSA/datapusher
+    requirements: requirements-freeze.txt
 
 # Enable crons only on specific hosts
 crons_enabled: false

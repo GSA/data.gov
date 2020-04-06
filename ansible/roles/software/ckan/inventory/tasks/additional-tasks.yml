@@ -1,21 +1,21 @@
 ---
-# - include: build-pkgs.yml
-#   vars:
-#     pkg:
-#       - {
-#           name: "ckanext-s3filestore",
-#           repo: "https://github.com/GSA/ckanext-s3filestore",
-#           requirements: "requirements.txt"
-#         }
-#   tags: ['s3filestore']
-# 
-# - name: add s3filestore to production.ini plugins
-#   replace:
-#     dest: /etc/ckan/production.ini
-#     regexp: '^(ckan.plugins(?!.*\bs3filestore\b).*)$'
-#     replace: '\1 s3filestore'
-#   notify: restart apache2
-#   tags: ['s3filestore']
+- include: build-pkgs.yml
+  vars:
+    pkg:
+      - {
+          name: "ckanext-s3filestore",
+          repo: "https://github.com/GSA/ckanext-s3filestore",
+          requirements: "requirements.txt"
+        }
+  tags: ['s3filestore']
+
+- name: add s3filestore to production.ini plugins
+  replace:
+    dest: /etc/ckan/production.ini
+    regexp: '^(ckan.plugins(?!.*\bs3filestore\b).*)$'
+    replace: '\1 s3filestore'
+  notify: restart apache2
+  tags: ['s3filestore']
 
 - name: copy datajson export map
   copy:

@@ -8,7 +8,7 @@
 
 - name: install ckan config
   template:
-    src: /etc/ckan/production.ini.j2
+    src: etc/ckan/production.ini.j2
     dest: /etc/ckan/production.ini
     mode: 0640
     group: www-data
