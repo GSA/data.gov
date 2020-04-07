@@ -11,9 +11,9 @@
     # db credentials
     ckan_db_server: "{{ postgresql_login_host }}"
     inventory_ckan_db_host: "{{ ckan_db_server }}"
-    inventory_db_user: inventory
+    inventory_db_user: inventory_master
     inventory_db_pass: "{{ vault_inventory_db_pass }}"
-    inventory_db_name: inventory
+    inventory_db_name: inventory_db_2_8
     datastore_db_server: "{{ postgresql_login_host }}"
     inventory_datapusher_db_name: datapusher
     inventory_datapusher_db_user: datapusher
