@@ -46,7 +46,7 @@
 
 
 - name: logrotate configuration
-  hosts: inventory-web,!v2
+  hosts: inventory-web
   roles:
     - role: nickhammond.logrotate
       logrotate_scripts:
