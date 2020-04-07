@@ -1,7 +1,0 @@
----
-- name: Install EFK nginx proxy
-  hosts: efk_nginx
-  serial: 1
-  roles:
-  - role: geerlingguy.nginx
-  - role: monitoring/efk-nginx

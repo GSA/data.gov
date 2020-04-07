@@ -1,4 +1,0 @@
----
-
-# ElasticSearch URL
-kibana_elasticsearch_url: "http://{{ groups.elasticsearch.0 }}:9200"

@@ -14,14 +14,9 @@ ANSIBLE_PLAYBOOKS := \
   common.yml \
   dashboard-web.yml \
   datagov-web.yml \
-  efk-nginx.yml \
-  efk-stack.yml \
-  elastalert.yml \
-  elasticsearch.yml \
   inventory.yml \
   jenkins.yml \
   jumpbox.yml \
-  kibana.yml \
   newrelic-java.yml \
   newrelic-php.yml \
   pycsw.yml \
