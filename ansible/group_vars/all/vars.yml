@@ -66,7 +66,7 @@ php_default_version_debian: "{{ php_major_minor_version }}"
 php_mysql_package: "php{{ php_major_minor_version }}-mysql"
 
 # for php-versions role
-php_version: "{{ php_major_minor_version }}" 
+php_version: "{{ php_major_minor_version }}"
 
 # solr
 solr_home: /data/solr5
@@ -77,6 +77,7 @@ solr_port: "8983"
 solr_cores:
   - catalog
   - inventory
+  - inventory-2-8
 
 
 # new python version

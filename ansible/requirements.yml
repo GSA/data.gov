@@ -67,7 +67,7 @@
   version: v1.0.2
 - name: gsa.datagov-deploy-solr
   src: https://github.com/GSA/datagov-deploy-solr.git
-  version: v1.0.0
+  version: feature/inventory-2-8
 - name: gsa.datagov-deploy-wordpress
   src: https://github.com/GSA/datagov-deploy-wordpress.git
   version: v1.0.4
