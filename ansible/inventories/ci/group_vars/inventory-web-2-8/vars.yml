@@ -39,6 +39,9 @@
     
     # max login
     saml2_site_url: unset
+
+    # solr config
+    solr_type: inventory-2-8
     
     # secrets
     inventory_ckan_instance_secret: "{{ vault_inventory_ckan_instance_secret }}"
