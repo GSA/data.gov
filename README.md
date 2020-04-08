@@ -52,7 +52,7 @@ these requirements:
 
 - [pyenv](https://github.com/pyenv/pyenv) (recommended) or [Python](https://www.python.org) 3.6
 - [Pipenv](https://pipenv.readthedocs.io/en/latest/)
-- [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) key (ask a team member)
+- [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html)
 
 
 ### Running playbooks
@@ -327,7 +327,7 @@ roles here that you can develop on individually.
 - [pyenv](https://github.com/pyenv/pyenv) (recommended) or [Python](https://www.python.org) 3.6
 - [Pipenv](https://pipenv.readthedocs.io/en/latest/)
 - [Vagrant](https://www.vagrantup.com/)
-- Ansible Vault key for editing secrets in inventory
+- [Ansible Vault key](https://docs.google.com/document/d/1detdsnIuwmqz6asrIfUWrmxCr56MGschY1yV0UeC_24/edit) for editing secrets in inventory
 
 
 ### Setup
@@ -426,7 +426,7 @@ Clean up the VM after your test.
 
 Inventory secrets are stored encrypted within the git repository using [Ansible
 Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html). In order
-to decrypt them for editing or review, you'll need the Ansible Vault password.
+to decrypt them for editing or review, you'll need [the Ansible Vault password](https://docs.google.com/document/d/1detdsnIuwmqz6asrIfUWrmxCr56MGschY1yV0UeC_24/edit).
 
 
 #### Setup the vault password
