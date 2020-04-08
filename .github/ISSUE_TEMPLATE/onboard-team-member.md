@@ -62,7 +62,6 @@ For new Project Management Office team members, follow these additional steps:
 - [ ] Add yourself for [AWS sandbox access](https://github.com/GSA/datagov-infrastructure-live/tree/master/iam#new-users)
 - [ ] Request access to AWS OPP account from team member
 - [ ] Add your public SSH key to the Ansible vault
-  - Request the Ansible Vault keys from team member
   - Clone the [datagov-deploy](https://github.com/GSA/datagov-deploy) repo
     locally
   - Follow the setup instructions for [development](https://github.com/GSA/datagov-deploy/blob/develop/README.md#development)
