@@ -44,6 +44,7 @@
       delay: 10
       register: result
       until: not result.failed
+      when: datagov_in_service | default(true)
 
 
 - name: logrotate configuration
