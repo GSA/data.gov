@@ -4,7 +4,7 @@ process_name=%(program_name)s-%(process_num)s
 numprocs={{ catalog_ckan_archiver_process_count }}
 stdout_logfile=/var/log/ckan-archiver.log
 redirect_stderr=true
-autostart=true
+autostart={{ datagov_in_service | default(true) | ternary('true', 'false') }}
 
 [program:celery-mem-check]
 command=/usr/bin/celery-mem-check.sh

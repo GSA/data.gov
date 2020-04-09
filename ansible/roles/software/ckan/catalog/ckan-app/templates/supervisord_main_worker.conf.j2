@@ -11,10 +11,12 @@ process_name=%(program_name)s-%(process_num)s
 numprocs={{ catalog_ckan_harvest_fetch_process_count }}
 stdout_logfile=/var/log/fetch-consumer.log  
 redirect_stderr=true 
-autostart=true
+autostart={{ datagov_in_service | default(true) | ternary('true', 'false') }}
+autorestart={{ datagov_in_service | default(true) | ternary('true', 'false') }}
 
 [program:harvest-gather]
 command=ckan --plugin=ckanext-harvest harvester gather_consumer          
 stdout_logfile=/var/log/gather-consumer.log  
 redirect_stderr=true
-autostart=true
+autostart={{ datagov_in_service | default(true) | ternary('true', 'false') }}
+autorestart={{ datagov_in_service | default(true) | ternary('true', 'false') }}
