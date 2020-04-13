@@ -6,7 +6,12 @@
       - memcached
       - swig
       - xmlsec1
+      - cron
+      - supervisor
   notify: restart apache2
+
+- name: ensure supervisor is started and enabled
+  service: name=supervisor state=started enabled=yes
 
 - name: Create log directory
   file: path={{ inventory_log_dir }} state=directory owner=root group=www-data mode=0750
