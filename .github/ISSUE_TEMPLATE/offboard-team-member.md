@@ -7,6 +7,7 @@ These tasks are performed by an Admin unless noted as an action for the outgoing
 
 - [ ] Team member should move all Data.gov related documents to team drives
 - [ ] Team member should document any work in progress and schedule a hand-off for any remaining tasks
+- [ ] Remove team member's access to the [shared Google Drive](https://drive.google.com/drive/folders/0AMRwhrSyJ5R4Uk9PVA)
 - [ ] Remove team member from Data.gov GitHub teams
   - [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members)
   - [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members)
