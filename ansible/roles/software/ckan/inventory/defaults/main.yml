@@ -15,6 +15,14 @@ inventory_app_environment: production
 inventory_log_dir: /var/log/inventory
 inventory_ckan_error_log: "{{ inventory_log_dir }}/ckan.error.log"
 inventory_ckan_access_log: "{{ inventory_log_dir }}/ckan.access.log"
+inventory_ckan_plugins_additional: []
+inventory_ckan_plugins_default:
+  - datajson
+  - datapusher
+  - datastore
+  - googleanalyticsbasic
+  - usmetadata
+inventory_ckan_saml2_enabled: false
 inventory_datapusher_error_log: "{{ inventory_log_dir }}/datapusher.error.log"
 inventory_datapusher_access_log: "{{ inventory_log_dir }}/datapusher.access.log"
 inventory_gunicorn_error_log: "{{ inventory_log_dir }}/gunicorn.log"
@@ -50,9 +58,10 @@ inventory_datastore_user: ckan_datastore
 inventory_db_name: ckan
 inventory_db_user: ckan
 
+saml2_idp_metadata_url: https://login.test.max.gov/idp/shibboleth
 saml2_site_url: https://inventory.data.gov/
 saml2_idp_entry: login.test.max.gov
 saml2_idp_metadata_url: https://{{ saml2_idp_entry }}/idp/shibboleth
 
 # Auth cookie `auth_tkt` must be HTTPS-only (SECURE) on Production
-who_secure: False
+who_secure: "False"
