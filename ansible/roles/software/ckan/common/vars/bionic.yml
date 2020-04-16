@@ -2,10 +2,10 @@
 ckan_os_packages:
   - git
   - libbz2-dev
+  - libgdbm-dev
   - libgeos-dev
   - libpq-dev
   - libxml2-dev
   - libxslt1-dev
   - python-dev
   - virtualenv
-  - libgdbm-dev
