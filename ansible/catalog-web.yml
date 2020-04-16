@@ -1,6 +1,6 @@
 ---
 - name: Catalog web stack
-  hosts: catalog-web,!v2
+  hosts: catalog-web
   serial: 1
   vars:
       app_type: catalog
@@ -11,6 +11,7 @@
         - tls
     - role: software/ckan/common
     - role: gsa.datagov-deploy-apache2
+      apache2_enabled: "{{ datagov_in_service | default(true) }}"
       tags:
         - apache
     - role: software/ckan/catalog/ckan-app
@@ -18,9 +19,6 @@
         app_repo_branch: "{{ catalog_ckan_app_version }}"
       tags:
         - app-deploy
-    - role: software/ckan/catalog/www
-      tags:
-        - apache2
     - role: software/ckan/fix-ckan-tracking
       tags:
         - frontend
@@ -46,10 +44,11 @@
       delay: 10
       register: result
       until: not result.failed
+      when: datagov_in_service | default(true)
 
 
 - name: logrotate configuration
-  hosts: catalog-web,!v2
+  hosts: catalog-web
   roles:
     - role: nickhammond.logrotate
       logrotate_scripts:
@@ -66,14 +65,14 @@
 
 
 - name: NewRelic
-  hosts: catalog-web,!catalog-admin,!v2
+  hosts: catalog-web,!catalog-admin
   vars:
     newrelic_app_name: catalog
   roles:
     - monitoring/newrelic/python-agent-ansible
 
 - name: NewRelic
-  hosts: catalog-admin,!v2
+  hosts: catalog-admin
   vars:
     newrelic_app_name: catalog-admin
   roles:
@@ -81,7 +80,7 @@
 
 
 - name: Service-level smoke tests
-  hosts: catalog-web,!v2
+  hosts: catalog-web
   tasks:
     - name: flush handlers
       meta: flush_handlers

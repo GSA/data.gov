@@ -2,13 +2,24 @@
 catalog-harvester-v1
 catalog-harvester-v2
 
+[catalog-harvester-main]
+catalog-harvester1d.dev-ocsit.bsp.gsa.gov
+catalogharvester1d.dev-ocsit.bsp.gsa.gov
+
+[catalog-harvester-misc]
+catalog-harvester2d.dev-ocsit.bsp.gsa.gov
+catalogharvester2d.dev-ocsit.bsp.gsa.gov
+
+[catalog-harvester-qa]
+
+
 [catalog-harvester-v1]
-catalog-harvester1d.dev-ocsit.bsp.gsa.gov usage=main_worker
-catalog-harvester2d.dev-ocsit.bsp.gsa.gov usage=misc_worker
+catalog-harvester1d.dev-ocsit.bsp.gsa.gov
+catalog-harvester2d.dev-ocsit.bsp.gsa.gov
 
 [catalog-harvester-v2]
-catalogharvester1d.dev-ocsit.bsp.gsa.gov usage=main_worker
-catalogharvester2d.dev-ocsit.bsp.gsa.gov usage=misc_worker
+catalogharvester1d.dev-ocsit.bsp.gsa.gov
+catalogharvester2d.dev-ocsit.bsp.gsa.gov
 
 [catalog-web:children]
 catalog-web-v1
