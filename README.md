@@ -42,6 +42,7 @@ production  | `master` (manual)  | BSP | datagov-jump2p.prod-ocsit.bsp.gsa.gov
 staging     | `release/*` or `master` (manual)  | BSP | datagov-jump2d.dev-ocsit.bsp.gsa.gov
 bionic      | `develop` (manual) | AWS sandbox | jump.bionic.datagov.us
 ci          | `develop` (manual) | AWS sandbox | jump.ci.datagov.us
+sandbox     | `develop` (manual) | AWS sandbox | jump.sandbox.datagov.us
 local       | feature branches   | laptop  | localhost
 
 
