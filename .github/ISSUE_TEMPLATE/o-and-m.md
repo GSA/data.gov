@@ -5,7 +5,7 @@ title: 'O+M'
 labels: ''
 assignees: ''
 ---
-As part of day-to-day operation of Data.gov, there are many [Operation and Maintenance (O&M) responsibilities](https://github.com/GSA/datagov-deploy/wiki/Operation-and-Maintenance-Responsibilities). Instead of having the entire team watching notifications and risking some notifications slipping through the cracks, we have created an [O&M Triage role](https://github.com/GSA/datagov-deploy/wiki/Operation-and-Maintenance-Responsibilities#om-triage-rotation). One person on the team is assigned the Triage role which rotates each week.
+As part of day-to-day operation of Data.gov, there are many [Operation and Maintenance (O&M) responsibilities](https://github.com/GSA/datagov-deploy/wiki/Operation-and-Maintenance-Responsibilities). Instead of having the entire team watching notifications and risking some notifications slipping through the cracks, we have created an [O&M Triage role](https://github.com/GSA/datagov-deploy/wiki/Operation-and-Maintenance-Responsibilities#om-triage-rotation). One person on the team is assigned the Triage role which rotates each sprint.
 
 Each day, you should start your triage by looking through the notification channels for anything **urgent** that came in after hours that might need immediate attention:
 
