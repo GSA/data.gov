@@ -63,9 +63,9 @@ Once you're SSH'd into the jumpbox, follow these steps for deploy.
 
        $ sudo su -l ubuntu
        $ tmux attach
-       
+
    Or if there are no existing tmux sessions, start a new one.
-   
+
        $ tmux
 
 1. Switch to the datagov-deploy directory.
@@ -92,6 +92,7 @@ Once you're SSH'd into the jumpbox, follow these steps for deploy.
        $ cd ansible
        $ pipenv run ansible-playbook site.yml
 
+*Note:* Until [this issue](https://github.com/GSA/datagov-deploy/issues/1552) gets resolved, the command to run playbooks in sandbox is `pipenv run ansible-playbook site.yml --inventory inventories/ci --skip-tags database --limit '!inventory-2-8-web1tf.internal.ci.datagov.us'`.
 
 ### Common plays
 
