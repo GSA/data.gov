@@ -7,6 +7,7 @@ These tasks are performed by an Admin unless noted as an action for the outgoing
 
 - [ ] Team member should move all Data.gov related documents to team drives
 - [ ] Team member should document any work in progress and schedule a hand-off for any remaining tasks
+- [ ] Remove team member's access to the [shared Google Drive](https://drive.google.com/drive/folders/0AMRwhrSyJ5R4Uk9PVA)
 - [ ] Remove team member from Data.gov GitHub teams
   - [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members)
   - [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members)
@@ -23,8 +24,8 @@ These tasks are performed by an Admin unless noted as an action for the outgoing
 - [ ] Remove team member from Uptrends via [email](https://docs.google.com/spreadsheets/d/1Z9Zpr1mpx-65i_fH2VTbVofPtidpLZs5cnkO0Jz53Vc/edit#gid=0)
 - [ ] Remove team member from [New Relic](https://newrelic.com)
 - [ ] Remove team member from [Docker Hub](https://cloud.docker.com/orgs/datagov/teams)
-- [ ] Remove team member from [Data.gov system accounts](https://github.com/GSA/datagov-account-management) following [Account Mangement Procedures](https://docs.google.com/document/d/1ipn-RX2Py1-jAAI_dbc6OdrK1j4Z8jKaya9C8RPyDa4/edit)
+- [ ] Remove team member from [Data.gov system accounts](https://github.com/GSA/datagov-deploy/wiki/CKAN-commands#system-administrator-accounts) on Inventory and Catalog
 - [ ] Remove team member from TTS Bug Bounty access [#bug-bounty-partners](https://gsa-tts.slack.com/messages/C5JQCD9PH)
 - [ ] Remove team member from [Snyk](https://app.snyk.io/org/data.gov/manage/members)
 - [ ] Remove team member from [Agari](https://gsa-tts.bp.agari.com/) (see [#admins-dmarc](https://gsa-tts.slack.com/archives/CNDTG5ML5) or @adborden for access)
-- [ ] Rotate [Ansible Vault](https://github.com/GSA/datagov-deploy/wiki/Keypair-Rotation#ansible-vault) key
+- [ ] [Rotate Ansible Vault key](https://github.com/GSA/datagov-deploy/wiki/Keypair-Rotation#ansible-vault) and [update the canonical location](https://docs.google.com/document/d/1detdsnIuwmqz6asrIfUWrmxCr56MGschY1yV0UeC_24/edit)
