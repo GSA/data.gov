@@ -58,7 +58,6 @@ inventory_datastore_user: ckan_datastore
 inventory_db_name: ckan
 inventory_db_user: ckan
 
-saml2_idp_metadata_url: https://login.test.max.gov/idp/shibboleth
 saml2_site_url: https://inventory.data.gov/
 saml2_idp_entry: login.test.max.gov
 saml2_idp_metadata_url: https://{{ saml2_idp_entry }}/idp/shibboleth
