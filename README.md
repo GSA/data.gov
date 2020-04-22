@@ -92,7 +92,7 @@ Once you're SSH'd into the jumpbox, follow these steps for deploy.
        $ cd ansible
        $ pipenv run ansible-playbook site.yml
 
-*Note:* Until [this issue](https://github.com/GSA/datagov-deploy/issues/1552) gets resolved, the command to run playbooks in sandbox is `pipenv run ansible-playbook site.yml --inventory inventories/ci --skip-tags database --limit '!inventory-2-8-web1tf.internal.ci.datagov.us'`.
+*Note:* Until [1552](https://github.com/GSA/datagov-deploy/issues/1552) and [1061](https://github.com/GSA/datagov-deploy/issues/1061) gets resolved, you should not run inventory in sandbox. The command is `pipenv run ansible-playbook site.yml --inventory inventories/ci --skip-tags database --limit 'all!inventory-web`.
 
 ### Common plays
 
