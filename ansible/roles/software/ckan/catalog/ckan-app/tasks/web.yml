@@ -1,0 +1,13 @@
+---
+- name: Install WSGI app
+  copy: src=etc_ckan_apache.wsgi dest=/etc/ckan/apache.wsgi mode=0644 owner=root group=www-data
+  notify: reload apache2
+
+- name: Configure ckan.conf
+  template: >-
+    src=etc_apache2_sites-enabled_ckan.conf.j2
+    dest=/etc/apache2/sites-enabled/ckan.conf
+    mode=0644
+    owner=root
+    group=www-data
+  notify: reload apache2

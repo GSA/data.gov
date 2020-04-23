@@ -1,6 +1,6 @@
 [plugin:auth_tkt]
 use = ckan.lib.auth_tkt:make_plugin
-secret = {{ who_ini_secret }}
+secret = {{ catalog_ckan_who_ini_secret }}
 
 [plugin:friendlyform]
 use = repoze.who.plugins.friendlyform:FriendlyFormPlugin
