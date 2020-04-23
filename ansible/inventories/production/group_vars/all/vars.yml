@@ -7,7 +7,9 @@ catalog_ckan_db_name: "{{ vault_catalog_ckan_db_name }}"
 catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
 catalog_ckan_db_user: "{{ vault_catalog_ckan_db_user }}"
 catalog_ckan_harvest_fetch_process_count: 6
+catalog_ckan_plugins_additional: [saml2]
 catalog_ckan_qa_update_process_count: 5
+catalog_ckan_saml2_enabled: true
 catalog_ckan_service_url: https://catalog.data.gov
 catalog_ckan_solr_port: "8983"
 catalog_ckan_solr_host: datagov-solr1p.prod-ocsit.bsp.gsa.gov

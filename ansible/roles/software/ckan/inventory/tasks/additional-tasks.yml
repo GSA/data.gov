@@ -73,7 +73,7 @@
   cron:
     name: "clean beaker cache in db"
     cron_file: ckan
-    job: supervisorctl start beaker-cache-cleanup
+    job: supervisorctl start beaker-cache-cleanup > /dev/null
     minute: "5"
     hour: "11"
     user: root

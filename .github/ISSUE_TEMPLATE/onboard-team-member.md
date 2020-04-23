@@ -28,6 +28,7 @@ Below are the tasks that will drive the onboarding process.
 - [ ] Add team member to [New Relic](https://newrelic.com)
 - [ ] Add team member to [Docker Hub](https://cloud.docker.com/orgs/datagov/teams)
 - [ ] Add team member to [Snyk](https://app.snyk.io/org/data.gov/manage/members)
+- [ ] Add team member as a SpaceDeveloper in the [`development`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/eab3d327-7d9f-423b-9838-753c26fdb5a0/users), [`staging`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/3e692cdd-6d26-41ea-9698-04903dc3f742/users), and [`management`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/9a1db116-0180-42be-8ffa-7944dcf6bf50/summary) spaces in cloud.gov.
 
 
 For new Project Management Office team members, follow these additional steps:
@@ -47,6 +48,7 @@ For new Project Management Office team members, follow these additional steps:
   - #datagov-notifications
   - #opp-data-analytics
 - [ ] Add team member to [the GCP project](https://console.cloud.google.com/iam-admin/iam?project=tts-datagov)
+- [ ] Add team member with OrgManager permissions in [the `gsa-datagov` organization](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/users) on cloud.gov
 - [ ] Add team member to [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members) GitHub team
 - [ ] Invite team member to calendar events
   - CKAN-multi project syncs
@@ -62,7 +64,6 @@ For new Project Management Office team members, follow these additional steps:
 - [ ] Add yourself for [AWS sandbox access](https://github.com/GSA/datagov-infrastructure-live/tree/master/iam#new-users)
 - [ ] Request access to AWS OPP account from team member
 - [ ] Add your public SSH key to the Ansible vault
-  - Request the Ansible Vault keys from team member
   - Clone the [datagov-deploy](https://github.com/GSA/datagov-deploy) repo
     locally
   - Follow the setup instructions for [development](https://github.com/GSA/datagov-deploy/blob/develop/README.md#development)

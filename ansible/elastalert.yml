@@ -1,6 +1,0 @@
----
-- name: Install Elastalert
-  hosts: elasticsearch
-  serial: 1
-  roles:
-    - role: gsa.elastalert

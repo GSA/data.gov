@@ -1,7 +1,0 @@
----
-- name: Install ElasticSearch
-  hosts: elasticsearch
-  roles:
-    - role: elastic.elasticsearch
-      vars:
-        es_major_version: "6.x"

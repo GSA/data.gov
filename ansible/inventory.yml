@@ -1,6 +1,6 @@
 ---
 - name: Provisioning Inventory CKAN Stack
-  hosts: inventory-web
+  hosts: inventory-web:!inventory-web-2-8
   serial: 1
   vars:
     app_type: inventory
@@ -8,7 +8,9 @@
   roles:
     - {role: software/common/tls, tags: ['tls']}
     - software/ckan/common
-    - {role: gsa.datagov-deploy-apache2, tags: ['apache']}
+    - role: gsa.datagov-deploy-apache2
+      apache2_enabled: "{{ datagov_in_service | default(true) }}"
+      tags: apache
     - {role: software/ckan/inventory, tags: ['deploy']}
     - {role: software/ckan/saml2, tags: ['saml2']}
 
@@ -46,7 +48,7 @@
 
 
 - name: logrotate configuration
-  hosts: inventory-web,!v2
+  hosts: inventory-web
   roles:
     - role: nickhammond.logrotate
       logrotate_scripts:
@@ -62,7 +64,7 @@
 
 
 - name: NewRelic
-  hosts: inventory-web
+  hosts: inventory-web:!inventory-web-2-8
   vars:
     newrelic_app_name: inventory
   roles:
@@ -72,7 +74,7 @@
 
 
 - name: Service-level smoke tests
-  hosts: inventory-web
+  hosts: inventory-web:!inventory-web-2-8
   tasks:
     - name: flush handlers
       meta: flush_handlers

@@ -1,8 +1,0 @@
----
-- src: 'https://github.com/GSA/datagov-deploy-apache2'
-  version: master
-  name: gsa.datagov-deploy-apache2
-
-- src: 'https://github.com/GSA/datagov-deploy-solr'
-  version: master
-  name: gsa.datagov-deploy-solr  

@@ -1,5 +1,11 @@
 ---
+- name: assert catalog_ckan_who_ini_secret is set
+  fail:
+    msg: catalog_ckan_who_ini_secret is not set but is required
+  when: catalog_ckan_who_ini_secret is undefined
 
+# Since ckanext-saml2 and its dependencies are part of catalog-app's requirements.txt, their
+# build dependencies must be installed even if saml2 will not be enabled.
 - name: make sure ckanext-saml2 dependency packages are installed
   apt: name={{ packages }} state=present
   vars:
@@ -9,7 +15,7 @@
       - xmlsec1
 
 - name: create directory for application logs
-  file: dest=/var/log/ckan owner=www-data group=www-data mode=0755 state=directory
+  file: dest={{ catalog_log_dir }} owner=www-data group=www-data mode=0755 state=directory
 
 # Work-around https://github.com/GSA/catalog-app/issues/76
 - name: create dynamic_menu dir for ckanext-datagovtheme
@@ -78,11 +84,22 @@
     - reload apache2
     - reload supervisor
 
+# https://github.com/GSA/catalog-app/issues/78
+# Work-around repoze.who issue for environments where saml2 is not configured.
+- name: install compatible version of repoze.who
+  pip:
+    name: repoze.who==2.0.0
+    virtualenv: "{{ project_source_new_code_path }}"
+    umask: '0022'
+    state: present
+  when: not catalog_ckan_saml2_enabled
+  notify:
+    - reload apache2
+    - reload supervisor
+
 # Configure CKAN
 - name: Configure production.ini
-  template: src=templates/{{ item }}.j2 dest=/{{ item }} owner=root group=www-data mode=0640
-  with_items:
-    - etc/ckan/production.ini
+  template: src=etc_ckan_production.ini.j2 dest=/etc/ckan/production.ini owner=root group=www-data mode=0640
   notify:
     - reload apache2
     - reload supervisor
@@ -99,23 +116,19 @@
     - reload apache2
     - reload supervisor
 
+# TODO configuration files should live in the application repo
 - name: Configure who.ini
-  copy:
-    src: "{{ app_source_path }}/config/environments/{{ env }}/saml2/who.ini"
-    dest: /etc/ckan
-    remote_src: true
+  template:
+    src: etc_ckan_who.{{ catalog_ckan_saml2_enabled | ternary('saml2', 'default') }}.ini.j2
+    dest: /etc/ckan/who.ini
     owner: root
     group: www-data
     mode: 0640
   notify:
     - reload apache2
-    - reload supervisor
 
-# TODO remove this after production deploy
-- name: undo point site_url in /etc/hosts to localhost
-  action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ ckan_site_domain | regex_replace('https?\://','') }}" state=absent
-  tags:
-   - molecule-notest
+- include_tasks: saml2.yml
+  when: catalog_ckan_saml2_enabled
 
 - name: Symlink current dir with new code
   file:
@@ -125,3 +138,9 @@
   notify:
     - reload apache2
     - reload supervisor
+
+- include_tasks: web.yml
+  when: catalog_app_type == "web"
+
+- include_tasks: worker.yml
+  when: catalog_app_type == "worker"

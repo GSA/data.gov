@@ -42,6 +42,7 @@ production  | `master` (manual)  | BSP | datagov-jump2p.prod-ocsit.bsp.gsa.gov
 staging     | `release/*` or `master` (manual)  | BSP | datagov-jump2d.dev-ocsit.bsp.gsa.gov
 bionic      | `develop` (manual) | AWS sandbox | jump.bionic.datagov.us
 ci          | `develop` (manual) | AWS sandbox | jump.ci.datagov.us
+sandbox     | `develop` (manual) | AWS sandbox | jump.sandbox.datagov.us
 local       | feature branches   | laptop  | localhost
 
 
@@ -52,7 +53,7 @@ these requirements:
 
 - [pyenv](https://github.com/pyenv/pyenv) (recommended) or [Python](https://www.python.org) 3.6
 - [Pipenv](https://pipenv.readthedocs.io/en/latest/)
-- [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) key (ask a team member)
+- [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html)
 
 
 ### Running playbooks
@@ -63,9 +64,9 @@ Once you're SSH'd into the jumpbox, follow these steps for deploy.
 
        $ sudo su -l ubuntu
        $ tmux attach
-       
+
    Or if there are no existing tmux sessions, start a new one.
-   
+
        $ tmux
 
 1. Switch to the datagov-deploy directory.
@@ -92,6 +93,9 @@ Once you're SSH'd into the jumpbox, follow these steps for deploy.
        $ cd ansible
        $ pipenv run ansible-playbook site.yml
 
+*Note:* Until [1552](https://github.com/GSA/datagov-deploy/issues/1552) and [1061](https://github.com/GSA/datagov-deploy/issues/1061) gets resolved, you should not run inventory in sandbox.
+
+    $ ansible-playbook --inventory inventories/ci --limit '!inventory-2-8-web1tf.internal.ci.datagov.us' common.yml dashboard.yml wordpress.yml catalog.yml 
 
 ### Common plays
 
@@ -327,7 +331,7 @@ roles here that you can develop on individually.
 - [pyenv](https://github.com/pyenv/pyenv) (recommended) or [Python](https://www.python.org) 3.6
 - [Pipenv](https://pipenv.readthedocs.io/en/latest/)
 - [Vagrant](https://www.vagrantup.com/)
-- Ansible Vault key for editing secrets in inventory
+- [Ansible Vault key](https://docs.google.com/document/d/1detdsnIuwmqz6asrIfUWrmxCr56MGschY1yV0UeC_24/edit) for editing secrets in inventory
 
 
 ### Setup
@@ -426,7 +430,7 @@ Clean up the VM after your test.
 
 Inventory secrets are stored encrypted within the git repository using [Ansible
 Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html). In order
-to decrypt them for editing or review, you'll need the Ansible Vault password.
+to decrypt them for editing or review, you'll need [the Ansible Vault password](https://docs.google.com/document/d/1detdsnIuwmqz6asrIfUWrmxCr56MGschY1yV0UeC_24/edit).
 
 
 #### Setup the vault password

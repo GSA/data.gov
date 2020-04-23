@@ -1,9 +1,6 @@
 MOLECULE_SUITES := \
-  software/ckan/catalog/harvest \
-  software/ckan/catalog/www \
   software/ckan/catalog/ckan-app \
   software/ckan/inventory \
-  software/ckan/native-login \
   software/common/php-fixes
 
 ANSIBLE_PLAYBOOKS := \
@@ -12,18 +9,12 @@ ANSIBLE_PLAYBOOKS := \
   catalog-web.yml \
   catalog-worker.yml \
   catalog.yml \
-  ckan-native-login.yml \
   common.yml \
   dashboard-web.yml \
   datagov-web.yml \
-  efk-nginx.yml \
-  efk-stack.yml \
-  elastalert.yml \
-  elasticsearch.yml \
   inventory.yml \
   jenkins.yml \
   jumpbox.yml \
-  kibana.yml \
   newrelic-java.yml \
   newrelic-php.yml \
   pycsw.yml \

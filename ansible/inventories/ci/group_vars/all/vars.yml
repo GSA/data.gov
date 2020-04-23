@@ -1,5 +1,6 @@
 ---
 # catalog
+catalog_ckan_allow_login_routes: true
 catalog_ckan_app_version: master
 catalog_ckan_db_host: "{{ catalog_postgresql_login_host }}"
 catalog_ckan_db_name: ckan
@@ -10,6 +11,7 @@ catalog_ckan_redis_pass: "{{ vault_catalog_ckan_redis_pass }}"
 catalog_ckan_service_url: https://catalog.ci.datagov.us
 catalog_ckan_solr_host: datagov-solr1tf.internal.ci.datagov.us
 catalog_ckan_solr_port: "{{ solr_port }}"
+catalog_ckan_who_ini_secret: "{{ vault_catalog_ckan_who_ini_secret }}"
 catalog_postgresql_login_host: "{{ vault_catalog_postgresql_login_host }}"
 catalog_postgresql_login_password: "{{ vault_catalog_postgresql_login_password }}"
 catalog_postgresql_login_user: "{{ vault_catalog_postgresql_login_user }}"
