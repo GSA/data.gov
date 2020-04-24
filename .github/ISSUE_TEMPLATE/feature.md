@@ -18,6 +18,6 @@ assignees: ''
 ## Measurements/metrics
 - [description of a thing that can be monitored or tested to measure and validate when the outcome has been achieved]
 
-## References/b
+## References/background
 - [notes about desirable attributes or context for the epic]
 - [lnks to previous research, possible routes to take, things that multiple stories will likely need to refer to]
