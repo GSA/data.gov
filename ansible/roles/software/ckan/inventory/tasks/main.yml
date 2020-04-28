@@ -104,7 +104,7 @@
     - etc/ckan/datapusher_settings.py
     - etc/apache2/sites-enabled/ckan.conf
     - etc/apache2/sites-enabled/datapusher.conf
-    - etc/supervisor/gunicorn-web-app.conf.j2
+    - etc/supervisor/conf.d/gunicorn-web-app.conf.j2
   notify: restart apache2
 
 - include_tasks: additional-tasks.yml
