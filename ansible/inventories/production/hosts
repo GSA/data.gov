@@ -2,15 +2,27 @@
 catalog-harvester-v1
 catalog-harvester-v2
 
+[catalog-harvester-main]
+catalog-harvester1p.prod-ocsit.bsp.gsa.gov
+catalogharvester1p.prod-ocsit.bsp.gsa.gov
+
+[catalog-harvester-misc]
+catalog-harvester2p.prod-ocsit.bsp.gsa.gov
+catalogharvester2p.prod-ocsit.bsp.gsa.gov
+
+[catalog-harvester-qa]
+catalog-harvester[3:6]p.prod-ocsit.bsp.gsa.gov
+catalogharvester[3:6]p.prod-ocsit.bsp.gsa.gov
+
 [catalog-harvester-v1]
-catalog-harvester1p.prod-ocsit.bsp.gsa.gov usage=main_worker
-catalog-harvester2p.prod-ocsit.bsp.gsa.gov usage=misc_worker
-catalog-harvester[3:6]p.prod-ocsit.bsp.gsa.gov usage=qa_worker
+catalog-harvester1p.prod-ocsit.bsp.gsa.gov
+catalog-harvester2p.prod-ocsit.bsp.gsa.gov
+catalog-harvester[3:6]p.prod-ocsit.bsp.gsa.gov
 
 [catalog-harvester-v2]
-catalogharvester1p.prod-ocsit.bsp.gsa.gov usage=qa_worker
-catalogharvester2p.prod-ocsit.bsp.gsa.gov usage=qa_worker
-catalogharvester[3:6]p.prod-ocsit.bsp.gsa.gov usage=qa_worker
+catalogharvester1p.prod-ocsit.bsp.gsa.gov
+catalogharvester2p.prod-ocsit.bsp.gsa.gov
+catalogharvester[3:6]p.prod-ocsit.bsp.gsa.gov
 
 [catalog-web:children]
 catalog-web-v1

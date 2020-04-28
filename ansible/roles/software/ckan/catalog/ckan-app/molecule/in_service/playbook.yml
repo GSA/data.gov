@@ -1,0 +1,10 @@
+---
+- name: Converge
+  hosts: all
+  pre_tasks:
+    - name: ensure apache2 is not started
+      service: name=apache2 state=stopped enabled=false
+  roles:
+    - role: ckan-app
+      vars:
+        datagov_in_service: false

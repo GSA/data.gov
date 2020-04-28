@@ -13,6 +13,7 @@ These tasks are performed by an Admin unless noted as an action for the outgoing
   - [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members)
   - [data-gov-ckan-multi-partners](https://github.com/orgs/GSA/teams/data-gov-ckan-multi-partners)
 - [ ] Remove access from [GSA GitHub org](https://github.com/GSA/GitHub-Administration/blob/master/README.md#removing-access-to-the-gsa-organization) (if leaving GSA)
+- [ ] Remove team member from [the `gsa-datagov` organization](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/users) on cloud.gov
 - [ ] Remove team member from [GCP account](https://console.cloud.google.com/iam-admin/iam?project=tts-datagov)
 - [ ] Remove team member from AWS OPP account
 - [ ] Remove team member from [AWS sandbox access](https://github.com/GSA/datagov-infrastructure-live/tree/master/iam#new-users)
