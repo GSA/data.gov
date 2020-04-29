@@ -6,7 +6,12 @@
       - memcached
       - swig
       - xmlsec1
+      - cron
+      - supervisor
   notify: restart apache2
+
+- name: ensure supervisor is started and enabled
+  service: name=supervisor state=started enabled=yes
 
 - name: Create log directory
   file: path={{ inventory_log_dir }} state=directory owner=root group=www-data mode=0750
@@ -89,7 +94,6 @@
   action: copy src={{ item }} dest=/{{ item }} owner=root group=www-data mode=0640
   with_items:
     - etc/ckan/who.ini
-    - etc/ckan/apache.wsgi
   notify: restart apache2
 
 - name: Configure production.ini
@@ -100,6 +104,7 @@
     - etc/ckan/datapusher_settings.py
     - etc/apache2/sites-enabled/ckan.conf
     - etc/apache2/sites-enabled/datapusher.conf
+    - etc/supervisor/conf.d/gunicorn-web-app.conf
   notify: restart apache2
 
 - include_tasks: additional-tasks.yml

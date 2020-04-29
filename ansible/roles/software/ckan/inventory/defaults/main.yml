@@ -17,6 +17,7 @@ inventory_ckan_error_log: "{{ inventory_log_dir }}/ckan.error.log"
 inventory_ckan_access_log: "{{ inventory_log_dir }}/ckan.access.log"
 inventory_datapusher_error_log: "{{ inventory_log_dir }}/datapusher.error.log"
 inventory_datapusher_access_log: "{{ inventory_log_dir }}/datapusher.access.log"
+inventory_gunicorn_error_log: "{{ inventory_log_dir }}/gunicorn.log"
 
 datapusher_pkgs:
   - name: datapusher
