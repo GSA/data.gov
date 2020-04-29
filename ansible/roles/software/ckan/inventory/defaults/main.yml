@@ -10,6 +10,7 @@ ckan_site_domain: https://inventory.data.gov
 ckan_virtual_env: "{{virtual_env}}"
 datapusher_virtual_env: /usr/lib/datapusher
 app_type: inventory
+solr_type: inventory
 
 inventory_app_environment: production
 inventory_log_dir: /var/log/inventory
