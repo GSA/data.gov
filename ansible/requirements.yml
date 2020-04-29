@@ -33,6 +33,8 @@
   version: 2.0.2
 - name: geerlingguy.pip
   version: 1.3.0
+- name: geerlingguy.solr
+  version: 5.1.0
 - name: gsa.ansible-os-ubuntu-14
   src: https://github.com/GSA/ansible-os-ubuntu-14.git
   version: master
