@@ -10,7 +10,7 @@
       - supervisor
   notify: restart apache2
 
--name: ensure supervisor is started and enabled
+- name: ensure supervisor is started and enabled
   service: name=supervisor state=started enabled=yes
 
 - name: Create log directory
