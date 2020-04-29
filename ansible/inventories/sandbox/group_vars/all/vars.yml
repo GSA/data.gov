@@ -3,9 +3,9 @@
 catalog_ckan_allow_login_routes: true
 catalog_ckan_app_version: master
 catalog_ckan_db_host: "{{ catalog_postgresql_login_host }}"
-catalog_ckan_db_name: ckan
-catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
-catalog_ckan_db_user: ckan
+catalog_ckan_db_name: catalog_db
+catalog_ckan_db_pass: "{{ catalog_postgresql_login_password }}"
+catalog_ckan_db_user: "{{ catalog_postgresql_login_user }}"
 catalog_ckan_redis_host: catalog-harvester1tf.internal.sandbox.datagov.us
 catalog_ckan_redis_pass: "{{ vault_catalog_ckan_redis_pass }}"
 catalog_ckan_service_url: https://catalog.sandbox.datagov.us
