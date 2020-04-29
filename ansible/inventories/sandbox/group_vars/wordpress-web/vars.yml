@@ -1,4 +1,8 @@
 ---
+# In sandbox, we use python3 on bionic web hosts
+# https://github.com/GSA/datagov-infrastructure-modules/issues/32
+ansible_python_interpreter: /usr/bin/python3
+
 datagov_service: wordpress-web1tf.internal.sandbox.datagov.us
 
 # WordPress env
