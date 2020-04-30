@@ -40,8 +40,6 @@ Environment | Deployed from      | ISP | Jumpbox
 mgmt        | `master`           | BSP | datagovjump1m.mgmt-ocsit.bsp.gsa.gov
 production  | `master` (manual)  | BSP | datagov-jump2p.prod-ocsit.bsp.gsa.gov
 staging     | `release/*` or `master` (manual)  | BSP | datagov-jump2d.dev-ocsit.bsp.gsa.gov
-bionic      | `develop` (manual) | AWS sandbox | jump.bionic.datagov.us
-ci          | `develop` (manual) | AWS sandbox | jump.ci.datagov.us
 sandbox     | `develop` (manual) | AWS sandbox | jump.sandbox.datagov.us
 local       | feature branches   | laptop  | localhost
 
@@ -93,9 +91,10 @@ Once you're SSH'd into the jumpbox, follow these steps for deploy.
        $ cd ansible
        $ pipenv run ansible-playbook site.yml
 
-*Note:* Until [1552](https://github.com/GSA/datagov-deploy/issues/1552) and [1061](https://github.com/GSA/datagov-deploy/issues/1061) gets resolved, you should not run inventory in sandbox.
+*Note:* Until [1061](https://github.com/GSA/datagov-deploy/issues/1061) is
+resolved, you should not run inventory in sandbox.
 
-    $ ansible-playbook --inventory inventories/ci --limit '!inventory-2-8-web1tf.internal.ci.datagov.us' common.yml dashboard.yml wordpress.yml catalog.yml 
+    $ ansible-playbook --inventory inventories/sandbox common.yml dashboard.yml wordpress.yml catalog.yml
 
 ### Common plays
 
