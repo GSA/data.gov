@@ -81,16 +81,16 @@ jobs:
             TEST_TARGETS=$(make circleci-glob | circleci tests split)
             pipenv run make ${TEST_TARGETS}
 
-  deploy-ci:
+  deploy-sandbox:
     docker:
       - image: circleci/python:3.6
     environment:
-      JENKINS_URL: https://ci.ci.datagov.us
+      JENKINS_URL: https://ci.sandbox.datagov.us
     steps:
       - checkout
       - deploy:
           name: Trigger Jenkins deploy
-          command: bin/jenkins_build deploy-ci-platform
+          command: bin/jenkins_build deploy-sandbox-platform
 
 
 workflows:
@@ -107,7 +107,7 @@ workflows:
                 - master
 
       # TODO re-enable once secrets are updated and IR gives us the go ahead
-      #- deploy-ci:
+      #- deploy-sandbox:
       #    requires:
       #      - lint
       #      - test
