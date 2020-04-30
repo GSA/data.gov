@@ -8,6 +8,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 
 virtualenv_path = '/usr/lib/ckan'
+readonly_url = 'https://readonly.ckan'
 
 
 def test_var_lib_ckan(host):
@@ -107,9 +108,10 @@ def test_apache_site(host):
     assert f.mode == 0o644
     assert f.contains('ErrorLog /var/log/ckan/ckan.error.log')
 
-    # In default configuration, there should be no redirects between readwrite
-    # and readonly instances.
-    assert not f.contains('RewriteRule.*/user/login'), \
-        'Expected no rewrite rule for login URLs'
-    assert not f.contains('RewriteCond.*!auth_tkt'), \
-        'Expected no rewrite condition for unauthenticated requests'
+    # In readwrite configuration, redirect unauthenticated requests to the
+    # readonly url.
+    assert f.contains('RewriteRule.*%s' % readonly_url)
+    assert not f.contains('RewriteCond.*!/user/login'), \
+        'Expected rewrite condition for login URLs'
+    assert f.contains('RewriteCond.*!auth_tkt'), \
+        'Expected rewrite condition for unauthenticated requests'
