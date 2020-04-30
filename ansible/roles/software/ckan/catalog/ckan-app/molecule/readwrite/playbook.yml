@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: ckan-app
+      catalog_ckan_readwrite_configuration: readwrite
+      url_readonly: https://readonly.ckan
