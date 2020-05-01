@@ -24,10 +24,8 @@ catalog_db_pass: "{{ vault_catalog_db_pass }}"
 catalog_db_name: "{{ vault_catalog_db_name }}"
 
 # other
-catalog_ckan_redis_host: catalog-harvester1d.dev-ocsit.bsp.gsa.gov
 catalog_ckan_solr_host: datagov-solrm1d.dev-ocsit.bsp.gsa.gov
 env: local
-redis_password: "{{ vault_redis_pass }}"
 
 # max login
 saml2_site_url: https://admin-catalog-datagov.dev-ocsit.bsp.gsa.gov/

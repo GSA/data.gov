@@ -14,9 +14,7 @@ current_source_symlink: /usr/lib/ckan
 project_index_path: /usr/lib/ckan
 
 # other
-catalog_ckan_redis_host: "localhost"
 env: local
-redis_password: "{{ vault_redis_pass }}"
 
 # max login
 saml2_site_url: https://admin-catalog.data.gov/

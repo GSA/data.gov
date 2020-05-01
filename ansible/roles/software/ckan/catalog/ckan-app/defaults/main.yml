@@ -72,4 +72,3 @@ app_type: catalog
 who_secure: "False"
 token_dat: placeholder-token
 catalog_ckan_redis_host: localhost
-redis_password: redis

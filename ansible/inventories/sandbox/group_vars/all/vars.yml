@@ -6,7 +6,7 @@ catalog_ckan_db_name: catalog_db
 catalog_ckan_db_pass: "{{ catalog_postgresql_login_password }}"
 catalog_ckan_db_user: "{{ catalog_postgresql_login_user }}"
 catalog_ckan_redis_host: catalog-harvester1tf.internal.sandbox.datagov.us
-catalog_ckan_redis_pass: "{{ vault_catalog_ckan_redis_pass }}"
+catalog_ckan_redis_password: "{{ redis_password }}"
 catalog_ckan_service_url: https://catalog.sandbox.datagov.us
 catalog_ckan_solr_host: datagov-solr1tf.internal.sandbox.datagov.us
 catalog_ckan_solr_port: "{{ solr_port }}"
@@ -160,6 +160,10 @@ pycsw_db_host: "{{ catalog_pycsw_db_host }}"
 pycsw_db_name: "{{ catalog_pycsw_db_name }}"
 pycsw_db_password: "{{ catalog_pycsw_db_pass }}"
 pycsw_db_user: "{{ catalog_pycsw_db_user }}"
+
+
+# Redis
+redis_password: "{{ vault_redis_password }}"
 
 
 # public urls
