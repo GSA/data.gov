@@ -8,6 +8,7 @@
 ################
 - import_playbook: jumpbox.yml
 - import_playbook: solr.yml
+- import_playbook: redis.yml
 
 
 # Application plays
