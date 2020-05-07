@@ -13,6 +13,8 @@
 [tag_group_jumpbox]
 [tag_group_kibana]
 [tag_group_solr]
+[tag_group_v1]
+[tag_group_v2]
 [tag_group_wordpress_web]
 
 
@@ -62,6 +64,12 @@ tag_group_catalog_harvester
 
 [solr:children]
 tag_group_solr
+
+[v1:children]
+tag_group_v1
+
+[v2:children]
+tag_group_v2
 
 [wordpress-web:children]
 tag_group_wordpress_web
