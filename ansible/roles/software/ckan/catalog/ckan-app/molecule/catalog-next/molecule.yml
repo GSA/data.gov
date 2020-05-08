@@ -29,6 +29,8 @@ provisioner:
         catalog_next: true
         app_repo_branch: catalog-2.8-dev
         app_repo: https://github.com/GSA/catalog.data.gov
+        catalog_ckan_plugins_default: []
+
   lint:
     name: ansible-lint
   playbooks:

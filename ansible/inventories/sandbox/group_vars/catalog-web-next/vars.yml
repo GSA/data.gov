@@ -13,3 +13,6 @@ app_repo: https://github.com/GSA/catalog.data.gov
 postgresql_login_host: "{{ catalog_next_postgresql_login_host }}"
 postgresql_login_password: "{{ catalog_next_postgresql_login_password }}"
 postgresql_login_user: "{{ catalog_next_postgresql_login_user }}"
+
+catalog_ckan_plugins_default: []
+

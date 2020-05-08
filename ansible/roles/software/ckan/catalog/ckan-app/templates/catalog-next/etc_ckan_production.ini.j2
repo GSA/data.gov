@@ -21,15 +21,6 @@ use = egg:Paste#http
 host = 0.0.0.0
 port = 5000
 
-[app:celery]
-REDIS_HOST = {{ catalog_ckan_redis_host }}
-BROKER_BACKEND = redis
-BROKER_HOST = redis://:{{ redis_password }}@%(REDIS_HOST)s/1
-CELERY_RESULT_BACKEND = redis
-REDIS_PORT = 6379
-REDIS_DB = 0
-REDIS_CONNECT_RETRY = True
-
 [app:main]
 use = egg:ckan
 full_stack = true
@@ -71,12 +62,6 @@ db_server = {{ catalog_ckan_db_host }}
 db_database = {{ catalog_db_name }}
 sqlalchemy.url = postgresql://%(db_user)s:%(db_pass)s@%(db_server)s/%(db_database)s
 
-#ckan.datastore.write_url = postgresql://ckan:pass@localhost/datastore
-#ckan.datastore.read_url = postgresql://datastore:pass@localhost/datastore
-
-# PostgreSQL' full-text search parameters
-ckan.datastore.default_fts_lang = english
-ckan.datastore.default_fts_index_method = gist
 
 ## Site Settings
 
@@ -173,13 +158,6 @@ ckan.storage_path = /var/lib/ckan
 #ckan.max_resource_size = 10
 #ckan.max_image_size = 2
 
-## Datapusher settings
-
-# Make sure you have set up the DataStore
-
-#ckan.datapusher.formats = csv xls xlsx tsv application/csv application/vnd.ms-excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-#ckan.datapusher.url = http://127.0.0.1:8800/
-
 # Resource Proxy settings
 # Preview size limit, default: 1MB
 ckan.resource_proxy.max_file_size = 1024 * 1024 * 50
@@ -205,37 +183,6 @@ smtp.mail_from = no-reply@data.gov
 
 ckan.tracking_enabled = False
 set debug = False
-ckan.harvest.mq.type = redis
-ckan.harvest.mq.hostname = {{ catalog_ckan_redis_host }}
-ckan.harvest.mq.password = {{ redis_password }}
-ckanext.harvest.email = on
-ckan.resource_proxy_enabled = 1
-ckan.spatial.validator.profiles = iso19139ngdc
-ckanext.spatial.search_backend = solr
-ckanext.spatial.common_map.type = custom
-ckanext.spatial.common_map.custom.url = //{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
-ckanext.spatial.common_map.subdomains = abc
-ckanext.spatial.common_map.attribution = Map tiles &amp; Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY SA</a>.
-ckanext.spatial.harvest.xslt_html_content = ckanext.datagovtheme:templates/xslt/iso-details.xslt
-ckanext.spatial.harvest.xslt_html_content_original = ckanext.datagovtheme:templates/xslt/esri-iso-fgdc-details.xslt
-ckanext.geodatagov.fgdc2iso_service = http://localhost:8080/fgdc2iso/
-ckanext.geodatagov.spatial_preview.url = https://climateathome.org/viewer/
-ckanext.geodatagov.spatial_preview.formats = wms kml kmz
-ckanext.geodatagov.dynamic_menu.url_default = https://www.data.gov/app/plugins/datagov-custom/wp_download_links.php
-ckanext.geodatagov.dynamic_menu.url = https://www.data.gov/app/plugins/datagov-custom/wp_download_links.php
-ckanext.geodatagov.bureau_csv.url_default = https://project-open-data.cio.gov/data/omb_bureau_codes.csv
-ckanext.geodatagov.bureau_csv.url = https://project-open-data.cio.gov/data/omb_bureau_codes.csv
-ckanext.geodatagov.doi.url = https://data.doi.gov/
-
-ckanext.geodatagov.aws_use_ami_role = true
-ckanext.geodatagov.aws_bucket_name = {{ catalog_bucket_name }}
-ckanext.geodatagov.aws_access_key_id = _placeholder
-ckanext.geodatagov.aws_secret_access_key = _placeholder
-
-ckanext.geodatagov.metrics_csv.aws_storage_path = gsa/catalog/metrics/
-ckanext.geodatagov.s3sitemap.aws_storage_path = gsa/catalog/sitemap/
-ckanext.geodatagov.jsonlexport.aws_storage_path = gsa/catalog/jsonl/
-ckanext.geodatagov.s3sitemap.aws_s3_url = https://filestore.data.gov/
 
 ## SAML2 Settings
 saml2.site_url = {{ saml2_site_url }}
@@ -254,13 +201,6 @@ saml2.organization_mapping =
 
 saml2.max_redirect_slo =
 saml2.max_security_level = https://max.gov/icam/2015/10/securityLevels/securePlus2
-
-googleanalytics.ids = UA-42145528-2 UA-17367410-17
-googleanalytics.id = UA-42145528-2
-googleanalytics.account = GSA Data.gov
-googleanalytics.token.filepath = /etc/ckan/token.dat
-ga-report.period = monthly
-ga-report.bounce_url = /
 
 ## Logging configuration
 [loggers]
