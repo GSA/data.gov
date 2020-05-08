@@ -64,7 +64,7 @@
       - "app_repo = {{ app_repo }}"
       - "app_source_path = {{ app_source_path }}"
       - "app_repo_branch = {{ app_repo_branch }}"
-      
+
 - name: Clone CKAN app
   git:
     repo: '{{ app_repo }}'
@@ -107,10 +107,10 @@
 - name: Set prefix for accessing catalog-next configuration files
   set_fact:
     prefix: "{{ 'catalog-next/' if (catalog_next | default(false)) else '' }}"
-    
+
 # Configure CKAN
 - name: Configure production.ini
-  template: src="{{prefix}}etc_ckan_production.ini.j2" dest=/etc/ckan/production.ini owner=root group=www-data mode=0640
+  template: src="{{ prefix }}etc_ckan_production.ini.j2" dest=/etc/ckan/production.ini owner=root group=www-data mode=0640
   notify:
     - reload apache2
     - reload supervisor
