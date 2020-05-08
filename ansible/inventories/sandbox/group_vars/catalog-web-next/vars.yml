@@ -3,6 +3,13 @@
 # https://github.com/GSA/datagov-infrastructure-modules/issues/32
 ansible_python_interpreter: /usr/bin/python3
 
+catalog_next: true
+
+catalog_ckan_service_url: https://catalog-next.sandbox.datagov.us
+
+catalog_ckan_app_version: master
+app_repo: https://github.com/GSA/catalog.data.gov
+
 postgresql_login_host: "{{ catalog_next_postgresql_login_host }}"
 postgresql_login_password: "{{ catalog_next_postgresql_login_password }}"
 postgresql_login_user: "{{ catalog_next_postgresql_login_user }}"
