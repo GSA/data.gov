@@ -15,7 +15,7 @@ def test_production_ini(host):
     assert production_ini.group == 'www-data'
     assert production_ini.mode == 0o640
 
-    assert production_ini.contains('ckan.plugins =.*datajson')
+    assert production_ini.contains('ckan.plugins =.*datajson_harvest')
     assert production_ini.contains('ckan.plugins =.*saml2')
 
 
