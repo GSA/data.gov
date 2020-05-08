@@ -1,7 +1,9 @@
 # Define ec2 tag groups. There might not be any actual hosts in every group.
 # See github.com/GSA/datagov-infrastructure-modules and github.com/GSA/datagov-infrastructure-live
 [tag_group_catalog_harvester]
+[tag_group_catalog_harvester_next]
 [tag_group_catalog_web]
+[tag_group_catalog_web_next]
 [tag_group_dashboard_web]
 [tag_group_efk_nginx]
 [tag_group_elasticsearch]
@@ -11,14 +13,24 @@
 [tag_group_jumpbox]
 [tag_group_kibana]
 [tag_group_solr]
+[tag_group_v1]
+[tag_group_v2]
 [tag_group_wordpress_web]
 
 
 [catalog-harvester:children]
 tag_group_catalog_harvester
+tag_group_catalog_harvester_next
+
+[catalog-harvester-next:children]
+tag_group_catalog_harvester_next
 
 [catalog-web:children]
 tag_group_catalog_web
+tag_group_catalog_web_next
+
+[catalog-web-next:children]
+tag_group_catalog_web_next
 
 [dashboard-web:children]
 tag_group_dashboard_web
@@ -52,6 +64,12 @@ tag_group_catalog_harvester
 
 [solr:children]
 tag_group_solr
+
+[v1:children]
+tag_group_v1
+
+[v2:children]
+tag_group_v2
 
 [wordpress-web:children]
 tag_group_wordpress_web
