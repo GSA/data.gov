@@ -78,6 +78,16 @@ default_tls_host_certificate: |-
 
 
 jenkins_admin_password: "{{ vault_jenkins_admin_password }}"
+jenkins_job_authentication_token: "{{ vault_jenkins_job_authentication_token }}"
+jenkins_jobs:
+  - name: deploy-ci-platform
+    git_url: https://github.com/gsa/datagov-deploy.git
+    git_ref: refs/heads/develop
+  - name: deploy-ci-catalog-app
+    git_url: https://github.com/gsa/catalog.data.gov.git
+
+jenkins_config: "{{ lookup('template', 'jenkins_config_sandbox.yml.j2') }}"
+
 jenkins_home: /data/jenkins
 jenkins_hostname: jenkins1tf.internal.sandbox.datagov.us
 jenkins_tls_key: "{{ vault_jenkins_tls_key }}"
