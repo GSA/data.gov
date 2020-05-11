@@ -497,17 +497,44 @@ configuration in [code](./ansible/templates/jenkins_config_sandbox.yml.j2).
 After running the `jenkins.yml` playbook, there are a few manual steps that need
 to be done.
 
-1. Log into the Jenkins instance using `jenkins_admin_username` (default:
-   admin) and `jenkins_admin_password` (see vault).
-1. Add [credentials](https://ci.sandbox.datagov.us/credentials/).
-   | Id                   | Type | Description |
-   | --                   | ---- | ----------- |
-   | ansible-vault-secret | file | File containing the password to the Ansible vault (ansible-secret-v2.txt). |
-   | datagov-sandbox      | file | [Root SSH private key](https://drive.google.com/drive/folders/10-hk-IqA0jQAW6727pKmW46EF-nHiNLr) file for the environment. |
-   | github-datagov-bot   | text | Personal [access token](https://github.com/settings/tokens) from the datagov-bot GitHub user. |
+1. Log into the new instance
+1. Configure credentials
+1. Add a CI bot user and API token
 
-   _Note: evaluate if we want to move the credential creation to
-   configuration-as-code configuraiton._
+
+#### Log into Jenkins
+
+[Log into](https://ci.sandbox.datagov.us/) the Jenkins instance using
+`jenkins_admin_username` (default: admin) and `jenkins_admin_password` (see
+vault).
+
+
+#### Configure credentials
+
+Add [credentials](https://ci.sandbox.datagov.us/credentials/) to manage secrets.
+
+| Id                   | Type | Description |
+| --                   | ---- | ----------- |
+| ansible-vault-secret | file | File containing the password to the Ansible vault (ansible-secret-v2.txt). |
+| datagov-sandbox      | file | [Root SSH private key](https://drive.google.com/drive/folders/10-hk-IqA0jQAW6727pKmW46EF-nHiNLr) file for the environment. |
+| github-datagov-bot   | text | Personal [access token](https://github.com/settings/tokens) from the datagov-bot GitHub user. |
+
+_Note: evaluate if we want to move the credential creation to
+configuration-as-code configuraiton._
+
+
+#### CI user
+
+Add a [CI user](https://ci.sandbox.datagov.us/securityRealm/). You can set
+a random password. You'll need this password to log in as the new CI user
+(Jenkins does not allow creating the API token as the admin user, you'll have to
+log in as the CI user itself).
+
+[Create an API key](https://ci.sandbox.datagov.us/user/ci/configure) which
+you'll use below to configure CircleCI.
+
+[Assign the CI user](https://ci.sandbox.datagov.us/role-strategy/assign-roles)
+to the `build-manager` so that the user is authorized to trigger a build.
 
 
 ### CircleCI Setup
