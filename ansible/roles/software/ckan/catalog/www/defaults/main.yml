@@ -1,7 +1,0 @@
----
-datagov_team_email: team@example.com
-
-catalog_log_dir: /var/log/ckan
-catalog_ckan_error_log: "{{ catalog_log_dir }}/ckan.error.log"
-catalog_ckan_access_log: "{{ catalog_log_dir }}/ckan.access.log"
-catalog_ckan_wsgi_processes: 2

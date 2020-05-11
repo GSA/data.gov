@@ -1,4 +1,0 @@
----
-catalog_harvester_fgdc2iso_apt_packages:
-  - default-jdk
-  - tomcat8

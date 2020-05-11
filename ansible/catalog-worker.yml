@@ -1,6 +1,6 @@
 ---
 - name: Catalog worker (harvester) stack
-  hosts: catalog-harvester,!v2
+  hosts: catalog-harvester
   vars:
       app_type: catalog
 
@@ -13,10 +13,8 @@
       tags:
         - app-deploy
 
-    - role: software/ckan/catalog/harvest
-
 - name: logrotate configuration
-  hosts: catalog-harvester,!v2
+  hosts: catalog-harvester
   roles:
     - role: nickhammond.logrotate
       logrotate_scripts:
