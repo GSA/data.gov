@@ -15,10 +15,17 @@ jenkins:
       allowAnonymousRead: false
 
 unclassified:
+  gitHubPluginConfig:
+    configs:
+      - credentialsId: "github-datagov-bot"
+        manageHooks: false
+        name: "GitHub"
+    hookUrl: "https://ci.sandbox.datagov.us/github-webhook/"
   timestamperConfig:
     allPipelines: true
 
 # https://plugins.jenkins.io/job-dsl/
+# https://ci.sandbox.datagov.us/plugin/job-dsl/api-viewer/index.html
 jobs:
 {% for job in jenkins_jobs %}
   - script: |
@@ -32,6 +39,7 @@ jobs:
             artifactNumToKeepStr('')
           } } }
           disableConcurrentBuilds()
+          githubProjectUrl('{{ job.git_url }}')
           quietPeriod(120)
         }
         definition {
