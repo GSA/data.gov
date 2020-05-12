@@ -107,6 +107,11 @@
     - etc/supervisor/conf.d/gunicorn-web-app.conf
   notify: restart apache2
 
+- name: load gunicorn
+  supervisorctl:
+    name: gunicorn-web-app
+    state: present
+
 - include_tasks: additional-tasks.yml
   vars:
     virtualenv: "{{ project_source_new_code_path }}"
