@@ -90,7 +90,7 @@ jobs:
       - checkout
       - deploy:
           name: Trigger Jenkins deploy
-          command: bin/jenkins_build deploy-sandbox-platform
+          command: bin/jenkins_build deploy-ci-platform
 
 
 workflows:
@@ -105,13 +105,10 @@ workflows:
             branches:
               only:
                 - master
-
-      # TODO re-enable once secrets are updated and IR gives us the go ahead
-      #- deploy-sandbox:
-      #    requires:
-      #      - lint
-      #      - test
-      #      - snyk-test
-      #    filters:
-      #      branches:
-      #        only: develop
+      - deploy-sandbox:
+          requires:
+            - lint
+            - test
+          filters:
+            branches:
+              only: develop
