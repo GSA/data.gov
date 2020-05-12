@@ -8,8 +8,6 @@
 jenkins:
   systemMessage: >
     Data.gov sandbox deployment service.
-  location:
-    adminAddress: "{{ datagov_team_email }}"
   authorizationStrategy:
     roleBased:
       roles:
@@ -67,7 +65,10 @@ unclassified:
       - credentialsId: "github-datagov-bot"
         manageHooks: false
         name: "GitHub"
-    hookUrl: "https://ci.sandbox.datagov.us/github-webhook/"
+    hookUrl: "https://{{ jenkins_host }}/github-webhook/"
+  location:
+    adminAddress: "{{ datagov_team_email }}"
+    url: "https://{{ jenkins_host }}/"
   timestamperConfig:
     allPipelines: true
 
