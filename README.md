@@ -480,14 +480,64 @@ You can configure git to automatically decrypt Vault files for reviewing diffs.
 _Note: this is a work in progress._
 
 Currently, deployment to BSP environments is done manually by running Ansible
-playbooks from the jumpbox hosts. We are moving to automated continuous deployment via Jenkins CI server.
+playbooks from the jumpbox hosts, within the BSP firewall. We are moving to
+automated continuous deployment via Jenkins CI server.
 
 We still use CircleCI for majority of CI needs. Any tasks requiring access to
 the GSA network (like deployment) are handed over to Jenkins (via the Jenkins
 API).
 
 
-### Setup
+### Jenkins configuration
+
+Using the
+[configuration-as-code](https://plugins.jenkins.io/configuration-as-code/)
+plugin, we are able to define the Jenkins configuration and its job
+configuration in [code](./ansible/templates/jenkins_config_sandbox.yml.j2).
+After running the `jenkins.yml` playbook, there are a few manual steps that need
+to be done.
+
+1. Log into the new instance
+1. Configure credentials
+1. Add a CI bot user and API token
+
+
+#### Log into Jenkins
+
+[Log into](https://ci.sandbox.datagov.us/) the Jenkins instance using
+`jenkins_admin_username` (default: admin) and `jenkins_admin_password` (see
+vault).
+
+
+#### Configure credentials
+
+Add [credentials](https://ci.sandbox.datagov.us/credentials/) to manage secrets.
+
+| Id                   | Type | Description |
+| --                   | ---- | ----------- |
+| ansible-vault-secret | file | File containing the password to the Ansible vault (ansible-secret-v2.txt). |
+| datagov-sandbox      | file | [Root SSH private key](https://drive.google.com/drive/folders/10-hk-IqA0jQAW6727pKmW46EF-nHiNLr) file for the environment. |
+| github-datagov-bot   | text | Personal [access token](https://github.com/settings/tokens) from the datagov-bot GitHub user. |
+
+_Note: evaluate if we want to move the credential creation to
+configuration-as-code configuraiton._
+
+
+#### CI user
+
+Add a [CI user](https://ci.sandbox.datagov.us/securityRealm/). You can set
+a random password. You'll need this password to log in as the new CI user
+(Jenkins does not allow creating the API token as the admin user, you'll have to
+log in as the CI user itself).
+
+[Create an API key](https://ci.sandbox.datagov.us/user/ci/configure) which
+you'll use below to configure CircleCI.
+
+[Assign the CI user](https://ci.sandbox.datagov.us/role-strategy/assign-roles)
+to the `build-manager` so that the user is authorized to trigger a build.
+
+
+### CircleCI Setup
 
 Add the following environment variables to CI configuration. These are required
 for the `bin/jenkins_build` script. Secret variables should be entered in the
@@ -496,7 +546,8 @@ for the `bin/jenkins_build` script. Secret variables should be entered in the
 Variable | Description | Secret
 `JENKINS_USER` | The Jenkins user with access to the API. | Y
 `JENKINS_API_TOKEN` | The API token for the Jenkins user. | Y
-`JENKINS_JOB_TOKEN` | The job token specified in the job configuration. | Y
+`JENKINS_JOB_TOKEN` | The job token specified in the job configuration (see
+`jenkins_job_authentication_token`). | Y
 `JENKINS_URL` | The URL to the Jenkins instance. | N
 
 In the CI job configuration (`.circleci/config.yml`), run the `bin/jenkins_build

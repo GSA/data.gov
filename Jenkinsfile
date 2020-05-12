@@ -33,4 +33,9 @@ pipeline {
       }
     }
   }
+  post {
+    failure {
+      step([$class: 'GitHubIssueNotifier'])
+    }
+  }
 }
