@@ -1,6 +1,6 @@
 ---
 - name: Catalog web stack
-  hosts: catalog-web:!catalog-web-next
+  hosts: catalog-web
   serial: 1
   vars:
       app_type: catalog
