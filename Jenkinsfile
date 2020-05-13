@@ -35,7 +35,7 @@ pipeline {
   }
   post {
     failure {
-      step([$class: 'GitHubIssueNotifier'])
+      step([$class: 'GitHubIssueNotifier', issueAppend: true])
     }
   }
 }
