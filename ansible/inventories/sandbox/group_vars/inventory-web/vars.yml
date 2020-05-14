@@ -25,8 +25,8 @@ inventory_datastore_ro_pass: "{{ vault_inventory_datastore_ro_db_pass }}"
 
 # other
 inventory_ckan_solr_host: datagov-solr1tf.internal.sandbox.datagov.us
-inventory_ckan_bucket_name: unset
-inventory_ckan_bucket_prefix: unset
+inventory_ckan_bucket_name: "{{ vault_bucket_name }}"
+inventory_ckan_bucket_prefix: "{{ vault_bucket_prefix }}"
 ckan_site_domain: https://inventory.sandbox.datagov.us
 
 postgresql_login_host: "{{ vault_postgresql_login_host }}"
