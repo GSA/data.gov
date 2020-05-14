@@ -1,0 +1,112 @@
+---
+# Configuration-as-code plugin https://plugins.jenkins.io/configuration-as-code/
+
+# Use https://ci.sandbox.datagov.us/configuration-as-code/ to export the
+# existing configuration for copy/pasting snippets. The plugin does not
+# recommend copying the entire configuration as not all options are compatible
+# with the configuration-as-code plugin.
+jenkins:
+  systemMessage: >
+    Data.gov sandbox deployment service.
+  authorizationStrategy:
+    roleBased:
+      roles:
+        global:
+          - name: admin
+            pattern: .*
+            assignments:
+              - admin
+            permissions:
+              - Agent/Build
+              - Agent/Configure
+              - Agent/Connect
+              - Agent/Create
+              - Agent/Delete
+              - Agent/Disconnect
+              - Agent/Provision
+              - Credentials/Create
+              - Credentials/Delete
+              - Credentials/ManageDomains
+              - Credentials/Update
+              - Credentials/View
+              - Job/Build
+              - Job/Cancel
+              - Job/Configure
+              - Job/Create
+              - Job/Delete
+              - Job/Discover
+              - Job/Move
+              - Job/Read
+              - Job/Workspace
+              - Lockable Resources/Reserve
+              - Lockable Resources/Unlock
+              - Lockable Resources/View
+              - Overall/Administer
+              - Overall/Read
+              - Run/Delete
+              - Run/Replay
+              - Run/Update
+              - SCM/Tag
+              - View/Configure
+              - View/Create
+              - View/Delete
+              - View/Read
+          - name: build-manager
+            pattern: .*
+            assignments:
+              - ci
+            permissions:
+              - Job/Build
+              - Job/Read
+              - Overall/Read
+        items: []
+
+unclassified:
+  gitHubPluginConfig:
+    configs:
+      - credentialsId: "github-datagov-bot"
+        manageHooks: false
+        name: "GitHub"
+    hookUrl: "https://{{ jenkins_host }}/github-webhook/"
+  location:
+    adminAddress: "{{ datagov_team_email }}"
+    url: "https://{{ jenkins_host }}/"
+  timestamperConfig:
+    allPipelines: true
+
+# https://plugins.jenkins.io/job-dsl/
+# https://ci.sandbox.datagov.us/plugin/job-dsl/api-viewer/index.html
+jobs:
+{% for job in jenkins_jobs %}
+  - script: |
+      pipelineJob('{{ job.name }}') {
+        authenticationToken('{{ job.authentication_token | default(jenkins_job_authentication_token) }}')
+        properties {
+          buildDiscarder { strategy { logRotator {
+            daysToKeepStr('90')
+            numToKeepStr('')
+            artifactDaysToKeepStr('')
+            artifactNumToKeepStr('')
+          } } }
+          disableConcurrentBuilds()
+          githubProjectUrl('{{ job.github_project_url | default("https://github.com/GSA/datagov-deploy") }}')
+          quietPeriod(120)
+        }
+        definition {
+          cpsScm {
+            scm {
+              git {
+                extensions {
+                  localBranch()
+                }
+                remote {
+                  url('{{ job.git_url }}')
+                }
+                branch('{{ job.git_ref | default('refs/heads/master') }}')
+              }
+            }
+            lightweight()
+          }
+        }
+      }
+{% endfor %}

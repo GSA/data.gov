@@ -2,14 +2,15 @@
 # catalog
 catalog_ckan_app_version: master
 catalog_ckan_db_host: "{{ catalog_postgresql_login_host }}"
-catalog_ckan_db_name: ckan
-catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
-catalog_ckan_db_user: ckan
+catalog_ckan_db_name: catalog_db
+catalog_ckan_db_pass: "{{ catalog_postgresql_login_password }}"
+catalog_ckan_db_user: "{{ catalog_postgresql_login_user }}"
 catalog_ckan_redis_host: catalog-harvester1tf.internal.sandbox.datagov.us
 catalog_ckan_redis_pass: "{{ vault_catalog_ckan_redis_pass }}"
 catalog_ckan_service_url: https://catalog.sandbox.datagov.us
 catalog_ckan_solr_host: datagov-solr1tf.internal.sandbox.datagov.us
 catalog_ckan_solr_port: "{{ solr_port }}"
+catalog_ckan_who_ini_secret: "{{ vault_catalog_ckan_who_ini_secret }}"
 catalog_postgresql_login_host: "{{ vault_catalog_postgresql_login_host }}"
 catalog_postgresql_login_password: "{{ vault_catalog_postgresql_login_password }}"
 catalog_postgresql_login_user: "{{ vault_catalog_postgresql_login_user }}"
@@ -21,6 +22,10 @@ catalog_db_pass: "{{ catalog_ckan_db_pass }}"
 catalog_db_name: "{{ catalog_ckan_db_name }}"
 catalog_db_user: "{{ catalog_ckan_db_user }}"
 
+# catalog-next
+catalog_next_postgresql_login_host: "{{ vault_catalog_next_postgresql_login_host }}"
+catalog_next_postgresql_login_password: "{{ vault_catalog_next_postgresql_login_password }}"
+catalog_next_postgresql_login_user: "{{ vault_catalog_next_postgresql_login_user }}"
 
 # common
 common_newrelic_enabled: false
@@ -72,6 +77,32 @@ default_tls_host_certificate: |-
 
 
 jenkins_admin_password: "{{ vault_jenkins_admin_password }}"
+jenkins_job_authentication_token: "{{ vault_jenkins_job_authentication_token }}"
+jenkins_jobs:
+  - name: deploy-ci-platform
+    git_url: https://github.com/gsa/datagov-deploy.git
+    git_ref: refs/heads/develop
+  - name: deploy-ci-app-catalog
+    git_url: https://github.com/gsa/catalog-app.git
+  - name: deploy-ci-app-catalog-next
+    git_url: https://github.com/gsa/catalog.data.gov.git
+    github_project_url: https://github.com/gsa/datagov-ckan-multi
+  - name: deploy-ci-app-dashboard
+    git_url: https://github.com/gsa/project-open-data-dashboard.git
+  - name: deploy-ci-app-inventory
+    git_url: https://github.com/gsa/inventory-app.git
+  - name: deploy-ci-app-inventory-next
+    git_url: https://github.com/gsa/inventory-app.git
+    git_ref: refs/heads/inventory_ckan_2.8
+  - name: deploy-ci-app-wordpress
+    git_url: https://github.com/gsa/datagov-wp-boilerplate.git
+    # TODO delete this once PR is merged
+  - name: deploy-ci-catalog-app
+    git_url: https://github.com/gsa/catalog.data.gov.git
+    github_project_url: https://github.com/gsa/datagov-ckan-multi
+
+jenkins_config: "{{ lookup('template', 'jenkins_config_sandbox.yml.j2') }}"
+
 jenkins_home: /data/jenkins
 jenkins_hostname: jenkins1tf.internal.sandbox.datagov.us
 jenkins_tls_key: "{{ vault_jenkins_tls_key }}"

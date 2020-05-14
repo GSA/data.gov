@@ -52,7 +52,7 @@ function build_job () {
   local job_name
   job_name=$1
 
-  jenkins_curl "/job/${job_name}/build?token=$JENKINS_JOB_TOKEN" -X POST -H "$(crumb_header)"
+  jenkins_curl "/job/${job_name}/build?token=$JENKINS_JOB_TOKEN" -X POST -H "$(crumb_header)" --data "cause=${CIRCLE_BUILD_URL:-build script}"
   echo "$job_name" started.
 }
 

@@ -1,6 +1,6 @@
 ---
 - name: Catalog web stack
-  hosts: catalog-web
+  hosts: catalog-web:!catalog-web-next
   serial: 1
   vars:
       app_type: catalog
@@ -48,7 +48,7 @@
 
 
 - name: logrotate configuration
-  hosts: catalog-web
+  hosts: catalog-web:!catalog-web-next
   roles:
     - role: nickhammond.logrotate
       logrotate_scripts:
@@ -65,14 +65,14 @@
 
 
 - name: NewRelic
-  hosts: catalog-web,!catalog-admin
+  hosts: catalog-web,!catalog-admin,!catalog-web-next
   vars:
     newrelic_app_name: catalog
   roles:
     - monitoring/newrelic/python-agent-ansible
 
 - name: NewRelic
-  hosts: catalog-admin
+  hosts: catalog-admin:!catalog-web-next
   vars:
     newrelic_app_name: catalog-admin
   roles:
@@ -80,7 +80,7 @@
 
 
 - name: Service-level smoke tests
-  hosts: catalog-web
+  hosts: catalog-web:!catalog-web-next
   tasks:
     - name: flush handlers
       meta: flush_handlers
@@ -96,3 +96,4 @@
         validate_certs: false
       run_once: true
       delegate_to: localhost
+      become: false

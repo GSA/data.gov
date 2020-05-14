@@ -29,7 +29,6 @@ catalog_ckan_plugins_default:
   - spatial_harvest_metadata_api
   - datagovtheme
   - datajson_harvest
-  - datajson
   - archiver
   - qa
   - googleanalyticsbasic

@@ -8,7 +8,7 @@ pipeline {
         }
       }
     }
-    stage('ping:ci') {
+    stage('ping:sandbox') {
       when { anyOf { branch 'develop' } }
       environment {
         ANSIBLE_VAULT_FILE = credentials('ansible-vault-secret')
@@ -16,11 +16,11 @@ pipeline {
       }
       steps {
         ansiColor('xterm') {
-          sh 'docker run --rm -v $SSH_KEY_FILE:$SSH_KEY_FILE -v $ANSIBLE_VAULT_FILE:$ANSIBLE_VAULT_FILE -u $(id -u) datagov/datagov-deploy:latest pipenv run ansible --key-file=$SSH_KEY_FILE --vault-password-file=$ANSIBLE_VAULT_FILE --inventory inventories/ci -m ping all'
+          sh 'docker run --rm -v $SSH_KEY_FILE:$SSH_KEY_FILE -v $ANSIBLE_VAULT_FILE:$ANSIBLE_VAULT_FILE -u $(id -u) datagov/datagov-deploy:latest pipenv run ansible --key-file=$SSH_KEY_FILE --vault-password-file=$ANSIBLE_VAULT_FILE --inventory inventories/sandbox -m ping all'
         }
       }
     }
-    stage('deploy:ci') {
+    stage('deploy:sandbox') {
       when { anyOf { branch 'develop' } }
       environment {
         ANSIBLE_VAULT_FILE = credentials('ansible-vault-secret')
@@ -28,9 +28,14 @@ pipeline {
       }
       steps {
         ansiColor('xterm') {
-          sh 'docker run --rm -v $SSH_KEY_FILE:$SSH_KEY_FILE -v $ANSIBLE_VAULT_FILE:$ANSIBLE_VAULT_FILE -u $(id -u) datagov/datagov-deploy:latest pipenv run ansible-playbook --key-file=$SSH_KEY_FILE --vault-password-file=$ANSIBLE_VAULT_FILE --inventory inventories/ci site.yml --skip-tags database'
+          sh 'docker run --rm -v $SSH_KEY_FILE:$SSH_KEY_FILE -v $ANSIBLE_VAULT_FILE:$ANSIBLE_VAULT_FILE -u $(id -u) datagov/datagov-deploy:latest pipenv run ansible-playbook --key-file=$SSH_KEY_FILE --vault-password-file=$ANSIBLE_VAULT_FILE --inventory inventories/sandbox site.yml --skip-tags database'
         }
       }
+    }
+  }
+  post {
+    failure {
+      step([$class: 'GitHubIssueNotifier', issueAppend: true])
     }
   }
 }
