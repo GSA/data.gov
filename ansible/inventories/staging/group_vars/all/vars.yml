@@ -146,6 +146,9 @@ ckan_site_domain: "{{ urls_public.catalog }}"
 solr_master_server: tempdatagovsolrm1d.dev-ocsit.bsp.gsa.gov
 solr_java_packages:
   - openjdk-8-jdk
+solr_cores:
+  - catalog
+  - inventory
 solr_xms: 8192m
 solr_xmx: 8192m
 

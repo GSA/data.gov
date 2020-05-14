@@ -72,12 +72,6 @@ php_version: "{{ php_major_minor_version }}"
 solr_home: /data/solr5
 solr_version: 5.5.5
 solr_port: "8983"
-# TODO applications should initialize the cores instead of
-# it being in the platform.
-solr_cores:
-  - catalog
-  - inventory
-
 
 # new python version
 common_python_version_directory: /usr/local/lib/python{{ common_python_version_number }}

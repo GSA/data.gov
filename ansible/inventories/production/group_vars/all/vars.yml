@@ -158,6 +158,9 @@ catalog_bucket_name: "{{ vault_catalog_bucket_name }}"
 solr_master_server: datagovsolrm1p.prod-ocsit.bsp.gsa.gov
 solr_java_packages:
   - openjdk-8-jdk
+solr_cores:
+  - catalog
+  - inventory
 solr_xms: 8192m
 solr_xmx: 8192m
 

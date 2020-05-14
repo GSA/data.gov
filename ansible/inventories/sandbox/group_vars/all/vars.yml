@@ -202,7 +202,10 @@ secops_user_public_key: "{{ vault_secops_user_public_key }}"
 solr_master_server: datagov-solr1tf.internal.{{ datagov_sandbox_env }}.datagov.us
 solr_java_packages:
   - openjdk-8-jdk
-
+solr_cores:
+  - catalog
+  - catalog-next
+  - inventory
 
 # wordpress
 # hostname needed for smoke test, IP address needed for ALB health check
