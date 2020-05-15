@@ -1,5 +1,8 @@
 [elasticsearch]
 
+[jenkins]
+jenkins.mgmt-ocsit.bsp.gsa.gov
+
 [jumpbox]
 datagovjumpbox1m.mgmt-ocsit.bsp.gsa.gov
 
