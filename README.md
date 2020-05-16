@@ -544,10 +544,10 @@ for the `bin/jenkins_build` script. Secret variables should be entered in the
 [UI configuration only](https://circleci.com/gh/GSA/datagov-deploy/edit#env-vars).
 
 Variable | Description | Secret
+-------- | ----------- | ------
 `JENKINS_USER` | The Jenkins user with access to the API. | Y
 `JENKINS_API_TOKEN` | The API token for the Jenkins user. | Y
-`JENKINS_JOB_TOKEN` | The job token specified in the job configuration (see
-`jenkins_job_authentication_token`). | Y
+`JENKINS_JOB_TOKEN` | The job token specified in the job configuration (see `jenkins_job_authentication_token`). | Y
 `JENKINS_URL` | The URL to the Jenkins instance. | N
 
 In the CI job configuration (`.circleci/config.yml`), run the `bin/jenkins_build
