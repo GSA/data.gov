@@ -61,6 +61,7 @@
 
 - name: schedule harvest-report cron
   cron: >-
+    name="harvest-report"
     cron_file=harvest-report
     job=/usr/local/bin/harvest-report.sh
     disabled={{ not (datagov_in_service | default(true)) }}
