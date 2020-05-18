@@ -70,4 +70,9 @@ ignore:
         reason: >-
           Fix not yet released https://github.com/ansible/ansible/pull/68431
         expires: 2020-04-14T06:00:00.000Z
+  SNYK-PYTHON-ANSIBLE-569107:
+    - '*':
+        reason: >-
+          Fix not yet released https://bugzilla.redhat.com/show_bug.cgi?id=1835566
+        expires: 2020-05-22T06:00:00.000Z
 patch: {}
