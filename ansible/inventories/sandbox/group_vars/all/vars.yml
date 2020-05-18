@@ -149,6 +149,7 @@ pycsw_db_user: "{{ catalog_pycsw_db_user }}"
 # public urls
 urls_public:
   catalog: https://catalog.{{ datagov_sandbox_env }}.datagov.us
+  catalog_next: https://catalog-next.{{ datagov_sandbox_env }}.datagov.us
 urls_private:
   catalog: https://catalog.{{ datagov_sandbox_env }}.datagov.us
 

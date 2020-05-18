@@ -7,7 +7,7 @@ catalog_next: true
 uses_gunicorn: true
 
 catalog_ckan_service_url: https://catalog-next.sandbox.datagov.us
-
+ckan_site_domain: "{{ urls_public.catalog_next }}"
 catalog_ckan_app_version: master
 app_repo: https://github.com/GSA/catalog.data.gov
 

@@ -1,10 +1,23 @@
 ---
+- name: Set some convenience facts about wsgi/gunicorn
+  set_fact:
+    gunicorn: "{{ uses_gunicorn | default(False) }}"
+    wsgi: "{{ not (uses_gunicorn | default(False)) }}"
+    
 - name: Install WSGI app
   copy: src=etc_ckan_apache.wsgi dest=/etc/ckan/apache.wsgi mode=0644 owner=root group=www-data
   notify: reload apache2
-  when: not (uses_gunicorn | default(False))
+  when: wsgi
   
-- name: copy supervisord config
+- name: Install supervisor
+  apt: name=supervisor state=present
+  when: gunicorn
+  
+- name: Enable supervisor service
+  service: name=supervisor state=started enabled=yes
+  when: gunicorn
+  
+- name: Copy supervisord config
   template:
     src: supervisord_gunicorn.conf.j2
     dest: /etc/supervisor/conf.d/supervisord_gunicorn.conf
@@ -12,7 +25,7 @@
     owner: root
     group: root
   notify: reload supervisor
-  when: uses_gunicorn | default(False)
+  when: gunicorn
   
 - name: Configure ckan.conf
   template:
