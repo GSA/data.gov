@@ -27,6 +27,7 @@ provisioner:
         # https://github.com/DavidWittman/ansible-redis/blob/21b0b6f9030275a2586baf591f322ce3348b2b2d/tasks/install.yml#L9
         redis_travis_ci: true
         catalog_next: true
+        uses_gunicorn: true
         app_repo: https://github.com/GSA/catalog.data.gov
         catalog_ckan_plugins_default: []
 

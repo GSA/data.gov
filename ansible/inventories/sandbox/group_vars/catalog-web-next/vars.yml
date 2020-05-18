@@ -4,6 +4,7 @@
 ansible_python_interpreter: /usr/bin/python3
 
 catalog_next: true
+uses_gunicorn: true
 
 catalog_ckan_service_url: https://catalog-next.sandbox.datagov.us
 

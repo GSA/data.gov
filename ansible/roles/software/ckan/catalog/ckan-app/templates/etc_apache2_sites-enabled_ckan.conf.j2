@@ -15,7 +15,11 @@ SSLEngine on
     # default CSW, collection level metadata
     ProxyPass /csw http://localhost:8000
 
-
+  {% if uses_gunicorn | default (False) %}
+    # gunicorn configuration
+    ProxyPass / http://localhost:5000/
+    ProxyPassReverse / http://localhost:5000/
+  {% else %}
     WSGIScriptAlias / /etc/ckan/apache.wsgi
 
     # Pass authorization info on (needed for rest api).
@@ -23,8 +27,8 @@ SSLEngine on
 
     # Deploy as a daemon (avoids conflicts between CKAN instances).
     WSGIDaemonProcess ckan display-name=ckan processes={{ catalog_ckan_wsgi_processes }} threads=15
-
     WSGIProcessGroup ckan
+  {% endif %}
 
     <Directory /etc/ckan>
       Options All
