@@ -2,6 +2,7 @@ data.gov
 aapi.data.gov
 admin-catalog.data.gov
 admin-catalog-bsp.data.gov
+admin-catalog-next.data.gov
 ag.data.gov
 agriculture.data.gov
 alpha.data.gov
@@ -38,6 +39,7 @@ highlights.data.gov
 humanrights.data.gov
 inventory.data.gov
 inventory-bsp.data.gov
+inventory-next.data.gov
 jobs.data.gov
 labs.data.gov
 labs-bsp.data.gov
