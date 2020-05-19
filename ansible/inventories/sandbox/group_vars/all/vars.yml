@@ -23,6 +23,7 @@ catalog_db_name: "{{ catalog_ckan_db_name }}"
 catalog_db_user: "{{ catalog_ckan_db_user }}"
 
 # catalog-next
+catalog_next_ckan_redis_password: "{{ vault_catalog_next_ckan_redis_password }}"
 catalog_next_postgresql_login_host: "{{ vault_catalog_next_postgresql_login_host }}"
 catalog_next_postgresql_login_password: "{{ vault_catalog_next_postgresql_login_password }}"
 catalog_next_postgresql_login_user: "{{ vault_catalog_next_postgresql_login_user }}"
@@ -74,6 +75,10 @@ default_tls_host_certificate: |-
   a6iApABZqU0Aac0KNKxx7F8BvcTfems78jd0RhKrGKD77l4VTtFb+gU2C02Abbm+
   lo4YdL0A8Y/f
   -----END CERTIFICATE-----
+
+
+# inventory-next
+inventory_next_ckan_redis_password: "{{ vault_inventory_next_ckan_redis_password }}"
 
 
 jenkins_admin_password: "{{ vault_jenkins_admin_password }}"
