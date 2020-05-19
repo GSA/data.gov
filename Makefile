@@ -1,6 +1,7 @@
 INVENTORY_ENVIRONMENTS := \
   mgmt \
   production \
+  sandbox \
   staging
 
 MOLECULE_SUITES := \
@@ -49,9 +50,7 @@ lint: $(LINT_TARGETS)
 	cd ansible && ansible-lint -v -x ANSIBLE0010 --exclude=roles/vendor *.yml
 
 $(LINT_TARGETS):
-	ANSIBLE_INVENTORY_ANY_UNPARSED_IS_FAILED=1 ansible-playbook -i ansible/inventories/$(subst lint-,,$@) --syntax-check ansible/*.yml
-
-	ansible-lint -v -x ANSIBLE0010 --exclude=ansible/roles/vendor ansible/*.yml
+	cd ansible && ansible-playbook -i inventories/$(subst lint-,,$@) --syntax-check $(ANSIBLE_PLAYBOOKS)
 
 $(MOLECULE_SUITE_TARGETS):
 	cd ansible/roles/$(subst test-molecule-,,$@) && \
