@@ -18,6 +18,7 @@ ANSIBLE_PLAYBOOKS := \
   newrelic-java.yml \
   newrelic-php.yml \
   pycsw.yml \
+  redis.yml \
   site.yml \
   solr.yml
 

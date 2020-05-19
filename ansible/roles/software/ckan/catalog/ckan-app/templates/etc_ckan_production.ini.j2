@@ -24,7 +24,7 @@ port = 5000
 [app:celery]
 REDIS_HOST = {{ catalog_ckan_redis_host }}
 BROKER_BACKEND = redis
-BROKER_HOST = redis://:{{ redis_password }}@%(REDIS_HOST)s/1
+BROKER_HOST = redis://:{{ catalog_ckan_redis_password }}@%(REDIS_HOST)s/1
 CELERY_RESULT_BACKEND = redis
 REDIS_PORT = 6379
 REDIS_DB = 0
@@ -207,7 +207,7 @@ ckan.tracking_enabled = False
 set debug = False
 ckan.harvest.mq.type = redis
 ckan.harvest.mq.hostname = {{ catalog_ckan_redis_host }}
-ckan.harvest.mq.password = {{ redis_password }}
+ckan.harvest.mq.password = {{ catalog_ckan_redis_password }}
 ckanext.harvest.email = on
 ckan.resource_proxy_enabled = 1
 ckan.spatial.validator.profiles = iso19139ngdc

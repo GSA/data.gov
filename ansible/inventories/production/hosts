@@ -109,6 +109,10 @@ catalog-harvester2p.prod-ocsit.bsp.gsa.gov
 # We configure only a single worker for pycsw, usually the misc worker.
 catalogharvester2p.prod-ocsit.bsp.gsa.gov
 
+[redis]
+catalog-harvester1p.prod-ocsit.bsp.gsa.gov
+catalogharvester1p.prod-ocsit.bsp.gsa.gov
+
 [solr]
 datagov-solrm1p.prod-ocsit.bsp.gsa.gov
 datagov-solr[1:2]p.prod-ocsit.bsp.gsa.gov is_solr_replica=true
