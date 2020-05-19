@@ -30,6 +30,8 @@ Below are the tasks that will drive the onboarding process.
 - [ ] Add team member to [Snyk](https://app.snyk.io/org/data.gov/manage/members)
 - [ ] Add team member as a SpaceDeveloper in the [`development`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/eab3d327-7d9f-423b-9838-753c26fdb5a0/users), [`staging`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/3e692cdd-6d26-41ea-9698-04903dc3f742/users), and [`management`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/9a1db116-0180-42be-8ffa-7944dcf6bf50/summary) spaces in cloud.gov.
 
+       $ cf set-space-role <email> gsa-datagov <space> SpaceDeveloper
+
 
 For new Project Management Office team members, follow these additional steps:
 
