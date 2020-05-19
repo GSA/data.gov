@@ -11,6 +11,7 @@ businessusa.data.gov
 catalog.data.gov
 catalog-bsp.data.gov
 catalog-next.data.gov
+ci.data.gov
 cities.data.gov
 climate.data.gov
 consumer.data.gov
