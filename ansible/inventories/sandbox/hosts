@@ -63,7 +63,14 @@ tag_group_catalog_web
 tag_group_catalog_harvester
 
 [redis:children]
+redis-catalog
+
+[redis-catalog:children]
 tag_group_catalog_harvester
+
+# Redis is provided by ElastiCache
+[redis-catalog-next]
+[redis-inventory-next]
 
 [solr:children]
 tag_group_solr
