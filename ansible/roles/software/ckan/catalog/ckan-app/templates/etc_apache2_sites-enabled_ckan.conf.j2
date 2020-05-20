@@ -9,17 +9,18 @@ SSLEngine on
     # CSW endpoints provided by pycsw
     # based on request URI
 
+  {% if ckan_uses_gunicorn | default (False) %}
+    # gunicorn configuration
+    ProxyPass / http://localhost:5000/
+    ProxyPassReverse / http://localhost:5000/
+    RequestHeader set X-Forwarded-Proto https
+  {% else %}
     # full CSW, all metadata
     ProxyPass /csw-all http://localhost:8001
 
     # default CSW, collection level metadata
     ProxyPass /csw http://localhost:8000
 
-  {% if ckan_uses_gunicorn | default (False) %}
-    # gunicorn configuration
-    ProxyPass / http://localhost:5000/
-    ProxyPassReverse / http://localhost:5000/
-  {% else %}
     WSGIScriptAlias / /etc/ckan/apache.wsgi
 
     # Pass authorization info on (needed for rest api).
