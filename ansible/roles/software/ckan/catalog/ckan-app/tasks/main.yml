@@ -106,7 +106,7 @@
 # Some catalog-next templates are in a subdirectory
 - name: Set prefix for accessing catalog-next configuration files
   set_fact:
-    prefix: "{{ 'catalog-next/' if (catalog_next | default(false)) else '' }}"
+    prefix: "{{ 'catalog-next/' if (ckan_catalog_next | default(false)) else '' }}"
 
 # Configure CKAN
 - name: Configure production.ini

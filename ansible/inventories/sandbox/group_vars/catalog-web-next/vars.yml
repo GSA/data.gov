@@ -3,8 +3,8 @@
 # https://github.com/GSA/datagov-infrastructure-modules/issues/32
 ansible_python_interpreter: /usr/bin/python3
 
-catalog_next: true
-uses_gunicorn: true
+ckan_catalog_next: true
+ckan_uses_gunicorn: true
 
 catalog_ckan_service_url: https://catalog-next.sandbox.datagov.us
 ckan_site_domain: "{{ urls_public.catalog_next }}"
@@ -20,5 +20,24 @@ catalog_ckan_db_name: catalog_db_next
 catalog_ckan_db_pass: "{{ catalog_next_postgresql_login_password }}"
 catalog_ckan_db_user: "{{ catalog_next_postgresql_login_user }}"
 
-catalog_ckan_plugins_default: []
-
+catalog_ckan_plugins_default:
+  - envvars
+  - image_view
+  - text_view
+  - recline_view
+  - datastore
+  - datapusher
+  - harvest
+  - geodatagov
+  - datajson
+  - datajson_harvest
+  - geodatagov_miscs
+  - z3950_harvester
+  - arcgis_harvester
+  - geodatagov_geoportal_harvester
+  - waf_harvester_collection
+  - geodatagov_csw_harvester
+  - geodatagov_doc_harvester
+  - geodatagov_waf_harvester
+  - spatial_query
+  - datagovtheme

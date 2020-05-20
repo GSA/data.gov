@@ -1,4 +1,4 @@
-[program:gunicorn-web-app]
+[program:catalog-web]
 command={{ project_source_new_code_path }}/bin/gunicorn --paste /etc/ckan/production.ini -b localhost:5000
 directory={{ project_source_new_code_path }}
 stdout_logfile={{ catalog_gunicorn_error_log }}
