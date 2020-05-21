@@ -9,7 +9,7 @@ SSLEngine on
     # CSW endpoints provided by pycsw
     # based on request URI
 
-  {% if ckan_uses_gunicorn | default (False) %}
+  {% if ckan_uses_gunicorn %}
     # gunicorn configuration
     ProxyPass / http://localhost:5000/
     ProxyPassReverse / http://localhost:5000/

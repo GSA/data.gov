@@ -75,3 +75,5 @@ who_secure: "False"
 token_dat: placeholder-token
 catalog_ckan_redis_host: localhost
 redis_password: redis
+ckan_production_ini_template: etc_ckan_production.ini.j2
+ckan_uses_gunicorn: false

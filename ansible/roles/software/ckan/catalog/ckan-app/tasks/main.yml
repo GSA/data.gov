@@ -59,7 +59,7 @@
 - name: Remove new code
   file: path="{{ project_source_new_code_path }}" state=absent
 
-- debug:
+- debug: 
     msg:
       - "app_repo = {{ app_repo }}"
       - "app_source_path = {{ app_source_path }}"
@@ -103,14 +103,13 @@
     - reload apache2
     - reload supervisor
 
-# Some catalog-next templates are in a subdirectory
-- name: Set prefix for accessing catalog-next configuration files
-  set_fact:
-    prefix: "{{ 'catalog-next/' if (ckan_catalog_next | default(false)) else '' }}"
+- debug:
+    msg:
+      - "ckan_production_ini_template = {{ ckan_production_ini_template }}"
 
 # Configure CKAN
 - name: Configure production.ini
-  template: src="{{ prefix }}etc_ckan_production.ini.j2" dest=/etc/ckan/production.ini owner=root group=www-data mode=0640
+  template: src="{{ ckan_production_ini_template }}" dest=/etc/ckan/production.ini owner=root group=www-data mode=0640
   notify:
     - reload apache2
     - reload supervisor
