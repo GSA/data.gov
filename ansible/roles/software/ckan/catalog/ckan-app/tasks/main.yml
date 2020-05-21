@@ -59,7 +59,7 @@
 - name: Remove new code
   file: path="{{ project_source_new_code_path }}" state=absent
 
-- debug: 
+- debug:
     msg:
       - "app_repo = {{ app_repo }}"
       - "app_source_path = {{ app_source_path }}"
