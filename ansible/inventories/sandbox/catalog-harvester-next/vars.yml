@@ -1,0 +1,2 @@
+---
+catalog_ckan_redis_password: "{{ catalog_next_ckan_redis_password }}"

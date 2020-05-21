@@ -95,6 +95,7 @@
       register: csw_collection
       run_once: true
       delegate_to: localhost
+      become: false
 
     - name: assert csw-collection response has title
       fail:
@@ -102,6 +103,7 @@
       when: csw_collection.content is not search("<ows:Title>CSW interface for catalog.data.gov</ows:Title>")
       run_once: true
       delegate_to: localhost
+      become: false
 
     - name: assert csw-all is up
       uri:
@@ -116,6 +118,7 @@
       register: csw_all
       run_once: true
       delegate_to: localhost
+      become: false
 
     - name: assert csw-all response has title
       fail:
@@ -123,3 +126,4 @@
       when: csw_all.content is not search("<ows:Title>CSW interface for catalog.data.gov</ows:Title>")
       run_once: true
       delegate_to: localhost
+      become: false

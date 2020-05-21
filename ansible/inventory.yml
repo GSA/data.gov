@@ -29,6 +29,7 @@
       delay: 10
       register: result
       until: not result.failed
+      become: false
       when: datagov_in_service | default(true)
 
     - name: assert app is up
@@ -93,6 +94,7 @@
           Cookie: auth_tkt=1
       run_once: true
       delegate_to: localhost
+      become: false
       retries: 3
       delay: 10
       register: result
