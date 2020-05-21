@@ -13,6 +13,7 @@ SSLEngine on
     # gunicorn configuration
     ProxyPass / http://localhost:5000/
     ProxyPassReverse / http://localhost:5000/
+    ProxyPreserveHost On
     RequestHeader set X-Forwarded-Proto https
   {% else %}
     # full CSW, all metadata
