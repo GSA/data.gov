@@ -49,7 +49,6 @@ provisioner:
           - geodatagov_waf_harvester
           - spatial_query
           - datagovtheme
-          
 
   lint:
     name: ansible-lint
