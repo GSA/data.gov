@@ -26,6 +26,17 @@ catalog_pycsw_db_pass: "{{ vault_catalog_pycsw_db_pass }}"
 catalog_pycsw_db_user: "{{ vault_catalog_pycsw_db_user }}"
 
 
+# catalog-next
+catalog_next_ckan_db_master_host: "{{ vault_catalog_next_ckan_db_master_host }}"
+catalog_next_ckan_db_replica_host: "{{ vault_catalog_next_ckan_db_replica_host }}"
+catalog_next_ckan_db_name: "{{ vault_catalog_next_ckan_db_name }}"
+catalog_next_ckan_db_pass: "{{ vault_catalog_next_ckan_db_pass }}"
+catalog_next_ckan_db_user: "{{ vault_catalog_next_ckan_db_user }}"
+catalog_next_ckan_postgresql_master_user: "{{ vault_catalog_next_ckan_postgresql_master_user }}"
+catalog_next_ckan_postgresql_master_password: "{{ vault_catalog_next_ckan_postgresql_master_password }}"
+catalog_next_ckan_postgresql_master_host: "{{ vault_catalog_next_ckan_postgresql_master_host }}"
+
+
 # common
 common_audit_report_enabled: false
 common_filebeat_logstash_output: "{{ vault_common_filebeat_logstash_output }}"
