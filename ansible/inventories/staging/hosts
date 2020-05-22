@@ -113,6 +113,10 @@ catalog-harvester1d.dev-ocsit.bsp.gsa.gov
 datagov-solrm1d.dev-ocsit.bsp.gsa.gov
 datagov-solr[1:2]d.dev-ocsit.bsp.gsa.gov is_solr_replica=true
 
+[solr-next]
+datagov-solrm1d-v2.dev-ocsit.bsp.gsa.gov
+datagov-solr[1:2]d-v2.dev-ocsit.bsp.gsa.gov is_solr_replica=true
+
 # trusty stack
 [v1:children]
 catalog-admin-v1
@@ -132,6 +136,7 @@ dashboard-web-v2
 inventory-web-v2
 jumpbox-v2
 solr
+solr-next
 wordpress-web-v2
 
 [web:children]
