@@ -41,6 +41,8 @@ catalog_ckan_python_home: /usr
 catalog_ckan_saml2_enabled: false
 catalog_harvest_enable_harvest_report: false
 catalog_log_dir: /var/log/ckan
+catalog_gunicorn_error_log: "{{ catalog_log_dir }}/gunicorn.log"
+
 app_source_path: /tmp/catalog-app
 app_repo: https://github.com/GSA/catalog-app.git
 app_repo_branch: master
@@ -72,3 +74,5 @@ app_type: catalog
 who_secure: "False"
 token_dat: placeholder-token
 catalog_ckan_redis_host: localhost
+ckan_production_ini_template: etc_ckan_production.ini.j2
+ckan_uses_gunicorn: false
