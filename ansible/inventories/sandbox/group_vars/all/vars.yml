@@ -101,10 +101,6 @@ jenkins_jobs:
     git_ref: refs/heads/inventory_ckan_2.8
   - name: deploy-ci-app-wordpress
     git_url: https://github.com/gsa/datagov-wp-boilerplate.git
-    # TODO delete this once PR is merged
-  - name: deploy-ci-catalog-app
-    git_url: https://github.com/gsa/catalog.data.gov.git
-    github_project_url: https://github.com/gsa/datagov-ckan-multi
 
 jenkins_config: "{{ lookup('template', 'jenkins_config_sandbox.yml.j2') }}"
 
