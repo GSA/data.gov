@@ -25,7 +25,11 @@ Below are the tasks that will drive the onboarding process.
 - [ ] Add team member to [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members) GitHub team
 - [ ] Request TTS Bug Bounty access [#bug-bounty-partners](https://gsa-tts.slack.com/messages/C5JQCD9PH)
 - [ ] Add team member to Uptrends via [email](https://docs.google.com/spreadsheets/d/1Z9Zpr1mpx-65i_fH2VTbVofPtidpLZs5cnkO0Jz53Vc/edit#gid=0)
-- [ ] Add team member to [New Relic](https://newrelic.com)
+- [ ] Add team member to [New Relic](https://newrelic.com) with permissions:
+  - Alerts manager
+  - APM manager
+  - Infrastructure manager
+  - Synthetics manager
 - [ ] Add team member to [Docker Hub](https://cloud.docker.com/orgs/datagov/teams)
 - [ ] Add team member to [Snyk](https://app.snyk.io/org/data.gov/manage/members)
 - [ ] Add team member as a SpaceDeveloper in the [`development`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/eab3d327-7d9f-423b-9838-753c26fdb5a0/users), [`staging`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/3e692cdd-6d26-41ea-9698-04903dc3f742/users), and [`management`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/9a1db116-0180-42be-8ffa-7944dcf6bf50/summary) spaces in cloud.gov.
@@ -54,6 +58,7 @@ For new Project Management Office team members, follow these additional steps:
   - CKAN-multi project syncs
   - FGDC meeting
   - CKAN Gov Working group
+- [ ] Promote team member to Admin in [New Relic](https://newrelic.com)
 
 
 ### Tasks for new team member
