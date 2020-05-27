@@ -1,6 +1,5 @@
 [catalog-harvester:children]
 catalog-harvester-v1
-catalog-harvester-v2
 
 [catalog-harvester-main]
 catalog-harvester1p.prod-ocsit.bsp.gsa.gov
@@ -26,7 +25,6 @@ catalogharvester[3:6]p.prod-ocsit.bsp.gsa.gov
 
 [catalog-web:children]
 catalog-web-v1
-catalog-web-v2
 
 [catalog-web-v1]
 catalog-web[1:2]p.prod-ocsit.bsp.gsa.gov
@@ -44,7 +42,6 @@ catalog-admin-v2
 
 [catalog-admin:children]
 catalog-admin-v1
-catalog-admin-v2
 
 [catalog-admin-v1]
 catalogpub-web1p.prod-ocsit.bsp.gsa.gov
@@ -66,7 +63,6 @@ dashboardweb[1:2]p.prod-ocsit.bsp.gsa.gov
 
 [inventory-web:children]
 inventory-web-v1
-inventory-web-v2
 
 [inventory-web-v1]
 inventory[1:2]p.prod-ocsit.bsp.gsa.gov
