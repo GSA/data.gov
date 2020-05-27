@@ -77,5 +77,4 @@ For new Project Management Office team members, follow these additional steps:
   - Follow the [ansible-vault instructions](https://github.com/GSA/datagov-deploy#editing-vault-secrets)
   - Checkout the `master` branch to make this change as a [hotfix](https://github.com/GSA/datagov-deploy/blob/develop/CONTRIBUTING.md#hotfixes)
   - Edit the vault file `pipenv run ansible-vault edit ansible/group_vars/all/vault.yml` and add your public SSH key
-- [ ] Join the international [CKAN Government Working Group](https://docs.google.com/document/d/1d04ZmvSCjb3zhsIZW01wSkoRSzIiLyWen5Z8iwfzhIU/edit)
 - [ ] Join [Open Data](https://digital.gov/communities/open-data/) community list
