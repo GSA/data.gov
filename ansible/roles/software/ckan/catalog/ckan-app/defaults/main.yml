@@ -39,6 +39,7 @@ catalog_ckan_plugins_default:
 
 catalog_ckan_python_home: /usr
 catalog_ckan_saml2_enabled: false
+catalog_ckan_who_ini_path: "etc_ckan_who.default.ini.j2"
 catalog_harvest_enable_harvest_report: false
 catalog_log_dir: /var/log/ckan
 catalog_gunicorn_error_log: "{{ catalog_log_dir }}/gunicorn.log"

@@ -1,0 +1,45 @@
+[plugin:auth_tkt]
+use = repoze.who.plugins.auth_tkt:make_plugin
+secret = {{ catalog_ckan_who_ini_secret }}
+
+[plugin:friendlyform]
+use = repoze.who.plugins.friendlyform:FriendlyFormPlugin
+login_form_url= /user/login
+login_handler_path = /login_generic
+logout_handler_path = /user/logout
+rememberer_name = auth_tkt
+post_login_url = /user/logged_in
+post_logout_url = /user/logged_out
+charset = utf-8
+
+[plugin:saml2auth]
+use = saml2.s2repoze.plugins.sp:make_plugin
+saml_conf = ckanext.saml2.config.sp_config
+remember_name = auth_tkt
+sid_store = /tmp/sp_sid_store
+identity_cache = memcached
+
+[plugin:saml2_challenge_decider]
+use = saml2.s2repoze.plugins.challenge_decider:make_plugin
+path_login = /user/login
+
+[general]
+request_classifier = repoze.who.classifiers:default_request_classifier
+challenge_decider = saml2_challenge_decider
+
+[identifiers]
+plugins =
+    saml2auth
+    auth_tkt
+    friendlyform;browser
+
+[authenticators]
+plugins =
+    saml2auth
+    auth_tkt
+    ckan.lib.authenticator:UsernamePasswordAuthenticator
+
+[challengers]
+plugins =
+    saml2auth
+    friendlyform;browser
