@@ -100,17 +100,15 @@
   template: src={{ item }} dest=/{{ item }} owner=root group=www-data mode=0640
   with_items:
     - etc/ckan/production.ini
+    - etc/ckan/apache.wsgi
     - etc/ckan/datapusher.wsgi
     - etc/ckan/datapusher_settings.py
     - etc/apache2/sites-enabled/ckan.conf
     - etc/apache2/sites-enabled/datapusher.conf
     - etc/supervisor/conf.d/gunicorn-web-app.conf
-  notify: restart apache2
-
-- name: load gunicorn
-  supervisorctl:
-    name: gunicorn-web-app
-    state: present
+  notify:
+    - restart apache2
+    - reload supervisor  # TODO the supervisor config files should be in their own task
 
 - include_tasks: additional-tasks.yml
   vars:
