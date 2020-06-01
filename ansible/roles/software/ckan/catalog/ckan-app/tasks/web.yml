@@ -26,6 +26,7 @@
   supervisorctl:
     name: catalog-web
     state: restarted
+  when: ckan_uses_gunicorn
 
 - name: Configure ckan.conf
   template:
