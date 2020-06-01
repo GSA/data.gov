@@ -125,7 +125,7 @@
 # TODO configuration files should live in the application repo
 - name: Configure who.ini
   template:
-    src: "{{catalog_ckan_who_ini_path}}"
+    src: "{{ catalog_ckan_who_ini_path }}"
     dest: /etc/ckan/who.ini
     owner: root
     group: www-data
