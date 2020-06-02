@@ -27,8 +27,6 @@ catalog_ckan_plugins_default:
   - image_view
   - text_view
   - recline_view
-  - datastore
-  - datapusher
   - harvest
   - ckan_harvester
   - geodatagov
