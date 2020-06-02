@@ -28,6 +28,7 @@ catalog_ckan_plugins_default:
   - text_view
   - recline_view
   - harvest
+  - ckan_harvester
   - geodatagov
   - datajson
   - datajson_harvest
@@ -39,5 +40,8 @@ catalog_ckan_plugins_default:
   - geodatagov_csw_harvester
   - geodatagov_doc_harvester
   - geodatagov_waf_harvester
+  - spatial_metadata
   - spatial_query
+  - report
+  - archiver
   - datagovtheme
