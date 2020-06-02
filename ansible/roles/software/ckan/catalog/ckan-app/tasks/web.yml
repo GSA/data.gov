@@ -22,12 +22,6 @@
   service: name=supervisor state=started enabled=yes
   when: ckan_uses_gunicorn
 
-- name: Restart gunicorn / ckan service
-  supervisorctl:
-    name: catalog-web
-    state: restarted
-  when: ckan_uses_gunicorn
-
 - name: Configure ckan.conf
   template:
     src: etc_apache2_sites-enabled_ckan.conf.j2

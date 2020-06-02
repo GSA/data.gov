@@ -8,7 +8,6 @@
 - name: reload supervisor
   command: supervisorctl reload
   when:
-    - catalog_app_type == "worker"
     - datagov_in_service | default(true)
   tags:
     - skip_ansible_lint
