@@ -8,7 +8,7 @@
 - name: reload supervisor
   command: supervisorctl reload
   when:
-    - catalog_app_type == "worker"
+    - (catalog_app_type == "worker") or ckan_uses_gunicorn
     - datagov_in_service | default(true)
   tags:
     - skip_ansible_lint

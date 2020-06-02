@@ -103,10 +103,6 @@
     - reload apache2
     - reload supervisor
 
-- debug:
-    msg:
-      - "ckan_production_ini_template = {{ ckan_production_ini_template }}"
-
 # Configure CKAN
 - name: Configure production.ini
   template: src="{{ ckan_production_ini_template }}" dest=/etc/ckan/production.ini owner=root group=www-data mode=0640
