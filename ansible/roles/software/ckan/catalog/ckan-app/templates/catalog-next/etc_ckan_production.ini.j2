@@ -97,6 +97,12 @@ search.facets.responsible-party.title = Organizations
 ckan.search.solr_commit = true
 
 
+## Redis Settings
+
+# URL to your Redis instance, including the database to be used.
+ckan.redis.url = redis://:{{ catalog_ckan_redis_password }}@{{ catalog_ckan_redis_host }}:6379/0
+
+
 ## CORS Settings
 
 # If cors.origin_allow_all is true, all origins are allowed.
@@ -183,6 +189,13 @@ smtp.mail_from = no-reply@data.gov
 
 ckan.tracking_enabled = False
 set debug = False
+
+## Harvest settings
+
+ckan.harvest.mq.type = redis
+ckan.harvest.mq.hostname = {{ catalog_ckan_redis_host }}
+ckan.harvest.mq.password = {{ catalog_ckan_redis_password }}
+ckanext.harvest.email = on
 
 ## SAML2 Settings
 saml2.site_url = {{ saml2_site_url }}

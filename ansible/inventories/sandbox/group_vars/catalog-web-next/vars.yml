@@ -1,11 +1,6 @@
 ---
-# In sandbox, we use python3 on bionic web hosts
-# https://github.com/GSA/datagov-infrastructure-modules/issues/32
-ansible_python_interpreter: /usr/bin/python3
-
 ckan_catalog_next: true
 ckan_uses_gunicorn: true
-ckan_production_ini_template: catalog-next/etc_ckan_production.ini.j2
 
 catalog_ckan_service_url: https://catalog-next.sandbox.datagov.us
 ckan_site_domain: https://catalog-next.sandbox.datagov.us
@@ -13,14 +8,15 @@ ckan_site_domain: https://catalog-next.sandbox.datagov.us
 catalog_ckan_app_version: master
 app_repo: https://github.com/GSA/catalog.data.gov
 
-# postgresql_login_host: "{{ catalog_next_postgresql_login_host }}"
-# postgresql_login_password: "{{ catalog_next_postgresql_login_password }}"
-# postgresql_login_user: "{{ catalog_next_postgresql_login_user }}"
+ckan_production_ini_template: catalog-next/etc_ckan_production.ini.j2
 
 catalog_ckan_db_host: "{{ catalog_next_postgresql_login_host }}"
-catalog_ckan_db_name: catalog_db_next
+catalog_ckan_db_name: "{{ catalog_next_ckan_db_name }}"
 catalog_ckan_db_pass: "{{ catalog_next_postgresql_login_password }}"
 catalog_ckan_db_user: "{{ catalog_next_postgresql_login_user }}"
+
+catalog_ckan_redis_host: "{{ catalog_next_ckan_redis_host }}"
+catalog_ckan_redis_password: "{{ catalog_next_ckan_redis_password }}"
 
 catalog_ckan_plugins_default:
   - envvars
