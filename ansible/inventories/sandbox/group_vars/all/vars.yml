@@ -1,4 +1,4 @@
-
+---
 # catalog
 catalog_ckan_app_version: master
 catalog_ckan_db_host: "{{ catalog_postgresql_login_host }}"
@@ -29,6 +29,29 @@ catalog_next_ckan_redis_password: "{{ vault_catalog_next_ckan_redis_password }}"
 catalog_next_postgresql_login_host: "{{ vault_catalog_next_postgresql_login_host }}"
 catalog_next_postgresql_login_password: "{{ vault_catalog_next_postgresql_login_password }}"
 catalog_next_postgresql_login_user: "{{ vault_catalog_next_postgresql_login_user }}"
+catalog_next_ckan_plugins_default:
+  - envvars
+  - image_view
+  - text_view
+  - recline_view
+  - harvest
+  - ckan_harvester
+  - geodatagov
+  - datajson
+  - datajson_harvest
+  - geodatagov_miscs
+  - z3950_harvester
+  - arcgis_harvester
+  - geodatagov_geoportal_harvester
+  - waf_harvester_collection
+  - geodatagov_csw_harvester
+  - geodatagov_doc_harvester
+  - geodatagov_waf_harvester
+  - spatial_metadata
+  - spatial_query
+  - report
+  - archiver
+  - datagovtheme
 
 # common
 common_newrelic_enabled: false

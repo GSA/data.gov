@@ -23,6 +23,7 @@ provisioner:
   inventory:
     group_vars:
       all:
+        ckan_catalog_next: true
         catalog_ckan_db_host: db
         catalog_ckan_db_name: ckan
         catalog_ckan_db_pass: ckan
