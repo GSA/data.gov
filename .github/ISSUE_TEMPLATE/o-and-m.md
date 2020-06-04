@@ -5,7 +5,7 @@ title: 'O+M'
 labels: ''
 assignees: ''
 ---
-As part of day-to-day operation of Data.gov, there are many [Operation and Maintenance (O&M) responsibilities](https://github.com/GSA/datagov-deploy/wiki/Operation-and-Maintenance-Responsibilities). Instead of having the entire team watching notifications and risking some notifications slipping through the cracks, we have created an [O&M Triage role](https://github.com/GSA/datagov-deploy/wiki/Operation-and-Maintenance-Responsibilities#om-triage-rotation). One person on the team is assigned the Triage role which rotates each sprint. _This is not meant to be a 24/7 responsibility, only East Coast business hours. If you are unavailable, please note when you will be unavailable in Slack and ask for someone to take on the roll for that time._
+As part of day-to-day operation of Data.gov, there are many [Operation and Maintenance (O&M) responsibilities](https://github.com/GSA/datagov-deploy/wiki/Operation-and-Maintenance-Responsibilities). Instead of having the entire team watching notifications and risking some notifications slipping through the cracks, we have created an [O&M Triage role](https://github.com/GSA/datagov-deploy/wiki/Operation-and-Maintenance-Responsibilities#om-triage-rotation). One person on the team is assigned the Triage role which rotates each sprint. _This is not meant to be a 24/7 responsibility, only East Coast business hours. If you are unavailable, please note when you will be unavailable in Slack and ask for someone to take on the role for that time._
 
 Each day, you should start your triage by looking through the notification channels for anything **urgent** that came in after hours that might need immediate attention:
 
@@ -20,5 +20,5 @@ You are responsible for all [O&M responsibilities](https://github.com/GSA/datago
 
 - [ ] [Audit log updated](https://docs.google.com/spreadsheets/d/1z6lqmyNxC7s5MiTt9f6vT41IS2DLLJl4HwEqXvvft40/edit) for [AU-6 Log auditing](https://github.com/GSA/datagov-deploy/wiki/Operation-and-Maintenance-Responsibilities#au-6-log-auditing) (**Friday**).
 - [ ] Any [New Relic alerts](https://alerts.newrelic.com/accounts/1601367/incidents) have been addressed or GH issues created.
-- [ ] Weekly [Nessus scan](https://github.com/GSA/datagov-deploy/wiki/Operation-and-Maintenance-Responsibilities#nessus-host-scan-report-from-isso) has been traiged.
-- [ ] If received, the monthly [Netsparker scan](https://github.com/GSA/datagov-deploy/wiki/Operation-and-Maintenance-Responsibilities#netsparker-compliance-scan-report-from-isso) has been traiged.
+- [ ] Weekly [Nessus scan](https://github.com/GSA/datagov-deploy/wiki/Operation-and-Maintenance-Responsibilities#nessus-host-scan-report-from-isso) has been triaged.
+- [ ] If received, the monthly [Netsparker scan](https://github.com/GSA/datagov-deploy/wiki/Operation-and-Maintenance-Responsibilities#netsparker-compliance-scan-report-from-isso) has been triaged.
