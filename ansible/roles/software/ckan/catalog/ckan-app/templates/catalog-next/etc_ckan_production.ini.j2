@@ -100,7 +100,9 @@ ckan.search.solr_commit = true
 ## Redis Settings
 
 # URL to your Redis instance, including the database to be used.
-ckan.redis.url = redis://:{{ catalog_ckan_redis_password }}@{{ catalog_ckan_redis_host }}:6379/0
+# 'rediss' is not a typo!  It specifies redis proto over TLS
+
+ckan.redis.url = rediss://:{{ catalog_ckan_redis_password }}@{{ catalog_ckan_redis_host }}:6379/0
 
 
 ## CORS Settings
@@ -191,10 +193,10 @@ ckan.tracking_enabled = False
 set debug = False
 
 ## Harvest settings
+# ckanext-harvest will use ckan.redis.url if redis configuration
+# is not specified here.
 
 ckan.harvest.mq.type = redis
-ckan.harvest.mq.hostname = {{ catalog_ckan_redis_host }}
-ckan.harvest.mq.password = {{ catalog_ckan_redis_password }}
 ckanext.harvest.email = on
 
 ## SAML2 Settings
