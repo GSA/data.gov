@@ -23,10 +23,36 @@ catalog_db_name: "{{ catalog_ckan_db_name }}"
 catalog_db_user: "{{ catalog_ckan_db_user }}"
 
 # catalog-next
+catalog_next_ckan_db_name: catalog_db_next
+catalog_next_ckan_redis_host: master.rep-sandbox-catalog-next.5kspe7.use1.cache.amazonaws.com
 catalog_next_ckan_redis_password: "{{ vault_catalog_next_ckan_redis_password }}"
+catalog_next_ckan_redis_url: "rediss://:{{ catalog_ckan_redis_password }}@{{ catalog_ckan_redis_host }}:6379/0"
 catalog_next_postgresql_login_host: "{{ vault_catalog_next_postgresql_login_host }}"
 catalog_next_postgresql_login_password: "{{ vault_catalog_next_postgresql_login_password }}"
 catalog_next_postgresql_login_user: "{{ vault_catalog_next_postgresql_login_user }}"
+catalog_next_ckan_plugins_default:
+  - envvars
+  - image_view
+  - text_view
+  - recline_view
+  - harvest
+  - ckan_harvester
+  - geodatagov
+  - datajson
+  - datajson_harvest
+  - geodatagov_miscs
+  - z3950_harvester
+  - arcgis_harvester
+  - geodatagov_geoportal_harvester
+  - waf_harvester_collection
+  - geodatagov_csw_harvester
+  - geodatagov_doc_harvester
+  - geodatagov_waf_harvester
+  - spatial_metadata
+  - spatial_query
+  - report
+  - archiver
+  - datagovtheme
 
 # common
 common_newrelic_enabled: false
