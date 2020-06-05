@@ -30,7 +30,7 @@ provisioner:
         ckan_uses_gunicorn: true
         app_repo: https://github.com/GSA/catalog.data.gov
         ckan_production_ini_template: catalog-next/etc_ckan_production.ini.j2
-        catalog_ckan_redis_password: SECRET
+        catalog_ckan_redis_url: redis://:secret@localhost:6379/0
         catalog_ckan_plugins_default:
           - envvars
           - image_view

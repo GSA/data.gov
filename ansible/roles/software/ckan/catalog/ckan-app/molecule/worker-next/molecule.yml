@@ -28,8 +28,7 @@ provisioner:
         catalog_ckan_db_name: ckan
         catalog_ckan_db_pass: ckan
         catalog_ckan_db_user: ckan
-        catalog_ckan_redis_host: redis
-        catalog_ckan_redis_password: redispass  # fake secret for test
+        catalog_ckan_redis_url: redis://:secret@localhost:6379/0
         app_repo: https://github.com/GSA/catalog.data.gov
         ckan_production_ini_template: catalog-next/etc_ckan_production.ini.j2
         catalog_ckan_who_ini_secret: e45cfed3-40f1-41c0-8e92-77eda7ddd9f3  # Fake secret for test

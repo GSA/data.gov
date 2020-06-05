@@ -102,7 +102,7 @@ ckan.search.solr_commit = true
 # URL to your Redis instance, including the database to be used.
 # 'rediss' is not a typo!  It specifies redis proto over TLS
 
-ckan.redis.url = rediss://:{{ catalog_ckan_redis_password }}@{{ catalog_ckan_redis_host }}:6379/0
+ckan.redis.url = {{ catalog_ckan_redis_url }}
 
 
 ## CORS Settings
