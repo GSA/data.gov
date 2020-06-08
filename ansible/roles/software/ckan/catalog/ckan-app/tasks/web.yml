@@ -6,9 +6,8 @@
 
 - name: Install supervisor
   apt: name=supervisor state=present
-  when: ckan_uses_gunicorn
 
-- name: Copy supervisord config
+- name: Copy gunicorn supervisord config
   template:
     src: supervisord_gunicorn.conf.j2
     dest: /etc/supervisor/conf.d/supervisord_gunicorn.conf
@@ -18,9 +17,17 @@
   notify: reload supervisor
   when: ckan_uses_gunicorn
 
+- name: Copy mem-cpu-check supervisord config
+  copy:
+    src: etc/supervisor/conf.d/supervisord_web_mem_cpu.conf
+    dest: /etc/supervisor/conf.d/supervisord_web_mem_cpu.conf
+    mode: 0644
+    owner: root
+    group: www-data
+  notify: reload supervisor
+
 - name: Enable supervisor service
   service: name=supervisor state=started enabled=yes
-  when: ckan_uses_gunicorn
 
 - name: Configure ckan.conf
   template:
