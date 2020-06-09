@@ -26,6 +26,14 @@
     group: www-data
   notify: reload supervisor
 
+- name: copy mem-cpu-check executables
+  copy:
+    src: usr/bin/celery-mem-check.sh
+    dest: /usr/bin/celery-mem-check.sh
+    mode: 0755
+    owner: root
+    group: root
+
 - name: Enable supervisor service
   service: name=supervisor state=started enabled=yes
 
