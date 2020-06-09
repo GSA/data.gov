@@ -23,7 +23,7 @@
     dest: /etc/supervisor/conf.d/supervisord_web_mem_cpu.conf
     mode: 0644
     owner: root
-    group: www-data
+    group: root
   notify: reload supervisor
 
 - name: copy mem-cpu-check executables
