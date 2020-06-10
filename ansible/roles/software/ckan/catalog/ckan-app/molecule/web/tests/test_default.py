@@ -8,6 +8,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 virtualenv_path = '/usr/lib/ckan'
 
+
 def test_gunicorn_conf(host):
     f = host.file('/etc/supervisor/conf.d/supervisord_gunicorn.conf')
 
