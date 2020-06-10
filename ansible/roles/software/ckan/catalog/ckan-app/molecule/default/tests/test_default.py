@@ -114,6 +114,7 @@ def test_apache_site(host):
     assert not f.contains('RewriteCond.*!auth_tkt'), \
         'Expected no rewrite condition for unauthenticated requests'
 
+
 def test_web_mem_cpu_conf(host):
     f = host.file('/etc/supervisor/conf.d/supervisord_web_mem_cpu.conf')
 
@@ -122,6 +123,7 @@ def test_web_mem_cpu_conf(host):
     assert f.group == 'root'
     assert f.mode == 0o644
     assert f.contains('[program:check-mem-cpu]')
+
 
 def test_cpu_mem_check_sh(host):
     f = host.file('/usr/bin/cpu-mem-check.sh')
