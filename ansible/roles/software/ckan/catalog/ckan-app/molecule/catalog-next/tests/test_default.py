@@ -89,16 +89,6 @@ def test_apache(host):
     assert apache.is_enabled
 
 
-def test_gunicorn_conf(host):
-    f = host.file('/etc/supervisor/conf.d/supervisord_gunicorn.conf')
-
-    assert f.exists
-    assert f.user == 'root'
-    assert f.group == 'root'
-    assert f.mode == 0o644
-    assert f.contains('[program:catalog-web]')
-
-
 def test_apache_site(host):
     f = host.file('/etc/apache2/sites-enabled/ckan.conf')
 
