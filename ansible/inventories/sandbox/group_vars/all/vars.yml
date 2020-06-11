@@ -53,6 +53,7 @@ catalog_next_ckan_plugins_default:
   - report
   - archiver
   - datagovtheme
+  - datagovcatalog
 
 # common
 common_newrelic_enabled: false
