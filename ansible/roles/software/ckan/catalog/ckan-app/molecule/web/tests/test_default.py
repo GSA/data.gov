@@ -16,7 +16,7 @@ def test_gunicorn_conf(host):
     assert f.user == 'root'
     assert f.group == 'root'
     assert f.mode == 0o644
-    assert f.contains('[program:catalog-web]')
+    assert f.contains('program:catalog-web')
 
 
 def test_web_mem_cpu_conf(host):
@@ -26,7 +26,7 @@ def test_web_mem_cpu_conf(host):
     assert f.user == 'root'
     assert f.group == 'root'
     assert f.mode == 0o644
-    assert f.contains('[program:check-mem-cpu]')
+    assert f.contains('program:cpu-mem-check')
 
 
 def test_cpu_mem_check_sh(host):

@@ -26,10 +26,10 @@
     group: root
   notify: reload supervisor
 
-- name: copy mem-cpu-check executables
+- name: copy cpu-mem-check executables
   copy:
-    src: usr/bin/celery-mem-check.sh
-    dest: /usr/bin/celery-mem-check.sh
+    src: usr/bin/cpu-mem-check.sh
+    dest: /usr/bin/cpu-mem-check.sh
     mode: 0755
     owner: root
     group: root
