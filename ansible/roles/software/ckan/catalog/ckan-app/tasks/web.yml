@@ -2,12 +2,31 @@
 - name: Install WSGI app
   copy: src=etc_ckan_apache.wsgi dest=/etc/ckan/apache.wsgi mode=0644 owner=root group=www-data
   notify: reload apache2
+  when: not ckan_uses_gunicorn
+
+- name: Install supervisor
+  apt: name=supervisor state=present
+  when: ckan_uses_gunicorn
+
+- name: Copy supervisord config
+  template:
+    src: supervisord_gunicorn.conf.j2
+    dest: /etc/supervisor/conf.d/supervisord_gunicorn.conf
+    mode: 0644
+    owner: root
+    group: root
+  notify: reload supervisor
+  when: ckan_uses_gunicorn
+
+- name: Enable supervisor service
+  service: name=supervisor state=started enabled=yes
+  when: ckan_uses_gunicorn
 
 - name: Configure ckan.conf
-  template: >-
-    src=etc_apache2_sites-enabled_ckan.conf.j2
-    dest=/etc/apache2/sites-enabled/ckan.conf
-    mode=0644
-    owner=root
-    group=www-data
+  template:
+    src: etc_apache2_sites-enabled_ckan.conf.j2
+    dest: /etc/apache2/sites-enabled/ckan.conf
+    mode: 0644
+    owner: root
+    group: www-data
   notify: reload apache2

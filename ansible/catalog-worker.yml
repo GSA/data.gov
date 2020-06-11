@@ -1,6 +1,6 @@
 ---
 - name: Catalog worker (harvester) stack
-  hosts: catalog-harvester:!catalog-harvester-next
+  hosts: catalog-harvester
   vars:
       app_type: catalog
 

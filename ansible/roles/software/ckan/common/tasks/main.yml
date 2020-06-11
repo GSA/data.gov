@@ -6,6 +6,12 @@
   apt: name={{ item }} state=present
   with_items: "{{ ckan_os_packages }}"
 
+- name: create CKAN temp directory
+  file: path=/var/tmp/ckan owner=www-data group=www-data mode=0755 state=directory
+
+- name: create CKAN storage directory
+  file: path=/var/lib/ckan owner=www-data group=www-data mode=0755 state=directory
+
 - name: create ckan config dir
   action: file path=/etc/ckan state=directory owner=root group=www-data mode=0750 follow=yes
 

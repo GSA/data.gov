@@ -1,6 +1,6 @@
 ---
 - name: ansistrano.deploy
-  version: 3.3.0
+  version: 3.5.0
 - name: ANXS.apt
   version: v2.0.0
 - name: ANXS.build-essential
@@ -64,7 +64,7 @@
   version: v1.0.2
 - name: gsa.datagov-deploy-solr
   src: https://github.com/GSA/datagov-deploy-solr.git
-  version: v1.0.0
+  version: v1.1.0
 - name: gsa.datagov-deploy-wordpress
   src: https://github.com/GSA/datagov-deploy-wordpress.git
   version: v1.0.4

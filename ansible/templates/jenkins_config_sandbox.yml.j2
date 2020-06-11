@@ -90,7 +90,6 @@ jobs:
           } } }
           disableConcurrentBuilds()
           githubProjectUrl('{{ job.github_project_url | default("https://github.com/GSA/datagov-deploy") }}')
-          quietPeriod(120)
         }
         definition {
           cpsScm {

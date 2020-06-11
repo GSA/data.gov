@@ -3,10 +3,6 @@
   tags: ['fgdc2iso']
   when: catalog_ckan_worker_type == 'main_worker'
 
-- include: redis.yml
-  tags: ['redis']
-  when: catalog_ckan_worker_type == 'main_worker'
-
 - name: Remove pip installed supervisor
   pip: name=supervisor virtualenv=/usr/lib/ckan/ state=absent
   tags:
@@ -61,6 +57,7 @@
 
 - name: schedule harvest-report cron
   cron: >-
+    name="harvest-report"
     cron_file=harvest-report
     job=/usr/local/bin/harvest-report.sh
     disabled={{ not (datagov_in_service | default(true)) }}
