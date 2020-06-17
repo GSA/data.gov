@@ -57,7 +57,6 @@ catalog_next_ckan_plugins_default:
 # common
 common_newrelic_enabled: false
 common_python_version_number: 2.7.10
-common_ubuntu_advantage_enabled: false
 filebeat_enabled: false
 nessus_agent_enabled: false
 trendmicro_enabled: false
