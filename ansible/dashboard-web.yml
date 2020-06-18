@@ -39,14 +39,6 @@
       delay: 10
       until: not result.failed
 
-    - name: access to simplesaml admin is forbidden
-      uri:
-        url: https://{{ ansible_fqdn }}/simplesaml/module.php/core/loginuserpass.php
-        follow_redirects: none
-        status_code: 403
-        validate_certs: false
-
-
 - name: Service-level smoke tests for dashboard
   hosts: dashboard-web
   tags: [deploy,provision]
