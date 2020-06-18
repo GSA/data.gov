@@ -26,6 +26,7 @@ common_operators: "{{ jumpbox_operators }}"  # This is inherited from inventory 
 common_reboot_notify_email: "{{ datagov_team_email }}"
 common_tls_host_key: "{{ default_tls_host_key }}"
 common_tls_host_certificate: "{{ default_tls_host_certificate }}"
+common_ubuntu_advantage_token: "{{ vault_ubuntu_advantage_token }}"
 
 
 dashboard_php_major_minor_version: "{{ php_major_minor_version }}"
