@@ -1,4 +1,5 @@
 ---
+datagov_in_service: false  # disable New Relic alerts until solr is installed and running
 datagov_service: solr
 
 solr_master_server: datagov-solrm1d-v2.dev-ocsit.bsp.gsa.gov
