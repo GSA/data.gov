@@ -183,7 +183,7 @@ inventory_ckan_solr_port: "{{ solr_port }}"
 
 pycsw_app_version: datagov/v2.4.x
 pycsw_base_url: https://catalog.sandbox.datagov.us
-pycsw_catalog_url: https://catalog.sandbox.datagov.us
+pycsw_ckan_url: https://catalog.sandbox.datagov.us
 pycsw_db_host: "{{ catalog_pycsw_db_host }}"
 pycsw_db_name: "{{ catalog_pycsw_db_name }}"
 pycsw_db_password: "{{ catalog_pycsw_db_pass }}"
