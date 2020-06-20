@@ -1,0 +1,2 @@
+---
+ubu16gsa_is_router: true  # work around https://github.com/GSA/datagov-deploy/issues/1786
