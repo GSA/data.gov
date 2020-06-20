@@ -16,6 +16,7 @@ RUN apk add \
   libc-dev \
   libffi-dev \
   make \
+  openssh \
   openssl-dev \
   pkgconfig
 
