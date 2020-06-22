@@ -219,10 +219,13 @@ nrinfragent_license_key: "{{ vault_nrinfragent_license_key }}"
 
 
 # postfix
-default_email_from: no-reply@data.gov
+default_email_from: no-reply@datagov.us
+# I've left some breadcrumbs from my testing of
+# https://github.com/GSA/datagov-deploy/issues/1796 below in case we pick up
+# that work.
 postfix_install:
   - postfix
-  - postfix-pcre  # needed for regexp database type
+  # - postfix-pcre  # needed for regexp database type
   - mailutils
   - libsasl2-2
   - sasl2-bin
@@ -231,9 +234,9 @@ postfix_mailname: datagov.us
 postfix_smtpd_tls_cert_file: /etc/ssl/certs/datagov_host.crt
 postfix_smtpd_tls_key_file: /etc/ssl/certs/datagov_host.key
 postfix_inet_interfaces: loopback-only  # only listen on loopback interfaces, we don't except remote mail from remote sources.
-postfix_default_database_type: regexp
+#postfix_default_database_type: regexp
 postfix_sender_canonical_maps:
-  - sender: /@{{ ansible_fqdn }}$/  # anything from the host should be mapped to a clean domain
+  - sender: "@{{ ansible_fqdn }}"  # anything from the host should be mapped to a clean domain
     rewrite: no-reply+{{ ansible_fqdn }}@datagov.us
 postfix_mydestination:
   - datagov.us
@@ -242,14 +245,14 @@ postfix_mydestination:
   - localhost
   - localhost.localdomain
 # Configure postfix as an email sink: rewrite all recipients to root local user
-postfix_recipient_canonical_maps:
-  - recipient: /./  # regexp to match all addresses
-    rewrite: root
-postfix_raw_options:
-  - |-
-    # Rewrite only the envelope to avoid changing the message headers. We want to
-    # keep the From: header intact for inspection.
-    recipient_canonical_classes = envelope_recipient
+#postfix_recipient_canonical_maps:
+#  - recipient: /./  # regexp to match all addresses
+#    rewrite: root
+#postfix_raw_options:
+#  - |-
+#    # Rewrite only the envelope to avoid changing the message headers. We want to
+#    # keep the From: header intact for inspection.
+#    recipient_canonical_classes = envelope_recipient
 
 
 # SAML
