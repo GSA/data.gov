@@ -74,5 +74,5 @@ ignore:
     - '*':
         reason: >-
           Fix not yet released https://bugzilla.redhat.com/show_bug.cgi?id=1835566
-        expires: 2020-06-23T06:00:00.000Z
+        expires: 2020-07-07T06:00:00.000Z
 patch: {}
