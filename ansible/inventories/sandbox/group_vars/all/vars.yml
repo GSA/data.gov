@@ -35,7 +35,7 @@ catalog_next_ckan_plugins_default:
   - image_view
   - text_view
   - recline_view
-  - harvest
+  - datagov_harvest
   - ckan_harvester
   - geodatagov
   - datajson
