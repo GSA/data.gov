@@ -139,7 +139,7 @@ newrelic_environment: production
 
 pycsw_app_version: datagov/v2.4.x
 pycsw_base_url: https://catalog.data.gov
-pycsw_catalog_url: https://catalog.data.gov
+pycsw_ckan_url: https://catalog.data.gov
 pycsw_db_host: "{{ catalog_pycsw_db_host }}"
 pycsw_db_name: "{{ catalog_pycsw_db_name }}"
 pycsw_db_password: "{{ catalog_pycsw_db_pass }}"

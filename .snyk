@@ -17,62 +17,9 @@ ignore:
           trusted inputs and templates on hosts with access restricted to
           operators only.
         expires: 2020-06-29T00:00:00.000Z
-  SNYK-PYTHON-ANSIBLE-559099:
-    - '*':
-        reason: review with data.gov team
-        expires: 2020-06-07T06:00:00.000Z
-  SNYK-PYTHON-ANSIBLE-559165:
-    - '*':
-        reason: review with data.gov team
-        expires: 2020-06-07T06:00:00.000Z
-  SNYK-PYTHON-ANSIBLE-559542:
-    - '*':
-        reason: review with data.gov team
-        expires: 2020-06-07T06:00:00.000Z
-  SNYK-PYTHON-PYYAML-559098:
-    - '*':
-        reason: review with data.gov team
-        expires: 2020-06-07T06:00:00.000Z
-  SNYK-PYTHON-ANSIBLE-559860:
-    - '*':
-        reason: playbooks are only run from/on trusted hosts.
-        expires: 2020-06-13T06:00:00.000Z
-  SNYK-PYTHON-ANSIBLE-560128:
-    - '*':
-        reason: svn module is not used.
-        expires: 2020-06-13T06:00:00.000Z
-  SNYK-PYTHON-ANSIBLE-560365:
-    - '*':
-        reason: >-
-          Hosts we run on are trusted, and information disclosure on these
-          hosts wouldn't be exposed outside of operators.
-        expires: 2020-06-17T06:00:00.000Z
-  SNYK-PYTHON-ANSIBLE-560366:
-    - '*':
-        reason: >-
-          Risk is acceptable. Playbooks are only run by trusted operators, with
-          trusted inputs and templates on hosts with access restricted to
-          operators only.
-        expires: 2020-06-17T06:00:00.000Z
-  SNYK-PYTHON-ANSIBLE-560367:
-    - '*':
-        reason: >-
-          ansible-vault is only executed on single-user developer workstations
-          and the jumpbox which is only accessible by operators.
-        expires: 2020-06-17T06:00:00.000Z
-  SNYK-PYTHON-ANSIBLE-560368:
-    - '*':
-        reason: >-
-          Remote hosts are trusted, only allowing access to operators.
-        expires: 2020-06-17T06:00:00.000Z
-  SNYK-PYTHON-ANSIBLE-561048:
-    - '*':
-        reason: >-
-          Fix not yet released https://github.com/ansible/ansible/pull/68431
-        expires: 2020-04-14T06:00:00.000Z
   SNYK-PYTHON-ANSIBLE-569107:
     - '*':
         reason: >-
           Fix not yet released https://bugzilla.redhat.com/show_bug.cgi?id=1835566
-        expires: 2020-06-23T06:00:00.000Z
+        expires: 2020-07-07T06:00:00.000Z
 patch: {}
