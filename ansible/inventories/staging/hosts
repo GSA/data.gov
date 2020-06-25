@@ -23,8 +23,14 @@ catalog-harvester2d.dev-ocsit.bsp.gsa.gov
 catalogharvester1d.dev-ocsit.bsp.gsa.gov
 catalogharvester2d.dev-ocsit.bsp.gsa.gov
 
+[catalog-harvester-next:children]
+catalog-harvester-v2
+
 [catalog-web:children]
 catalog-web-v1
+
+[catalog-web-next:children]
+catalog-web-v2
 
 [catalog-web-v1]
 catalog-web[1:2]d.dev-ocsit.bsp.gsa.gov
@@ -40,6 +46,9 @@ catalog-admin-v2
 
 [catalog-admin:children]
 catalog-admin-v1
+
+[catalog-admin-next:children]
+catalog-admin-v2
 
 [catalog-admin-v1]
 catalogpub-web1d.dev-ocsit.bsp.gsa.gov

@@ -1,6 +1,6 @@
 ---
 - name: Catalog web stack
-  hosts: catalog-web
+  hosts: catalog-web,catalog-web-next
   serial: "{{ datagov_serial | default(1) }}"
   vars:
       app_type: catalog
@@ -80,7 +80,7 @@
 
 
 - name: logrotate configuration
-  hosts: catalog-web:!catalog-web-next
+  hosts: catalog-web,catalog-web-next
   roles:
     - role: nickhammond.logrotate
       logrotate_scripts:
@@ -97,28 +97,34 @@
 
 
 - name: NewRelic
-  hosts: catalog-web,!catalog-admin,!catalog-web-next
-  vars:
-    newrelic_app_name: catalog
+  hosts: catalog-web,catalog-web-next
   roles:
     - role: monitoring/newrelic/python-agent-ansible
       when: common_newrelic_enabled
   tags:
     - newrelic
 
-- name: NewRelic
-  hosts: catalog-admin:!catalog-web-next
-  vars:
-    newrelic_app_name: catalog-admin
-  roles:
-    - role: monitoring/newrelic/python-agent-ansible
-      when: common_newrelic_enabled
-  tags:
-    - newrelic
+- name: Service-level smoke tests (catalog classic)
+  hosts: catalog-web
+  tasks:
+    - name: flush handlers
+      meta: flush_handlers
 
+    - name: assert catalog is up
+      uri:
+        url: "{{ catalog_ckan_service_url }}/api/action/status_show"
+        follow_redirects: none
+        status_code: 200
+        # TODO enable cert validation. Staging and production hosts have GSA
+        # signed certs which should be valid.
+        # https://github.com/GSA/datagov-deploy/issues/900
+        validate_certs: false
+      run_once: true
+      delegate_to: localhost
+      become: false
 
-- name: Service-level smoke tests
-  hosts: catalog-web:!catalog-web-next
+- name: Service-level smoke tests (catalog-next)
+  hosts: catalog-web-next
   tasks:
     - name: flush handlers
       meta: flush_handlers
