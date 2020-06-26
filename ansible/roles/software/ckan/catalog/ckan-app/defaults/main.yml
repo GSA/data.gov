@@ -74,6 +74,6 @@ app_type: catalog
 who_secure: "False"
 token_dat: placeholder-token
 catalog_ckan_redis_host: localhost
-catalog_ckan_fdgc2iso_host: localhost
+catalog_ckan_fgdc2iso_host: localhost
 ckan_production_ini_template: etc_ckan_production.ini.j2
 ckan_uses_gunicorn: false
