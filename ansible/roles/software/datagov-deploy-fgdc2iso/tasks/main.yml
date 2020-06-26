@@ -4,21 +4,25 @@
     msg: saxon_license is required but has not been defined.
   when: saxon_license is undefined
 
-- name: include distribution-specific variables
-  include_vars: "{{ ansible_distribution_release }}.yml"
-
-- name: prepare packages needed for harvester
-  apt: name="{{ catalog_harvester_fgdc2iso_apt_packages }}" state=present
-
   # Nessus 12085
 - name: remove default tomcat files
-  file: dest={{ catalog_harvester_tomcat_directory }}/webapps/ROOT state=absent
+  file: dest=/opt/tomcat/webapps/{{item}} state=absent
+  with_items:
+    - docs
+    - examples
+    - host-manager
+    - manager
+    - ROOT
 
+- name: install cron
+  apt: name=cron state=present
+
+  # TODO use cron module
 - name: copy clean-tmp-files cron
   copy: src=etc/cron.d/clean-tmp-files dest=/etc/cron.d/clean-tmp-files mode=0644
 
 - name: copy fgdc2iso app
-  copy: src=var/lib/tomcat6/webapps/fgdc2iso.war dest={{ catalog_harvester_tomcat_directory }}/webapps/fgdc2iso.war mode=0644
+  copy: src=opt/tomcat/webapps/fgdc2iso.war dest=/opt/tomcat/webapps/fgdc2iso.war mode=0644
   notify: restart tomcat
 
 - name: copy saxon-license.lic

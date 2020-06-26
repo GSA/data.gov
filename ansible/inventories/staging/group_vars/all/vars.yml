@@ -13,6 +13,7 @@ catalog_ckan_qa_update_process_count: 5
 catalog_ckan_readwrite_configuration: readonly
 catalog_ckan_redis_host: catalog-harvester1d.dev-ocsit.bsp.gsa.gov
 catalog_ckan_redis_password: "{{ redis_password }}"
+catalog_ckan_fgdc2iso_host: catalog-fgdc2iso1d.dev-ocsit.bsp.gsa.gov
 catalog_ckan_saml2_enabled: true
 catalog_ckan_service_url: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
 catalog_ckan_solr_host: datagov-solr1d.dev-ocsit.bsp.gsa.gov

@@ -4,6 +4,7 @@
 [tag_group_catalog_harvester_next]
 [tag_group_catalog_web]
 [tag_group_catalog_web_next]
+[tag_group_fgdc2iso]
 [tag_group_dashboard_web]
 [tag_group_efk_nginx]
 [tag_group_elasticsearch]
@@ -28,6 +29,9 @@ tag_group_catalog_harvester_next
 [catalog-web:children]
 tag_group_catalog_web
 tag_group_catalog_web_next
+
+[fgdc2iso:children]
+tag_group_fgdc2iso
 
 [catalog-web-next:children]
 tag_group_catalog_web_next
