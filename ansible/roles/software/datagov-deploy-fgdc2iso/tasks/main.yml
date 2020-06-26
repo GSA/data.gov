@@ -6,7 +6,7 @@
 
   # Nessus 12085
 - name: remove default tomcat files
-  file: dest=/opt/tomcat/webapps/{{item}} state=absent
+  file: dest=/opt/tomcat/webapps/{{ item }} state=absent
   with_items:
     - docs
     - examples
