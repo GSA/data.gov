@@ -21,6 +21,13 @@
 - name: copy clean-tmp-files cron
   copy: src=etc/cron.d/clean-tmp-files dest=/etc/cron.d/clean-tmp-files mode=0644
 
+- name: Copying nginix configuration
+  template:
+    src: "fgdc2iso.nginx.conf.j2"
+    dest: "/etc/nginx/sites-enabled/fgdc2iso.nginx.conf"
+  notify:
+    - reload nginx
+
 - name: copy fgdc2iso app
   copy: src=opt/tomcat/webapps/fgdc2iso.war dest=/opt/tomcat/webapps/fgdc2iso.war mode=0644
   notify: restart tomcat

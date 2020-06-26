@@ -11,4 +11,15 @@
         tomcat_instances:
           - name: "tomcat"
             version: 9
+
+
+- name: Deploy nginx
+  hosts: fgdc2iso
+  roles:
+    - { role: geerlingguy.nginx, tags: [nginx, provision] }
+
+
+- name: Deploy fgdc2iso
+  hosts: fgdc2iso
+  roles:
     - role: software/datagov-deploy-fgdc2iso

@@ -1,3 +1,6 @@
 ---
 - name: restart tomcat
   service: name=tomcat state=restarted
+
+- name: reload nginx
+  service: name=nginx state=reloaded
