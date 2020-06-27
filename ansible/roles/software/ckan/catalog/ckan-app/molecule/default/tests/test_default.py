@@ -78,7 +78,7 @@ def test_compatible_repoze_who(host):
     assert 'repoze.who' in packages
     assert 'Paste' in packages
 
-    assert '2.0' == packages['repoze.who'].get('version')
+    assert '2.2.0' == packages['repoze.who'].get('version')
     assert '1.7.5.1' == packages['Paste'].get('version')
 
 

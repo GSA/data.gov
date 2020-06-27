@@ -94,7 +94,7 @@
 # Work-around repoze.who issue for environments where saml2 is not configured.
 - name: install compatible version of repoze.who
   pip:
-    name: repoze.who==2.0.0
+    name: repoze.who==2.2.0
     virtualenv: "{{ project_source_new_code_path }}"
     umask: '0022'
     state: present
