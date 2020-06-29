@@ -1,7 +1,7 @@
 ---
 - name: Catalog web stack
   hosts: catalog-web
-  serial: 1
+  serial: "{{ datagov_serial | default(1) }}"
   vars:
       app_type: catalog
 

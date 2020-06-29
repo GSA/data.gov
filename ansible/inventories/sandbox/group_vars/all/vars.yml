@@ -73,6 +73,7 @@ dashboard_service_url: https://dashboard.sandbox.datagov.us
 datagov_enable_postgresql_role: true
 datagov_environment: sandbox
 datagov_sandbox_env: sandbox
+datagov_serial: "100%"
 
 default_tls_host_key: "{{ vault_default_tls_host_key }}"
 default_tls_host_certificate: |-

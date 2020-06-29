@@ -1,6 +1,6 @@
 ---
 - hosts: '!jumpbox'
-  serial: 1
+  serial: "{{ datagov_serial | default(1) }}"
   gather_facts: false
   tasks:
     - name: Check if reboot is required
