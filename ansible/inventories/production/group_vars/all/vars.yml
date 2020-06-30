@@ -233,7 +233,7 @@ nessus_agent_port: "{{ vault_nessus_agent_port }}"
 nessus_agent_group: "{{ vault_nessus_agent_group }}"
 
 # saxon license
-saxon_license: "{{ vault_saxon_license }}"
+fgdc2iso_saxon_license: "{{ vault_fgdc2iso_saxon_license }}"
 
 
 # ckan

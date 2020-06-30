@@ -1,8 +1,8 @@
 ---
-- name: assert saxon_license exists
+- name: assert fgdc2iso_saxon_license exists
   fail:
-    msg: saxon_license is required but has not been defined.
-  when: saxon_license is undefined
+    msg: fgdc2iso_saxon_license is required but has not been defined.
+  when: fgdc2iso_saxon_license is undefined
 
   # Nessus 12085
 - name: remove default tomcat files
@@ -35,6 +35,6 @@
 - name: copy saxon-license.lic
   copy:
     content: |
-      {{ saxon_license }}
+      {{ fgdc2iso_saxon_license }}
     dest: /etc/saxon-license.lic
     mode: "0644"

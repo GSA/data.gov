@@ -240,7 +240,7 @@ saml2_sp_private_key: "{{ vault_saml2_sp_private_key }}"
 
 # fgdc2iso service
 # saxon license
-saxon_license: "{{ vault_saxon_license }}"
+fgdc2iso_saxon_license: "{{ vault_fgdc2iso_saxon_license }}"
 
 
 # SecOps user

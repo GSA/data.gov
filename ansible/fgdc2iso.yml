@@ -1,6 +1,6 @@
 ---
 - name: Deploy Tomcat
-  hosts: fgdc2iso
+  hosts: catalog-fgdc2iso
   roles:
     - role: robertdebock.bootstrap
     - role: robertdebock.core_dependencies
@@ -14,12 +14,12 @@
 
 
 - name: Deploy nginx
-  hosts: fgdc2iso
+  hosts: catalog-fgdc2iso
   roles:
     - { role: geerlingguy.nginx, tags: [nginx, provision] }
 
 
 - name: Deploy fgdc2iso
-  hosts: fgdc2iso
+  hosts: catalog-fgdc2iso
   roles:
     - role: software/datagov-deploy-fgdc2iso
