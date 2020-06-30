@@ -10,7 +10,7 @@
 
 - name: CSW web
   hosts: pycsw-web,!v2
-  serial: 1
+  serial: "{{ datagov_serial | default(1) }}"
   roles:
     - role: gsa.datagov-deploy-pycsw
       pycsw_role: web

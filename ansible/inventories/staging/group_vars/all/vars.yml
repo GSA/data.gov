@@ -57,6 +57,7 @@ dashboard_service_url: https://dashboard-datagov.dev-ocsit.bsp.gsa.gov
 
 # data.gov-wide variables
 datagov_environment: staging
+datagov_serial: "100%"
 
 
 default_tls_host_key: "{{ vault_default_tls_host_key }}"
