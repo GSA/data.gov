@@ -1,0 +1,3 @@
+---
+fgdc2iso_tls_certificate_filepath: /etc/ssl/certs/datagov_host.crt
+fgdc2iso_tls_key_filepath: /etc/ssl/private/datagov_host.key

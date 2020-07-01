@@ -12,12 +12,32 @@
           - name: "tomcat"
             version: 9
 
-
 - name: Deploy nginx
   hosts: catalog-fgdc2iso
   roles:
-    - { role: geerlingguy.nginx, tags: [nginx, provision] }
-
+    - role: geerlingguy.nginx
+      vars:
+        nginx_upstreams:
+          - name: "tomcat"
+            servers:
+              - "127.0.0.1:8080"
+        nginx_vhosts:
+          - listen: "80"
+            server_name: "fgdc2iso"
+            filename: "fgdc2iso.80.conf"
+            return: "301 https://$host$request_uri"
+          - listen: "443"
+            server_name: "fgdc2iso"
+            filename: "fgdc2iso.443.conf"
+            extra_parameters: |
+              location / {
+                proxy_pass http://tomcat;
+              }
+              ssl_certificate     {{ fgdc2iso_tls_certificate_filepath }};
+              ssl_certificate_key {{ fgdc2iso_tls_key_filepath }};
+              ssl_protocols       TLSv1.2 TLSv1.3;
+              ssl_ciphers         HIGH:!aNULL:!MD5;
+      tags: [nginx, provision]
 
 - name: Deploy fgdc2iso
   hosts: catalog-fgdc2iso
