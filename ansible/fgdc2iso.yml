@@ -43,3 +43,39 @@
   hosts: catalog-fgdc2iso
   roles:
     - role: software/datagov-deploy-fgdc2iso
+
+  # Host-level smoke tests
+  tasks:
+    - name: flush handlers
+      meta: flush_handlers
+
+    - name: assert app is up
+      uri:
+        url: http://localhost/fgdc2iso/
+        follow_redirects: all
+        method: POST
+        body: |
+          <metadata>
+            <idinfo>
+              <citation>
+                <citeinfo>
+                  <title>ABC 123</title>
+                </citeinfo>
+              </citation>
+            </idinfo>
+          </metadata>
+        status_code: 200
+        return_content: yes
+        # TODO enable cert validation. Staging and production hosts have GSA
+        # signed certs which should be valid.
+        # https://github.com/GSA/datagov-deploy/issues/900
+        validate_certs: false
+      retries: 3
+      delay: 10
+      register: result
+      until: not result.failed
+
+    - name: assert valid iso returned
+      fail:
+        msg: fgdc2iso does not return correct iso content.
+      when: "'<gco:CharacterString>ABC 123' not in result.content"
