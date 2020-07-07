@@ -78,3 +78,18 @@
     - name: assert valid iso returned
       assert:
         that: "'<gco:CharacterString>ABC 123' in result.content"
+
+- name: logrotate configuration
+  hosts: catalog-fgdc2iso
+  roles:
+    - role: nickhammond.logrotate
+      logrotate_scripts:
+        - name: nginx
+          paths:
+            - /var/log/nginx/*.log
+          options:
+            - compress
+            - copytruncate
+            - daily
+            - missingok
+            - rotate 60
