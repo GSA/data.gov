@@ -1,7 +1,0 @@
----
-- name: Converge
-  hosts: all
-  tasks:
-    - name: "Include datagov-deploy-fgdc2iso"
-      include_role:
-        name: "datagov-deploy-fgdc2iso"

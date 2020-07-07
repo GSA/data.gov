@@ -1,3 +1,4 @@
+---
 galaxy_info:
   author: Fuhu Xia
   description: fgdc2iso provision
@@ -12,5 +13,4 @@ galaxy_info:
 
   galaxy_tags: []
 
-dependencies:
-  - role: robertdebock.tomcat
+dependencies: []

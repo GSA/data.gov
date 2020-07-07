@@ -19,11 +19,21 @@
 
   # TODO use cron module
 - name: copy clean-tmp-files cron
-  copy: src=etc/cron.d/clean-tmp-files dest=/etc/cron.d/clean-tmp-files mode=0644
+  copy:
+    src: etc/cron.d/clean-tmp-files
+    dest: /etc/cron.d/clean-tmp-files
+    mode: 0644
 
 - name: copy fgdc2iso app
-  copy: src=opt/tomcat/webapps/fgdc2iso.war dest=/opt/tomcat/webapps/fgdc2iso.war mode=0644
-  notify: restart tomcat
+  copy:
+    src: opt/tomcat/webapps/fgdc2iso.war
+    dest: /opt/tomcat/webapps/fgdc2iso.war
+    mode: 0644
+
+- name: wait for war file to be deployed
+  wait_for:
+    path: /opt/tomcat/webapps/fgdc2iso/app.py
+    timeout: 20
 
 - name: copy saxon-license.lic
   copy:

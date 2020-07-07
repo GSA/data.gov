@@ -3,11 +3,16 @@ dependency:
   name: galaxy
 driver:
   name: docker
+lint:
+  name: yamllint
 platforms:
-  - name: instance
-    image: docker.io/pycontribs/centos:7
-    pre_build_image: true
+  - name: fgdc2iso-bionic
+    image: ubuntu:bionic
 provisioner:
   name: ansible
+  lint:
+    name: ansible-lint
 verifier:
-  name: ansible
+  name: testinfra
+  lint:
+    name: flake8

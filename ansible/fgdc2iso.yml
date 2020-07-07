@@ -76,6 +76,5 @@
       until: not result.failed
 
     - name: assert valid iso returned
-      fail:
-        msg: fgdc2iso does not return correct iso content.
-      when: "'<gco:CharacterString>ABC 123' not in result.content"
+      assert:
+        that: "'<gco:CharacterString>ABC 123' in result.content"
