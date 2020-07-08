@@ -50,6 +50,9 @@
 - name: gsa.datagov-deploy-common
   src: https://github.com/GSA/datagov-deploy-common
   version: v4.1.1
+- name: gsa.datagov-deploy-fgdc2iso
+  src: https://github.com/GSA/datagov-deploy-fgdc2iso
+  version: master
 - name: gsa.datagov-deploy-jenkins
   src: https://github.com/GSA/datagov-deploy-jenkins
   version: v1.0.0

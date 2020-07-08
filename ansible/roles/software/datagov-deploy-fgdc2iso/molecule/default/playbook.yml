@@ -1,8 +1,0 @@
----
-- name: Converge
-  hosts: all
-
-  roles:
-    - role: datagov-deploy-fgdc2iso
-      vars:
-        fgdc2iso_saxon_license: blah blah fake saxon license Licensor=Saxonica

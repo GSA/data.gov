@@ -1,2 +1,0 @@
-# delete those tomcat tmp file older than 2 days
-0 0 * * * root find /tmp/ -type f -user tomcat -name "tmp*-*-*-*-*" -mtime +2 -delete

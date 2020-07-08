@@ -42,7 +42,7 @@
 - name: Deploy fgdc2iso
   hosts: catalog-fgdc2iso
   roles:
-    - role: software/datagov-deploy-fgdc2iso
+    - role: gsa.datagov-deploy-fgdc2iso
 
   # Host-level smoke tests
   tasks:
