@@ -90,8 +90,8 @@
 - name: robertdebock.java
   version: 2.5.0
 - name: robertdebock.service
-  version: 2.5.3
-- name: robertdebock.tomcat
   version: 2.6.0
-- name: sbaerlocher.wp-cli
+- name: robertdebock.tomcat
   version: 4.5.0
+- name: sbaerlocher.wp-cli
+  version: 1.3.1
