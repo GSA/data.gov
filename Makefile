@@ -12,6 +12,7 @@ ANSIBLE_PLAYBOOKS := \
   common.yml \
   dashboard-web.yml \
   datagov-web.yml \
+  fgdc2iso.yml \
   inventory.yml \
   jenkins.yml \
   jumpbox.yml \

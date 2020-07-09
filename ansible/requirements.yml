@@ -50,6 +50,9 @@
 - name: gsa.datagov-deploy-common
   src: https://github.com/GSA/datagov-deploy-common
   version: v4.1.1
+- name: gsa.datagov-deploy-fgdc2iso
+  src: https://github.com/GSA/datagov-deploy-fgdc2iso
+  version: v1.0.0
 - name: gsa.datagov-deploy-jenkins
   src: https://github.com/GSA/datagov-deploy-jenkins
   version: v1.0.0
@@ -80,5 +83,15 @@
   version: 1.0.0
 - name: oefenweb.postfix
   version: v3.0.1
+- name: robertdebock.bootstrap
+  version: 4.2.0
+- name: robertdebock.core_dependencies
+  version: 1.4.0
+- name: robertdebock.java
+  version: 2.5.0
+- name: robertdebock.service
+  version: 2.6.0
+- name: robertdebock.tomcat
+  version: 4.5.0
 - name: sbaerlocher.wp-cli
   version: 1.3.1
