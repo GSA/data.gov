@@ -5,21 +5,10 @@ ignore:
   SNYK-PYTHON-ANSIBLE-536475:
     - '*':
         reason: solaris_zone module is not used
-        expires: 2020-06-29T00:00:00.000Z
-  SNYK-PYTHON-ANSIBLE-72650:
-    - '*':
-        reason: 'ansible playbooks are not run on windows hosts, linux only'
-        expires: 2020-06-29T00:00:00.000Z
-  SNYK-PYTHON-ANSIBLE-174932:
-    - '*':
-        reason: >-
-          Risk is acceptable. Playbooks are only run by trusted operators, with
-          trusted inputs and templates on hosts with access restricted to
-          operators only.
-        expires: 2020-06-29T00:00:00.000Z
+        expires: 2020-08-07T00:00:00.000Z
   SNYK-PYTHON-ANSIBLE-569107:
     - '*':
         reason: >-
           Fix not yet released https://bugzilla.redhat.com/show_bug.cgi?id=1835566
-        expires: 2020-07-07T06:00:00.000Z
+        expires: 2020-07-14T06:00:00.000Z
 patch: {}

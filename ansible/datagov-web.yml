@@ -1,7 +1,7 @@
 ---
 - name: Deploy Wordpress
   hosts: wordpress-web
-  serial: 1
+  serial: "{{ datagov_serial | default(1) }}"
   roles:
     - { role: software/common/tls, tags: [provision, tls] }
     - { role: software/common/php-common, tags: [provision] }
@@ -16,7 +16,7 @@
 
 - name: Deploying Data.gov
   hosts: wordpress-web
-  serial: 1
+  serial: "{{ datagov_serial | default(1) }}"
   roles:
     - { role: gsa.datagov-deploy-wordpress, tags: [deploy, provision] }
   tasks:

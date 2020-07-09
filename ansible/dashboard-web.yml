@@ -1,7 +1,7 @@
 ---
 - name: Provisioning Dashboard
   hosts: dashboard-web
-  serial: 1
+  serial: "{{ datagov_serial | default(1) }}"
   roles:
     - { role: software/common/tls, tags: [provision, tls] }
     - { role: software/common/php-common, tags: [provision] }
@@ -17,7 +17,7 @@
 
 - name: Deploying Dashboard
   hosts: dashboard-web
-  serial: 1
+  serial: "{{ datagov_serial | default(1) }}"
   roles:
     - { role: gsa.datagov-deploy-dashboard, tags: [deploy, provision] }
   # Host-level smoke tests
