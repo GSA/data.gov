@@ -72,6 +72,7 @@ dashboard_service_url: https://dashboard.sandbox.datagov.us
 # data.gov-wide variables
 datagov_enable_postgresql_role: true
 datagov_environment: sandbox
+datagov_operators_test: "{{ vault_datagov_operators_test }}"
 datagov_sandbox_env: sandbox
 datagov_serial: "100%"
 

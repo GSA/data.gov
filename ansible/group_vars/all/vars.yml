@@ -5,9 +5,6 @@
 
 # Operators for production and staging environments (GSA environments)
 datagov_operators_production: "{{ vault_datagov_operators_production }}"
-# Operators for test and sandbox environments
-datagov_operators_test: "{{ vault_datagov_operators_test }}"
-
 
 # catalog
 catalog_ckan_python_home: "{{ common_python_version_directory }}"
