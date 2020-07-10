@@ -23,11 +23,7 @@
             servers:
               - "127.0.0.1:8080"
         nginx_vhosts:
-          - listen: "80"
-            server_name: "fgdc2iso"
-            filename: "fgdc2iso.80.conf"
-            return: "301 https://$host$request_uri"
-          - listen: "443"
+          - listen: "443 ssl"
             server_name: "fgdc2iso"
             filename: "fgdc2iso.443.conf"
             extra_parameters: |
@@ -52,7 +48,7 @@
 
     - name: assert app is up
       uri:
-        url: http://localhost/fgdc2iso/
+        url: https://{{ ansible_fqdn }}/fgdc2iso/
         follow_redirects: all
         method: POST
         body: |
