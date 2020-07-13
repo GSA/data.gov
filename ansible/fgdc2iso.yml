@@ -63,10 +63,6 @@
           </metadata>
         status_code: 200
         return_content: yes
-        # TODO enable cert validation. Staging and production hosts have GSA
-        # signed certs which should be valid.
-        # https://github.com/GSA/datagov-deploy/issues/900
-        validate_certs: false
       retries: 3
       delay: 10
       register: result
