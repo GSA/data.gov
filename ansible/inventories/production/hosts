@@ -107,11 +107,15 @@ catalogharvester2p.prod-ocsit.bsp.gsa.gov
 
 [redis:children]
 redis-catalog
+redis-catalog-next
+redis-inventory-next
 
 [redis-catalog]
 catalog-harvester1p.prod-ocsit.bsp.gsa.gov
 
 [redis-catalog-next]
+redis1p.prod-ocsit.bsp.gsa.gov
+
 [redis-inventory-next]
 
 catalogharvester1p.prod-ocsit.bsp.gsa.gov
@@ -138,6 +142,8 @@ catalog-web-v2
 dashboard-web-v2
 inventory-web-v2
 jumpbox-v2
+redis-catalog-next
+redis-inventory-next
 solr
 wordpress-web-v2
 
