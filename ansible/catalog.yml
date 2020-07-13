@@ -7,6 +7,10 @@
   tags:
     - worker
 
+- import_playbook: fgdc2iso.yml
+  tags:
+    - fgdc2iso
+
 - import_playbook: pycsw.yml
   tags:
     - pycsw

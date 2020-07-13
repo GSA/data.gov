@@ -91,11 +91,6 @@ Once you're SSH'd into the jumpbox, follow these steps for deploy.
        $ cd ansible
        $ pipenv run ansible-playbook site.yml
 
-*Note:* Until [1061](https://github.com/GSA/datagov-deploy/issues/1061) is
-resolved, you should not run inventory in sandbox.
-
-    $ ansible-playbook --inventory inventories/sandbox common.yml dashboard.yml wordpress.yml catalog.yml
-
 ### Common plays
 
 _These commands assume you've activated the virtualenv with `pipenv shell` or you can

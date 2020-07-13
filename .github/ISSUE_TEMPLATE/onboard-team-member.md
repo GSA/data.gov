@@ -77,4 +77,5 @@ For new Project Management Office team members, follow these additional steps:
   - Follow the [ansible-vault instructions](https://github.com/GSA/datagov-deploy#editing-vault-secrets)
   - Checkout the `master` branch to make this change as a [hotfix](https://github.com/GSA/datagov-deploy/blob/develop/CONTRIBUTING.md#hotfixes)
   - Edit the vault file `pipenv run ansible-vault edit ansible/group_vars/all/vault.yml` and add your public SSH key
+- [ ] Enable MFA for [HackerOne](https://hackerone.com/settings/auth)
 - [ ] Join [Open Data](https://digital.gov/communities/open-data/) community list
