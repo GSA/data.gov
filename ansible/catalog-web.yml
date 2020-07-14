@@ -97,3 +97,7 @@
       run_once: true
       delegate_to: localhost
       become: false
+      retries: 3
+      delay: 10
+      register: result
+      until: not result.failed
