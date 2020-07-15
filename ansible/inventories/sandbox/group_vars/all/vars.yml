@@ -5,6 +5,7 @@ catalog_ckan_db_host: "{{ catalog_postgresql_login_host }}"
 catalog_ckan_db_name: catalog_db
 catalog_ckan_db_pass: "{{ catalog_postgresql_login_password }}"
 catalog_ckan_db_user: "{{ catalog_postgresql_login_user }}"
+catalog_ckan_email_from: "{{ default_email_from }}"
 catalog_ckan_redis_host: catalog-harvester1tf.internal.sandbox.datagov.us
 catalog_ckan_redis_password: "{{ redis_password }}"
 catalog_ckan_service_url: https://catalog.sandbox.datagov.us
