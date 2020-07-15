@@ -23,6 +23,13 @@
             servers:
               - "127.0.0.1:8080"
         nginx_vhosts:
+          - listen: "80"
+            server_name: "fgdc2iso"
+            filename: "fgdc2iso.80.conf"
+            extra_parameters: |
+              location / {
+                proxy_pass http://tomcat;
+              }
           - listen: "443 ssl"
             server_name: "fgdc2iso"
             filename: "fgdc2iso.443.conf"
