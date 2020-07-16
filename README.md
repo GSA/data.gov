@@ -91,11 +91,6 @@ Once you're SSH'd into the jumpbox, follow these steps for deploy.
        $ cd ansible
        $ pipenv run ansible-playbook site.yml
 
-*Note:* Until [1061](https://github.com/GSA/datagov-deploy/issues/1061) is
-resolved, you should not run inventory in sandbox.
-
-    $ ansible-playbook --inventory inventories/sandbox common.yml dashboard.yml wordpress.yml catalog.yml
-
 ### Common plays
 
 _These commands assume you've activated the virtualenv with `pipenv shell` or you can
@@ -432,21 +427,26 @@ Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html). In order
 to decrypt them for editing or review, you'll need [the Ansible Vault password](https://docs.google.com/document/d/1detdsnIuwmqz6asrIfUWrmxCr56MGschY1yV0UeC_24/edit).
 
 
-#### Setup the vault password
+#### Setup the vault password(s)
 
 On invocations, you'll be prompted for the vault password. You should add the
 password to a file and configure Ansible so that it reads the password from
-file.
+file. In order to use `git log` to review vault history, you'll probably want
+previous passwords as well. First, create a directory for the passwords.
 
     $ mkdir -m 0700 .secrets
-    $ touch .secrets/ansible-secret.txt
 
-Open `.secrets/ansible-secret.txt` and add the password. Then, set
-`ANSIBLE_VAULT_PASSWORD_FILE` to the password file's path.
+Create a file (e.g. `.secrets/ansible-secret-v2.txt`) containing only a single
+[Ansible Vault password](https://docs.google.com/document/d/1detdsnIuwmqz6asrIfUWrmxCr56MGschY1yV0UeC_24/edit).
+You can add additional passwords if you wish, one password per file.
+Then, set [`ANSIBLE_VAULT_IDENTITY_LIST`](https://docs.ansible.com/ansible/latest/reference_appendices/config.html#default-vault-identity-list)
+to the list of password file paths (comma separated).
 
-    $ cat <<EOF >> .env
-    ANSIBLE_VAULT_PASSWORD_FILE=.secrets/ansible-secret.txt
-    EOF
+    $ echo ANSIBLE_VAULT_IDENTITY_LIST=$(find $(pwd)/.secrets -type f | sort -r | paste -s -d, -) > .env
+
+Your .env should look like:
+
+    ANSIBLE_VAULT_IDENTITY_LIST="/home/gsa/projects/datagov/datagov-deploy/.secrets/ansible-secret-v2.txt,/home/gsa/projects/datagov/datagov-deploy/.secrets/ansible-secret-v1.txt"
 
 `pipenv` will load this `.env` file automatically if included at the root of
 the project.

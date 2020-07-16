@@ -1,8 +1,4 @@
 ---
-- include: fgdc2iso.yml
-  tags: ['fgdc2iso']
-  when: catalog_ckan_worker_type == 'main_worker'
-
 - name: Remove pip installed supervisor
   pip: name=supervisor virtualenv=/usr/lib/ckan/ state=absent
   tags:
