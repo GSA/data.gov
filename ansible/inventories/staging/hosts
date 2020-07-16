@@ -32,6 +32,10 @@ catalog-web-v1
 [catalog-web-next:children]
 catalog-web-v2
 
+[catalog-next:children]
+catalog-web-next
+catalog-harvester-next
+
 [catalog-web-v1]
 catalog-web[1:2]d.dev-ocsit.bsp.gsa.gov
 

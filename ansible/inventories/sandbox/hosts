@@ -36,6 +36,10 @@ tag_group_catalog_web_next
 [catalog-web-next:children]
 tag_group_catalog_web_next
 
+[catalog-next:children]
+catalog-web-next
+catalog-harvester-next
+
 [dashboard-web:children]
 tag_group_dashboard_web
 

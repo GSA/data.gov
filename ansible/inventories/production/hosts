@@ -52,6 +52,13 @@ catalogpub-web1p.prod-ocsit.bsp.gsa.gov
 [catalog-admin-v2]
 catalogpubweb1p.prod-ocsit.bsp.gsa.gov
 
+[catalog-harvester-next]
+[catalog-web-next]
+
+[catalog-next:children]
+catalog-web-next
+catalog-harvester-next
+
 [dashboard-web:children]
 dashboard-web-v1
 dashboard-web-v2
