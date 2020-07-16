@@ -8,12 +8,5 @@
       register: reboot_required
 
     - name: Reboot host
-      shell: "sleep 1 && reboot"
-      async: 1
-      poll: 0
+      reboot: {}
       when: force_reboot is defined or reboot_required.stat.exists
-      register: rebooted
-
-    - name: Wait for host to come up
-      local_action: wait_for host={{ ansible_ssh_host }} port=22 delay=60 state=started
-      when: rebooted is not skipped
