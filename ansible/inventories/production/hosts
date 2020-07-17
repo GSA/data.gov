@@ -1,3 +1,6 @@
+[catalog-fgdc2iso]
+catalog-fgdc2iso1p.prod-ocsit.bsp.gsa.gov
+
 [catalog-harvester:children]
 catalog-harvester-v1
 
@@ -137,6 +140,7 @@ wordpress-web-v1
 # bionic stack
 [v2:children]
 catalog-admin-v2
+catalog-fgdc2iso
 catalog-harvester-v2
 catalog-web-v2
 dashboard-web-v2
