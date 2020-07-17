@@ -11,10 +11,10 @@ ignore:
         reason: >-
           Fix not yet released https://bugzilla.redhat.com/show_bug.cgi?id=1835566. Current server security
           sufficient to mitigate risk.
-        expires: 2020-07-20T06:00:00.000Z
+        expires: 2020-07-23T06:00:00.000Z
   SNYK-PYTHON-ANSIBLE-585821:
     - '*':
         reason: >-
           There is no fixed version for ansible. The vulnerable check mode is not used.
-        expires: 2020-07-24T06:00:00.000Z
+        expires: 2020-09-17T06:00:00.000Z
 patch: {}
