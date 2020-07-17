@@ -21,5 +21,6 @@ You are responsible for all [O&M responsibilities](https://github.com/GSA/datago
 - [ ] [Audit log updated](https://docs.google.com/spreadsheets/d/1z6lqmyNxC7s5MiTt9f6vT41IS2DLLJl4HwEqXvvft40/edit) for [AU-6 Log auditing](https://github.com/GSA/datagov-deploy/wiki/Operation-and-Maintenance-Responsibilities#au-6-log-auditing) (**Friday**).
 - [ ] Any [New Relic alerts](https://alerts.newrelic.com/accounts/1601367/incidents) have been addressed or GH issues created.
 - [ ] Weekly [Nessus scan](https://github.com/GSA/datagov-deploy/wiki/Operation-and-Maintenance-Responsibilities#nessus-host-scan-report-from-isso) has been triaged.
+- [ ] Weekly [Snyk scan](https://github.com/GSA/datagov-deploy/wiki/Snyk-configuration-notes#weekly-review) is complete.
 - [ ] If received, the monthly [Netsparker scan](https://github.com/GSA/datagov-deploy/wiki/Operation-and-Maintenance-Responsibilities#netsparker-compliance-scan-report-from-isso) has been triaged.
 - [ ] Finishing the shift: Log the [number of alerts](https://docs.google.com/spreadsheets/d/1u1hSUAQW6FWzphog122stfB6MB9Wiq0NROT3PeicRoM/edit#gid=939071144) 
