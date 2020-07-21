@@ -17,4 +17,10 @@ ignore:
         reason: >-
           There is no fixed version for ansible. The vulnerable check mode is not used.
         expires: 2020-09-17T06:00:00.000Z
+  SNYK-PYTHON-ANSIBLE-585821:
+    - '*':
+        reason: >-
+          Fix is not yet released for ansible, and server access is managed so all users are authorized to
+          read all data, mitigating issue.
+        expires: 2020-10-21T06:00:00.000Z
 patch: {}
