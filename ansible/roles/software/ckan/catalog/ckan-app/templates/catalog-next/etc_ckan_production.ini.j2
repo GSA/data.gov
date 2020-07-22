@@ -187,7 +187,7 @@ ckan.hide_activity_from_users = %(ckan.site_id)s
 #smtp.starttls = False
 #smtp.user = your_username@gmail.com
 #smtp.password = your_password
-smtp.mail_from = no-reply@data.gov
+smtp.mail_from = {{ catalog_ckan_email_from }}
 
 ckan.tracking_enabled = False
 set debug = False

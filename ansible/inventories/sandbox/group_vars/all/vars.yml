@@ -5,6 +5,7 @@ catalog_ckan_db_host: "{{ catalog_postgresql_login_host }}"
 catalog_ckan_db_name: catalog_db
 catalog_ckan_db_pass: "{{ catalog_postgresql_login_password }}"
 catalog_ckan_db_user: "{{ catalog_postgresql_login_user }}"
+catalog_ckan_email_from: "{{ default_email_from }}"
 catalog_ckan_redis_host: catalog-harvester1tf.internal.sandbox.datagov.us
 catalog_ckan_redis_password: "{{ redis_password }}"
 catalog_ckan_fgdc2iso_host: catalog-fgdc2iso1tf.internal.sandbox.datagov.us
@@ -222,13 +223,40 @@ nrinfragent_license_key: "{{ vault_nrinfragent_license_key }}"
 
 
 # postfix
-postfix_relayhost: smtp.gsa.gov
-postfix_relayhost_port: 25
-postfix_sasl_auth_enable: false
-postfix_relaytls: true
-default_email_from: no-reply@data.gov
-postfix_key: "{{ vault_postfix_key }}"
-postfix_pem: "{{ vault_postfix_pem }}"
+default_email_from: no-reply@datagov.us
+# I've left some breadcrumbs from my testing of
+# https://github.com/GSA/datagov-deploy/issues/1796 below in case we pick up
+# that work.
+postfix_install:
+  - postfix
+  # - postfix-pcre  # needed for regexp database type
+  - mailutils
+  - libsasl2-2
+  - sasl2-bin
+  - libsasl2-modules
+postfix_mailname: datagov.us
+postfix_smtpd_tls_cert_file: /etc/ssl/certs/datagov_host.crt
+postfix_smtpd_tls_key_file: /etc/ssl/certs/datagov_host.key
+postfix_inet_interfaces: loopback-only  # only listen on loopback interfaces, we don't except remote mail from remote sources.
+#postfix_default_database_type: regexp
+postfix_sender_canonical_maps:
+  - sender: "@{{ ansible_fqdn }}"  # anything from the host should be mapped to a clean domain
+    rewrite: no-reply+{{ ansible_fqdn }}@datagov.us
+postfix_mydestination:
+  - datagov.us
+  - "{{ postfix_hostname }}"
+  - localdomain
+  - localhost
+  - localhost.localdomain
+# Configure postfix as an email sink: rewrite all recipients to root local user
+#postfix_recipient_canonical_maps:
+#  - recipient: /./  # regexp to match all addresses
+#    rewrite: root
+#postfix_raw_options:
+#  - |-
+#    # Rewrite only the envelope to avoid changing the message headers. We want to
+#    # keep the From: header intact for inspection.
+#    recipient_canonical_classes = envelope_recipient
 
 
 # SAML
