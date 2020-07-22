@@ -59,9 +59,9 @@
           options:
             - compress
             - copytruncate
-            - size 512M
+            - daily
             - missingok
-            - rotate 8
+            - rotate 180
 
 
 - name: NewRelic
