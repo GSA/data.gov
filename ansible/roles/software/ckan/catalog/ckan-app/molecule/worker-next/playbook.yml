@@ -8,4 +8,3 @@
         catalog_ckan_email_from: no-reply@data.gov
         catalog_ckan_worker_type: main_worker
         catalog_harvest_enable_harvest_report: true
-        fgdc2iso_saxon_license: blah blah blah fake saxon license

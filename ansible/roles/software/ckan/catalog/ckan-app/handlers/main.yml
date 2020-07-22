@@ -2,9 +2,6 @@
 - name: restart redis
   service: name=redis-server state=restarted
 
-- name: restart tomcat
-  service: name={{ catalog_harvester_tomcat_service }} state=restarted
-
 - name: reload supervisor
   command: supervisorctl reload
   when:
