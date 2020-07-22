@@ -1,0 +1,2 @@
+# delete those tomcat6 tmp file older than 2 days
+0 0 * * * root find /tmp/ -type f -user tomcat6 -name "tmp*-*-*-*-*" -mtime +2 -delete
