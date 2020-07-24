@@ -88,7 +88,7 @@ extendedKeyUsage = 1.3.6.1.5.5.7.3.1
 subjectAltName = @alt_names
 
 [ alt_names ]
-$(cat | san_hosts)
+$((echo $common_name; cat) | san_hosts)
 EOF
 )
 
