@@ -3,3 +3,4 @@
   hosts: all
   roles:
     - role: ckan-app
+      catalog_ckan_email_from: no-reply@data.gov

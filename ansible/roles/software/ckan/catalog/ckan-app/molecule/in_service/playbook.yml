@@ -7,4 +7,5 @@
   roles:
     - role: ckan-app
       vars:
+        catalog_ckan_email_from: no-reply@data.gov
         datagov_in_service: false

@@ -12,6 +12,7 @@ ANSIBLE_PLAYBOOKS := \
   common.yml \
   dashboard-web.yml \
   datagov-web.yml \
+  fgdc2iso.yml \
   inventory.yml \
   jenkins.yml \
   jumpbox.yml \
@@ -37,8 +38,10 @@ setup:
 	pipenv install --dev
 
 lint:
-	cd ansible && ansible-playbook --syntax-check $(ANSIBLE_PLAYBOOKS)
-	cd ansible && ansible-lint -v -x ANSIBLE0010 --exclude=roles/vendor *.yml
+	cd ansible && ANSIBLE_INVENTORY_ANY_UNPARSED_IS_FAILED=true ansible-playbook --syntax-check --inventory inventories/production $(ANSIBLE_PLAYBOOKS)
+	cd ansible && ANSIBLE_INVENTORY_ANY_UNPARSED_IS_FAILED=true ansible-playbook --syntax-check --inventory inventories/staging $(ANSIBLE_PLAYBOOKS)
+	cd ansible && ANSIBLE_INVENTORY_ANY_UNPARSED_IS_FAILED=true ansible-playbook --syntax-check --inventory inventories/mgmt $(ANSIBLE_PLAYBOOKS)
+	cd ansible && ansible-lint -v -x ANSIBLE0010 --exclude=roles/vendor $(ANSIBLE_PLAYBOOKS)
 
 $(MOLECULE_SUITE_TARGETS):
 	cd ansible/roles/$(subst test-molecule-,,$@) && \

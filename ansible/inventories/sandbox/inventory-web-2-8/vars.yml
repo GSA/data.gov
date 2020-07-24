@@ -1,2 +1,0 @@
----
-inventory_ckan_redis_password: "{{ inventory_next_ckan_redis_password }}"

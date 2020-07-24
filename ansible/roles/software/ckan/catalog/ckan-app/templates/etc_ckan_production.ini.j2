@@ -201,7 +201,7 @@ ckan.hide_activity_from_users = %(ckan.site_id)s
 #smtp.starttls = False
 #smtp.user = your_username@gmail.com
 #smtp.password = your_password
-smtp.mail_from = no-reply@data.gov
+smtp.mail_from = {{ catalog_ckan_email_from }}
 
 ckan.tracking_enabled = False
 set debug = False
@@ -218,7 +218,7 @@ ckanext.spatial.common_map.subdomains = abc
 ckanext.spatial.common_map.attribution = Map tiles &amp; Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY SA</a>.
 ckanext.spatial.harvest.xslt_html_content = ckanext.datagovtheme:templates/xslt/iso-details.xslt
 ckanext.spatial.harvest.xslt_html_content_original = ckanext.datagovtheme:templates/xslt/esri-iso-fgdc-details.xslt
-ckanext.geodatagov.fgdc2iso_service = http://localhost:8080/fgdc2iso/
+ckanext.geodatagov.fgdc2iso_service = http://{{ catalog_ckan_fgdc2iso_host }}/fgdc2iso/
 ckanext.geodatagov.spatial_preview.url = https://climateathome.org/viewer/
 ckanext.geodatagov.spatial_preview.formats = wms kml kmz
 ckanext.geodatagov.dynamic_menu.url_default = https://www.data.gov/app/plugins/datagov-custom/wp_download_links.php
@@ -277,13 +277,13 @@ level = WARNING
 handlers = console
 
 [logger_ckan]
-level = INFO
+level = WARNING
 handlers = console
 qualname = ckan
 propagate = 0
 
 [logger_ckanext]
-level = DEBUG
+level = WARNING
 handlers = console
 qualname = ckanext
 propagate = 0

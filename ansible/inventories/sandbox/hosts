@@ -1,5 +1,6 @@
 # Define ec2 tag groups. There might not be any actual hosts in every group.
 # See github.com/GSA/datagov-infrastructure-modules and github.com/GSA/datagov-infrastructure-live
+[tag_group_catalog_fgdc2iso]
 [tag_group_catalog_harvester]
 [tag_group_catalog_harvester_next]
 [tag_group_catalog_web]
@@ -17,6 +18,8 @@
 [tag_group_v2]
 [tag_group_wordpress_web]
 
+[catalog-fgdc2iso:children]
+tag_group_catalog_fgdc2iso
 
 [catalog-harvester:children]
 tag_group_catalog_harvester
