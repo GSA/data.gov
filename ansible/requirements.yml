@@ -22,7 +22,7 @@
 - name: geerlingguy.jenkins
   version: 4.3.0
 - name: geerlingguy.nginx
-  version: 2.6.3
+  version: 2.8.0
 - name: geerlingguy.php
   version: 3.7.0
 - name: geerlingguy.php-versions
