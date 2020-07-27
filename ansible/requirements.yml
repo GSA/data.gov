@@ -30,7 +30,7 @@
 - name: geerlingguy.php-memcached
   version: 2.0.2
 - name: geerlingguy.php-mysql
-  version: 2.0.2
+  version: 2.1.0
 - name: geerlingguy.pip
   version: 1.3.0
 - name: geerlingguy.solr
