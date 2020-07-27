@@ -17,4 +17,10 @@ ignore:
         reason: >-
           There is no fixed version for ansible. The vulnerable check mode is not used.
         expires: 2020-09-17T06:00:00.000Z
+  SNYK-PYTHON-PYYAML-590151:
+    - '*':
+        reason: >-
+          There is no fix for PyYaml at this time. Only trusted operators are allowed to run yaml files on our services.
+          These operators should only be using trusted sources as well.
+        expires: 2020-08-27T06:00:00.000Z
 patch: {}
