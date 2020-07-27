@@ -41,6 +41,7 @@ common_filebeat_config:
 
 common_newrelic_enabled: "{{ datagov_in_service | default(true) }}"
 common_python_version_number: 2.7.10
+common_ubuntu_advantage_token: "{{ vault_common_ubuntu_advantage_token }}"
 filebeat_enabled: true
 nessus_agent_enabled: true
 trendmicro_enabled: true
