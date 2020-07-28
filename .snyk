@@ -17,4 +17,9 @@ ignore:
         reason: >-
           There is no fixed version for ansible. The vulnerable check mode is not used.
         expires: 2020-09-17T06:00:00.000Z
+  SNYK-PYTHON-PYYAML-590151:
+    - '*':
+        reason: >-
+          YAML playbooks are considered trusted and run only on our secured jumpboxes by our operators. Risk is acceptable.
+        expires: 2020-08-10T06:00:00.000Z
 patch: {}

@@ -9,6 +9,7 @@ molecule = {extras = ["docker"],version = "~=2.22.0"}
 [packages]
 ansible = "~=2.8.0"
 boto = "*"
+cryptography = "*"
 
 [requires]
 python_version = "3.6"
