@@ -20,6 +20,9 @@ ignore:
   SNYK-PYTHON-PYYAML-590151:
     - '*':
         reason: >-
-          YAML playbooks are considered trusted and run only on our secured jumpboxes by our operators. Risk is acceptable.
-        expires: 2020-08-10T06:00:00.000Z
+          There is no fix for PyYaml at this time. YAML playbooks are
+          considered trusted and run only on our secured jumpboxes by our
+          operators.  These operators should only be using trusted sources as
+          well.  Risk is acceptable.
+        expires: 2020-08-27T06:00:00.000Z
 patch: {}
