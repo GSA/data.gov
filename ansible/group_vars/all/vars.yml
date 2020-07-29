@@ -139,8 +139,12 @@ datagov_operators_test:
 
 
 # newrelic monitoring
+newrelic_environment: "{{ datagov_environment | default('unknown') }}"
 nrinfragent_config:
-  license_key: "{{ vault_nrinfragent_license_key }}"
+  license_key: "{{ newrelic_license_key }}"
+  collector_url: https://gov-infra-api.newrelic.com
+  command_channel_url: https://gov-infrastructure-command-api.newrelic.com
+  identity_url: https://gov-identity-api.newrelic.com
   custom_attributes:
     environment: "{{ datagov_environment | default('unknown') }}"
     service: "{{ datagov_service | default('unknown') }}"
