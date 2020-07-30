@@ -27,7 +27,7 @@
 # You must specify the license key associated with your New
 # Relic account. This key binds the Python Agent's data to your
 # account in the New Relic service.
-license_key = {{ nrinfragent_license_key }}
+license_key = {{ newrelic_license_key }}
 
 # The application name. Set this to be the name of your
 # application as you would like it to show up in New Relic UI.
@@ -179,6 +179,10 @@ browser_monitoring.auto_instrument = true
 # the application to construct a statistically representative
 # call tree.
 thread_profiler.enabled = true
+
+# FedRAMP approved collector
+# https://github.com/GSA/datagov-deploy/issues/1944
+host = gov-collector.newrelic.com
 
 # ---------------------------------------------------------------------------
 
