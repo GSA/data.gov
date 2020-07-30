@@ -69,14 +69,20 @@
   vars:
     newrelic_app_name: catalog
   roles:
-    - monitoring/newrelic/python-agent-ansible
+    - role: monitoring/newrelic/python-agent-ansible
+      when: common_newrelic_enabled
+  tags:
+    - newrelic
 
 - name: NewRelic
   hosts: catalog-admin:!catalog-web-next
   vars:
     newrelic_app_name: catalog-admin
   roles:
-    - monitoring/newrelic/python-agent-ansible
+    - role: monitoring/newrelic/python-agent-ansible
+      when: common_newrelic_enabled
+  tags:
+    - newrelic
 
 
 - name: Service-level smoke tests

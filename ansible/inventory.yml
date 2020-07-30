@@ -69,7 +69,8 @@
   vars:
     newrelic_app_name: inventory
   roles:
-    - monitoring/newrelic/python-agent-ansible
+    - role: monitoring/newrelic/python-agent-ansible
+      when: common_newrelic_enabled
   tags:
     - newrelic
 
