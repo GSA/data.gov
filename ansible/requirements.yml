@@ -76,7 +76,7 @@
 - name: jobscore.beats
   version: v1.0.0
 - name: newrelic.newrelic-infra
-  version: 0.7.0
+  version: 0.8.2
 - name: nickhammond.logrotate
   version: v0.0.5
 - name: nleutner.newrelic-php

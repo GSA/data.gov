@@ -135,9 +135,8 @@ inventory_ckan_solr_host: datagov-solrm1p.prod-ocsit.bsp.gsa.gov
 inventory_ckan_solr_port: "8983"
 
 
-# Newrelic
-nrinfragent_license_key: "{{ vault_nrinfragent_license_key }}"
-newrelic_environment: production
+# New Relic
+newrelic_license_key: "{{ vault_newrelic_license_key }}"
 
 
 pycsw_app_version: datagov/v2.4.x
