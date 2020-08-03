@@ -14,6 +14,14 @@
       - swig
       - xmlsec1
 
+- name: set REQUESTS_CA_BUNDLE
+  blockinfile:
+    path: /etc/profile
+    create: true
+    block: |
+      # https://github.com/GSA/datagov-deploy/pull/1965#issuecomment-667562671
+      REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+
 - name: create directory for application logs
   file: dest={{ catalog_log_dir }} owner=www-data group=www-data mode=0755 state=directory
 
