@@ -137,6 +137,9 @@ datagov_operators_test:
     public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDOc4Jh25ibG2ZxoeOJ8fPShoGJNcmU0S0qc4xCda/OcMf8Jtm/jWdUqWAA8vDTUu9tUTjS1aoEd+RsDxsXoQfbi4Za6HBT54qa4CmocEX6XQsdSn7gxFkSMD1KrZHE6Vk26lgmr9mDshcPFdwHXrqmOudZQhfN4CxiAo1E+pbIMhD2UJ/0PPVt/3myAHyywxNymPO0gl/gC1g6UAtidwDwGuWc1m7Fshw2BTt9FYPI4ItepBwps2Kn9+Ze7O1boytr8hoFnlpSJdq/G34YierDkN+yrM5251SkDmK6btjfwdEEkQlBQPkuHSkXUIgjs+YKtOgIUnk8eDFt4rTq8ok/ yaditi.dave@gsa.gov
     active: false
 
+# Limit SSH Access
+jumpbox_ips: "10.0.0.0/8"
+
 
 # newrelic monitoring
 newrelic_environment: "{{ datagov_environment | default('unknown') }}"
