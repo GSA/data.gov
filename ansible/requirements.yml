@@ -49,7 +49,7 @@
   version: v1.3.1
 - name: gsa.datagov-deploy-common
   src: https://github.com/GSA/datagov-deploy-common
-  version: v4.1.3
+  version: v4.1.4
 - name: gsa.datagov-deploy-fgdc2iso
   src: https://github.com/GSA/datagov-deploy-fgdc2iso
   version: v1.0.0
@@ -58,7 +58,7 @@
   version: v1.0.0
 - name: gsa.datagov-deploy-jumpbox
   src: https://github.com/GSA/datagov-deploy-jumpbox
-  version: v2.0.1
+  version: v2.1.0
 - name: gsa.datagov-deploy-pycsw
   src: https://github.com/GSA/datagov-deploy-pycsw
   version: v1.0.5
