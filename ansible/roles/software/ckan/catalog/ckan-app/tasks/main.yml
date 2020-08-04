@@ -20,7 +20,12 @@
     create: true
     block: |
       # https://github.com/GSA/datagov-deploy/pull/1965#issuecomment-667562671
+      # TODO move this to the application environment (via .env or $HOME/profile)
+      # rather than at the system level
       REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+  when:
+    - datagov_environment is defined
+    - datagov_environment != "production"
 
 - name: create directory for application logs
   file: dest={{ catalog_log_dir }} owner=www-data group=www-data mode=0755 state=directory
