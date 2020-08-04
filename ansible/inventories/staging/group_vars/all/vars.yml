@@ -29,6 +29,9 @@ catalog_pycsw_db_user: "{{ vault_catalog_pycsw_db_user }}"
 # catalog-next
 catalog_next_ckan_db_master_host: "{{ vault_catalog_next_ckan_db_master_host }}"
 catalog_next_ckan_db_replica_host: "{{ vault_catalog_next_ckan_db_replica_host }}"
+catalog_next_ckan_redis_host: redis1d.dev-ocsit.bsp.gsa.gov
+catalog_next_ckan_redis_password: "{{ vault_catalog_next_ckan_redis_password }}"
+catalog_next_ckan_redis_url: rediss://{{ catalog_next_ckan_redis_password }}@{{ catalog_next_ckan_redis_host }}:6379/0
 catalog_next_ckan_db_name: "{{ vault_catalog_next_ckan_db_name }}"
 catalog_next_ckan_db_pass: "{{ vault_catalog_next_ckan_db_pass }}"
 catalog_next_ckan_db_user: "{{ vault_catalog_next_ckan_db_user }}"
