@@ -77,3 +77,4 @@ catalog_ckan_redis_host: localhost
 catalog_ckan_fgdc2iso_host: localhost
 ckan_production_ini_template: etc_ckan_production.ini.j2
 ckan_uses_gunicorn: false
+ckan_email_test_server_enabled: false

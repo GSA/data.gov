@@ -4,3 +4,4 @@
   roles:
     - role: ckan-app
       catalog_ckan_email_from: no-reply@data.gov
+      ckan_email_test_server_enabled: true

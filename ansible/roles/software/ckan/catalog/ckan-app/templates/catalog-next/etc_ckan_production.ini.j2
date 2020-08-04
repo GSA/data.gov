@@ -188,8 +188,8 @@ ckan.hide_activity_from_users = %(ckan.site_id)s
 #smtp.user = your_username@gmail.com
 #smtp.password = your_password
 smtp.mail_from = {{ catalog_ckan_email_from }}
-{% if ckan_email_enabled|default(False) %}
-smpt.test_server = true
+{% if ckan_email_test_server_enabled %}
+smpt.test_server = localhost
 {% endif %}
 ckan.tracking_enabled = False
 set debug = False
