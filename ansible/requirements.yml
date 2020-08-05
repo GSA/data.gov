@@ -83,6 +83,8 @@
   version: 1.0.0
 - name: oefenweb.postfix
   version: v3.0.1
+- name: pgolm.monit
+  version: v1.4.0
 - name: robertdebock.bootstrap
   version: 4.2.0
 - name: robertdebock.core_dependencies
