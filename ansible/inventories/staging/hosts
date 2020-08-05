@@ -19,22 +19,8 @@ catalogharvester2d.dev-ocsit.bsp.gsa.gov
 catalog-harvester1d.dev-ocsit.bsp.gsa.gov
 catalog-harvester2d.dev-ocsit.bsp.gsa.gov
 
-[catalog-harvester-v2]
-catalogharvester1d.dev-ocsit.bsp.gsa.gov
-catalogharvester2d.dev-ocsit.bsp.gsa.gov
-
-[catalog-harvester-next:children]
-catalog-harvester-v2
-
 [catalog-web:children]
 catalog-web-v1
-
-[catalog-web-next:children]
-catalog-web-v2
-
-[catalog-next:children]
-catalog-web-next
-catalog-harvester-next
 
 [catalog-web-v1]
 catalog-web[1:2]d.dev-ocsit.bsp.gsa.gov
@@ -42,28 +28,32 @@ catalog-web[1:2]d.dev-ocsit.bsp.gsa.gov
 [catalog-web-v1:children]
 catalog-admin-v1
 
-[catalog-web-v2]
-catalogweb[1:2]d.dev-ocsit.bsp.gsa.gov
-
-[catalog-web-v2:children]
-catalog-admin-v2
-
-[catalog-web-next-a]
-catalogweb1d.dev-ocsit.bsp.gsa.gov
-
-[catalog-web-next-b]
-catalogweb2d.dev-ocsit.bsp.gsa.gov
-
 [catalog-admin:children]
 catalog-admin-v1
-
-[catalog-admin-next:children]
-catalog-admin-v2
 
 [catalog-admin-v1]
 catalogpub-web1d.dev-ocsit.bsp.gsa.gov
 
-[catalog-admin-v2]
+[catalog-next:children]
+catalog-next-harvester
+catalog-next-web
+
+[catalog-next-harvester]
+catalogharvester1d.dev-ocsit.bsp.gsa.gov
+catalogharvester2d.dev-ocsit.bsp.gsa.gov
+
+[catalog-next-web:children]
+catalog-next-web-a
+catalog-next-web-b
+catalog-next-web-admin
+
+[catalog-next-web-a]
+catalogweb1d.dev-ocsit.bsp.gsa.gov
+
+[catalog-next-web-b]
+catalogweb2d.dev-ocsit.bsp.gsa.gov
+
+[catalog-next-web-admin]
 catalogpubweb1d.dev-ocsit.bsp.gsa.gov
 
 [dashboard-web:children]
@@ -151,14 +141,14 @@ catalog-web-v1
 dashboard-web-v1
 inventory-web-v1
 jumpbox-v1
+pycsw-web-v1
+pycsw-worker-v1
 wordpress-web-v1
 
 # bionic stack
 [v2:children]
-catalog-admin-v2
+catalog-next
 catalog-fgdc2iso
-catalog-harvester-v2
-catalog-web-v2
 dashboard-web-v2
 inventory-web-v2
 jumpbox-v2

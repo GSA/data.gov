@@ -40,24 +40,22 @@ catalog-admin-v1
 catalogweb[1:2]p.prod-ocsit.bsp.gsa.gov
 catalogbweb[1:2]p.prod-ocsit.bsp.gsa.gov
 
-[catalog-web-v2:children]
-catalog-admin-v2
-
 [catalog-admin:children]
 catalog-admin-v1
 
 [catalog-admin-v1]
 catalogpub-web1p.prod-ocsit.bsp.gsa.gov
 
-[catalog-admin-v2]
+[catalog-next-admin]
 catalogpubweb1p.prod-ocsit.bsp.gsa.gov
 
-[catalog-harvester-next]
-[catalog-web-next]
+[catalog-next-harvester]
+[catalog-next-web]
 
 [catalog-next:children]
-catalog-web-next
-catalog-harvester-next
+catalog-next-admin
+catalog-next-harvester
+catalog-next-web
 
 [dashboard-web:children]
 dashboard-web-v1
@@ -146,7 +144,6 @@ wordpress-web-v1
 
 # bionic stack
 [v2:children]
-catalog-admin-v2
 catalog-fgdc2iso
 catalog-harvester-v2
 catalog-web-v2

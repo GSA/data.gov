@@ -1,6 +1,6 @@
 ---
 - name: Catalog web stack
-  hosts: catalog-web,catalog-web-next
+  hosts: catalog-web,catalog-next-web
   serial: "{{ datagov_serial | default(1) }}"
   vars:
       app_type: catalog
@@ -80,7 +80,7 @@
 
 
 - name: logrotate configuration
-  hosts: catalog-web,catalog-web-next
+  hosts: catalog-web,catalog-next-web
   roles:
     - role: nickhammond.logrotate
       logrotate_scripts:
@@ -97,7 +97,7 @@
 
 
 - name: NewRelic
-  hosts: catalog-web,catalog-web-next
+  hosts: catalog-web,catalog-next-web
   roles:
     - role: monitoring/newrelic/python-agent-ansible
       when: common_newrelic_enabled
@@ -124,7 +124,7 @@
       become: false
 
 - name: Service-level smoke tests (catalog-next)
-  hosts: catalog-web-next
+  hosts: catalog-next-web
   tasks:
     - name: flush handlers
       meta: flush_handlers

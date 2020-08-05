@@ -1,7 +1,0 @@
----
-catalog_ckan_readwrite_configuration: readwrite
-catalog_ckan_db_host: "{{ catalog_next_ckan_db_primary_host }}"
-
-# Override the newrelic application name to keep it separate from the main
-# catalog-web instances since it's performance profile is very different.
-newrelic_app_name: catalog-admin-next
