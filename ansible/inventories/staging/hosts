@@ -48,6 +48,12 @@ catalogweb[1:2]d.dev-ocsit.bsp.gsa.gov
 [catalog-web-v2:children]
 catalog-admin-v2
 
+[catalog-web-next-a]
+catalogweb1d.dev-ocsit.bsp.gsa.gov
+
+[catalog-web-next-b]
+catalogweb2d.dev-ocsit.bsp.gsa.gov
+
 [catalog-admin:children]
 catalog-admin-v1
 

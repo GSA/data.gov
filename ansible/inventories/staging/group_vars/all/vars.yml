@@ -27,17 +27,26 @@ catalog_pycsw_db_user: "{{ vault_catalog_pycsw_db_user }}"
 
 
 # catalog-next
-catalog_next_ckan_db_master_host: "{{ vault_catalog_next_ckan_db_master_host }}"
+catalog_next_ckan_db_name: "{{ vault_catalog_next_ckan_db_name }}"
+catalog_next_ckan_db_pass: "{{ vault_catalog_next_ckan_db_pass }}"
+catalog_next_ckan_db_primary_host: "{{ vault_catalog_next_ckan_db_primary_host }}"
 catalog_next_ckan_db_replica_host: "{{ vault_catalog_next_ckan_db_replica_host }}"
+catalog_next_ckan_db_user: "{{ vault_catalog_next_ckan_db_user }}"
+catalog_next_ckan_instance_secret: "{{ vault_catalog_next_ckan_instance_secret }}"
+catalog_next_ckan_instance_uuid: 1d6ce0c2-1e55-48c5-8d2a-37452ff57989
+catalog_next_ckan_postgresql_admin_host: "{{ vault_catalog_next_ckan_postgresql_admin_host }}"
+catalog_next_ckan_postgresql_admin_password: "{{ vault_catalog_next_ckan_postgresql_admin_password }}"
+catalog_next_ckan_postgresql_admin_user: "{{ vault_catalog_next_ckan_postgresql_admin_user }}"
+catalog_next_ckan_production_ini_template: catalog-next/etc_ckan_production.ini.j2
 catalog_next_ckan_redis_host: redis1d.dev-ocsit.bsp.gsa.gov
 catalog_next_ckan_redis_password: "{{ vault_catalog_next_ckan_redis_password }}"
 catalog_next_ckan_redis_url: rediss://{{ catalog_next_ckan_redis_password }}@{{ catalog_next_ckan_redis_host }}:6379/0
-catalog_next_ckan_db_name: "{{ vault_catalog_next_ckan_db_name }}"
-catalog_next_ckan_db_pass: "{{ vault_catalog_next_ckan_db_pass }}"
-catalog_next_ckan_db_user: "{{ vault_catalog_next_ckan_db_user }}"
-catalog_next_ckan_postgresql_master_user: "{{ vault_catalog_next_ckan_postgresql_master_user }}"
-catalog_next_ckan_postgresql_master_password: "{{ vault_catalog_next_ckan_postgresql_master_password }}"
-catalog_next_ckan_postgresql_master_host: "{{ vault_catalog_next_ckan_postgresql_master_host }}"
+catalog_next_ckan_solr_a_host: datagov-solr1d-v2.dev-ocsit.bsp.gsa.gov
+catalog_next_ckan_solr_b_host: datagov-solr2d-v2.dev-ocsit.bsp.gsa.gov
+catalog_next_ckan_solr_primary_host: datagov-solrm1d-v2.dev-ocsit.bsp.gsa.gov
+catalog_next_ckan_token_dat: "{{ vault_catalog_next_ckan_token_dat }}"
+catalog_next_ckan_who_ini_secret: "{{ vault_catalog_next_ckan_who_ini_secret }}"
+
 
 
 # common
