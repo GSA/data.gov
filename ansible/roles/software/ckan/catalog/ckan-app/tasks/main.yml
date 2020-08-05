@@ -111,7 +111,9 @@
     virtualenv: "{{ project_source_new_code_path }}"
     umask: '0022'
     state: present
-  when: not catalog_ckan_saml2_enabled
+  when:
+    - not catalog_ckan_saml2_enabled
+    - "'v2' not in group_names"
   notify:
     - reload apache2
     - reload supervisor

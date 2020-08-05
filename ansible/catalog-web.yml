@@ -22,6 +22,38 @@
     - role: software/ckan/fix-ckan-tracking
       tags:
         - frontend
+    - role: pgolm.monit
+      vars:
+        monit_cycle: "{{ monit_cycle_seconds | default(60) }}"
+        monit_log_destination: /var/log/ckan/monit.log
+        monit_webinterface_enabled: false
+        monit_mail_enabled: true
+        monit_alert_addresses: ["{{ datagov_team_email }} only on { resource, timeout }"]
+        monit_alert_mail_format:
+          from: "{{ default_email_from }}"
+          subject: $SERVICE $EVENT at $DATE
+          message: |
+            Monit $ACTION $SERVICE at $DATE on $HOST: $DESCRIPTION.
+
+            Details at New Relic page: https://one.newrelic.com/launcher/infra.infra
+
+            * Note: apache2 memory usage is checked against threshold {{ monit_apache2_mem_threshold | default(90) }}%.
+              You are receiving notifications for the following events:
+              1) "Resource limit matched" in subject line means apache2 is being restarted after memory reaching threshold.
+              2) "Resource limit succeeded" in subject line means apache2 is back to normal after restart.
+              3) "Timeout" means monit has given up monitoring apache2 after too many failed attempts.
+                 Run "sudo rm /var/lib/monit/state && sudo monit reload" to recover it.
+        monit_services:
+          - name: catalog-web-apache2
+            type: process
+            target: /var/run/apache2/apache2.pid
+            start: "/etc/init.d/apache2 start"
+            stop: "/etc/init.d/apache2 stop"
+            rules:
+              - if TOTALMEMORY > {{ monit_apache2_mem_threshold | default(90) }}% for {{ monit_apache2_mem_cycle | default(4) }} cycles then restart
+              - if 5 restarts within 20 cycles then unmonitor
+      tags:
+        - monit
 
   # Host-level smoke tests
   tasks:
@@ -69,14 +101,20 @@
   vars:
     newrelic_app_name: catalog
   roles:
-    - monitoring/newrelic/python-agent-ansible
+    - role: monitoring/newrelic/python-agent-ansible
+      when: common_newrelic_enabled
+  tags:
+    - newrelic
 
 - name: NewRelic
   hosts: catalog-admin:!catalog-web-next
   vars:
     newrelic_app_name: catalog-admin
   roles:
-    - monitoring/newrelic/python-agent-ansible
+    - role: monitoring/newrelic/python-agent-ansible
+      when: common_newrelic_enabled
+  tags:
+    - newrelic
 
 
 - name: Service-level smoke tests
