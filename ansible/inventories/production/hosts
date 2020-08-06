@@ -60,6 +60,20 @@ catalog-next-web-b
 [catalog-next-web-a]
 [catalog-next-web-b]
 
+[ungrouped-catalog-next]
+# We apply the common role to these. Even though they are not in service or
+# assigned to a role, they need to be configured and patched.
+
+# catalog-next-worker ungrouped
+catalogharvester1p.prod-ocsit.bsp.gsa.gov
+catalogharvester2p.prod-ocsit.bsp.gsa.gov
+catalogharvester[3:6]p.prod-ocsit.bsp.gsa.gov
+
+# catalog-next-web ungrouped
+catalogpubweb1p.prod-ocsit.bsp.gsa.gov
+catalogweb[1:2]p.prod-ocsit.bsp.gsa.gov
+catalogbweb[1:2]p.prod-ocsit.bsp.gsa.gov
+
 [dashboard-web:children]
 dashboard-web-v1
 dashboard-web-v2
@@ -148,6 +162,7 @@ jumpbox-v2
 redis-catalog-next
 redis-inventory-next
 solr
+ungrouped-catalog-next
 wordpress-web-v2
 
 [web:children]
