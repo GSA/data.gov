@@ -6,11 +6,9 @@ catalog-harvester-v1
 
 [catalog-harvester-main]
 catalog-harvester1d.dev-ocsit.bsp.gsa.gov
-catalogharvester1d.dev-ocsit.bsp.gsa.gov
 
 [catalog-harvester-misc]
 catalog-harvester2d.dev-ocsit.bsp.gsa.gov
-catalogharvester2d.dev-ocsit.bsp.gsa.gov
 
 [catalog-harvester-qa]
 
@@ -35,12 +33,21 @@ catalog-admin-v1
 catalogpub-web1d.dev-ocsit.bsp.gsa.gov
 
 [catalog-next:children]
-catalog-next-harvester
 catalog-next-web
+catalog-next-worker
 
-[catalog-next-harvester]
+[catalog-next-worker:children]
+catalog-next-worker-main
+catalog-next-worker-misc
+catalog-next-worker-qa
+
+[catalog-next-worker-main]
 catalogharvester1d.dev-ocsit.bsp.gsa.gov
+
+[catalog-next-worker-misc]
 catalogharvester2d.dev-ocsit.bsp.gsa.gov
+
+[catalog-next-worker-qa]
 
 [catalog-next-web:children]
 catalog-next-web-a

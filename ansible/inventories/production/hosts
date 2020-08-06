@@ -6,25 +6,17 @@ catalog-harvester-v1
 
 [catalog-harvester-main]
 catalog-harvester1p.prod-ocsit.bsp.gsa.gov
-catalogharvester1p.prod-ocsit.bsp.gsa.gov
 
 [catalog-harvester-misc]
 catalog-harvester2p.prod-ocsit.bsp.gsa.gov
-catalogharvester2p.prod-ocsit.bsp.gsa.gov
 
 [catalog-harvester-qa]
 catalog-harvester[3:6]p.prod-ocsit.bsp.gsa.gov
-catalogharvester[3:6]p.prod-ocsit.bsp.gsa.gov
 
 [catalog-harvester-v1]
 catalog-harvester1p.prod-ocsit.bsp.gsa.gov
 catalog-harvester2p.prod-ocsit.bsp.gsa.gov
 catalog-harvester[3:6]p.prod-ocsit.bsp.gsa.gov
-
-[catalog-harvester-v2]
-catalogharvester1p.prod-ocsit.bsp.gsa.gov
-catalogharvester2p.prod-ocsit.bsp.gsa.gov
-catalogharvester[3:6]p.prod-ocsit.bsp.gsa.gov
 
 [catalog-web:children]
 catalog-web-v1
@@ -47,10 +39,17 @@ catalog-admin-v1
 catalogpub-web1p.prod-ocsit.bsp.gsa.gov
 
 [catalog-next:children]
-catalog-next-harvester
 catalog-next-web
+catalog-next-worker
 
-[catalog-next-harvester]
+[catalog-next-worker:children]
+catalog-next-worker-main
+catalog-next-worker-misc
+catalog-next-worker-qa
+
+[catalog-next-worker-main]
+[catalog-next-worker-misc]
+[catalog-next-worker-qa]
 
 [catalog-next-web:children]
 catalog-next-web-admin
@@ -141,7 +140,6 @@ wordpress-web-v1
 # bionic stack
 [v2:children]
 catalog-fgdc2iso
-catalog-harvester-v2
 catalog-next
 catalog-web-v2
 dashboard-web-v2
