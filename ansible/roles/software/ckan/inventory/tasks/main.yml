@@ -110,7 +110,7 @@
 - name: load gunicorn
   supervisorctl:
     name: gunicorn-web-app
-    state: present
+    state: restarted
 
 - include_tasks: additional-tasks.yml
   vars:
