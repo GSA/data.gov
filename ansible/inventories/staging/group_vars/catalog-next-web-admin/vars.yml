@@ -3,4 +3,6 @@ catalog_ckan_readwrite_configuration: readwrite
 catalog_ckan_db_host: "{{ catalog_next_ckan_db_primary_host }}"
 catalog_ckan_solr_host: "{{ catalog_next_ckan_solr_primary_host }}"
 
+ckan_site_domain: "{{ catalog_ckan_admin_service_url }}"
+
 newrelic_app_name: catalog-next-admin

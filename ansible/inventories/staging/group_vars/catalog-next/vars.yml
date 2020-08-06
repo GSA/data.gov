@@ -11,7 +11,8 @@ catalog_ckan_readwrite_configuration: readonly
 catalog_ckan_redis_host: "{{ catalog_next_ckan_redis_host }}"
 catalog_ckan_redis_password: "{{ catalog_next_ckan_redis_password }}"
 catalog_ckan_redis_url: "{{ catalog_next_ckan_redis_url }}"
-catalog_ckan_service_url: https://catalog-next-datagov.dev-ocsit.bsp.gsa.gov
+catalog_ckan_service_url: "{{ catalog_next_ckan_service_url }}"
+catalog_ckan_admin_service_url: "{{ catalog_next_ckan_admin_service_url }}"
 catalog_ckan_solr_host: "{{ catalog_next_ckan_solr_a_host }}"  # default. this is probably overridden in other groups/host vars
 catalog_ckan_who_ini_secret: "{{ catalog_next_ckan_who_ini_secret }}"
 
@@ -30,3 +31,6 @@ saml2_site_url: https://admin-catalog-next-datagov.dev-ocsit.bsp.gsa.gov/
 
 # Token for working with the Google Analytics API
 token_dat: "{{ catalog_next_ckan_token_dat }}"
+
+url_readonly: "{{ catalog_next_ckan_service_url }}"
+url_writable: "{{ catalog_next_ckan_admin_service_url }}"
