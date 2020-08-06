@@ -50,7 +50,8 @@ function full_inventory () {
 {
   "production": $(do_ansible_inventory production $directory),
   "staging": $(do_ansible_inventory staging $directory),
-  "mgmt": $(do_ansible_inventory mgmt $directory)
+  "mgmt": $(do_ansible_inventory mgmt $directory),
+  "sandbox": $(do_ansible_inventory sandbox $directory)
 }
 EOF
 }

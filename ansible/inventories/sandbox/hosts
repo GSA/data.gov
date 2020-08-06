@@ -1,94 +1,69 @@
-# Define ec2 tag groups. There might not be any actual hosts in every group.
-# See github.com/GSA/datagov-infrastructure-modules and github.com/GSA/datagov-infrastructure-live
-[tag_group_catalog_fgdc2iso]
-[tag_group_catalog_harvester]
-[tag_group_catalog_harvester_next]
-[tag_group_catalog_web]
-[tag_group_catalog_web_next]
-[tag_group_dashboard_web]
-[tag_group_efk_nginx]
-[tag_group_elasticsearch]
-[tag_group_inventory_web]
-[tag_group_inventory_web_next]
-[tag_group_inventory_web_2_8]
-[tag_group_jenkins]
-[tag_group_jumpbox]
-[tag_group_kibana]
-[tag_group_solr]
-[tag_group_v1]
-[tag_group_v2]
-[tag_group_wordpress_web]
+# Hosts in sandbox are created from [Terraform][1] but
+# provisioned and configured here in Ansible. We use a static hosts file to
+# better match production and staging.
+#
+# [1]: https://github.com/GSA/datagov-infrastructure-live
 
-[catalog-fgdc2iso:children]
-tag_group_catalog_fgdc2iso
+[catalog-fgdc2iso]
+catalog-fgdc2iso1tf.internal.sandbox.datagov.us
 
-[catalog-harvester:children]
-tag_group_catalog_harvester
-tag_group_catalog_harvester_next
+[catalog-harvester]
+catalog-harvester1tf.internal.sandbox.datagov.us
 
-[catalog-harvester-next:children]
-tag_group_catalog_harvester_next
-
-[catalog-web:children]
-tag_group_catalog_web
-tag_group_catalog_web_next
-
-[catalog-web-next:children]
-tag_group_catalog_web_next
+[catalog-web]
+catalog-web1tf.internal.sandbox.datagov.us
 
 [catalog-next:children]
-catalog-web-next
-catalog-harvester-next
+catalog-next-web
+catalog-next-worker
 
-[dashboard-web:children]
-tag_group_dashboard_web
+[catalog-next-worker]
+catalog-harvester-next1tf.internal.sandbox.datagov.us
 
-[efk_nginx:children]
-tag_group_efk_nginx
+[catalog-next-web]
+catalog-next-web1tf.internal.sandbox.datagov.us
 
-[elasticsearch:children]
-tag_group_elasticsearch
+[dashboard-web]
+dashboard-web1tf.internal.sandbox.datagov.us
 
-[inventory-web:children]
-tag_group_inventory_web
+[jumpbox]
+datagov-jump1tf.internal.sandbox.datagov.us
 
+[solr]
+datagov-solr1tf.internal.sandbox.datagov.us
+
+# transitional placeholder
+# TODO remove me
 [inventory-web-2-8:children]
-tag_group_inventory_web_2_8
-tag_group_inventory_web_next
+inventory-next-web
 
-[jenkins:children]
-tag_group_jenkins
+# transitional placeholder
+# TODO remove me
+[inventory-web-next:children]
+inventory-next-web
 
-[jumpbox:children]
-tag_group_jumpbox
+[inventory-next-web]
+inventory-next-web1tf.internal.sandbox.datagov.us
 
-[kibana:children]
-tag_group_kibana
+[inventory-web]
+inventory-web1tf.internal.sandbox.datagov.us
 
-[pycsw-web:children]
-tag_group_catalog_web
+[jenkins]
+jenkins1tf.internal.sandbox.datagov.us
 
-[pycsw-worker:children]
-tag_group_catalog_harvester
-
-[redis:children]
-redis-catalog
-
-[redis-catalog:children]
-tag_group_catalog_harvester
-
-# Redis is provided by ElastiCache
-[redis-catalog-next]
-[redis-inventory-next]
-
-[solr:children]
-tag_group_solr
+[wordpress-web]
+wordpress-web1tf.internal.sandbox.datagov.us
 
 [v1:children]
-tag_group_v1
+catalog-harvester
+catalog-web
+inventory-web
 
 [v2:children]
-tag_group_v2
-
-[wordpress-web:children]
-tag_group_wordpress_web
+catalog-fgdc2iso
+catalog-next
+dashboard-web
+jumpbox
+solr
+jenkins
+wordpress-web
