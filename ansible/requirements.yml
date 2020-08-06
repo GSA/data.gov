@@ -58,7 +58,7 @@
   version: v1.0.0
 - name: gsa.datagov-deploy-jumpbox
   src: https://github.com/GSA/datagov-deploy-jumpbox
-  version: v2.1.0
+  version: v2.1.1
 - name: gsa.datagov-deploy-pycsw
   src: https://github.com/GSA/datagov-deploy-pycsw
   version: v1.0.5
