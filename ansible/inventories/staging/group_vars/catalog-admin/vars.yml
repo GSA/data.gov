@@ -1,3 +1,2 @@
 ---
 catalog_ckan_readwrite_configuration: readwrite
-newrelic_app_name: catalog-admin

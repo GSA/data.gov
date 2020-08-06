@@ -46,16 +46,20 @@ catalog-admin-v1
 [catalog-admin-v1]
 catalogpub-web1p.prod-ocsit.bsp.gsa.gov
 
-[catalog-next-admin]
-catalogpubweb1p.prod-ocsit.bsp.gsa.gov
-
-[catalog-next-harvester]
-[catalog-next-web]
-
 [catalog-next:children]
-catalog-next-admin
 catalog-next-harvester
 catalog-next-web
+
+[catalog-next-harvester]
+
+[catalog-next-web:children]
+catalog-next-web-admin
+catalog-next-web-a
+catalog-next-web-b
+
+[catalog-next-web-admin]
+[catalog-next-web-a]
+[catalog-next-web-b]
 
 [dashboard-web:children]
 dashboard-web-v1
@@ -146,6 +150,7 @@ wordpress-web-v1
 [v2:children]
 catalog-fgdc2iso
 catalog-harvester-v2
+catalog-next
 catalog-web-v2
 dashboard-web-v2
 inventory-web-v2
