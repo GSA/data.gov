@@ -56,6 +56,7 @@ catalog_next_ckan_plugins_default:
   - archiver
   - datagovtheme
   - datagovcatalog
+  - googleanalyticsbasic
 
 # common
 common_newrelic_enabled: false
