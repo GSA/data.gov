@@ -129,7 +129,12 @@
   tags:
     - molecule-notest # Device or resource busy ranaming temp file
 
-- name: Ensure gunicorn is started and enabled
+- name: Ensure gunicorn-web-app configuration is loaded
+  supervisorctl:
+    name: gunicorn-web-app
+    state: present
+
+- name: Ensure gunicorn-web-app service is started
   supervisorctl:
     name: gunicorn-web-app
     state: started
