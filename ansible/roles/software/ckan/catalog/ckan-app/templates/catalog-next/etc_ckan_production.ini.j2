@@ -203,6 +203,9 @@ ckan.harvest.mq.type = redis
 ckanext.harvest.email = on
 ckan.harvest.status_mail.all=True
 
+# FGDC service
+ckanext.geodatagov.fgdc2iso_service = https://{{ catalog_ckan_fgdc2iso_host }}/fgdc2iso/
+
 ## SAML2 Settings
 saml2.site_url = {{ saml2_site_url }}
 saml2.config_path = %(here)s/saml2
