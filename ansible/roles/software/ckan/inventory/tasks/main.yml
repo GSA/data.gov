@@ -137,7 +137,7 @@
 - name: Ensure gunicorn-web-app service is started
   supervisorctl:
     name: gunicorn-web-app
-    state: started
+    state: restarted
 
 - name: Ensure apache2 is started and enabled
   service: name=apache2 enabled={{ datagov_in_service | ternary('true', 'false') }} state={{ datagov_in_service | ternary('started', 'stopped') }}
