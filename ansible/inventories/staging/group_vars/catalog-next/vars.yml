@@ -7,12 +7,14 @@ catalog_ckan_db_name: "{{ catalog_next_ckan_db_name }}"
 catalog_ckan_db_pass: "{{ catalog_next_ckan_db_pass }}"
 catalog_ckan_db_user: "{{ catalog_next_ckan_db_user }}"
 catalog_ckan_plugins_default: "{{ catalog_next_ckan_plugins_default }}"
+catalog_ckan_plugins_additional: []  # disable saml2
 catalog_ckan_readwrite_configuration: readonly
 catalog_ckan_redis_host: "{{ catalog_next_ckan_redis_host }}"
 catalog_ckan_redis_password: "{{ catalog_next_ckan_redis_password }}"
 catalog_ckan_redis_url: "{{ catalog_next_ckan_redis_url }}"
 catalog_ckan_service_url: "{{ catalog_next_ckan_service_url }}"
 catalog_ckan_admin_service_url: "{{ catalog_next_ckan_admin_service_url }}"
+catalog_ckan_saml2_enabled: false
 catalog_ckan_solr_host: "{{ catalog_next_ckan_solr_a_host }}"  # default. this is probably overridden in other groups/host vars
 catalog_ckan_who_ini_secret: "{{ catalog_next_ckan_who_ini_secret }}"
 
