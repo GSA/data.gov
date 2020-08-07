@@ -105,12 +105,9 @@
     - etc/apache2/sites-enabled/ckan.conf
     - etc/apache2/sites-enabled/datapusher.conf
     - etc/supervisor/conf.d/gunicorn-web-app.conf
-  notify: restart apache2
-
-- name: load gunicorn
-  supervisorctl:
-    name: gunicorn-web-app
-    state: present
+  notify:
+    - restart apache2
+    - reload supervisor
 
 - include_tasks: additional-tasks.yml
   vars:

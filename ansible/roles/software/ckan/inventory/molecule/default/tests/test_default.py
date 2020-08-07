@@ -1,4 +1,5 @@
 import os
+import re
 
 import testinfra.utils.ansible_runner
 
@@ -56,3 +57,8 @@ def test_beaker_cache_cleanup(host):
     assert supervisor_conf.mode == 0o644
     assert supervisor_conf.contains(
         '/usr/local/bin/beaker-cache-cleanup.sh')
+
+
+def test_gunicorn_web_app(host):
+    supervisor_output = host.check_output('supervisorctl status')
+    assert re.search(r'gunicorn-web-app +RUNNING', supervisor_output)
