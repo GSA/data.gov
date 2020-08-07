@@ -55,8 +55,8 @@
 
     - name: assert app is up
       uri:
-        url: http://{{ ansible_fqdn }}/fgdc2iso/
-        follow_redirects: all
+        url: https://{{ ansible_fqdn }}/fgdc2iso/
+        validate_certs: false
         method: POST
         body: |
           <metadata>
