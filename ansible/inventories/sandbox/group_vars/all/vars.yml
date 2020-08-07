@@ -33,6 +33,10 @@ catalog_next_postgresql_login_host: "{{ vault_catalog_next_postgresql_login_host
 catalog_next_postgresql_login_password: "{{ vault_catalog_next_postgresql_login_password }}"
 catalog_next_postgresql_login_user: "{{ vault_catalog_next_postgresql_login_user }}"
 
+
+ckan_create_user_via_web: true
+
+
 # common
 common_newrelic_enabled: false
 common_python_version_number: 2.7.10
