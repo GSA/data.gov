@@ -5,7 +5,7 @@ ignore:
   SNYK-PYTHON-ANSIBLE-536475:
     - '*':
         reason: solaris_zone module is not used
-        expires: 2020-08-07T00:00:00.000Z
+        expires: 2020-09-07T00:00:00.000Z
   SNYK-PYTHON-ANSIBLE-569107:
     - '*':
         reason: >-
