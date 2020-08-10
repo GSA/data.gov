@@ -166,6 +166,7 @@
       delay: 10
       register: result
       until: not result.failed
+      when: datagov_in_service | default(true)
 
 - name: Service-level admin-catalog-next.data.gov smoke tests (catalog-next)
   hosts: catalog-next-web-admin
@@ -191,3 +192,4 @@
       delay: 10
       register: result
       until: not result.failed
+      when: datagov_in_service | default(true)
