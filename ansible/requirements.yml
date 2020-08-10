@@ -49,7 +49,7 @@
   version: v1.3.1
 - name: gsa.datagov-deploy-common
   src: https://github.com/GSA/datagov-deploy-common
-  version: v4.1.4
+  version: v4.1.5
 - name: gsa.datagov-deploy-fgdc2iso
   src: https://github.com/GSA/datagov-deploy-fgdc2iso
   version: v1.0.0
