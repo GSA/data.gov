@@ -249,6 +249,14 @@ postfix_mydestination:
   - localdomain
   - localhost
   - localhost.localdomain
+# Match all mail and use the "discard" transport (discard all mail)
+postfix_transport_maps:
+  - pattern: "*"
+    result: "discard:"
+postfix_raw_options:
+  - |
+    # Postfix needs a value set https://github.com/GSA/datagov-deploy/issues/1795
+    smtpd_recipient_restrictions = reject
 # Configure postfix as an email sink: rewrite all recipients to root local user
 #postfix_recipient_canonical_maps:
 #  - recipient: /./  # regexp to match all addresses
