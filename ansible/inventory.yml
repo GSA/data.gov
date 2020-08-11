@@ -25,7 +25,7 @@
         follow_redirects: none
         status_code: 200
         validate_certs: false
-      retries: 3
+      retries: 10
       delay: 10
       register: result
       until: not result.failed
