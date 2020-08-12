@@ -1,6 +1,6 @@
 ---
 - name: Solr
-  hosts: solr
+  hosts: solr,solr-next
   roles:
     - role: geerlingguy.java
       vars:

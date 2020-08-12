@@ -1,0 +1,32 @@
+---
+ckan_catalog_next: true
+ckan_uses_gunicorn: true
+ckan_production_ini_template: catalog-next/etc_ckan_production.ini.j2
+
+catalog_ckan_app_version: master
+app_repo: https://github.com/GSA/catalog.data.gov
+
+catalog_ckan_plugins_default:
+  - envvars
+  - image_view
+  - text_view
+  - recline_view
+  - datagov_harvest
+  - ckan_harvester
+  - geodatagov
+  - datajson
+  - datajson_harvest
+  - geodatagov_miscs
+  - z3950_harvester
+  - arcgis_harvester
+  - geodatagov_geoportal_harvester
+  - waf_harvester_collection
+  - geodatagov_csw_harvester
+  - geodatagov_doc_harvester
+  - geodatagov_waf_harvester
+  - spatial_metadata
+  - spatial_query
+  - report
+  - archiver
+  - datagovtheme
+  - datagovcatalog
