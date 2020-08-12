@@ -107,6 +107,17 @@ datagov_operators_test:
     email: tom.wood@civicactions.com
     public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCnQZMuUYNL4AMje9YL0L8pZNKoJ1b+Vbx9dH30H5ARXxWdOGmGILpMNJ7KOqPokk06fNPBV5NgohxcdzP4dq2E+7SPr4n1Oe7nYEC6wAo0A6IX2WWQ3gQzwZmi15XIohh/FGgDEUQ3NOlV65Go9mPfMNCWgmEin78cMwnyFitQJ4elk445rccbUnHDAFsoVHYoUjWosroMmTNzV1DEfO5fAX3oSOPLOB3kKyOcGhMblBhtyHtYEgok+DvjN9RJqTiM3bgvD4ApzUI7KBP/XJRrE+7iaF6U8YmRvFsLCroQdGUX4MaxkWZZSrccxCAHoDsFyPOlM8D/qfXo++q53JzudCv5fQHT1AcCkNT+POjRONgSihtsTNbtt1GXSpRG16/laSUFh/Fp5eWbQALwnZqm/CJejt/kGtHCyyTCIE6DnvdodJ752+bsCTU3tpeOOt+FjPwkT8Ejf5c5X4kXJy0NWo0PpsS6yf3DaJt246C8Jkso6kPrY2jLW65zbCqjy/lEQ7qLJrIKfcijsGz6e+i1el8UXlZXcwWBGYsY2GIZLCYdbApJ+ifn0ILl1gdWTc5Bd/1YHWSULbM71X7XksG1O9N3qDyd4hfCmakFpkf9PDBFRzCziVgAlbxht9ZFRfyYLz/UZ7viDJuee5OqWi7b30PL80IdLDneejA+eki5RQ== taw@Toms-MacBook-Pro-2.local
 
+# Inventory Credentials
+inventory_ckan_solr_port: "{{ solr_port }}"
+inventory_db_name: inventory_db
+inventory_datapusher_db_name: datapusher
+inventory_datapusher_db_user: datapusher
+inventory_datastore_db_name: datastore
+inventory_datastore_user: datastore
+inventory_datastore_ro_user: datastore_ro
+
+
+
 # Limit SSH Access
 jumpbox_ips: ["10.0.0.0/8"]
 
