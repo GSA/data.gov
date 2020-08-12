@@ -30,7 +30,6 @@ ckan_session_store_type: memory
 ckan_site_domain: https://catalog-next-datagov.dev-ocsit.bsp.gsa.gov
 ckan_uses_gunicorn: true
 
-datagov_in_service: false
 datagov_service: catalog-next
 
 newrelic_app_name: catalog-next
