@@ -41,7 +41,7 @@
         # signed certs which should be valid.
         # https://github.com/GSA/datagov-deploy/issues/900
         validate_certs: false
-      retries: 3
+      retries: 10
       delay: 10
       register: result
       until: not result.failed
