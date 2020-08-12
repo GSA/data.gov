@@ -3,5 +3,28 @@
 # https://github.com/GSA/datagov-infrastructure-modules/issues/32
 ansible_python_interpreter: /usr/bin/python3
 
-inventory_ckan_bucket_name: "{{ vault_bucket_name }}"
-inventory_ckan_bucket_prefix: "{{ vault_bucket_prefix }}"
+# db credentials
+inventory_ckan_db_host: "{{ inventory_next_postgresql_login_host }}"
+inventory_db_user: "{{ inventory_next_postgresql_login_user }}"
+inventory_db_pass: "{{ inventory_next_postgresql_login_password }}"
+datastore_db_server: "{{ inventory_next_postgresql_login_host }}"
+inventory_datapusher_db_pass: "{{ inventory_next_datapusher_db_pass }}"
+inventory_datastore_pass: "{{ inventory_next_datastore_pass }}"
+inventory_datastore_ro_pass: "{{ inventory_next_datastore_ro_pass }}"
+
+# other
+inventory_ckan_bucket_name: "{{ inventory_next_ckan_s3_bucket_name }}"
+inventory_ckan_bucket_prefix: "{{ inventory_next_ckan_s3_bucket_prefix }}"
+ckan_site_domain: "{{ inventory_next_ckan_service_url }}"
+
+# TODO is this for all databases (inventory, datastore, datapusher)? Don't think we need this
+# postgresql_enable_extensions:
+#   - postgis
+
+# max login
+saml2_site_url: unset
+
+# secrets
+ckan_instance_secret: "{{ inventory_next_ckan_instance_secret }}"
+ckan_instance_uuid: "{{ inventory_next_ckan_instance_uuid }}"
+who_ini_secret: "{{ inventory_next_ckan_who_ini_secret }}"

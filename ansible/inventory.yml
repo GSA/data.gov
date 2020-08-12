@@ -1,6 +1,6 @@
 ---
 - name: Provisioning Inventory CKAN Stack
-  hosts: inventory-web:!inventory-web-2-8:!inventory-web-next
+  hosts: inventory-web:inventory-next
   serial: "{{ datagov_serial | default(1) }}"
   vars:
     app_type: inventory
@@ -49,7 +49,7 @@
 
 
 - name: logrotate configuration
-  hosts: inventory-web
+  hosts: inventory-web:inventory-next
   roles:
     - role: nickhammond.logrotate
       logrotate_scripts:
@@ -76,7 +76,7 @@
 
 
 - name: Service-level smoke tests
-  hosts: inventory-web:!inventory-web-2-8:!inventory-web-next
+  hosts: inventory-web:!inventory-next
   tasks:
     - name: flush handlers
       meta: flush_handlers

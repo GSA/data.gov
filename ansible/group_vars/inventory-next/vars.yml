@@ -1,0 +1,9 @@
+---
+
+datagov_service: inventory
+
+# project path
+project_source_rollback_path: /usr/lib/ckan-rollback
+project_source_new_code_path: /usr/lib/ckan-new
+current_source_symlink: /usr/lib/ckan
+project_index_path: /usr/lib/ckan
