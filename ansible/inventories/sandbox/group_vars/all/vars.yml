@@ -215,8 +215,6 @@ postfix_install:
   - sasl2-bin
   - libsasl2-modules
 postfix_mailname: datagov.us
-postfix_smtpd_tls_cert_file: /etc/ssl/certs/datagov_host.crt
-postfix_smtpd_tls_key_file: /etc/ssl/certs/datagov_host.key
 postfix_inet_interfaces: loopback-only  # only listen on loopback interfaces, we don't except remote mail from remote sources.
 #postfix_default_database_type: regexp
 postfix_sender_canonical_maps:
