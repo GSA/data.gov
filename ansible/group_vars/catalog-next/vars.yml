@@ -30,3 +30,4 @@ catalog_ckan_plugins_default:
   - archiver
   - datagovtheme
   - datagovcatalog
+  - googleanalyticsbasic
