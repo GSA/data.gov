@@ -55,16 +55,6 @@
     umask: "0022"
   notify: restart apache2
 
-#- name: setup virtualenv for new deployment
-#  shell: umask 0022 && virtualenv -p "{{ inventory_ckan_python_home }}/bin/python" "{{ project_source_new_code_path }}"
-#  args:
-#    creates: "{{ project_source_new_code_path }}"
-#
-#- name: after vitualenv is setup, upgrade pip
-#  shell: umask 0022 && {{ project_source_new_code_path }}/bin/pip install -U pip
-#  tags:
-#    - skip_ansible_lint
-
 - name: install inventory app from requirements
   pip:
     requirements: "{{ inventory_app_source_path }}/requirements-freeze.txt"
@@ -78,12 +68,12 @@
   tags:
     - datapusher
 
-# - include_tasks: build-pkgs.yml
-#   vars:
-#     pkg: "{{ datapusher_pkgs }}"
-#     virtualenv: "{{ datapusher_virtual_env }}"
-#   tags:
-#     - datapusher
+- include_tasks: build-pkgs.yml
+  vars:
+    pkg: "{{ datapusher_pkgs }}"
+    virtualenv: "{{ datapusher_virtual_env }}"
+  tags:
+    - datapusher
 
 - name: create directories
   action: file path={{ item }} state=directory owner="www-data" group="www-data" mode=0755
@@ -116,7 +106,7 @@
 - name: fix virtualenv permissions
   file: path={{ item }} state=directory group=www-data recurse=yes
   with_items:
-    # - "{{ datapusher_virtual_env }}"
+    - "{{ datapusher_virtual_env }}"
     - "{{ project_source_new_code_path }}"
 
 - name: Symlink current dir with new code
