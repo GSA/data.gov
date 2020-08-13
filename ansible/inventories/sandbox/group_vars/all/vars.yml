@@ -32,31 +32,10 @@ catalog_next_ckan_redis_url: "rediss://:{{ catalog_ckan_redis_password }}@{{ cat
 catalog_next_postgresql_login_host: "{{ vault_catalog_next_postgresql_login_host }}"
 catalog_next_postgresql_login_password: "{{ vault_catalog_next_postgresql_login_password }}"
 catalog_next_postgresql_login_user: "{{ vault_catalog_next_postgresql_login_user }}"
-catalog_next_ckan_plugins_default:
-  - envvars
-  - image_view
-  - text_view
-  - recline_view
-  - datagov_harvest
-  - ckan_harvester
-  - geodatagov
-  - datajson
-  - datajson_harvest
-  - geodatagov_miscs
-  - z3950_harvester
-  - arcgis_harvester
-  - geodatagov_geoportal_harvester
-  - waf_harvester_collection
-  - geodatagov_csw_harvester
-  - geodatagov_doc_harvester
-  - geodatagov_waf_harvester
-  - spatial_metadata
-  - spatial_query
-  - report
-  - archiver
-  - datagovtheme
-  - datagovcatalog
-  - googleanalyticsbasic
+
+
+ckan_create_user_via_web: true
+
 
 # common
 common_newrelic_enabled: false
@@ -260,8 +239,6 @@ postfix_install:
   - sasl2-bin
   - libsasl2-modules
 postfix_mailname: datagov.us
-postfix_smtpd_tls_cert_file: /etc/ssl/certs/datagov_host.crt
-postfix_smtpd_tls_key_file: /etc/ssl/certs/datagov_host.key
 postfix_inet_interfaces: loopback-only  # only listen on loopback interfaces, we don't except remote mail from remote sources.
 #postfix_default_database_type: regexp
 postfix_sender_canonical_maps:
