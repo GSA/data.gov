@@ -2,6 +2,7 @@
 
 datagov_service: inventory
 inventory_db_name: inventory_db
+inventory_ckan_python_home: /usr/local/lib
 app_type: inventory
 
 # project path

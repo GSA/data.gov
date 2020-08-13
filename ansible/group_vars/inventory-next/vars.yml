@@ -3,6 +3,7 @@
 datagov_service: inventory
 app_type: inventory-next
 inventory_db_name: inventory_db_next
+inventory_ckan_python_home: /usr
 datagov_in_service: false
 
 # project path
