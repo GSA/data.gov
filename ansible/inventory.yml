@@ -2,8 +2,6 @@
 - name: Provisioning Inventory CKAN Stack
   hosts: inventory-next
   serial: "{{ datagov_serial | default(1) }}"
-  vars:
-    app_type: inventory
 
   roles:
     - {role: software/common/tls, tags: ['tls']}
