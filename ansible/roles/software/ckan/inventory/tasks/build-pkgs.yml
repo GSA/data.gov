@@ -9,11 +9,11 @@
   with_items: "{{ pkg }}"
   notify: restart apache2
 
-- name: install requirements for pkg
+- name: install requirements
   pip:
     requirements: "{{ virtualenv }}/src/{{ item.name }}/{{ item.requirements }}"
     virtualenv: "{{ virtualenv }}"
-    virtualenv_python: "{{ inventory_ckan_python_home }}/bin/python"
+    virtualenv_python: "{{ python_home }}/bin/python"
     umask: "0022"
   with_items: "{{ pkg }}"
   when: item.requirements is defined
