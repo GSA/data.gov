@@ -14,6 +14,8 @@ inventory_ckan_bucket_name: "{{ inventory_ckan_s3_bucket_name }}"
 inventory_ckan_bucket_prefix: "{{ inventory_ckan_s3_bucket_prefix }}"
 ckan_site_domain: "{{ inventory_ckan_service_url }}"
 
+inventory_app_repo_branch: master
+
 # TODO is this for all databases (inventory, datastore, datapusher)? Don't think we need this
 # postgresql_enable_extensions:
 #   - postgis
