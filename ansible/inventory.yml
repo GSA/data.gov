@@ -63,7 +63,7 @@
 
 
 - name: NewRelic
-  hosts: inventory-web:!inventory-web-2-8:!inventory-web-next
+  hosts: inventory-web:!inventory-next
   vars:
     newrelic_app_name: inventory
   roles:
