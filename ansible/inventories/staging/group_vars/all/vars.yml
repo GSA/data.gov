@@ -220,8 +220,6 @@ postfix_relayhost: smtp.gsa.gov
 postfix_relayhost_port: 25
 postfix_relaytls: true
 postfix_sasl_auth_enable: false
-postfix_smtpd_tls_cert_file: /etc/ssl/certs/datagov_host.crt
-postfix_smtpd_tls_key_file: /etc/ssl/certs/datagov_host.key
 postfix_aliases:
   - user: postmaster
     alias: root
