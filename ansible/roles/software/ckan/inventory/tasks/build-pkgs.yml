@@ -13,7 +13,7 @@
   pip:
     requirements: "{{ virtualenv }}/src/{{ item.name }}/{{ item.requirements }}"
     virtualenv: "{{ virtualenv }}"
-    virtualenv_python: "{{ virtualenv }}/bin/python"
+    virtualenv_python: "{{ inventory_ckan_python_home }}/bin/python"
     umask: "0022"
   with_items: "{{ pkg }}"
   when: item.requirements is defined
