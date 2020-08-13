@@ -24,6 +24,10 @@ ckan_site_domain: "{{ inventory_next_ckan_service_url }}"
 # max login
 saml2_site_url: unset
 
+# redis
+inventory_ckan_redis_password: "{{ inventory_next_ckan_redis_password }}"
+inventory_ckan_redis_host: "{{ inventory_next_ckan_redis_host }}"
+
 # secrets
 ckan_instance_secret: "{{ inventory_next_ckan_instance_secret }}"
 ckan_instance_uuid: "{{ inventory_next_ckan_instance_uuid }}"
