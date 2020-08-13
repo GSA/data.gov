@@ -109,7 +109,6 @@ datagov_operators_test:
 
 # Inventory Credentials
 inventory_ckan_solr_port: "{{ solr_port }}"
-inventory_db_name: inventory_db
 inventory_datapusher_db_name: datapusher
 inventory_datapusher_db_user: datapusher
 inventory_datastore_db_name: datastore

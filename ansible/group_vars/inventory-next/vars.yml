@@ -2,6 +2,7 @@
 
 datagov_service: inventory
 app_type: inventory-next
+inventory_db_name: inventory_db_next
 
 # project path
 project_source_rollback_path: /usr/lib/ckan-rollback
