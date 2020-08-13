@@ -1,6 +1,6 @@
 ---
 - name: Provisioning Inventory CKAN Stack
-  hosts: inventory-web,inventory-next
+  hosts: inventory-next
   serial: "{{ datagov_serial | default(1) }}"
   vars:
     app_type: inventory
