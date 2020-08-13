@@ -109,7 +109,7 @@ default_tls_host_certificate: |-
   -----END CERTIFICATE-----
 
 
-# Inventory TODO: set vault variables
+# Inventory
 inventory_ckan_s3_bucket_name: "{{ vault_inventory_s3_bucket_name }}"
 inventory_ckan_s3_bucket_prefix: "{{ vault_inventory_s3_bucket_prefix }}"
 inventory_ckan_instance_secret: "{{ vault_inventory_ckan_instance_secret }}"
