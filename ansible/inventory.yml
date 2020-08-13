@@ -19,18 +19,18 @@
     - name: flush handlers
       meta: flush_handlers
 
-    - name: assert datapusher is up
-      uri:
-        url: http://localhost:8800
-        follow_redirects: none
-        status_code: 200
-        validate_certs: false
-      retries: 10
-      delay: 10
-      register: result
-      until: not result.failed
-      become: false
-      when: datagov_in_service | default(true)
+    # - name: assert datapusher is up
+    #   uri:
+    #     url: http://localhost:8800
+    #     follow_redirects: none
+    #     status_code: 200
+    #     validate_certs: false
+    #   retries: 10
+    #   delay: 10
+    #   register: result
+    #   until: not result.failed
+    #   become: false
+    #   when: datagov_in_service | default(true)
 
     - name: assert app is up
       uri:
