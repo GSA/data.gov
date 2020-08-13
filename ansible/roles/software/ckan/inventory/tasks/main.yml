@@ -116,7 +116,7 @@
 - name: fix virtualenv permissions
   file: path={{ item }} state=directory group=www-data recurse=yes
   with_items:
-    - "{{ datapusher_virtual_env }}"
+    # - "{{ datapusher_virtual_env }}"
     - "{{ project_source_new_code_path }}"
 
 - name: Symlink current dir with new code
