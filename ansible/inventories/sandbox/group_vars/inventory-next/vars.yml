@@ -3,6 +3,18 @@
 # https://github.com/GSA/datagov-infrastructure-modules/issues/32
 ansible_python_interpreter: /usr/bin/python3
 
+datagov_service: inventory
+app_type: inventory-next
+inventory_db_name: inventory_db_next
+inventory_python_home: "{{ inventory_ckan_python_home }}"
+datagov_in_service: false
+
+# project path
+project_source_rollback_path: /usr/lib/ckan-rollback
+project_source_new_code_path: /usr/lib/ckan-new
+current_source_symlink: /usr/lib/ckan
+project_index_path: /usr/lib/ckan
+
 # db credentials
 inventory_ckan_db_host: "{{ inventory_next_postgresql_login_host }}"
 inventory_db_user: "{{ inventory_next_postgresql_login_user }}"

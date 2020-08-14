@@ -1,5 +1,16 @@
 ---
 
+datagov_service: inventory
+inventory_db_name: inventory_db
+inventory_python_home: "{{ python_home }}"
+app_type: inventory
+
+# project path
+project_source_rollback_path: /usr/lib/ckan-rollback
+project_source_new_code_path: /usr/lib/ckan-new
+current_source_symlink: /usr/lib/ckan
+project_index_path: /usr/lib/ckan
+
 # db credentials
 inventory_ckan_db_host: "{{ inventory_postgresql_login_host }}"
 inventory_db_user: "{{ inventory_postgresql_login_user }}"
