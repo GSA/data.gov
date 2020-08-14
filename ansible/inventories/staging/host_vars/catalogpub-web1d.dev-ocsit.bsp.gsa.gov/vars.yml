@@ -21,3 +21,7 @@ catalog_ckan_db_user: "{{ vault_catalog_ckan_db_user }}"
 catalog_ckan_solr_host: datagov-solrm1d.dev-ocsit.bsp.gsa.gov
 
 common_audit_report_enabled: true
+
+# Since catalog-admin and catalog-web have the same variable precendence (and
+# catalog-web wins), we override the app name here in host vars.
+newrelic_app_name: catalog-admin

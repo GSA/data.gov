@@ -1,6 +1,6 @@
 ---
 - name: Catalog web stack
-  hosts: catalog-web
+  hosts: catalog-web,catalog-next-web
   serial: "{{ datagov_serial | default(1) }}"
   vars:
       app_type: catalog
@@ -80,7 +80,7 @@
 
 
 - name: logrotate configuration
-  hosts: catalog-web:!catalog-web-next
+  hosts: catalog-web,catalog-next-web
   roles:
     - role: nickhammond.logrotate
       logrotate_scripts:
@@ -97,28 +97,55 @@
 
 
 - name: NewRelic
-  hosts: catalog-web,!catalog-admin,!catalog-web-next
-  vars:
-    newrelic_app_name: catalog
+  hosts: catalog-web,catalog-next-web
   roles:
     - role: monitoring/newrelic/python-agent-ansible
       when: common_newrelic_enabled
   tags:
     - newrelic
 
-- name: NewRelic
-  hosts: catalog-admin:!catalog-web-next
-  vars:
-    newrelic_app_name: catalog-admin
-  roles:
-    - role: monitoring/newrelic/python-agent-ansible
-      when: common_newrelic_enabled
-  tags:
-    - newrelic
+- name: Service-level catalog.data.gov smoke tests (catalog classic)
+  hosts: catalog-web
+  tasks:
+    - name: flush handlers
+      meta: flush_handlers
 
+    - name: assert catalog is up
+      uri:
+        url: "{{ catalog_ckan_service_url }}/api/action/status_show"
+        follow_redirects: none
+        status_code: 200
+        # TODO enable cert validation. Staging and production hosts have GSA
+        # signed certs which should be valid.
+        # https://github.com/GSA/datagov-deploy/issues/900
+        validate_certs: false
+      run_once: true
+      delegate_to: localhost
+      become: false
 
-- name: Service-level smoke tests
-  hosts: catalog-web:!catalog-web-next
+- name: Service-level admin-catalog.data.gov smoke tests (catalog classic)
+  hosts: catalog-admin
+  tasks:
+    - name: flush handlers
+      meta: flush_handlers
+
+    - name: assert catalog is up
+      uri:
+        url: "{{ catalog_ckan_admin_service_url }}/api/action/status_show"
+        follow_redirects: none
+        status_code: 200
+        headers:
+          Cookie: auth_tkt=1
+        # TODO enable cert validation. Staging and production hosts have GSA
+        # signed certs which should be valid.
+        # https://github.com/GSA/datagov-deploy/issues/900
+        validate_certs: false
+      run_once: true
+      delegate_to: localhost
+      become: false
+
+- name: Service-level catalog-next.data.gov smoke tests (catalog-next)
+  hosts: catalog-next-web
   tasks:
     - name: flush handlers
       meta: flush_handlers
@@ -139,3 +166,30 @@
       delay: 10
       register: result
       until: not result.failed
+      when: datagov_in_service | default(true)
+
+- name: Service-level admin-catalog-next.data.gov smoke tests (catalog-next)
+  hosts: catalog-next-web-admin
+  tasks:
+    - name: flush handlers
+      meta: flush_handlers
+
+    - name: assert catalog is up
+      uri:
+        url: "{{ catalog_ckan_admin_service_url }}/api/action/status_show"
+        follow_redirects: none
+        status_code: 200
+        headers:
+          Cookie: auth_tkt=1
+        # TODO enable cert validation. Staging and production hosts have GSA
+        # signed certs which should be valid.
+        # https://github.com/GSA/datagov-deploy/issues/900
+        validate_certs: false
+      run_once: true
+      delegate_to: localhost
+      become: false
+      retries: 3
+      delay: 10
+      register: result
+      until: not result.failed
+      when: datagov_in_service | default(true)

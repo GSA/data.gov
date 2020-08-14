@@ -79,7 +79,7 @@ ckan.auth.user_create_organizations = false
 ckan.auth.user_delete_groups = false
 ckan.auth.user_delete_organizations = false
 ckan.auth.create_user_via_api = false
-ckan.auth.create_user_via_web = true
+ckan.auth.create_user_via_web = {{ ckan_create_user_via_web }}
 ckan.auth.roles_that_cascade_to_sub_groups = admin
 
 
@@ -204,7 +204,7 @@ ckanext.harvest.email = on
 ckan.harvest.status_mail.all=True
 
 # FGDC service
-ckanext.geodatagov.fgdc2iso_service = https://{{ catalog_ckan_fgdc2iso_host }}/fgdc2iso/
+ckanext.geodatagov.fgdc2iso_service = http://{{ catalog_ckan_fgdc2iso_host }}/fgdc2iso/
 
 ## SAML2 Settings
 saml2.site_url = {{ saml2_site_url }}
