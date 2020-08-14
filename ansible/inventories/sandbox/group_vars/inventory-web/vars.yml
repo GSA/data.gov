@@ -11,6 +11,13 @@ project_source_new_code_path: /usr/lib/ckan-new
 current_source_symlink: /usr/lib/ckan
 project_index_path: /usr/lib/ckan
 
+# Inventory SOLR
+inventory_ckan_solr_port: "{{ solr_port }}"
+
+# Inventory Datapusher
+inventory_datastore_ro_user: datastore_ro
+inventory_datastore_user: datastore
+
 # db credentials
 inventory_ckan_db_host: "{{ inventory_postgresql_login_host }}"
 inventory_db_user: "{{ inventory_postgresql_login_user }}"
