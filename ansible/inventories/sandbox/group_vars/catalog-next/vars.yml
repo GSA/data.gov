@@ -6,6 +6,7 @@ catalog_ckan_db_host: "{{ catalog_next_postgresql_login_host }}"
 catalog_ckan_db_name: "{{ catalog_next_ckan_db_name }}"
 catalog_ckan_db_pass: "{{ catalog_next_postgresql_login_password }}"
 catalog_ckan_db_user: "{{ catalog_next_postgresql_login_user }}"
+catalog_ckan_fgdc2iso_host: "{{ catalog_next_ckan_fgdc2iso_host }}"
 
 catalog_ckan_redis_url: "{{ catalog_next_ckan_redis_url }}"
 catalog_ckan_redis_host: "{{ catalog_next_ckan_redis_host }}"
