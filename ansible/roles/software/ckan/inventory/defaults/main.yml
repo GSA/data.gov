@@ -49,6 +49,7 @@ inventory_datastore_ro_user: ckan_datastore_ro
 inventory_datastore_user: ckan_datastore
 inventory_db_name: ckan
 inventory_db_user: ckan
+inventory_python_home: "{{ python_home }}"
 
 saml2_site_url: https://inventory.data.gov/
 saml2_idp_entry: login.test.max.gov
