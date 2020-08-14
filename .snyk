@@ -17,11 +17,6 @@ ignore:
         reason: >-
           There is no fixed version for ansible. The vulnerable check mode is not used.
         expires: 2020-09-17T06:00:00.000Z
-  SNYK-PYTHON-ANSIBLE-597661:
-    - '*':
-        reason: >-
-          Medium Severity Issue created. No sensitive info is passed to uri module.
-        expires: 2020-08-17T06:00:00.000Z
   SNYK-PYTHON-PYYAML-590151:
     - '*':
         reason: >-
