@@ -103,6 +103,7 @@ inventory_postgresql_login_host: "{{ vault_inventory_postgresql_login_host }}"
 inventory_postgresql_login_user: "{{ vault_inventory_postgresql_login_user }}"
 inventory_postgresql_login_password: "{{ vault_inventory_postgresql_login_password }}"
 
+inventory_ckan_solr_port: "{{ solr_port }}"
 
 # Inventory Next
 inventory_next_ckan_s3_bucket_name: "{{ vault_inventory_next_s3_bucket_name }}"

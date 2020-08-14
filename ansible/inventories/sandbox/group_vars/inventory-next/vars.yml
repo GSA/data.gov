@@ -9,8 +9,6 @@ inventory_db_name: inventory_db_next
 inventory_python_home: "{{ inventory_ckan_python_home }}"
 datagov_in_service: false
 
-# Inventory SOLR
-inventory_ckan_solr_port: "{{ solr_port }}"
 
 # Inventory Datapusher
 inventory_datastore_ro_user: datastore_ro
