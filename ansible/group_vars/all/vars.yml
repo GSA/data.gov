@@ -15,6 +15,7 @@ default_tls_host_key_filepath: /etc/ssl/private/datagov_host.key
 apache2_ssl_certificate_file: "{{ default_tls_host_certificate_filepath }}"
 apache2_ssl_certificate_key_file: "{{ default_tls_host_key_filepath }}"
 
+
 # common roles
 common_operators: "{{ jumpbox_operators }}"  # This is inherited from inventory variables
 common_reboot_notify_email: "{{ datagov_team_email }}"
@@ -121,6 +122,11 @@ nrinfragent_config:
   custom_attributes:
     environment: "{{ datagov_environment | default('unknown') }}"
     service: "{{ datagov_service | default('unknown') }}"
+
+
+# monit settings
+monit_apache2_mem_threshold: 83
+
 
 # Nginx
 nginx_remove_default_vhost: true

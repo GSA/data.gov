@@ -37,7 +37,7 @@
 
             Details at New Relic page: https://one.newrelic.com/launcher/infra.infra
 
-            * Note: apache2 memory usage is checked against threshold {{ monit_apache2_mem_threshold | default(90) }}%.
+            * Note: apache2 memory usage is checked against threshold {{ monit_apache2_mem_threshold }}%.
               You are receiving notifications for the following events:
               1) "Resource limit matched" in subject line means apache2 is being restarted after memory reaching threshold.
               2) "Resource limit succeeded" in subject line means apache2 is back to normal after restart.
@@ -50,7 +50,7 @@
             start: "/etc/init.d/apache2 start"
             stop: "/etc/init.d/apache2 stop"
             rules:
-              - if TOTALMEMORY > {{ monit_apache2_mem_threshold | default(90) }}% for {{ monit_apache2_mem_cycle | default(4) }} cycles then restart
+              - if TOTALMEMORY > {{ monit_apache2_mem_threshold }}% for {{ monit_apache2_mem_cycle | default(4) }} cycles then restart
               - if 5 restarts within 20 cycles then unmonitor
       tags:
         - monit
