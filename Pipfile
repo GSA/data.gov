@@ -8,6 +8,8 @@ molecule = {extras = ["docker"],version = "~=2.22.0"}
 
 [packages]
 ansible = "~=2.8.0"
+# Temporarily work-around issue in 4.3.0
+ansible-lint = "<4.3.0"
 boto = "*"
 cryptography = "*"
 
