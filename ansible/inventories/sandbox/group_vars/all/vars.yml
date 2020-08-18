@@ -89,8 +89,38 @@ default_tls_host_certificate: |-
   -----END CERTIFICATE-----
 
 
-# inventory-next
+# Inventory
+inventory_ckan_s3_bucket_name: "{{ vault_inventory_s3_bucket_name }}"
+inventory_ckan_s3_bucket_prefix: "{{ vault_inventory_s3_bucket_prefix }}"
+inventory_ckan_instance_secret: "{{ vault_inventory_ckan_instance_secret }}"
+inventory_ckan_instance_uuid: "{{ vault_inventory_ckan_instance_uuid }}"
+inventory_ckan_service_url: https://inventory.sandbox.datagov.us
+inventory_ckan_who_ini_secret: "{{ vault_inventory_ckan_who_ini_secret }}"
+inventory_ckan_solr_host: datagov-solr1tf.internal.sandbox.datagov.us
+inventory_web_datapusher_db_pass: "{{ vault_inventory_datapusher_db_pass }}"
+inventory_web_datastore_pass: "{{ vault_inventory_datastore_db_pass }}"
+inventory_web_datastore_ro_pass: "{{ vault_inventory_datastore_ro_db_pass }}"
+inventory_postgresql_login_host: "{{ vault_inventory_postgresql_login_host }}"
+inventory_postgresql_login_user: "{{ vault_inventory_postgresql_login_user }}"
+inventory_postgresql_login_password: "{{ vault_inventory_postgresql_login_password }}"
+
+inventory_ckan_solr_port: "{{ solr_port }}"
+
+# Inventory Next
+inventory_next_ckan_s3_bucket_name: "{{ vault_inventory_next_s3_bucket_name }}"
+inventory_next_ckan_s3_bucket_prefix: "{{ vault_inventory_next_s3_bucket_prefix }}"
+inventory_next_ckan_instance_secret: "{{ vault_inventory_next_ckan_instance_secret }}"
+inventory_next_ckan_instance_uuid: "{{ vault_inventory_next_ckan_instance_uuid }}"
+inventory_next_ckan_service_url: https://inventory-next.sandbox.datagov.us
+inventory_next_ckan_who_ini_secret: "{{ vault_inventory_next_ckan_who_ini_secret }}"
+inventory_next_ckan_redis_host: "master.rep-sandbox-inventory-next.5kspe7.use1.cache.amazonaws.com"
 inventory_next_ckan_redis_password: "{{ vault_inventory_next_ckan_redis_password }}"
+inventory_next_datapusher_db_pass: "{{ vault_inventory_next_datapusher_db_pass }}"
+inventory_next_datastore_pass: "{{ vault_inventory_next_datastore_db_pass }}"
+inventory_next_datastore_ro_pass: "{{ vault_inventory_next_datastore_ro_db_pass }}"
+inventory_next_postgresql_login_host: "{{ vault_inventory_next_postgresql_login_host }}"
+inventory_next_postgresql_login_user: "{{ vault_inventory_next_postgresql_login_user }}"
+inventory_next_postgresql_login_password: "{{ vault_inventory_next_postgresql_login_password }}"
 
 
 jenkins_admin_password: "{{ vault_jenkins_admin_password }}"
@@ -160,11 +190,6 @@ jenkins_host: ci.sandbox.datagov.us
 
 
 jumpbox_operators: "{{ datagov_operators_test }}"
-
-
-inventory_ckan_service_url: https://inventory.sandbox.datagov.us
-inventory_ckan_solr_port: "{{ solr_port }}"
-
 
 pycsw_app_version: datagov/v2.4.x
 pycsw_base_url: https://catalog.sandbox.datagov.us
@@ -271,6 +296,7 @@ solr_cores:
   - catalog
   - catalog-next
   - inventory
+  - inventory-next
 
 # wordpress
 # hostname needed for smoke test, IP address needed for ALB health check
