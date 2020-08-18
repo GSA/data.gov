@@ -15,6 +15,7 @@ default_tls_host_key_filepath: /etc/ssl/private/datagov_host.key
 apache2_ssl_certificate_file: "{{ default_tls_host_certificate_filepath }}"
 apache2_ssl_certificate_key_file: "{{ default_tls_host_key_filepath }}"
 
+
 # common roles
 common_operators: "{{ jumpbox_operators }}"  # This is inherited from inventory variables
 common_reboot_notify_email: "{{ datagov_team_email }}"
@@ -31,6 +32,7 @@ dashboard_php_major_minor_version: "{{ php_major_minor_version }}"
 
 datagov_support_email: datagov@gsa.gov
 datagov_team_email: datagovhelp@gsa.gov
+datagov_slack_devops_email: "{{ vault_datagov_slack_devops_email }}"
 
 # Production operators
 # This list is used to authorize operators to the BSP environments
@@ -122,6 +124,11 @@ nrinfragent_config:
     environment: "{{ datagov_environment | default('unknown') }}"
     service: "{{ datagov_service | default('unknown') }}"
 
+
+# monit settings
+monit_apache2_mem_threshold: 83
+
+
 # Nginx
 nginx_remove_default_vhost: true
 nginx_ppa_use: true
@@ -149,6 +156,7 @@ php_mysql_package: "php{{ php_major_minor_version }}-mysql"
 php_version: "{{ php_major_minor_version }}"
 
 # postfix
+postfix_inet_interfaces: loopback-only  # only listen on loopback interfaces, we don't accept remote mail from remote sources.
 postfix_smtpd_tls_key_file: "{{ default_tls_host_key_filepath }}"
 postfix_smtpd_tls_cert_file: "{{ default_tls_host_certificate_filepath }}"
 

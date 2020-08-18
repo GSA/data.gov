@@ -49,7 +49,7 @@
   version: v1.3.2
 - name: gsa.datagov-deploy-common
   src: https://github.com/GSA/datagov-deploy-common
-  version: v4.1.5
+  version: v4.2.0
 - name: gsa.datagov-deploy-fgdc2iso
   src: https://github.com/GSA/datagov-deploy-fgdc2iso
   version: v1.0.0
@@ -67,7 +67,7 @@
   version: v1.0.2
 - name: gsa.datagov-deploy-solr
   src: https://github.com/GSA/datagov-deploy-solr.git
-  version: v1.1.1
+  version: v1.2.0
 - name: gsa.datagov-deploy-wordpress
   src: https://github.com/GSA/datagov-deploy-wordpress.git
   version: v1.0.6

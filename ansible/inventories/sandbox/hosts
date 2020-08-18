@@ -33,17 +33,7 @@ datagov-jump1tf.internal.sandbox.datagov.us
 [solr]
 datagov-solr1tf.internal.sandbox.datagov.us
 
-# transitional placeholder
-# TODO remove me
-[inventory-web-2-8:children]
-inventory-next-web
-
-# transitional placeholder
-# TODO remove me
-[inventory-web-next:children]
-inventory-next-web
-
-[inventory-next-web]
+[inventory-next]
 inventory-next-web1tf.internal.sandbox.datagov.us
 
 [inventory-web]
@@ -63,6 +53,7 @@ inventory-web
 [v2:children]
 catalog-fgdc2iso
 catalog-next
+inventory-next
 dashboard-web
 jumpbox
 solr
