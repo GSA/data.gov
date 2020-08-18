@@ -9,6 +9,16 @@ We want to ensure a welcoming environment for all of our projects. Our staff fol
 the [GSA Code of Conduct](https://github.com/GSA/open-source-policy/blob/master/CODE_OF_CONDUCT.md)
 and expect all contributors to do the same.
 
+
+## Principles
+
+1. Our work is transparent and open
+1. We start with user needs
+1. We follow Agile and DevOps methodology
+
+
+### Our work is transparent and open
+
 Data.gov is a small team that is asked to cover a lot of diverse topics and
 projects and work across a very broad spectrum of stakeholders. So it is
 critical to discuss and communicate often and expectations and preferences for
@@ -28,6 +38,45 @@ task “Capacity”
   and large group of stakeholders and interested parties. Don’t be afraid to ask
   questions, you will have a lot and getting those answered can only help the
   entire team.
+
+
+### We start with user needs
+
+Building toward user needs keep us focused on delivering on our mission.
+
+> We always begin with identifying our partners’ needs and the needs of the
+> people they serve. Through first-hand research, we explore how to best meet
+> those needs. We seek to first understand who we are designing for then figure
+> out how to deliver effective solutions. By starting with user needs, we can work
+> within our partner’s constraints while also working to change those constraints.
+
+_-- [18F UX Guide](https://github.com/18F/ux-guide/blob/master/README.md)_
+
+
+### We follow Agile and DevOps methodology
+
+[Agile Manifesto](https://agilemanifesto.org/).
+
+Data.gov follows the four principles of modern [Release
+Engineering](https://en.wikipedia.org/wiki/Release_engineering):
+
+* **Identifiability** Being able to identify all of the source, tools,
+  environment, and other components that make up a particular release.
+* **Reproducibility** The ability to integrate source, third party components,
+  data, and deployment externals of a software system in order to guarantee
+  operational stability.
+* **Consistency** The mission to provide a stable framework for development,
+  deployment, audit, and accountability for software components.
+* **Agility** The ongoing research into what are the repercussions of modern
+  software engineering practices on the productivity in the software cycle, i.e.
+  continuous integration.
+
+Additionally, Data.gov is made up of several applications. We strive to maintain
+independence of these applications from the underlying Platform.
+
+- Applications follow the [Twelve-Factor Methodology](https://12factor.net).
+- The Platform exposes services to applications.
+- Deployment of each Application is independent from the deployment of the Platform.
 
 
 ## Sprint rituals
