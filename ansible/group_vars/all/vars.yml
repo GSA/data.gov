@@ -32,6 +32,7 @@ dashboard_php_major_minor_version: "{{ php_major_minor_version }}"
 
 datagov_support_email: datagov@gsa.gov
 datagov_team_email: datagovhelp@gsa.gov
+datagov_slack_devops_email: "{{ vault_datagov_slack_devops_email }}"
 
 # Production operators
 # This list is used to authorize operators to the BSP environments
