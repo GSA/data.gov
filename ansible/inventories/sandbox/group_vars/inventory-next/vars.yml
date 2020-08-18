@@ -14,12 +14,6 @@ datagov_in_service: false
 inventory_datastore_ro_user: datastore_ro
 inventory_datastore_user: datastore
 
-# project path
-project_source_rollback_path: /usr/lib/ckan-rollback
-project_source_new_code_path: /usr/lib/ckan-new
-current_source_symlink: /usr/lib/ckan
-project_index_path: /usr/lib/ckan
-
 # db credentials
 inventory_ckan_db_host: "{{ inventory_next_postgresql_login_host }}"
 inventory_db_user: "{{ inventory_next_postgresql_login_user }}"

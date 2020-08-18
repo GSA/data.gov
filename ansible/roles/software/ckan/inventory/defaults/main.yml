@@ -28,6 +28,7 @@ datapusher_pkgs:
 crons_enabled: false
 
 # provide some default values to be overwritten later by group vars and host vars...
+project_index_path: /usr/lib/ckan
 project_source_rollback_path: /usr/lib/ckan-rollback
 project_source_new_code_path: /usr/lib/ckan-new
 current_source_symlink: /usr/lib/ckan
