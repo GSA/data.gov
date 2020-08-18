@@ -149,6 +149,7 @@ php_mysql_package: "php{{ php_major_minor_version }}-mysql"
 php_version: "{{ php_major_minor_version }}"
 
 # postfix
+postfix_inet_interfaces: loopback-only  # only listen on loopback interfaces, we don't accept remote mail from remote sources.
 postfix_smtpd_tls_key_file: "{{ default_tls_host_key_filepath }}"
 postfix_smtpd_tls_cert_file: "{{ default_tls_host_certificate_filepath }}"
 
