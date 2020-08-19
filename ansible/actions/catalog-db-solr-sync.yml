@@ -20,4 +20,5 @@
     - name: Run Sync Command
       shell: "ckan search-index rebuild {{ db_solr_sync_package_name }}"
       become: true
-      when: db_solr_sync_package_name != ""
+      when: db_solr_sync_package_name
+      tags: skip_ansible_lint
