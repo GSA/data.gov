@@ -1,0 +1,5 @@
+---
+# TrendMicro
+trendmicro_policy_id_web: "{{ vault_trendmicro_policy_id_web }}"
+
+datagov_in_service: false
