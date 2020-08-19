@@ -1,17 +1,20 @@
 ---
 
-# spaghetti js fix
-- name: set env
-  set_fact:
-    current_env: "{{ inventory_dir | basename }}"
-
-- name: copy spaghetti to /tmp folder
-  copy:
-    src: js.tgz
-    dest: /tmp/js.tgz
-  when: (inventory_hostname != "catalogpub-web1p.prod-ocsit.bsp.gsa.gov") and (current_env == "production")
-
-- name: make plate of spaghetti
-  shell: cd /tmp && tar -xf /tmp/js.tgz -C /
-  when: (inventory_hostname != "catalogpub-web1p.prod-ocsit.bsp.gsa.gov") and (current_env == "production")
-  notify: reload apache2
+# locate tracking urls in three js files, replace them with 
+# urls from wrtiable instances.
+- name: replace readonly tracking url to the writable one
+  replace:
+    path: "{{ item.path }}"
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.replace }}"
+  with_items:
+    - path: /usr/lib/ckan/src/ckanext-datagovtheme/ckanext/datagovtheme/fanstatic_library/scripts/tracking.js
+      regexp: '\$\.ajax\({url : ''/_tracking\'','
+      replace: "$.ajax({url : '{{ urls_private.catalog }}/_tracking',"
+    - path: /usr/lib/ckan/src/ckan/ckan/public/base/javascript/tracking.js
+      regexp: '\$\(''body''\)\.data\(''site-root''\) \+ ''_tracking'''
+      replace: "'{{ urls_private.catalog }}/_tracking'"
+    - path: /usr/lib/ckan/src/ckan/ckan/public/base/javascript/tracking.min.js
+      regexp: '\$\(''body''\)\.data\(''site-root''\)\+''_tracking'''
+      replace: "'{{ urls_private.catalog }}/_tracking'"
+  when: readwrite_type == "readonly"
