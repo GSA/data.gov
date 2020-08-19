@@ -6,6 +6,7 @@ MOLECULE_SUITES := \
 ANSIBLE_PLAYBOOKS := \
   actions/reboot.yml \
   actions/uninstall-fluentd.yml \
+  actions/catalog-db-solr-sync.yml \
   catalog-web.yml \
   catalog-worker.yml \
   catalog.yml \

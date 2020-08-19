@@ -150,6 +150,9 @@ Tail the logs using `dsh`.
 
     $ dsh -g catalog-web-v1 -M -c tail -f /var/log/ckan/ckan.custom.log
 
+Run a DB-SOLR sync for a dataset on catalog.
+
+    $ ansible-playbook actions/catalog-db-solr-sync.yml --extra-vars "db_solr_sync_package_name=insert-package-name-here"
 
 ### Application playbooks
 
