@@ -1,27 +1,5 @@
 # Roadmap
 
-Data.gov follows the four principles of modern [Release
-Engineering](https://en.wikipedia.org/wiki/Release_engineering):
-
-* **Identifiability** Being able to identify all of the source, tools,
-  environment, and other components that make up a particular release.
-* **Reproducibility** The ability to integrate source, third party components,
-  data, and deployment externals of a software system in order to guarantee
-  operational stability.
-* **Consistency** The mission to provide a stable framework for development,
-  deployment, audit, and accountability for software components.
-* **Agility** The ongoing research into what are the repercussions of modern
-  software engineering practices on the productivity in the software cycle, i.e.
-  continuous integration.
-
-Additionally, Data.gov is made up of several applications. We strive to maintain
-independence of these applications from the underlying Platform.
-
-- Applications follow the [Twelve-Factor Methodology](https://12factor.net).
-- The Platform exposes services to applications.
-- Deployment of each Application is independent from the deployment of the Platform.
-
-
 ## Goals
 
 - Implement Continuous Deployment for the platform and all applications.

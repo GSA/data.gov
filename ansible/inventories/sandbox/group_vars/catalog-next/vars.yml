@@ -1,18 +1,12 @@
 ---
-ckan_catalog_next: true
-
-catalog_app_type: worker
-catalog_pycsw_cron_enable: false
-
-catalog_ckan_app_version: master
-app_repo: https://github.com/GSA/catalog.data.gov
-
-ckan_production_ini_template: catalog-next/etc_ckan_production.ini.j2
+catalog_ckan_service_url: https://catalog-next.sandbox.datagov.us
+ckan_site_domain: https://catalog-next.sandbox.datagov.us
 
 catalog_ckan_db_host: "{{ catalog_next_postgresql_login_host }}"
 catalog_ckan_db_name: "{{ catalog_next_ckan_db_name }}"
 catalog_ckan_db_pass: "{{ catalog_next_postgresql_login_password }}"
 catalog_ckan_db_user: "{{ catalog_next_postgresql_login_user }}"
+catalog_ckan_fgdc2iso_host: "{{ catalog_next_ckan_fgdc2iso_host }}"
 
 catalog_ckan_redis_url: "{{ catalog_next_ckan_redis_url }}"
 catalog_ckan_redis_host: "{{ catalog_next_ckan_redis_host }}"

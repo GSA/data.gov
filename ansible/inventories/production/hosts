@@ -6,25 +6,17 @@ catalog-harvester-v1
 
 [catalog-harvester-main]
 catalog-harvester1p.prod-ocsit.bsp.gsa.gov
-catalogharvester1p.prod-ocsit.bsp.gsa.gov
 
 [catalog-harvester-misc]
 catalog-harvester2p.prod-ocsit.bsp.gsa.gov
-catalogharvester2p.prod-ocsit.bsp.gsa.gov
 
 [catalog-harvester-qa]
 catalog-harvester[3:6]p.prod-ocsit.bsp.gsa.gov
-catalogharvester[3:6]p.prod-ocsit.bsp.gsa.gov
 
 [catalog-harvester-v1]
 catalog-harvester1p.prod-ocsit.bsp.gsa.gov
 catalog-harvester2p.prod-ocsit.bsp.gsa.gov
 catalog-harvester[3:6]p.prod-ocsit.bsp.gsa.gov
-
-[catalog-harvester-v2]
-catalogharvester1p.prod-ocsit.bsp.gsa.gov
-catalogharvester2p.prod-ocsit.bsp.gsa.gov
-catalogharvester[3:6]p.prod-ocsit.bsp.gsa.gov
 
 [catalog-web:children]
 catalog-web-v1
@@ -40,17 +32,47 @@ catalog-admin-v1
 catalogweb[1:2]p.prod-ocsit.bsp.gsa.gov
 catalogbweb[1:2]p.prod-ocsit.bsp.gsa.gov
 
-[catalog-web-v2:children]
-catalog-admin-v2
-
 [catalog-admin:children]
 catalog-admin-v1
 
 [catalog-admin-v1]
 catalogpub-web1p.prod-ocsit.bsp.gsa.gov
 
-[catalog-admin-v2]
+[catalog-next:children]
+catalog-next-web
+catalog-next-worker
+
+[catalog-next-worker:children]
+catalog-next-worker-main
+catalog-next-worker-misc
+catalog-next-worker-qa
+
+[catalog-next-worker-main]
+[catalog-next-worker-misc]
+[catalog-next-worker-qa]
+
+[catalog-next-web:children]
+catalog-next-web-admin
+catalog-next-web-a
+catalog-next-web-b
+
+[catalog-next-web-admin]
+[catalog-next-web-a]
+[catalog-next-web-b]
+
+[ungrouped-catalog-next]
+# We apply the common role to these. Even though they are not in service or
+# assigned to a role, they need to be configured and patched.
+
+# catalog-next-worker ungrouped
+catalogharvester1p.prod-ocsit.bsp.gsa.gov
+catalogharvester2p.prod-ocsit.bsp.gsa.gov
+catalogharvester[3:6]p.prod-ocsit.bsp.gsa.gov
+
+# catalog-next-web ungrouped
 catalogpubweb1p.prod-ocsit.bsp.gsa.gov
+catalogweb[1:2]p.prod-ocsit.bsp.gsa.gov
+catalogbweb[1:2]p.prod-ocsit.bsp.gsa.gov
 
 [dashboard-web:children]
 dashboard-web-v1
@@ -86,27 +108,17 @@ datagov-jump2p.prod-ocsit.bsp.gsa.gov
 
 [pycsw-web:children]
 pycsw-web-v1
-pycsw-web-v2
 
 [pycsw-web-v1:children]
 # We install pycsw on all catalog-web hosts
 catalog-web-v1
 
-[pycsw-web-v2:children]
-# We install pycsw on all catalog-web hosts
-catalog-web-v2
-
 [pycsw-worker:children]
 pycsw-worker-v1
-pycsw-worker-v2
 
 [pycsw-worker-v1]
 # We configure only a single worker for pycsw, usually the misc worker.
 catalog-harvester2p.prod-ocsit.bsp.gsa.gov
-
-[pycsw-worker-v2]
-# We configure only a single worker for pycsw, usually the misc worker.
-catalogharvester2p.prod-ocsit.bsp.gsa.gov
 
 [redis:children]
 redis-catalog
@@ -135,13 +147,14 @@ catalog-web-v1
 dashboard-web-v1
 inventory-web-v1
 jumpbox-v1
+pycsw-web-v1
+pycsw-worker-v1
 wordpress-web-v1
 
 # bionic stack
 [v2:children]
-catalog-admin-v2
 catalog-fgdc2iso
-catalog-harvester-v2
+catalog-next
 catalog-web-v2
 dashboard-web-v2
 inventory-web-v2
@@ -149,6 +162,7 @@ jumpbox-v2
 redis-catalog-next
 redis-inventory-next
 solr
+ungrouped-catalog-next
 wordpress-web-v2
 
 [web:children]

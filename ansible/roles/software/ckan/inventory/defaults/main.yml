@@ -28,6 +28,7 @@ datapusher_pkgs:
 crons_enabled: false
 
 # provide some default values to be overwritten later by group vars and host vars...
+project_index_path: /usr/lib/ckan
 project_source_rollback_path: /usr/lib/ckan-rollback
 project_source_new_code_path: /usr/lib/ckan-new
 current_source_symlink: /usr/lib/ckan
@@ -49,6 +50,9 @@ inventory_datastore_ro_user: ckan_datastore_ro
 inventory_datastore_user: ckan_datastore
 inventory_db_name: ckan
 inventory_db_user: ckan
+inventory_python_home: "/usr"
+
+inventory_ckan_redis_db: "0"
 
 saml2_site_url: https://inventory.data.gov/
 saml2_idp_entry: login.test.max.gov
