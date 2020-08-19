@@ -1,4 +1,8 @@
 ---
+- name: Assert newrelic_app_name is set
+  fail:
+    msg: newrelic_app_name is required but it is not set
+  when: newrelic_app_name is undefined
 
 - name: Install the New Relic Python agent
   pip: name=newrelic virtualenv=/usr/lib/ckan umask=022

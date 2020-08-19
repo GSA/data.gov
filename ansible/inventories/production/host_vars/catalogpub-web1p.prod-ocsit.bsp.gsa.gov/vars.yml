@@ -16,3 +16,7 @@ catalog_pycsw_db_name: "{{ vault_catalog_pycsw_db_name }}"
 
 # other
 catalog_ckan_solr_host: datagov-solrm1p.prod-ocsit.bsp.gsa.gov
+
+# Since catalog-admin and catalog-web have the same variable precendence (and
+# catalog-web wins), we override the app name here in host vars.
+newrelic_app_name: catalog-admin
