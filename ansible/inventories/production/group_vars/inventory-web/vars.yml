@@ -26,6 +26,7 @@ inventory_datastore_ro_pass: "{{ vault_inventory_datastore_ro_pass }}"
 # other
 inventory_ckan_bucket_name: "{{ vault_bucket_name }}"
 inventory_ckan_bucket_prefix: "{{ vault_bucket_prefix }}"
+inventory_python_home: "{{ python_home }}"
 ckan_site_domain: "{{ vault_ckan_site_domain }}"
 
 # max login
