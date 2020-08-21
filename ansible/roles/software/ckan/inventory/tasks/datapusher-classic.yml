@@ -24,11 +24,11 @@
   notify: restart apache2
 
 - name: Add Datapusher configuration files
-  template: 
+  template:
     src: "{{ item }}"
     dest: "/{{ item }}"
     owner: root
-    group: www-data 
+    group: www-data
     mode: "0640"
   with_items:
     - etc/ckan/datapusher.wsgi

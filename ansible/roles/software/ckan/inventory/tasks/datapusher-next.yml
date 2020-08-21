@@ -1,7 +1,7 @@
 ---
 
 - name: Install build dependencies
-  apt: 
+  apt:
     name: "{{ packages }}"
     state: present
   vars:
@@ -14,7 +14,7 @@
       - git
 
 - name: Remove old datapusher code
-  file: 
+  file:
     path: "{{ datapusher_virtual_env }}"
     state: absent
 
@@ -57,13 +57,14 @@
 - name: Run datapusher setup
   command: "{{ datapusher_virtual_env }}/bin/python {{ datapusher_virtual_env }}/src/setup.py develop"
   become: true
+  tags: skip_ansible_lint
 
 - name: Add Datapusher configuration files
-  template: 
+  template:
     src: "{{ item }}"
     dest: "/{{ item }}"
     owner: root
-    group: www-data 
+    group: www-data
     mode: "0640"
   with_items:
     - etc/ckan/datapusher.wsgi
@@ -75,7 +76,7 @@
     - reload supervisor
 
 - name: Add Datapusher configuration files
-  template: 
+  template:
     src: etc/ckan/datapusher_settings.py
     dest: "{{ datapusher_virtual_env }}/src/deployment"
     owner: root
