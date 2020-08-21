@@ -63,18 +63,6 @@
     umask: "0022"
   notify: restart apache2
 
-- name: Remove old datapusher code
-  file: path="{{ datapusher_virtual_env }}" state=absent
-  tags:
-    - datapusher
-
-- include_tasks: build-pkgs.yml
-  vars:
-    pkg: "{{ datapusher_pkgs }}"
-    virtualenv: "{{ datapusher_virtual_env }}"
-  tags:
-    - datapusher
-
 - name: create directories
   action: file path={{ item }} state=directory owner="www-data" group="www-data" mode=0755
   with_items:
@@ -90,14 +78,21 @@
   template: src={{ item }} dest=/{{ item }} owner=root group=www-data mode=0640
   with_items:
     - etc/ckan/production.ini
-    - etc/ckan/datapusher.wsgi
-    - etc/ckan/datapusher_settings.py
     - etc/apache2/sites-enabled/ckan.conf
-    - etc/apache2/sites-enabled/datapusher.conf
     - etc/supervisor/conf.d/gunicorn-web-app.conf
   notify:
     - restart apache2
     - reload supervisor
+
+- include_tasks: datapusher-next.yml
+  tags:
+    - datapusher
+  when: inventory_next
+
+- include_tasks: datapusher-classic.yml
+  tags:
+    - datapusher
+  when: not inventory_next
 
 - include_tasks: additional-tasks.yml
   vars:

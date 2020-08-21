@@ -1,27 +1,24 @@
 ---
 - name: get code
   git:
-    repo: "{{ item.repo }}"
-    dest: "{{ virtualenv }}/src/{{ item.name }}"
-    version: "{{ item.branch | default('master') }}"
+    repo: "{{ build_pkg_repo }}"
+    dest: "{{ virtualenv }}/src/{{ build_pkg_name }}"
+    version: "{{ build_pkg_branch | default('master') }}"
     force: yes
     umask: "0022"
-  with_items: "{{ pkg }}"
   notify: restart apache2
 
 - name: install requirements for pkg
   pip:
-    requirements: "{{ virtualenv }}/src/{{ item.name }}/{{ item.requirements }}"
+    requirements: "{{ virtualenv }}/src/{{ build_pkg_name }}/{{ build_pkg_requirements }}"
     virtualenv: "{{ virtualenv }}"
     virtualenv_python: "{{ inventory_python_home }}/bin/python"
     umask: "0022"
-  with_items: "{{ pkg }}"
-  when: item.requirements is defined
+  when: build_pkg_requirements is defined
   notify: restart apache2
 
 - name: run setup
-  command: chdir={{ virtualenv }}/src/{{ item.name }} {{ virtualenv }}/bin/python setup.py develop
-  with_items: "{{ pkg }}"
+  command: chdir={{ virtualenv }}/src/{{ build_pkg_name }} {{ virtualenv }}/bin/python setup.py develop
   tags:
     - skip_ansible_lint
   notify: restart apache2

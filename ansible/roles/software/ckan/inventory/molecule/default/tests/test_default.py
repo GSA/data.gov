@@ -62,3 +62,8 @@ def test_beaker_cache_cleanup(host):
 def test_gunicorn_web_app(host):
     supervisor_output = host.check_output('supervisorctl status')
     assert re.search(r'gunicorn-web-app +RUNNING', supervisor_output)
+
+
+def test_gunicorn_datapusher(host):
+    supervisor_output = host.check_output('supervisorctl status')
+    assert re.search(r'gunicorn-datapusher +RUNNING', supervisor_output)

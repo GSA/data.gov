@@ -1,0 +1,83 @@
+---
+
+- name: Install build dependencies
+  apt: 
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - python-dev
+      - python-virtualenv
+      - build-essential
+      - libxslt1-dev
+      - libxml2-dev
+      - git
+
+- name: Remove old datapusher code
+  file: 
+    path: "{{ datapusher_virtual_env }}"
+    state: absent
+
+- name: setup virtualenv for new datapusher
+  pip:
+    name:
+      - pip>=19.3.0
+      - setuptools>=44.0.0,<45.0.0  # setuptools 45+ requires python 3.5, keep pinned below, but still modern version
+    virtualenv: '{{ datapusher_virtual_env }}'
+    # virtualenv_python: "{{ inventory_ckan_python_home }}/bin/python"
+    umask: "0022"
+  notify: restart apache2
+
+- name: setup gunicorn for new datapusher
+  pip:
+    name: gunicorn~=19.10.0
+    virtualenv: '{{ datapusher_virtual_env }}'
+    umask: "0022"
+
+- name: Make datapusher source code directory
+  file:
+    path: "{{ datapusher_virtual_env }}/src"
+    state: directory
+
+- name: Git clone datapusher
+  git:
+    force: yes
+    umask: "0022"
+    repo: "{{ datapusher_next_repo }}"
+    dest: "{{ datapusher_virtual_env }}/src"
+    version: "{{ datapusher_next_branch }}"
+
+- name: install requirements for datapusher
+  pip:
+    requirements: "{{ datapusher_virtual_env }}/src/{{ datapusher_next_requirements }}"
+    virtualenv: "{{ datapusher_virtual_env }}"
+    virtualenv_python: "{{ datapusher_virtual_env }}/bin/python"
+    umask: "0022"
+
+- name: Run datapusher setup
+  command: "{{ datapusher_virtual_env }}/bin/python {{ datapusher_virtual_env }}/src/setup.py develop"
+  become: true
+
+- name: Add Datapusher configuration files
+  template: 
+    src: "{{ item }}"
+    dest: "/{{ item }}"
+    owner: root
+    group: www-data 
+    mode: "0640"
+  with_items:
+    - etc/ckan/datapusher.wsgi
+    - etc/ckan/datapusher_settings.py
+    - etc/supervisor/conf.d/gunicorn-datapusher.conf
+    - etc/apache2/sites-enabled/datapusher_next.conf
+  notify:
+    - restart apache2
+    - reload supervisor
+
+- name: Add Datapusher configuration files
+  template: 
+    src: etc/ckan/datapusher_settings.py
+    dest: "{{ datapusher_virtual_env }}/src/deployment"
+    owner: root
+    group: www-data
+    mode: "0640"

@@ -19,10 +19,13 @@ inventory_datapusher_error_log: "{{ inventory_log_dir }}/datapusher.error.log"
 inventory_datapusher_access_log: "{{ inventory_log_dir }}/datapusher.access.log"
 inventory_gunicorn_error_log: "{{ inventory_log_dir }}/gunicorn.log"
 
-datapusher_pkgs:
-  - name: datapusher
-    repo: https://github.com/GSA/datapusher
-    requirements: requirements-freeze.txt
+datapusher_build_pkg_name: datapusher
+datapusher_build_pkg_repo: https://github.com/GSA/datapusher.git
+datapusher_build_pkg_requirements: requirements-freeze.txt
+datapusher_gunicorn_error_log: "{{ inventory_log_dir }}/datapusher_gunicorn.log"
+datapusher_next_repo: https://github.com/ckan/datapusher.git
+datapusher_next_requirements: requirements.txt
+datapusher_next_branch: "0.0.16"
 
 # Enable crons only on specific hosts
 crons_enabled: false
@@ -53,6 +56,8 @@ inventory_db_user: ckan
 inventory_python_home: "/usr"
 
 inventory_ckan_redis_db: "0"
+
+inventory_next: false
 
 saml2_site_url: https://inventory.data.gov/
 saml2_idp_entry: login.test.max.gov
