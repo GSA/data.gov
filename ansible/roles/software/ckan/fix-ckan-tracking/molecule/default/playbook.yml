@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: fix-ckan-tracking
+      vars:
+        readwrite_type: readonly
