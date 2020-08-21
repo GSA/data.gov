@@ -17,7 +17,7 @@ def test_hosts_file(host):
 
 def test_apache2_sites(host):
     ckan = host.file('/etc/apache2/sites-enabled/ckan.conf')
-    datapusher = host.file('/etc/apache2/sites-enabled/datapusher.conf')
+    datapusher = host.file('/etc/apache2/sites-enabled/datapusher_next.conf')
 
     assert ckan.exists
     assert ckan.user == 'root'
@@ -62,3 +62,8 @@ def test_beaker_cache_cleanup(host):
 def test_gunicorn_web_app(host):
     supervisor_output = host.check_output('supervisorctl status')
     assert re.search(r'gunicorn-web-app +RUNNING', supervisor_output)
+
+
+def test_gunicorn_datapusher(host):
+    supervisor_output = host.check_output('supervisorctl status')
+    assert re.search(r'gunicorn-datapusher +RUNNING', supervisor_output)
