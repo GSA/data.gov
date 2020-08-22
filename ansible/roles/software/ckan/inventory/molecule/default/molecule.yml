@@ -14,14 +14,6 @@ platforms:
     image: ubuntu:trusty
     groups:
       - trusty
-  - name: ckan-inventory-app-bionic
-    image: ubuntu:bionic
-    groups:
-      - bionic
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    capabilities:
-      - SYS_ADMIN
 provisioner:
   name: ansible
   lint:
