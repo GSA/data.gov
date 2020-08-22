@@ -3,7 +3,7 @@
   vars:
     build_pkg_name: "ckanext-s3filestore"
     build_pkg_repo: "https://github.com/GSA/ckanext-s3filestore"
-    build_pdg_requirements: "requirements.txt"
+    build_pkg_requirements: "requirements.txt"
   tags: ['s3filestore']
 
 - name: add s3filestore to production.ini plugins

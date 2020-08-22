@@ -20,7 +20,7 @@ inventory_datapusher_access_log: "{{ inventory_log_dir }}/datapusher.access.log"
 inventory_gunicorn_error_log: "{{ inventory_log_dir }}/gunicorn.log"
 
 datapusher_build_pkg_name: datapusher
-datapusher_build_pkg_repo: https://github.com/GSA/datapusher.git
+datapusher_build_pkg_repo: https://github.com/GSA/datapusher
 datapusher_build_pkg_requirements: requirements-freeze.txt
 datapusher_gunicorn_error_log: "{{ inventory_log_dir }}/datapusher_gunicorn.log"
 datapusher_next_repo: https://github.com/ckan/datapusher.git
