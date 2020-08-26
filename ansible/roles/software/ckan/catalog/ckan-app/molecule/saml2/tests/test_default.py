@@ -43,7 +43,7 @@ def test_saml2_dir(host):
 
 
 def test_saml2_attributes(host):
-    attributes = host.file('/etc/ckan/saml2/basic.py')
+    attributes = host.file('/etc/ckan/saml2/attributemaps/basic.py')
 
     assert attributes.exists
     assert attributes.user == 'root'
@@ -52,7 +52,7 @@ def test_saml2_attributes(host):
 
 
 def test_saml2_uri(host):
-    uri = host.file('/etc/ckan/saml2/saml_uri.py')
+    uri = host.file('/etc/ckan/saml2/attributemaps/saml_uri.py')
 
     assert uri.exists
     assert uri.user == 'root'

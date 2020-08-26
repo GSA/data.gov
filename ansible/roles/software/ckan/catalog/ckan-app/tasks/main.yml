@@ -100,7 +100,7 @@
     state: present
   when:
     - not catalog_ckan_saml2_enabled
-    - "'v2' not in group_names"
+    - not ckan_catalog_next
   notify:
     - reload apache2
     - reload supervisor
