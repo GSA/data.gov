@@ -1,0 +1,25 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: ckan-fix-tracking-trusty
+    image: ubuntu:trusty
+  - name: ckan-fix-tracking-bionic
+    image: ubuntu:bionic
+provisioner:
+  name: ansible
+  inventory:
+    group_vars:
+      all:
+        urls_private:
+          catalog: "https://private.url.localdomain"
+  lint:
+    name: ansible-lint
+verifier:
+  name: testinfra
+  lint:
+    name: flake8
