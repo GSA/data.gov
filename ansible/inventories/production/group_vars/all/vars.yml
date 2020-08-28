@@ -152,8 +152,8 @@ pycsw_db_user: "{{ catalog_pycsw_db_user }}"
 # public urls
 urls_public:
   catalog: https://catalog.data.gov
-urls_private:
-  catalog: "{{ vault_urls_private_catalog }}"
+urls_admin:
+  catalog: https://admin-catalog.data.gov
 ckan_site_domain: "{{ urls_public.catalog }}"
 
 # s3 bucket

@@ -173,8 +173,8 @@ pycsw_db_user: "{{ catalog_pycsw_db_user }}"
 # public urls
 urls_public:
   catalog: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
-urls_private:
-  catalog: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
+urls_admin:
+  catalog: https://admin-catalog-datagov.dev-ocsit.bsp.gsa.gov
 ckan_site_domain: "{{ urls_public.catalog }}"
 
 
