@@ -39,9 +39,9 @@
       until: not csw_collection.failed
 
     - name: assert csw-collection response has title
-      fail:
-        msg: csw-collection response did not contain ows:Title attribute
-      when: csw_collection.content is not search("<ows:Title>CSW interface for catalog.data.gov</ows:Title>")
+      assert:
+        that: csw_collection.content is search("<ows:Title>CSW interface for catalog.data.gov</ows:Title>")
+        fail_msg: csw-collection response did not contain ows:Title attribute
 
     - name: assert csw-all is up
       uri:
@@ -62,9 +62,9 @@
       until: not csw_all.failed
 
     - name: assert csw-all response has title
-      fail:
-        msg: csw-all response did not contain ows:Title attribute
-      when: csw_all.content is not search("<ows:Title>CSW interface for catalog.data.gov</ows:Title>")
+      assert:
+        that: csw_all.content is search("<ows:Title>CSW interface for catalog.data.gov</ows:Title>")
+        fail_msg: csw-all response did not contain ows:Title attribute
 
 
 - name: CSW worker
@@ -98,9 +98,9 @@
       become: false
 
     - name: assert csw-collection response has title
-      fail:
-        msg: csw-collection response did not contain ows:Title attribute
-      when: csw_collection.content is not search("<ows:Title>CSW interface for catalog.data.gov</ows:Title>")
+      assert:
+        that: csw_collection.content is search("<ows:Title>CSW interface for catalog.data.gov</ows:Title>")
+        fail_msg: csw-collection response did not contain ows:Title attribute
       run_once: true
       delegate_to: localhost
       become: false
@@ -121,9 +121,9 @@
       become: false
 
     - name: assert csw-all response has title
-      fail:
-        msg: csw-all response did not contain ows:Title attribute
-      when: csw_all.content is not search("<ows:Title>CSW interface for catalog.data.gov</ows:Title>")
+      assert:
+        that: csw_all.content is search("<ows:Title>CSW interface for catalog.data.gov</ows:Title>")
+        fail_msg: csw-all response did not contain ows:Title attribute
       run_once: true
       delegate_to: localhost
       become: false
