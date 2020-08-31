@@ -82,7 +82,7 @@
 - name: nleutner.newrelic-php
   version: 1.0.0
 - name: oefenweb.postfix
-  version: v3.1.2
+  version: v3.0.1
 - name: pgolm.monit
   version: v1.4.0
 - name: robertdebock.bootstrap
