@@ -51,7 +51,7 @@
       - pip>=19.3.0
       - setuptools>=44.0.0,<45.0.0  # setuptools 45+ requires python 3.5, keep pinned below, but still modern version
     virtualenv: '{{ project_source_new_code_path }}'
-    virtualenv_python: "{{ inventory_ckan_python_home }}/bin/python"
+    virtualenv_python: "{{ inventory_python_home }}/bin/python"
     umask: "0022"
   notify: restart apache2
 
@@ -59,7 +59,7 @@
   pip:
     requirements: "{{ inventory_app_source_path }}/requirements-freeze.txt"
     virtualenv: '{{ project_source_new_code_path }}'
-    virtualenv_python: "{{ inventory_ckan_python_home }}/bin/python"
+    virtualenv_python: "{{ inventory_python_home }}/bin/python"
     umask: "0022"
   notify: restart apache2
 
