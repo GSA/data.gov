@@ -69,7 +69,6 @@
     - etc/ckan/datapusher.wsgi
     - etc/ckan/datapusher_settings.py
     - etc/supervisor/conf.d/gunicorn-datapusher.conf
-    - etc/apache2/sites-enabled/datapusher_next.conf
   notify:
     - restart apache2
     - reload supervisor
