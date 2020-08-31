@@ -52,7 +52,7 @@ inventory_datastore_ro_user: ckan_datastore_ro
 inventory_datastore_user: ckan_datastore
 inventory_db_name: ckan
 inventory_db_user: ckan
-inventory_python_home: "/usr/local/lib/python2.7.10"
+inventory_python_home: "/usr"
 
 inventory_ckan_redis_db: "0"
 
