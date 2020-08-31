@@ -5,8 +5,21 @@
 - name: create pki directory
   action: file path=/etc/ckan/saml2/pki state=directory mode=0750 owner=root group=www-data
 
+- name: create attributemaps directory
+  action: file path=/etc/ckan/saml2/attributemaps state=directory mode=0755 owner=root group=www-data
+
+# TODO remove me after https://github.com/GSA/datagov-deploy/issues/1968
+# Cleanup fallout #1968
 - name: copy all needed files
-  action: copy src=etc/ckan/saml2/ dest=/etc/ckan/saml2/ mode=0644 owner=root group=www-data
+  file: dest=/etc/ckan/saml2/{{ item }} state=absent
+  with_items:
+    - basic.py
+    - saml_uri.py
+  notify: reload apache2
+
+# TODO configuration files should live in the application repo
+- name: copy all needed files
+  action: copy src=etc/ckan/saml2/ dest=/etc/ckan/saml2/attributemaps mode=0644 owner=root group=www-data
   notify: reload apache2
 
 - name: template all needed files
