@@ -76,6 +76,17 @@
 
 - name: Add Datapusher configuration files
   template:
+    src: "etc/apache2/sites-enabled/datapusher_next.conf"
+    dest: "/etc/apache2/sites-enabled/datapusher.conf"
+    owner: root
+    group: www-data
+    mode: "0640"
+  notify:
+    - restart apache2
+    - reload supervisor
+
+- name: Add Datapusher configuration files
+  template:
     src: etc/ckan/datapusher_settings.py
     dest: "{{ datapusher_virtual_env }}/src/deployment"
     owner: root
