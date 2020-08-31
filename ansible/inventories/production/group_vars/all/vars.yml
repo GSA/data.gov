@@ -251,3 +251,6 @@ ci_deploy_version: master
 # hostname needed for smoke test, IP address needed for ALB health check
 wordpress_nginx_server_name: www.data.gov data.gov wp-bsp.data.gov labs.data.gov $hostname {{ ansible_default_ipv4.address }}
 wordpress_service_url: https://www.data.gov
+
+# monit
+monit_slack_devops_email: "{{ vault_monit_slack_devops_email }}"
