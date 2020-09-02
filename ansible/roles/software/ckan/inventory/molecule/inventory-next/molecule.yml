@@ -10,10 +10,6 @@ lint:
   # TODO fix linting
   enabled: false
 platforms:
-  - name: ckan-inventory-app-trusty
-    image: ubuntu:trusty
-    groups:
-      - trusty
   - name: ckan-inventory-app-bionic
     image: ubuntu:bionic
     groups:
@@ -34,11 +30,10 @@ provisioner:
       all:
         python_home: /usr
         inventory_ckan_solr_port: 8983
-      bionic:
         inventory_app_repo_branch: inventory_ckan_2.8
         inventory_next: true
 scenario:
-  name: default
+  name: inventory-next
   # TODO fix idempotency
   test_sequence:
     - lint
