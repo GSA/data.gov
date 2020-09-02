@@ -30,7 +30,6 @@
         monit_mail_enabled: true
         monit_alert_addresses:
           - "{{ datagov_team_email }} only on { resource, timeout }"
-          - "{{ monit_slack_devops_email | default('root@localhost') }} only on { resource, timeout }"
         monit_alert_mail_format:
           from: "{{ default_email_from }}"
           subject: $SERVICE $EVENT at $DATE
