@@ -1,12 +1,9 @@
 ---
 - include: build-pkgs.yml
   vars:
-    pkg:
-      - {
-          name: "ckanext-s3filestore",
-          repo: "https://github.com/GSA/ckanext-s3filestore",
-          requirements: "requirements.txt"
-        }
+    build_pkg_name: "ckanext-s3filestore"
+    build_pkg_repo: "https://github.com/GSA/ckanext-s3filestore"
+    build_pkg_requirements: "requirements.txt"
   tags: ['s3filestore']
 
 - name: add s3filestore to production.ini plugins
@@ -22,19 +19,6 @@
     src: "{{ virtualenv }}/src/ckanext-datajson/ckanext/datajson/export_map/export.inventory.map.sample.json"
     dest: "{{ virtualenv }}/src/ckanext-datajson/ckanext/datajson/export_map/export.map.json"
     remote_src: true
-  notify: restart apache2
-
-- name: "Datapusher json content-type temp fix (content-type: application/json does not work now)"
-  replace:
-    dest: /usr/lib/datapusher/lib/python2.7/site-packages/ckanserviceprovider/web.py
-    regexp: 'application/json'
-    replace: 'application/x-www-form-urlencoded'
-  notify: restart apache2
-
-- name: "Remove compiled web.pyc"
-  file:
-    path: /usr/lib/datapusher/lib/python2.7/site-packages/ckanserviceprovider/web.pyc
-    state: absent
   notify: restart apache2
 
 - name: install beaker cache cleanup script

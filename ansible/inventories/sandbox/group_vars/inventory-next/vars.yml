@@ -6,7 +6,7 @@ ansible_python_interpreter: /usr/bin/python3
 datagov_service: inventory
 app_type: inventory-next
 inventory_db_name: inventory_db_next
-inventory_python_home: "{{ inventory_ckan_python_home }}"
+inventory_python_home: "{{ python_home }}"
 datagov_in_service: false
 
 
@@ -30,8 +30,10 @@ ckan_site_domain: "{{ inventory_next_ckan_service_url }}"
 
 inventory_app_repo_branch: inventory_ckan_2.8
 
-# max login
-saml2_site_url: unset
+# saml2 authentication
+catalog_ckan_saml2_enabled: true
+catalog_ckan_plugins_additional: [saml2]
+saml2_site_url: https://inventory-next.sandbox.datagov.us/
 
 # redis
 inventory_ckan_redis_password: "{{ inventory_next_ckan_redis_password }}"

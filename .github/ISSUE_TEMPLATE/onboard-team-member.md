@@ -36,6 +36,7 @@ Below are the tasks that will drive the onboarding process.
 
        $ cf set-space-role <email> gsa-datagov <space> SpaceDeveloper
 
+- [ ] Request Federalist access by posting in [#federalist-support](https://gsa-tts.slack.com/archives/C1NUUGTT5) with the new member's GitHub username.
 
 For new Project Management Office team members, follow these additional steps:
 
