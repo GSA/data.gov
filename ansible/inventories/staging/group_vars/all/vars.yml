@@ -268,6 +268,3 @@ ci_deploy_version: develop
 # hostname needed for smoke test, IP address needed for ALB health check
 wordpress_nginx_server_name: wordpress-datagov.dev-ocsit.bsp.gsa.gov $hostname {{ ansible_default_ipv4.address }}
 wordpress_service_url: https://wordpress-datagov.dev-ocsit.bsp.gsa.gov
-
-# monit
-monit_slack_devops_email: "{{ vault_monit_slack_devops_email }}"

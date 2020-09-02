@@ -6,6 +6,7 @@ project_source_rollback_path: /usr/lib/ckan-rollback
 project_source_new_code_path: /usr/lib/ckan-new
 current_source_symlink: /usr/lib/ckan
 project_index_path: /usr/lib/ckan
+inventory_python_home: "{{ python_home }}"
 
 # db credentials
 ckan_db_server: "{{ vault_ckan_db_server }}"
