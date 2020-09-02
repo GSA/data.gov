@@ -1,7 +1,7 @@
 ---
 # role url
 url_readonly: "{{ urls_public.catalog }}"
-url_writable: "{{ urls_private.catalog }}"
+url_writable: "{{ urls_admin.catalog }}"
 
 # project path
 project_source_rollback_path: /usr/lib/ckan-rollback
