@@ -29,7 +29,9 @@
 
 - name: setup gunicorn for new datapusher
   pip:
-    name: gunicorn~=19.10.0
+    name: 
+      - gunicorn~=19.10.0
+      - gevent~=20.6.2
     virtualenv: '{{ datapusher_virtual_env }}'
     umask: "0022"
 

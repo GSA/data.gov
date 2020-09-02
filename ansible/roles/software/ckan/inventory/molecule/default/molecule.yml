@@ -14,6 +14,14 @@ platforms:
     image: ubuntu:trusty
     groups:
       - trusty
+  - name: ckan-inventory-app-bionic
+    image: ubuntu:bionic
+    groups:
+      - bionic
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    capabilities:
+      - SYS_ADMIN
 provisioner:
   name: ansible
   lint:
@@ -26,6 +34,9 @@ provisioner:
       all:
         python_home: /usr
         inventory_ckan_solr_port: 8983
+      bionic:
+        inventory_app_repo_branch: inventory_ckan_2.8
+        inventory_next: true
 scenario:
   name: default
   # TODO fix idempotency
