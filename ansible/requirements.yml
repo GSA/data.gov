@@ -52,7 +52,7 @@
   version: v4.2.0
 - name: gsa.datagov-deploy-fgdc2iso
   src: https://github.com/GSA/datagov-deploy-fgdc2iso
-  version: v1.0.0
+  version: v1.0.1
 - name: gsa.datagov-deploy-jenkins
   src: https://github.com/GSA/datagov-deploy-jenkins
   version: v1.0.0
