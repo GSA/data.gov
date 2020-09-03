@@ -83,14 +83,21 @@ def main():
         db['datastore_pass'], db['db_server'], db['datastore_user'], db['datastore_database']
     ))
 
-    print '\n## Remove Createdb privilege from Datastore write user %s' % db['datastore_user']
-    run('PGPASSWORD=%s psql -h %s -U %s postgres -c "ALTER USER %s WITH NOCREATEDB"' % (
-        db['db_pass'], db['db_server'], db['db_user'], db['datastore_user']
-    ))
-
     print '\n## Set permissions for Datastore DB'
     run('sudo ckan datastore set-permissions | PGPASSWORD=%s psql -h %s -U %s -d %s --set ON_ERROR_STOP=1' % (
         db['datastore_pass'], db['db_server'], db['datastore_user'], db['datastore_database']
+    ))
+
+    # revert changes for AWS RDS privilege workaround
+    print '\n## Change for Datastore DB owner to %s' % db['db_user']
+    run('PGPASSWORD=%s psql -h %s -U %s postgres -c "ALTER DATABASE %s OWNER TO %s"' % (
+        db['db_pass'], db['db_server'], db['db_user'], db['datastore_database'], db['db_user']
+    ))
+
+    # revert changes for AWS RDS privilege workaround
+    print '\n## Remove Createdb privilege from Datastore write user %s' % db['datastore_user']
+    run('PGPASSWORD=%s psql -h %s -U %s postgres -c "ALTER USER %s WITH NOCREATEDB"' % (
+        db['db_pass'], db['db_server'], db['db_user'], db['datastore_user']
     ))
 
     print '\n## Initialize CKAN database'
