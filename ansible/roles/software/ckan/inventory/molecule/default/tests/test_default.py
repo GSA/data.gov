@@ -40,6 +40,16 @@ def test_apache2(host):
     assert apache2.is_running
 
 
+def test_inventory_db_init_script(host):
+    script = host.file('/usr/local/bin/inventory-db-init.py')
+
+    assert script.exists
+    assert script.user == 'root'
+    assert script.group == 'root'
+    assert script.mode == 0o755
+    assert script.contains('/etc/ckan/production.ini')
+
+
 def test_beaker_cache_cleanup(host):
     script = host.file('/usr/local/bin/beaker-cache-cleanup.sh')
     supervisor_conf = host.file(
