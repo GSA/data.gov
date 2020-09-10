@@ -34,15 +34,14 @@ def test_apache2_sites(host):
 
 
 def test_export_map_json(host):
-    json = host.file("""/usr/lib/ckan/src/ckanext-datajson
-        /ckanext/datajson/export_map/export.map.json""")
-    ckan = host.file('/etc/apache2/sites-enabled/ckan.conf')
+    json = host.file('/usr/lib/ckan/src/ckanext-datajson/ckanext' \
+        '/datajson/export_map/export.map.json')
 
     assert json.exists
     assert json.user == 'root'
     assert json.group == 'www-data'
-    assert json.mode == 0o640
-    assert ckan.contains('dataset_field_map')
+    assert json.mode == 0o644
+    assert json.contains('dataset_fields_map')
 
 
 def test_apache2(host):
