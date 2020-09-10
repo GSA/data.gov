@@ -34,8 +34,8 @@ def test_apache2_sites(host):
 
 
 def test_export_map_json(host):
-    json = host.file('/usr/lib/ckan/src/ckanext-datajson/ckanext' \
-        '/datajson/export_map/export.map.json')
+    json = host.file('/usr/lib/ckan/src/ckanext-datajson/ckanext'
+                     '/datajson/export_map/export.map.json')
 
     assert json.exists
     assert json.user == 'root'
