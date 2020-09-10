@@ -33,6 +33,17 @@ def test_apache2_sites(host):
         'ErrorLog /var/log/inventory/datapusher.error.log')
 
 
+def test_export_map_json(host):
+    json = host.file('/usr/lib/ckan/src/ckanext-datajson/ckanext'
+                     '/datajson/export_map/export.map.json')
+
+    assert json.exists
+    assert json.user == 'root'
+    assert json.group == 'www-data'
+    assert json.mode == 0o644
+    assert json.contains('dataset_fields_map')
+
+
 def test_apache2(host):
     apache2 = host.service('apache2')
 
