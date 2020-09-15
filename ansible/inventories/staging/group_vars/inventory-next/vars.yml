@@ -1,0 +1,45 @@
+---
+# In sandbox, we use python3 on bionic web hosts
+# https://github.com/GSA/datagov-infrastructure-modules/issues/32
+ansible_python_interpreter: /usr/bin/python3
+
+datagov_service: inventory
+app_type: inventory-next
+inventory_db_name: inventory_db_next
+inventory_python_home: "{{ python_home }}"
+datagov_in_service: false
+
+
+# Inventory Datapusher
+inventory_datastore_ro_user: datastore_ro
+inventory_datastore_user: datastore
+
+# db credentials
+inventory_ckan_db_host: "{{ inventory_next_postgresql_login_host }}"
+inventory_db_user: "{{ inventory_next_postgresql_login_user }}"
+inventory_db_pass: "{{ inventory_next_postgresql_login_password }}"
+datastore_db_server: "{{ inventory_next_postgresql_login_host }}"
+inventory_datapusher_db_pass: "{{ inventory_next_datapusher_db_pass }}"
+inventory_datastore_pass: "{{ inventory_next_datastore_pass }}"
+inventory_datastore_ro_pass: "{{ inventory_next_datastore_ro_pass }}"
+
+# other
+inventory_ckan_bucket_name: "{{ inventory_next_ckan_s3_bucket_name }}"
+inventory_ckan_bucket_prefix: "{{ inventory_next_ckan_s3_bucket_prefix }}"
+ckan_site_domain: "{{ inventory_next_ckan_service_url }}"
+
+inventory_app_repo_branch: inventory_ckan_2.8
+
+# saml2 authentication
+catalog_ckan_saml2_enabled: true
+catalog_ckan_plugins_additional: [saml2]
+saml2_site_url: https://inventory-next.sandbox.datagov.us/
+
+# redis
+inventory_ckan_redis_password: "{{ inventory_next_ckan_redis_password }}"
+inventory_ckan_redis_host: "{{ inventory_next_ckan_redis_host }}"
+
+# secrets
+ckan_instance_secret: "{{ inventory_next_ckan_instance_secret }}"
+ckan_instance_uuid: "{{ inventory_next_ckan_instance_uuid }}"
+who_ini_secret: "{{ inventory_next_ckan_who_ini_secret }}"
