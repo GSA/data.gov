@@ -9,6 +9,8 @@ inventory_db_name: inventory_db_next
 inventory_python_home: "{{ python_home }}"
 datagov_in_service: false
 
+# Trendmicro firewall policy
+trendmicro_policy_id: "{{ trendmicro_policy_id_web }}"
 
 # Inventory Datapusher
 inventory_datastore_ro_user: datastore_ro
