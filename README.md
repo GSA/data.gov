@@ -386,6 +386,8 @@ If you have multiple scenarios, you can specify them individually.
 
     $ molecule test -s <scenario>
 
+If you created a new scenario, be sure to add it to the appropriate variable in the [Makefile](./Makefile)
+
 
 ### Manual testing with Vagrant
 
