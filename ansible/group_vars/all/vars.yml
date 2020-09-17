@@ -128,7 +128,7 @@ nrinfragent_config:
 
 
 # monit settings
-monit_apache2_mem_threshold: 83
+monit_apache2_mem_threshold: 82
 
 
 # Nginx
