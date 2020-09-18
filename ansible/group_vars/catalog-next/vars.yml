@@ -28,6 +28,7 @@ catalog_ckan_plugins_default:
   - spatial_query
   - report
   - archiver
+  - qa
   - datagovtheme
   - datagovcatalog
   - googleanalyticsbasic
