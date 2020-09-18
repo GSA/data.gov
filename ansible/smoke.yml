@@ -1,6 +1,9 @@
 ---
 - name: Host smoke tests
-  hosts: all
+  # TODO This check should be enabled on jumpbox and jenkins
+  # Skip the check on the delegate host because the firewall allows
+  # localhost access and the check will fail.
+  hosts: "!jumpbox:!jenkins"
   tasks:
     - name: assert smtp port is closed
       wait_for:
