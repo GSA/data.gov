@@ -17,6 +17,7 @@
 
 - name: www.data.gov cache smoke tests
   hosts: all
+  gather_facts: false
   tasks:
     - name: assert main page is cached
       vars:
@@ -78,6 +79,7 @@
 
 - name: catalog.data.gov cache smoke tests
   hosts: all
+  gather_facts: false
   tasks:
     - name: assert static assets are cached
       # This test is a bit tricky because the URLs for most assets are
