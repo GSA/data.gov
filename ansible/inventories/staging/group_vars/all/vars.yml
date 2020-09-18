@@ -155,6 +155,22 @@ inventory_ckan_service_url: https://inventory-datagov.dev-ocsit.bsp.gsa.gov
 inventory_ckan_solr_host: datagov-solrm1d.dev-ocsit.bsp.gsa.gov
 inventory_ckan_solr_port: "8983"
 
+# Inventory Next
+inventory_next_ckan_s3_bucket_name: "{{ vault_inventory_next_s3_bucket_name }}"
+inventory_next_ckan_s3_bucket_prefix: "{{ vault_inventory_next_s3_bucket_prefix }}"
+inventory_next_ckan_instance_secret: "{{ vault_inventory_next_ckan_instance_secret }}"
+inventory_next_ckan_instance_uuid: "{{ vault_inventory_next_ckan_instance_uuid }}"
+inventory_next_ckan_service_url: https://inventory-next-datagov.dev-ocsit.bsp.gsa.gov
+inventory_next_ckan_who_ini_secret: "{{ vault_inventory_next_ckan_who_ini_secret }}"
+inventory_next_ckan_redis_host: "redis1d.dev-ocsit.bsp.gsa.gov"
+inventory_next_ckan_redis_password: "{{ vault_inventory_next_ckan_redis_password }}"
+inventory_next_datapusher_db_pass: "{{ vault_inventory_next_datapusher_db_pass }}"
+inventory_next_datastore_pass: "{{ vault_inventory_next_datastore_db_pass }}"
+inventory_next_datastore_ro_pass: "{{ vault_inventory_next_datastore_ro_db_pass }}"
+inventory_next_postgresql_login_host: "{{ vault_inventory_next_postgresql_login_host }}"
+inventory_next_postgresql_login_user: "{{ vault_inventory_next_postgresql_login_user }}"
+inventory_next_postgresql_login_password: "{{ vault_inventory_next_postgresql_login_password }}"
+
 
 # New Relic
 newrelic_license_key: "{{ vault_newrelic_license_key }}"
