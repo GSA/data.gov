@@ -72,7 +72,7 @@
   when:
     - not inventory_ckan_saml2_enabled
   notify:
-    - reload apache2
+    - restart apache2
     - reload supervisor
 
 - name: create directories
