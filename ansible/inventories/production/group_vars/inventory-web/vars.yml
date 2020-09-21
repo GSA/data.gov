@@ -32,6 +32,8 @@ ckan_site_domain: "{{ vault_ckan_site_domain }}"
 
 # max login
 saml2_site_url: "{{ vault_saml2_site_url }}"
+inventory_ckan_saml2_enabled: true
+inventory_ckan_plugins_additional: [saml2]
 
 # secrets
 who_ini_secret: "{{ vault_who_ini_secret }}"
