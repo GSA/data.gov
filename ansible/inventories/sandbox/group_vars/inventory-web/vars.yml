@@ -25,7 +25,7 @@ ckan_site_domain: "{{ inventory_ckan_service_url }}"
 
 # saml2 authentication
 inventory_ckan_saml2_enabled: true
-inventory_ckan_plugins_additional: [saml2]
+inventory_ckan_plugins_additional: [saml2, s3filestore]
 saml2_site_url: https://inventory.sandbox.datagov.us/
 
 # secrets
