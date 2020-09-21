@@ -63,6 +63,18 @@
     umask: "0022"
   notify: restart apache2
 
+- name: install repoze.who library for local login (if saml disabled)
+  pip:
+    name: repoze.who~=2.3
+    virtualenv: "{{ project_source_new_code_path }}"
+    umask: '0022'
+    state: present
+  when:
+    - not inventory_ckan_saml2_enabled
+  notify:
+    - reload apache2
+    - reload supervisor
+
 - name: create directories
   action: file path={{ item }} state=directory owner="www-data" group="www-data" mode=0755
   with_items:
