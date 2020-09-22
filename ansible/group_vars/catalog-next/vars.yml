@@ -39,3 +39,4 @@ catalog_ckan_plugins_default:
   - dcat
   - dcat_json_interface
   - structured_data
+  - saml2
