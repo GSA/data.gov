@@ -13,6 +13,7 @@
         msg: smtp port expected to be closed
         timeout: 10
       delegate_to: localhost
+      become: false
 
 
 - name: www.data.gov cache smoke tests
@@ -44,6 +45,7 @@
               Response looks like it was not cached when it should be:
               {{ second_response | to_json }}
       delegate_to: localhost
+      become: false
       run_once: true
 
     - name: assert TTL for 4xx is less than 10 seconds to prevent CPDoS
@@ -74,6 +76,7 @@
               Response looks like it was cached when it shouldn't be:
               {{ second_response | to_json }}
       delegate_to: localhost
+      become: false
       run_once: true
 
 
@@ -108,6 +111,7 @@
               Response looks like it was not cached when it should be:
               {{ second_response | to_json }}
       delegate_to: localhost
+      become: false
       run_once: true
 
 
@@ -140,4 +144,5 @@
               Response looks like it was cached when it shouldn't be:
               {{ second_response.content }}
       delegate_to: localhost
+      become: false
       run_once: true
