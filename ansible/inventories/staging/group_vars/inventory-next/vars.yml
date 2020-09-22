@@ -29,13 +29,15 @@ ckan_site_domain: "{{ inventory_next_ckan_service_url }}"
 inventory_app_repo_branch: inventory_ckan_2.8
 
 # saml2 authentication
-catalog_ckan_saml2_enabled: true
-catalog_ckan_plugins_additional: [saml2]
-saml2_site_url: https://inventory-next-datagov.dev-ocsit.bsp.gsa.gov/
+inventory_ckan_saml2_enabled: false
+inventory_ckan_plugins_additional: [s3filestore]
 
 # redis
 inventory_ckan_redis_password: "{{ inventory_next_ckan_redis_password }}"
 inventory_ckan_redis_host: "{{ inventory_next_ckan_redis_host }}"
+# To be combination, setting to localhost for now
+# rediss://:{{ inventory_ckan_redis_password }}@{{ inventory_ckan_redis_host }}:6379/{{ inventory_ckan_redis_db }}
+inventory_ckan_redis_url: redis://localhost:6379/0
 
 # secrets
 ckan_instance_secret: "{{ inventory_next_ckan_instance_secret }}"
