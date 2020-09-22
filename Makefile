@@ -39,6 +39,7 @@ ANSIBLE_PLAYBOOKS := \
   pycsw.yml \
   redis.yml \
   site.yml \
+  smoke.yml \
   solr.yml
 
 # Create test-molecule-<suite>-<scenario> targets

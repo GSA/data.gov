@@ -63,9 +63,9 @@
       until: not contact_forms.failed
 
     - name: assert Location header contains /contact
-      fail:
-        msg: "Expected Location {{ expected_url }} to be in {{ item.location }}"
-      when: expected_url not in item.location
+      assert:
+        that: expected_url in item.location
+        fail_msg: "Expected Location {{ expected_url }} to be in {{ item.location }}"
       vars:
         expected_url: "{{ ansible_fqdn }}/contact"
       loop: "{{ contact_forms.results }}"

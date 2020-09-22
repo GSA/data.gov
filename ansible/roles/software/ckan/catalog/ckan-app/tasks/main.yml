@@ -1,8 +1,8 @@
 ---
 - name: assert catalog_ckan_who_ini_secret is set
-  fail:
-    msg: catalog_ckan_who_ini_secret is not set but is required
-  when: catalog_ckan_who_ini_secret is undefined
+  assert:
+    that: catalog_ckan_who_ini_secret is defined
+    fail_msg: catalog_ckan_who_ini_secret is not set but is required
 
 # Since ckanext-saml2 and its dependencies are part of catalog-app's requirements.txt, their
 # build dependencies must be installed even if saml2 will not be enabled.
