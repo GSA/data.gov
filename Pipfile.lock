@@ -228,12 +228,6 @@
             "index": "pypi",
             "version": "==2.8.14"
         },
-        "ansible-base": {
-            "hashes": [
-                "sha256:72c062ccdcec627542c8305ca7050cbdc651585a3fa27e3f536f82a27b5e0557"
-            ],
-            "version": "==2.10.1"
-        },
         "ansible-lint": {
             "hashes": [
                 "sha256:b9fc9a6564f5d60a4284497f966f38ef78f0e2505edbe2bd1225f1ade31c2d8a",
