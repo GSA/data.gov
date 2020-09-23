@@ -21,7 +21,7 @@
 
 - name: Update CKAN translation files
   command: "{{ project_source_new_code_path }}/bin/paster --plugin=ckan trans js -c /etc/ckan/production.ini"
-  when: 
+  when:
     - inventory_next
     - db_is_setup
 
