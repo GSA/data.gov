@@ -20,7 +20,7 @@
   copy: src=inventory-db-init.py dest=/usr/local/bin/inventory-db-init.py owner=root group=root mode=0755
 
 - name: Update CKAN translation files
-  command: ckan trans js
+  command: /usr/lib/ckan/bin/paster --plugin=ckan trans js -c /etc/ckan/production.ini
   when: inventory_next
 
 - name: install beaker cache cleanup script
