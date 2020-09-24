@@ -30,7 +30,7 @@ ckan_site_domain: "{{ inventory_next_ckan_service_url }}"
 
 inventory_app_repo_branch: inventory_ckan_2.8
 
-# saml2 authentication
+# saml2 authentication (disabled until https://github.com/GSA/datagov-ckan-multi/issues/348 is resolved)
 inventory_ckan_saml2_enabled: false
 inventory_ckan_plugins_additional: [s3filestore]
 
