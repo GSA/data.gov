@@ -23,7 +23,12 @@ SQLALCHEMY_DATABASE_URI = "postgresql://" + db_user + ":" + db_pass + "@" + db_s
 # webserver host and port
 
 HOST = '0.0.0.0'
+
+{% if datapusher_gunicorn_port is defined %}
+PORT = "{{ datapusher_gunicorn_port }}"
+{% else %}
 PORT = 8800
+{% endif %}
 
 # logging
 

@@ -1,3 +1,5 @@
 ---
 
 inventory_next: true
+
+datapusher_gunicorn_port: 6000
