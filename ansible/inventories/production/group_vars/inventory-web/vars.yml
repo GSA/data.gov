@@ -1,6 +1,8 @@
 ---
 datagov_service: inventory
 
+datapusher_build_pkg_branch: datagov/inventory-classic
+
 # project path
 project_source_rollback_path: /usr/lib/ckan-rollback
 project_source_new_code_path: /usr/lib/ckan-new
