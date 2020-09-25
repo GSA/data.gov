@@ -59,7 +59,7 @@
 
 - name: install psycopg2
   pip:
-    name: "pscopg2"
+    name: "psycopg2"
     virtualenv: "{{ datapusher_virtual_env }}"
     virtualenv_python: "{{ datapusher_virtual_env }}/bin/python"
     umask: "0022"
