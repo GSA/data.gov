@@ -1,6 +1,7 @@
 ---
 
 datagov_service: inventory
+inventory_app_repo_branch: improved-metadata-form
 inventory_db_name: inventory_db
 inventory_python_home: "{{ python_home }}"
 app_type: inventory
