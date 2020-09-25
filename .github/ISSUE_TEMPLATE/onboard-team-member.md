@@ -24,7 +24,6 @@ Below are the tasks that will drive the onboarding process.
 - [ ] Make sure team member has 2FA enabled for their GitHub account and [request](https://github.com/GSA/GitHub-Administration/blob/master/README.md#requesting-access-to-the-gsa-organization) membership to GSA GitHub org
 - [ ] Add team member to [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members) GitHub team
 - [ ] Request TTS Bug Bounty access [#bug-bounty-partners](https://gsa-tts.slack.com/messages/C5JQCD9PH)
-- [ ] Add team member to Uptrends via [email](https://docs.google.com/spreadsheets/d/1Z9Zpr1mpx-65i_fH2VTbVofPtidpLZs5cnkO0Jz53Vc/edit#gid=0)
 - [ ] Add team member to [New Relic](https://newrelic.com) with permissions:
   - Alerts manager
   - APM manager
