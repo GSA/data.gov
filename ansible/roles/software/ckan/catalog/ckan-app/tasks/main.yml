@@ -127,7 +127,7 @@
 # TODO configuration files should live in the application repo
 - name: Configure who.ini
   template:
-    src: etc_ckan_who.{{ catalog_ckan_saml2_enabled | ternary('saml2', 'default') }}.ini.j2
+    src: "{{ ckan_who_ini_template_dir }}/etc_ckan_who.{{ catalog_ckan_saml2_enabled | ternary('saml2', 'default') }}.ini.j2"
     dest: /etc/ckan/who.ini
     owner: root
     group: www-data

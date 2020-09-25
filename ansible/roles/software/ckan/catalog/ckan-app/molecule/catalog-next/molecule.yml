@@ -29,7 +29,14 @@ provisioner:
         ckan_catalog_next: true
         ckan_uses_gunicorn: true
         app_repo: https://github.com/GSA/catalog.data.gov
+        app_repo_branch: enable-saml2
         ckan_production_ini_template: catalog-next/etc_ckan_production.ini.j2
+        catalog_ckan_saml2_enabled: true
+        ckan_who_ini_template_dir: "catalog-next"
+        saml2_idp_metadata_url: "https://idp.int.identitysandbox.gov/api/saml/metadata2020"
+        saml2_site_url: "https://catalog-next.sandbox.datagov.us/"
+        saml2_sp_public_certificate: ""
+        saml2_sp_private_key: ""
         catalog_ckan_redis_url: redis://:secret@localhost:6379/0
         catalog_ckan_plugins_default:
           - envvars
@@ -51,8 +58,8 @@ provisioner:
           - spatial_query
           - spatial_harvest_metadata_api
           - datagovtheme
+          - saml2
         newrelic_license_key: some-secret
-
   lint:
     name: ansible-lint
   playbooks:
