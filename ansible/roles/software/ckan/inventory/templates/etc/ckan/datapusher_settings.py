@@ -31,5 +31,7 @@ PORT = 8800
 # FROM_EMAIL = 'server-error@example.com'
 # ADMINS = ['yourname@example.com']  # where to send emails
 
+EXTERNAL_STORAGE = True
+
 # LOG_FILE = '/tmp/ckan_service.log'
 STDERR = True
