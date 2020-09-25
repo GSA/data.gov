@@ -39,7 +39,7 @@
 
 - name: Make datapusher source code directory
   file:
-    path: "{{ datapusher_virtual_env }}/src"
+    path: "{{ datapusher_virtual_env }}/src/datapusher"
     state: directory
 
 - name: Git clone datapusher
@@ -47,18 +47,25 @@
     force: yes
     umask: "0022"
     repo: "{{ datapusher_next_repo }}"
-    dest: "{{ datapusher_virtual_env }}/src"
+    dest: "{{ datapusher_virtual_env }}/src/datapusher"
     version: "{{ datapusher_next_branch }}"
 
 - name: install requirements for datapusher
   pip:
-    requirements: "{{ datapusher_virtual_env }}/src/{{ datapusher_next_requirements }}"
+    requirements: "{{ datapusher_virtual_env }}/src/datapusher/{{ datapusher_next_requirements }}"
+    virtualenv: "{{ datapusher_virtual_env }}"
+    virtualenv_python: "{{ datapusher_virtual_env }}/bin/python"
+    umask: "0022"
+
+- name: install psycopg2
+  pip:
+    name: "pscopg2"
     virtualenv: "{{ datapusher_virtual_env }}"
     virtualenv_python: "{{ datapusher_virtual_env }}/bin/python"
     umask: "0022"
 
 - name: Run datapusher setup
-  command: "{{ datapusher_virtual_env }}/bin/python {{ datapusher_virtual_env }}/src/setup.py develop"
+  command: "{{ datapusher_virtual_env }}/bin/python {{ datapusher_virtual_env }}/src/datapusher/setup.py develop"
   become: true
   tags: skip_ansible_lint
 
