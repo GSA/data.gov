@@ -12,6 +12,7 @@
       - libxslt1-dev
       - libxml2-dev
       - git
+      - libffi-dev
 
 - name: Remove old datapusher code
   file:
@@ -28,13 +29,13 @@
     umask: "0022"
   notify: restart apache2
 
-- name: setup gunicorn for new datapusher
-  pip:
-    name:
-      - gunicorn~=19.10.0
-      - gevent~=20.6.2
-    virtualenv: '{{ datapusher_virtual_env }}'
-    umask: "0022"
+# - name: setup gunicorn for new datapusher
+#   pip:
+#     name:
+#       - gunicorn~=19.10.0
+#       - gevent~=20.6.2
+#     virtualenv: '{{ datapusher_virtual_env }}'
+#     umask: "0022"
 
 - name: Make datapusher source code directory
   file:
@@ -71,26 +72,30 @@
   with_items:
     - etc/ckan/datapusher.wsgi
     - etc/ckan/datapusher_settings.py
-    - etc/supervisor/conf.d/gunicorn-datapusher.conf
+    # - etc/supervisor/conf.d/gunicorn-datapusher.conf
+    - etc/apache2/sites-enabled/datapusher.conf
   notify:
     - restart apache2
-    - reload supervisor
+    # - reload supervisor
 
-- name: Add Datapusher configuration files
-  template:
-    src: "etc/apache2/sites-enabled/datapusher_next.conf"
-    dest: "/etc/apache2/sites-enabled/datapusher.conf"
-    owner: root
-    group: www-data
-    mode: "0640"
-  notify:
-    - restart apache2
-    - reload supervisor
+# - name: Enable DataPusher Apache Site
+#   command: 
 
-- name: Add Datapusher configuration files
-  template:
-    src: etc/ckan/datapusher_settings.py
-    dest: "{{ datapusher_virtual_env }}/src/deployment"
-    owner: root
-    group: www-data
-    mode: "0640"
+# - name: Add Datapusher configuration files
+#   template:
+#     src: "etc/apache2/sites-enabled/datapusher_next.conf"
+#     dest: "/etc/apache2/sites-enabled/datapusher.conf"
+#     owner: root
+#     group: www-data
+#     mode: "0640"
+#   notify:
+#     - restart apache2
+#     - reload supervisor
+
+# - name: Add Datapusher configuration files
+#   template:
+#     src: etc/ckan/datapusher_settings.py
+#     dest: "{{ datapusher_virtual_env }}/src/deployment"
+#     owner: root
+#     group: www-data
+#     mode: "0640"
