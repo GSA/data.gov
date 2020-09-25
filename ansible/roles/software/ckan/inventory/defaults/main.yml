@@ -41,7 +41,6 @@ datapusher_gunicorn_error_log: "{{ inventory_log_dir }}/datapusher_gunicorn.log"
 datapusher_next_repo: https://github.com/ckan/datapusher.git
 datapusher_next_requirements: requirements.txt
 datapusher_next_branch: "0.0.16"
-datapusher_gunicorn_port: 
 
 # Enable crons only on specific hosts
 crons_enabled: false

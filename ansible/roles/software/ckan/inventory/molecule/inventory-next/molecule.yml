@@ -33,7 +33,6 @@ provisioner:
         inventory_ckan_solr_port: 8983
         inventory_app_repo_branch: inventory_ckan_2.8
         inventory_next: true
-        datapusher_gunicorn_port: 6000
 scenario:
   name: inventory-next
   # TODO fix idempotency

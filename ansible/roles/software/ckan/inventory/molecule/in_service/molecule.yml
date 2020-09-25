@@ -36,7 +36,6 @@ provisioner:
         inventory_ckan_solr_port: 8983
       bionic:
         inventory_app_repo_branch: inventory_ckan_2.8
-        datapusher_gunicorn_port: 6000
 scenario:
   name: in_service
   test_sequence:

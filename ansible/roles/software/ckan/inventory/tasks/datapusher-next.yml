@@ -26,55 +26,12 @@
     build_pkg_requirements: "{{ datapusher_next_requirements }}"
     virtualenv: "{{ datapusher_virtual_env }}"
 
-# - name: setup virtualenv for new datapusher
-#   pip:
-#     name:
-#       - pip>=19.3.0
-#       - setuptools>=44.0.0,<45.0.0  # setuptools 45+ requires python 3.5, keep pinned below, but still modern version
-#     virtualenv: '{{ datapusher_virtual_env }}'
-#     virtualenv_python: "{{ inventory_python_home }}/bin/python"
-#     umask: "0022"
-#   notify: restart apache2
-
-# - name: setup gunicorn for new datapusher
-#   pip:
-#     name:
-#       - gunicorn~=19.10.0
-#       - gevent~=20.6.2
-#     virtualenv: '{{ datapusher_virtual_env }}'
-#     umask: "0022"
-
-# - name: Make datapusher source code directory
-#   file:
-#     path: "{{ datapusher_virtual_env }}/src/datapusher"
-#     state: directory
-
-# - name: Git clone datapusher
-#   git:
-#     force: yes
-#     umask: "0022"
-#     repo: "{{ datapusher_next_repo }}"
-#     dest: "{{ datapusher_virtual_env }}/src/datapusher"
-#     version: "{{ datapusher_next_branch }}"
-
-# - name: install requirements for datapusher
-#   pip:
-#     requirements: "{{ datapusher_virtual_env }}/src/datapusher/{{ datapusher_next_requirements }}"
-#     virtualenv: "{{ datapusher_virtual_env }}"
-#     virtualenv_python: "{{ datapusher_virtual_env }}/bin/python"
-#     umask: "0022"
-
 - name: install psycopg2
   pip:
     name: "psycopg2"
     virtualenv: "{{ datapusher_virtual_env }}"
     virtualenv_python: "{{ datapusher_virtual_env }}/bin/python"
     umask: "0022"
-
-# - name: Run datapusher setup
-#   command: "{{ datapusher_virtual_env }}/bin/python {{ datapusher_virtual_env }}/src/datapusher/setup.py develop"
-#   become: true
-#   tags: skip_ansible_lint
 
 - name: Add Datapusher configuration files
   template:
@@ -86,30 +43,6 @@
   with_items:
     - etc/ckan/datapusher.wsgi
     - etc/ckan/datapusher_settings.py
-    # - etc/supervisor/conf.d/gunicorn-datapusher.conf
     - etc/apache2/sites-enabled/datapusher.conf
   notify:
     - restart apache2
-    # - reload supervisor
-
-# - name: Enable DataPusher Apache Site
-#   command: 
-
-# - name: Add Datapusher configuration files
-#   template:
-#     src: "etc/apache2/sites-enabled/datapusher_next.conf"
-#     dest: "/etc/apache2/sites-enabled/datapusher.conf"
-#     owner: root
-#     group: www-data
-#     mode: "0640"
-#   notify:
-#     - restart apache2
-#     - reload supervisor
-
-# - name: Add Datapusher configuration files
-#   template:
-#     src: etc/ckan/datapusher_settings.py
-#     dest: "{{ datapusher_virtual_env }}/src/deployment"
-#     owner: root
-#     group: www-data
-#     mode: "0640"

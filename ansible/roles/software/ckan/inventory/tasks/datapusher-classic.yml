@@ -37,4 +37,3 @@
     - etc/apache2/sites-enabled/datapusher.conf
   notify:
     - restart apache2
-    - reload supervisor
