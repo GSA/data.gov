@@ -12,7 +12,7 @@
       - libxslt1-dev
       - libxml2-dev
       - git
-      - libffi-devs
+      - libffi-dev
 
 - name: Remove old datapusher code
   file:
