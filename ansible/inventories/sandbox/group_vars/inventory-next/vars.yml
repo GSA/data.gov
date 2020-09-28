@@ -7,7 +7,7 @@ datagov_service: inventory
 app_type: inventory-next
 inventory_db_name: inventory_db_next
 inventory_python_home: "{{ python_home }}"
-datagov_in_service: true
+datagov_in_service: false
 
 datapusher_build_pkg_branch: datagov/inventory-next
 
@@ -31,7 +31,7 @@ ckan_site_domain: "{{ inventory_next_ckan_service_url }}"
 
 inventory_app_repo_branch: inventory_ckan_2.8
 
-# saml2 authentication
+# saml2 authentication (disabled until https://github.com/GSA/datagov-ckan-multi/issues/348 is resolved)
 inventory_ckan_saml2_enabled: false
 inventory_ckan_plugins_additional: []
 

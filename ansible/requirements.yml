@@ -70,7 +70,7 @@
   version: v1.2.0
 - name: gsa.datagov-deploy-wordpress
   src: https://github.com/GSA/datagov-deploy-wordpress.git
-  version: v1.0.6
+  version: v1.0.7
 - name: jnv.unattended-upgrades
   version: v1.8.0
 - name: jobscore.beats
