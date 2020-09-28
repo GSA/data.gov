@@ -38,9 +38,8 @@ inventory_ckan_plugins_additional: []
 # redis
 inventory_ckan_redis_password: "{{ inventory_next_ckan_redis_password }}"
 inventory_ckan_redis_host: "{{ inventory_next_ckan_redis_host }}"
-# To be combination, setting to localhost for now
-# rediss://:{{ inventory_ckan_redis_password }}@{{ inventory_ckan_redis_host }}:6379/{{ inventory_ckan_redis_db }}
-inventory_ckan_redis_url: redis://localhost:6379/0
+# Requires rediss due to AWS redis security configuration
+inventory_ckan_redis_url: rediss://:{{ inventory_ckan_redis_password }}@{{ inventory_ckan_redis_host }}:6379/{{ inventory_ckan_redis_db }}
 
 # secrets
 ckan_instance_secret: "{{ inventory_next_ckan_instance_secret }}"

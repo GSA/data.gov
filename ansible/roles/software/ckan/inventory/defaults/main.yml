@@ -71,7 +71,7 @@ inventory_db_name: ckan
 inventory_db_user: ckan
 inventory_python_home: "/usr"
 
-inventory_ckan_redis_db: "0"
+inventory_ckan_redis_db: "1"
 
 inventory_next: false
 
