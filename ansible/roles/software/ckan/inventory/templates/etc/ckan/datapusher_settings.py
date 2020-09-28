@@ -23,12 +23,15 @@ SQLALCHEMY_DATABASE_URI = "postgresql://" + db_user + ":" + db_pass + "@" + db_s
 # webserver host and port
 
 HOST = '0.0.0.0'
+
 PORT = 8800
 
 # logging
 
 # FROM_EMAIL = 'server-error@example.com'
 # ADMINS = ['yourname@example.com']  # where to send emails
+
+EXTERNAL_STORAGE = True
 
 # LOG_FILE = '/tmp/ckan_service.log'
 STDERR = True

@@ -9,6 +9,7 @@ inventory_db_name: inventory_db_next
 inventory_python_home: "{{ python_home }}"
 datagov_in_service: false
 
+datapusher_build_pkg_branch: datagov/inventory-next
 
 # Inventory Datapusher
 inventory_datastore_ro_user: datastore_ro
@@ -32,7 +33,7 @@ inventory_app_repo_branch: inventory_ckan_2.8
 
 # saml2 authentication (disabled until https://github.com/GSA/datagov-ckan-multi/issues/348 is resolved)
 inventory_ckan_saml2_enabled: false
-inventory_ckan_plugins_additional: [s3filestore]
+inventory_ckan_plugins_additional: []
 
 # redis
 inventory_ckan_redis_password: "{{ inventory_next_ckan_redis_password }}"
