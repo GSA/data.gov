@@ -37,11 +37,13 @@ inventory_ckan_plugins_additional: [s3filestore]
 # redis
 inventory_ckan_redis_password: "{{ inventory_next_ckan_redis_password }}"
 inventory_ckan_redis_host: "{{ inventory_next_ckan_redis_host }}"
-# To be combination, setting to localhost for now
-# rediss://:{{ inventory_ckan_redis_password }}@{{ inventory_ckan_redis_host }}:6379/{{ inventory_ckan_redis_db }}
-inventory_ckan_redis_url: redis://localhost:6379/0
+# Requires redis due to standard EC2 redis system setup
+inventory_ckan_redis_url: redis://:{{ inventory_ckan_redis_password }}@{{ inventory_ckan_redis_host }}:6379/{{ inventory_ckan_redis_db }}
 
 # secrets
 ckan_instance_secret: "{{ inventory_next_ckan_instance_secret }}"
 ckan_instance_uuid: "{{ inventory_next_ckan_instance_uuid }}"
 who_ini_secret: "{{ inventory_next_ckan_who_ini_secret }}"
+
+# solr
+inventory_ckan_solr_host: "{{ inventory_next_ckan_solr_host }}"
