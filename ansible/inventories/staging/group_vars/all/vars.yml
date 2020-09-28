@@ -204,9 +204,7 @@ solr_java_packages:
   - openjdk-8-jdk
 solr_cores:
   - catalog
-  - catalog-next
   - inventory
-  - inventory-next
 solr_xms: 8192m
 solr_xmx: 8192m
 
