@@ -24,6 +24,7 @@
   when:
     - inventory_next
     - db_is_setup
+  become: true
 
 - name: install beaker cache cleanup script
   template: src=beaker-cache-cleanup.sh.j2 dest=/usr/local/bin/beaker-cache-cleanup.sh owner=root group=root mode=0755
