@@ -45,3 +45,6 @@ inventory_ckan_redis_url: redis://localhost:6379/0
 ckan_instance_secret: "{{ inventory_next_ckan_instance_secret }}"
 ckan_instance_uuid: "{{ inventory_next_ckan_instance_uuid }}"
 who_ini_secret: "{{ inventory_next_ckan_who_ini_secret }}"
+
+# solr
+inventory_ckan_solr_host: "{{ inventory_next_ckan_solr_host }}"
