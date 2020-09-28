@@ -34,6 +34,7 @@ provisioner:
         datagov_in_service: false
         python_home: /usr
         inventory_ckan_solr_port: 8983
+        db_is_setup: false
       bionic:
         inventory_app_repo_branch: inventory_ckan_2.8
         datapusher_build_pkg_branch: datagov/inventory-next
