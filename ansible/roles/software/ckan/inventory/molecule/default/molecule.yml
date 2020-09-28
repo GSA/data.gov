@@ -38,6 +38,7 @@ provisioner:
       bionic:
         inventory_app_repo_branch: inventory_ckan_2.8
         inventory_next: true
+        datapusher_build_pkg_branch: datagov/inventory-next
 scenario:
   name: default
   # TODO fix idempotency
