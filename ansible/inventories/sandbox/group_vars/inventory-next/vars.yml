@@ -7,7 +7,7 @@ datagov_service: inventory
 app_type: inventory-next
 inventory_db_name: inventory_db_next
 inventory_python_home: "{{ python_home }}"
-datagov_in_service: false
+datagov_in_service: true
 
 datapusher_build_pkg_branch: datagov/inventory-next
 
