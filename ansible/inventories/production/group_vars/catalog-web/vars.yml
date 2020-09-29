@@ -6,8 +6,8 @@ datagov_service: catalog
 newrelic_app_name: catalog
 
 # role url
-url_readonly: "{{ urls_public.catalog }}"
-url_writable: https://admin-catalog.data.gov
+url_readonly: "{{ catalog_url_public }}"
+url_writable: "{{ catalog_url_admin }}"
 
 # project path
 project_source_rollback_path: /usr/lib/ckan-rollback
