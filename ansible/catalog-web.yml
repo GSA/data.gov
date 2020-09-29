@@ -14,15 +14,15 @@
       apache2_enabled: "{{ datagov_in_service | default(true) }}"
       tags:
         - apache
+    - role: software/ckan/saml2
+      tags: 
+        - saml2
+      when: catalog_ckan_saml2_enabled | default(false)
     - role: software/ckan/catalog/ckan-app
       vars:
         app_repo_branch: "{{ catalog_ckan_app_version }}"
       tags:
         - app-deploy
-    - role: software/ckan/saml2
-      tags: 
-        - saml2
-      when: catalog_ckan_saml2_enabled | default(false)
     - role: software/ckan/fix-ckan-tracking
       tags:
         - frontend
