@@ -7,6 +7,8 @@ ckan_uses_gunicorn: true
 ckan_production_ini_template: catalog-next/etc_ckan_production.ini.j2
 
 catalog_ckan_app_version: master
+#catalog_ckan_app_version: enable-saml2
+
 app_repo: https://github.com/GSA/catalog.data.gov
 
 catalog_ckan_plugins_default:
