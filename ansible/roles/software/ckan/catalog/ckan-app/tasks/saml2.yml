@@ -1,13 +1,13 @@
 ---
 - name: assert saml2_sp_public_certificate is set
-  fail:
-    msg: saml2_sp_public_certificate is required
-  when: saml2_sp_public_certificate is undefined
+  assert:
+    that: saml2_sp_public_certificate is defined
+    fail_msg: saml2_sp_public_certificate is required
 
 - name: assert saml2_sp_private_key is set
-  fail:
-    msg: saml2_sp_private_key is required
-  when: saml2_sp_private_key is undefined
+  assert:
+    that: saml2_sp_private_key is defined
+    fail_msg: saml2_sp_private_key is required
 
 - name: create saml2 directory
   action: file path=/etc/ckan/saml2/ state=directory mode=0755 owner=root group=www-data

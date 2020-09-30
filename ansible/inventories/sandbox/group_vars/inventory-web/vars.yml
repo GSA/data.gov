@@ -1,6 +1,10 @@
 ---
 
 datagov_service: inventory
+
+datapusher_build_pkg_branch: datagov/inventory-classic
+
+inventory_app_repo_branch: improved-metadata-form
 inventory_db_name: inventory_db
 inventory_python_home: "{{ python_home }}"
 app_type: inventory
@@ -23,9 +27,10 @@ inventory_ckan_bucket_name: "{{ inventory_ckan_s3_bucket_name }}"
 inventory_ckan_bucket_prefix: "{{ inventory_ckan_s3_bucket_prefix }}"
 ckan_site_domain: "{{ inventory_ckan_service_url }}"
 
-# saml2 authentication
-catalog_ckan_saml2_enabled: true
-catalog_ckan_plugins_additional: [saml2]
+# saml2 authentication (temporarily disabled to allow testing
+# https://github.com/GSA/datagov-ckan-multi/issues/326 by non-GSA folks)
+inventory_ckan_saml2_enabled: false
+inventory_ckan_plugins_additional: [s3filestore]
 saml2_site_url: https://inventory.sandbox.datagov.us/
 
 # secrets

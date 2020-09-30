@@ -28,10 +28,12 @@ provisioner:
   inventory:
     group_vars:
       all:
+        db_is_setup: false
         python_home: /usr
         inventory_ckan_solr_port: 8983
         inventory_app_repo_branch: inventory_ckan_2.8
         inventory_next: true
+        datapusher_build_pkg_branch: datagov/inventory-next
 scenario:
   name: inventory-next
   # TODO fix idempotency

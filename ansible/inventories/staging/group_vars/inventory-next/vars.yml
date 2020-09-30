@@ -1,15 +1,14 @@
 ---
-# In sandbox, we use python3 on bionic web hosts
-# https://github.com/GSA/datagov-infrastructure-modules/issues/32
-ansible_python_interpreter: /usr/bin/python3
-
 datagov_service: inventory
 app_type: inventory-next
 inventory_db_name: inventory_db_next
 inventory_python_home: "{{ python_home }}"
-datagov_in_service: true
+datagov_in_service: false
 
 datapusher_build_pkg_branch: datagov/inventory-next
+
+# Trendmicro firewall policy
+trendmicro_policy_id: "{{ trendmicro_policy_id_web }}"
 
 # Inventory Datapusher
 inventory_datastore_ro_user: datastore_ro
@@ -31,17 +30,20 @@ ckan_site_domain: "{{ inventory_next_ckan_service_url }}"
 
 inventory_app_repo_branch: inventory_ckan_2.8
 
-# saml2 authentication (disabled until https://github.com/GSA/datagov-ckan-multi/issues/348 is resolved)
+# saml2 authentication
 inventory_ckan_saml2_enabled: false
-inventory_ckan_plugins_additional: []
+inventory_ckan_plugins_additional: [s3filestore]
 
 # redis
 inventory_ckan_redis_password: "{{ inventory_next_ckan_redis_password }}"
 inventory_ckan_redis_host: "{{ inventory_next_ckan_redis_host }}"
-# Requires rediss due to AWS redis security configuration
-inventory_ckan_redis_url: rediss://:{{ inventory_ckan_redis_password }}@{{ inventory_ckan_redis_host }}:6379/{{ inventory_ckan_redis_db }}
+# Requires redis due to standard EC2 redis system setup
+inventory_ckan_redis_url: redis://:{{ inventory_ckan_redis_password }}@{{ inventory_ckan_redis_host }}:6379/{{ inventory_ckan_redis_db }}
 
 # secrets
 ckan_instance_secret: "{{ inventory_next_ckan_instance_secret }}"
 ckan_instance_uuid: "{{ inventory_next_ckan_instance_uuid }}"
 who_ini_secret: "{{ inventory_next_ckan_who_ini_secret }}"
+
+# solr
+inventory_ckan_solr_host: "{{ inventory_next_ckan_solr_host }}"

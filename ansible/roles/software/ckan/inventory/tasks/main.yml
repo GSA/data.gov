@@ -63,10 +63,22 @@
     umask: "0022"
   notify: restart apache2
 
+- name: install repoze.who library for local login (if saml disabled)
+  pip:
+    name: repoze.who~=2.3
+    virtualenv: "{{ project_source_new_code_path }}"
+    umask: '0022'
+    state: present
+  when:
+    - not inventory_ckan_saml2_enabled
+  notify:
+    - restart apache2
+    - reload supervisor
+
 - name: create directories
-  action: file path={{ item }} state=directory owner="www-data" group="www-data" mode=0755
+  action: file path={{ item }} state=directory owner="www-data" group="www-data" mode=0755 recurse=yes
   with_items:
-    - /var/lib/ckan
+    - /var/lib/ckan/files/storage
 
 - name: copy all needed files
   action: copy src={{ item }} dest=/{{ item }} owner=root group=www-data mode=0640

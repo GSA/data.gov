@@ -6,14 +6,6 @@
     build_pkg_requirements: "requirements.txt"
   tags: ['s3filestore']
 
-- name: add s3filestore to production.ini plugins
-  replace:
-    dest: /etc/ckan/production.ini
-    regexp: '^(ckan.plugins(?!.*\bs3filestore\b).*)$'
-    replace: '\1 s3filestore'
-  notify: restart apache2
-  tags: ['s3filestore']
-
 - name: copy datajson export map
   copy:
     src: "{{ virtualenv }}/src/ckanext-datajson/ckanext/datajson/export_map/export.inventory.map.sample.json"
@@ -26,6 +18,13 @@
 
 - name: install inventory db init script
   copy: src=inventory-db-init.py dest=/usr/local/bin/inventory-db-init.py owner=root group=root mode=0755
+
+- name: Update CKAN translation files
+  command: "{{ project_source_new_code_path }}/bin/paster --plugin=ckan trans js -c /etc/ckan/production.ini"
+  when:
+    - inventory_next
+    - db_is_setup
+  become: true
 
 - name: install beaker cache cleanup script
   template: src=beaker-cache-cleanup.sh.j2 dest=/usr/local/bin/beaker-cache-cleanup.sh owner=root group=root mode=0755

@@ -6,6 +6,7 @@
 - include_tasks: build-pkgs.yml
   vars:
     build_pkg_name: "{{ datapusher_build_pkg_name }}"
+    build_pkg_branch: "{{ datapusher_build_pkg_branch }}"
     build_pkg_repo: "{{ datapusher_build_pkg_repo }}"
     build_pkg_requirements: "{{ datapusher_build_pkg_requirements }}"
     virtualenv: "{{ datapusher_virtual_env }}"
@@ -37,4 +38,3 @@
     - etc/apache2/sites-enabled/datapusher.conf
   notify:
     - restart apache2
-    - reload supervisor

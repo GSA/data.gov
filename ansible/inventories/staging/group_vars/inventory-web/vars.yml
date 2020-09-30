@@ -1,6 +1,8 @@
 ---
 datagov_service: inventory
 
+datapusher_build_pkg_branch: datagov/inventory-classic
+
 # project path
 project_source_rollback_path: /usr/lib/ckan-rollback
 project_source_new_code_path: /usr/lib/ckan-new
@@ -31,6 +33,8 @@ ckan_site_domain: "{{ vault_ckan_site_domain }}"
 
 # max login
 saml2_site_url: "{{ vault_saml2_site_url }}"
+inventory_ckan_saml2_enabled: true
+inventory_ckan_plugins_additional: [saml2, s3filestore]
 
 # secrets
 who_ini_secret: "{{ vault_who_ini_secret }}"

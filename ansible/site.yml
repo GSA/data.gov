@@ -17,3 +17,7 @@
 - import_playbook: dashboard-web.yml
 - import_playbook: datagov-web.yml
 - import_playbook: inventory.yml
+
+# Validation and cleanup
+#########################
+- import_playbook: smoke.yml
