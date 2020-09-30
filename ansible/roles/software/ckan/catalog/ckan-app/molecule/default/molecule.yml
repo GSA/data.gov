@@ -34,6 +34,8 @@ provisioner:
         catalog_ckan_who_ini_secret: e45cfed3-40f1-41c0-8e92-77eda7ddd9f3  # Fake secret for test
         # https://github.com/DavidWittman/ansible-redis/blob/21b0b6f9030275a2586baf591f322ce3348b2b2d/tasks/install.yml#L9
         redis_travis_ci: true
+        catalog_host_public: catalog.sandbox.datagov.us
+        catalog_host_admin: admin-catalog.sandbox.datagov.us
       v2:
         app_repo_branch: bionic
   lint:
