@@ -10,7 +10,11 @@ Below are the tasks that will drive the onboarding process.
 
 ### Tasks for admin or onboarding buddy
 
-- [ ] Add team member to [TTS Slack](https://handbook.18f.gov/slack/#tts-staff) and #datagov-devsecops
+- [ ] Add team member to [TTS Slack](https://handbook.18f.gov/slack/#tts-staff)
+  - #datagov-alerts
+  - #datagov-ckan-multi
+  - #datagov-devsecops
+  - #datagov-notifications
 - [ ] Invite team member to [Data.gov calendar](https://calendar.google.com/calendar/r/settings/calendar/Z3NhLmdvdl9zcjZ0NG52YjRhOTNjNnNzdHRxYXAzbjZtMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t) and events
   - Daily sync
   - Sprint planning
@@ -22,8 +26,8 @@ Below are the tasks that will drive the onboarding process.
   - [Data.gov team list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagovhelp)
   - [Inventory help list](https://groups.google.com/a/gsa.gov/forum/#!forum/inventory-help)
 - [ ] Make sure team member has 2FA enabled for their GitHub account and [request](https://github.com/GSA/GitHub-Administration/blob/master/README.md#requesting-access-to-the-gsa-organization) membership to GSA GitHub org
-- [ ] Add team member to [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members) GitHub team
-- [ ] Request TTS Bug Bounty access [#bug-bounty-partners](https://gsa-tts.slack.com/messages/C5JQCD9PH)
+- [ ] Add team member to a Data.gov GitHub team (devsecops: [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members) or ckan-multi: [data-gov-ckan-multi](https://github.com/orgs/GSA/teams/data-gov-ckan-multi/members))
+- [ ] Request TTS Bug Bounty access in [#bug-bounty-partners](https://gsa-tts.slack.com/messages/C5JQCD9PH)
 - [ ] Add team member to [New Relic](https://newrelic.com) with permissions:
   - Alerts manager
   - APM manager
@@ -43,23 +47,17 @@ For new Project Management Office team members, follow these additional steps:
   - [CKAN Mutli](https://drive.google.com/drive/folders/0ALb0g1S27SJPUk9PVA)
 - [ ] Add team member to email lists
   - [Data.gov support list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagov)
-- [ ] Add team member to #datagov-pmo (PMO only)
-- [ ] Add team member to Data.gov slack channels
+- [ ] Add team member to #datagov-pmo
+- [ ] Add team member to additional slack channels
   - #bug-bounty
   - #bug-bounty-partners
-  - #datagov-alerts
-  - #datagov-ckan-multi
   - #datagov-comms
-  - #datagov-devsecops
-  - #datagov-notifications
   - #opp-data-analytics
 - [ ] Add team member to [the GCP project](https://console.cloud.google.com/iam-admin/iam?project=tts-datagov)
 - [ ] Add team member with OrgManager permissions in [the `gsa-datagov` organization](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/users) on cloud.gov
 - [ ] Add team member to [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members) GitHub team
 - [ ] Invite team member to calendar events
-  - CKAN-multi project syncs
-  - FGDC meeting
-  - CKAN Gov Working group
+  - CKAN-multi project meetings
 - [ ] Promote team member to Admin in [New Relic](https://newrelic.com)
 
 
@@ -70,12 +68,13 @@ For new Project Management Office team members, follow these additional steps:
 - [ ] [Request access](https://docs.google.com/forms/d/e/1FAIpQLSetStmwqrbMWDz_WIlh1trjhP0PFCjKXHzshsJveYmtIvlG2Q/viewform) to Data.gov systems; select “Catalog Admin” for the system, and “Data.gov team member” for justification
 - [ ] Add yourself for [AWS sandbox access](https://github.com/GSA/datagov-infrastructure-live/tree/master/iam#new-users)
 - [ ] Request access to AWS OPP account from team member
-- [ ] Add your public SSH key to the Ansible vault
+- [ ] Add your public SSH key to [GSA/datagov-deploy](https://github.com/GSA/datagov-deploy/blob/develop/ansible/group_vars/all/vars.yml)
+- [ ] Setup the Ansible vault
   - Clone the [datagov-deploy](https://github.com/GSA/datagov-deploy) repo
     locally
   - Follow the setup instructions for [development](https://github.com/GSA/datagov-deploy/blob/develop/README.md#development)
   - Follow the [ansible-vault instructions](https://github.com/GSA/datagov-deploy#editing-vault-secrets)
-  - Checkout the `master` branch to make this change as a [hotfix](https://github.com/GSA/datagov-deploy/blob/develop/CONTRIBUTING.md#hotfixes)
-  - Edit the vault file `pipenv run ansible-vault edit ansible/group_vars/all/vault.yml` and add your public SSH key
-  - Review [documentation](https://github.com/GSA/datagov-deploy/wiki/gsa-vpn) on how to access/setup environment for staging and production access.
+  - Open a vault file `pipenv run ansible-vault view ansible/inventories/sandbox/group_vars/all/vault.yml`, you should see yaml in clear text.
+- [ ] Connect to the [GSA VPN](https://github.com/GSA/datagov-deploy/wiki/gsa-vpn) for access to the staging and production environments.
+- [ ] Enable MFA for [HackerOne](https://hackerone.com/settings/auth)
 - [ ] Join [Open Data](https://digital.gov/communities/open-data/) community list
