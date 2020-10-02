@@ -29,8 +29,6 @@ provisioner:
         ckan_catalog_next: true
         ckan_uses_gunicorn: true
         app_repo: https://github.com/GSA/catalog.data.gov
-        catalog_host_public: catalog-next.sandbox.datagov.us
-        catalog_host_admin: admin-catalog-next.sandbox.datagov.us
         ckan_production_ini_template: catalog-next/etc_ckan_production.ini.j2
         catalog_ckan_redis_url: redis://:secret@localhost:6379/0
         catalog_ckan_plugins_default:
