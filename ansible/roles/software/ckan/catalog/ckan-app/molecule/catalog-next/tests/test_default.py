@@ -8,6 +8,8 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 
 virtualenv_path = '/usr/lib/ckan'
+catalog_host_public = 'catalog.localdomain.local'
+catalog_host_public_next = 'catalog-next.localdomain.local'
 
 
 def test_var_lib_ckan(host):
@@ -107,3 +109,7 @@ def test_apache_site(host):
     assert f.group == 'www-data'
     assert f.mode == 0o644
     assert f.contains('ErrorLog /var/log/ckan/ckan.error.log')
+
+    # catalog domain ServerName, catalog-next in ServerAlias
+    assert f.contains('ServerName %s' % catalog_host_public)
+    assert f.contains('ServerAlias %s' % catalog_host_public_next)
