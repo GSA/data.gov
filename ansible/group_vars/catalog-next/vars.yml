@@ -5,7 +5,6 @@
 ckan_catalog_next: true
 ckan_uses_gunicorn: true
 ckan_production_ini_template: catalog-next/etc_ckan_production.ini.j2
-
 catalog_ckan_app_version: master
 #catalog_ckan_app_version: enable-saml2
 
