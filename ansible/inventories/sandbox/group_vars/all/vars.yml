@@ -12,6 +12,8 @@ catalog_ckan_fgdc2iso_host: catalog-fgdc2iso1tf.internal.sandbox.datagov.us
 catalog_ckan_service_url: https://catalog.sandbox.datagov.us
 catalog_ckan_solr_host: datagov-solr1tf.internal.sandbox.datagov.us
 catalog_ckan_solr_port: "{{ solr_port }}"
+catalog_ckan_saml2_enabled: false
+catalog_ckan_who_ini_path: "etc_ckan_who.default.ini.j2"
 catalog_ckan_who_ini_secret: "{{ vault_catalog_ckan_who_ini_secret }}"
 catalog_postgresql_login_host: "{{ vault_catalog_postgresql_login_host }}"
 catalog_postgresql_login_password: "{{ vault_catalog_postgresql_login_password }}"
@@ -33,7 +35,8 @@ catalog_next_ckan_redis_url: "rediss://:{{ catalog_ckan_redis_password }}@{{ cat
 catalog_next_postgresql_login_host: "{{ vault_catalog_next_postgresql_login_host }}"
 catalog_next_postgresql_login_password: "{{ vault_catalog_next_postgresql_login_password }}"
 catalog_next_postgresql_login_user: "{{ vault_catalog_next_postgresql_login_user }}"
-
+catalog_next_saml2_enabled: false
+catalog_next_who_ini_path: "catalog-next/etc_ckan_who.saml2.ini.j2"
 
 ckan_create_user_via_web: true
 

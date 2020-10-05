@@ -6,6 +6,7 @@
       vars:
         catalog_ckan_email_from: no-reply@data.gov
         catalog_ckan_saml2_enabled: true
+        catalog_ckan_who_ini_path: "etc_ckan_who.saml2.ini.j2"
         catalog_ckan_plugins_additional: [saml2]
         saml2_sp_public_certificate: |-
           -----BEGIN CERTIFICATE-----
