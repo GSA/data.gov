@@ -1,6 +1,6 @@
 ---
-catalog_ckan_service_url: https://catalog-next.sandbox.datagov.us
-ckan_site_domain: https://catalog-next.sandbox.datagov.us
+catalog_ckan_service_url: https://{{ catalog_host_public_next }}
+ckan_site_domain: https://{{ catalog_host_public_next }}
 
 catalog_ckan_db_host: "{{ catalog_next_postgresql_login_host }}"
 catalog_ckan_db_name: "{{ catalog_next_ckan_db_name }}"
