@@ -35,7 +35,7 @@ catalog_next_ckan_redis_url: "rediss://:{{ catalog_ckan_redis_password }}@{{ cat
 catalog_next_postgresql_login_host: "{{ vault_catalog_next_postgresql_login_host }}"
 catalog_next_postgresql_login_password: "{{ vault_catalog_next_postgresql_login_password }}"
 catalog_next_postgresql_login_user: "{{ vault_catalog_next_postgresql_login_user }}"
-catalog_next_saml2_enabled: false
+catalog_next_ckan_saml2_enabled: true
 catalog_next_who_ini_path: "catalog-next/etc_ckan_who.saml2.ini.j2"
 
 ckan_create_user_via_web: true
