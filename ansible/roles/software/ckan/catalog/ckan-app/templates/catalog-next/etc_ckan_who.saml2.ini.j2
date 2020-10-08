@@ -4,7 +4,7 @@ secret = {{ catalog_ckan_who_ini_secret }}
 
 [plugin:saml2auth]
 use = saml2.s2repoze.plugins.sp:make_plugin
-saml_conf = ckanext.saml2.config_max.sp_config
+saml_conf = ckanext.saml2.config_login_gov.sp_config
 remember_name = auth_tkt
 identity_cache = memcached
 
