@@ -48,8 +48,13 @@ catalog-next-worker-misc
 catalog-next-worker-qa
 
 [catalog-next-worker-main]
+catalogharvester1p.prod-ocsit.bsp.gsa.gov
+
 [catalog-next-worker-misc]
+catalogharvester2p.prod-ocsit.bsp.gsa.gov
+
 [catalog-next-worker-qa]
+catalogharvester[3:6]p.prod-ocsit.bsp.gsa.gov
 
 [catalog-next-web:children]
 catalog-next-web-admin
@@ -57,21 +62,12 @@ catalog-next-web-a
 catalog-next-web-b
 
 [catalog-next-web-admin]
-[catalog-next-web-a]
-[catalog-next-web-b]
-
-[ungrouped-catalog-next]
-# We apply the common role to these. Even though they are not in service or
-# assigned to a role, they need to be configured and patched.
-
-# catalog-next-worker ungrouped
-catalogharvester1p.prod-ocsit.bsp.gsa.gov
-catalogharvester2p.prod-ocsit.bsp.gsa.gov
-catalogharvester[3:6]p.prod-ocsit.bsp.gsa.gov
-
-# catalog-next-web ungrouped
 catalogpubweb1p.prod-ocsit.bsp.gsa.gov
+
+[catalog-next-web-a]
 catalogweb[1:2]p.prod-ocsit.bsp.gsa.gov
+
+[catalog-next-web-b]
 catalogbweb[1:2]p.prod-ocsit.bsp.gsa.gov
 
 [dashboard-web:children]
@@ -167,7 +163,6 @@ redis-catalog-next
 redis-inventory-next
 solr
 solr-next
-ungrouped-catalog-next
 wordpress-web-v2
 
 [web:children]
