@@ -23,9 +23,8 @@ SSLEngine on
     ServerAlias {{ catalog_host_public_next }}
   {% endif %}
 {% endif %}
-    ServerAlias localhost
+    ServerAlias localhost {{ ansible_default_ipv4.address | default('') }}
     ServerAlias {{ ansible_fqdn }}
-    ServerAlias {{ ansible_default_ipv4.address }}
 
     # CSW endpoints provided by pycsw
     # based on request URI
