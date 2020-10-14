@@ -26,6 +26,28 @@ catalog_pycsw_db_pass: "{{ vault_catalog_pycsw_db_pass }}"
 catalog_pycsw_db_user: "{{ vault_catalog_pycsw_db_user }}"
 
 
+# catalog-next
+catalog_next_ckan_db_name: "{{ vault_catalog_next_ckan_db_name }}"
+catalog_next_ckan_db_pass: "{{ vault_catalog_next_ckan_db_pass }}"
+catalog_next_ckan_db_primary_host: "{{ vault_catalog_next_ckan_db_primary_host }}"
+catalog_next_ckan_db_replica_host: "{{ vault_catalog_next_ckan_db_replica_host }}"
+catalog_next_ckan_db_user: "{{ vault_catalog_next_ckan_db_user }}"
+catalog_next_ckan_instance_secret: "{{ vault_catalog_next_ckan_instance_secret }}"
+catalog_next_ckan_instance_uuid: 5ab5625f-4ec5-435b-a725-55eaa36d264b
+catalog_next_ckan_postgresql_admin_host: "{{ vault_catalog_next_ckan_postgresql_admin_host }}"
+catalog_next_ckan_postgresql_admin_password: "{{ vault_catalog_next_ckan_postgresql_admin_password }}"
+catalog_next_ckan_postgresql_admin_user: "{{ vault_catalog_next_ckan_postgresql_admin_user }}"
+catalog_next_ckan_production_ini_template: catalog-next/etc_ckan_production.ini.j2
+catalog_next_ckan_redis_host: redis1p.prod-ocsit.bsp.gsa.gov
+catalog_next_ckan_redis_password: "{{ vault_catalog_next_ckan_redis_password }}"
+catalog_next_ckan_redis_url: redis://:{{ catalog_next_ckan_redis_password }}@{{ catalog_next_ckan_redis_host }}:6379/0
+catalog_next_ckan_solr_a_host: datagov-solr1p-v2.prod-ocsit.bsp.gsa.gov
+catalog_next_ckan_solr_b_host: datagov-solr2p-v2.prod-ocsit.bsp.gsa.gov
+catalog_next_ckan_solr_primary_host: datagov-solrm1p-v2.prod-ocsit.bsp.gsa.gov
+catalog_next_ckan_token_dat: "{{ vault_catalog_next_ckan_token_dat }}"
+catalog_next_ckan_who_ini_secret: "{{ vault_catalog_next_ckan_who_ini_secret }}"
+
+
 # common
 common_audit_report_enabled: false
 common_filebeat_logstash_output: "{{ vault_common_filebeat_logstash_output }}"
