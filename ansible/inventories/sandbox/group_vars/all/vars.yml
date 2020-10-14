@@ -205,12 +205,18 @@ redis_password: "{{ vault_redis_password }}"
 
 
 # public urls
-urls_public:
-  catalog: https://catalog.{{ datagov_sandbox_env }}.datagov.us
-urls_admin:
-  catalog: https://catalog.{{ datagov_sandbox_env }}.datagov.us
+catalog_host_public: catalog.{{ datagov_sandbox_env }}.datagov.us
+catalog_host_admin: catalog.{{ datagov_sandbox_env }}.datagov.us
 
-ckan_site_domain: "{{ urls_public.catalog }}"
+catalog_url_public: https://{{ catalog_host_public }}
+catalog_url_admin: https://{{ catalog_host_admin }}
+
+ckan_site_domain: "{{ catalog_host_public }}"
+
+# next public urls
+catalog_host_public_next: catalog-next.sandbox.datagov.us
+catalog_host_admin_next: catalog-next.sandbox.datagov.us
+
 
 # s3 bucket
 catalog_bucket_name: "{{ vault_catalog_bucket_name }}"

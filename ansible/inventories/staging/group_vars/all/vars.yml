@@ -16,8 +16,8 @@ catalog_ckan_redis_host: catalog-harvester1d.dev-ocsit.bsp.gsa.gov
 catalog_ckan_redis_password: "{{ redis_password }}"
 catalog_ckan_fgdc2iso_host: catalog-fgdc2iso1d.dev-ocsit.bsp.gsa.gov
 catalog_ckan_saml2_enabled: true
-catalog_ckan_service_url: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
-catalog_ckan_admin_service_url: https://admin-catalog-datagov.dev-ocsit.bsp.gsa.gov
+catalog_ckan_service_url: https://{{ catalog_host_public }}
+catalog_ckan_admin_service_url: https://{{ catalog_host_admin }}
 catalog_ckan_solr_host: datagov-solr1d.dev-ocsit.bsp.gsa.gov
 catalog_ckan_solr_port: "8983"
 # read-only database variables
@@ -42,8 +42,6 @@ catalog_next_ckan_production_ini_template: catalog-next/etc_ckan_production.ini.
 catalog_next_ckan_redis_host: redis1d.dev-ocsit.bsp.gsa.gov
 catalog_next_ckan_redis_password: "{{ vault_catalog_next_ckan_redis_password }}"
 catalog_next_ckan_redis_url: redis://:{{ catalog_next_ckan_redis_password }}@{{ catalog_next_ckan_redis_host }}:6379/0
-catalog_next_ckan_service_url: https://catalog-next-datagov.dev-ocsit.bsp.gsa.gov
-catalog_next_ckan_admin_service_url: https://admin-catalog-next-datagov.dev-ocsit.bsp.gsa.gov
 catalog_next_ckan_solr_a_host: datagov-solr1d-v2.dev-ocsit.bsp.gsa.gov
 catalog_next_ckan_solr_b_host: datagov-solr2d-v2.dev-ocsit.bsp.gsa.gov
 catalog_next_ckan_solr_primary_host: datagov-solrm1d-v2.dev-ocsit.bsp.gsa.gov
@@ -188,11 +186,17 @@ pycsw_db_user: "{{ catalog_pycsw_db_user }}"
 
 
 # public urls
-urls_public:
-  catalog: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
-urls_admin:
-  catalog: https://admin-catalog-datagov.dev-ocsit.bsp.gsa.gov
-ckan_site_domain: "{{ urls_public.catalog }}"
+catalog_host_public: catalog-datagov.dev-ocsit.bsp.gsa.gov
+catalog_host_admin: admin-catalog-datagov.dev-ocsit.bsp.gsa.gov
+
+catalog_url_public: https://{{ catalog_host_public }}
+catalog_url_admin: https://{{ catalog_host_admin }}
+
+ckan_site_domain: "{{ catalog_host_public }}"
+
+# next public urls
+catalog_host_public_next: catalog-next-datagov.dev-ocsit.bsp.gsa.gov
+catalog_host_admin_next: admin-catalog-next-datagov.dev-ocsit.bsp.gsa.gov
 
 
 # Redis

@@ -15,8 +15,7 @@ provisioner:
   inventory:
     group_vars:
       all:
-        urls_admin:
-          catalog: "https://admin.url.localdomain"
+        catalog_url_admin: "https://admin.url.localdomain"
   lint:
     name: ansible-lint
 verifier:

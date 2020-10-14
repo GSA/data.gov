@@ -1,6 +1,5 @@
 ---
 # catalog
-catalog_ckan_admin_service_url: https://admin-catalog.data.gov
 catalog_ckan_app_version: master
 catalog_ckan_archiver_process_count: 3
 catalog_ckan_db_host: "{{ vault_catalog_ckan_db_host }}"
@@ -16,7 +15,8 @@ catalog_ckan_redis_host: catalog-harvester1p.prod-ocsit.bsp.gsa.gov
 catalog_ckan_redis_password: "{{ redis_password }}"
 catalog_ckan_fgdc2iso_host: catalog-fgdc2iso1p.prod-ocsit.bsp.gsa.gov
 catalog_ckan_saml2_enabled: true
-catalog_ckan_service_url: https://catalog.data.gov
+catalog_ckan_service_url: https://{{ catalog_host_public }}
+catalog_ckan_admin_service_url: https://{{ catalog_host_admin }}
 catalog_ckan_solr_port: "8983"
 catalog_ckan_solr_host: datagov-solr1p.prod-ocsit.bsp.gsa.gov
 catalog_ckan_wsgi_processes: 6
@@ -150,11 +150,18 @@ pycsw_db_password: "{{ catalog_pycsw_db_pass }}"
 pycsw_db_user: "{{ catalog_pycsw_db_user }}"
 
 # public urls
-urls_public:
-  catalog: https://catalog.data.gov
-urls_admin:
-  catalog: https://admin-catalog.data.gov
-ckan_site_domain: "{{ urls_public.catalog }}"
+catalog_host_public: catalog.data.gov
+catalog_host_admin: admin-catalog.data.gov
+
+catalog_url_public: https://{{ catalog_host_public }}
+catalog_url_admin: https://{{ catalog_host_admin }}
+
+ckan_site_domain: "{{ catalog_host_public }}"
+
+# next public urls
+catalog_host_public_next: catalog-next.data.gov
+catalog_host_admin_next: admin-catalog-next.data.gov
+
 
 # s3 bucket
 catalog_bucket_name: "{{ vault_catalog_bucket_name }}"
