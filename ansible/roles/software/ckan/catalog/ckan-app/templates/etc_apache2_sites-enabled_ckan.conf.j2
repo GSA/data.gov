@@ -6,6 +6,9 @@ SSLEngine on
 <VirtualHost 0.0.0.0:80>
   ServerName ckan
   Redirect 404 /
+
+  ErrorLog {{ catalog_ckan_error_log }}
+  CustomLog {{ catalog_ckan_access_log }} combined
 </VirtualHost>
 
 <VirtualHost 0.0.0.0:80>
@@ -22,6 +25,7 @@ SSLEngine on
 {% endif %}
     ServerAlias localhost
     ServerAlias {{ ansible_fqdn }}
+    ServerAlias {{ ansible_default_ipv4.address }}
 
     # CSW endpoints provided by pycsw
     # based on request URI
