@@ -19,7 +19,7 @@ These tasks are performed by an Admin unless noted as an action for the outgoing
 - [ ] Remove team member from [GCP account](https://console.cloud.google.com/iam-admin/iam?project=tts-datagov)
 - [ ] Remove team member from AWS OPP account
 - [ ] Remove team member from [AWS sandbox access](https://github.com/GSA/datagov-infrastructure-live/tree/master/iam#new-users)
-- [ ] Disable team member in [jumpbox operators](https://github.com/GSA/datagov-deploy/blob/develop/ansible/group_vars/all/vault.yml) **set `active: false`** (removing them from the list will leave the account active https://github.com/GSA/datagov-deploy/issues/1837)
+- [ ] Remove team member from [jumpbox operators](https://github.com/GSA/datagov-deploy/blob/develop/ansible/group_vars/all/vars.yml)
 - [ ] Remove team member from Data.gov email lists
   - [datagov](https://groups.google.com/a/gsa.gov/forum/#!forum/datagov)
   - [datagovhelp](https://groups.google.com/a/gsa.gov/forum/#!forum/datagovhelp)
