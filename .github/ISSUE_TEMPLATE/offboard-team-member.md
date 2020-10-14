@@ -14,7 +14,7 @@ These tasks are performed by an Admin unless noted as an action for the outgoing
 - [ ] Remove team member from Data.gov GitHub teams
   - [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members)
   - [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members)
-  - [data-gov-ckan-multi-partners](https://github.com/orgs/GSA/teams/data-gov-ckan-multi-partners)
+  - [data-gov-ckan-multi](https://github.com/orgs/GSA/teams/data-gov-ckan-multi/members)
 - [ ] Remove team member from [the `gsa-datagov` organization](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/users) on cloud.gov
 - [ ] Remove team member from [GCP account](https://console.cloud.google.com/iam-admin/iam?project=tts-datagov)
 - [ ] Remove team member from AWS OPP account
