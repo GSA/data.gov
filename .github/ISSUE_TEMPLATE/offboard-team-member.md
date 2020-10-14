@@ -29,6 +29,11 @@ These tasks are performed by an Admin unless noted as an action for the outgoing
 - [ ] Remove team member from [Agari](https://gsa-tts.bp.agari.com/) (see [#admins-dmarc](https://gsa-tts.slack.com/archives/CNDTG5ML5) or @adborden for access)
 - [ ] [Rotate Ansible Vault key](https://github.com/GSA/datagov-deploy/wiki/Keypair-Rotation#ansible-vault) and [update the canonical location](https://docs.google.com/document/d/1detdsnIuwmqz6asrIfUWrmxCr56MGschY1yV0UeC_24/edit)
 
+If team member is also leaving TTS:
+- [ ] Remove team member from Slack
+
 If the team member is also leaving GSA:
 - [ ] Request the user be removed from Federalist by posting to [#federalist-support](https://gsa-tts.slack.com/archives/C1NUUGTT5) with the member's GitHub username
 - [ ] Remove access from [GSA GitHub org](https://github.com/GSA/GitHub-Administration/blob/master/README.md#removing-access-to-the-gsa-organization)
+- [ ] Create "Offboard from GSA IT" ticket
+- [ ] Notify HSPD-12 if needed
