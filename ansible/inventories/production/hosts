@@ -28,10 +28,6 @@ catalogb-web[1:2]p.prod-ocsit.bsp.gsa.gov
 [catalog-web-v1:children]
 catalog-admin-v1
 
-[catalog-web-v2]
-catalogweb[1:2]p.prod-ocsit.bsp.gsa.gov
-catalogbweb[1:2]p.prod-ocsit.bsp.gsa.gov
-
 [catalog-admin:children]
 catalog-admin-v1
 
@@ -155,7 +151,6 @@ wordpress-web-v1
 [v2:children]
 catalog-fgdc2iso
 catalog-next
-catalog-web-v2
 dashboard-web-v2
 inventory-web-v2
 jumpbox-v2
