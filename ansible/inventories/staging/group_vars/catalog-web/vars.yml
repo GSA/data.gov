@@ -4,8 +4,8 @@ ckan_session_store_type: memory
 datagov_service: catalog
 
 # role url
-url_readonly: "{{ catalog_url_public }}"
-url_writable: "{{ catalog_url_admin }}"
+url_readonly: "{{ urls_public.catalog }}"
+url_writable: https://admin-catalog-datagov.dev-ocsit.bsp.gsa.gov
 
 # project path
 project_source_rollback_path: /usr/lib/ckan-rollback

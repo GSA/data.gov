@@ -10,13 +10,13 @@
   with_items:
     - path: /usr/lib/ckan/src/ckanext-datagovtheme/ckanext/datagovtheme/fanstatic_library/scripts/tracking.js
       regexp: '\$\.ajax\({url : ''/_tracking\'','
-      replace: "$.ajax({url : '{{ catalog_url_admin }}/_tracking',"
+      replace: "$.ajax({url : '{{ urls_admin.catalog }}/_tracking',"
     - path: /usr/lib/ckan/src/ckan/ckan/public/base/javascript/tracking.js
       regexp: '\$\(''body''\)\.data\(''site-root''\) \+ ''_tracking'''
-      replace: "'{{ catalog_url_admin }}/_tracking'"
+      replace: "'{{ urls_admin.catalog }}/_tracking'"
     - path: /usr/lib/ckan/src/ckan/ckan/public/base/javascript/tracking.min.js
       regexp: '\$\(''body''\)\.data\(''site-root''\)\+''_tracking'''
-      replace: "'{{ catalog_url_admin }}/_tracking'"
+      replace: "'{{ urls_admin.catalog }}/_tracking'"
   when: readwrite_type == "readonly"
 
 # newer ckan version might have different tracking url pattern

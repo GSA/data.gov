@@ -4,24 +4,7 @@ SSLEngine on
 </VirtualHost>
 
 <VirtualHost 0.0.0.0:80>
-  ServerName ckan
-  Redirect 404 /
-</VirtualHost>
-
-<VirtualHost 0.0.0.0:80>
-{% if catalog_ckan_readwrite_configuration == 'readwrite' %}
-    ServerName {{ catalog_host_admin }}
-  {% if ckan_catalog_next == true %}
-    ServerAlias {{ catalog_host_admin_next }}
-  {% endif %}
-{% else %}
-    ServerName {{ catalog_host_public }}
-  {% if ckan_catalog_next == true %}
-    ServerAlias {{ catalog_host_public_next }}
-  {% endif %}
-{% endif %}
-    ServerAlias localhost
-    ServerAlias {{ ansible_fqdn }}
+    ServerName ckan
 
     # CSW endpoints provided by pycsw
     # based on request URI
