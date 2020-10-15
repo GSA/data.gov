@@ -2,7 +2,7 @@
 app_repo: https://github.com/GSA/catalog.data.gov
 catalog_ckan_app_version: master
 
-catalog_ckan_db_host: "{{ catalog_next_ckan_db_replica_host }}"
+catalog_ckan_db_host: "{{ catalog_next_ckan_db_replica_a_host }}"
 catalog_ckan_db_name: "{{ catalog_next_ckan_db_name }}"
 catalog_ckan_db_pass: "{{ catalog_next_ckan_db_pass }}"
 catalog_ckan_db_user: "{{ catalog_next_ckan_db_user }}"
