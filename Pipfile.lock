@@ -21,7 +21,7 @@
                 "sha256:a8f5a36c8e5a57292858447cebede353be7d872c15e1f1a68a90d9ee5682e2ae"
             ],
             "index": "pypi",
-            "version": "==2.8.15"
+            "version": "==2.8.16"
         },
         "ansible-lint": {
             "hashes": [
@@ -226,7 +226,7 @@
                 "sha256:a8f5a36c8e5a57292858447cebede353be7d872c15e1f1a68a90d9ee5682e2ae"
             ],
             "index": "pypi",
-            "version": "==2.8.15"
+            "version": "==2.8.16"
         },
         "ansible-lint": {
             "hashes": [
