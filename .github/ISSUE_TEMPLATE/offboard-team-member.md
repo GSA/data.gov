@@ -7,19 +7,23 @@ These tasks are performed by an Admin unless noted as an action for the outgoing
 
 - [ ] Team member should move all Data.gov related documents to team drives
 - [ ] Team member should document any work in progress and schedule a hand-off for any remaining tasks
-- [ ] Remove team member's access to the [shared Google Drive](https://drive.google.com/drive/folders/0AMRwhrSyJ5R4Uk9PVA)
+- [ ] Remove team member's access to Google Drive
+  - [Data.gov](https://drive.google.com/drive/folders/0AMRwhrSyJ5R4Uk9PVA)
+  - [Data.gov Mutli Tenant](https://drive.google.com/drive/folders/0ALb0g1S27SJPUk9PVA)
+  - [DatagovDevSecOps](https://drive.google.com/drive/folders/1Ac1dUmzTLTsDv8A8TSyLzrXo1a7hm4NF)
 - [ ] Remove team member from Data.gov GitHub teams
   - [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members)
   - [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members)
-  - [data-gov-ckan-multi-partners](https://github.com/orgs/GSA/teams/data-gov-ckan-multi-partners)
+  - [data-gov-ckan-multi](https://github.com/orgs/GSA/teams/data-gov-ckan-multi/members)
 - [ ] Remove team member from [the `gsa-datagov` organization](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/users) on cloud.gov
 - [ ] Remove team member from [GCP account](https://console.cloud.google.com/iam-admin/iam?project=tts-datagov)
 - [ ] Remove team member from AWS OPP account
 - [ ] Remove team member from [AWS sandbox access](https://github.com/GSA/datagov-infrastructure-live/tree/master/iam#new-users)
-- [ ] Disable team member in [jumpbox operators](https://github.com/GSA/datagov-deploy/blob/develop/ansible/group_vars/all/vault.yml) **set `active: false`** (removing them from the list will leave the account active https://github.com/GSA/datagov-deploy/issues/1837)
+- [ ] Remove team member from [jumpbox operators](https://github.com/GSA/datagov-deploy/blob/develop/ansible/group_vars/all/vars.yml)
 - [ ] Remove team member from Data.gov email lists
-  - [Data.gov support list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagov)
-  - [Data.gov team list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagovhelp)
+  - [datagov](https://groups.google.com/a/gsa.gov/forum/#!forum/datagov)
+  - [datagovhelp](https://groups.google.com/a/gsa.gov/forum/#!forum/datagovhelp)
+  - [inventory-help](https://groups.google.com/a/gsa.gov/forum/#!forum/inventory-help)
 - [ ] Remove team member from [Data.gov calendar](https://calendar.google.com/calendar/r/settings/calendar/Z3NhLmdvdl9zcjZ0NG52YjRhOTNjNnNzdHRxYXAzbjZtMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t) and events
 - [ ] Remove team member from [New Relic](https://newrelic.com)
 - [ ] Remove team member from [Docker Hub](https://cloud.docker.com/orgs/datagov/teams)
@@ -29,6 +33,11 @@ These tasks are performed by an Admin unless noted as an action for the outgoing
 - [ ] Remove team member from [Agari](https://gsa-tts.bp.agari.com/) (see [#admins-dmarc](https://gsa-tts.slack.com/archives/CNDTG5ML5) or @adborden for access)
 - [ ] [Rotate Ansible Vault key](https://github.com/GSA/datagov-deploy/wiki/Keypair-Rotation#ansible-vault) and [update the canonical location](https://docs.google.com/document/d/1detdsnIuwmqz6asrIfUWrmxCr56MGschY1yV0UeC_24/edit)
 
+If team member is also leaving TTS:
+- [ ] Remove team member from Slack
+
 If the team member is also leaving GSA:
 - [ ] Request the user be removed from Federalist by posting to [#federalist-support](https://gsa-tts.slack.com/archives/C1NUUGTT5) with the member's GitHub username
 - [ ] Remove access from [GSA GitHub org](https://github.com/GSA/GitHub-Administration/blob/master/README.md#removing-access-to-the-gsa-organization)
+- [ ] Create "Offboard from GSA IT" ticket
+- [ ] Notify HSPD-12 if needed
