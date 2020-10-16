@@ -139,6 +139,10 @@ catalogharvester1p.prod-ocsit.bsp.gsa.gov
 datagov-solrm1p.prod-ocsit.bsp.gsa.gov
 datagov-solr[1:2]p.prod-ocsit.bsp.gsa.gov is_solr_replica=true
 
+[solr-next]
+datagov-solrm1p-v2.prod-ocsit.bsp.gsa.gov
+datagov-solr[1:2]p-v2.prod-ocsit.bsp.gsa.gov is_solr_replica=true
+
 # trusty stack
 [v1:children]
 catalog-admin-v1
@@ -162,6 +166,7 @@ jumpbox-v2
 redis-catalog-next
 redis-inventory-next
 solr
+solr-next
 ungrouped-catalog-next
 wordpress-web-v2
 
