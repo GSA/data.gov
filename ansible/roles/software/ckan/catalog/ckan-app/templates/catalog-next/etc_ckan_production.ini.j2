@@ -216,10 +216,10 @@ saml2.site_url = {{ saml2_site_url }}
 saml2.config_path = %(here)s/saml2
 
 saml2.user_mapping =
-    email~maxemail
-    fullname~field_display_name
-    id~maxid
-    name~maxemail
+    email~email
+    fullname~email
+    id~uuid
+    name~email
 
 saml2.organization_mapping =
     name~field_unique_id
