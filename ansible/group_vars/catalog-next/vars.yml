@@ -27,6 +27,7 @@ catalog_ckan_plugins_default:
   - spatial_metadata
   - spatial_query
   - report
+  - spatial_harvest_metadata_api
   - archiver
   - qa
   - datagovtheme
