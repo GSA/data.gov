@@ -78,6 +78,8 @@
 
 - name: Service-level smoke tests
   hosts: pycsw-web,!v2
+  tags:
+    - smoke
   tasks:
     - name: flush handlers
       meta: flush_handlers
