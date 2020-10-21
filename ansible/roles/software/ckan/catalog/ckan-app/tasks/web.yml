@@ -4,6 +4,22 @@
   notify: reload apache2
   when: not ckan_uses_gunicorn
 
+- name: Copy CKAN server_start.sh
+  copy:
+    src: "{{ app_source_path }}/ckan/setup/server_start.sh"
+    dest: /etc/ckan/server_start.sh
+    mode: 0744
+  become: yes
+  when: ckan_uses_gunicorn
+
+- name: Copy gunicorn .env
+  copy:
+    src: gunicorn_env.j2
+    dest: /etc/ckan/.env
+    mode: 0744
+  become: yes
+  when: ckan_uses_gunicorn
+
 - name: Install supervisor
   apt: name=supervisor state=present
   when: ckan_uses_gunicorn
