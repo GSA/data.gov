@@ -1,7 +1,6 @@
 ---
 datagov_service: inventory
 app_type: inventory-next
-inventory_db_name: inventory_db_next
 inventory_python_home: "{{ python_home }}"
 datagov_in_service: true
 
@@ -10,18 +9,22 @@ datapusher_build_pkg_branch: datagov/inventory-next
 # Trendmicro firewall policy
 trendmicro_policy_id: "{{ trendmicro_policy_id_web }}"
 
-# Inventory Datapusher
-inventory_datastore_ro_user: datastore_ro
-inventory_datastore_user: datastore
-
 # db credentials
 inventory_ckan_db_host: "{{ inventory_next_postgresql_login_host }}"
 inventory_db_user: "{{ inventory_next_postgresql_login_user }}"
 inventory_db_pass: "{{ inventory_next_postgresql_login_password }}"
-datastore_db_server: "{{ inventory_next_postgresql_login_host }}"
-inventory_datapusher_db_pass: "{{ inventory_next_datapusher_db_pass }}"
+inventory_db_name: "{{ inventory_next_postgresql_db_name }}"
+
+datastore_db_server: "{{ inventory_next_datastore_login_host }}"
+inventory_datastore_db_name: "{{ inventory_next_datastore_db_name }}"
+inventory_datastore_user: "{{ inventory_next_datastore_user }}"
 inventory_datastore_pass: "{{ inventory_next_datastore_pass }}"
+inventory_datastore_ro_user: "{{ inventory_next_datastore_ro_user }}"
 inventory_datastore_ro_pass: "{{ inventory_next_datastore_ro_pass }}"
+
+inventory_datapusher_db_name: "{{ inventory_next_datapusher_db_name }}"
+inventory_datapusher_db_user: "{{ inventory_db_user }}"
+inventory_datapusher_db_pass: "{{ inventory_db_pass }}"
 
 # other
 inventory_ckan_bucket_name: "{{ inventory_next_ckan_s3_bucket_name }}"
