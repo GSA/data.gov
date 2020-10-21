@@ -9,8 +9,8 @@
     src: "{{ app_source_path }}/ckan/setup/server_start.sh"
     dest: /etc/ckan/server_start.sh
     mode: preserve
-    remote_src: yes
-  become: yes
+    remote_src: true
+  become: true
   when: ckan_uses_gunicorn
 
 - name: Copy gunicorn .env
@@ -20,7 +20,7 @@
     mode: 0644
     owner: root
     group: root
-  become: yes
+  become: true
   when: ckan_uses_gunicorn
 
 - name: Install supervisor
