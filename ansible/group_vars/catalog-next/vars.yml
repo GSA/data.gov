@@ -3,7 +3,7 @@ ckan_catalog_next: true
 ckan_uses_gunicorn: true
 ckan_production_ini_template: catalog-next/etc_ckan_production.ini.j2
 
-catalog_ckan_app_version: feature/new-relic
+catalog_ckan_app_version: master
 app_repo: https://github.com/GSA/catalog.data.gov
 
 catalog_ckan_plugins_default:
