@@ -1,6 +1,6 @@
 ---
 # catalog
-catalog_ckan_app_version: master
+catalog_ckan_app_version: feature/new-relic
 catalog_ckan_db_host: "{{ catalog_postgresql_login_host }}"
 catalog_ckan_db_name: catalog_db
 catalog_ckan_db_pass: "{{ catalog_postgresql_login_password }}"
