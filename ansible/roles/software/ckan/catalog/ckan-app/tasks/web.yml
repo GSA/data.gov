@@ -8,15 +8,18 @@
   copy:
     src: "{{ app_source_path }}/ckan/setup/server_start.sh"
     dest: /etc/ckan/server_start.sh
-    mode: 0744
+    mode: preserve
+    remote_src: yes
   become: yes
   when: ckan_uses_gunicorn
 
 - name: Copy gunicorn .env
-  copy:
+  template:
     src: gunicorn_env.j2
     dest: /etc/ckan/.env
-    mode: 0744
+    mode: 0644
+    owner: root
+    group: root
   become: yes
   when: ckan_uses_gunicorn
 
