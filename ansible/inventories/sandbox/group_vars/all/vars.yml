@@ -232,6 +232,7 @@ real_ansible_env: production
 
 # newrelic
 nrinfragent_license_key: "{{ vault_nrinfragent_license_key }}"
+newrelic_license_key: "{{ nrinfragent_license_key }}"
 
 
 # postfix

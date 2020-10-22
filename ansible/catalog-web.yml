@@ -101,7 +101,9 @@
   hosts: catalog-web,catalog-next-web
   roles:
     - role: monitoring/newrelic/python-agent-ansible
-      when: common_newrelic_enabled
+      when:
+        - common_newrelic_enabled
+        - not ckan_uses_gunicorn
   tags:
     - newrelic
 

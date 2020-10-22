@@ -1,7 +1,8 @@
 [program:catalog-web]
-command={{ project_source_new_code_path }}/bin/gunicorn --worker-class gevent --paste /etc/ckan/production.ini -b localhost:5000 --proxy-allow-from="127.0.0.1"
+command=/etc/ckan/server_start.sh -b localhost:5000 --proxy-allow-from="127.0.0.1"
 directory={{ project_source_new_code_path }}
 stdout_logfile={{ catalog_gunicorn_error_log }}
 autostart=true
 autorestart=true
 redirect_stderr=true
+environment=PATH="{{ project_source_new_code_path }}/bin:%(ENV_PATH)s"
