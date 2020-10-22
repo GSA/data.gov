@@ -51,6 +51,7 @@ provisioner:
           - spatial_query
           - spatial_harvest_metadata_api
           - datagovtheme
+        newrelic_license_key: some-secret
 
   lint:
     name: ansible-lint
