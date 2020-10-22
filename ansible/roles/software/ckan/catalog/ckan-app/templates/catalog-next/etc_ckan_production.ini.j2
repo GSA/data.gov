@@ -200,6 +200,9 @@ set debug = False
 # Mark as finished Jobs in 'Running' status after x minutes (1440 min = 24 hours)
 ckan.harvest.timeout = 1440
 
+# define the time frame in days to clean the harvest logs
+ckan.harvest.log_timeframe = 180
+
 ckan.harvest.mq.type = redis
 ckanext.harvest.email = on
 ckan.harvest.status_mail.all=True
