@@ -5,3 +5,4 @@ stdout_logfile={{ catalog_gunicorn_error_log }}
 autostart=true
 autorestart=true
 redirect_stderr=true
+environment=PATH="{{ project_source_new_code_path }}/bin:%(ENV_PATH)s"
