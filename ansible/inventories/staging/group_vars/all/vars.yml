@@ -154,8 +154,8 @@ inventory_ckan_solr_host: datagov-solrm1d.dev-ocsit.bsp.gsa.gov
 inventory_ckan_solr_port: "8983"
 
 # Inventory Next
-inventory_next_ckan_s3_bucket_name: "{{ vault_inventory_next_s3_bucket_name }}"
-inventory_next_ckan_s3_bucket_prefix: "{{ vault_inventory_next_s3_bucket_prefix }}"
+inventory_next_ckan_s3_bucket_name: "{{ vault_inventory_next_ckan_s3_bucket_name }}"
+inventory_next_ckan_s3_bucket_prefix: "{{ vault_inventory_next_ckan_s3_bucket_prefix }}"
 inventory_next_ckan_instance_secret: "{{ vault_inventory_next_ckan_instance_secret }}"
 inventory_next_ckan_instance_uuid: "{{ vault_inventory_next_ckan_instance_uuid }}"
 inventory_next_ckan_service_url: https://inventory-next-datagov.dev-ocsit.bsp.gsa.gov

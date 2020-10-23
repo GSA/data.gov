@@ -107,8 +107,8 @@ inventory_postgresql_login_password: "{{ vault_inventory_postgresql_login_passwo
 inventory_ckan_solr_port: "{{ solr_port }}"
 
 # Inventory Next
-inventory_next_ckan_s3_bucket_name: "{{ vault_inventory_next_s3_bucket_name }}"
-inventory_next_ckan_s3_bucket_prefix: "{{ vault_inventory_next_s3_bucket_prefix }}"
+inventory_next_ckan_s3_bucket_name: "{{ vault_inventory_next_ckan_s3_bucket_name }}"
+inventory_next_ckan_s3_bucket_prefix: "{{ vault_inventory_next_ckan_s3_bucket_prefix }}"
 inventory_next_ckan_instance_secret: "{{ vault_inventory_next_ckan_instance_secret }}"
 inventory_next_ckan_instance_uuid: "{{ vault_inventory_next_ckan_instance_uuid }}"
 inventory_next_ckan_service_url: https://inventory-next.sandbox.datagov.us
