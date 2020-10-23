@@ -36,8 +36,8 @@
     minute: "30"
     hour: "2"
     user: root
-    disabled: "{{ not crons_enabled }}"
-    state: {{ catalog_enable_clean_harvest_logs | ternary('present', 'absent') }}
+    disabled: "{{ not crons_enabled or not catalog_enable_clean_harvest_logs }}"
+    state: present
   tags: ['cron']
 
 - name: install worker cron jobs
