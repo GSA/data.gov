@@ -36,7 +36,7 @@
     minute: "30"
     hour: "2"
     user: root
-    disabled: "{{ not crons_enabled or not catalog_enable_clean_harvest_logs }}"
+    disabled: "{{ not catalog_enable_clean_harvest_logs }}"
     state: present
   tags: ['cron']
 
