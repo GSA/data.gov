@@ -5,6 +5,13 @@ redirect_stderr=true
 autostart=false
 autorestart=false
 
+[program:ckan-clean-harvest-logs]
+command=ckan --plugin=ckanext-harvest harvester clean_harvest_log
+stdout_logfile=/var/log/ckan/clean_harvest_log.log
+redirect_stderr=true
+autostart=false
+autorestart=false
+
 [program:ckan-combine-feeds]
 command=ckan --plugin=ckanext-geodatagov geodatagov combine-feeds
 stdout_logfile=/var/log/ckan/combine-feeds.log
