@@ -40,6 +40,7 @@ catalog_ckan_plugins_default:
 catalog_ckan_python_home: /usr
 catalog_ckan_saml2_enabled: false
 catalog_harvest_enable_harvest_report: false
+catalog_enable_clean_harvest_logs: false
 catalog_log_dir: /var/log/ckan
 catalog_gunicorn_error_log: "{{ catalog_log_dir }}/gunicorn.log"
 
