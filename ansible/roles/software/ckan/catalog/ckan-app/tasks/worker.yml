@@ -28,6 +28,18 @@
     - usr/bin/celery-mem-check.sh
   when: catalog_ckan_worker_type == 'qa_worker'
 
+- name: schedule ckan-clean-harvest-logs cron
+  cron:
+    name: "clean harvest logs in db"
+    cron_file: ckan
+    job: supervisorctl start ckan-clean-harvest-logs > /dev/null
+    minute: "30"
+    hour: "2"
+    user: root
+    disabled: "{{ not catalog_enable_clean_harvest_logs }}"
+    state: present
+  tags: ['cron']
+
 - name: install worker cron jobs
   copy: src=etc/cron.d/ckan_{{ catalog_ckan_worker_type }} dest=/etc/cron.d/ckan mode=0644 owner=root group=root
   tags: ['cron']
