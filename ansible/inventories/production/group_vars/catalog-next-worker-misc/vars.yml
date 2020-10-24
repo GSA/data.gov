@@ -1,0 +1,4 @@
+---
+catalog_ckan_worker_type: misc_worker
+catalog_harvest_enable_harvest_report: true
+catalog_pycsw_cron_enabled: false

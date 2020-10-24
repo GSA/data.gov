@@ -1,4 +1,7 @@
 ---
+# These are playbook vars. Keep in mind inventory vars files
+# (staging/group_vars/catalog-next) will **not** override these.
+
 ckan_catalog_next: true
 ckan_uses_gunicorn: true
 ckan_production_ini_template: catalog-next/etc_ckan_production.ini.j2

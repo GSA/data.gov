@@ -74,10 +74,14 @@
       delay: 10
       register: result
       until: not result.failed
+      tags:
+        - smoke
 
     - name: assert valid iso returned
       assert:
         that: "'<gco:CharacterString>ABC 123' in result.content"
+      tags:
+        - smoke
 
 - name: logrotate configuration
   hosts: catalog-fgdc2iso

@@ -29,6 +29,8 @@
       until: not result.failed
       become: false
       when: datagov_in_service | default(true)
+      tags:
+        - smoke
 
     - name: assert app is up
       uri:
@@ -44,6 +46,8 @@
       register: result
       until: not result.failed
       when: datagov_in_service | default(true)
+      tags:
+        - smoke
 
 
 - name: logrotate configuration
@@ -75,6 +79,8 @@
 
 - name: Service-level smoke tests
   hosts: inventory-web:!inventory-next
+  tags:
+    - smoke
   tasks:
     - name: flush handlers
       meta: flush_handlers

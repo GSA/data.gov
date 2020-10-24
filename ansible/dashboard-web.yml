@@ -41,7 +41,10 @@
 
 - name: Service-level smoke tests for dashboard
   hosts: dashboard-web
-  tags: [deploy,provision]
+  tags:
+    - deploy
+    - provision
+    - smoke
   tasks:
     - name: flush handlers
       meta: flush_handlers

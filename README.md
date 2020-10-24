@@ -154,6 +154,25 @@ Run a DB-SOLR sync for a dataset on catalog.
 
     $ ansible-playbook actions/catalog-db-solr-sync.yml --extra-vars "db_solr_sync_package_name=insert-package-name-here"
 
+
+#### Supported tags
+
+These tags are supported by the site.yml platform-wide playbook.
+
+Tag       | Description
+---       | -----------
+catalog   | Catalog application (includes PyCSW) within site.yml playbook
+common    | Common plays within site.yml playbook
+dashboard | Dashboard application within site.yml playbook
+inventory | Inventory application within site.yml playbook
+jumpbox   | Jumpbox plays within site.yml playbook
+pycsw     | Deploys only the PyCSW application
+redis     | Redis plays within site.yml playbook
+smoke     | Smoke/sanity tests
+solr      | Solr plays within site.yml playbook
+wordpress | WordPress application within site.yml playbook
+
+
 ### Application playbooks
 
 Application playbooks deploy a single Application and its Services (e.g.
@@ -188,10 +207,10 @@ Variable | Description
 
 ##### Supported tags
 
-Tag      | Description
----      | -----------
-pycsw    | Deploys only the PyCSW application
-database | Configure the database with CKAN and PyCSW users
+Tag       | Description
+---       | -----------
+pycsw     | Deploys only the PyCSW application
+smoke     | Smoke/sanity tests
 
 
 #### Dashboard
@@ -208,6 +227,13 @@ Variable | Description
 `project_git_version` | Tag, branch, or commit to deploy
 
 
+##### Supported tags
+
+Tag       | Description
+---       | -----------
+smoke     | Smoke/sanity tests
+
+
 #### Inventory
 
 Deploy inventory.data.gov.
@@ -220,6 +246,13 @@ Deploy inventory.data.gov.
 Variable | Description
 -------- | -----------
 `inventory_ckan_app_version` | Tag, branch, or commit of ckan to deploy
+
+
+##### Supported tags
+
+Tag       | Description
+---       | -----------
+smoke     | Smoke/sanity tests
 
 
 #### PyCSW
@@ -244,6 +277,7 @@ Variable | Description
 Tag      | Description
 ---      | -----------
 database | Configure the database with PyCSW user
+smoke     | Smoke/sanity tests
 
 
 #### Solr
@@ -265,6 +299,13 @@ Deploys the www.data.gov (WordPress) application.
 Variable | Description
 -------- | -----------
 `project_git_version` | Tag, branch, or commit to deploy
+
+
+##### Supported tags
+
+Tag       | Description
+---       | -----------
+smoke     | Smoke/sanity tests
 
 
 ## Ansible inventory groups

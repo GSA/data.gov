@@ -1,5 +1,0 @@
----
-# TrendMicro
-trendmicro_policy_id: "{{ trendmicro_policy_id_web }}"
-
-datagov_in_service: false
