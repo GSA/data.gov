@@ -100,7 +100,7 @@
     - restart apache2
 
 - name: Configure inventory-classic server
-  template: 
+  template:
     src: etc/supervisor/conf.d/gunicorn-web-app.conf
     dest: /etc/supervisor/conf.d/gunicorn-web-app.conf
     owner: root
@@ -111,7 +111,7 @@
     - reload supervisor
 
 - name: Configure inventory-next server
-  template: 
+  template:
     src: etc/supervisor/conf.d/gunicorn-web-app-next.conf
     dest: /etc/supervisor/conf.d/gunicorn-web-app-next.conf
     owner: root
@@ -120,7 +120,7 @@
   when: inventory-next
   notify:
     - reload supervisor
-    
+
 - name: Copy CKAN server_start.sh
   copy:
     src: "{{ inventory_app_source_path }}/ckan/config/server_start.sh"
