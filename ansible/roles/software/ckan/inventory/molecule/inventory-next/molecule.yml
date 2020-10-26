@@ -34,6 +34,7 @@ provisioner:
         inventory_app_repo_branch: inventory_ckan_2.8
         inventory_next: true
         datapusher_build_pkg_branch: datagov/inventory-next
+        newrelic_license_key: some-secret
 scenario:
   name: inventory-next
   # TODO fix idempotency

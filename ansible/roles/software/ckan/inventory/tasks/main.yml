@@ -10,6 +10,11 @@
       - supervisor
   notify: restart apache2
 
+- name: Assert newrelic_license_key is set
+  assert:
+    that: newrelic_license_key is defined
+    fail_msg: newrelic_license_key is required but it is not set
+
 - name: ensure supervisor is started and enabled
   service: name=supervisor state=started enabled=yes
 
@@ -91,10 +96,41 @@
   with_items:
     - etc/ckan/production.ini
     - etc/apache2/sites-enabled/ckan.conf
-    - etc/supervisor/conf.d/gunicorn-web-app.conf
   notify:
     - restart apache2
+
+- name: Configure inventory-classic server
+  template: 
+    - src=etc/supervisor/conf.d/gunicorn-web-app.conf
+    - dest=/etc/supervisor/conf.d/gunicorn-web-app.conf
+  when: not inventory-next
+
+- name: Configure inventory-next server
+  template: 
+    - src=etc/supervisor/conf.d/gunicorn-web-app-next.conf 
+    - dest=/etc/supervisor/conf.d/gunicorn-web-app-next.conf 
+  when: inventory-next
+  notify:
     - reload supervisor
+    
+- name: Copy CKAN server_start.sh
+  copy:
+    src: "{{ inventory_app_source_path }}/ckan/config/server_start.sh"
+    dest: /etc/ckan/server_start.sh
+    mode: 0755
+    remote_src: true
+  become: true
+  when: inventory-next
+
+- name: Copy app .env
+  template:
+    src: gunicorn_env.j2
+    dest: /etc/ckan/.env
+    mode: 0644
+    owner: root
+    group: root
+  become: true
+  when: inventory-next
 
 - include_tasks: datapusher-next.yml
   tags:
