@@ -97,21 +97,23 @@
     - etc/ckan/production.ini
     - etc/apache2/sites-enabled/ckan.conf
   notify:
-    - restart apache2
-
+	- restart apache2
+				
 - name: Configure inventory-classic server
-  template: 
-    - src=etc/supervisor/conf.d/gunicorn-web-app.conf
-    - dest=/etc/supervisor/conf.d/gunicorn-web-app.conf
+	template: 
+		- src=etc/supervisor/conf.d/gunicorn-web-app.conf
+		- dest=/etc/supervisor/conf.d/gunicorn-web-app.conf
   when: not inventory-next
+  notify:
+		- reload supervisor
 
 - name: Configure inventory-next server
   template: 
-    - src=etc/supervisor/conf.d/gunicorn-web-app-next.conf 
-    - dest=/etc/supervisor/conf.d/gunicorn-web-app-next.conf 
+		- src=etc/supervisor/conf.d/gunicorn-web-app-next.conf 
+		- dest=/etc/supervisor/conf.d/gunicorn-web-app-next.conf 
   when: inventory-next
-  notify:
-    - reload supervisor
+	notify:
+  	- reload supervisor
     
 - name: Copy CKAN server_start.sh
   copy:
