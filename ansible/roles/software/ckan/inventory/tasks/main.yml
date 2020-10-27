@@ -132,7 +132,7 @@
 
 - name: Copy app .env
   template:
-    src: gunicorn_env.j2
+    src: app_env.j2
     dest: /etc/ckan/.env
     mode: 0644
     owner: root
