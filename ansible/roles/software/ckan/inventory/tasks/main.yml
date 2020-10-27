@@ -106,7 +106,7 @@
     owner: root
     group: www-data
     mode: 0640
-  when: not inventory-next
+  when: not inventory_next
   notify:
     - reload supervisor
 
@@ -117,18 +117,18 @@
     owner: root
     group: www-data
     mode: 0640
-  when: inventory-next
+  when: inventory_next
   notify:
     - reload supervisor
 
 - name: Copy CKAN server_start.sh
   copy:
-    src: "{{ inventory_app_source_path }}/ckan/config/server_start.sh"
+    src: "{{ inventory_app_source_path }}/config/server_start.sh"
     dest: /etc/ckan/server_start.sh
     mode: 0755
     remote_src: true
   become: true
-  when: inventory-next
+  when: inventory_next
 
 - name: Copy app .env
   template:
@@ -138,7 +138,7 @@
     owner: root
     group: root
   become: true
-  when: inventory-next
+  when: inventory_next
 
 - include_tasks: datapusher-next.yml
   tags:
