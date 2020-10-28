@@ -1,2 +1,3 @@
 ---
 catalog_ckan_worker_type: misc_worker
+catalog_enable_clean_harvest_logs: true
