@@ -9,8 +9,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v4-pipenv-{{ checksum "Pipfile.lock" }}
-            - v4-pipenv-
+            - v5-pipenv-{{ checksum "Pipfile.lock" }}
+            - v5-pipenv-
       - run: pipenv sync --dev
       - run: pipenv run make vendor
       - run: pipenv run make lint
