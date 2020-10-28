@@ -110,9 +110,9 @@
   when: inventory_next
 
 - name: Remove old supervisor files
-  file: 
-    - path: /etc/supervisor/conf.d/gunicorn-web-app.conf
-    - state: absent
+  file:
+    path: /etc/supervisor/conf.d/gunicorn-web-app.conf
+    state: absent
   become: true
   when: inventory_next
 
