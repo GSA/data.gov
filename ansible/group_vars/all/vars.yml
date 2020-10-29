@@ -5,6 +5,7 @@
 
 # catalog
 catalog_ckan_python_home: "{{ common_python_version_directory }}"
+ckan_uses_gunicorn: false
 
 
 # Default TLS/SSL certificate used for internal traffic to host.
