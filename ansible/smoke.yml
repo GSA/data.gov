@@ -47,6 +47,7 @@
       delegate_to: localhost
       become: false
       run_once: true
+      when: smoke_enable_cdn_checks | default(True)
 
     - name: assert TTL for 4xx is less than 10 seconds to prevent CPDoS
       block:
@@ -78,6 +79,7 @@
       delegate_to: localhost
       become: false
       run_once: true
+      when: smoke_enable_cdn_checks | default(True)
 
 
 - name: catalog.data.gov cache smoke tests
@@ -113,6 +115,7 @@
       delegate_to: localhost
       become: false
       run_once: true
+      when: smoke_enable_cdn_checks | default(True)
 
 
     - name: assert TTL for 4xx is less than 10 seconds to prevent CPDoS
@@ -146,3 +149,4 @@
       delegate_to: localhost
       become: false
       run_once: true
+      when: smoke_enable_cdn_checks | default(True)
