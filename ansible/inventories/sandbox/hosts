@@ -61,7 +61,7 @@ jenkins
 wordpress-web
 
 [pycsw-web]
-catalog-web1tf.internal.sandbox.datagov.us
+catalog-next-web1tf.internal.sandbox.datagov.us
 
 [pycsw-worker]
 catalog-harvester-next1tf.internal.sandbox.datagov.us
