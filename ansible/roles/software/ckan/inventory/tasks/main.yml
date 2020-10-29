@@ -99,6 +99,23 @@
   notify:
     - restart apache2
 
+- name: Copy app .env
+  template:
+    src: app_env.j2
+    dest: /etc/ckan/.env
+    mode: 0644
+    owner: root
+    group: root
+  become: true
+  when: inventory_next
+
+- name: Remove old supervisor files
+  file:
+    path: /etc/supervisor/conf.d/gunicorn-web-app.conf
+    state: absent
+  become: true
+  when: inventory_next
+
 - name: Configure inventory-classic server
   template:
     src: etc/supervisor/conf.d/gunicorn-web-app.conf
@@ -127,16 +144,6 @@
     dest: /etc/ckan/server_start.sh
     mode: 0755
     remote_src: true
-  become: true
-  when: inventory_next
-
-- name: Copy app .env
-  template:
-    src: app_env.j2
-    dest: /etc/ckan/.env
-    mode: 0644
-    owner: root
-    group: root
   become: true
   when: inventory_next
 
