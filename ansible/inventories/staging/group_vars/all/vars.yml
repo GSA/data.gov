@@ -235,7 +235,7 @@ web_app_env: production
 real_ansible_env: staging
 
 # postfix
-default_email_from: "{{ vault_default_email_from }}"
+default_email_from: no-reply-staging@data.gsa.gov
 postfix_raw_options:
   - |
     smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
@@ -252,7 +252,12 @@ postfix_aliases:
     alias: "{{ datagov_team_email }}"
 postfix_sender_canonical_maps:
   - sender: "@{{ ansible_fqdn }}"
-    rewrite: no-reply+{{ ansible_fqdn }}@data.gov
+    rewrite: no-reply-staging+{{ ansible_fqdn }}@data.gsa.gov
+postfix_transport_maps:
+  - pattern: "{{ datagov_team_email }}"  # deliver mail to the data.gov team normally
+    result: smtp
+  - pattern: "*"  # discard all other mail
+    result: "discard:"
 
 
 # SAML
