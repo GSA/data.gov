@@ -60,14 +60,8 @@ solr
 jenkins
 wordpress-web
 
-[pycsw-web:children]
-pycsw-web-v2
+[pycsw-web]
+catalog-next-web1tf.internal.sandbox.datagov.us
 
-[pycsw-web-v2:children]
-catalog-next
-
-[pycsw-worker:children]
-pycsw-worker-v2
-
-[pycsw-worker-v2]
+[pycsw-worker]
 catalog-harvester-next1tf.internal.sandbox.datagov.us
