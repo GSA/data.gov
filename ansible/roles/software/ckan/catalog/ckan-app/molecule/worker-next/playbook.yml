@@ -8,3 +8,4 @@
         catalog_ckan_email_from: no-reply@data.gov
         catalog_ckan_worker_type: main_worker
         catalog_harvest_enable_harvest_report: true
+        catalog_enable_clean_harvest_logs: true

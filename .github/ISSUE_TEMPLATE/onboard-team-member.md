@@ -59,6 +59,8 @@ For new Project Management Office team members, follow these additional steps:
 - [ ] Invite team member to calendar events
   - CKAN-multi project meetings
 - [ ] Promote team member to Admin in [New Relic](https://newrelic.com)
+- [ ] Add team member as an Owner to PyPI packages:
+  - https://pypi.org/project/ckanext-dcat-usmetadata/
 
 
 ### Tasks for new team member

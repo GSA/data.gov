@@ -1,0 +1,3 @@
+---
+catalog_ckan_solr_host: "{{ catalog_next_ckan_solr_b_host }}"
+catalog_ckan_db_host: "{{ catalog_next_ckan_db_replica_b_host }}"

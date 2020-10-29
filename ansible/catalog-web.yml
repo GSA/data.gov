@@ -78,6 +78,8 @@
       register: result
       until: not result.failed
       when: datagov_in_service | default(true)
+      tags:
+        - smoke
 
 
 - name: logrotate configuration
@@ -101,12 +103,16 @@
   hosts: catalog-web,catalog-next-web
   roles:
     - role: monitoring/newrelic/python-agent-ansible
-      when: common_newrelic_enabled
+      when:
+        - common_newrelic_enabled
+        - not ckan_uses_gunicorn
   tags:
     - newrelic
 
 - name: Service-level catalog.data.gov smoke tests (catalog classic)
   hosts: catalog-web
+  tags:
+    - smoke
   tasks:
     - name: flush handlers
       meta: flush_handlers
@@ -126,6 +132,8 @@
 
 - name: Service-level admin-catalog.data.gov smoke tests (catalog classic)
   hosts: catalog-admin
+  tags:
+    - smoke
   tasks:
     - name: flush handlers
       meta: flush_handlers
@@ -147,6 +155,8 @@
 
 - name: Service-level catalog-next.data.gov smoke tests (catalog-next)
   hosts: catalog-next-web
+  tags:
+    - smoke
   tasks:
     - name: flush handlers
       meta: flush_handlers
@@ -171,6 +181,8 @@
 
 - name: Service-level admin-catalog-next.data.gov smoke tests (catalog-next)
   hosts: catalog-next-web-admin
+  tags:
+    - smoke
   tasks:
     - name: flush handlers
       meta: flush_handlers

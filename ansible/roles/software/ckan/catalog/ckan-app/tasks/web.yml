@@ -1,8 +1,32 @@
 ---
+- name: Assert newrelic_license_key is set
+  assert:
+    that: newrelic_license_key is defined
+    fail_msg: newrelic_license_key is required but it is not set
+
 - name: Install WSGI app
   copy: src=etc_ckan_apache.wsgi dest=/etc/ckan/apache.wsgi mode=0644 owner=root group=www-data
   notify: reload apache2
   when: not ckan_uses_gunicorn
+
+- name: Copy CKAN server_start.sh
+  copy:
+    src: "{{ app_source_path }}/ckan/setup/server_start.sh"
+    dest: /etc/ckan/server_start.sh
+    mode: 0755
+    remote_src: true
+  become: true
+  when: ckan_uses_gunicorn
+
+- name: Copy app .env
+  template:
+    src: gunicorn_env.j2
+    dest: /etc/ckan/.env
+    mode: 0644
+    owner: root
+    group: root
+  become: true
+  when: ckan_uses_gunicorn
 
 - name: Install supervisor
   apt: name=supervisor state=present
