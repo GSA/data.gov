@@ -5,6 +5,8 @@
 
 - name: reread supervisor
   command: supervisorctl reread
+  tags:
+    - skip_ansible_lint
 
 - name: restart ckan
   command: supervisorctl restart ckan
