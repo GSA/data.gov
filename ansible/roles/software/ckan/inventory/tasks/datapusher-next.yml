@@ -26,8 +26,6 @@
     build_pkg_repo: "{{ datapusher_build_pkg_repo }}"
     build_pkg_requirements: "{{ datapusher_next_requirements }}"
     virtualenv: "{{ datapusher_virtual_env }}"
-  notify:
-    - restart apache2
 
 - name: install psycopg2
   pip:
@@ -47,5 +45,4 @@
     - etc/ckan/datapusher.wsgi
     - etc/ckan/datapusher_settings.py
     - etc/apache2/sites-enabled/datapusher.conf
-  notify:
-    - restart apache2
+  notify: restart apache2

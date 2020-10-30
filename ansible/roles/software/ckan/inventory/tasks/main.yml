@@ -61,8 +61,7 @@
     virtualenv: '{{ project_source_new_code_path }}'
     virtualenv_python: "{{ inventory_python_home }}/bin/python"
     umask: "0022"
-  notify:
-    - restart ckan
+  notify: restart ckan
 
 - name: install repoze.who library for local login (if saml disabled)
   pip:
@@ -72,6 +71,7 @@
     state: present
   when:
     - not inventory_ckan_saml2_enabled
+  notify: restart ckan
 
 - name: create directories
   action: file path={{ item }} state=directory owner="www-data" group="www-data" mode=0755 recurse=yes
