@@ -6,6 +6,9 @@
 - name: restart supervisor
   service: name=supervisor state=restarted
 
+- name: reread supervisor
+  command: supervisorctl reread
+
 - name: restart ckan
   command: supervisorctl restart ckan
   when:
