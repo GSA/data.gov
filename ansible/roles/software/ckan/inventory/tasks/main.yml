@@ -8,7 +8,6 @@
       - xmlsec1
       - cron
       - supervisor
-  notify: restart supervisor
 
 - name: Assert newrelic_license_key is set
   assert:

@@ -3,9 +3,6 @@
   service: name=apache2 state=restarted
   when: datagov_in_service
 
-- name: restart supervisor
-  service: name=supervisor state=restarted
-
 - name: reread supervisor
   command: supervisorctl reread
 
