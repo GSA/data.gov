@@ -3,8 +3,11 @@
   service: name=apache2 state=restarted
   when: datagov_in_service
 
-- name: reload supervisor
-  command: supervisorctl reload
+- name: restart supervisor
+  service: name=supervisor state=restarted
+
+- name: restart ckan
+  command: supervisorctl restart ckan
   when: datagov_in_service
   tags:
     - skip_ansible_lint

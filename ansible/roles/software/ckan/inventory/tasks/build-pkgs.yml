@@ -6,7 +6,6 @@
     version: "{{ build_pkg_branch | default('master') }}"
     force: yes
     umask: "0022"
-  notify: restart apache2
 
 - name: install requirements for pkg
   pip:
@@ -15,10 +14,8 @@
     virtualenv_python: "{{ inventory_python_home }}/bin/python"
     umask: "0022"
   when: build_pkg_requirements is defined
-  notify: restart apache2
 
 - name: run setup
   command: chdir={{ virtualenv }}/src/{{ build_pkg_name }} {{ virtualenv }}/bin/python setup.py develop
   tags:
     - skip_ansible_lint
-  notify: restart apache2

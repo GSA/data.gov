@@ -54,8 +54,6 @@
     virtualenv: '{{ project_source_new_code_path }}'
     virtualenv_python: "{{ inventory_python_home }}/bin/python"
     umask: "0022"
-  notify:
-    - reload supervisor
 
 - name: install inventory app from requirements
   pip:
@@ -64,7 +62,7 @@
     virtualenv_python: "{{ inventory_python_home }}/bin/python"
     umask: "0022"
   notify:
-    - reload supervisor
+    - restart ckan
 
 - name: install repoze.who library for local login (if saml disabled)
   pip:
@@ -74,8 +72,6 @@
     state: present
   when:
     - not inventory_ckan_saml2_enabled
-  notify:
-    - reload supervisor
 
 - name: create directories
   action: file path={{ item }} state=directory owner="www-data" group="www-data" mode=0755 recurse=yes
@@ -87,7 +83,7 @@
   with_items:
     - etc/ckan/who.ini
   notify:
-    - reload supervisor
+    - restart ckan
 
 - name: Configure production.ini
   template: src={{ item }} dest=/{{ item }} owner=root group=www-data mode=0640
@@ -96,7 +92,7 @@
     - etc/apache2/sites-enabled/ckan.conf
   notify:
     - restart apache2
-    - reload supervisor
+    - restart ckan
 
 - name: Copy app .env
   template:
@@ -108,7 +104,7 @@
   become: true
   when: inventory_next
   notify:
-    - reload supervisor
+    - restart ckan
 
 - name: Remove old supervisor files
   file:
@@ -117,7 +113,7 @@
   become: true
   when: inventory_next
   notify:
-    - reload supervisor
+    - restart supervisor
 
 - name: Configure inventory-classic server
   template:
@@ -128,7 +124,7 @@
     mode: 0640
   when: not inventory_next
   notify:
-    - reload supervisor
+    - restart supervisor
 
 - name: Configure inventory-next server
   template:
@@ -139,7 +135,7 @@
     mode: 0640
   when: inventory_next
   notify:
-    - reload supervisor
+    - restart supervisor
 
 - name: Copy CKAN server_start.sh
   copy:
@@ -150,7 +146,7 @@
   become: true
   when: inventory_next
   notify:
-    - reload supervisor
+    - restart ckan
 
 - include_tasks: datapusher-next.yml
   tags:
@@ -178,7 +174,7 @@
     path: "{{ current_source_symlink }}"
     state: link
   notify:
-    - reload supervisor
+    - restart ckan
 
 - name: ensure supervisor is started and enabled
   service: name=supervisor state=started enabled=yes
