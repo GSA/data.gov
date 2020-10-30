@@ -1,5 +1,7 @@
 ---
 datagov_in_service: false  # TODO https://github.com/GSA/datagov-ckan-multi/issues/298 waiting on admin-catalog-next TLS certificate
+catalog_ckan_apache_server_alias:
+  - admin-catalog.data.gov
 catalog_ckan_apache_server_name: "{{ catalog_host_admin_next }}"
 catalog_ckan_readwrite_configuration: readwrite
 catalog_ckan_db_host: "{{ catalog_next_ckan_db_primary_host }}"
