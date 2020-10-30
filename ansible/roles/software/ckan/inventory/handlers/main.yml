@@ -8,7 +8,7 @@
 
 - name: restart ckan
   command: supervisorctl restart ckan
-  when: 
+  when:
     - datagov_in_service
     - inventory-next
   tags:
