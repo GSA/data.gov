@@ -113,8 +113,6 @@ def test_apache_site(host):
     # In readwrite configuration, ServerName is admin site, not
     # public site.
     assert f.contains('Redirect 404 /')
-    assert f.contains('ServerName %s' % catalog_host_admin)
-    assert not f.contains('ServerName %s' % catalog_host_public)
 
     # In readwrite configuration, redirect unauthenticated requests to the
     # readonly url.

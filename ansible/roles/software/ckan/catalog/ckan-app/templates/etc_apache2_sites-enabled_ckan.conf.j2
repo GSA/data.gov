@@ -12,19 +12,8 @@ SSLEngine on
 </VirtualHost>
 
 <VirtualHost 0.0.0.0:80>
-{% if catalog_ckan_readwrite_configuration == 'readwrite' %}
-    ServerName {{ catalog_host_admin }}
-  {% if ckan_catalog_next == true %}
-    ServerAlias {{ catalog_host_admin_next }}
-  {% endif %}
-{% else %}
-    ServerName {{ catalog_host_public }}
-  {% if ckan_catalog_next == true %}
-    ServerAlias {{ catalog_host_public_next }}
-  {% endif %}
-{% endif %}
-    ServerAlias localhost {{ ansible_default_ipv4.address | default('') }}
-    ServerAlias {{ ansible_fqdn }}
+    ServerName {{ catalog_ckan_apache_server_name }}
+    ServerAlias {{ catalog_ckan_apache_server_alias | join(' ') }} {{ ansible_fqdn }} localhost {{ ansible_default_ipv4.address | default('') }}
 
     # CSW endpoints provided by pycsw
     # based on request URI

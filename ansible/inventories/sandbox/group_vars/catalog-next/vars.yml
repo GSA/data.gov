@@ -2,6 +2,9 @@
 catalog_ckan_service_url: https://{{ catalog_host_public_next }}
 ckan_site_domain: https://{{ catalog_host_public_next }}
 
+catalog_ckan_apache_server_name: "{{ catalog_host_public_next }}"
+catalog_ckan_apache_server_alias:
+  - d1xr5ix4dos50f.cloudfront.net
 catalog_ckan_db_host: "{{ catalog_next_postgresql_login_host }}"
 catalog_ckan_db_name: "{{ catalog_next_ckan_db_name }}"
 catalog_ckan_db_pass: "{{ catalog_next_postgresql_login_password }}"
