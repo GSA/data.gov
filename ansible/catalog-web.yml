@@ -129,6 +129,10 @@
       run_once: true
       delegate_to: localhost
       become: false
+      retries: 3
+      delay: 10
+      register: result
+      until: not result.failed
 
 - name: Service-level admin-catalog.data.gov smoke tests (catalog classic)
   hosts: catalog-admin
@@ -152,6 +156,10 @@
       run_once: true
       delegate_to: localhost
       become: false
+      retries: 3
+      delay: 10
+      register: result
+      until: not result.failed
 
 - name: Service-level catalog-next.data.gov smoke tests (catalog-next)
   hosts: catalog-next-web
