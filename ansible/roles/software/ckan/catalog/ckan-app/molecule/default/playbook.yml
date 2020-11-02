@@ -3,4 +3,8 @@
   hosts: all
   roles:
     - role: ckan-app
+      catalog_ckan_apache_server_name: ckan
+      catalog_ckan_apache_server_alias:
+        - red
+        - blue
       catalog_ckan_email_from: no-reply@data.gov
