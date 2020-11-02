@@ -39,7 +39,7 @@
     mode: 0644
     owner: root
     group: root
-  notify: 
+  notify:
     - reload supervisor
     - restart ckan
   when: ckan_uses_gunicorn
