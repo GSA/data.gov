@@ -47,7 +47,7 @@
     mode: "0644"
     owner: root
     group: root
-  notify: reread supervisor
+  notify: reload supervisor
 
 - name: schedule beaker-cache-cleanup cron
   cron:

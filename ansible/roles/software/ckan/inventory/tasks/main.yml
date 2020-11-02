@@ -113,7 +113,7 @@
   become: true
   when: inventory_next
   notify:
-    - reread supervisor
+    - reload supervisor
 
 - name: Configure inventory-classic server
   template:
@@ -124,7 +124,7 @@
     mode: 0640
   when: not inventory_next
   notify:
-    - reread supervisor
+    - reload supervisor
 
 - name: Configure inventory-next server
   template:
@@ -135,7 +135,7 @@
     mode: 0640
   when: inventory_next
   notify:
-    - reread supervisor
+    - reload supervisor
 
 - name: Copy CKAN server_start.sh
   copy:
