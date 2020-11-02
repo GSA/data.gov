@@ -39,7 +39,9 @@
     mode: 0644
     owner: root
     group: root
-  notify: reload supervisor
+  notify: 
+    - reload supervisor
+    - restart ckan
   when: ckan_uses_gunicorn
 
 - name: Enable supervisor service
