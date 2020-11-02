@@ -3,10 +3,17 @@
   service: name=redis-server state=restarted
 
 - name: reload supervisor
-  command: supervisorctl reload
+  command: supervisorctl reread && supervisorctl update
   when:
     - (catalog_app_type == "worker") or ckan_uses_gunicorn
     - datagov_in_service | default(true)
+  tags:
+    - skip_ansible_lint
+
+- name: restart ckan
+  command: supervisorctl restart catalog-web
+  when:
+    - ckan_uses_gunicorn
   tags:
     - skip_ansible_lint
 
