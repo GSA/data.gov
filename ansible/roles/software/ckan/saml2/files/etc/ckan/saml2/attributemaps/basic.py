@@ -1,6 +1,6 @@
 
 MAP = {
-    "identifier": "urn:oasis:names:tc:SAML:2.0:attr-name-format:basic",
+    "identifier": "urn:oasis:names:tc:SAML:2.0:attrname-format:basic",
     "fro": {
         'urn:mace:dir:attribute-def:aRecord': 'aRecord',
         'urn:mace:dir:attribute-def:aliasedEntryName': 'aliasedEntryName',
