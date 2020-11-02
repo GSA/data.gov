@@ -1,6 +1,6 @@
 
 
-def test_gunicorn_datapusher(host):
+def test_wsgi_datapusher(host):
     apache = host.file('/etc/apache2/sites-enabled/datapusher.conf')
 
     assert apache.exists

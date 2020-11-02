@@ -4,7 +4,12 @@
   when: datagov_in_service
 
 - name: reload supervisor
-  command: supervisorctl reload
+  command: supervisorctl reread && supervisorctl update
+  tags:
+    - skip_ansible_lint
+
+- name: restart ckan
+  command: supervisorctl restart ckan
   when: datagov_in_service
   tags:
     - skip_ansible_lint
