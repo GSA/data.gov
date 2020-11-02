@@ -164,7 +164,7 @@ inventory_next_ckan_service_url: https://inventory-next-datagov.dev-ocsit.bsp.gs
 inventory_next_ckan_solr_host: datagov-solrm1d-v2.dev-ocsit.bsp.gsa.gov
 inventory_next_ckan_who_ini_secret: "{{ vault_inventory_next_ckan_who_ini_secret }}"
 inventory_next_datastore_login_host: "{{ vault_inventory_next_datastore_login_host }}"
-inventory_next_datastore_db_name: "{{ value_inventory_next_datastore_db_name }}"
+inventory_next_datastore_db_name: "{{ vault_inventory_next_datastore_db_name }}"
 inventory_next_datastore_user: "{{ vault_inventory_next_datastore_user }}"
 inventory_next_datastore_pass: "{{ vault_inventory_next_datastore_pass }}"
 inventory_next_datastore_ro_user: "{{vault_inventory_next_datastore_ro_user }}"
