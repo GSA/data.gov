@@ -24,6 +24,7 @@
   when:
     - inventory_next
     - db_is_setup
+    - datagov_in_service
   become: true
 
 - name: install beaker cache cleanup script
