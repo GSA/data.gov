@@ -36,3 +36,6 @@ catalog_ckan_plugins_default:
   - datagovtheme
   - datagovcatalog
   - googleanalyticsbasic
+  - dcat
+  - dcat_json_interface
+  - structured_data
