@@ -10,8 +10,6 @@
 
 - name: restart ckan
   command: supervisorctl restart ckan
-  when:
-    - datagov_in_service
-    - inventory_next
+  when: datagov_in_service
   tags:
     - skip_ansible_lint
