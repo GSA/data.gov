@@ -11,6 +11,9 @@
 - import_playbook: jumpbox.yml
   tags:
     - jumpbox
+- import_playbook: fgdc2iso.yml
+  tags:
+    - fgdc2iso
 - import_playbook: solr.yml
   tags:
     - solr
