@@ -129,8 +129,11 @@ inventory_ckan_plugins_default:
   - text_view
   - usmetadata
 
+
 # Limit SSH Access
-jumpbox_ips: ["10.0.0.0/8"]
+jumpbox_ips:
+  - "10.0.0.0/8"
+  - "127.0.0.1"
 
 
 # newrelic monitoring
