@@ -42,11 +42,25 @@ inventory-web1tf.internal.sandbox.datagov.us
 [jenkins]
 jenkins1tf.internal.sandbox.datagov.us
 
+[pycsw-web-v1]
+catalog-web1tf.internal.sandbox.datagov.us
+
+[pycsw-worker-v1]
+catalog-harvester1tf.internal.sandbox.datagov.us
+
+[pycsw-web-v2]
+catalog-next-web1tf.internal.sandbox.datagov.us
+
+[pycsw-worker-v2]
+catalog-harvester-next1tf.internal.sandbox.datagov.us
+
 [pycsw-web:children]
-catalog-next-web
+pycsw-web-v1
+pycsw-web-v2
 
 [pycsw-worker:children]
-catalog-next-worker
+pycsw-worker-v1
+pycsw-worker-v2
 
 [wordpress-web]
 wordpress-web1tf.internal.sandbox.datagov.us
@@ -55,6 +69,8 @@ wordpress-web1tf.internal.sandbox.datagov.us
 catalog-harvester
 catalog-web
 inventory-web
+pycsw-web-v1
+pycsw-worker-v1
 
 [v2:children]
 catalog-fgdc2iso
@@ -63,7 +79,7 @@ inventory-next
 dashboard-web
 jenkins
 jumpbox
-pycsw-web
-pycsw-worker
+pycsw-web-v2
+pycsw-worker-v2
 solr
 wordpress-web
