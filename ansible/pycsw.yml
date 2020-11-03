@@ -22,7 +22,7 @@
 
     - name: assert csw-collection is up
       uri:
-        url: http://{{ ansible_fqdn }}/csw?service=CSW&version=2.0.2&request=GetCapabilities
+        url: "{{ catalog_url_public }}/csw?service=CSW&version=2.0.2&request=GetCapabilities"
         follow_redirects: none
         status_code: 200
         return_content: true
@@ -45,7 +45,7 @@
 
     - name: assert csw-all is up
       uri:
-        url: http://{{ ansible_fqdn }}/csw-all?service=CSW&version=2.0.2&request=GetCapabilities
+        url: "{{ catalog_url_public }}/csw-all?service=CSW&version=2.0.2&request=GetCapabilities"
         follow_redirects: none
         status_code: 200
         return_content: true
