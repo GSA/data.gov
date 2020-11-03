@@ -2,3 +2,6 @@
 catalog_app_type: worker
 catalog_enable_clean_harvest_logs: true
 catalog_pycsw_cron_enable: false
+
+pycsw_base_url: https://catalog-next.sandbox.datagov.us
+pycsw_ckan_url: https://catalog-next.sandbox.datagov.us
