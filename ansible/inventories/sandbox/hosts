@@ -42,6 +42,10 @@ inventory-web1tf.internal.sandbox.datagov.us
 [jenkins]
 jenkins1tf.internal.sandbox.datagov.us
 
+[pycsw:children]
+pycsw-web
+pycsw-worker
+
 [pycsw-web-v1]
 catalog-web1tf.internal.sandbox.datagov.us
 

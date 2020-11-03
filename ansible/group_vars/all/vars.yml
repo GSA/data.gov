@@ -180,6 +180,11 @@ postfix_inet_interfaces: loopback-only  # only listen on loopback interfaces, we
 postfix_smtpd_tls_key_file: "{{ default_tls_host_key_filepath }}"
 postfix_smtpd_tls_cert_file: "{{ default_tls_host_certificate_filepath }}"
 
+
+# pyenv
+pyenv_update_git_install: true
+
+
 # solr
 solr_home: /data/solr5
 solr_version: 5.5.5
