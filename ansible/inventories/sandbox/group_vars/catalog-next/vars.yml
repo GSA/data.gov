@@ -16,3 +16,6 @@ catalog_ckan_redis_host: "{{ catalog_next_ckan_redis_host }}"
 catalog_ckan_redis_password: "{{ catalog_next_ckan_redis_password }}"
 
 catalog_ckan_plugins_default: "{{ catalog_next_ckan_plugins_default }}"
+
+pycsw_base_url: https://catalog-next.sandbox.datagov.us
+pycsw_ckan_url: https://catalog-next.sandbox.datagov.us
