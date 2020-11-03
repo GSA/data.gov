@@ -42,8 +42,11 @@ inventory-web1tf.internal.sandbox.datagov.us
 [jenkins]
 jenkins1tf.internal.sandbox.datagov.us
 
-[pycsw-web]
-[pycsw-worker]
+[pycsw-web:children]
+catalog-next-web
+
+[pycsw-worker:children]
+catalog-next-worker
 
 [wordpress-web]
 wordpress-web1tf.internal.sandbox.datagov.us
