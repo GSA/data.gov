@@ -12,11 +12,14 @@ SSLEngine on
 </VirtualHost>
 
 <VirtualHost 0.0.0.0:80>
-    ServerName {{ catalog_ckan_apache_server_name }}
-    ServerAlias {{ catalog_ckan_apache_server_alias | join(' ') }} {{ ansible_fqdn }} localhost {{ ansible_default_ipv4.address | default('') }}
+  ServerName {{ catalog_ckan_apache_server_name }}
+  ServerAlias {{ catalog_ckan_apache_server_alias | join(' ') }} {{ ansible_fqdn }} localhost {{ ansible_default_ipv4.address | default('') }}
 
-    # CSW endpoints provided by pycsw
-    # based on request URI
+  # CSW endpoints provided by pycsw
+  # full CSW, all metadata
+  ProxyPass /csw-all http://localhost:8001
+  # default CSW, collection level metadata
+  ProxyPass /csw http://localhost:8000
 
   {% if ckan_uses_gunicorn %}
     # gunicorn configuration
@@ -25,12 +28,6 @@ SSLEngine on
     ProxyPreserveHost On
     RequestHeader set X-Forwarded-Proto https
   {% else %}
-    # full CSW, all metadata
-    ProxyPass /csw-all http://localhost:8001
-
-    # default CSW, collection level metadata
-    ProxyPass /csw http://localhost:8000
-
     WSGIScriptAlias / /etc/ckan/apache.wsgi
 
     # Pass authorization info on (needed for rest api).
