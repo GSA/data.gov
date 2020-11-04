@@ -21,7 +21,8 @@ datastore_db_server: "{{ inventory_next_datastore_login_host }}"
 inventory_datastore_db_name: datastore_try_01
 inventory_datastore_user: "{{ inventory_next_datastore_user }}"
 inventory_datastore_pass: "{{ inventory_next_datastore_pass }}"
-inventory_datastore_ro_user: "{{ inventory_next_datastore_ro_user }}"
+#inventory_datastore_ro_user: "{{ inventory_next_datastore_ro_user }}"
+inventory_datastore_ro_user: datastore_ro_try_01
 inventory_datastore_ro_pass: "{{ inventory_next_datastore_ro_pass }}"
 
 #inventory_datapusher_db_name: "{{ inventory_next_datapusher_db_name }}"
