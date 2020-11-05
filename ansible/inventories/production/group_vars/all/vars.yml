@@ -165,8 +165,7 @@ inventory_ckan_solr_port: "8983"
 newrelic_license_key: "{{ vault_newrelic_license_key }}"
 
 
-#pycsw_app_version: datagov/v2.4.x
-pycsw_app_version: a0120f921f3f787a40f1f9af3fd80d05963b974c   # TODO remove me before next release https://github.com/GSA/datagov-deploy/pull/2385
+pycsw_app_version: datagov/v2.4.x
 pycsw_base_url: https://catalog.data.gov
 pycsw_ckan_url: https://catalog.data.gov
 pycsw_db_host: "{{ catalog_pycsw_db_host }}"

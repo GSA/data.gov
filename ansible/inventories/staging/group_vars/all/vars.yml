@@ -180,10 +180,8 @@ inventory_next_datapusher_db_name: "{{ vault_inventory_next_datapusher_db_name }
 newrelic_license_key: "{{ vault_newrelic_license_key }}"
 
 
-# pycsw
 pycsw_app_environment: staging
-#pycsw_app_version: datagov/v2.4.x
-pycsw_app_version: a0120f921f3f787a40f1f9af3fd80d05963b974c   # TODO remove me before next release https://github.com/GSA/datagov-deploy/pull/2385
+pycsw_app_version: datagov/v2.4.x
 pycsw_base_url: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
 pycsw_ckan_url: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
 pycsw_db_host: "{{ catalog_pycsw_db_host }}"
