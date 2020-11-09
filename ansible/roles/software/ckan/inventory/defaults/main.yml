@@ -71,7 +71,6 @@ inventory_python_home: "/usr"
 inventory_ckan_redis_db: "1"
 
 inventory_next: false
-newrelic_app_name: inventory-next
 
 saml2_site_url: https://inventory.data.gov/
 saml2_idp_entry: login.test.max.gov

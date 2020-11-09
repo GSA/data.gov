@@ -42,6 +42,15 @@
 - name: Remove new code
   file: path="{{ project_source_new_code_path }}" state=absent
 
+- name: Check if new relic log exists
+  stat: path=/var/log/inventory/new_relic.log
+  register: nr_log
+
+- name: Create NR log if it doesn't exist
+  file:
+    path=/var/log/inventory/new_relic.log owner=www-data group=www-data mode=0750 state=touch
+  when: not nr_log.stat.exists
+
 - name: Clone Inventory app
   git:
     force: yes
