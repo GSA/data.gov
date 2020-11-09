@@ -37,6 +37,7 @@ provisioner:
         db_is_setup: false
         newrelic_license_key: some-secret
         newrelic_app_name: inventory-molecule
+        newrelic_enabled: false
       bionic:
         inventory_app_repo_branch: inventory_ckan_2.8
         datapusher_build_pkg_branch: datagov/inventory-next
