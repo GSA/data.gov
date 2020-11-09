@@ -48,7 +48,7 @@
 
 - name: Create NR log if it doesn't exist
   file:
-    path=/var/log/inventory/new_relic.log owner=root group=www-data mode=0750 state=present
+    path=/var/log/inventory/new_relic.log owner=root group=www-data mode=0750 state=touch
   when: not nr_log.stat.exists
 
 - name: Clone Inventory app
