@@ -35,6 +35,7 @@ provisioner:
         inventory_next: true
         datapusher_build_pkg_branch: datagov/inventory-next
         newrelic_license_key: some-secret
+        newrelic_app_name: inventory-molecule
 scenario:
   name: inventory-next
   # TODO fix idempotency
