@@ -13,7 +13,7 @@
     virtualenv: "{{ virtualenv }}"
     virtualenv_python: "{{ inventory_python_home }}/bin/python"
     umask: "0022"
-  when: build_pkg_requirements is defined
+  when: build_pkg_requirements is defined and build_pkg_requirements != None
 
 - name: run setup
   command: chdir={{ virtualenv }}/src/{{ build_pkg_name }} {{ virtualenv }}/bin/python setup.py develop

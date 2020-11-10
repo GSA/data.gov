@@ -35,6 +35,10 @@ inventory_app_repo_branch: inventory_ckan_2.8
 newrelic_app_name: inventory-next-staging
 newrelic_enabled: true
 
+ckanext_s3_name: ckanext-cloudstorage
+ckanext_s3_repo: https://github.com/TkTech/ckanext-cloudstorage
+ckanext_s3_req: None
+
 # saml2 authentication
 inventory_ckan_saml2_enabled: false
 inventory_ckan_plugins_additional: [s3filestore]

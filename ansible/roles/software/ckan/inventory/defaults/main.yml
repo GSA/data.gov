@@ -11,6 +11,11 @@ ckan_virtual_env: "{{virtual_env}}"
 datapusher_virtual_env: /usr/lib/datapusher
 app_type: inventory
 
+# s3 extension
+ckanext_s3_name: ckanext-s3filestore
+ckanext_s3_repo: https://github.com/GSA/ckanext-s3filestore
+ckanext_s3_req: requirements.txt
+
 inventory_ckan_plugins_additional: []
 inventory_ckan_plugins_default:
   - datajson
