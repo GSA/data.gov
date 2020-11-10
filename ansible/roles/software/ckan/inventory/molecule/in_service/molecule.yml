@@ -44,7 +44,7 @@ provisioner:
         inventory_next: true
         ckanext_s3_name: ckanext-cloudstorage
         ckanext_s3_repo: https://github.com/TkTech/ckanext-cloudstorage
-        ckanext_s3_req: None
+        ckanext_s3_req: false
 scenario:
   name: in_service
   test_sequence:

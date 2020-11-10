@@ -39,7 +39,7 @@ provisioner:
         newrelic_enabled : true
         ckanext_s3_name: ckanext-cloudstorage
         ckanext_s3_repo: https://github.com/TkTech/ckanext-cloudstorage
-        ckanext_s3_req: None
+        ckanext_s3_req: false
 scenario:
   name: inventory-next
   # TODO fix idempotency

@@ -44,7 +44,7 @@ provisioner:
         datapusher_build_pkg_branch: datagov/inventory-next
         ckanext_s3_name: ckanext-cloudstorage
         ckanext_s3_repo: https://github.com/TkTech/ckanext-cloudstorage
-        ckanext_s3_req: None
+        ckanext_s3_req: false
 scenario:
   name: default
   # TODO fix idempotency
