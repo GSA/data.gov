@@ -6,20 +6,6 @@
     build_pkg_requirements: "{{ ckanext_s3_req }}"
   tags: ['s3filestore']
 
-  # - include: build-pkgs.yml
-  # vars:
-  #   build_pkg_name: "ckanext-s3filestore"
-  #   build_pkg_repo: "https://github.com/GSA/ckanext-s3filestore"
-  #   build_pkg_requirements: "requirements.txt"
-  # tags: ['s3filestore']
-
-  # - include: build-pkgs.yml
-  # vars:
-  #   build_pkg_name: "ckanext-cloudstorage"
-  #   build_pkg_repo: "https://github.com/TkTech/ckanext-cloudstorage"
-  # when: inventory_next
-  # tags: ['s3filestore']
-
 - name: copy datajson export map
   copy:
     src: "{{ virtualenv }}/src/ckanext-datajson/ckanext/datajson/export_map/export.inventory.map.sample.json"
