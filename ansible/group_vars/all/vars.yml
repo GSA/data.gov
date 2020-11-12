@@ -132,8 +132,11 @@ inventory_ckan_plugins_default:
   - text_view
   - usmetadata
 
+
 # Limit SSH Access
-jumpbox_ips: ["10.0.0.0/8"]
+jumpbox_ips:
+  - "10.0.0.0/8"
+  - "127.0.0.1"
 
 
 # newrelic monitoring
@@ -182,6 +185,11 @@ php_version: "{{ php_major_minor_version }}"
 postfix_inet_interfaces: loopback-only  # only listen on loopback interfaces, we don't accept remote mail from remote sources.
 postfix_smtpd_tls_key_file: "{{ default_tls_host_key_filepath }}"
 postfix_smtpd_tls_cert_file: "{{ default_tls_host_certificate_filepath }}"
+
+
+# pyenv
+pyenv_update_git_install: true
+
 
 # solr
 solr_home: /data/solr5

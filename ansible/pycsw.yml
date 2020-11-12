@@ -1,6 +1,6 @@
 ---
 - name: Set the deploy version
-  hosts: pycsw-web,pycsw-worker,!v2
+  hosts: pycsw-web,pycsw-worker
   tasks:
     - name: Set deploy version
       set_fact:
@@ -9,7 +9,7 @@
   tags: always
 
 - name: CSW web
-  hosts: pycsw-web,!v2
+  hosts: pycsw-web
   serial: "{{ datagov_serial | default(1) }}"
   roles:
     - role: gsa.datagov-deploy-pycsw
@@ -22,7 +22,7 @@
 
     - name: assert csw-collection is up
       uri:
-        url: http://{{ ansible_fqdn }}/csw?service=CSW&version=2.0.2&request=GetCapabilities
+        url: "{{ catalog_url_public }}/csw?service=CSW&version=2.0.2&request=GetCapabilities"
         follow_redirects: none
         status_code: 200
         return_content: true
@@ -45,7 +45,7 @@
 
     - name: assert csw-all is up
       uri:
-        url: http://{{ ansible_fqdn }}/csw-all?service=CSW&version=2.0.2&request=GetCapabilities
+        url: "{{ catalog_url_public }}/csw-all?service=CSW&version=2.0.2&request=GetCapabilities"
         follow_redirects: none
         status_code: 200
         return_content: true
@@ -68,7 +68,7 @@
 
 
 - name: CSW worker
-  hosts: pycsw-worker,!v2
+  hosts: pycsw-worker
   roles:
     - role: gsa.datagov-deploy-pycsw
       pycsw_role: worker
@@ -77,7 +77,7 @@
 
 
 - name: Service-level smoke tests
-  hosts: pycsw-web,!v2
+  hosts: pycsw-web
   tags:
     - smoke
   tasks:

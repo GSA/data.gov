@@ -4,7 +4,6 @@ datagov_service: inventory
 
 datapusher_build_pkg_branch: datagov/inventory-classic
 
-inventory_app_repo_branch: improved-metadata-form
 inventory_db_name: inventory_db
 inventory_python_home: "{{ python_home }}"
 app_type: inventory

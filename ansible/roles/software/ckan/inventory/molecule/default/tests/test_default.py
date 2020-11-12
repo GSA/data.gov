@@ -80,6 +80,6 @@ def test_beaker_cache_cleanup(host):
         '/usr/local/bin/beaker-cache-cleanup.sh')
 
 
-def test_gunicorn_web_app(host):
+def test_ckan_process(host):
     supervisor_output = host.check_output('supervisorctl status')
-    assert re.search(r'gunicorn-web-app +RUNNING', supervisor_output)
+    assert re.search(r'ckan +RUNNING', supervisor_output)

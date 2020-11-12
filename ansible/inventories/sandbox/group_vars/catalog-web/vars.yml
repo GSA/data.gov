@@ -20,6 +20,9 @@ ckan_instance_uuid: "{{ catalog_ckan_instance_uuid }}"
 # token_dat for Google Analytics
 token_dat: "{{ catalog_ckan_token_dat }}"
 
+catalog_ckan_apache_server_name: "{{ catalog_host_public }}"
+catalog_ckan_apache_server_alias:
+  - d1xr5ix4dos50f.cloudfront.net
 catalog_ckan_instance_secret: "{{ vault_catalog_ckan_instance_secret }}"
 catalog_ckan_instance_uuid: "{{ vault_catalog_ckan_instance_uuid }}"
 catalog_ckan_token_dat: "{{ vault_catalog_ckan_token_dat }}"

@@ -1,5 +1,6 @@
 ---
 # catalog
+catalog_ckan_apache_server_name: "{{ catalog_host_public }}"
 catalog_ckan_app_version: master
 catalog_ckan_archiver_process_count: 3
 # read-only database variables
@@ -179,10 +180,8 @@ inventory_next_datapusher_db_name: "{{ vault_inventory_next_datapusher_db_name }
 newrelic_license_key: "{{ vault_newrelic_license_key }}"
 
 
-# pycsw
 pycsw_app_environment: staging
-#pycsw_app_version: datagov/v2.4.x
-pycsw_app_version: a0120f921f3f787a40f1f9af3fd80d05963b974c   # TODO remove me before next release https://github.com/GSA/datagov-deploy/pull/2385
+pycsw_app_version: datagov/v2.4.x
 pycsw_base_url: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
 pycsw_ckan_url: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
 pycsw_db_host: "{{ catalog_pycsw_db_host }}"
@@ -268,6 +267,11 @@ saml2_idp_metadata_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
 saml_idp_cert_fprint: "7A43DACB95D67FB6A804FD37C8A7DCA5B0384939"
 saml2_sp_public_certificate: "{{ vault_saml2_sp_public_certificate }}"
 saml2_sp_private_key: "{{ vault_saml2_sp_private_key }}"
+
+
+# smoke tests
+smoke_enable_cdn_checks: false
+
 
 # td-agent
 elasticsearch_endpoint: "{{ vault_elasticsearch_endpoint }}"

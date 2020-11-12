@@ -295,6 +295,10 @@ secops_user: "{{ vault_secops_user }}"
 secops_user_public_key: "{{ vault_secops_user_public_key }}"
 
 
+# smoke tests
+smoke_enable_cdn_checks: false
+
+
 # solr
 solr_master_server: datagov-solr1tf.internal.{{ datagov_sandbox_env }}.datagov.us
 solr_java_packages:
