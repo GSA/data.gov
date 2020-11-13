@@ -62,8 +62,6 @@ SSLEngine on
     # Header set Content-Security-Policy "default-src 'self'"
 
     RewriteEngine On
-    RewriteCond %{HTTP_REFERER} !{{saml2_idp_entry}} [NC]
-    RewriteRule ^(\/?)$ /dataset [R]
 
 {% if catalog_ckan_readwrite_configuration == 'readwrite' %}
     {# Allow login, redirect any unauthed requests to the readonly site #}
