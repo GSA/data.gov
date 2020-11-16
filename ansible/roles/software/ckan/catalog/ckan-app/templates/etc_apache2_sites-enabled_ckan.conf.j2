@@ -72,11 +72,16 @@ SSLEngine on
     RewriteCond %{HTTP_REFERER}    !{{saml2_idp_entry}} [NC]
     RewriteCond %{HTTP_COOKIE}     !auth_tkt
     RewriteRule ^(.*)$ {{ url_readonly }}$1 [R,L]
+
 {% elif catalog_ckan_readwrite_configuration == 'readonly' %}
     RewriteRule   "^(/en)?/user/login"  "{{ url_writable }}/user/login" [R,L]
     RewriteRule   "^(/en)?/user/_logout"  "{{ url_writable }}/user/_logout"  [R,L]
     RewriteRule   "^(/en)?/user/logged_in"  "{{ url_writable }}/user/logged_in"  [R,L]
     RewriteRule   "^(/en)?/login_generic"  "{{ url_writable }}/login_generic"  [R,L]
+
+    RewriteCond %{HTTP_REFERER} !{{saml2_idp_entry}} [NC]	
+    RewriteRule ^(\/?)$ /dataset [R]
+
 {% endif %}
 
     RewriteRule ^/api/rest/dataset$ api/action/package_search [R]
@@ -91,4 +96,5 @@ SSLEngine on
 
     RewriteRule ^/api/3/action/resource_search$ api/action/package_search [R]
     RewriteRule ^/api/action/resource_search$ api/action/package_search [R]
+    
 </VirtualHost>
