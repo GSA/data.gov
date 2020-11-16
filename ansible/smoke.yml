@@ -151,26 +151,17 @@
       run_once: true
       when: smoke_enable_cdn_checks | default(True)
 
-- name: catalog-next.data.gov /dataset redirection
+- name: catalog-next.data.gov tests
   hosts: all
   gather_facts: false
   tasks:
     - name: assert only one redirection to https and /dataset
-      vars:
-        url: http://catalog-next.data.gov
       block:
         - name: look for expected redirection
-          uri:
-            url: "{{ url }}"
-            status_code: 302
-            follow_redirects: all
-            maximum_redirection: 1
-            register: response
-        - name: assert redirection
-          assert:
-            that: response.url == 'https://catalog-next.data.gov/dataset'
-            fail_msg: |
-              We expect a redirection to HTTPS and to /dataset
+          shell: "curl -L --max-redirs 1 -v http://catalog-next.data.gov > /dev/null"
+          register: response
+          failed_when: response.rc != 0
+            
       delegate_to: localhost
       become: false
       run_once: true
