@@ -158,7 +158,7 @@
     - name: assert only one redirection to https and /dataset
       block:
         - name: look for expected redirection
-          shell: "curl -L --max-redirs 1 -v http://catalog-next.data.gov > /dev/null"
+          shell: "curl -L --max-redirs 1 -v https://catalog-next.data.gov > /dev/null"
           register: response
           failed_when: response.rc != 0
             
