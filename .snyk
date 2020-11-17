@@ -6,7 +6,7 @@ ignore:
     - '*':
         reason: >-
           solaris_zone module is not used
-        expires: 2020-11-16T00:00:00.000Z
+        expires: 2020-11-19T00:00:00.000Z
   SNYK-PYTHON-PYYAML-590151:
     - '*':
         reason: >-
@@ -14,5 +14,5 @@ ignore:
           considered trusted and run only on our secured jumpboxes by our
           operators.  These operators should only be using trusted sources as
           well.  Risk is acceptable.
-        expires: 2020-11-16T06:00:00.000Z
+        expires: 2020-11-19T06:00:00.000Z
 patch: {}
