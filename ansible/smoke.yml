@@ -165,4 +165,3 @@
       delegate_to: localhost
       become: false
       run_once: true
-      when: ckan_uses_gunicorn | default(True)
