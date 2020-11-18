@@ -72,6 +72,7 @@
     RewriteRule   "^(/en)?/user/_logout"  "{{ url_writable }}/user/_logout"  [R,L]
     RewriteRule   "^(/en)?/user/logged_in"  "{{ url_writable }}/user/logged_in"  [R,L]
     RewriteRule   "^(/en)?/login_generic"  "{{ url_writable }}/login_generic"  [R,L]
+    RewriteRule   "^/_tracking$" "{{ url_writable }}/_tracking" [R=307,L]
 {% endif %}
 
     RewriteRule ^/api/rest/dataset$ api/action/package_search [R]
