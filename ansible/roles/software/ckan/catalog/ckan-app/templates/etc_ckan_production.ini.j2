@@ -241,6 +241,9 @@ ckanext.geodatagov.s3sitemap.aws_s3_url = https://filestore.data.gov/
 saml2.site_url = {{ saml2_site_url }}
 saml2.config_path = %(here)s/saml2
 
+# Needed for login.gov
+saml2.name_id_from_saml2_NameID = true
+
 saml2.user_mapping =
     email~maxemail
     fullname~field_display_name
