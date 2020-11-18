@@ -215,6 +215,9 @@ saml2.issuer = urn:gov:gsa:SAML:2.0.profiles:sp:sso:datagovus:catalog-next-sandb
 saml2.site_url = {{ saml2_site_url }}
 saml2.config_path = %(here)s/saml2
 
+# Needed for login.gov
+saml2.name_id_from_saml2_NameID = true
+
 saml2.user_mapping =
     email~email
     fullname~email
