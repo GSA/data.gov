@@ -62,10 +62,13 @@ db_server = {{ catalog_ckan_db_host }}
 db_database = {{ catalog_db_name }}
 sqlalchemy.url = postgresql://%(db_user)s:%(db_pass)s@%(db_server)s/%(db_database)s
 
-sqlalchemy.pool_size = {{ sqlalchemy_pool_size | default(5) }}
-sqlalchemy.max_overflow = {{ sqlalchemy_max_overflow | default(10) }}
-ckan.datastore.sqlalchemy.pool_size = {{ datastore_sqlalchemy_pool_size | default(5) }}
-ckan.datastore.sqlalchemy.max_overflow = {{ datastore_sqlalchemy_max_overflow | default(10) }}
+{% if sqlalchemy_pool_size is defined %}
+sqlalchemy.pool_size = {{ sqlalchemy_pool_size }}
+{% endif %}
+
+{% if sqlalchemy_max_overflow is defined %}
+sqlalchemy.max_overflow = {{ sqlalchemy_max_overflow }}
+{% endif %}
 
 ## Site Settings
 
