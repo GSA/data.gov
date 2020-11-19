@@ -58,7 +58,7 @@
 
     RewriteEngine On
 
-{% if catalog_ckan_readwrite_configuration == 'readwrite' %}
+{% if catalog_ckan_readwrite_configuration == 'writeonly' %}
     {# Allow login, redirect any unauthed requests to the readonly site #}
     RewriteCond %{REQUEST_URI}     !^/api/action/status_show
     RewriteCond %{REQUEST_URI}     !^/user/(login|logged_in|_logout|logged_out|logged_out_redirect)
