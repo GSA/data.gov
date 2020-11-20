@@ -159,19 +159,33 @@
             method: POST
             status_code: 307
             follow_redirects: none
+          register: response
+        - name: assert Location redirect
+          assert:
+            that: response.url == "https://admin-catalog.data.gov/_tracking"
+            fail_msg: |
+              POST redirect failed (we expect 307 redirection to the writable instance)
+              {{ response.content }}
       delegate_to: localhost
       become: false
       run_once: true
     
     - name: check /_tracking redirection with data
       block:
-        - name: send ost with data
+        - name: send POST with data
           uri:
             url: http://catalog.data.gov/_tracking
             method: POST
             body: "url=/ansible-test&type=page"
             status_code: 200
             follow_redirects: all
+          register: response
+        - name: assert Location redirect
+          assert:
+            that: response.url == "https://admin-catalog.data.gov/_tracking"
+            fail_msg: |
+              POST redirect failed (we expect redirection to the writable instance)
+              {{ response.content }}
       delegate_to: localhost
       become: false
       run_once: true
