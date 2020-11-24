@@ -11,6 +11,9 @@
 - import_playbook: jumpbox.yml
   tags:
     - jumpbox
+- import_playbook: fgdc2iso.yml
+  tags:
+    - fgdc2iso
 - import_playbook: solr.yml
   tags:
     - solr
@@ -33,6 +36,9 @@
 - import_playbook: inventory.yml
   tags:
     - inventory
+- import_playbook: pycsw.yml
+  tags:
+    - pycsw
 
 # Validation and cleanup
 #########################

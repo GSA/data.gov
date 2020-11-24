@@ -39,7 +39,9 @@
     mode: 0644
     owner: root
     group: root
-  notify: reload supervisor
+  notify:
+    - reload supervisor
+    - restart ckan
   when: ckan_uses_gunicorn
 
 - name: Enable supervisor service
@@ -50,6 +52,15 @@
   template:
     src: etc_apache2_sites-enabled_ckan.conf.j2
     dest: /etc/apache2/sites-enabled/ckan.conf
+    mode: 0644
+    owner: root
+    group: www-data
+  notify: reload apache2
+
+- name: Configure ckan443.conf
+  template:
+    src: etc_apache2_sites-enabled_ckan443.conf.j2
+    dest: /etc/apache2/sites-enabled/ckan443.conf
     mode: 0644
     owner: root
     group: www-data

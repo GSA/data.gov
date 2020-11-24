@@ -102,14 +102,10 @@ def test_gunicorn_conf(host):
 
 
 def test_apache_site(host):
-    f = host.file('/etc/apache2/sites-enabled/ckan.conf')
+    f = host.file('/etc/apache2/sites-enabled/ckan443.conf')
 
     assert f.exists
     assert f.user == 'root'
     assert f.group == 'www-data'
     assert f.mode == 0o644
     assert f.contains('ErrorLog /var/log/ckan/ckan.error.log')
-
-    # catalog domain ServerName, catalog-next in ServerAlias
-    assert f.contains('ServerName %s' % catalog_host_public)
-    assert f.contains('ServerAlias %s' % catalog_host_public_next)

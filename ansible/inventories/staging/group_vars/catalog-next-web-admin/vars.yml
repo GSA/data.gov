@@ -1,5 +1,6 @@
 ---
-catalog_ckan_readwrite_configuration: readwrite
+catalog_ckan_apache_server_name: "{{ catalog_host_admin_next }}"
+catalog_ckan_readwrite_configuration: writeonly
 catalog_ckan_db_host: "{{ catalog_next_ckan_db_primary_host }}"
 catalog_ckan_solr_host: "{{ catalog_next_ckan_solr_primary_host }}"
 

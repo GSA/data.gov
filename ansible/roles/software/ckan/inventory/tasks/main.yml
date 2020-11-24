@@ -8,15 +8,11 @@
       - xmlsec1
       - cron
       - supervisor
-  notify: restart apache2
 
 - name: Assert newrelic_license_key is set
   assert:
     that: newrelic_license_key is defined
     fail_msg: newrelic_license_key is required but it is not set
-
-- name: ensure supervisor is started and enabled
-  service: name=supervisor state=started enabled=yes
 
 - name: Create log directory
   file: path={{ inventory_log_dir }} state=directory owner=root group=www-data mode=0750
@@ -48,7 +44,7 @@
 
 - name: Create NR log if it doesn't exist
   file:
-    path=/var/log/inventory/new_relic.log owner=www-data group=www-data mode=0644 state=touch
+    path=/var/log/inventory/new_relic.log owner=root group=www-data mode=0644 state=touch
   when: not nr_log.stat.exists
 
 - name: Clone Inventory app
@@ -67,7 +63,6 @@
     virtualenv: '{{ project_source_new_code_path }}'
     virtualenv_python: "{{ inventory_python_home }}/bin/python"
     umask: "0022"
-  notify: restart apache2
 
 - name: install inventory app from requirements
   pip:
@@ -75,7 +70,7 @@
     virtualenv: '{{ project_source_new_code_path }}'
     virtualenv_python: "{{ inventory_python_home }}/bin/python"
     umask: "0022"
-  notify: restart apache2
+  notify: restart ckan
 
 - name: install repoze.who library for local login (if saml disabled)
   pip:
@@ -85,9 +80,7 @@
     state: present
   when:
     - not inventory_ckan_saml2_enabled
-  notify:
-    - restart apache2
-    - reload supervisor
+  notify: restart ckan
 
 - name: create directories
   action: file path={{ item }} state=directory owner="www-data" group="www-data" mode=0755 recurse=yes
@@ -98,15 +91,18 @@
   action: copy src={{ item }} dest=/{{ item }} owner=root group=www-data mode=0640
   with_items:
     - etc/ckan/who.ini
-  notify: restart apache2
+  notify:
+    - restart ckan
 
 - name: Configure production.ini
   template: src={{ item }} dest=/{{ item }} owner=root group=www-data mode=0640
   with_items:
     - etc/ckan/production.ini
     - etc/apache2/sites-enabled/ckan.conf
+    - etc/apache2/sites-enabled/ckan443.conf
   notify:
     - restart apache2
+    - restart ckan
 
 - name: Copy app .env
   template:
@@ -117,6 +113,8 @@
     group: root
   become: true
   when: inventory_next
+  notify:
+    - restart ckan
 
 - name: Remove old supervisor files
   file:
@@ -124,6 +122,8 @@
     state: absent
   become: true
   when: inventory_next
+  notify:
+    - reload supervisor
 
 - name: Configure inventory-classic server
   template:
@@ -155,6 +155,8 @@
     remote_src: true
   become: true
   when: inventory_next
+  notify:
+    - restart ckan
 
 - include_tasks: datapusher-next.yml
   tags:
@@ -181,12 +183,11 @@
     src: "{{ project_source_new_code_path }}"
     path: "{{ current_source_symlink }}"
     state: link
-  notify: restart apache2
+  notify:
+    - restart ckan
 
-- name: point site_url in /etc/hosts to localhost
-  action: lineinfile dest=/etc/hosts line="127.0.0.1 {{ ckan_site_domain | regex_replace('https?\://','') }}" state=absent
-  tags:
-    - molecule-notest # Device or resource busy ranaming temp file
+- name: ensure supervisor is started and enabled
+  service: name=supervisor state=started enabled=yes
 
 - name: Ensure apache2 is started and enabled
   service: name=apache2 enabled={{ datagov_in_service | ternary('true', 'false') }} state={{ datagov_in_service | ternary('started', 'stopped') }}

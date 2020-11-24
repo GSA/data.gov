@@ -88,7 +88,7 @@
     umask: "0022"
   notify:
     - reload apache2
-    - reload supervisor
+    - restart ckan
 
 # https://github.com/GSA/catalog-app/issues/78
 # Work-around repoze.who issue for environments where saml2 is not configured.
@@ -103,14 +103,14 @@
     - not ckan_catalog_next
   notify:
     - reload apache2
-    - reload supervisor
+    - restart ckan
 
 # Configure CKAN
 - name: Configure production.ini
   template: src="{{ ckan_production_ini_template }}" dest=/etc/ckan/production.ini owner=root group=www-data mode=0640
   notify:
     - reload apache2
-    - reload supervisor
+    - restart ckan
 
 # Add token.dat file
 - name: Add token.dat file
@@ -122,7 +122,7 @@
     mode=0640
   notify:
     - reload apache2
-    - reload supervisor
+    - restart ckan
 
 # TODO configuration files should live in the application repo
 - name: Configure who.ini
@@ -145,7 +145,7 @@
     state: link
   notify:
     - reload apache2
-    - reload supervisor
+    - restart ckan
 
 - include_tasks: web.yml
   when: catalog_app_type == "web"

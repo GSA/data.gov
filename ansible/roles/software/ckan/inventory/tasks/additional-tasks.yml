@@ -5,6 +5,8 @@
     build_pkg_repo: "https://github.com/GSA/ckanext-s3filestore"
     build_pkg_requirements: "requirements.txt"
   tags: ['s3filestore']
+  when:
+    - not inventory_next
 
 - name: copy datajson export map
   copy:
@@ -14,7 +16,7 @@
     group: www-data
     mode: '0644'
     remote_src: true
-  notify: restart apache2
+  notify: restart ckan
 
 - name: install inventory db init script
   copy: src=inventory-db-init.py dest=/usr/local/bin/inventory-db-init.py owner=root group=root mode=0755
@@ -26,6 +28,7 @@
     - db_is_setup
     - datagov_in_service
   become: true
+  notify: restart ckan
 
 - name: install beaker cache cleanup script
   template: src=beaker-cache-cleanup.sh.j2 dest=/usr/local/bin/beaker-cache-cleanup.sh owner=root group=root mode=0755
@@ -40,12 +43,6 @@
     owner: root
     group: root
 
-# need this manual start to pass molecule test?
-- name: start supervisor
-  service:
-    name: supervisor
-    state: started
-
 - name: copy supervisord config
   copy:
     src: beaker-cache-cleanup.conf
@@ -53,11 +50,7 @@
     mode: "0644"
     owner: root
     group: root
-
-- name: add beaker-cache-cleanup program
-  supervisorctl:
-    name: beaker-cache-cleanup
-    state: present
+  notify: reload supervisor
 
 - name: schedule beaker-cache-cleanup cron
   cron:
