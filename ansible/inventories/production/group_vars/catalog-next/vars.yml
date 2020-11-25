@@ -1,7 +1,7 @@
 ---
 app_repo: https://github.com/GSA/catalog.data.gov
 catalog_ckan_app_version: master
-
+catalog_ckan_wsgi_processes: 8
 catalog_ckan_apache_server_alias:
   - catalog.data.gov
 catalog_ckan_apache_server_name: "{{ catalog_host_public_next }}"
@@ -24,6 +24,10 @@ catalog_ckan_who_ini_secret: "{{ catalog_next_ckan_who_ini_secret }}"
 catalog_db_name: "{{ catalog_ckan_db_name }}"
 catalog_db_pass: "{{ catalog_ckan_db_pass }}"
 catalog_db_user: "{{ catalog_ckan_db_user }}"
+
+# Before increasing pool_size check gunicorn workers
+# sqlalchemy_pool_size: 15
+# sqlalchemy_max_overflow: 25
 
 ckan_catalog_next: true
 ckan_instance_secret: "{{ catalog_next_ckan_instance_secret }}"
