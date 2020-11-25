@@ -110,11 +110,11 @@ def test_apache_site(host):
     assert f.mode == 0o644
     assert f.contains('ErrorLog /var/log/ckan/ckan.error.log')
 
-    # In readwrite configuration, ServerName is admin site, not
+    # In writeonly configuration, ServerName is admin site, not
     # public site.
     assert f.contains('Redirect 404 /')
 
-    # In readwrite configuration, redirect unauthenticated requests to the
+    # In writeonly configuration, redirect unauthenticated requests to the
     # readonly url.
     assert f.contains('RewriteRule.*%s' % readonly_url)
     assert not f.contains('RewriteCond.*!/user/login'), \
