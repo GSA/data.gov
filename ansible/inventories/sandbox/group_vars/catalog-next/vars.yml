@@ -26,3 +26,6 @@ saml2_site_url: "https://catalog-next.sandbox.datagov.us/"
 
 saml2_sp_public_certificate: "{{ vault_catalog_next_saml2_sp_public_certificate }}"
 saml2_sp_private_key: "{{ vault_catalog_next_saml2_sp_private_key }}"
+
+# saml2 role will install attribute maps from:
+saml2_attributemaps_dir: "login_gov"
