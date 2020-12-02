@@ -170,6 +170,7 @@
       delegate_to: localhost
       become: false
       run_once: true
+      when: catalog_validate_redirect | default(False)
 
     - name: check /_tracking redirection with data
       block:
@@ -191,3 +192,4 @@
       delegate_to: localhost
       become: false
       run_once: true
+      when: catalog_validate_redirect | default(False)
