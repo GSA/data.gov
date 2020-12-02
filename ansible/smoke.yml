@@ -175,7 +175,7 @@
       block:
         - name: send POST with data
           uri:
-            url: http://catalog.data.gov/_tracking
+            url: https://catalog.data.gov/_tracking
             method: POST
             body: "url=/ansible-test&type=page"
             status_code: 200
