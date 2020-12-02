@@ -218,7 +218,7 @@ ckan.harvest.status_mail.all=True
 ckanext.geodatagov.fgdc2iso_service = http://{{ catalog_ckan_fgdc2iso_host }}/fgdc2iso/
 
 ## SAML2 Settings
-saml2.issuer = urn:gov:gsa:SAML:2.0.profiles:sp:sso:datagovus:catalog-next-sandbox
+saml2.issuer = {{ saml2_issuer }}
 saml2.site_url = {{ saml2_site_url }}
 saml2.config_path = %(here)s/saml2
 

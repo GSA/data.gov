@@ -35,6 +35,7 @@ provisioner:
         catalog_ckan_who_ini_path: "catalog-next/etc_ckan_who.saml2.ini.j2"
         saml2_idp_metadata_url: "https://idp.int.identitysandbox.gov/api/saml/metadata2020"
         saml2_site_url: "https://catalog-next.sandbox.datagov.us/"
+        saml2_issuer: "urn:gov:gsa:SAML:2.0.profiles:sp:sso:datagovus:catalog-next-sandbox"
         saml2_sp_public_certificate: |-
           -----BEGIN CERTIFICATE-----
           MIIEGTCCAwGgAwIBAgIJAL+dmeInc15LMA0GCSqGSIb3DQEBCwUAMIGiMQswCQYD
