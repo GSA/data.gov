@@ -1,0 +1,36 @@
+---
+
+# locate tracking urls in three js files, replace them with 
+# urls from wrtiable instances.
+- name: replace readonly tracking url to the writable one
+  replace:
+    path: "{{ item.path }}"
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.replace }}"
+  with_items:
+    - path: /usr/lib/ckan/src/ckanext-datagovtheme/ckanext/datagovtheme/fanstatic_library/scripts/tracking.js
+      regexp: '\$\.ajax\({url : ''/_tracking\'','
+      replace: "$.ajax({url : '{{ catalog_url_admin }}/_tracking',"
+    - path: /usr/lib/ckan/src/ckan/ckan/public/base/javascript/tracking.js
+      regexp: '\$\(''body''\)\.data\(''site-root''\) \+ ''_tracking'''
+      replace: "'{{ catalog_url_admin }}/_tracking'"
+    - path: /usr/lib/ckan/src/ckan/ckan/public/base/javascript/tracking.min.js
+      regexp: '\$\(''body''\)\.data\(''site-root''\)\+''_tracking'''
+      replace: "'{{ catalog_url_admin }}/_tracking'"
+  when: readwrite_type == "readonly"
+
+# newer ckan version might have different tracking url pattern
+# we need to make sure they are all replaced in the  previous task.
+- name: make sure we did not miss any string "'/_tracking'" or "'_tracking'"
+  lineinfile:
+    name: "{{ item }}"
+    regexp: '^(.*)''/_tracking''|''_tracking''(.*)$'
+    state: absent
+  check_mode: yes
+  register: tracking
+  failed_when: (tracking is changed) or (tracking is failed)
+  with_items:
+    - /usr/lib/ckan/src/ckanext-datagovtheme/ckanext/datagovtheme/fanstatic_library/scripts/tracking.js
+    - /usr/lib/ckan/src/ckan/ckan/public/base/javascript/tracking.js
+    - /usr/lib/ckan/src/ckan/ckan/public/base/javascript/tracking.min.js
+  when: readwrite_type == "readonly"

@@ -19,6 +19,9 @@
         app_repo_branch: "{{ catalog_ckan_app_version }}"
       tags:
         - app-deploy
+    - role: software/ckan/fix-ckan-tracking
+      tags:
+        - frontend
     - role: pgolm.monit
       vars:
         monit_cycle: "{{ monit_cycle_seconds | default(60) }}"
