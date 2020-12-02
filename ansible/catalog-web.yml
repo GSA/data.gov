@@ -82,7 +82,7 @@
       block:
         - name: send POST
           uri:
-            url: https://{{ url_readonly }}/_tracking
+            url: "{{ url_readonly }}/_tracking"
             method: POST
             status_code: 307
             follow_redirects: none
@@ -90,7 +90,7 @@
           register: response
         - name: assert Location redirect
           assert:
-            that: response.location == "https://{{ url_writable }}/_tracking"
+            that: response.location == "{{ url_writable }}/_tracking"
             fail_msg: |
               POST redirect failed (we expect 307 redirection to the writable instance)
               {{ response.content }}
@@ -107,7 +107,7 @@
       block:
         - name: send POST with data
           uri:
-            url: https://{{ url_readonly }}/_tracking
+            url: "{{ url_readonly }}/_tracking"
             method: POST
             body: "url=/ansible-test&type=page"
             status_code: 200
@@ -116,7 +116,7 @@
           register: response
         - name: assert Location redirect
           assert:
-            that: response.url == "https://{{ url_writable }}/_tracking"
+            that: response.url == "{{ url_writable }}/_tracking"
             fail_msg: |
               POST redirect failed (we expect redirection to the writable instance)
               {{ response.content }}
