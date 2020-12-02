@@ -169,7 +169,7 @@
       delegate_to: localhost
       become: false
       run_once: true
-    
+
     - name: check /_tracking redirection with data
       block:
         - name: send POST with data
