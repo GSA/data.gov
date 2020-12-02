@@ -179,7 +179,7 @@
             method: POST
             body: "url=/ansible-test&type=page"
             status_code: 200
-            follow_redirects: 
+            follow_redirects: yes
             return_content: true
           register: response
         - name: assert Location redirect
