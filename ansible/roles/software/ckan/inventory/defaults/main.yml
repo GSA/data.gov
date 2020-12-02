@@ -55,6 +55,7 @@ datastore_db_server: localhost
 inventory_ckan_app_version: inventory
 inventory_ckan_bucket_name: bucket
 inventory_ckan_bucket_prefix: prefix
+inventory_ckan_who_ini_path: etc_ckan_who.default.ini.j2
 inventory_ckan_ckanext_saml2_version: max
 inventory_ckan_db_host: localhost
 inventory_ckan_solr_host: localhost
@@ -71,6 +72,7 @@ inventory_python_home: "/usr"
 inventory_ckan_redis_db: "1"
 
 inventory_next: false
+ckan_production_ini_template: etc/ckan/production.ini
 
 saml2_site_url: https://inventory.data.gov/
 saml2_idp_entry: login.test.max.gov
