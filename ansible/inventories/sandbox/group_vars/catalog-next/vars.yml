@@ -5,7 +5,7 @@ ckan_site_domain: https://{{ catalog_host_public_next }}
 catalog_ckan_apache_server_name: "{{ catalog_host_public_next }}"
 catalog_ckan_apache_server_alias:
   - d1xr5ix4dos50f.cloudfront.net
-catalog_ckan_app_version: enable-saml2
+catalog_ckan_app_version: master
 catalog_ckan_db_host: "{{ catalog_next_postgresql_login_host }}"
 catalog_ckan_db_name: "{{ catalog_next_ckan_db_name }}"
 catalog_ckan_db_pass: "{{ catalog_next_postgresql_login_password }}"
@@ -27,5 +27,6 @@ saml2_site_url: "https://catalog-next.sandbox.datagov.us/"
 saml2_sp_public_certificate: "{{ vault_catalog_next_saml2_sp_public_certificate }}"
 saml2_sp_private_key: "{{ vault_catalog_next_saml2_sp_private_key }}"
 
-# saml2 role will install attribute maps from:
-saml2_attributemaps_dir: "login_gov"
+# saml2 role will install attribute maps from here (and trailing
+# slash is significant!)
+saml2_attributemaps_dir: login_gov/
