@@ -100,7 +100,7 @@
       tags:
         - smoke
       when: 
-        - catalog_ckan_readwrite_configuration == readonly
+        - catalog_ckan_readwrite_configuration == 'readonly'
         - datagov_in_service
 
     - name: check /_tracking redirection with data
@@ -126,7 +126,7 @@
       tags:
         - smoke
       when: 
-        - catalog_ckan_readwrite_configuration == readonly
+        - catalog_ckan_readwrite_configuration == 'readonly'
         - datagov_in_service
 
 
