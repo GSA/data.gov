@@ -77,6 +77,57 @@
       when: datagov_in_service | default(true)
       tags:
         - smoke
+      
+    - name: check /_tracking first redirection
+      block:
+        - name: send POST
+          uri:
+            url: https://{{ ansible_fqdn }}/_tracking
+            method: POST
+            status_code: 307
+            follow_redirects: none
+            return_content: true
+          register: response
+        - name: assert Location redirect
+          assert:
+            that: response.location == "https://{{ url_writable }}/_tracking"
+            fail_msg: |
+              POST redirect failed (we expect 307 redirection to the writable instance)
+              {{ response.content }}
+      delegate_to: localhost
+      become: false
+      run_once: true
+      tags:
+        - smoke
+      when: 
+        - catalog_ckan_readwrite_configuration == readonly
+        - datagov_in_service
+
+    - name: check /_tracking redirection with data
+      block:
+        - name: send POST with data
+          uri:
+            url: https://{{ ansible_fqdn }}/_tracking
+            method: POST
+            body: "url=/ansible-test&type=page"
+            status_code: 200
+            follow_redirects: yes
+            return_content: true
+          register: response
+        - name: assert Location redirect
+          assert:
+            that: response.url == "https://{{ url_writable }}/_tracking"
+            fail_msg: |
+              POST redirect failed (we expect redirection to the writable instance)
+              {{ response.content }}
+      delegate_to: localhost
+      become: false
+      run_once: true
+      tags:
+        - smoke
+      when: 
+        - catalog_ckan_readwrite_configuration == readonly
+        - datagov_in_service
 
 
 - name: logrotate configuration

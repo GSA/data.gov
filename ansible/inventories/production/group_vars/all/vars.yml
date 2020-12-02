@@ -25,8 +25,6 @@ catalog_pycsw_db_host: "{{ vault_catalog_pycsw_db_host }}"
 catalog_pycsw_db_name: "{{ vault_catalog_pycsw_db_name }}"
 catalog_pycsw_db_pass: "{{ vault_catalog_pycsw_db_pass }}"
 catalog_pycsw_db_user: "{{ vault_catalog_pycsw_db_user }}"
-catalog_validate_redirect: true
-
 
 # catalog-next
 catalog_next_ckan_db_name: "{{ vault_catalog_next_ckan_db_name }}"
