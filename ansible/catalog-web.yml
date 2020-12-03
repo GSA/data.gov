@@ -77,16 +77,17 @@
       when: datagov_in_service | default(true)
       tags:
         - smoke
-      
+
     - name: check /_tracking first redirection
       block:
         - name: send POST
           uri:
-            url: "{{ url_readonly }}/_tracking"
+            url: "{{ ansible_fqdn }}/_tracking"
             method: POST
             status_code: 307
             follow_redirects: none
             return_content: true
+            validate_certs: false
           register: response
         - name: assert Location redirect
           assert:
@@ -99,7 +100,7 @@
       run_once: true
       tags:
         - smoke
-      when: 
+      when:
         - catalog_ckan_readwrite_configuration == 'readonly'
         - datagov_in_service
 
@@ -107,12 +108,13 @@
       block:
         - name: send POST with data
           uri:
-            url: "{{ url_readonly }}/_tracking"
+            url: "{{ ansible_fqdn }}/_tracking"
             method: POST
             body: "url=/ansible-test&type=page"
             status_code: 200
             follow_redirects: yes
             return_content: true
+            validate_certs: false
           register: response
         - name: assert Location redirect
           assert:
@@ -125,7 +127,7 @@
       run_once: true
       tags:
         - smoke
-      when: 
+      when:
         - catalog_ckan_readwrite_configuration == 'readonly'
         - datagov_in_service
 
