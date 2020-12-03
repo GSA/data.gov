@@ -84,7 +84,7 @@ inventory-web-v1
 [inventory-web-v1]
 inventory[1:2]p.prod-ocsit.bsp.gsa.gov
 
-[inventory-web-v2]
+[inventory-next]
 inventory-[1:2]p.prod-ocsit.bsp.gsa.gov
 
 [jumpbox:children]
@@ -163,7 +163,7 @@ wordpress-web-v1
 catalog-fgdc2iso
 catalog-next
 dashboard-web-v2
-inventory-web-v2
+inventory-next
 jumpbox-v2
 redis-catalog-next
 redis-inventory-next
