@@ -200,6 +200,9 @@ smtp.mail_from = {{ catalog_ckan_email_from }}
 ckan.tracking_enabled = True
 set debug = False
 
+## Spatial settings
+ckanext.spatial.search_backend = solr
+
 ## Harvest settings
 # ckanext-harvest will use ckan.redis.url if redis configuration
 # is not specified here.
