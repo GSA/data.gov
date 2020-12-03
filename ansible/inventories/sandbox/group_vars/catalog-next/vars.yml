@@ -5,7 +5,6 @@ ckan_site_domain: https://{{ catalog_host_public_next }}
 catalog_ckan_apache_server_name: "{{ catalog_host_public_next }}"
 catalog_ckan_apache_server_alias:
   - d1xr5ix4dos50f.cloudfront.net
-catalog_ckan_app_version: master
 catalog_ckan_db_host: "{{ catalog_next_postgresql_login_host }}"
 catalog_ckan_db_name: "{{ catalog_next_ckan_db_name }}"
 catalog_ckan_db_pass: "{{ catalog_next_postgresql_login_password }}"
@@ -18,8 +17,6 @@ catalog_ckan_redis_password: "{{ catalog_next_ckan_redis_password }}"
 
 catalog_ckan_plugins_default: "{{ catalog_next_ckan_plugins_default }}"
 
-catalog_ckan_saml2_enabled: true
-
 # login.gov identity sandbox
 saml2_idp_metadata_url: "https://idp.int.identitysandbox.gov/api/saml/metadata2020"
 saml2_issuer: "urn:gov:gsa:SAML:2.0.profiles:sp:sso:datagovus:catalog-next-sandbox"
@@ -30,4 +27,4 @@ saml2_sp_private_key: "{{ vault_catalog_next_saml2_sp_private_key }}"
 
 # saml2 role will install attribute maps from here (and trailing
 # slash is significant!)
-saml2_attributemaps_dir: login_gov/
+saml2_attributemaps_dir: login_gov

@@ -86,7 +86,7 @@ saml2_idp_metadata_url: https://login.test.max.gov/idp/shibboleth
 saml2_site_url: https://admin-catalog.data.gov/
 saml2_issuer: ""
 # trailing slash is important!
-saml2_attributemaps_dir: max_gov/
+saml2_attributemaps_dir: max_gov
 catalog_bucket_name: somebucketname
 env: local
 catalog_ckan_solr_host: localhost

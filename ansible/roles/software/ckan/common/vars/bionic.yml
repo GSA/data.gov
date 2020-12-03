@@ -1,7 +1,6 @@
 ---
 ckan_os_packages:
   - git
-  - libdb-dev
   - libbz2-dev
   - libgdbm-dev
   - libgeos-dev
