@@ -82,7 +82,7 @@
       block:
         - name: send POST
           uri:
-            url: "{{ ansible_fqdn }}/_tracking"
+            url: "https://{{ ansible_fqdn }}/_tracking"
             method: POST
             status_code: 307
             follow_redirects: none
@@ -108,7 +108,7 @@
       block:
         - name: send POST with data
           uri:
-            url: "{{ ansible_fqdn }}/_tracking"
+            url: "https://{{ ansible_fqdn }}/_tracking"
             method: POST
             body: "url=/ansible-test&type=page"
             status_code: 200
