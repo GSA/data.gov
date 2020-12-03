@@ -17,6 +17,18 @@
   CustomLog {{ catalog_ckan_access_log }} combined
 </VirtualHost>
 
+# TODO remove this once catalog-next.data.gov is removed
+# Redirect any catalog-next.data.gov traffic to catalog.data.gov
+<VirtualHost 0.0.0.0:443>
+  SSLEngine on
+
+  ServerName catalog-next.data.gov
+  RedirectMatch "^/(.*)" "https://catalog.data.gov/$1"
+
+  ErrorLog {{ catalog_ckan_error_log }}
+  CustomLog {{ catalog_ckan_access_log }} combined
+</VirtualHost>
+
 <VirtualHost 0.0.0.0:443>
   SSLEngine on
 
