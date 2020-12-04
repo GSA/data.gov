@@ -113,7 +113,8 @@ provisioner:
           - spatial_query
           - spatial_harvest_metadata_api
           - datagovtheme
-          - saml2
+        catalog_ckan_plugins_additional:
+          - saml2          
         newrelic_license_key: some-secret
   lint:
     name: ansible-lint
