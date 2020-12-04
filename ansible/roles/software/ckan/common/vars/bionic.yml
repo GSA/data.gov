@@ -9,3 +9,4 @@ ckan_os_packages:
   - libxslt1-dev
   - python-dev
   - virtualenv
+  - libdb-dev
