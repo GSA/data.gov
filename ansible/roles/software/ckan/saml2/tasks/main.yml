@@ -19,7 +19,7 @@
 
 # TODO configuration files should live in the application repo
 - name: copy all needed files
-  action: copy src=etc/ckan/saml2/ dest=/etc/ckan/saml2/attributemaps mode=0644 owner=root group=www-data
+  action: copy src=etc/ckan/saml2/attributemaps dest=/etc/ckan/saml2/attributemaps mode=0644 owner=root group=www-data
   notify: reload apache2
 
 - name: template all needed files
