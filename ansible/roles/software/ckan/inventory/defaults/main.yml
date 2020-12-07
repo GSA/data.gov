@@ -78,6 +78,13 @@ saml2_site_url: https://inventory.data.gov/
 saml2_idp_entry: login.test.max.gov
 saml2_idp_metadata_url: https://{{ saml2_idp_entry }}/idp/shibboleth
 
+inventory_saml_type: max.gov
+inventory_saml2_user_mapping: |
+  email~maxemail
+  fullname~field_display_name
+  id~maxid
+  name~maxemail
+
 inventory_login_memcached: /var/lib/ckan/memcached
 inventory_login_outstanding: /var/lib/ckan/outstanding
 inventory_login_sid_store_cert: /var/lib/ckan/sid_store_cert

@@ -126,7 +126,7 @@ inventory_next_datastore_ro_pass: "{{ vault_inventory_next_datastore_ro_db_pass 
 inventory_next_postgresql_login_host: "{{ vault_inventory_next_postgresql_login_host }}"
 inventory_next_postgresql_login_user: "{{ vault_inventory_next_postgresql_login_user }}"
 inventory_next_postgresql_login_password: "{{ vault_inventory_next_postgresql_login_password }}"
-inventory_next_ckan_saml2_enabled: false
+inventory_next_ckan_saml2_enabled: true
 inventory_next_ckan_who_ini_path: inventory-next/etc_ckan_who.saml2.ini.j2
 
 jenkins_admin_password: "{{ vault_jenkins_admin_password }}"

@@ -19,15 +19,19 @@
 
 # TODO configuration files should live in the application repo
 - name: copy all needed files
-  action: copy src=etc/ckan/saml2/attributemaps dest=/etc/ckan/saml2/attributemaps mode=0644 owner=root group=www-data
+  action: copy src=etc/ckan/saml2/{{ inventory_saml_type }}/attributemaps dest=/etc/ckan/saml2/attributemaps mode=0644 owner=root group=www-data
   notify: reload apache2
 
-- name: template all needed files
+- name: template all cert files
   action: template src=etc/ckan/{{ item }} dest=/etc/ckan/{{ item }} mode=0640 owner=root group=www-data
   with_items:
     - saml2/pki/mycert.pem
     - saml2/pki/mykey.pem
     - who.ini
+  notify: reload apache2
+
+- name: template who.ini file
+  action: template src=etc/ckan/{{ inventory_saml_type }}/who.ini.j2 dest=/etc/ckan/who.ini mode=0640 owner=root group=www-data
   notify: reload apache2
 
 - name: Downloads idp metadata

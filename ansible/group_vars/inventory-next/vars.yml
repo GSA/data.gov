@@ -6,14 +6,9 @@ ckan_production_ini_template: inventory-next/etc_ckan_production.ini.j2
 inventory_ckan_saml2_enabled: "{{ inventory_next_ckan_saml2_enabled }}"
 inventory_ckan_who_ini_path: "{{ inventory_next_ckan_who_ini_path }}"
 
-inventory_ckan_plugins_default:
-  - datajson
-  - datapusher
-  - datastore
-  - dcat_usmetadata
-  - googleanalyticsbasic
-  - recline_view
-  - stats
-  - text_view
-  - usmetadata
-  - saml2
+inventory_saml_type: login.gov
+inventory_saml2_user_mapping: |
+  email~email
+  fullname~email
+  id~uuid
+  name~email

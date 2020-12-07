@@ -37,7 +37,7 @@ newrelic_enabled: true
 
 # saml2 authentication
 inventory_ckan_saml2_enabled: false
-inventory_ckan_plugins_additional: [s3filestore]
+inventory_ckan_plugins_additional: [s3filestore, saml2]
 
 # redis
 inventory_ckan_redis_password: "{{ inventory_next_ckan_redis_password }}"
