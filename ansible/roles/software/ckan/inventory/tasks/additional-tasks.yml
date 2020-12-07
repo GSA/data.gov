@@ -37,7 +37,7 @@
     owner: "root"
     group: "www-data"
     mode: 0664
-    recurse: yes
+    state: touch
   with_items:
     - "{{ inventory_login_memcached }}"
     - "{{ inventory_login_outstanding }}"
