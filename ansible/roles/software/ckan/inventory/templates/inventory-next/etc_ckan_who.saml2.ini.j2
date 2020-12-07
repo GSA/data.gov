@@ -6,9 +6,9 @@ secret = {{ catalog_ckan_who_ini_secret }}
 use = saml2.s2repoze.plugins.sp:make_plugin
 saml_conf = ckanext.saml2.config_login_gov.sp_config
 remember_name = auth_tkt
-identity_cache = memcached
-sid_store = outstanding
-sid_store_cert = sid_store_cert
+identity_cache = {{ inventory_login_memcached }}
+sid_store = {{ inventory_login_outstanding }}
+sid_store_cert = {{ inventory_login_sid_store_cert }}
 
 [plugin:saml2_challenge_decider]
 use = saml2.s2repoze.plugins.challenge_decider:make_plugin
