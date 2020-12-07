@@ -33,7 +33,6 @@
 - name: Set permissions for saml2 memcache
   file:
     path: "{{ item }}"
-    state: directory
     owner: "root"
     group: "www-data"
     mode: 0664
