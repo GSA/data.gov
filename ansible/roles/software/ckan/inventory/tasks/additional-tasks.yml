@@ -30,6 +30,19 @@
   become: true
   notify: restart ckan
 
+- name: Set permissions for saml2 memcache
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "root"
+    group: "www-data"
+    mode: 0664
+    recurse: yes
+  with_items:
+    - "{{ inventory_login_memcached }}"
+    - "{{ inventory_login_outstanding }}"
+    - "{{ inventory_login_sid_store_cert }}"
+
 - name: install beaker cache cleanup script
   template: src=beaker-cache-cleanup.sh.j2 dest=/usr/local/bin/beaker-cache-cleanup.sh owner=root group=root mode=0755
 
