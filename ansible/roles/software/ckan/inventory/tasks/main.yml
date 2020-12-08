@@ -99,7 +99,6 @@
   with_items:
     - etc/ckan/production.ini
     - etc/apache2/sites-enabled/ckan.conf
-    - etc/apache2/sites-enabled/ckan443.conf
   notify:
     - restart apache2
     - restart ckan
