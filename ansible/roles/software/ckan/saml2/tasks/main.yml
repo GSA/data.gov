@@ -27,7 +27,6 @@
   with_items:
     - saml2/pki/mycert.pem
     - saml2/pki/mykey.pem
-    - who.ini
   notify: reload apache2
 
 - name: template who.ini file
