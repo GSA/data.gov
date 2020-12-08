@@ -97,20 +97,11 @@
   notify:
     - restart ckan
 
-- name: Configure production.ini
-  template:
-    src: "{{ ckan_production_ini_template }}"
-    dest: /etc/ckan/production.ini
-    owner: root
-    group: www-data
-    mode: 0640
-  notify:
-    - restart ckan
-
 - name: Configure apache files
   template: src={{ item }} dest=/{{ item }} owner=root group=www-data mode=0640
   with_items:
     - etc/apache2/sites-enabled/ckan.conf
+    - etc/ckan/production.ini
   notify:
     - restart apache2
     - restart ckan
