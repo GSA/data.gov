@@ -19,6 +19,7 @@ catalog_ckan_fgdc2iso_host: catalog-fgdc2iso1d.dev-ocsit.bsp.gsa.gov
 catalog_ckan_saml2_enabled: true
 catalog_ckan_service_url: https://{{ catalog_host_public }}
 catalog_ckan_admin_service_url: https://{{ catalog_host_admin }}
+catalog_ckan_who_ini_path: "etc_ckan_who.saml2.ini.j2"
 catalog_ckan_solr_host: datagov-solr1d.dev-ocsit.bsp.gsa.gov
 catalog_ckan_solr_port: "8983"
 # read-only database variables
@@ -27,6 +28,7 @@ catalog_pycsw_db_name: "{{ vault_catalog_pycsw_db_name }}"
 catalog_pycsw_db_pass: "{{ vault_catalog_pycsw_db_pass }}"
 catalog_pycsw_db_user: "{{ vault_catalog_pycsw_db_user }}"
 
+catalog_ckan_wsgi_processes: 4
 
 # catalog-next
 catalog_next_ckan_db_name: "{{ vault_catalog_next_ckan_db_name }}"
@@ -41,15 +43,15 @@ catalog_next_ckan_postgresql_admin_password: "{{ vault_catalog_next_ckan_postgre
 catalog_next_ckan_postgresql_admin_user: "{{ vault_catalog_next_ckan_postgresql_admin_user }}"
 catalog_next_ckan_production_ini_template: catalog-next/etc_ckan_production.ini.j2
 catalog_next_ckan_redis_host: redis1d.dev-ocsit.bsp.gsa.gov
-catalog_next_ckan_redis_password: "{{ vault_catalog_next_ckan_redis_password }}"
+catalog_next_ckan_redis_password: "{{ redis_password }}"
 catalog_next_ckan_redis_url: redis://:{{ catalog_next_ckan_redis_password }}@{{ catalog_next_ckan_redis_host }}:6379/0
 catalog_next_ckan_solr_a_host: datagov-solr1d-v2.dev-ocsit.bsp.gsa.gov
 catalog_next_ckan_solr_b_host: datagov-solr2d-v2.dev-ocsit.bsp.gsa.gov
 catalog_next_ckan_solr_primary_host: datagov-solrm1d-v2.dev-ocsit.bsp.gsa.gov
 catalog_next_ckan_token_dat: "{{ vault_catalog_next_ckan_token_dat }}"
 catalog_next_ckan_who_ini_secret: "{{ vault_catalog_next_ckan_who_ini_secret }}"
-
-
+catalog_next_ckan_saml2_enabled: false
+catalog_next_ckan_who_ini_path: "etc_ckan_who.default.ini.j2"
 
 # common
 common_audit_report_enabled: false
@@ -156,7 +158,7 @@ inventory_ckan_solr_port: "8983"
 
 # Inventory Next
 inventory_next_ckan_redis_host: "redis1d.dev-ocsit.bsp.gsa.gov"
-inventory_next_ckan_redis_password: "{{ vault_inventory_next_ckan_redis_password }}"
+inventory_next_ckan_redis_password: "{{ redis_password }}"
 inventory_next_ckan_s3_bucket_name: "{{ vault_inventory_next_ckan_s3_bucket_name }}"
 inventory_next_ckan_s3_bucket_prefix: "{{ vault_inventory_next_ckan_s3_bucket_prefix }}"
 inventory_next_ckan_instance_secret: "{{ vault_inventory_next_ckan_instance_secret }}"
@@ -242,6 +244,9 @@ postfix_raw_options:
     smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
     smtpd_tls_mandatory_ciphers = high
     smtpd_tls_mandatory_exclude_ciphers = aNULL, MD5
+  - |
+    # Postfix needs a value set https://github.com/GSA/datagov-deploy/issues/1795
+    smtpd_relay_restrictions = permit_mynetworks, reject_unauth_destination
 postfix_relayhost: smtp.gsa.gov
 postfix_relayhost_port: 25
 postfix_relaytls: true

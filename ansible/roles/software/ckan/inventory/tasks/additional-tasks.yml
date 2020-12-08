@@ -5,6 +5,8 @@
     build_pkg_repo: "https://github.com/GSA/ckanext-s3filestore"
     build_pkg_requirements: "requirements.txt"
   tags: ['s3filestore']
+  when:
+    - not inventory_next
 
 - name: copy datajson export map
   copy:
@@ -24,6 +26,7 @@
   when:
     - inventory_next
     - db_is_setup
+    - datagov_in_service
   become: true
   notify: restart ckan
 

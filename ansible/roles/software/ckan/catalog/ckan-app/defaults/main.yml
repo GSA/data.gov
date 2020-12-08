@@ -5,11 +5,19 @@ catalog_app_type: web  # either web or worker
 catalog_ckan_access_log: "{{ catalog_log_dir }}/ckan.access.log"
 catalog_ckan_apache_server_alias: []
 catalog_ckan_apache_server_name: ckan
-catalog_ckan_readwrite_configuration: default  # One of [default, readwrite, readonly]
+
+# One of [default, writeonly, readonly]
+# default: stand-alone instance, handles both read and write operations.
+# writeonly: has a db write connection for admin, redirects to readonly for non admin operations.
+# readonly: serves anonymous traffic, redirects to admin for write operations.
+catalog_ckan_readwrite_configuration: default
 catalog_ckan_app_version: master
 catalog_ckan_error_log: "{{ catalog_log_dir }}/ckan.error.log"
 catalog_ckan_harvest_fetch_process_count: 2
+
+# Gunicorn recomends to use 2 * CPUs + 1: "{{ 2 * ansible_processor_vcpus|int + 1 }}"
 catalog_ckan_wsgi_processes: 2
+
 catalog_ckan_worker_type: main_worker  # Choices: main_worker misc_worker qa_worker
 catalog_ckan_plugins_additional: []
 catalog_ckan_plugins_default:
@@ -76,6 +84,8 @@ catalog_db_name: ckan
 catalog_ckan_db_host: localhost
 saml2_idp_metadata_url: https://login.test.max.gov/idp/shibboleth
 saml2_site_url: https://admin-catalog.data.gov/
+saml2_issuer: ""
+saml2_attributemaps_dir: max_gov
 catalog_bucket_name: somebucketname
 env: local
 catalog_ckan_solr_host: localhost
@@ -87,6 +97,7 @@ token_dat: placeholder-token
 catalog_ckan_redis_host: localhost
 catalog_ckan_fgdc2iso_host: localhost
 ckan_catalog_next: false
+catalog_ckan_who_ini_path: etc_ckan_who.default.ini.j2
 ckan_production_ini_template: etc_ckan_production.ini.j2
 ckan_uses_gunicorn: false
 newrelic_app_name: catalog

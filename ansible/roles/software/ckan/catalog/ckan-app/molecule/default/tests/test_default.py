@@ -99,7 +99,7 @@ def test_wsgi(host):
 
 
 def test_apache_site(host):
-    f = host.file('/etc/apache2/sites-enabled/ckan.conf')
+    f = host.file('/etc/apache2/sites-enabled/ckan443.conf')
 
     assert f.exists
     assert f.user == 'root'
@@ -116,7 +116,7 @@ def test_apache_site(host):
     assert f.contains('ServerAlias .* ckan-catalog-app-'), \
         'ServerAlias should include hostname/FQDN'
 
-    # In default configuration, there should be no redirects between readwrite
+    # In default configuration, there should be no redirects between writeonly
     # and readonly instances.
     assert not f.contains('RewriteRule.*/user/login'), \
         'Expected no rewrite rule for login URLs'
