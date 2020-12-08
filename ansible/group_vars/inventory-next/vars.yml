@@ -7,6 +7,6 @@ inventory_ckan_saml2_enabled: "{{ inventory_next_ckan_saml2_enabled }}"
 inventory_saml_type: login.gov
 inventory_saml2_user_mapping: |
   email~email
-  fullname~email
-  id~uuid
-  name~email
+    fullname~email
+    id~uuid
+    name~email
