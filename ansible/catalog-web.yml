@@ -60,7 +60,7 @@
 
     - name: assert catalog is up
       uri:
-        url: https://{{ ansible_fqdn }}/api/action/status_show
+        url: http://{{ ansible_fqdn }}/api/action/status_show
         follow_redirects: none
         status_code: 200
         # TODO enable cert validation. Staging and production hosts have GSA
