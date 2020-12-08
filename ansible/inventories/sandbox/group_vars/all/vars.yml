@@ -12,6 +12,8 @@ catalog_ckan_fgdc2iso_host: catalog-fgdc2iso1tf.internal.sandbox.datagov.us
 catalog_ckan_service_url: https://catalog.sandbox.datagov.us
 catalog_ckan_solr_host: datagov-solr1tf.internal.sandbox.datagov.us
 catalog_ckan_solr_port: "{{ solr_port }}"
+catalog_ckan_saml2_enabled: false
+catalog_ckan_who_ini_path: "etc_ckan_who.default.ini.j2"
 catalog_ckan_who_ini_secret: "{{ vault_catalog_ckan_who_ini_secret }}"
 catalog_postgresql_login_host: "{{ vault_catalog_postgresql_login_host }}"
 catalog_postgresql_login_password: "{{ vault_catalog_postgresql_login_password }}"
@@ -33,10 +35,11 @@ catalog_next_ckan_redis_url: "rediss://:{{ catalog_ckan_redis_password }}@{{ cat
 catalog_next_postgresql_login_host: "{{ vault_catalog_next_postgresql_login_host }}"
 catalog_next_postgresql_login_password: "{{ vault_catalog_next_postgresql_login_password }}"
 catalog_next_postgresql_login_user: "{{ vault_catalog_next_postgresql_login_user }}"
-
+catalog_next_ckan_saml2_enabled: true
+catalog_next_ckan_who_ini_path: "catalog-next/etc_ckan_who.saml2.ini.j2"
 
 ckan_create_user_via_web: true
-
+catalog_ckan_wsgi_processes: 2
 
 # common
 common_newrelic_enabled: false
@@ -283,7 +286,6 @@ saml2_idp_metadata_url: "https://{{ saml2_idp_entry }}/idp/shibboleth"
 saml_idp_cert_fprint: "67:76:BB:87:FE:76:D6:4A:BE:19:3F:E2:B6:1A:49:06:AE:56:06:B8"
 saml2_sp_public_certificate: "{{ vault_saml2_sp_public_certificate }}"
 saml2_sp_private_key: "{{ vault_saml2_sp_private_key }}"
-
 
 # fgdc2iso service
 # saxon license
