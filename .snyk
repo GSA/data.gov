@@ -15,4 +15,10 @@ ignore:
           operators.  These operators should only be using trusted sources as
           well.  Risk is acceptable.
         expires: 2020-12-19T06:00:00.000Z
+  SNYK-PYTHON-PY-1049546:
+    - '*':
+        reason: >-
+          There is no fix for Py at this time. This is introduced through molecule
+          and molecule is only used in dev environments.
+        expires: 2021-03-10T06:00:00.000Z
 patch: {}
