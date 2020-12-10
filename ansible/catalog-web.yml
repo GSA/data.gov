@@ -60,7 +60,7 @@
 
     - name: assert catalog is up
       uri:
-        url: http://{{ ansible_fqdn }}/api/action/status_show
+        url: https://{{ ansible_fqdn }}/api/action/status_show
         follow_redirects: none
         status_code: 200
         # TODO enable cert validation. Staging and production hosts have GSA
@@ -102,7 +102,7 @@
         - smoke
       when:
         - catalog_ckan_readwrite_configuration == 'readonly'
-        - datagov_in_service
+        - datagov_in_service | default(true)
 
     - name: check /_tracking redirection with data
       block:
@@ -129,7 +129,7 @@
         - smoke
       when:
         - catalog_ckan_readwrite_configuration == 'readonly'
-        - datagov_in_service
+        - datagov_in_service | default(true)
 
 
 - name: logrotate configuration
