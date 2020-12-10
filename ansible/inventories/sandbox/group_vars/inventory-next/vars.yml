@@ -3,7 +3,7 @@
 # https://github.com/GSA/datagov-infrastructure-modules/issues/32
 ansible_python_interpreter: /usr/bin/python3
 
-datagov_service: inventory
+datagov_service: inventory-next
 app_type: inventory-next
 inventory_db_name: inventory_db_next
 inventory_python_home: "{{ python_home }}"

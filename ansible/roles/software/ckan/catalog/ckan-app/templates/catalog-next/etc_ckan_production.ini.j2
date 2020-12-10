@@ -62,6 +62,13 @@ db_server = {{ catalog_ckan_db_host }}
 db_database = {{ catalog_db_name }}
 sqlalchemy.url = postgresql://%(db_user)s:%(db_pass)s@%(db_server)s/%(db_database)s
 
+{% if sqlalchemy_pool_size is defined %}
+sqlalchemy.pool_size = {{ sqlalchemy_pool_size }}
+{% endif %}
+
+{% if sqlalchemy_max_overflow is defined %}
+sqlalchemy.max_overflow = {{ sqlalchemy_max_overflow }}
+{% endif %}
 
 ## Site Settings
 
@@ -193,6 +200,9 @@ smtp.mail_from = {{ catalog_ckan_email_from }}
 ckan.tracking_enabled = True
 set debug = False
 
+## Spatial settings
+ckanext.spatial.search_backend = solr
+
 ## Harvest settings
 # ckanext-harvest will use ckan.redis.url if redis configuration
 # is not specified here.
@@ -211,14 +221,18 @@ ckan.harvest.status_mail.all=True
 ckanext.geodatagov.fgdc2iso_service = http://{{ catalog_ckan_fgdc2iso_host }}/fgdc2iso/
 
 ## SAML2 Settings
+saml2.issuer = {{ saml2_issuer }}
 saml2.site_url = {{ saml2_site_url }}
 saml2.config_path = %(here)s/saml2
 
+# Needed for login.gov
+saml2.name_id_from_saml2_NameID = true
+
 saml2.user_mapping =
-    email~maxemail
-    fullname~field_display_name
-    id~maxid
-    name~maxemail
+    email~email
+    fullname~email
+    id~uuid
+    name~email
 
 saml2.organization_mapping =
     name~field_unique_id
@@ -257,7 +271,7 @@ ckanext-archiver.cache_url_root={{ ckan_site_domain }}
 
 ## Logging configuration
 [loggers]
-keys = root, ckan, ckanext
+keys = root, ckan, ckanext, saml2
 
 [handlers]
 keys = console
@@ -279,6 +293,12 @@ propagate = 0
 level = DEBUG
 handlers = console
 qualname = ckanext
+propagate = 0
+
+[logger_saml2]
+level = INFO
+handlers = console
+qualname = saml2
 propagate = 0
 
 [handler_console]

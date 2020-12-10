@@ -3,7 +3,7 @@
   service: name=redis-server state=restarted
 
 - name: reload supervisor
-  command: supervisorctl reread && supervisorctl update
+  command: supervisorctl reread && supervisorctl update all
   when:
     - (catalog_app_type == "worker") or ckan_uses_gunicorn
     - datagov_in_service | default(true)

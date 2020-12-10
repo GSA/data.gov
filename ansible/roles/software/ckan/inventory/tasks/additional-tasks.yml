@@ -26,6 +26,7 @@
   when:
     - inventory_next
     - db_is_setup
+    - datagov_in_service
   become: true
   notify: restart ckan
 

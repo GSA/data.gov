@@ -16,7 +16,7 @@ def test_hosts_file(host):
 
 
 def test_apache2_sites(host):
-    ckan = host.file('/etc/apache2/sites-enabled/ckan443.conf')
+    ckan = host.file('/etc/apache2/sites-enabled/ckan.conf')
     datapusher = host.file('/etc/apache2/sites-enabled/datapusher.conf')
 
     assert ckan.exists

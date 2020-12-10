@@ -1,7 +1,7 @@
 ---
 app_repo: https://github.com/GSA/catalog.data.gov
 catalog_ckan_app_version: master
-
+catalog_ckan_wsgi_processes: 8
 catalog_ckan_apache_server_alias:
   - catalog.data.gov
 catalog_ckan_apache_server_name: "{{ catalog_host_public_next }}"
@@ -25,6 +25,10 @@ catalog_db_name: "{{ catalog_ckan_db_name }}"
 catalog_db_pass: "{{ catalog_ckan_db_pass }}"
 catalog_db_user: "{{ catalog_ckan_db_user }}"
 
+# Before increasing pool_size check gunicorn workers
+# sqlalchemy_pool_size: 15
+# sqlalchemy_max_overflow: 25
+
 ckan_catalog_next: true
 ckan_instance_secret: "{{ catalog_next_ckan_instance_secret }}"
 ckan_instance_uuid: "{{ catalog_next_ckan_instance_uuid }}"
@@ -36,6 +40,14 @@ ckan_uses_gunicorn: true
 datagov_service: catalog-next
 
 newrelic_app_name: catalog-next
+
+# TODO enable sending harvest report emails after launch (delete these overrides)
+# https://github.com/GSA/datagov-ckan-multi/issues/400
+postfix_transport_maps:
+  - pattern: "{{ datagov_team_email }}"  # deliver mail to the data.gov team normally
+    result: smtp
+  - pattern: "*"  # discard all other mail
+    result: "discard:"
 
 saml2_site_url: https://admin-catalog-next.data.gov/
 

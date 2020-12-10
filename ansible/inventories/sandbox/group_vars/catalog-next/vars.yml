@@ -16,3 +16,16 @@ catalog_ckan_redis_host: "{{ catalog_next_ckan_redis_host }}"
 catalog_ckan_redis_password: "{{ catalog_next_ckan_redis_password }}"
 
 catalog_ckan_plugins_default: "{{ catalog_next_ckan_plugins_default }}"
+catalog_ckan_plugins_additional: [saml2]
+
+# login.gov identity sandbox
+saml2_idp_metadata_url: "https://idp.int.identitysandbox.gov/api/saml/metadata2020"
+saml2_issuer: "urn:gov:gsa:SAML:2.0.profiles:sp:sso:datagovus:catalog-next-sandbox"
+saml2_site_url: "https://catalog-next.sandbox.datagov.us/"
+
+saml2_sp_public_certificate: "{{ vault_catalog_next_saml2_sp_public_certificate }}"
+saml2_sp_private_key: "{{ vault_catalog_next_saml2_sp_private_key }}"
+
+# saml2 role will install attribute maps from here (and trailing
+# slash is significant!)
+saml2_attributemaps_dir: login_gov
