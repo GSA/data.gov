@@ -102,7 +102,7 @@ def test_wsgi(host):
 
 
 def test_apache_site(host):
-    f = host.file('/etc/apache2/sites-enabled/ckan443.conf')
+    f = host.file('/etc/apache2/sites-enabled/ckan.conf')
 
     assert f.exists
     assert f.user == 'root'
