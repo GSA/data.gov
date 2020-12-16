@@ -1,4 +1,15 @@
 <VirtualHost 0.0.0.0:80>
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+
+    ErrorLog {{ catalog_ckan_error_log }}
+    CustomLog {{ catalog_ckan_access_log }} combined
+</VirtualHost>
+
+<VirtualHost 0.0.0.0:443>
+  SSLEngine on
+
   ServerName ckan
   Redirect 404 /
 
@@ -6,7 +17,9 @@
   CustomLog {{ catalog_ckan_access_log }} combined
 </VirtualHost>
 
-<VirtualHost 0.0.0.0:80>
+<VirtualHost 0.0.0.0:443>
+  SSLEngine on
+
   ServerName {{ catalog_ckan_apache_server_name }}
   ServerAlias {{ catalog_ckan_apache_server_alias | join(' ') }} {{ ansible_fqdn }} localhost {{ ansible_default_ipv4.address | default('') }}
 
