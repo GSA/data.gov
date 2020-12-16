@@ -6,7 +6,8 @@ ignore:
     - '*':
         reason: >-
           solaris_zone module is not used, fix requires ansible 2.9
-        expires: 2020-12-19T00:00:00.000Z
+          https://github.com/gsa/datagov-deploy/issues/893
+        expires: 2021-1-19T00:00:00.000Z
   SNYK-PYTHON-PYYAML-590151:
     - '*':
         reason: >-
@@ -14,11 +15,17 @@ ignore:
           considered trusted and run only on our secured jumpboxes by our
           operators.  These operators should only be using trusted sources as
           well.  Risk is acceptable.
-        expires: 2020-12-19T06:00:00.000Z
+        expires: 2021-1-19T06:00:00.000Z
   SNYK-PYTHON-PY-1049546:
     - '*':
         reason: >-
           There is no fix for Py at this time. This is introduced through molecule
           and molecule is only used in dev environments.
         expires: 2021-03-10T06:00:00.000Z
+  SNYK-PYTHON-CRYPTOGRAPHY-1022152:
+    - '*':
+        reason: >-
+          An issue was created to resolve this issue within 30-days.
+          https://github.com/GSA/datagov-deploy/issues/2472
+        expires: 2021-03-10T06:00:00.000Z        
 patch: {}
