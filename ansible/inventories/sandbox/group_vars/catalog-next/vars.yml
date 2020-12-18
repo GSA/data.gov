@@ -22,7 +22,7 @@ catalog_ckan_plugins_additional: [saml2]
 saml2_idp_metadata_url: "https://idp.int.identitysandbox.gov/api/saml/metadata2020"
 saml2_issuer: "urn:gov:gsa:SAML:2.0.profiles:sp:sso:datagovus:catalog-next-sandbox"
 saml2_site_url: "https://catalog-next.sandbox.datagov.us/"
-
+saml2_idp_url: https://idp.int.identitysandbox.gov/api/saml/auth2020
 saml2_sp_public_certificate: "{{ vault_catalog_next_saml2_sp_public_certificate }}"
 saml2_sp_private_key: "{{ vault_catalog_next_saml2_sp_private_key }}"
 
