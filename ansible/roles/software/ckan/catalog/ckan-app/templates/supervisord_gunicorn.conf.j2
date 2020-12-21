@@ -1,5 +1,5 @@
 [program:catalog-web]
-command=/etc/ckan/server_start.sh -b localhost:5000 --workers={{ catalog_ckan_wsgi_processes }} --proxy-allow-from="127.0.0.1"
+command=/etc/ckan/server_start.sh -b localhost:5000 --workers={{ catalog_ckan_wsgi_processes }} --max-requests {{ catalog_ckan_wsgi_max_requests }} --max-requests-jitter {{ catalog_ckan_wsgi_max_requests_jitter }} --proxy-allow-from="127.0.0.1"
 directory={{ project_source_new_code_path }}
 stdout_logfile={{ catalog_gunicorn_error_log }}
 autostart=true
