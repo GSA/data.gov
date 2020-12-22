@@ -34,6 +34,9 @@ inventory_datapusher_error_log: "{{ inventory_log_dir }}/datapusher.error.log"
 inventory_datapusher_access_log: "{{ inventory_log_dir }}/datapusher.access.log"
 inventory_gunicorn_error_log: "{{ inventory_log_dir }}/gunicorn.log"
 
+inventory_ckan_wsgi_max_requests: 5000
+inventory_ckan_wsgi_max_requests_jitter: 1000
+
 datapusher_build_pkg_name: datapusher
 datapusher_build_pkg_branch: datagov/inventory-classic
 datapusher_build_pkg_repo: https://github.com/GSA/datapusher
