@@ -31,7 +31,7 @@
 - name: schedule ckan-clean-harvest-logs cron
   cron:
     name: "clean harvest logs in db"
-    cron_file: ckan
+    cron_file: ckan_jobs  # Preferred location for new cron jobs. Avoid name collision with the old crontab below.
     job: supervisorctl start ckan-clean-harvest-logs > /dev/null
     minute: "30"
     hour: "2"

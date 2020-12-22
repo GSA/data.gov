@@ -1,7 +1,7 @@
 <VirtualHost 0.0.0.0:80>
     RewriteEngine On
     RewriteCond %{HTTPS} off
-    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
 
     ErrorLog {{ catalog_ckan_error_log }}
     CustomLog {{ catalog_ckan_access_log }} combined

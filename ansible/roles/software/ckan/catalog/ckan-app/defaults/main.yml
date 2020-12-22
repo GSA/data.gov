@@ -17,6 +17,8 @@ catalog_ckan_harvest_fetch_process_count: 2
 
 # Gunicorn recomends to use 2 * CPUs + 1: "{{ 2 * ansible_processor_vcpus|int + 1 }}"
 catalog_ckan_wsgi_processes: 2
+catalog_ckan_wsgi_max_requests: 5000
+catalog_ckan_wsgi_max_requests_jitter: 1000
 
 catalog_ckan_worker_type: main_worker  # Choices: main_worker misc_worker qa_worker
 catalog_ckan_plugins_additional: []
@@ -85,6 +87,7 @@ catalog_ckan_db_host: localhost
 saml2_idp_metadata_url: https://login.test.max.gov/idp/shibboleth
 saml2_site_url: https://admin-catalog.data.gov/
 saml2_issuer: ""
+saml2_idp_url: ""
 saml2_attributemaps_dir: max_gov
 catalog_bucket_name: somebucketname
 env: local
