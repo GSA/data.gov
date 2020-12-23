@@ -1,6 +1,6 @@
 # New Relic
 NEW_RELIC_LICENSE_KEY="{{ newrelic_license_key }}"
-NEW_RELIC_APP_NAME="{{ newrelic_app_name }}"
+NEW_RELIC_APP_NAME="{{ newrelic_app_name }}{{% if datagov_environment and datagov_environment != 'production' %} ({{ datagov_environment }}){% endif %}"
 NEW_RELIC_MONITOR_MODE="{{ newrelic_enabled }}"
 NEW_RELIC_LOG=/var/log/inventory/new_relic.log
 NEW_RELIC_LOG_LEVEL=info
