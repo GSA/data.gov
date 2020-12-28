@@ -1,0 +1,17 @@
+version: 2
+updates:
+- package-ecosystem: pip
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "10:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: ansible-lint
+    versions:
+    - ">= 4.3.a"
+    - "< 4.4"
+  - dependency-name: molecule
+    versions:
+    - ">= 3.0.a"
+    - "< 3.1"
