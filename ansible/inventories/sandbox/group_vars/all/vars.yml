@@ -150,7 +150,7 @@ jenkins_jobs:
 jenkins_config: "{{ lookup('template', 'jenkins_config_sandbox.yml.j2') }}"
 
 jenkins_home: /data/jenkins
-jenkins_hostname: jenkins1tf.internal.sandbox.datagov.us
+jenkins_host: jenkins1tf.internal.sandbox.datagov.us
 jenkins_tls_key: "{{ vault_jenkins_tls_key }}"
 jenkins_tls_cert: |-
   -----BEGIN CERTIFICATE-----
@@ -189,7 +189,7 @@ jenkins_tls_cert: |-
   iqmUG4lFFNeBYMYt5wPR3I+e6Bn2tk/a5McVhCQt6uVBWfgiPnxrU+pef2EgQ7J9
   VzQrATk1ZB3jBepMlhLBl7I=
   -----END CERTIFICATE-----
-jenkins_host: ci.sandbox.datagov.us
+jenkins_url: ci.sandbox.datagov.us
 
 
 jumpbox_operators: "{{ datagov_operators_test }}"
