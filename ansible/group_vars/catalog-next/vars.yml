@@ -19,7 +19,6 @@ catalog_ckan_plugins_default:
   - datagov_harvest
   - ckan_harvester
   - geodatagov
-  - datajson
   - datajson_harvest
   - geodatagov_miscs
   - z3950_harvester
