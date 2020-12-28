@@ -39,7 +39,6 @@ provisioner:
           - recline_view
           - harvest
           - geodatagov
-          - datajson
           - datajson_harvest
           - geodatagov_miscs
           - z3950_harvester
