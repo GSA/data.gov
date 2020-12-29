@@ -90,10 +90,10 @@ unclassified:
       - credentialsId: "github-datagov-bot"
         manageHooks: false
         name: "GitHub"
-    hookUrl: "https://{{ jenkins_host }}/github-webhook/"
+    hookUrl: "https://{{ jenkins_url }}/github-webhook/"
   location:
     adminAddress: "{{ datagov_team_email }}"
-    url: "https://{{ jenkins_host }}/"
+    url: "https://{{ jenkins_url }}/"
   timestamper:
     allPipelines: true
 
