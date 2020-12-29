@@ -14,8 +14,7 @@ jenkins:
         global:
           - name: admin
             pattern: .*
-            assignments:
-              - admin
+            assignments: [{{ jenkins_admins | join(', ') }}]
             permissions:
               - Agent/Build
               - Agent/Configure
@@ -60,6 +59,30 @@ jenkins:
               - Job/Read
               - Overall/Read
         items: []
+
+  securityRealm:
+    saml:
+      advancedConfiguration:
+        forceAuthn: false
+        spEntityId: "{{ jenkins_saml_sp_entity_id }}"
+      binding: "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+      displayNameAttributeName: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
+      emailAttributeName: "email"
+      encryptionData:
+        forceSignRedirectBindingAuthnRequest: false
+        keystorePassword: "{{ jenkins_saml_keystore_password }}"
+        keystorePath: "/data/jenkins/saml-key.jks"
+        privateKeyAlias: "saml-key"
+        privateKeyPassword: "{{ jenkins_saml_private_key_password }}"
+      groupsAttributeName: "http://schemas.xmlsoap.org/claims/Group"
+      idpMetadataConfiguration:
+        period: 1440
+        url: "{{ jenkins_saml_idp_metadata_url }}"
+      logoutUrl: "{{ jenkins_saml_idp_logout_url }}"
+      maximumAuthenticationLifetime: 86400
+      usernameAttributeName: "email"
+      usernameCaseConversion: "lowercase"
+
 
 unclassified:
   gitHubPluginConfig:

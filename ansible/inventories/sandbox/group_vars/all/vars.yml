@@ -148,6 +148,12 @@ jenkins_jobs:
     git_url: https://github.com/gsa/datagov-wp-boilerplate.git
 
 jenkins_config: "{{ lookup('template', 'jenkins_config_sandbox.yml.j2') }}"
+jenkins_admins: "{{ datagov_operators_test | map(attribute='email') | list }}"
+jenkins_saml_sp_entity_id: urn:gov:gsa:SAML:2.0.profiles:sp:sso:gsa:datagov-ci-jenkins
+jenkins_saml_keystore_password: "{{ vault_jenkins_saml_keystore_password }}"
+jenkins_saml_private_key_password: "{{ vault_jenkins_saml_private_key_password }}"
+jenkins_saml_idp_metadata_url: https://idp.int.identitysandbox.gov/api/saml/metadata2020
+jenkins_saml_idp_logout_url: https://idp.int.identitysandbox.gov/api/saml/logout2020
 
 jenkins_home: /data/jenkins
 jenkins_host: jenkins1tf.internal.sandbox.datagov.us
