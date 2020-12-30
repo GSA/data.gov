@@ -1,4 +1,3 @@
 ---
 jenkins_host: jenkins-saml1tf.internal.sandbox.datagov.us
 jenkins_url: jenkins-saml.sandbox.datagov.us
-jenkins_saml_keystore_path: "{{ playbook_dir }}/files/sandbox/saml-key.jks"
