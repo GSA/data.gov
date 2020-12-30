@@ -145,6 +145,8 @@ jenkins_jobs:
     git_ref: refs/heads/inventory_ckan_2.8
   - name: deploy-ci-app-wordpress
     git_url: https://github.com/gsa/datagov-wp-boilerplate.git
+jenkins_additional_plugins:
+  - build-token-root  # Allow CircleCI to trigger builds with a job token
 
 
 # Limit SSH Access
