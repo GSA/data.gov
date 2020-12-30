@@ -1,4 +1,99 @@
 ---
+jenkins_admin_password: "{{ vault_jenkins_admin_password }}"
+jenkins_admins: "{{ datagov_operators_production | map(attribute='email') | list }}"
+jenkins_job_authentication_token: "{{ vault_jenkins_job_authentication_token }}"
+jenkins_jobs:
+  - name: deploy-ci-platform
+    git_url: https://github.com/gsa/datagov-deploy.git
+  - name: deploy-ci-app-catalog
+    git_url: https://github.com/gsa/catalog-app.git
+  - name: deploy-ci-app-catalog-next
+    git_url: https://github.com/gsa/catalog.data.gov.git
+    github_project_url: https://github.com/gsa/datagov-ckan-multi
+  - name: deploy-ci-app-dashboard
+    git_url: https://github.com/gsa/project-open-data-dashboard.git
+  - name: deploy-ci-app-inventory
+    git_url: https://github.com/gsa/inventory-app.git
+  - name: deploy-ci-app-inventory-next
+    git_url: https://github.com/gsa/inventory-app.git
+    git_ref: refs/heads/inventory_ckan_2.8
+  - name: deploy-ci-app-wordpress
+    git_url: https://github.com/gsa/datagov-wp-boilerplate.git
+
+jenkins_saml_sp_entity_id: urn:gov:gsa:SAML:2.0.profiles:sp:sso:gsa:datagov-ci-jenkins
+jenkins_saml_keystore_password: "{{ vault_jenkins_saml_keystore_password }}"
+jenkins_saml_keystore_path: "{{ playbook_dir }}/files/mgmt/saml-key.jks"
+jenkins_saml_private_key_password: "{{ vault_jenkins_saml_private_key_password }}"
+jenkins_saml_idp_metadata_url: https://idp.int.identitysandbox.gov/api/saml/metadata2020
+jenkins_saml_idp_logout_url: https://idp.int.identitysandbox.gov/api/saml/logout2020
+jenkins_system_message: >
+  Data.gov continuous integration and delivery service.
+jenkins_home: /data/jenkins
+jenkins_host: jenkins.mgmt-ocsit.bsp.gsa.gov
+# TODO this should be the mgmt hosts certificate
+jenkins_tls_key: "{{ vault_jenkins_tls_key }}"
+jenkins_tls_cert: |-
+  -----BEGIN CERTIFICATE-----
+  MIIDrjCCApYCCQDzu3KSUyq/3DANBgkqhkiG9w0BAQsFADCBmDELMAkGA1UEBhMC
+  VVMxCzAJBgNVBAgMAkRDMRMwEQYDVQQHDApXYXNoaW5ndG9uMQwwCgYDVQQKDANH
+  U0ExDDAKBgNVBAsMA1RUUzEnMCUGA1UEAwweamVua2lucy5tZ210LW9jc2l0LmJz
+  cC5nc2EuZ292MSIwIAYJKoZIhvcNAQkBFhNkYXRhZ292aGVscEBnc2EuZ292MB4X
+  DTIwMTIzMDIzMDkyMFoXDTIxMTIzMDIzMDkyMFowgZgxCzAJBgNVBAYTAlVTMQsw
+  CQYDVQQIDAJEQzETMBEGA1UEBwwKV2FzaGluZ3RvbjEMMAoGA1UECgwDR1NBMQww
+  CgYDVQQLDANUVFMxJzAlBgNVBAMMHmplbmtpbnMubWdtdC1vY3NpdC5ic3AuZ3Nh
+  LmdvdjEiMCAGCSqGSIb3DQEJARYTZGF0YWdvdmhlbHBAZ3NhLmdvdjCCASIwDQYJ
+  KoZIhvcNAQEBBQADggEPADCCAQoCggEBANC1kQn9xl6/MHHg97JElUczykwQzVGP
+  7UzPEorCdwgJI4TTjQOZ0pyshsCDMNJ3ZxOVc/K/F19/iWm7txblQ/a4ltMmsnJR
+  2TgPgYIcRrbeJBKFrcFDAJnjaIs1C/AsBYtSkHnYa1XOElP8RSAzKXDJlyKTGr0l
+  MZnMo6602UGjF0gd7jV4XSWAM4i1w+HlvjEMkdK4G7Qu6sjGs5KoEFf1yPeBYmKD
+  YlC4I7TsxTKA4Vi4U1KSrubhGe+oL3CAdf86Wf8at20XO6Neyom5lQ3RIa7JZ8o8
+  lMu0pKm40rUI9Sw7LgY6cnjJ1SWep/r5FWlxRgRk2ZFRYjVdXgKJsd0CAwEAATAN
+  BgkqhkiG9w0BAQsFAAOCAQEAcRBtEu6yTokqVkVs9Erletrss3Dv8UDrFf52j45W
+  ZNWIKlBBtvwXXC2diZzNIrHKQkxfkPhUfLiFRaME45oi+K2phk7offJbFdDcJuAu
+  efZo0/4u3I9aU2xtK2XWbsyzleDKGPACCkW0nsNIzCRWCzIFAeKPCikyS1IyaV7F
+  exMXJYf3gPefY4kyqNgxv/71Log4D78V705QJJH3eaFh0EA3pKGpE0O3MPWJ6EBG
+  cbFZHpFAPxkcyCkj55O0/tGprbsbvn82v/k1nq5bKAotkzH8ZUIBJ/R2xpn8oujh
+  7gXXx3R9Z6Hdcqg4x1GbkUS4YYyX2d8QaDgmyEsiROtiig==
+  -----END CERTIFICATE-----
+
+
+jenkins_url: ci.data.gov
+jenkins_admins_permissions:
+  #- Agent/Build
+  #- Agent/Configure
+  #- Agent/Connect
+  #- Agent/Create
+  #- Agent/Delete
+  #- Agent/Disconnect
+  #- Agent/Provision
+  - Credentials/Create
+  - Credentials/Delete
+  - Credentials/ManageDomains
+  - Credentials/Update
+  - Credentials/View
+  - Job/Build
+  - Job/Cancel
+  #- Job/Configure
+  #- Job/Create
+  #- Job/Delete
+  - Job/Discover
+  - Job/Move
+  - Job/Read
+  - Job/Workspace
+  - Lockable Resources/Reserve
+  - Lockable Resources/Unlock
+  - Lockable Resources/View
+  #- Overall/Administer
+  - Overall/Read
+  - Run/Delete
+  - Run/Replay
+  - Run/Update
+  #- SCM/Tag
+  - View/Configure
+  - View/Create
+  - View/Delete
+  - View/Read
+
 jumpbox_operators: "{{ datagov_operators_production }}"
 
 # TrendMicro
