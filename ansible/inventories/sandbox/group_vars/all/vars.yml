@@ -129,7 +129,7 @@ inventory_next_postgresql_login_password: "{{ vault_inventory_next_postgresql_lo
 jenkins_admin_password: "{{ vault_jenkins_admin_password }}"
 jenkins_job_authentication_token: "{{ vault_jenkins_job_authentication_token }}"
 jenkins_admins: "{{ datagov_operators_test | map(attribute='email') | list }}"
-jenkins_saml_sp_entity_id: urn:gov:gsa:SAML:2.0.profiles:sp:sso:gsa:datagov-ci-jenkins
+jenkins_saml_sp_entity_id: urn:gov:gsa:SAML:2.0.profiles:sp:sso:gsa:ci_datagov_sandbox
 jenkins_saml_keystore_password: "{{ vault_jenkins_saml_keystore_password }}"
 jenkins_saml_private_key_password: "{{ vault_jenkins_saml_private_key_password }}"
 jenkins_saml_idp_metadata_url: https://idp.int.identitysandbox.gov/api/saml/metadata2020
