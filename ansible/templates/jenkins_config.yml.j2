@@ -13,7 +13,7 @@ jenkins:
         global:
           - name: admin
             pattern: .*
-            assignments: [{{ jenkins_admins | join(', ') }}]
+            assignments: [admin, {{ jenkins_admins | join(', ') }}]
             permissions: [{{ jenkins_admins_permissions | join(', ') }}]
           - name: build-manager
             pattern: .*
