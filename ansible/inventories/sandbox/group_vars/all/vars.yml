@@ -198,6 +198,7 @@ jenkins_tls_cert: |-
   VzQrATk1ZB3jBepMlhLBl7I=
   -----END CERTIFICATE-----
 jenkins_url: ci.sandbox.datagov.us
+jenkins_workflow: sandbox
 jenkins_admins_permissions:
   - Agent/Build
   - Agent/Configure
