@@ -539,7 +539,7 @@ API).
 Using the
 [configuration-as-code](https://plugins.jenkins.io/configuration-as-code/)
 plugin, we are able to define the Jenkins configuration and its job
-configuration in [code](./ansible/templates/jenkins_config_sandbox.yml.j2).
+configuration in [code](./ansible/templates/jenkins_config.yml.j2).
 After running the `jenkins.yml` playbook, there are a few manual steps that need
 to be done.
 

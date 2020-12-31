@@ -1,0 +1,3 @@
+---
+jenkins_host: jenkins-saml1tf.internal.sandbox.datagov.us
+jenkins_url: jenkins-saml.sandbox.datagov.us
