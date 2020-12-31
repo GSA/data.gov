@@ -56,6 +56,9 @@ jenkins_tls_cert: |-
   7gXXx3R9Z6Hdcqg4x1GbkUS4YYyX2d8QaDgmyEsiROtiig==
   -----END CERTIFICATE-----
 
+default_tls_host_key: "{{ jenkins_tls_key }}"
+default_tls_host_certificate: "{{ jenkins_tls_cert }}"
+
 
 jenkins_url: ci.data.gov
 jenkins_admins_permissions:
