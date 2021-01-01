@@ -31,9 +31,9 @@ See our [Roadmap](docs/roadmap.md) for where we're taking Data.gov.
 
 Production and staging environments are deployed to FAS Cloud Services (FCS,
 formerly BSP). Our sandbox environments are provisioned by
-[datagov-infrastructure-live](https://github.com/gsa/datagov-infrastructure-live).
+[GSA/datagov-infrastructure-live](https://github.com/gsa/datagov-infrastructure-live).
 
-GSA [VPN access](https://github.com/GSA/datagov-deploy/wiki/Horizon-Desktop) is required to access production and staging.
+GSA [VPN access](https://github.com/GSA/datagov-deploy/wiki/GSA-VPN) is required to access production and staging.
 
 Environment | Deployed from      | ISP | Jumpbox
 ----------- | -------------      | --- | ----
