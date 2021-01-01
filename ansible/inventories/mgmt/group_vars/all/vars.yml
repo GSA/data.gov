@@ -1,4 +1,32 @@
 ---
+# common
+common_newrelic_enabled: "{{ datagov_in_service | default(true) }}"
+common_filebeat_logstash_output: "{{ vault_common_filebeat_logstash_output }}"
+common_filebeat_config:
+  filebeat.config.modules:
+    enabled: true
+    path: ${path.config}/modules.d/*.yml
+  filebeat.modules:
+    - module: system
+      syslog:
+        enabled: true
+  output.logstash:
+    hosts: ["{{ common_filebeat_logstash_output }}"]
+
+filebeat_enabled: true
+nessus_agent_enabled: true
+trendmicro_enabled: true
+# TODO prefix these with common_
+filebeat_config: "{{ common_filebeat_config }}"
+products:
+  - filebeat
+
+
+# data.gov-wide variables
+datagov_environment: mgmt
+
+
+# jenkins
 jenkins_admin_password: "{{ vault_jenkins_admin_password }}"
 jenkins_admins: "{{ datagov_operators_production | map(attribute='email') | list }}"
 jenkins_job_authentication_token: "{{ vault_jenkins_job_authentication_token }}"
@@ -97,9 +125,48 @@ jenkins_admins_permissions:
   - View/Delete
   - View/Read
 
+
+# jumpbox
 jumpbox_operators: "{{ datagov_operators_production }}"
 
+
+# nessus
+nessus_agent_key: "{{ vault_nessus_agent_key }}"
+nessus_agent_host: "{{ vault_nessus_agent_host }}"
+nessus_agent_port: "{{ vault_nessus_agent_port }}"
+nessus_agent_group: "{{ vault_nessus_agent_group }}"
+
+
+# New Relic
+newrelic_license_key: "{{ vault_newrelic_license_key }}"
+
+
+# postfix
+default_email_from: no-reply-mgmt@data.gsa.gov
+postfix_raw_options:
+  - |
+    smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
+    smtpd_tls_mandatory_ciphers = high
+    smtpd_tls_mandatory_exclude_ciphers = aNULL, MD5
+  - |
+    # Postfix needs a value set https://github.com/GSA/datagov-deploy/issues/1795
+    smtpd_relay_restrictions = permit_mynetworks, reject_unauth_destination
+postfix_relayhost: smtp.gsa.gov
+postfix_relayhost_port: 25
+postfix_relaytls: true
+postfix_sasl_auth_enable: false
+postfix_aliases:
+  - user: postmaster
+    alias: root
+  - user: root
+    alias: "{{ datagov_team_email }}"
+postfix_sender_canonical_maps:
+  - sender: "@{{ ansible_fqdn }}"
+    rewrite: no-reply-mgmt+{{ ansible_fqdn }}@data.gsa.gov
+
+
 # TrendMicro
+trendmicro_enabled: true
 trendmicro_policy_id_jumpbox: "{{ vault_trendmicro_policy_id_jumpbox }}"
 trendmicro_policy_id_mgmt_app: "{{ vault_trendmicro_policy_id_mgmt_app }}"
 trendmicro_policy_id_mgmt_web: "{{ vault_trendmicro_policy_id_mgmt_web }}"
