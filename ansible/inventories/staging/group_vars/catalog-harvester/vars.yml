@@ -1,4 +1,5 @@
 ---
+datagov_app_process: worker
 datagov_service: catalog
 
 catalog_app_type: worker
