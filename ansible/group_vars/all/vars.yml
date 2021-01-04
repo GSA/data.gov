@@ -165,6 +165,7 @@ nrinfragent_config:
   custom_attributes:
     environment: "{{ datagov_environment | default('unknown') }}"
     service: "{{ datagov_service | default('unknown') }}"
+    app_process: "{{ datagov_app_process | default('') }}"  # optional
 
 
 # monit settings
