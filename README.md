@@ -574,10 +574,10 @@ configuration-as-code configuraiton._
 With SAML authentication enabled, you can no longer create user/service accounts
 through the UI. Instead, use the [script
 console](https://ci.sandbox.datagov.us/script) to run the script below. Set
-a random password. The return value is the API token save for later as you won't have
+a random password. The return value is the API token. Save this for later as you won't have
 another chance.
 
-The CI user should be assigned to teh `build-manager` role. This is already
+The CI user should be assigned to the `build-manager` role. This is already
 configured in our configuration-as-code.
 
 ```groovy
