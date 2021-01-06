@@ -24,71 +24,47 @@ products:
 
 # data.gov-wide variables
 datagov_environment: mgmt
+default_tls_host_key: "{{ vault_default_tls_host_key }}"
+default_tls_host_certificate: |-
+  -----BEGIN CERTIFICATE-----
+  MIIF8zCCBNugAwIBAgITHQABhtGTccqaE4TQOAACAAGG0TANBgkqhkiG9w0BAQsF
+  ADBvMRMwEQYKCZImiZPyLGQBGRYDZ292MRMwEQYKCZImiZPyLGQBGRYDZ3NhMRIw
+  EAYKCZImiZPyLGQBGRYCZHMxEzARBgoJkiaJk/IsZAEZFgNlbnQxGjAYBgNVBAMT
+  EUVDT0gyUy1JU1NDQTAxKDEpMB4XDTIxMDEwNTEzMjQ0MFoXDTIzMDQxMDEzMjQ0
+  MFowgeoxCzAJBgNVBAYTAlVTMR0wGwYDVQQIExREaXN0cmljdCBvZiBDb2x1bWJp
+  YTETMBEGA1UEBxMKV2FzaGluZ3RvbjEoMCYGA1UEChMfR2VuZXJhbCBTZXJ2aWNl
+  cyBBZG1pbmlzdHJhdGlvbjEqMCgGA1UECxMhVGVjaG5vbG9neSBUcmFuc2Zvcm1h
+  dGlvbiBTZXJ2aWNlMS0wKwYDVQQDEyRkYXRhZ292anVtcDFtLm1nbXQtb2NzaXQu
+  YnNwLmdzYS5nb3YxIjAgBgkqhkiG9w0BCQEWE2RhdGFnb3ZoZWxwQGdzYS5nb3Yw
+  ggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDisoWc+NtessiUWzT2ZkYQ
+  TyCIu8RGu50RMIu0LO2yt73zN2tB2oXbxjPLnAwsVQ0LM9+JA7seZjPjcClun3Dt
+  qr8uYYEo57dGpSRBta4PgmNLSvyrEmFhvD5quA6uT8vOmQcqTe48xWci0tkvq0/6
+  PCWOWbsXrGd0YnwYzXF61q+7hDOYkxXq6hAS1MTd/xQ13jT/bULcr/H2MmKfk7u/
+  xd8Cd/zYNp91H/jsjQd3NnvwpOgWS0mmwVafoQclJMODs5ZDLTxvvq74ovUpjjSa
+  l8whE+lhvUesgjvN60qu2Cd4IhHHxfB4ljbUUO6SzIzngZ2jr2DcfP1vRYuqGR/h
+  AgMBAAGjggIKMIICBjATBgNVHSUEDDAKBggrBgEFBQcDATBPBgNVHREESDBGgiRk
+  YXRhZ292anVtcDFtLm1nbXQtb2NzaXQuYnNwLmdzYS5nb3aCHmplbmtpbnMubWdt
+  dC1vY3NpdC5ic3AuZ3NhLmdvdjAdBgNVHQ4EFgQUOPElQgGilU/DraXoCf5BVrJK
+  owowHwYDVR0jBBgwFoAUSUzJ8P9khZrHYiv+yyi0KExFIhgwTAYDVR0fBEUwQzBB
+  oD+gPYY7aHR0cDovL2dzYXBraS5lbnQuZHMuZ3NhLmdvdi9nc2FjZXJ0cy9FQ09I
+  MlMtSVNTQ0EwMSgyKS5jcmwwgacGCCsGAQUFBwEBBIGaMIGXMGUGCCsGAQUFBzAC
+  hllodHRwOi8vZ3NhcGtpLmVudC5kcy5nc2EuZ292L2dzYWNlcnRzL0VDT0gyUy1J
+  U1NDQTAxLmVudC5kcy5nc2EuZ292X0VDT0gyUy1JU1NDQTAxKDIpLmNydDAuBggr
+  BgEFBQcwAYYiaHR0cDovL2dzYW9jc3AuZW50LmRzLmdzYS5nb3Yvb2NzcDALBgNV
+  HQ8EBAMCBaAwPAYJKwYBBAGCNxUHBC8wLQYlKwYBBAGCNxUIg4mvL4WeoH2C+YMP
+  hrCODYSflxE+geqcNYTvZgIBZAIBEzAbBgkrBgEEAYI3FQoEDjAMMAoGCCsGAQUF
+  BwMBMA0GCSqGSIb3DQEBCwUAA4IBAQB84p9EsvN2b1QzeR6YRp9X0VnRFY3BSgQx
+  DbEj+8bwxBX8HSxUTqQ13q+E3LndWAL5aGfh19RYCU1XJ2U9Qtc/2p2TVnUXPlOE
+  VHKUYjmVdd20hPDMVR5RMoJbDjNTGNAL8EzFVhIpgvRe/D9DdTMC+0b15GqfYF/o
+  6pgfxBhoVaOiv/RwTmx7wOiAFjHu/BK7tE4p9ju/IEk/ip/iBPe8kt4amg1GmqSF
+  HZQncz/D72epa9B6P/nhkv2hGudIJ6wIbfIxPJhW7zYZxoq7psKZ/FnhSJBEp8In
+  jpWgOaB/bbEeRYZE/DMGKwDBRHWXmUg6YnrRpScgXj98Y3gXKk+I
+  -----END CERTIFICATE-----
 
 
 # jenkins
 jenkins_admin_password: "{{ vault_jenkins_admin_password }}"
 jenkins_admins: "{{ datagov_operators_production | map(attribute='email') | list }}"
-jenkins_job_authentication_token: "{{ vault_jenkins_job_authentication_token }}"
-jenkins_jobs:
-  - name: deploy-ci-platform
-    git_url: https://github.com/gsa/datagov-deploy.git
-  - name: deploy-ci-app-catalog
-    git_url: https://github.com/gsa/catalog-app.git
-  - name: deploy-ci-app-catalog-next
-    git_url: https://github.com/gsa/catalog.data.gov.git
-    github_project_url: https://github.com/gsa/datagov-ckan-multi
-  - name: deploy-ci-app-dashboard
-    git_url: https://github.com/gsa/project-open-data-dashboard.git
-  - name: deploy-ci-app-inventory
-    git_url: https://github.com/gsa/inventory-app.git
-  - name: deploy-ci-app-inventory-next
-    git_url: https://github.com/gsa/inventory-app.git
-    git_ref: refs/heads/inventory_ckan_2.8
-  - name: deploy-ci-app-wordpress
-    git_url: https://github.com/gsa/datagov-wp-boilerplate.git
-
-jenkins_saml_sp_entity_id: urn:gov:gsa:SAML:2.0.profiles:sp:sso:gsa:datagov-ci-jenkins
-jenkins_saml_keystore_password: "{{ vault_jenkins_saml_keystore_password }}"
-jenkins_saml_keystore_path: "{{ playbook_dir }}/files/mgmt/saml-key.jks"
-jenkins_saml_private_key_password: "{{ vault_jenkins_saml_private_key_password }}"
-jenkins_saml_idp_metadata_url: https://idp.int.identitysandbox.gov/api/saml/metadata2020
-jenkins_saml_idp_logout_url: https://idp.int.identitysandbox.gov/api/saml/logout2020
-jenkins_system_message: >
-  Data.gov continuous integration and delivery service.
-jenkins_home: /data/jenkins
-jenkins_host: jenkins.mgmt-ocsit.bsp.gsa.gov
-# TODO this should be the mgmt hosts certificate
-jenkins_tls_key: "{{ vault_jenkins_tls_key }}"
-jenkins_tls_cert: |-
-  -----BEGIN CERTIFICATE-----
-  MIIDrjCCApYCCQDzu3KSUyq/3DANBgkqhkiG9w0BAQsFADCBmDELMAkGA1UEBhMC
-  VVMxCzAJBgNVBAgMAkRDMRMwEQYDVQQHDApXYXNoaW5ndG9uMQwwCgYDVQQKDANH
-  U0ExDDAKBgNVBAsMA1RUUzEnMCUGA1UEAwweamVua2lucy5tZ210LW9jc2l0LmJz
-  cC5nc2EuZ292MSIwIAYJKoZIhvcNAQkBFhNkYXRhZ292aGVscEBnc2EuZ292MB4X
-  DTIwMTIzMDIzMDkyMFoXDTIxMTIzMDIzMDkyMFowgZgxCzAJBgNVBAYTAlVTMQsw
-  CQYDVQQIDAJEQzETMBEGA1UEBwwKV2FzaGluZ3RvbjEMMAoGA1UECgwDR1NBMQww
-  CgYDVQQLDANUVFMxJzAlBgNVBAMMHmplbmtpbnMubWdtdC1vY3NpdC5ic3AuZ3Nh
-  LmdvdjEiMCAGCSqGSIb3DQEJARYTZGF0YWdvdmhlbHBAZ3NhLmdvdjCCASIwDQYJ
-  KoZIhvcNAQEBBQADggEPADCCAQoCggEBANC1kQn9xl6/MHHg97JElUczykwQzVGP
-  7UzPEorCdwgJI4TTjQOZ0pyshsCDMNJ3ZxOVc/K/F19/iWm7txblQ/a4ltMmsnJR
-  2TgPgYIcRrbeJBKFrcFDAJnjaIs1C/AsBYtSkHnYa1XOElP8RSAzKXDJlyKTGr0l
-  MZnMo6602UGjF0gd7jV4XSWAM4i1w+HlvjEMkdK4G7Qu6sjGs5KoEFf1yPeBYmKD
-  YlC4I7TsxTKA4Vi4U1KSrubhGe+oL3CAdf86Wf8at20XO6Neyom5lQ3RIa7JZ8o8
-  lMu0pKm40rUI9Sw7LgY6cnjJ1SWep/r5FWlxRgRk2ZFRYjVdXgKJsd0CAwEAATAN
-  BgkqhkiG9w0BAQsFAAOCAQEAcRBtEu6yTokqVkVs9Erletrss3Dv8UDrFf52j45W
-  ZNWIKlBBtvwXXC2diZzNIrHKQkxfkPhUfLiFRaME45oi+K2phk7offJbFdDcJuAu
-  efZo0/4u3I9aU2xtK2XWbsyzleDKGPACCkW0nsNIzCRWCzIFAeKPCikyS1IyaV7F
-  exMXJYf3gPefY4kyqNgxv/71Log4D78V705QJJH3eaFh0EA3pKGpE0O3MPWJ6EBG
-  cbFZHpFAPxkcyCkj55O0/tGprbsbvn82v/k1nq5bKAotkzH8ZUIBJ/R2xpn8oujh
-  7gXXx3R9Z6Hdcqg4x1GbkUS4YYyX2d8QaDgmyEsiROtiig==
-  -----END CERTIFICATE-----
-
-default_tls_host_key: "{{ jenkins_tls_key }}"
-default_tls_host_certificate: "{{ jenkins_tls_cert }}"
-
-
-jenkins_url: ci.data.gov
 jenkins_admins_permissions:
   #- Agent/Build
   #- Agent/Configure
@@ -124,6 +100,64 @@ jenkins_admins_permissions:
   - View/Create
   - View/Delete
   - View/Read
+
+jenkins_job_authentication_token: "{{ vault_jenkins_job_authentication_token }}"
+jenkins_jobs:
+  - name: deploy-ci-platform
+    git_url: https://github.com/gsa/datagov-deploy.git
+  - name: deploy-ci-app-catalog
+    git_url: https://github.com/gsa/catalog-app.git
+  - name: deploy-ci-app-catalog-next
+    git_url: https://github.com/gsa/catalog.data.gov.git
+    github_project_url: https://github.com/gsa/datagov-ckan-multi
+  - name: deploy-ci-app-dashboard
+    git_url: https://github.com/gsa/project-open-data-dashboard.git
+  - name: deploy-ci-app-inventory
+    git_url: https://github.com/gsa/inventory-app.git
+  - name: deploy-ci-app-inventory-next
+    git_url: https://github.com/gsa/inventory-app.git
+    git_ref: refs/heads/inventory_ckan_2.8
+  - name: deploy-ci-app-wordpress
+    git_url: https://github.com/gsa/datagov-wp-boilerplate.git
+jenkins_saml_sp_entity_id: urn:gov:gsa:SAML:2.0.profiles:sp:sso:gsa:datagov-ci-jenkins
+jenkins_saml_keystore_password: "{{ vault_jenkins_saml_keystore_password }}"
+jenkins_saml_keystore_path: "{{ playbook_dir }}/files/mgmt/saml-key.jks"
+jenkins_saml_private_key_password: "{{ vault_jenkins_saml_private_key_password }}"
+jenkins_saml_idp_metadata_url: https://idp.int.identitysandbox.gov/api/saml/metadata2020
+jenkins_saml_idp_logout_url: https://idp.int.identitysandbox.gov/api/saml/logout2020
+jenkins_system_message: >
+  Data.gov continuous integration and delivery service.
+jenkins_home: /data/jenkins
+jenkins_host: jenkins.mgmt-ocsit.bsp.gsa.gov
+jenkins_tls_key: "{{ vault_jenkins_tls_key }}"
+jenkins_tls_cert: |
+  -----BEGIN CERTIFICATE-----
+  MIIDrjCCApYCCQDzu3KSUyq/3DANBgkqhkiG9w0BAQsFADCBmDELMAkGA1UEBhMC
+  VVMxCzAJBgNVBAgMAkRDMRMwEQYDVQQHDApXYXNoaW5ndG9uMQwwCgYDVQQKDANH
+  U0ExDDAKBgNVBAsMA1RUUzEnMCUGA1UEAwweamVua2lucy5tZ210LW9jc2l0LmJz
+  cC5nc2EuZ292MSIwIAYJKoZIhvcNAQkBFhNkYXRhZ292aGVscEBnc2EuZ292MB4X
+  DTIwMTIzMDIzMDkyMFoXDTIxMTIzMDIzMDkyMFowgZgxCzAJBgNVBAYTAlVTMQsw
+  CQYDVQQIDAJEQzETMBEGA1UEBwwKV2FzaGluZ3RvbjEMMAoGA1UECgwDR1NBMQww
+  CgYDVQQLDANUVFMxJzAlBgNVBAMMHmplbmtpbnMubWdtdC1vY3NpdC5ic3AuZ3Nh
+  LmdvdjEiMCAGCSqGSIb3DQEJARYTZGF0YWdvdmhlbHBAZ3NhLmdvdjCCASIwDQYJ
+  KoZIhvcNAQEBBQADggEPADCCAQoCggEBANC1kQn9xl6/MHHg97JElUczykwQzVGP
+  7UzPEorCdwgJI4TTjQOZ0pyshsCDMNJ3ZxOVc/K/F19/iWm7txblQ/a4ltMmsnJR
+  2TgPgYIcRrbeJBKFrcFDAJnjaIs1C/AsBYtSkHnYa1XOElP8RSAzKXDJlyKTGr0l
+  MZnMo6602UGjF0gd7jV4XSWAM4i1w+HlvjEMkdK4G7Qu6sjGs5KoEFf1yPeBYmKD
+  YlC4I7TsxTKA4Vi4U1KSrubhGe+oL3CAdf86Wf8at20XO6Neyom5lQ3RIa7JZ8o8
+  lMu0pKm40rUI9Sw7LgY6cnjJ1SWep/r5FWlxRgRk2ZFRYjVdXgKJsd0CAwEAATAN
+  BgkqhkiG9w0BAQsFAAOCAQEAcRBtEu6yTokqVkVs9Erletrss3Dv8UDrFf52j45W
+  ZNWIKlBBtvwXXC2diZzNIrHKQkxfkPhUfLiFRaME45oi+K2phk7offJbFdDcJuAu
+  efZo0/4u3I9aU2xtK2XWbsyzleDKGPACCkW0nsNIzCRWCzIFAeKPCikyS1IyaV7F
+  exMXJYf3gPefY4kyqNgxv/71Log4D78V705QJJH3eaFh0EA3pKGpE0O3MPWJ6EBG
+  cbFZHpFAPxkcyCkj55O0/tGprbsbvn82v/k1nq5bKAotkzH8ZUIBJ/R2xpn8oujh
+  7gXXx3R9Z6Hdcqg4x1GbkUS4YYyX2d8QaDgmyEsiROtiig==
+  -----END CERTIFICATE-----
+
+default_tls_host_key: "{{ jenkins_tls_key }}"
+default_tls_host_certificate: "{{ jenkins_tls_cert }}"
+
+jenkins_url: ci.data.gov
 
 
 # jumpbox
