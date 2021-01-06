@@ -223,9 +223,9 @@ ckanext.geodatagov.fgdc2iso_service = http://{{ catalog_ckan_fgdc2iso_host }}/fg
 ## SAML2auth Settings
 
 # TODO update certificates
-ckanext.saml2auth.idp_metadata.local_path=%(here)s/saml2/idp.xml
-ckanext.saml2auth.key_file_path=%(here)s/saml2/pki/mykey.pem
-ckanext.saml2auth.cert_file_path=%(here)s/saml2/pki/mycert.pem
+ckanext.saml2auth.idp_metadata.local_path=/etc/ckan/saml2/idp.xml
+ckanext.saml2auth.key_file_path=/etc/ckan/saml2/pki/mykey.pem
+ckanext.saml2auth.cert_file_path=/etc/ckan/saml2/pki/mycert.pem
 
 ckanext.saml2auth.idp_metadata.location=local
 ckanext.saml2auth.user_firstname=first_name
