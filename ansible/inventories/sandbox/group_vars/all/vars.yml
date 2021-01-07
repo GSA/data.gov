@@ -27,7 +27,9 @@ catalog_db_name: "{{ catalog_ckan_db_name }}"
 catalog_db_user: "{{ catalog_ckan_db_user }}"
 
 # catalog-next
-catalog_next_ckan_db_name: catalog_db_next
+catalog_next_ckan_db_name: ckan
+catalog_next_ckan_db_pass: "{{ vault_catalog_next_ckan_db_pass }}"
+catalog_next_ckan_db_user: ckan
 catalog_next_ckan_fgdc2iso_host: catalog-next-fgdc2iso1tf.internal.sandbox.datagov.us
 catalog_next_ckan_redis_host: master.rep-sandbox-catalog-next.5kspe7.use1.cache.amazonaws.com
 catalog_next_ckan_redis_password: "{{ vault_catalog_next_ckan_redis_password }}"
