@@ -128,29 +128,16 @@ inventory_next_postgresql_login_password: "{{ vault_inventory_next_postgresql_lo
 
 jenkins_admin_password: "{{ vault_jenkins_admin_password }}"
 jenkins_job_authentication_token: "{{ vault_jenkins_job_authentication_token }}"
-jenkins_jobs:
-  - name: deploy-ci-platform
-    git_url: https://github.com/gsa/datagov-deploy.git
-    git_ref: refs/heads/develop
-  - name: deploy-ci-app-catalog
-    git_url: https://github.com/gsa/catalog-app.git
-  - name: deploy-ci-app-catalog-next
-    git_url: https://github.com/gsa/catalog.data.gov.git
-    github_project_url: https://github.com/gsa/datagov-ckan-multi
-  - name: deploy-ci-app-dashboard
-    git_url: https://github.com/gsa/project-open-data-dashboard.git
-  - name: deploy-ci-app-inventory
-    git_url: https://github.com/gsa/inventory-app.git
-  - name: deploy-ci-app-inventory-next
-    git_url: https://github.com/gsa/inventory-app.git
-    git_ref: refs/heads/inventory_ckan_2.8
-  - name: deploy-ci-app-wordpress
-    git_url: https://github.com/gsa/datagov-wp-boilerplate.git
-
-jenkins_config: "{{ lookup('template', 'jenkins_config_sandbox.yml.j2') }}"
-
-jenkins_home: /data/jenkins
-jenkins_hostname: jenkins1tf.internal.sandbox.datagov.us
+jenkins_admins: "{{ datagov_operators_test | map(attribute='email') | list }}"
+jenkins_saml_sp_entity_id: urn:gov:gsa:SAML:2.0.profiles:sp:sso:gsa:ci_datagov_sandbox
+jenkins_saml_keystore_password: "{{ vault_jenkins_saml_keystore_password }}"
+jenkins_saml_keystore_path: "{{ playbook_dir }}/files/sandbox/saml-key.jks"
+jenkins_saml_private_key_password: "{{ vault_jenkins_saml_private_key_password }}"
+jenkins_saml_idp_metadata_url: https://idp.int.identitysandbox.gov/api/saml/metadata2020
+jenkins_saml_idp_logout_url: https://idp.int.identitysandbox.gov/api/saml/logout2020
+jenkins_system_message: >
+  Data.gov sandbox continuous integration and delivery service.
+jenkins_host: jenkins1tf.internal.sandbox.datagov.us
 jenkins_tls_key: "{{ vault_jenkins_tls_key }}"
 jenkins_tls_cert: |-
   -----BEGIN CERTIFICATE-----
@@ -189,7 +176,42 @@ jenkins_tls_cert: |-
   iqmUG4lFFNeBYMYt5wPR3I+e6Bn2tk/a5McVhCQt6uVBWfgiPnxrU+pef2EgQ7J9
   VzQrATk1ZB3jBepMlhLBl7I=
   -----END CERTIFICATE-----
-jenkins_host: ci.sandbox.datagov.us
+jenkins_url: ci.sandbox.datagov.us
+jenkins_admins_permissions:
+  - Agent/Build
+  - Agent/Configure
+  - Agent/Connect
+  - Agent/Create
+  - Agent/Delete
+  - Agent/Disconnect
+  - Agent/Provision
+  - Credentials/Create
+  - Credentials/Delete
+  - Credentials/ManageDomains
+  - Credentials/Update
+  - Credentials/View
+  - Job/Build
+  - Job/Cancel
+  - Job/Configure
+  - Job/Create
+  - Job/Delete
+  - Job/Discover
+  - Job/Move
+  - Job/Read
+  - Job/Workspace
+  - Lockable Resources/Reserve
+  - Lockable Resources/Unlock
+  - Lockable Resources/View
+  - Overall/Administer
+  - Overall/Read
+  - Run/Delete
+  - Run/Replay
+  - Run/Update
+  - SCM/Tag
+  - View/Configure
+  - View/Create
+  - View/Delete
+  - View/Read
 
 
 jumpbox_operators: "{{ datagov_operators_test }}"

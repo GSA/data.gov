@@ -68,6 +68,9 @@ common_filebeat_config:
 
 common_newrelic_enabled: "{{ datagov_in_service | default(true) }}"
 common_python_version_number: 2.7.10
+# Trailing space is signficant here.
+common_shell_prompt: >-
+  ${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u@\h\[\033[00m\] (production) \[\033[01;34m\]\w\[\033[00m\]\$ 
 common_ubuntu_advantage_token: "{{ vault_common_ubuntu_advantage_token }}"
 filebeat_enabled: true
 nessus_agent_enabled: true

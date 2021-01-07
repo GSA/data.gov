@@ -220,28 +220,25 @@ ckan.harvest.status_mail.all=True
 # FGDC service
 ckanext.geodatagov.fgdc2iso_service = http://{{ catalog_ckan_fgdc2iso_host }}/fgdc2iso/
 
-## SAML2 Settings
-saml2.issuer = {{ saml2_issuer }}
-saml2.site_url = {{ saml2_site_url }}
-saml2.config_path = %(here)s/saml2
-saml2.idp_url = {{ saml2_idp_url }}
+## SAML2auth Settings
 
-# Needed for login.gov
-saml2.name_id_from_saml2_NameID = true
+# TODO update certificates
+ckanext.saml2auth.idp_metadata.local_path=/etc/ckan/saml2/idp.xml
+ckanext.saml2auth.key_file_path=/etc/ckan/saml2/pki/mykey.pem
+ckanext.saml2auth.cert_file_path=/etc/ckan/saml2/pki/mycert.pem
 
-saml2.user_mapping =
-    email~email
-    fullname~email
-    id~uuid
-    name~email
-
-saml2.organization_mapping =
-    name~field_unique_id
-    title~field_organization
-    extras:organization_type~field_organization_type
-
-saml2.max_redirect_slo =
-saml2.max_security_level = https://max.gov/icam/2015/10/securityLevels/securePlus2
+ckanext.saml2auth.idp_metadata.location=local
+ckanext.saml2auth.user_firstname=first_name
+ckanext.saml2auth.user_lastname=last_name
+ckanext.saml2auth.user_email=email
+ckanext.saml2auth.allow_unknown_attributes=true
+ckanext.saml2auth.sp.name_id_format=urn:oasis:names:tc:saml:2.0:nameid-format:persistent urn:oasis:names:tc:saml:2.0:nameid-format:transient urn:oasis:names:tc:saml:2.0:nameid-format:emailaddress
+ckanext.saml2auth.entity_id={{ saml2_issuer }}
+ckanext.saml2auth.want_response_signed=false
+ckanext.saml2auth.want_assertions_signed=false
+ckanext.saml2auth.want_assertions_or_response_signed=true
+ckanext.saml2auth.enable_ckan_internal_login=false
+# ckanext.saml2auth.attribute_map_dir={{ saml2_attributemaps_dir }}
 
 # Google Analytics
 googleanalytics.ids = UA-42145528-2 UA-17367410-17

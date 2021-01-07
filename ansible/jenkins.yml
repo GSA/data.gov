@@ -3,3 +3,20 @@
   hosts: jenkins
   roles:
     - gsa.datagov-deploy-jenkins
+  tasks:
+    - name: flush handlers
+      meta: flush_handlers
+
+    # https://github.com/geerlingguy/ansible-role-jenkins/blob/8540d6c49f16dcb4def1c87e7b13610223a87aa5/tasks/main.yml#L35
+    - name: smoke test
+      uri:
+        url: "https://{{ jenkins_url }}/cli/"
+        return_content: true
+        timeout: 5
+        body_format: raw
+        follow_redirects: "no"
+        status_code: 200,403
+      register: result
+      until: (result.status == 403 or result.status == 200) and (result.content.find("Please wait while") == -1)
+      retries: 60
+      delay: 1

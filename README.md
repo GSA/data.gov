@@ -31,9 +31,9 @@ See our [Roadmap](docs/roadmap.md) for where we're taking Data.gov.
 
 Production and staging environments are deployed to FAS Cloud Services (FCS,
 formerly BSP). Our sandbox environments are provisioned by
-[datagov-infrastructure-live](https://github.com/gsa/datagov-infrastructure-live).
+[GSA/datagov-infrastructure-live](https://github.com/gsa/datagov-infrastructure-live).
 
-GSA [VPN access](https://github.com/GSA/datagov-deploy/wiki/Horizon-Desktop) is required to access production and staging.
+GSA [VPN access](https://github.com/GSA/datagov-deploy/wiki/GSA-VPN) is required to access production and staging.
 
 Environment | Deployed from      | ISP | Jumpbox
 ----------- | -------------      | --- | ----
@@ -539,7 +539,7 @@ API).
 Using the
 [configuration-as-code](https://plugins.jenkins.io/configuration-as-code/)
 plugin, we are able to define the Jenkins configuration and its job
-configuration in [code](./ansible/templates/jenkins_config_sandbox.yml.j2).
+configuration in [code](./ansible/templates/jenkins_config.yml.j2).
 After running the `jenkins.yml` playbook, there are a few manual steps that need
 to be done.
 
@@ -571,16 +571,42 @@ configuration-as-code configuraiton._
 
 #### CI user
 
-Add a [CI user](https://ci.sandbox.datagov.us/securityRealm/). You can set
-a random password. You'll need this password to log in as the new CI user
-(Jenkins does not allow creating the API token as the admin user, you'll have to
-log in as the CI user itself).
+With SAML authentication enabled, you can no longer create user/service accounts
+through the UI. Instead, use the [script
+console](https://ci.sandbox.datagov.us/script) to run the script below. Set
+a random password. The return value is the API token save for later as you won't have
+another chance.
 
-[Create an API key](https://ci.sandbox.datagov.us/user/ci/configure) which
-you'll use below to configure CircleCI.
+The CI user should be assigned to teh `build-manager` role. This is already
+configured in our configuration-as-code.
 
-[Assign the CI user](https://ci.sandbox.datagov.us/role-strategy/assign-roles)
-to the `build-manager` so that the user is authorized to trigger a build.
+```groovy
+// fill these out script parameters
+def userName = 'ci'
+def userPassword = // pwgen -s 64 1
+def tokenName = 'circleci'
+
+import hudson.model.*
+import hudson.security.*
+import jenkins.model.*
+import jenkins.security.*
+import jenkins.security.apitoken.*
+
+// create the user
+def instance = Jenkins.getInstance()
+def hudsonRealm = new HudsonPrivateSecurityRealm(false)
+hudsonRealm.createAccount(userName, userPassword)
+instance.setSecurityRealm(hudsonRealm)
+instance.save()
+
+// create an API token for the user
+def user = User.get(userName, false)
+def apiTokenProperty = user.getProperty(ApiTokenProperty.class)
+def result = apiTokenProperty.tokenStore.generateNewToken(tokenName)
+user.save()
+
+return result.plainValue
+```
 
 
 ### CircleCI Setup
