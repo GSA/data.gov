@@ -2,6 +2,13 @@
 version: v1.13.5
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
+  SNYK-PYTHON-ANYCONFIG-1055467:
+    - '*':
+        reason: >-
+          molecule is only used for testing in trusted environments.
+          Work is ongoing to upgrade molecule to v3, current risk is
+          acceptable
+        expires: 2021-2-07T00:00:00.000Z
   SNYK-PYTHON-ANSIBLE-536475:
     - '*':
         reason: >-
