@@ -48,7 +48,7 @@ datagov_operators_production:
     email: fuhu.xia@gsa.gov
     public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3THO5PQvZoEGscVKh1RdnCEyfW62f41H8NaGNj7faV1TO2ngo1U/WyKvf1QnOanllGaPQLYeE0tsmXChz6tbKErssL04Zux+UEUfU2MHLhqsb3IkAvIKjYGIl9gvFRYDslvSxZjCXtRA+egqZlmgXpJ2+nYLMPjar3nxnN/8Je+dTIgX0EGCtOPLC8ouvSg7ZEwIf7D3C4HT/kvvGyFUDj/hUgVpxqUTaeO2ILoCgyHvAqS0hy3Fn1uStAZJ6cbub7AnmGvo4CJqamx8zVzepFBQk0+Kcsp92hXclSrsi9m/UpeCbmL0k6VbamKZHEcJUC4CfvsJ2yGT0EoMO+l5l fuhu.xia@gsa.gov
   - username: jamesbrown
-    email: jbrown@xentity.com
+    email: james.c.brown@gsa.gov
     public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0hjmDjbqbRLZN7sCvztfrrOpFoNSc7o2z0sSs3i5pL3TAeySkBXvzr9i9JglRVgd8lJC+ucX9t5GBcw8PLVoaGwoErnEVLUYLsWDgn2PSCPMakffB5PB6kzgnzuxJsXRxKpU8aEUNIFi7/2W0knBiGOBS4JR06xlDngI1HhjS0Qc8ge46fYy9GVeROkW49X2J6RxwJ+nKMjs8It2uyH+tf3zeJ6YeevoruaEvCF6QuJjA06haTH4lYHJ186ql96iaMGEW4+AJTIaLHNtHGOr3kxDaS+nZUdUBJFYrthHWBUYiKxH0xxM5d+UVesv3PfZ9iemBQx2FFx/AR8/RXSed jamesbrown@pop-os
   - username: jkramer
     email: julie.kramer@civicactions.com
@@ -91,7 +91,7 @@ datagov_operators_test:
     email: fuhu.xia@gsa.gov
     public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3THO5PQvZoEGscVKh1RdnCEyfW62f41H8NaGNj7faV1TO2ngo1U/WyKvf1QnOanllGaPQLYeE0tsmXChz6tbKErssL04Zux+UEUfU2MHLhqsb3IkAvIKjYGIl9gvFRYDslvSxZjCXtRA+egqZlmgXpJ2+nYLMPjar3nxnN/8Je+dTIgX0EGCtOPLC8ouvSg7ZEwIf7D3C4HT/kvvGyFUDj/hUgVpxqUTaeO2ILoCgyHvAqS0hy3Fn1uStAZJ6cbub7AnmGvo4CJqamx8zVzepFBQk0+Kcsp92hXclSrsi9m/UpeCbmL0k6VbamKZHEcJUC4CfvsJ2yGT0EoMO+l5l fuhu.xia@gsa.gov
   - username: jamesbrown
-    email: jbrown@xentity.com
+    email: james.c.brown@gsa.gov
     public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0hjmDjbqbRLZN7sCvztfrrOpFoNSc7o2z0sSs3i5pL3TAeySkBXvzr9i9JglRVgd8lJC+ucX9t5GBcw8PLVoaGwoErnEVLUYLsWDgn2PSCPMakffB5PB6kzgnzuxJsXRxKpU8aEUNIFi7/2W0knBiGOBS4JR06xlDngI1HhjS0Qc8ge46fYy9GVeROkW49X2J6RxwJ+nKMjs8It2uyH+tf3zeJ6YeevoruaEvCF6QuJjA06haTH4lYHJ186ql96iaMGEW4+AJTIaLHNtHGOr3kxDaS+nZUdUBJFYrthHWBUYiKxH0xxM5d+UVesv3PfZ9iemBQx2FFx/AR8/RXSed jamesbrown@pop-os
   - username: jkramer
     email: julie.kramer@civicactions.com
