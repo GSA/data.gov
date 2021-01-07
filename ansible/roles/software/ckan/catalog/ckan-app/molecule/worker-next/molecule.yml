@@ -5,9 +5,6 @@ dependency:
     role-file: molecule/shared/requirements.yml
 driver:
   name: docker
-lint:
-  name: yamllint
-  enabled: false
 platforms:
   - name: ckan-catalog-app-bionic
     image: ubuntu:bionic
@@ -53,8 +50,9 @@ provisioner:
         newrelic_license_key: some-secret
         # https://github.com/DavidWittman/ansible-redis/blob/21b0b6f9030275a2586baf591f322ce3348b2b2d/tasks/install.yml#L9
         redis_travis_ci: true
-  lint:
-    name: ansible-lint
+  lint: |
+    set -e
+    ansible-lint
   playbooks:
     prepare: ../shared/prepare.yml
 scenario:
@@ -76,5 +74,6 @@ scenario:
     - destroy
 verifier:
   name: testinfra
-  lint:
-    name: flake8
+  lint: |
+    set -e
+    flake8

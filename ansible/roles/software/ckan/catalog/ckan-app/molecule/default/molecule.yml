@@ -5,9 +5,6 @@ dependency:
     role-file: molecule/shared/requirements.yml
 driver:
   name: docker
-lint:
-  name: yamllint
-  enabled: false
 platforms:
   - name: ckan-catalog-app-trusty
     image: ubuntu:trusty
@@ -37,8 +34,9 @@ provisioner:
         redis_travis_ci: true
       v2:
         app_repo_branch: bionic
-  lint:
-    name: ansible-lint
+  lint: |
+    set -e
+    ansible-lint
   playbooks:
     prepare: ../shared/prepare.yml
 scenario:
@@ -60,5 +58,6 @@ scenario:
     - destroy
 verifier:
   name: testinfra
-  lint:
-    name: flake8
+  lint: |
+    set -e
+    flake8
