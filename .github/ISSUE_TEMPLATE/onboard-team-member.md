@@ -40,6 +40,7 @@ Below are the tasks that will drive the onboarding process.
        $ cf set-space-role <email> gsa-datagov <space> SpaceDeveloper
 
 - [ ] Request Federalist access by posting in [#federalist-support](https://gsa-tts.slack.com/archives/C1NUUGTT5) with the new member's GitHub username.
+- [ ] Once member had logged into Login.gov, add them to the [data.gov team](https://dashboard.int.identitysandbox.gov/teams/174).
 
 For new Project Management Office team members, follow these additional steps:
 
@@ -65,6 +66,7 @@ For new Project Management Office team members, follow these additional steps:
 
 ### Tasks for new team member
 
+- [ ] Log into [Login.gov dashboard](https://dashboard.int.identitysandbox.gov/auth/logindotgov)
 - [ ] Ensure your GitHub account meets the criteria for [GSA GitHub org](https://github.com/GSA/GitHub-Administration/blob/master/README.md) (setup 2FA)
 - [ ] Read through the [required reading list](https://github.com/GSA/datagov-deploy/wiki/Onboarding-Offboarding#required-reading-list)
 - [ ] [Request access](https://docs.google.com/forms/d/e/1FAIpQLSetStmwqrbMWDz_WIlh1trjhP0PFCjKXHzshsJveYmtIvlG2Q/viewform) to Data.gov systems; select “Catalog Admin” for the system, and “Data.gov team member” for justification
