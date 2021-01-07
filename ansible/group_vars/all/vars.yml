@@ -147,6 +147,7 @@ jenkins_jobs:
     git_url: https://github.com/gsa/datagov-wp-boilerplate.git
 jenkins_additional_plugins:
   - build-token-root  # Allow CircleCI to trigger builds with a job token
+jenkins_prefer_tls: true  # Use long-term-support releases instead of weekly updates
 
 
 # Limit SSH Access
