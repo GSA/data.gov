@@ -25,6 +25,7 @@ These tasks are performed by an Admin unless noted as an action for the outgoing
   - [datagovhelp](https://groups.google.com/a/gsa.gov/forum/#!forum/datagovhelp)
   - [inventory-help](https://groups.google.com/a/gsa.gov/forum/#!forum/inventory-help)
 - [ ] Remove team member from [Data.gov calendar](https://calendar.google.com/calendar/r/settings/calendar/Z3NhLmdvdl9zcjZ0NG52YjRhOTNjNnNzdHRxYXAzbjZtMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t) and events
+- [ ] Remove team member from [Login.gov team](https://dashboard.int.identitysandbox.gov/teams/174).
 - [ ] Remove team member from [New Relic](https://newrelic.com)
 - [ ] Remove team member from [Docker Hub](https://cloud.docker.com/orgs/datagov/teams)
 - [ ] Remove team member from [Data.gov system accounts](https://github.com/GSA/datagov-deploy/wiki/CKAN-commands#system-administrator-accounts) on Inventory and Catalog
