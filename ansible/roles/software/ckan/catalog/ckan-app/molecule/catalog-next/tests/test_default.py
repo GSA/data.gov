@@ -54,7 +54,8 @@ def test_production_ini(host):
     assert production_ini.mode == 0o640
 
     assert production_ini.contains('ckan.plugins =.*datajson_harvest')
-    assert production_ini.contains('ckan.plugins =.*saml2')
+    # TODO just for sandbox-next
+    # assert production_ini.contains('ckan.plugins =.*saml2auth')
 
 
 def test_who_ini(host):
@@ -65,7 +66,7 @@ def test_who_ini(host):
     assert who_ini.group == 'www-data'
     assert who_ini.mode == 0o640
 
-    assert who_ini.contains('saml2auth')
+    # TODO just for sandbox-next assert not who_ini.contains('saml2auth')
 
 
 def test_compatible_repoze_who(host):

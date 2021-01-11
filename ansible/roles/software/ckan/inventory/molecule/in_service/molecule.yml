@@ -5,9 +5,6 @@ dependency:
     role-file: requirements.yml
 driver:
   name: docker
-lint:
-  name: yamllint
-  enabled: false
 platforms:
   - name: inventory-ckan-trusty
     image: ubuntu:trusty
@@ -23,8 +20,9 @@ platforms:
       - SYS_ADMIN
 provisioner:
   name: ansible
-  lint:
-    name: ansible-lint
+  lint: |
+    set -e
+    ansible-lint
   playbooks:
     prepare: ../resources/prepare.yml
     converge: ../resources/playbook.yml
@@ -58,5 +56,6 @@ scenario:
     - destroy
 verifier:
   name: testinfra
-  lint:
-    name: flake8
+  lint: |
+    set -e
+    flake8

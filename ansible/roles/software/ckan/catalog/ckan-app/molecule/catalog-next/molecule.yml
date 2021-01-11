@@ -5,9 +5,6 @@ dependency:
     role-file: molecule/shared/requirements.yml
 driver:
   name: docker
-lint:
-  name: yamllint
-  enabled: false
 platforms:
   - name: ckan-catalog-app-bionic
     image: ubuntu:bionic
@@ -35,7 +32,7 @@ provisioner:
         catalog_ckan_who_ini_path: "catalog-next/etc_ckan_who.saml2.ini.j2"
         saml2_idp_metadata_url: "https://idp.int.identitysandbox.gov/api/saml/metadata2020"
         saml2_site_url: "https://catalog-next.sandbox.datagov.us/"
-        saml2_issuer: "urn:gov:gsa:SAML:2.0.profiles:sp:sso:datagovus:catalog-next-sandbox"
+        catalog_ckan_saml2_entity_id: "urn:gov:gsa:SAML:2.0.profiles:sp:sso:datagovus:catalog-next-sandbox"
         saml2_idp_url: https://idp.int.identitysandbox.gov/api/saml/auth2020
         saml2_sp_public_certificate: |-
           -----BEGIN CERTIFICATE-----
@@ -116,8 +113,9 @@ provisioner:
         catalog_ckan_plugins_additional:
           - saml2
         newrelic_license_key: some-secret
-  lint:
-    name: ansible-lint
+  lint: |
+    set -e
+    ansible-lint
   playbooks:
     prepare: ../shared/prepare.yml
 scenario:
@@ -139,5 +137,6 @@ scenario:
     - destroy
 verifier:
   name: testinfra
-  lint:
-    name: flake8
+  lint: |
+    set -e
+    flake8

@@ -15,10 +15,11 @@
 - name: create pki directory
   action: file path=/etc/ckan/saml2/pki state=directory mode=0750 owner=root group=www-data
 
+# TODO remove this after ckanext-saml2auth ships
 - name: create attributemaps directory
   action: file path=/etc/ckan/saml2/attributemaps state=directory mode=0755 owner=root group=www-data
 
-# TODO configuration files should live in the application repo
+# TODO remove this after ckanext-saml2auth ships
 - name: copy all needed files
   copy: src=saml2/{{ saml2_attributemaps_dir }}/ dest=/etc/ckan/saml2/attributemaps mode=0644 owner=root group=www-data
   notify: reload apache2

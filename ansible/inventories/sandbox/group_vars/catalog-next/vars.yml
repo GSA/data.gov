@@ -7,8 +7,8 @@ catalog_ckan_apache_server_alias:
   - d1xr5ix4dos50f.cloudfront.net
 catalog_ckan_db_host: "{{ catalog_next_postgresql_login_host }}"
 catalog_ckan_db_name: "{{ catalog_next_ckan_db_name }}"
-catalog_ckan_db_pass: "{{ catalog_next_postgresql_login_password }}"
-catalog_ckan_db_user: "{{ catalog_next_postgresql_login_user }}"
+catalog_ckan_db_pass: "{{ catalog_next_ckan_db_pass }}"
+catalog_ckan_db_user: "{{ catalog_next_ckan_db_user }}"
 catalog_ckan_fgdc2iso_host: "{{ catalog_next_ckan_fgdc2iso_host }}"
 
 catalog_ckan_redis_url: "{{ catalog_next_ckan_redis_url }}"
@@ -16,15 +16,36 @@ catalog_ckan_redis_host: "{{ catalog_next_ckan_redis_host }}"
 catalog_ckan_redis_password: "{{ catalog_next_ckan_redis_password }}"
 
 catalog_ckan_plugins_default: "{{ catalog_next_ckan_plugins_default }}"
-catalog_ckan_plugins_additional: [saml2]
+catalog_ckan_plugins_additional: [saml2auth]
 
 # login.gov identity sandbox
 saml2_idp_metadata_url: "https://idp.int.identitysandbox.gov/api/saml/metadata2020"
-saml2_issuer: "urn:gov:gsa:SAML:2.0.profiles:sp:sso:datagovus:catalog-next-sandbox"
+catalog_ckan_saml2_entity_id: urn:gov:gsa:SAML:2.0.profiles:sp:sso:gsa:datagov-sandbox-catalog
 saml2_site_url: "https://catalog-next.sandbox.datagov.us/"
 saml2_idp_url: https://idp.int.identitysandbox.gov/api/saml/auth2020
-saml2_sp_public_certificate: "{{ vault_catalog_next_saml2_sp_public_certificate }}"
 saml2_sp_private_key: "{{ vault_catalog_next_saml2_sp_private_key }}"
+saml2_sp_public_certificate: |
+  -----BEGIN CERTIFICATE-----
+  MIIDgjCCAmoCCQCXYZkCURsR4DANBgkqhkiG9w0BAQsFADCBgjELMAkGA1UEBhMC
+  VVMxCzAJBgNVBAgMAkRDMRMwEQYDVQQHDApXYXNoaW5ndG9uMQwwCgYDVQQKDANH
+  U0ExDDAKBgNVBAsMA1RUUzERMA8GA1UEAwwIZGF0YS5nb3YxIjAgBgkqhkiG9w0B
+  CQEWE2RhdGFnb3ZoZWxwQGdzYS5nb3YwHhcNMjEwMTA3MjA0MjUwWhcNMjIwMTA3
+  MjA0MjUwWjCBgjELMAkGA1UEBhMCVVMxCzAJBgNVBAgMAkRDMRMwEQYDVQQHDApX
+  YXNoaW5ndG9uMQwwCgYDVQQKDANHU0ExDDAKBgNVBAsMA1RUUzERMA8GA1UEAwwI
+  ZGF0YS5nb3YxIjAgBgkqhkiG9w0BCQEWE2RhdGFnb3ZoZWxwQGdzYS5nb3YwggEi
+  MA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCyWoCyn/HYc8V1B8fm0QnKAxWh
+  IHgSS7k0hWZTzXobc1IIhojPr50hgaSEc19qlVD+Jbli3SIYK4GwfElCy2L+cWAf
+  gRWNCzdXJOVKXNXHjVXj7vbxX8rFYEbAw8LMlu/XtCe42rdrVNpZC8hTT5kxtgHI
+  nbEB+IMZl+n10vESm46MsC0JZF1ywPBQVPPlYWcJ1WQWz0i/hmrEOpRqnlHfQ3tL
+  A2eLqdu0OLO4RXznRWM31zMXx5wyaCet7EqYPke4OBsaGbN+Ii3VLsgrGiyHxV4r
+  uladNvP0X8co+2BWwj2e/esTWeQ+EuvMryL7JADDBwZagzY7AJSCSjgFNNOlAgMB
+  AAEwDQYJKoZIhvcNAQELBQADggEBAJDwKJfCDtTEzi6GgGbRau5PMWkaF8rBOc9P
+  4VSitBsCvG19Tk7eLFVYXDsxfo9S7Ulxwh12/9yu0NfbewF8m8NXcYeOWUjJWvkK
+  AhPRml9uCYNtQe3kwRvrMACdm5k8vkcAU0ZsSqNlMomcHBER79n4Dnegmx11+I1x
+  p7iKAQcLWzoV4wqJv3APvl0r6CpCAEeSUjwWscKmME1aF00V6PPDTYKJSm/c93si
+  O/RCGIoCnNX6GlK3wpurXp1U36FfFkZYPzVQCggGSTDYczts6pJ+oj1OGCHuNPgF
+  x8Me29JSC5KGy4dbPCdM42X/KUyobVoqQwjrs0SIN+fkpD4Uoas=
+  -----END CERTIFICATE-----
 
 # saml2 role will install attribute maps from here (and trailing
 # slash is significant!)
