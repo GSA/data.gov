@@ -6,7 +6,13 @@
     - { role: software/common/tls, tags: [provision, tls] }
     - { role: software/common/php-common, tags: [provision] }
     - { role: geerlingguy.git, tags: [provision] }
-    - { role: geerlingguy.nginx, tags: [nginx, provision] }
+    - role: geerlingguy.nginx
+      vars:
+        # Remove nginx version info
+        nginx_server_tokens: "off"
+      tags:
+        - nginx
+        - provision
     - { role: geerlingguy.php-versions, tags: [php, provision] }
     - { role: geerlingguy.php, tags: [php, provision] }
     - { role: geerlingguy.php-mysql, tags: [php, php-mysql, provision] }
