@@ -159,6 +159,7 @@ default_tls_host_certificate: |-
 
 
 jumpbox_operators: "{{ datagov_operators_production }}"
+jumpbox_shell_prompt: "{{ common_shell_prompt }}"
 
 
 inventory_ckan_service_url: https://inventory.data.gov
