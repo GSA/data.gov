@@ -46,7 +46,3 @@ saml2_sp_public_certificate: |
   O/RCGIoCnNX6GlK3wpurXp1U36FfFkZYPzVQCggGSTDYczts6pJ+oj1OGCHuNPgF
   x8Me29JSC5KGy4dbPCdM42X/KUyobVoqQwjrs0SIN+fkpD4Uoas=
   -----END CERTIFICATE-----
-
-# saml2 role will install attribute maps from here (and trailing
-# slash is significant!)
-saml2_attributemaps_dir: login_gov

@@ -48,8 +48,43 @@ catalog_next_ckan_solr_b_host: datagov-solr2p-v2.prod-ocsit.bsp.gsa.gov
 catalog_next_ckan_solr_primary_host: datagov-solrm1p-v2.prod-ocsit.bsp.gsa.gov
 catalog_next_ckan_token_dat: "{{ vault_catalog_next_ckan_token_dat }}"
 catalog_next_ckan_who_ini_secret: "{{ vault_catalog_next_ckan_who_ini_secret }}"
-catalog_next_ckan_saml2_enabled: false
+catalog_next_ckan_saml2_enabled: true
 catalog_next_ckan_who_ini_path: "etc_ckan_who.default.ini.j2"
+catalog_next_saml2_sp_public_certificate: |-
+  -----BEGIN CERTIFICATE-----
+  MIIFgjCCA2oCCQCQl3+XUEkb0DANBgkqhkiG9w0BAQsFADCBgjELMAkGA1UEBhMC
+  VVMxCzAJBgNVBAgMAkRDMRMwEQYDVQQHDApXYXNoaW5ndG9uMQwwCgYDVQQKDANH
+  U0ExDDAKBgNVBAsMA1RUUzERMA8GA1UEAwwIZGF0YS5nb3YxIjAgBgkqhkiG9w0B
+  CQEWE2RhdGFnb3ZoZWxwQGdzYS5nb3YwHhcNMjEwMTEyMjMzMjIwWhcNMjIwMTEy
+  MjMzMjIwWjCBgjELMAkGA1UEBhMCVVMxCzAJBgNVBAgMAkRDMRMwEQYDVQQHDApX
+  YXNoaW5ndG9uMQwwCgYDVQQKDANHU0ExDDAKBgNVBAsMA1RUUzERMA8GA1UEAwwI
+  ZGF0YS5nb3YxIjAgBgkqhkiG9w0BCQEWE2RhdGFnb3ZoZWxwQGdzYS5nb3YwggIi
+  MA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQD5fJlW5Q2a4l/EzXfrlCOKwwgd
+  3ZykJz4xtR6qPCoI5mubHcLuQ7ADspXhaAYgUIzqPvyX8B8xW1Pi3P+YhHcviFiQ
+  FIA76mcaj/PDyVGmVcvllLkqJ5AoKAM9UR8n4hQBaM7dk6E2oV1T219aH13EMdf0
+  hhrU58KE3rF02O64x1nZIjGxknIwe7DqX1Wk3Xz01wkfvl1i6Bz+cfOpAe1WmnFJ
+  ZSIPcp8gFOPCMUUxy3oTMpO5nSmnH2UMROO9mD/6xXzMuSj7vbVcBkoZ/ckNbXSo
+  lwYxb0FK7E79jtpVNv4lFz/edoBXOjOGULO8wBmHpj+XF590eIL9u6+Aa3Fex7Pv
+  HrI2ZwFALxrTbNmjkw8NDHG9OzB2cELFPmIv6z4Vbm+St1qL6UvjDv1ODSZZTeca
+  u8UzcGKLceF2MKB2EDP44feWPF1P+lX3Mghu4KIxRwSyrwyQQWE/uaF0swCPMX8r
+  qR0mTTVWsXqmSTuAB0pNYVbrL0+UTz7UvkWCvLB0cpEO8O/fNkJEq3d/hLKJgR9Q
+  7daIHU6r+Mv4/dimXNPX3QwYrSaXbUETUP/9r8UpGIjdZmns7yG0lMdx20HymTc4
+  KutnsQgqJAmnsjIY7EPbAVV8sMOuncfu0dJ/FiYvOsj9tkNiQINBPa6tUAksTn5Q
+  k5EhToNngsD4d5F//QIDAQABMA0GCSqGSIb3DQEBCwUAA4ICAQCJt1nmm7QR5CgW
+  VV/wvvdxQDH/96Y0f8kKTFUHC+UgzEpQOvXooO3skhgt3xgIXkXFhyMJ3zPBb41P
+  +VUMr9u40k2xjB/f3oY67o/Y6yOCP0+/HSov9XprvP8ga41ZQovTLvQflctEFg5M
+  x8MZD3GuCo5vGRf/Iov+PnCi+QF2d9bFfdpseEIJFv4fcOJ9lb6dqnjpgeLE0qtZ
+  IY+cXgQUajOwK//yMpvQaYMkiwMgTcuSiMOoEqvfd98dewxESzlf6TtdNxrg8Vpq
+  aCfeqfo5QiV0k8P/npFrbdEm8KNvlOIqzh27H7ErH4VSjH7uhc1nIGMYL2F4+yF2
+  K6EXyN/q2k9tO3ANxNx/ZsC5JiVOds0qc04cPQRRaCT03dwqgjzGNIdDCcNfM6nq
+  QVlHVhvUj+XYerVc5ki4CAJrvLajKhvC0SHJdR1fG+8oxbJgOUiqg3klGGzhQIbk
+  T+RCdhBGXYOwjBGnabudWQPBkpjYVYKQyA+GDwcUoZneWlfKbpxcj1xpBJoewIX3
+  FVSfmJg9dPxCJm03wWCiKgbb4tOaCsjnhGpTnRF6WkFVPys1qJBaoFbjub/W2p+L
+  ZLfnY9zosumtWJVahSNJWrMpG7V9+wTP/pUTDYYsow4JKrH6TE+hRpaQ5gKRRPSG
+  BZ3SYIbIuB2mxi5e0toZbpm6+1cumA==
+  -----END CERTIFICATE-----
+
+catalog_next_saml2_sp_private_key: "{{ vault_catalog_next_saml2_sp_private_key }}"
 
 
 # common

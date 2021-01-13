@@ -8,14 +8,14 @@ catalog_ckan_db_name: "{{ catalog_next_ckan_db_name }}"
 catalog_ckan_db_pass: "{{ catalog_next_ckan_db_pass }}"
 catalog_ckan_db_user: "{{ catalog_next_ckan_db_user }}"
 catalog_ckan_plugins_default: "{{ catalog_next_ckan_plugins_default }}"
-catalog_ckan_plugins_additional: []  # disable saml2
+
 catalog_ckan_readwrite_configuration: readonly
 catalog_ckan_redis_host: "{{ catalog_next_ckan_redis_host }}"
 catalog_ckan_redis_password: "{{ catalog_next_ckan_redis_password }}"
 catalog_ckan_redis_url: "{{ catalog_next_ckan_redis_url }}"
 catalog_ckan_service_url: https://{{ catalog_host_public_next }}
 catalog_ckan_admin_service_url: https://{{ catalog_host_admin_next }}
-catalog_ckan_saml2_enabled: false
+catalog_ckan_saml2_enabled: true
 catalog_ckan_solr_host: "{{ catalog_next_ckan_solr_a_host }}"  # default. this is probably overridden in other groups/host vars
 catalog_ckan_who_ini_secret: "{{ catalog_next_ckan_who_ini_secret }}"
 
@@ -35,10 +35,19 @@ datagov_service: catalog-next
 
 newrelic_app_name: catalog-next
 
-saml2_site_url: https://admin-catalog-next-datagov.dev-ocsit.bsp.gsa.gov/
-
 # Token for working with the Google Analytics API
 token_dat: "{{ catalog_next_ckan_token_dat }}"
 
 url_readonly: https://{{ catalog_host_public_next }}
 url_writable: https://{{ catalog_host_admin_next }}
+
+catalog_ckan_plugins_additional: [saml2auth]
+
+# login.gov identity sandbox
+saml2_idp_metadata_url: "https://idp.int.identitysandbox.gov/api/saml/metadata2020"
+catalog_ckan_saml2_entity_id: urn:gov:gsa:SAML:2.0.profiles:sp:sso:gsa:datagov-staging-catalog
+saml2_site_url: "https://admin-catalog-next-datagov.dev-ocsit.bsp.gsa.gov/"
+saml2_idp_url: https://idp.int.identitysandbox.gov/api/saml/auth2020
+saml2_sp_private_key: "{{ catalog_next_saml2_sp_private_key }}"
+saml2_sp_public_certificate: "{{ catalog_next_saml2_sp_public_certificate }}"
+saml2_idp_entry: idp.int.identitysandbox.gov
