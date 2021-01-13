@@ -65,7 +65,3 @@ saml2_idp_url: https://idp.int.identitysandbox.gov/api/saml/auth2020
 saml2_sp_private_key: "{{ catalog_next_saml2_sp_private_key }}"
 saml2_sp_public_certificate: "{{ catalog_next_saml2_sp_public_certificate }}"
 saml2_idp_entry: idp.int.identitysandbox.gov
-
-# saml2 role will install attribute maps from here (and trailing
-# slash is significant!)
-saml2_attributemaps_dir: login_gov
