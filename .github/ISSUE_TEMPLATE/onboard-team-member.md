@@ -70,7 +70,7 @@ For new Project Management Office team members, follow these additional steps:
 - [ ] Ensure your GitHub account meets the criteria for [GSA GitHub org](https://github.com/GSA/GitHub-Administration/blob/master/README.md) (setup 2FA)
 - [ ] Read through the [required reading list](https://github.com/GSA/datagov-deploy/wiki/Onboarding-Offboarding#required-reading-list)
 - [ ] [Request access](https://docs.google.com/forms/d/e/1FAIpQLSetStmwqrbMWDz_WIlh1trjhP0PFCjKXHzshsJveYmtIvlG2Q/viewform) to Data.gov systems; select “Catalog Admin” for the system, and “Data.gov team member” for justification
-- [ ] Add yourself for [AWS sandbox access](https://github.com/GSA/datagov-infrastructure-live/tree/master/iam#new-users)
+- [ ] Add yourself for [AWS sandbox access](https://github.com/GSA/datagov-iam/tree/master/README.md#new-users)
 - [ ] Request access to AWS OPP account from team member
 - [ ] Add your public SSH key to [GSA/datagov-deploy](https://github.com/GSA/datagov-deploy/blob/develop/ansible/group_vars/all/vars.yml)
 - [ ] Setup the Ansible vault
