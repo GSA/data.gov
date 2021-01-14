@@ -1,3 +1,7 @@
 ---
 
 inventory_next: true
+ckan_production_ini_template: inventory-next/etc_ckan_production.ini.j2
+
+inventory_ckan_saml2_enabled: "{{ inventory_next_ckan_saml2_enabled }}"
+inventory_ckan_who_ini_path: "{{ inventory_next_ckan_who_ini_path }}"

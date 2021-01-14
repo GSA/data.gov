@@ -87,21 +87,33 @@
   with_items:
     - /var/lib/ckan/files/storage
 
-- name: copy all needed files
-  action: copy src={{ item }} dest=/{{ item }} owner=root group=www-data mode=0640
-  with_items:
-    - etc/ckan/who.ini
+# TODO remove this after ckanext-saml2auth ships
+- name: Configure who.ini
+  template:
+    src: "{{ inventory_ckan_who_ini_path }}"
+    dest: /etc/ckan/who.ini
+    owner: root
+    group: www-data
+    mode: 0640
   notify:
     - restart ckan
 
 - name: Configure production.ini
+  template:
+    src: "{{ ckan_production_ini_template }}"
+    dest: /etc/ckan/production.ini
+    owner: root
+    group: www-data
+    mode: 0640
+  notify:
+    - restart ckan
+
+- name: Configure apache file
   template: src={{ item }} dest=/{{ item }} owner=root group=www-data mode=0640
   with_items:
-    - etc/ckan/production.ini
     - etc/apache2/sites-enabled/ckan.conf
   notify:
     - restart apache2
-    - restart ckan
 
 - name: Copy app .env
   template:
