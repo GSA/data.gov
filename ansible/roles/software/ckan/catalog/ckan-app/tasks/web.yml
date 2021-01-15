@@ -1,9 +1,4 @@
 ---
-- name: Assert newrelic_license_key is set
-  assert:
-    that: newrelic_license_key is defined
-    fail_msg: newrelic_license_key is required but it is not set
-
 - name: Install WSGI app
   copy: src=etc_ckan_apache.wsgi dest=/etc/ckan/apache.wsgi mode=0644 owner=root group=www-data
   notify: reload apache2

@@ -113,7 +113,6 @@ provisioner:
           - datagovtheme
         catalog_ckan_plugins_additional:
           - saml2auth
-        newrelic_license_key: some-secret
   lint: |
     set -e
     ansible-lint

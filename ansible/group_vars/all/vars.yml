@@ -137,6 +137,14 @@ jumpbox_ips:
 
 
 # newrelic monitoring
+# APM environment variables for applications
+newrelic_app_envs: |
+  NEW_RELIC_APP_NAME="{{ newrelic_app_name }}{% if newrelic_environment != 'production' %} ({{ newrelic_environment }}){% endif %}"
+  NEW_RELIC_HOST=gov-collector.newrelic.com
+  NEW_RELIC_LICENSE_KEY="{{ newrelic_license_key }}"
+  NEW_RELIC_LOG=/var/log/new_relic.log
+  NEW_RELIC_LOG_LEVEL=info
+  NEW_RELIC_MONITOR_MODE={{ newrelic_enabled | ternary('true', 'false') }}
 newrelic_environment: "{{ datagov_environment | default('unknown') }}"
 nrinfragent_config:
   license_key: "{{ newrelic_license_key }}"
