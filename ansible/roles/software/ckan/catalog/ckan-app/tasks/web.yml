@@ -20,13 +20,12 @@
 
 - name: Copy app .env
   template:
-    src: gunicorn_env.j2
+    src: app_env.j2
     dest: /etc/ckan/.env
     mode: 0644
     owner: root
     group: root
   become: true
-  when: ckan_uses_gunicorn
 
 - name: Install supervisor
   apt: name=supervisor state=present
