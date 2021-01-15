@@ -229,6 +229,7 @@ inventory_next_postgresql_db_name: "{{ vault_inventory_next_postgresql_db_name }
 inventory_next_datapusher_db_name: "{{ vault_inventory_next_datapusher_db_name }}"
 
 # New Relic
+newrelic_enabled: true
 newrelic_license_key: "{{ vault_newrelic_license_key }}"
 
 
