@@ -11,6 +11,7 @@ ckan_virtual_env: "{{virtual_env}}"
 datapusher_virtual_env: /usr/lib/datapusher
 app_type: inventory
 
+inventory_ckan_envs: ""
 inventory_ckan_plugins_additional: []
 inventory_ckan_plugins_default:
   - datajson

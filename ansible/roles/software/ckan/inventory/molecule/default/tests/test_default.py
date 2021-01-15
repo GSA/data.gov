@@ -83,3 +83,13 @@ def test_beaker_cache_cleanup(host):
 def test_ckan_process(host):
     supervisor_output = host.check_output('supervisorctl status')
     assert re.search(r'ckan +RUNNING', supervisor_output)
+
+
+def test_ckan_dot_env(host):
+    dot_env = host.file('/etc/ckan/.env')
+
+    assert dot_env.exists
+    assert dot_env.user == 'root'
+    assert dot_env.group == 'www-data'
+    assert dot_env.mode == 0o640
+    assert dot_env.contains('TEST_ENV=1')
