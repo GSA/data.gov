@@ -112,7 +112,7 @@ provisioner:
           - spatial_harvest_metadata_api
           - datagovtheme
         catalog_ckan_plugins_additional:
-          - saml2
+          - saml2auth
         newrelic_license_key: some-secret
   lint: |
     set -e
