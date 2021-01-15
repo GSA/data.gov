@@ -30,6 +30,7 @@ catalog_db_user: "{{ catalog_ckan_db_user }}"
 catalog_next_ckan_db_name: ckan
 catalog_next_ckan_db_pass: "{{ vault_catalog_next_ckan_db_pass }}"
 catalog_next_ckan_db_user: ckan
+catalog_next_ckan_envs: ""
 catalog_next_ckan_fgdc2iso_host: catalog-next-fgdc2iso1tf.internal.sandbox.datagov.us
 catalog_next_ckan_redis_host: master.rep-sandbox-catalog-next.5kspe7.use1.cache.amazonaws.com
 catalog_next_ckan_redis_password: "{{ vault_catalog_next_ckan_redis_password }}"
@@ -112,6 +113,7 @@ inventory_postgresql_login_password: "{{ vault_inventory_postgresql_login_passwo
 inventory_ckan_solr_port: "{{ solr_port }}"
 
 # Inventory Next
+inventory_next_ckan_envs: ""
 inventory_next_ckan_s3_bucket_name: "{{ vault_inventory_next_ckan_s3_bucket_name }}"
 inventory_next_ckan_s3_bucket_prefix: "{{ vault_inventory_next_ckan_s3_bucket_prefix }}"
 inventory_next_ckan_instance_secret: "{{ vault_inventory_next_ckan_instance_secret }}"
