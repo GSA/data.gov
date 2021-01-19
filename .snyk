@@ -7,7 +7,7 @@ ignore:
         reason: >-
           solaris_zone module is not used, fix requires ansible 2.9
           https://github.com/gsa/datagov-deploy/issues/893
-        expires: 2021-1-19T00:00:00.000Z
+        expires: 2021-2-19T00:00:00.000Z
   SNYK-PYTHON-PYYAML-590151:
     - '*':
         reason: >-
@@ -15,7 +15,7 @@ ignore:
           considered trusted and run only on our secured jumpboxes by our
           operators.  These operators should only be using trusted sources as
           well.  Risk is acceptable.
-        expires: 2021-1-19T06:00:00.000Z
+        expires: 2021-2-19T06:00:00.000Z
   SNYK-PYTHON-PY-1049546:
     - '*':
         reason: >-
