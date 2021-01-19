@@ -220,9 +220,8 @@ ckan.harvest.status_mail.all=True
 # FGDC service
 ckanext.geodatagov.fgdc2iso_service = http://{{ catalog_ckan_fgdc2iso_host }}/fgdc2iso/
 
+{% if catalog_ckan_saml2_enabled %}
 ## SAML2auth Settings
-
-# TODO update certificates
 ckanext.saml2auth.idp_metadata.local_path=/etc/ckan/saml2/idp.xml
 ckanext.saml2auth.key_file_path=/etc/ckan/saml2/pki/mykey.pem
 ckanext.saml2auth.cert_file_path=/etc/ckan/saml2/pki/mycert.pem
@@ -233,12 +232,12 @@ ckanext.saml2auth.user_lastname=last_name
 ckanext.saml2auth.user_email=email
 ckanext.saml2auth.allow_unknown_attributes=true
 ckanext.saml2auth.sp.name_id_format=urn:oasis:names:tc:saml:2.0:nameid-format:persistent urn:oasis:names:tc:saml:2.0:nameid-format:transient urn:oasis:names:tc:saml:2.0:nameid-format:emailaddress
-ckanext.saml2auth.entity_id={{ saml2_issuer }}
+ckanext.saml2auth.entity_id={{ catalog_ckan_saml2_entity_id }}
 ckanext.saml2auth.want_response_signed=false
 ckanext.saml2auth.want_assertions_signed=false
 ckanext.saml2auth.want_assertions_or_response_signed=true
 ckanext.saml2auth.enable_ckan_internal_login=false
-# ckanext.saml2auth.attribute_map_dir={{ saml2_attributemaps_dir }}
+{% endif %}
 
 # Google Analytics
 googleanalytics.ids = UA-42145528-2 UA-17367410-17

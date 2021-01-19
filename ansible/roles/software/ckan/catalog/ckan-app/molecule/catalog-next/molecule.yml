@@ -32,7 +32,7 @@ provisioner:
         catalog_ckan_who_ini_path: "catalog-next/etc_ckan_who.saml2.ini.j2"
         saml2_idp_metadata_url: "https://idp.int.identitysandbox.gov/api/saml/metadata2020"
         saml2_site_url: "https://catalog-next.sandbox.datagov.us/"
-        saml2_issuer: "urn:gov:gsa:SAML:2.0.profiles:sp:sso:datagovus:catalog-next-sandbox"
+        catalog_ckan_saml2_entity_id: "urn:gov:gsa:SAML:2.0.profiles:sp:sso:datagovus:catalog-next-sandbox"
         saml2_idp_url: https://idp.int.identitysandbox.gov/api/saml/auth2020
         saml2_sp_public_certificate: |-
           -----BEGIN CERTIFICATE-----
@@ -60,6 +60,7 @@ provisioner:
           iXN+eL6gQ9i1vWc6MbfAdR7Zib3dHZmEQtYyXbHqnmmPI9Y2ousd+c6HPu+z
           -----END CERTIFICATE-----
 
+        # This is a test key. Do NOT use in any other context.
         saml2_sp_private_key: |-
           -----BEGIN PRIVATE KEY-----
           MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC2vHGrABrdODX9
@@ -111,7 +112,7 @@ provisioner:
           - spatial_harvest_metadata_api
           - datagovtheme
         catalog_ckan_plugins_additional:
-          - saml2
+          - saml2auth
         newrelic_license_key: some-secret
   lint: |
     set -e

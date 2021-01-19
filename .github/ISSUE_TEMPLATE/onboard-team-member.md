@@ -35,11 +35,13 @@ Below are the tasks that will drive the onboarding process.
   - Synthetics manager
 - [ ] Add team member to [Docker Hub](https://cloud.docker.com/orgs/datagov/teams)
 - [ ] Add team member to [Snyk](https://app.snyk.io/org/data.gov/manage/members)
+- [ ] Add team member to [Data.gov Google Analytics](https://analytics.google.com/analytics/web/#/a42145528w85560911p88728213/admin/suiteusermanagement/account) account
 - [ ] Add team member as a SpaceDeveloper in the [`development`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/eab3d327-7d9f-423b-9838-753c26fdb5a0/users), [`staging`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/3e692cdd-6d26-41ea-9698-04903dc3f742/users), and [`management`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/9a1db116-0180-42be-8ffa-7944dcf6bf50/summary) spaces in cloud.gov.
 
        $ cf set-space-role <email> gsa-datagov <space> SpaceDeveloper
 
 - [ ] Request Federalist access by posting in [#federalist-support](https://gsa-tts.slack.com/archives/C1NUUGTT5) with the new member's GitHub username.
+- [ ] Once member had logged into Login.gov, add them to the [data.gov team](https://dashboard.int.identitysandbox.gov/teams/174).
 
 For new Project Management Office team members, follow these additional steps:
 
@@ -65,10 +67,11 @@ For new Project Management Office team members, follow these additional steps:
 
 ### Tasks for new team member
 
+- [ ] Log into [Login.gov dashboard](https://dashboard.int.identitysandbox.gov/auth/logindotgov)
 - [ ] Ensure your GitHub account meets the criteria for [GSA GitHub org](https://github.com/GSA/GitHub-Administration/blob/master/README.md) (setup 2FA)
 - [ ] Read through the [required reading list](https://github.com/GSA/datagov-deploy/wiki/Onboarding-Offboarding#required-reading-list)
 - [ ] [Request access](https://docs.google.com/forms/d/e/1FAIpQLSetStmwqrbMWDz_WIlh1trjhP0PFCjKXHzshsJveYmtIvlG2Q/viewform) to Data.gov systems; select “Catalog Admin” for the system, and “Data.gov team member” for justification
-- [ ] Add yourself for [AWS sandbox access](https://github.com/GSA/datagov-infrastructure-live/tree/master/iam#new-users)
+- [ ] Add yourself for [AWS sandbox access](https://github.com/GSA/datagov-iam/tree/master/README.md#new-users)
 - [ ] Request access to AWS OPP account from team member
 - [ ] Add your public SSH key to [GSA/datagov-deploy](https://github.com/GSA/datagov-deploy/blob/develop/ansible/group_vars/all/vars.yml)
 - [ ] Setup the Ansible vault
@@ -80,3 +83,4 @@ For new Project Management Office team members, follow these additional steps:
 - [ ] Connect to the [GSA VPN](https://github.com/GSA/datagov-deploy/wiki/gsa-vpn) for access to the staging and production environments.
 - [ ] Enable MFA for [HackerOne](https://hackerone.com/settings/auth)
 - [ ] Join [Open Data](https://digital.gov/communities/open-data/) community list
+- [ ] Request access to the [Digital Analytics Program](https://digital.gov/guides/dap/gaining-access-to-dap-data/)
