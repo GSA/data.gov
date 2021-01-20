@@ -48,6 +48,21 @@
       when: datagov_in_service | default(true)
       tags:
         - smoke
+    
+    - name: assert search_sql is turned off
+      uri:
+        url: https://{{ ansible_fqdn }}/api/action/datastore_search_sql?sql=SELECT%20%27test%27
+        follow_redirects: none
+        status_code: 400
+        # TODO enable cert validation. Staging and production hosts have GSA
+        # signed certs which should be valid.
+        # https://github.com/GSA/datagov-deploy/issues/900
+        validate_certs: false
+      retries: 10
+      delay: 10
+      when: datagov_in_service | default(true)
+      tags:
+        - smoke
 
 
 - name: logrotate configuration
