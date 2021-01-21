@@ -100,6 +100,7 @@
     RewriteRule ^/api/action/current_package_list_with_resources$ api/action/package_search [R]
     RewriteRule ^/api/3/action/current_package_list_with_resources$ api/3/action/package_search [R]
 
+    # TODO fix https://github.com/GSA/datagov-deploy/issues/2664
     RewriteRule ^/api/3/action/resource_search$ api/action/package_search [R]
     RewriteRule ^/api/action/resource_search$ api/action/package_search [R]
 </VirtualHost>
