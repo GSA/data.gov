@@ -21,6 +21,3 @@ assignees: ''
 ## References/background
 - [notes about desirable attributes or context for the epic]
 - [lnks to previous research, possible routes to take, things that multiple stories will likely need to refer to]
-
-## Sketch
-[Notes or a checklist reflecting our understanding of the selected approach]
