@@ -100,6 +100,8 @@
     RewriteRule ^/api/action/current_package_list_with_resources$ api/action/package_search [R]
     RewriteRule ^/api/3/action/current_package_list_with_resources$ api/3/action/package_search [R]
 
+    {% if catalog_ckan_disable_resource_search %}
     RewriteRule ^/api/3/action/resource_search$ api/action/package_search [R]
     RewriteRule ^/api/action/resource_search$ api/action/package_search [R]
+    {% endif %}
 </VirtualHost>
