@@ -87,7 +87,6 @@
   with_items:
     - /var/lib/ckan/files/storage
 
-# TODO remove this after ckanext-saml2auth ships
 - name: Configure who.ini
   template:
     src: "{{ inventory_ckan_who_ini_path }}"
@@ -107,6 +106,9 @@
     mode: 0640
   notify:
     - restart ckan
+
+- include_tasks: saml2.yml
+  when: inventory_ckan_saml2_enabled
 
 - name: Configure apache file
   template: src={{ item }} dest=/{{ item }} owner=root group=www-data mode=0640

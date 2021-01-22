@@ -77,6 +77,7 @@ inventory_ckan_redis_db: "1"
 inventory_next: false
 ckan_production_ini_template: etc/ckan/production.ini
 
+saml2_attributemaps_dir: max_gov
 saml2_site_url: https://inventory.data.gov/
 saml2_idp_entry: login.test.max.gov
 saml2_idp_metadata_url: https://{{ saml2_idp_entry }}/idp/shibboleth

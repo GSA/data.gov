@@ -199,6 +199,7 @@ jumpbox_operators: "{{ datagov_operators_production }}"
 inventory_ckan_service_url: https://inventory.data.gov
 inventory_ckan_solr_host: datagov-solrm1p.prod-ocsit.bsp.gsa.gov
 inventory_ckan_solr_port: "8983"
+inventory_ckan_who_ini_path: "etc_ckan_who.saml2.ini.j2"
 
 # Inventory Next
 inventory_next_ckan_redis_host: "redis1p.prod-ocsit.bsp.gsa.gov"

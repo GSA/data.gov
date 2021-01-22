@@ -190,6 +190,7 @@ inventory_app_environment: staging
 inventory_ckan_service_url: https://inventory-datagov.dev-ocsit.bsp.gsa.gov
 inventory_ckan_solr_host: datagov-solrm1d.dev-ocsit.bsp.gsa.gov
 inventory_ckan_solr_port: "8983"
+inventory_ckan_who_ini_path: "etc_ckan_who.saml2.ini.j2"
 
 # Inventory Next
 inventory_next_ckan_redis_host: "redis1d.dev-ocsit.bsp.gsa.gov"

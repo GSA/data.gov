@@ -3,6 +3,10 @@
   service: name=apache2 state=restarted
   when: datagov_in_service
 
+- name: reload apache2
+  service: name=apache2 state=reloaded
+  when: datagov_in_service
+
 - name: reload supervisor
   command: supervisorctl reread && supervisorctl update
   tags:
