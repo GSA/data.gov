@@ -20,4 +20,4 @@ assignees: ''
 
 ## References/background
 - [notes about desirable attributes or context for the epic]
-- [lnks to previous research, possible routes to take, things that multiple stories will likely need to refer to]
+- [links to previous research, possible routes to take, things that multiple stories will likely need to refer to]

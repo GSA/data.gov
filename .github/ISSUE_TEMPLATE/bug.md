@@ -28,3 +28,6 @@ labels:
 ## Actual behavior
 
 <!-- description of what actually happened. -->
+
+## Sketch
+[Notes or a checklist reflecting our understanding of the selected approach]
