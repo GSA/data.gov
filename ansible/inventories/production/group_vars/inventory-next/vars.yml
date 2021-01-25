@@ -39,6 +39,8 @@ inventory_ckan_plugins_additional: [saml2auth s3filestore]
 
 # saml2 authentication
 inventory_ckan_saml2_enabled: true
+ckan_production_ini_template: inventory-next/etc_ckan_production.ini.j2
+inventory_ckan_who_ini_path: inventory-next/etc_ckan_who.saml2.ini.j2
 
 # login.gov identity sandbox
 saml2_idp_metadata_url: "https://idp.int.identitysandbox.gov/api/saml/metadata2020"

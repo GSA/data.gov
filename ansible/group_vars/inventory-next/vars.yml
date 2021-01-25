@@ -1,7 +1,3 @@
 ---
 
 inventory_next: true
-ckan_production_ini_template: inventory-next/etc_ckan_production.ini.j2
-
-inventory_ckan_saml2_enabled: true
-inventory_ckan_who_ini_path: inventory-next/etc_ckan_who.saml2.ini.j2
