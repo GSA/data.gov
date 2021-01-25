@@ -35,12 +35,12 @@ inventory_app_repo_branch: inventory-28-with-saml2
 newrelic_app_name: inventory-next
 newrelic_enabled: true
 
-inventory_ckan_plugins_additional: [saml2auth s3filestore]
+inventory_ckan_plugins_additional: [s3filestore]
 
 # saml2 authentication
-inventory_ckan_saml2_enabled: true
-ckan_production_ini_template: inventory-next/etc_ckan_production.ini.j2
-inventory_ckan_who_ini_path: inventory-next/etc_ckan_who.saml2.ini.j2
+inventory_ckan_saml2_enabled: false
+ckan_production_ini_template: etc/ckan/production.ini
+inventory_ckan_who_ini_path: etc_ckan_who.default.ini.j2
 
 # login.gov identity sandbox
 saml2_idp_metadata_url: "https://idp.int.identitysandbox.gov/api/saml/metadata2020"
