@@ -152,6 +152,7 @@ jumpbox-v1
 pycsw-web-v1
 pycsw-worker-v1
 wordpress-web-v1
+solr
 
 # bionic stack
 [v2:children]
@@ -161,7 +162,6 @@ dashboard-web-v2
 inventory-next
 jumpbox-v2
 redis-next
-solr
 solr-next
 wordpress-web-v2
 pycsw-web-v2
