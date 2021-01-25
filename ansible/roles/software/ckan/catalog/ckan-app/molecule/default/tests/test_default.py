@@ -83,6 +83,7 @@ def test_compatible_repoze_who(host):
 
 
 def test_pip_version(host):
+    # pip 21 no longer support Python 2
     packages = host.pip_package.get_packages(
         pip_path=('%s/bin/pip' % virtualenv_path)
     )
