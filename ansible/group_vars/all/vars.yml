@@ -123,9 +123,6 @@ inventory_ckan_plugins_default:
   - text_view
   - usmetadata
 
-inventory_next_ckan_plugins_default:
-  - datagov_inventory
-
 # jenkins
 jenkins_config: "{{ lookup('template', 'jenkins_config.yml.j2') }}"
 jenkins_home: /data/jenkins

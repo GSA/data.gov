@@ -11,6 +11,7 @@ ckan_virtual_env: "{{virtual_env}}"
 datapusher_virtual_env: /usr/lib/datapusher
 app_type: inventory
 
+inventory_ckan_plugins_first: []
 inventory_ckan_plugins_additional: []
 inventory_ckan_plugins_default:
   - datajson
@@ -22,9 +23,6 @@ inventory_ckan_plugins_default:
   - stats
   - text_view
   - usmetadata
-
-inventory_next_ckan_plugins_default:
-  - datagov_inventory
 
 # Use local login by default
 inventory_ckan_saml2_enabled: false
