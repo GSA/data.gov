@@ -23,6 +23,9 @@ inventory_ckan_plugins_default:
   - text_view
   - usmetadata
 
+inventory_next_ckan_plugins_default:
+  - datagov_inventory
+
 # Use local login by default
 inventory_ckan_saml2_enabled: false
 
