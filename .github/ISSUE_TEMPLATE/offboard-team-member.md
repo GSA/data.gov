@@ -18,7 +18,7 @@ These tasks are performed by an Admin unless noted as an action for the outgoing
 - [ ] Remove team member from [the `gsa-datagov` organization](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/users) on cloud.gov
 - [ ] Remove team member from [GCP account](https://console.cloud.google.com/iam-admin/iam?project=tts-datagov)
 - [ ] Remove team member from AWS OPP account
-- [ ] Remove team member from [AWS sandbox access](https://github.com/GSA/datagov-infrastructure-live/tree/master/iam#new-users)
+- [ ] Remove team member from [AWS sandbox access](https://github.com/GSA/datagov-iam/blob/main/README.md#new-users)
 - [ ] Remove team member from [jumpbox operators](https://github.com/GSA/datagov-deploy/blob/develop/ansible/group_vars/all/vars.yml)
 - [ ] Remove team member from Data.gov email lists
   - [datagov](https://groups.google.com/a/gsa.gov/forum/#!forum/datagov)
@@ -32,6 +32,7 @@ These tasks are performed by an Admin unless noted as an action for the outgoing
 - [ ] Remove team member from TTS Bug Bounty access [#bug-bounty-partners](https://gsa-tts.slack.com/messages/C5JQCD9PH)
 - [ ] Remove team member from [Snyk](https://app.snyk.io/org/data.gov/manage/members)
 - [ ] Remove team member from [Agari](https://gsa-tts.bp.agari.com/) (see [#admins-dmarc](https://gsa-tts.slack.com/archives/CNDTG5ML5) or @adborden for access)
+- [ ] Remove team member from [Data.gov Google Analytics](https://analytics.google.com/analytics/web/#/a42145528w85560911p88728213/admin/suiteusermanagement/account) account
 - [ ] [Rotate Ansible Vault key](https://github.com/GSA/datagov-deploy/wiki/Keypair-Rotation#ansible-vault) and [update the canonical location](https://docs.google.com/document/d/1detdsnIuwmqz6asrIfUWrmxCr56MGschY1yV0UeC_24/edit)
 - [ ] Remove team member from PyPI packages:
   - https://pypi.org/project/ckanext-dcat-usmetadata/

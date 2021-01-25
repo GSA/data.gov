@@ -60,6 +60,7 @@ provisioner:
           iXN+eL6gQ9i1vWc6MbfAdR7Zib3dHZmEQtYyXbHqnmmPI9Y2ousd+c6HPu+z
           -----END CERTIFICATE-----
 
+        # This is a test key. Do NOT use in any other context.
         saml2_sp_private_key: |-
           -----BEGIN PRIVATE KEY-----
           MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC2vHGrABrdODX9
@@ -111,7 +112,7 @@ provisioner:
           - spatial_harvest_metadata_api
           - datagovtheme
         catalog_ckan_plugins_additional:
-          - saml2
+          - saml2auth
         newrelic_license_key: some-secret
   lint: |
     set -e

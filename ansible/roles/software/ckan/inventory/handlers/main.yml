@@ -8,7 +8,7 @@
   when: datagov_in_service
 
 - name: reload supervisor
-  command: supervisorctl reread && supervisorctl update
+  shell: supervisorctl reread && supervisorctl update
   tags:
     - skip_ansible_lint
 
