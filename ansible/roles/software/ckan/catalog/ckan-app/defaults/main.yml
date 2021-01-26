@@ -12,6 +12,7 @@ catalog_ckan_apache_server_name: ckan
 # readonly: serves anonymous traffic, redirects to admin for write operations.
 catalog_ckan_readwrite_configuration: default
 catalog_ckan_app_version: master
+catalog_ckan_disable_resource_search: false
 catalog_ckan_error_log: "{{ catalog_log_dir }}/ckan.error.log"
 catalog_ckan_harvest_fetch_process_count: 2
 

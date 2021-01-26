@@ -1,4 +1,6 @@
 ---
+catalog_ckan_disable_resource_search: true
+
 datagov_app_process: web
 
 # role url
