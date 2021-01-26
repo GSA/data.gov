@@ -58,7 +58,7 @@
 - name: setup virtualenv for new deployment
   pip:
     name:
-      - pip>=19.3.0
+      - pip==20.3.3  # pip 21 no longer supports python 2
       - setuptools>=44.0.0,<45.0.0  # setuptools 45+ requires python 3.5, keep pinned below, but still modern version
     virtualenv: '{{ project_source_new_code_path }}'
     virtualenv_python: "{{ inventory_python_home }}/bin/python"
