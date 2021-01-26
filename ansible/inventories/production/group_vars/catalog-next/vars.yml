@@ -17,7 +17,7 @@ catalog_ckan_redis_password: "{{ catalog_next_ckan_redis_password }}"
 catalog_ckan_redis_url: "{{ catalog_next_ckan_redis_url }}"
 catalog_ckan_service_url: https://{{ catalog_host_public_next }}
 catalog_ckan_admin_service_url: https://{{ catalog_host_admin_next }}
-catalog_ckan_saml2_enabled: true
+catalog_ckan_saml2_enabled: "{{ catalog_next_ckan_saml2_enabled }}"
 catalog_ckan_solr_host: "{{ catalog_next_ckan_solr_a_host }}"  # default. this is probably overridden in other groups/host vars
 catalog_ckan_who_ini_secret: "{{ catalog_next_ckan_who_ini_secret }}"
 
@@ -55,7 +55,7 @@ token_dat: "{{ catalog_next_ckan_token_dat }}"
 url_readonly: https://{{ catalog_host_public_next }}
 url_writable: https://{{ catalog_host_admin_next }}
 
-catalog_ckan_plugins_additional: [saml2auth]
+catalog_ckan_plugins_additional: []
 
 # login.gov identity sandbox
 saml2_idp_metadata_url: "https://idp.int.identitysandbox.gov/api/saml/metadata2020"

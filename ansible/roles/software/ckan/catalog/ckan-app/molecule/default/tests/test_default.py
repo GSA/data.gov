@@ -82,6 +82,16 @@ def test_compatible_repoze_who(host):
     assert '1.7.5.1' == packages['Paste'].get('version')
 
 
+def test_pip_version(host):
+    # pip 21 no longer support Python 2
+    packages = host.pip_package.get_packages(
+        pip_path=('%s/bin/pip' % virtualenv_path)
+    )
+
+    assert 'pip' in packages
+    assert '20.3.3' == packages['pip'].get('version')
+
+
 def test_apache(host):
     apache = host.service('apache2')
 

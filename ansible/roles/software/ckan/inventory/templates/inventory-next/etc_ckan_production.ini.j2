@@ -6,7 +6,7 @@
 # following URL for a description of what they do and the full list of
 # available options:
 #
-# https://docs.ckan.org/en/latest/maintaining/configuration.html
+# http://docs.ckan.org/en/latest/configuration.html
 #
 # The %(here)s variable will be replaced with the parent directory of this file
 #
@@ -85,9 +85,8 @@ ckan.auth.user_create_organizations = false
 ckan.auth.user_delete_groups = false
 ckan.auth.user_delete_organizations = false
 ckan.auth.create_user_via_api = false
-ckan.auth.create_user_via_web = false
+ckan.auth.create_user_via_web = true
 ckan.auth.roles_that_cascade_to_sub_groups = admin
-ckan.auth.public_user_details = false
 
 ## Search Settings
 
@@ -109,10 +108,8 @@ ckan.redis.url = {{ inventory_ckan_redis_url}}
 #       Add ``pdf_preview`` to enable the resource preview for PDFs
 #		Add ``resource_proxy`` to enable resorce proxying and get around the
 #		same origin policy
-ckan.plugins = {{ (inventory_ckan_plugins_first + inventory_ckan_plugins_default + 
-                  inventory_ckan_plugins_additional) | join(' ') }}
-
-
+# ckan.plugins = usmetadata datajson datastore datapusher stats text_view recline_view googleanalyticsbasic saml2 dcat_usmetadata
+ckan.plugins = {{ (inventory_ckan_plugins_additional + inventory_ckan_plugins_default) | join(' ') }}
 
 ckan.views.default_views = recline_view text_view image_view webpage_view recline_grid_view
 
@@ -140,23 +137,22 @@ ckan.locale_order = en pt_BR ja it cs_CZ ca es fr el sv sr sr@latin no sk fi ru 
 ckan.locales_offered =
 ckan.locales_filtered_out = en_GB
 
-## SAML2 Settings
-saml2.site_url = {{ saml2_site_url }}
-saml2.config_path = %(here)s/saml2
+## SAML2auth Settings
+ckanext.saml2auth.idp_metadata.local_path=/etc/ckan/saml2/idp.xml
+ckanext.saml2auth.key_file_path=/etc/ckan/saml2/pki/mykey.pem
+ckanext.saml2auth.cert_file_path=/etc/ckan/saml2/pki/mycert.pem
 
-saml2.user_mapping =
-    email~maxemail
-    fullname~field_display_name
-    id~maxid
-    name~maxemail
-
-saml2.organization_mapping =
-    name~field_unique_id
-    title~field_organization
-    extras:organization_type~field_organization_type
-
-saml2.max_redirect_slo =
-saml2.max_security_level = https://max.gov/icam/2015/10/securityLevels/securePlus2
+ckanext.saml2auth.idp_metadata.location=local
+ckanext.saml2auth.user_firstname=first_name
+ckanext.saml2auth.user_lastname=last_name
+ckanext.saml2auth.user_email=email
+ckanext.saml2auth.allow_unknown_attributes=true
+ckanext.saml2auth.sp.name_id_format=urn:oasis:names:tc:saml:2.0:nameid-format:persistent urn:oasis:names:tc:saml:2.0:nameid-format:transient n:oasis:names:tc:saml:2.0:nameid-format:emailaddress
+ckanext.saml2auth.entity_id={{ inventory_ckan_saml2_entity_id }}
+ckanext.saml2auth.want_response_signed=false
+ckanext.saml2auth.want_assertions_signed=false
+ckanext.saml2auth.want_assertions_or_response_signed=true
+ckanext.saml2auth.enable_ckan_internal_login=false
 
 ## Feeds Settings
 

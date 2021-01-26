@@ -58,7 +58,7 @@
 - name: setup virtualenv for new deployment
   pip:
     name:
-      - pip>=19.3.0
+      - pip==20.3.3  # pip 21 no longer supports python 2
       - setuptools>=44.0.0,<45.0.0  # setuptools 45+ requires python 3.5, keep pinned below, but still modern version
     virtualenv: '{{ project_source_new_code_path }}'
     virtualenv_python: "{{ inventory_python_home }}/bin/python"
@@ -87,21 +87,35 @@
   with_items:
     - /var/lib/ckan/files/storage
 
-- name: copy all needed files
-  action: copy src={{ item }} dest=/{{ item }} owner=root group=www-data mode=0640
-  with_items:
-    - etc/ckan/who.ini
+- name: Configure who.ini
+  template:
+    src: "{{ inventory_ckan_who_ini_path }}"
+    dest: /etc/ckan/who.ini
+    owner: root
+    group: www-data
+    mode: 0640
   notify:
     - restart ckan
 
 - name: Configure production.ini
+  template:
+    src: "{{ ckan_production_ini_template }}"
+    dest: /etc/ckan/production.ini
+    owner: root
+    group: www-data
+    mode: 0640
+  notify:
+    - restart ckan
+
+- include_tasks: saml2.yml
+  when: inventory_ckan_saml2_enabled
+
+- name: Configure apache file
   template: src={{ item }} dest=/{{ item }} owner=root group=www-data mode=0640
   with_items:
-    - etc/ckan/production.ini
     - etc/apache2/sites-enabled/ckan.conf
   notify:
     - restart apache2
-    - restart ckan
 
 - name: Copy app .env
   template:

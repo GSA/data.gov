@@ -1,4 +1,0 @@
----
-- name: reload apache2
-  service: name=apache2 state=reloaded
-  when: datagov_in_service | default(true)

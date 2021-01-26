@@ -34,6 +34,8 @@ provisioner:
         newrelic_license_key: some-secret
         newrelic_app_name: inventory-molecule
         newrelic_enabled: true
+        inventory_ckan_saml2_entity_id: urn:gov:gsa:SAML:2.0.profiles:sp:sso:gsa:datagov-sandbox-inventory
+        inventory_next_ckan_who_ini_secret: some-secret
 scenario:
   name: inventory-next
   # TODO fix idempotency
