@@ -13,6 +13,7 @@ catalog_ckan_service_url: https://catalog.sandbox.datagov.us
 catalog_ckan_solr_host: datagov-solr1tf.internal.sandbox.datagov.us
 catalog_ckan_solr_port: "{{ solr_port }}"
 catalog_ckan_saml2_enabled: false
+catalog_ckan_saml2_require_piv: false
 catalog_ckan_who_ini_path: "etc_ckan_who.default.ini.j2"
 catalog_ckan_who_ini_secret: "{{ vault_catalog_ckan_who_ini_secret }}"
 catalog_postgresql_login_host: "{{ vault_catalog_postgresql_login_host }}"

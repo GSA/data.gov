@@ -237,6 +237,10 @@ ckanext.saml2auth.want_response_signed=false
 ckanext.saml2auth.want_assertions_signed=false
 ckanext.saml2auth.want_assertions_or_response_signed=true
 ckanext.saml2auth.enable_ckan_internal_login=false
+{% if catalog_ckan_saml2_require_piv %}
+ckanext.saml2auth.requested_authn_context=http://idmanagement.gov/ns/assurance/aal/3?hspd12=true
+{% endif %}
+
 {% endif %}
 
 # Google Analytics

@@ -16,6 +16,7 @@ catalog_ckan_redis_host: catalog-harvester1p.prod-ocsit.bsp.gsa.gov
 catalog_ckan_redis_password: "{{ redis_password }}"
 catalog_ckan_fgdc2iso_host: catalog-fgdc2iso1p.prod-ocsit.bsp.gsa.gov
 catalog_ckan_saml2_enabled: true
+catalog_ckan_saml2_require_piv: false
 catalog_ckan_service_url: https://{{ catalog_host_public }}
 catalog_ckan_admin_service_url: https://{{ catalog_host_admin }}
 catalog_ckan_who_ini_path: "etc_ckan_who.saml2.ini.j2"
