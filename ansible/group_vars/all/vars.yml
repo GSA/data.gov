@@ -123,6 +123,7 @@ inventory_ckan_plugins_default:
   - text_view
   - usmetadata
 
+
 # jenkins
 jenkins_config: "{{ lookup('template', 'jenkins_config.yml.j2') }}"
 jenkins_home: /data/jenkins
