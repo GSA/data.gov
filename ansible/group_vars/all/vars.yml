@@ -127,24 +127,6 @@ inventory_ckan_plugins_default:
 # jenkins
 jenkins_config: "{{ lookup('template', 'jenkins_config.yml.j2') }}"
 jenkins_home: /data/jenkins
-jenkins_jobs:
-  - name: deploy-ci-platform
-    git_url: https://github.com/gsa/datagov-deploy.git
-    git_ref: refs/heads/develop
-  - name: deploy-ci-app-catalog
-    git_url: https://github.com/gsa/catalog-app.git
-  - name: deploy-ci-app-catalog-next
-    git_url: https://github.com/gsa/catalog.data.gov.git
-    github_project_url: https://github.com/gsa/datagov-ckan-multi
-  - name: deploy-ci-app-dashboard
-    git_url: https://github.com/gsa/project-open-data-dashboard.git
-  - name: deploy-ci-app-inventory
-    git_url: https://github.com/gsa/inventory-app.git
-  - name: deploy-ci-app-inventory-next
-    git_url: https://github.com/gsa/inventory-app.git
-    git_ref: refs/heads/inventory_ckan_2.8
-  - name: deploy-ci-app-wordpress
-    git_url: https://github.com/gsa/datagov-wp-boilerplate.git
 jenkins_prefer_lts: true  # Use long-term-support releases instead of weekly updates
 
 

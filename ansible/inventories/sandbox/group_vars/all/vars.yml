@@ -129,8 +129,27 @@ inventory_next_postgresql_login_password: "{{ vault_inventory_next_postgresql_lo
 
 
 jenkins_admin_password: "{{ vault_jenkins_admin_password }}"
-jenkins_job_authentication_token: "{{ vault_jenkins_job_authentication_token }}"
 jenkins_admins: "{{ datagov_operators_test | map(attribute='email') | list }}"
+jenkins_job_authentication_token: "{{ vault_jenkins_job_authentication_token }}"
+jenkins_jobs:
+  - name: deploy-ci-platform
+    git_url: https://github.com/gsa/datagov-deploy.git
+    git_ref: refs/heads/develop
+  - name: deploy-ci-app-catalog
+    git_url: https://github.com/gsa/catalog-app.git
+  - name: deploy-ci-app-catalog-next
+    git_url: https://github.com/gsa/catalog.data.gov.git
+    github_project_url: https://github.com/gsa/datagov-ckan-multi
+  - name: deploy-ci-app-dashboard
+    git_url: https://github.com/gsa/project-open-data-dashboard.git
+  - name: deploy-ci-app-inventory
+    git_url: https://github.com/gsa/inventory-app.git
+  - name: deploy-ci-app-inventory-next
+    git_url: https://github.com/gsa/inventory-app.git
+    git_ref: refs/heads/inventory_ckan_2.8
+  - name: deploy-ci-app-wordpress
+    git_url: https://github.com/gsa/datagov-wp-boilerplate.git
+
 jenkins_saml_sp_entity_id: urn:gov:gsa:SAML:2.0.profiles:sp:sso:gsa:ci_datagov_sandbox
 jenkins_saml_keystore_password: "{{ vault_jenkins_saml_keystore_password }}"
 jenkins_saml_keystore_path: "{{ playbook_dir }}/files/sandbox/saml-key.jks"
