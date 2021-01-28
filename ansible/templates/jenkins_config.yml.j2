@@ -92,7 +92,7 @@ jobs:
                 remote {
                   url('{{ job.git_url }}')
                 }
-                branch('refs/heads/${branch_name}')
+                branch('refs/heads/^${branch_name}')
               }
             }
           }

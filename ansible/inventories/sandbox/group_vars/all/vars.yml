@@ -134,7 +134,7 @@ jenkins_job_authentication_token: "{{ vault_jenkins_job_authentication_token }}"
 jenkins_jobs:
   - name: deploy-ci-platform
     git_url: https://github.com/gsa/datagov-deploy.git
-    git_ref: refs/heads/develop
+    git_ref: develop
   - name: deploy-ci-app-catalog
     git_url: https://github.com/gsa/catalog-app.git
   - name: deploy-ci-app-catalog-next
@@ -146,7 +146,7 @@ jenkins_jobs:
     git_url: https://github.com/gsa/inventory-app.git
   - name: deploy-ci-app-inventory-next
     git_url: https://github.com/gsa/inventory-app.git
-    git_ref: refs/heads/inventory_ckan_2.8
+    git_ref: inventory_ckan_2.8
   - name: deploy-ci-app-wordpress
     git_url: https://github.com/gsa/datagov-wp-boilerplate.git
 
