@@ -236,6 +236,11 @@ ckanext.saml2auth.entity_id={{ catalog_ckan_saml2_entity_id }}
 ckanext.saml2auth.want_response_signed=false
 ckanext.saml2auth.want_assertions_signed=false
 ckanext.saml2auth.want_assertions_or_response_signed=true
+
+{% if catalog_ckan_saml2_requested_authn_context | length > 0 %}
+ckanext.saml2auth.requested_authn_context = {{ catalog_ckan_saml2_requested_authn_context | join(' ') }}
+{% endif %}
+
 ckanext.saml2auth.enable_ckan_internal_login=true
 {% endif %}
 
