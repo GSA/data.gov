@@ -9,7 +9,7 @@ catalog_ckan_db_name: "{{ vault_catalog_ckan_db_name }}"
 catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
 catalog_ckan_db_user: "{{ vault_catalog_ckan_db_user }}"
 catalog_ckan_email_from: "{{ default_email_from }}"
-catalog_ckan_harvest_fetch_process_count: 6
+catalog_ckan_harvest_fetch_process_count: 4
 catalog_ckan_plugins_additional: [saml2]
 catalog_ckan_qa_update_process_count: 5
 catalog_ckan_readwrite_configuration: readonly
