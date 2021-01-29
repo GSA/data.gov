@@ -52,7 +52,6 @@ catalog_ckan_plugins_default:
 
 catalog_ckan_python_home: /usr
 catalog_ckan_saml2_enabled: false
-catalog_ckan_saml2_require_piv: false
 catalog_harvest_enable_harvest_report: false
 catalog_enable_clean_harvest_logs: false
 catalog_log_dir: /var/log/ckan

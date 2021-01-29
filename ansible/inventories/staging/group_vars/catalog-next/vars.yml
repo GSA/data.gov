@@ -16,7 +16,8 @@ catalog_ckan_redis_url: "{{ catalog_next_ckan_redis_url }}"
 catalog_ckan_service_url: https://{{ catalog_host_public_next }}
 catalog_ckan_admin_service_url: https://{{ catalog_host_admin_next }}
 catalog_ckan_saml2_enabled: true
-catalog_ckan_saml2_require_piv: true
+catalog_ckan_saml2_requested_authn_context:
+  - http://idmanagement.gov/ns/assurance/aal/3?hspd12=true
 catalog_ckan_solr_host: "{{ catalog_next_ckan_solr_a_host }}"  # default. this is probably overridden in other groups/host vars
 catalog_ckan_who_ini_secret: "{{ catalog_next_ckan_who_ini_secret }}"
 
