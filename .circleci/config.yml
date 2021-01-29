@@ -111,4 +111,6 @@ workflows:
             - test
           filters:
             branches:
-              only: develop
+              only:
+                - develop
+                - bugfix/jenkinsfile
