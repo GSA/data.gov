@@ -28,7 +28,7 @@ jenkins:
   securityRealm:
     saml:
       advancedConfiguration:
-        {%- if jenkins_saml_authentication_context %}
+        {%- if jenkins_saml_authentication_context is defined %}
         authnContextClassRef: "{{ jenkins_saml_authentication_context }}"
         {%- endif %}
         forceAuthn: false
