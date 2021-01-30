@@ -100,7 +100,7 @@ if [[ "$#" -eq 0 ]]; then
   exit 1
 fi
 
-BRANCH_NAME=${BRANCH_NAME:-master}
+BRANCH_NAME=${branch_name:-master}
 
 command=$1
 shift
