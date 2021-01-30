@@ -2,6 +2,7 @@
 
 set -o errexit
 set -o pipefail
+shopt -s extglob  # For extended pattern matching +() in slugify
 
 function usage () {
   cat <<EOF >&2
