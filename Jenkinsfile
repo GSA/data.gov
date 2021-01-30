@@ -3,11 +3,14 @@ pipeline {
   stages {
     stage('workflow:sandbox') {
       when { anyOf { environment name: 'DATAGOV_WORKFLOW', value: 'sandbox' } }
+      environment {
+        BRANCH_NAME = "${branch_name}"
+      }
       stages {
         stage('build') {
           steps {
             ansiColor('xterm') {
-              sh 'docker build --build-arg APP_UID=$(id -u) --build-arg APP_GID=$(id -g) -t datagov/datagov-deploy:${branch_name} .'
+              sh 'bin/jenkins-deploy build'
             }
           }
         }
@@ -16,14 +19,13 @@ pipeline {
           environment {
             ANSIBLE_VAULT_FILE = credentials('ansible-vault-secret')
             SSH_KEY_FILE = credentials('datagov-sandbox')
-            DATAGOV_ANSIBLE_INVENTORY = 'sandbox'
           }
           steps {
             ansiColor('xterm') {
-              sh 'docker run --rm -v $SSH_KEY_FILE:$SSH_KEY_FILE -v $ANSIBLE_VAULT_FILE:$ANSIBLE_VAULT_FILE -u $(id -u) datagov/datagov-deploy:${branch_name} pipenv run ansible --key-file=$SSH_KEY_FILE --vault-password-file=$ANSIBLE_VAULT_FILE --inventory inventories/$DATAGOV_ANSIBLE_INVENTORY -m ping all'
+              sh 'bin/jenkins-deploy ping sandbox'
             }
             ansiColor('xterm') {
-              sh 'docker run --rm -v $SSH_KEY_FILE:$SSH_KEY_FILE -v $ANSIBLE_VAULT_FILE:$ANSIBLE_VAULT_FILE -u $(id -u) datagov/datagov-deploy:${branch_name} pipenv run ansible-playbook --key-file=$SSH_KEY_FILE --vault-password-file=$ANSIBLE_VAULT_FILE --inventory inventories/$DATAGOV_ANSIBLE_INVENTORY site.yml'
+              sh 'bin/jenkins-deploy deploy sandbox site.yml'
             }
           }
         }
@@ -31,11 +33,14 @@ pipeline {
     }
     stage('workflow:production') {
       when { anyOf { environment name: 'DATAGOV_WORKFLOW', value: 'production' } }
+      environment {
+        BRANCH_NAME = "${branch_name}"
+      }
       stages {
         stage('build') {
           steps {
             ansiColor('xterm') {
-              sh 'docker build --build-arg APP_UID=$(id -u) --build-arg APP_GID=$(id -g) -t datagov/datagov-deploy:${branch_name} .'
+              sh 'bin/jenkins-deploy build'
             }
           }
         }
@@ -49,14 +54,13 @@ pipeline {
           environment {
             ANSIBLE_VAULT_FILE = credentials('ansible-vault-secret')
             SSH_KEY_FILE = credentials('ssh-staging')
-            DATAGOV_ANSIBLE_INVENTORY = 'staging'
           }
           steps {
             ansiColor('xterm') {
-              sh 'docker run --rm -v $SSH_KEY_FILE:$SSH_KEY_FILE -v $ANSIBLE_VAULT_FILE:$ANSIBLE_VAULT_FILE -u $(id -u) datagov/datagov-deploy:${branch_name} pipenv run ansible --key-file=$SSH_KEY_FILE --vault-password-file=$ANSIBLE_VAULT_FILE --inventory inventories/$DATAGOV_ANSIBLE_INVENTORY -m ping all'
+              sh 'bin/jenkins-deploy ping staging'
             }
             ansiColor('xterm') {
-              sh 'docker run --rm -v $SSH_KEY_FILE:$SSH_KEY_FILE -v $ANSIBLE_VAULT_FILE:$ANSIBLE_VAULT_FILE -u $(id -u) datagov/datagov-deploy:${branch_name} pipenv run ansible-playbook --key-file=$SSH_KEY_FILE --vault-password-file=$ANSIBLE_VAULT_FILE --inventory inventories/$DATAGOV_ANSIBLE_INVENTORY site.yml'
+              sh 'bin/jenkins-deploy deploy staging site.yml'
             }
           }
         }
@@ -69,14 +73,13 @@ pipeline {
           environment {
             ANSIBLE_VAULT_FILE = credentials('ansible-vault-secret')
             SSH_KEY_FILE = credentials('ssh-mgmt')
-            DATAGOV_ANSIBLE_INVENTORY = 'mgmt'
           }
           steps {
             ansiColor('xterm') {
-              sh 'docker run --rm -v $SSH_KEY_FILE:$SSH_KEY_FILE -v $ANSIBLE_VAULT_FILE:$ANSIBLE_VAULT_FILE -u $(id -u) datagov/datagov-deploy:${branch_name} pipenv run ansible --key-file=$SSH_KEY_FILE --vault-password-file=$ANSIBLE_VAULT_FILE --inventory inventories/$DATAGOV_ANSIBLE_INVENTORY -m ping all'
+              sh 'bin/jenkins-deploy ping mgmt'
             }
             ansiColor('xterm') {
-              sh 'docker run --rm -v $SSH_KEY_FILE:$SSH_KEY_FILE -v $ANSIBLE_VAULT_FILE:$ANSIBLE_VAULT_FILE -u $(id -u) datagov/datagov-deploy:${branch_name} pipenv run ansible-playbook --key-file=$SSH_KEY_FILE --vault-password-file=$ANSIBLE_VAULT_FILE --inventory inventories/$DATAGOV_ANSIBLE_INVENTORY site.yml'
+              sh 'bin/jenkins-deploy deploy mgmt site.yml'
             }
           }
         }
@@ -89,14 +92,13 @@ pipeline {
           environment {
             ANSIBLE_VAULT_FILE = credentials('ansible-vault-secret')
             SSH_KEY_FILE = credentials('ssh-production')
-            DATAGOV_ANSIBLE_INVENTORY = 'production'
           }
           steps {
             ansiColor('xterm') {
-              sh 'docker run --rm -v $SSH_KEY_FILE:$SSH_KEY_FILE -v $ANSIBLE_VAULT_FILE:$ANSIBLE_VAULT_FILE -u $(id -u) datagov/datagov-deploy:${branch_name} pipenv run ansible --key-file=$SSH_KEY_FILE --vault-password-file=$ANSIBLE_VAULT_FILE --inventory inventories/$DATAGOV_ANSIBLE_INVENTORY -m ping all'
+              sh 'bin/jenkins-deploy ping production'
             }
             ansiColor('xterm') {
-              sh 'docker run --rm -v $SSH_KEY_FILE:$SSH_KEY_FILE -v $ANSIBLE_VAULT_FILE:$ANSIBLE_VAULT_FILE -u $(id -u) datagov/datagov-deploy:${branch_name} pipenv run ansible-playbook --key-file=$SSH_KEY_FILE --vault-password-file=$ANSIBLE_VAULT_FILE --inventory inventories/$DATAGOV_ANSIBLE_INVENTORY site.yml'
+              sh 'bin/jenkins-deploy deploy production site.yml'
             }
           }
         }

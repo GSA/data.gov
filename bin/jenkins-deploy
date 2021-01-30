@@ -1,0 +1,122 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+
+function usage () {
+  cat <<EOF >&2
+$0: <command> [arguments...]
+
+Commands:
+
+  build
+    Build the datagov-deploy artifact (wraps docker build).
+
+  run [arguments...]
+    Runs the build artifact for deploy (wraps docker run).
+
+  ping <environment>
+    Runs ansible ping to test connectivity.
+
+  deploy <environment> <playbook.yml> [arguments...]
+    Runs ansible-playbook with the given arugments for deploy.
+
+
+Required environment variables:
+
+  ANSIBLE_VAULT_FILE
+    Path to the Ansible Vault password file.
+
+  SSH_KEY_FILE
+    Path to the SSH key file for access to the environment.
+
+EOF
+}
+
+# Slugify the given text. Replaces most symbols with "-", except for
+# alphanumeric characters, underscore, and dash.
+function slugify () {
+  local text
+  text="$1"
+  echo -n "${text//+([^A-z0-9_-])/-}"
+}
+
+# Returns a docker tag based on the branch name
+function get_tag () {
+  local branch
+  branch="$1"
+  if [[ "$branch" = "master" || "$branch" = "main" ]]; then
+    # Use "latest" tag for master/main branches.
+    echo -n latest
+    return 0
+  fi
+
+  slugify "$branch"
+}
+
+function run () {
+  exec docker run --rm -v $SSH_KEY_FILE:$SSH_KEY_FILE -v $ANSIBLE_VAULT_FILE:$ANSIBLE_VAULT_FILE -u $(id -u) datagov/datagov-deploy:$(get_tag $BRANCH_NAME) "$@"
+}
+
+function ping () {
+  local environment
+  environment="$1"
+  run pipenv run ansible --key-file=$SSH_KEY_FILE --vault-password-file=$ANSIBLE_VAULT_FILE --inventory "inventories/$environment" -m ping all
+}
+
+function deploy () {
+  local environment playbook
+  environment="$1"
+  shift
+  playbook="$1"
+  shift
+
+  run pipenv run ansible-playbook --key-file=$SSH_KEY_FILE --vault-password-file=$ANSIBLE_VAULT_FILE --inventory "inventories/$environment" "$playbook" "$@"
+}
+
+function build () {
+  docker build --build-arg APP_UID=$(id -u) --build-arg APP_GID=$(id -g) -t datagov/datagov-deploy:$(get_tag $BRANCH_NAME) .
+}
+
+
+if [[ "$#" -eq 0 ]]; then
+  echo "Please specify a command." >&2
+  usage
+  exit 1
+fi
+
+if [[ -z "$ANSIBLE_VAULT_FILE" ]]; then
+  echo "ANSIBLE_VAULT_FILE environment variable must be set." >&2
+  usage
+  exit 1
+fi
+
+if [[ -z "$SSH_KEY_FILE" ]]; then
+  echo "SSH_KEY_FILE environment variable must be set." >&2
+  usage
+  exit 1
+fi
+
+BRANCH_NAME=${BRANCH_NAME:-master}
+
+command=$1
+shift
+case "$command" in
+  build)
+    build
+    ;;
+  deploy)
+    deploy "$@"
+    ;;
+  ping)
+    ping "$@"
+    ;;
+  run)
+    run "$@"
+    ;;
+  *)
+    echo "Unknown command." >&2
+    usage
+    exit 1
+    ;;
+esac
