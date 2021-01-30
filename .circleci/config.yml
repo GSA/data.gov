@@ -112,4 +112,4 @@ workflows:
             branches:
               only:
                 - develop
-                - bugfix/jenkinsfile
+                - bugfix/jenkins-branch
