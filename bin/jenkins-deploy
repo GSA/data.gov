@@ -91,7 +91,7 @@ function deploy () {
 }
 
 function build () {
-  docker build --build-arg APP_UID=$(id -u) --build-arg APP_GID=$(id -g) -t datagov/datagov-deploy:$(get_tag $BRANCH_NAME) .
+  docker build --pull --build-arg APP_UID=$(id -u) --build-arg APP_GID=$(id -g) -t datagov/datagov-deploy:$(get_tag $BRANCH_NAME) .
 }
 
 
