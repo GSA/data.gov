@@ -34,6 +34,8 @@ catalog_next_ckan_db_primary_host: "{{ vault_catalog_next_ckan_db_primary_host }
 catalog_next_ckan_db_replica_a_host: "{{ vault_catalog_next_ckan_db_replica_a_host }}"
 catalog_next_ckan_db_replica_b_host: "{{ vault_catalog_next_ckan_db_replica_b_host }}"
 catalog_next_ckan_db_user: "{{ vault_catalog_next_ckan_db_user }}"
+catalog_next_ckan_envs: |
+  {{ newrelic_app_envs }}
 catalog_next_ckan_instance_secret: "{{ vault_catalog_next_ckan_instance_secret }}"
 catalog_next_ckan_instance_uuid: 5ab5625f-4ec5-435b-a725-55eaa36d264b
 catalog_next_ckan_postgresql_admin_host: "{{ vault_catalog_next_ckan_postgresql_admin_host }}"
@@ -203,6 +205,8 @@ inventory_ckan_solr_port: "8983"
 inventory_ckan_who_ini_path: "etc_ckan_who.saml2.ini.j2"
 
 # Inventory Next
+inventory_next_ckan_envs: |
+  {{ newrelic_app_envs }}
 inventory_next_ckan_redis_host: "redis1p.prod-ocsit.bsp.gsa.gov"
 inventory_next_ckan_redis_password: "{{ redis_password }}"
 inventory_next_ckan_s3_bucket_name: "{{ vault_inventory_next_ckan_s3_bucket_name }}"
@@ -225,6 +229,7 @@ inventory_next_postgresql_db_name: "{{ vault_inventory_next_postgresql_db_name }
 inventory_next_datapusher_db_name: "{{ vault_inventory_next_datapusher_db_name }}"
 
 # New Relic
+newrelic_enabled: true
 newrelic_license_key: "{{ vault_newrelic_license_key }}"
 
 
