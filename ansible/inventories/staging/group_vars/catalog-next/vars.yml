@@ -32,6 +32,7 @@ ckan_production_ini_template: "{{ catalog_next_ckan_production_ini_template }}"
 ckan_session_store_type: memory
 ckan_site_domain: https://catalog-next-datagov.dev-ocsit.bsp.gsa.gov
 ckan_uses_gunicorn: true
+catalog_ckan_cache_control_max_age: 86400
 
 datagov_service: catalog-next
 

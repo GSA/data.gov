@@ -55,6 +55,9 @@
     ErrorLog {{ catalog_ckan_error_log }}
     CustomLog {{ catalog_ckan_access_log }} combined
 
+    # Cache
+    Header add Cache-Control "max-age={{ catalog_ckan_cache_control_max_age }}"
+    
     # fix Cross-Frame Scripting (XFS) vulnerability
     Header set X-Frame-Options "SAMEORIGIN"
 

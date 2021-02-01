@@ -2,6 +2,7 @@
 app_repo: https://github.com/GSA/catalog.data.gov
 catalog_ckan_app_version: master
 catalog_ckan_wsgi_processes: 8
+catalog_ckan_cache_control_max_age: 86400
 catalog_ckan_apache_server_alias:
   - catalog.data.gov
 catalog_ckan_apache_server_name: "{{ catalog_host_public_next }}"

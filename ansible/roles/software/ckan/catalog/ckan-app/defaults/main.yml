@@ -5,6 +5,7 @@ catalog_app_type: web  # either web or worker
 catalog_ckan_access_log: "{{ catalog_log_dir }}/ckan.access.log"
 catalog_ckan_apache_server_alias: []
 catalog_ckan_apache_server_name: ckan
+catalog_ckan_cache_control_max_age: 0
 
 # One of [default, writeonly, readonly]
 # default: stand-alone instance, handles both read and write operations.
