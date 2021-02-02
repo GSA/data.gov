@@ -259,7 +259,7 @@ solr_cores:
   - catalog
   - inventory
 solr_xms: 8192m
-solr_xmx: 8192m
+solr_xmx: 12288m
 
 # SecOps user
 secops_user: "{{ vault_secops_user }}"

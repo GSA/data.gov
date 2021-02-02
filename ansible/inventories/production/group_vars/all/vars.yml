@@ -267,7 +267,7 @@ solr_cores:
   - catalog
   - inventory
 solr_xms: 8192m
-solr_xmx: 8192m
+solr_xmx: 12288m
 
 
 
