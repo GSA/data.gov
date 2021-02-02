@@ -48,7 +48,7 @@ catalog_next_ckan_solr_b_host: datagov-solr2p-v2.prod-ocsit.bsp.gsa.gov
 catalog_next_ckan_solr_primary_host: datagov-solrm1p-v2.prod-ocsit.bsp.gsa.gov
 catalog_next_ckan_token_dat: "{{ vault_catalog_next_ckan_token_dat }}"
 catalog_next_ckan_who_ini_secret: "{{ vault_catalog_next_ckan_who_ini_secret }}"
-catalog_next_ckan_saml2_enabled: false
+catalog_next_ckan_saml2_enabled: true
 catalog_next_ckan_who_ini_path: "etc_ckan_who.default.ini.j2"
 catalog_next_saml2_sp_public_certificate: |-
   -----BEGIN CERTIFICATE-----
