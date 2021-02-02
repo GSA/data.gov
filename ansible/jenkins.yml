@@ -2,7 +2,12 @@
 - name: Install jenkins
   hosts: jenkins
   roles:
-    - gsa.datagov-deploy-jenkins
+    - role: geerlingguy.nginx
+      tags:
+        - nginx
+    - role: gsa.datagov-deploy-jenkins
+      tags:
+        - jenkins
   tasks:
     - name: flush handlers
       meta: flush_handlers

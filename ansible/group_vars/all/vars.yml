@@ -167,6 +167,7 @@ nginx_ppa_use: true
 nginx_ppa_version: stable
 nginx_extra_conf_options: |-
   include /etc/nginx/modules-enabled/*.conf;
+nginx_server_tokens: "off"
 
 
 # PHP
