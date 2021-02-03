@@ -245,7 +245,7 @@ catalog_url_admin: https://{{ catalog_host_admin }}
 ckan_site_domain: "{{ catalog_host_public }}"
 
 # next public urls
-catalog_host_public_next: catalog-next.data.gov
+catalog_host_public_next: catalog.data.gov
 catalog_host_admin_next: admin-catalog-next.data.gov
 
 
