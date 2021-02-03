@@ -129,36 +129,9 @@ jenkins_system_message: >
   Data.gov continuous integration and delivery service.
 jenkins_home: /data/jenkins
 jenkins_host: jenkins.mgmt-ocsit.bsp.gsa.gov
-jenkins_tls_key: "{{ vault_jenkins_tls_key }}"
-jenkins_tls_cert: |
-  -----BEGIN CERTIFICATE-----
-  MIIDrjCCApYCCQDzu3KSUyq/3DANBgkqhkiG9w0BAQsFADCBmDELMAkGA1UEBhMC
-  VVMxCzAJBgNVBAgMAkRDMRMwEQYDVQQHDApXYXNoaW5ndG9uMQwwCgYDVQQKDANH
-  U0ExDDAKBgNVBAsMA1RUUzEnMCUGA1UEAwweamVua2lucy5tZ210LW9jc2l0LmJz
-  cC5nc2EuZ292MSIwIAYJKoZIhvcNAQkBFhNkYXRhZ292aGVscEBnc2EuZ292MB4X
-  DTIwMTIzMDIzMDkyMFoXDTIxMTIzMDIzMDkyMFowgZgxCzAJBgNVBAYTAlVTMQsw
-  CQYDVQQIDAJEQzETMBEGA1UEBwwKV2FzaGluZ3RvbjEMMAoGA1UECgwDR1NBMQww
-  CgYDVQQLDANUVFMxJzAlBgNVBAMMHmplbmtpbnMubWdtdC1vY3NpdC5ic3AuZ3Nh
-  LmdvdjEiMCAGCSqGSIb3DQEJARYTZGF0YWdvdmhlbHBAZ3NhLmdvdjCCASIwDQYJ
-  KoZIhvcNAQEBBQADggEPADCCAQoCggEBANC1kQn9xl6/MHHg97JElUczykwQzVGP
-  7UzPEorCdwgJI4TTjQOZ0pyshsCDMNJ3ZxOVc/K/F19/iWm7txblQ/a4ltMmsnJR
-  2TgPgYIcRrbeJBKFrcFDAJnjaIs1C/AsBYtSkHnYa1XOElP8RSAzKXDJlyKTGr0l
-  MZnMo6602UGjF0gd7jV4XSWAM4i1w+HlvjEMkdK4G7Qu6sjGs5KoEFf1yPeBYmKD
-  YlC4I7TsxTKA4Vi4U1KSrubhGe+oL3CAdf86Wf8at20XO6Neyom5lQ3RIa7JZ8o8
-  lMu0pKm40rUI9Sw7LgY6cnjJ1SWep/r5FWlxRgRk2ZFRYjVdXgKJsd0CAwEAATAN
-  BgkqhkiG9w0BAQsFAAOCAQEAcRBtEu6yTokqVkVs9Erletrss3Dv8UDrFf52j45W
-  ZNWIKlBBtvwXXC2diZzNIrHKQkxfkPhUfLiFRaME45oi+K2phk7offJbFdDcJuAu
-  efZo0/4u3I9aU2xtK2XWbsyzleDKGPACCkW0nsNIzCRWCzIFAeKPCikyS1IyaV7F
-  exMXJYf3gPefY4kyqNgxv/71Log4D78V705QJJH3eaFh0EA3pKGpE0O3MPWJ6EBG
-  cbFZHpFAPxkcyCkj55O0/tGprbsbvn82v/k1nq5bKAotkzH8ZUIBJ/R2xpn8oujh
-  7gXXx3R9Z6Hdcqg4x1GbkUS4YYyX2d8QaDgmyEsiROtiig==
-  -----END CERTIFICATE-----
-
+jenkins_tls_key: "{{ default_tls_host_key }}"
+jenkins_tls_cert: "{{ default_tls_host_certificate }}"
 jenkins_workflow: production
-
-default_tls_host_key: "{{ jenkins_tls_key }}"
-default_tls_host_certificate: "{{ jenkins_tls_cert }}"
-
 jenkins_url: ci.data.gov
 
 
