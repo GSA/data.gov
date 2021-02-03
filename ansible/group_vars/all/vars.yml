@@ -127,27 +127,7 @@ inventory_ckan_plugins_default:
 # jenkins
 jenkins_config: "{{ lookup('template', 'jenkins_config.yml.j2') }}"
 jenkins_home: /data/jenkins
-jenkins_jobs:
-  - name: deploy-ci-platform
-    git_url: https://github.com/gsa/datagov-deploy.git
-    git_ref: refs/heads/develop
-  - name: deploy-ci-app-catalog
-    git_url: https://github.com/gsa/catalog-app.git
-  - name: deploy-ci-app-catalog-next
-    git_url: https://github.com/gsa/catalog.data.gov.git
-    github_project_url: https://github.com/gsa/datagov-ckan-multi
-  - name: deploy-ci-app-dashboard
-    git_url: https://github.com/gsa/project-open-data-dashboard.git
-  - name: deploy-ci-app-inventory
-    git_url: https://github.com/gsa/inventory-app.git
-  - name: deploy-ci-app-inventory-next
-    git_url: https://github.com/gsa/inventory-app.git
-    git_ref: refs/heads/inventory_ckan_2.8
-  - name: deploy-ci-app-wordpress
-    git_url: https://github.com/gsa/datagov-wp-boilerplate.git
-jenkins_additional_plugins:
-  - build-token-root  # Allow CircleCI to trigger builds with a job token
-jenkins_prefer_tls: true  # Use long-term-support releases instead of weekly updates
+jenkins_prefer_lts: true  # Use long-term-support releases instead of weekly updates
 
 
 # Limit SSH Access
@@ -157,6 +137,14 @@ jumpbox_ips:
 
 
 # newrelic monitoring
+# APM environment variables for applications
+newrelic_app_envs: |
+  NEW_RELIC_APP_NAME="{{ newrelic_app_name }}{% if newrelic_environment != 'production' %} ({{ newrelic_environment }}){% endif %}"
+  NEW_RELIC_HOST=gov-collector.newrelic.com
+  NEW_RELIC_LICENSE_KEY="{{ newrelic_license_key }}"
+  NEW_RELIC_LOG=/var/log/new_relic.log
+  NEW_RELIC_LOG_LEVEL=info
+  NEW_RELIC_MONITOR_MODE={{ newrelic_enabled | default(False) | ternary('true', 'false') }}
 newrelic_environment: "{{ datagov_environment | default('unknown') }}"
 nrinfragent_config:
   license_key: "{{ newrelic_license_key }}"
@@ -179,6 +167,7 @@ nginx_ppa_use: true
 nginx_ppa_version: stable
 nginx_extra_conf_options: |-
   include /etc/nginx/modules-enabled/*.conf;
+nginx_server_tokens: "off"
 
 
 # PHP

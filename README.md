@@ -35,13 +35,13 @@ formerly BSP). Our sandbox environments are provisioned by
 
 GSA [VPN access](https://github.com/GSA/datagov-deploy/wiki/GSA-VPN) is required to access production and staging.
 
-Environment | Deployed from      | ISP | Jumpbox
------------ | -------------      | --- | ----
-mgmt        | `master`           | BSP | datagovjump1m.mgmt-ocsit.bsp.gsa.gov
-production  | `master` (manual)  | BSP | datagov-jump2p.prod-ocsit.bsp.gsa.gov
-staging     | `release/*` or `master` (manual)  | BSP | datagov-jump2d.dev-ocsit.bsp.gsa.gov
-sandbox     | `develop` (manual) | AWS sandbox | jump.sandbox.datagov.us
-local       | feature branches   | laptop  | localhost
+Environment | Deployment branch                      | ISP         | Jumpbox
+----------- | -----------------                      | ---         | ----
+mgmt        | `master` (semi-manual)                 | BSP         | datagovjump1m.mgmt-ocsit.bsp.gsa.gov
+production  | `master` (semi-manual)                 | BSP         | datagov-jump2p.prod-ocsit.bsp.gsa.gov
+staging     | `release/*` and `master` (semi-manual) | BSP         | datagov-jump2d.dev-ocsit.bsp.gsa.gov
+sandbox     | `develop`                              | AWS sandbox | jump.sandbox.datagov.us
+local       | feature branches                       | laptop      | localhost
 
 
 ## Usage
@@ -523,15 +523,17 @@ You can configure git to automatically decrypt Vault files for reviewing diffs.
 
 ## Deployment
 
-_Note: this is a work in progress._
+Because of GSA firewalls, we split our continuous integration and delivery into
+two roles. CircleCI handles continuous integration and Jenkins handles
+deployment within the GSA firewall.
 
-Currently, deployment to BSP environments is done manually by running Ansible
-playbooks from the jumpbox hosts, within the BSP firewall. We are moving to
-automated continuous deployment via Jenkins CI server.
+On any commit, CircleCI runs the automated test suites and if successful, hands
+off deployment to Jenkins.
 
-We still use CircleCI for majority of CI needs. Any tasks requiring access to
-the GSA network (like deployment) are handed over to Jenkins (via the Jenkins
-API).
+Workflow   | Environments              | URL
+--------   | ------------              | ---
+production | staging, mgmt, production | https://ci.data.gov
+sandbox    | sandbox                   | https://ci.sandbox.datagov.us
 
 
 ### Jenkins configuration
@@ -574,10 +576,10 @@ configuration-as-code configuraiton._
 With SAML authentication enabled, you can no longer create user/service accounts
 through the UI. Instead, use the [script
 console](https://ci.sandbox.datagov.us/script) to run the script below. Set
-a random password. The return value is the API token save for later as you won't have
+a random password. The return value is the API token. Save this for later as you won't have
 another chance.
 
-The CI user should be assigned to teh `build-manager` role. This is already
+The CI user should be assigned to the `build-manager` role. This is already
 configured in our configuration-as-code.
 
 ```groovy

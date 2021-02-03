@@ -132,3 +132,13 @@ def test_apache_site(host):
         'Expected no rewrite rule for login URLs'
     assert not f.contains('RewriteCond.*!auth_tkt'), \
         'Expected no rewrite condition for unauthenticated requests'
+
+
+def test_ckan_dot_env(host):
+    dot_env = host.file('/etc/ckan/.env')
+
+    assert dot_env.exists
+    assert dot_env.user == 'root'
+    assert dot_env.group == 'www-data'
+    assert dot_env.mode == 0o640
+    assert dot_env.contains('TEST_ENV=1')

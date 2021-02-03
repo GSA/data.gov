@@ -9,11 +9,6 @@
       - cron
       - supervisor
 
-- name: Assert newrelic_license_key is set
-  assert:
-    that: newrelic_license_key is defined
-    fail_msg: newrelic_license_key is required but it is not set
-
 - name: Create log directory
   file: path={{ inventory_log_dir }} state=directory owner=root group=www-data mode=0750
 
@@ -87,31 +82,44 @@
   with_items:
     - /var/lib/ckan/files/storage
 
-- name: copy all needed files
-  action: copy src={{ item }} dest=/{{ item }} owner=root group=www-data mode=0640
-  with_items:
-    - etc/ckan/who.ini
+- name: Configure who.ini
+  template:
+    src: "{{ inventory_ckan_who_ini_path }}"
+    dest: /etc/ckan/who.ini
+    owner: root
+    group: www-data
+    mode: 0640
   notify:
     - restart ckan
 
 - name: Configure production.ini
+  template:
+    src: "{{ ckan_production_ini_template }}"
+    dest: /etc/ckan/production.ini
+    owner: root
+    group: www-data
+    mode: 0640
+  notify:
+    - restart ckan
+
+- include_tasks: saml2.yml
+  when: inventory_ckan_saml2_enabled
+
+- name: Configure apache file
   template: src={{ item }} dest=/{{ item }} owner=root group=www-data mode=0640
   with_items:
-    - etc/ckan/production.ini
     - etc/apache2/sites-enabled/ckan.conf
   notify:
     - restart apache2
-    - restart ckan
 
 - name: Copy app .env
   template:
     src: app_env.j2
     dest: /etc/ckan/.env
-    mode: 0644
+    mode: 0640
     owner: root
-    group: root
+    group: www-data
   become: true
-  when: inventory_next
   notify:
     - restart ckan
 

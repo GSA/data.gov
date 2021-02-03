@@ -9,7 +9,7 @@ catalog_ckan_db_name: "{{ vault_catalog_ckan_db_name }}"
 catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
 catalog_ckan_db_user: "{{ vault_catalog_ckan_db_user }}"
 catalog_ckan_email_from: "{{ default_email_from }}"
-catalog_ckan_harvest_fetch_process_count: 6
+catalog_ckan_harvest_fetch_process_count: 4
 catalog_ckan_plugins_additional: [saml2]
 catalog_ckan_qa_update_process_count: 5
 catalog_ckan_readwrite_configuration: readonly
@@ -36,6 +36,8 @@ catalog_next_ckan_db_pass: "{{ vault_catalog_next_ckan_db_pass }}"
 catalog_next_ckan_db_primary_host: "{{ vault_catalog_next_ckan_db_primary_host }}"
 catalog_next_ckan_db_replica_host: "{{ vault_catalog_next_ckan_db_replica_host }}"
 catalog_next_ckan_db_user: "{{ vault_catalog_next_ckan_db_user }}"
+catalog_next_ckan_envs: |
+  {{ newrelic_app_envs }}
 catalog_next_ckan_instance_secret: "{{ vault_catalog_next_ckan_instance_secret }}"
 catalog_next_ckan_instance_uuid: 1d6ce0c2-1e55-48c5-8d2a-37452ff57989
 catalog_next_ckan_postgresql_admin_host: "{{ vault_catalog_next_ckan_postgresql_admin_host }}"
@@ -190,8 +192,11 @@ inventory_app_environment: staging
 inventory_ckan_service_url: https://inventory-datagov.dev-ocsit.bsp.gsa.gov
 inventory_ckan_solr_host: datagov-solrm1d.dev-ocsit.bsp.gsa.gov
 inventory_ckan_solr_port: "8983"
+inventory_ckan_who_ini_path: "etc_ckan_who.saml2.ini.j2"
 
 # Inventory Next
+inventory_next_ckan_envs: |
+  {{ newrelic_app_envs }}
 inventory_next_ckan_redis_host: "redis1d.dev-ocsit.bsp.gsa.gov"
 inventory_next_ckan_redis_password: "{{ redis_password }}"
 inventory_next_ckan_s3_bucket_name: "{{ vault_inventory_next_ckan_s3_bucket_name }}"
@@ -214,6 +219,7 @@ inventory_next_postgresql_db_name: "{{ vault_inventory_next_postgresql_db_name }
 inventory_next_datapusher_db_name: "{{ vault_inventory_next_datapusher_db_name }}"
 
 # New Relic
+newrelic_enabled: true
 newrelic_license_key: "{{ vault_newrelic_license_key }}"
 
 
@@ -253,7 +259,7 @@ solr_cores:
   - catalog
   - inventory
 solr_xms: 8192m
-solr_xmx: 8192m
+solr_xmx: 12288m
 
 # SecOps user
 secops_user: "{{ vault_secops_user }}"

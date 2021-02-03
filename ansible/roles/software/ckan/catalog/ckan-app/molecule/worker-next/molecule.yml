@@ -47,7 +47,6 @@ provisioner:
           - geodatagov_waf_harvester
           - spatial_query
           - datagovtheme
-        newrelic_license_key: some-secret
         # https://github.com/DavidWittman/ansible-redis/blob/21b0b6f9030275a2586baf591f322ce3348b2b2d/tasks/install.yml#L9
         redis_travis_ci: true
   lint: |
