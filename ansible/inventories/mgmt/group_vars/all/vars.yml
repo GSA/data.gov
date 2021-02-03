@@ -132,7 +132,7 @@ jenkins_host: jenkins.mgmt-ocsit.bsp.gsa.gov
 jenkins_tls_key: "{{ default_tls_host_key }}"
 jenkins_tls_cert: "{{ default_tls_host_certificate }}"
 jenkins_workflow: production
-jenkins_url: ci.data.gov
+jenkins_url: ci-datagov.mgmt-ocsit.bsp.gsa.gov
 
 
 # jumpbox
