@@ -1,6 +1,6 @@
 ---
 # catalog
-catalog_ckan_app_version: master
+catalog_ckan_app_version: fcs
 catalog_ckan_db_host: "{{ catalog_postgresql_login_host }}"
 catalog_ckan_db_name: catalog_db
 catalog_ckan_db_pass: "{{ catalog_postgresql_login_password }}"
@@ -148,7 +148,7 @@ jenkins_jobs:
     git_url: https://github.com/gsa/inventory-app.git
   - name: deploy-ci-app-inventory-next
     git_url: https://github.com/gsa/inventory-app.git
-    git_ref: inventory_ckan_2.8
+    git_ref: fcs
   - name: deploy-ci-app-wordpress
     git_url: https://github.com/gsa/datagov-wp-boilerplate.git
 

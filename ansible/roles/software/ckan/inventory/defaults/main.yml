@@ -3,7 +3,7 @@ datagov_in_service: true
 db_is_setup: true
 inventory_app_source_path: /tmp/inventory-app
 inventory_app_repo: https://github.com/GSA/inventory-app.git
-inventory_app_repo_branch: master
+inventory_app_repo_branch: fcs
 
 # used in  production.ini/ckan_site_url and hosts
 ckan_site_domain: https://inventory.data.gov
