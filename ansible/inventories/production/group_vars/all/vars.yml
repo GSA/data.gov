@@ -1,7 +1,7 @@
 ---
 # catalog
 catalog_ckan_apache_server_name: "{{ catalog_host_public }}"
-catalog_ckan_app_version: master
+catalog_ckan_app_version: fcs
 catalog_ckan_archiver_process_count: 3
 catalog_ckan_db_host: "{{ vault_catalog_ckan_db_host }}"
 catalog_ckan_db_name: "{{ vault_catalog_ckan_db_name }}"

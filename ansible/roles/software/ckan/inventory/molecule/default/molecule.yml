@@ -35,7 +35,7 @@ provisioner:
         inventory_ckan_envs: |
           TEST_ENV=1
       bionic:
-        inventory_app_repo_branch: inventory_ckan_2.8
+        inventory_app_repo_branch: fcs
         inventory_next: true
         datapusher_build_pkg_branch: datagov/inventory-next
 scenario:
