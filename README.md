@@ -4,12 +4,12 @@
 
 This is the main repository for the Data.gov Platform. We use this repository to
 [track our team's work](https://app.zenhub.com/workspaces/datagov-devsecops-579a2532d1d6ea9c3fcf5cfa/board)
-and for our [Ansible](https://www.ansible.com) playbooks that deploy all the
+and for our [Ansible](https://www.ansible.com) playbooks that deploy a static version of the
 [Data.gov site components](https://github.com/GSA/datagov-deploy/wiki/Site-components):
 
   - www.data.gov (WordPress)
-  - catalog.data.gov (CKAN 2.3)
-  - inventory.data.gov (CKAN 2.5)
+  - catalog.data.gov (CKAN 2.8)
+  - inventory.data.gov (CKAN 2.8)
   - labs.data.gov/dashboard (Project Open Data Dashboard)
 
 Additionally, each host is configured with common Services:
@@ -109,7 +109,7 @@ Or use `--limit` if you just want to focus on a single host or group.
 
     $ ansible-playbook site.yml --limit catalog-web
 
-Deploy the Catalog application.
+Deploy the static catalog application.
 
     $ ansible-playbook catalog.yml
 
@@ -177,7 +177,7 @@ wordpress | WordPress application within site.yml playbook
 
 Application playbooks deploy a single Application and its Services (e.g.
 apache2). We document supported tags and common variables here, but you should
-refer to the individual roles for the complete documentation.
+refer to the individual roles for the complete documentation. Note: deploying from the `master` branch will deploy a frozen version of each application via its `fcs` branch.
 
 _These commands assume you've activated the virtualenv with `pipenv shell` or you can
 prefix each command with `pipenv run` e.g. `pipenv run ansible`._
@@ -299,6 +299,8 @@ Deploys the www.data.gov (WordPress) application.
 Variable | Description
 -------- | -----------
 `project_git_version` | Tag, branch, or commit to deploy
+
+Note: On the `master` branch, this variable should be set to `fcs`.
 
 
 ##### Supported tags

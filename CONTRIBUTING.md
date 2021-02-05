@@ -220,6 +220,16 @@ occasional nudging to get it unblocked.
   In progress.
 
 
+#### Needs Review
+
+Task has one or more items that need peer review before being moved to Ready for Deploy. 
+
+
+##### Exit criteria
+
+- Work has been reviewed and approved by one or more members of the data.gov team.
+- If applicable, work is ready to be included on the next release. Usually through integration in the `develop` branch.
+
 #### Ready for deploy
 
 Task has been merged to develop/master and applied to the sandbox environments
@@ -259,14 +269,13 @@ Deployment works a little differently between the platform
 ([datagov-deploy][datagov-deploy]) and the application repos (e.g.
 [catalog-app](https://github.com/GSA/catalog-app)).
 
-In general, the `master` branch should be in a deployable state at all
-times.
-
+Now that applications are moved or are in the process of moving to `cloud.gov`, the `master` branch is in a frozen state and will only capture changes to any application's `fcs` branch.
 
 ### Application deployment
 
-On any change to `master`, the application should be sequentially deployed to
-sandbox, staging, and then production. If there's an issue with the deploy along
+All deployments from the `master` branch will capture a frozen state for each application via their `fcs` branch (eg [catalog.data.gov](https://github.com/GSA/catalog.data.gov/tree/fcs)).
+
+Changes to the `master` should be rare and only include security or compliance updates. The application should be sequentially deployed to sandbox, staging, and then production. If there's an issue with the deploy along
 the way, the deploy should be halted and then the issue addressed (following the
 usual PR workflow) before starting a new deploy. See [application
 release](https://github.com/GSA/datagov-deploy/wiki/Releases#application-release)
@@ -296,26 +305,6 @@ Branch | Deployed to | Frequency
 
 See [Releases](https://github.com/GSA/datagov-deploy/wiki/Releases) for details
 on the platform deployment steps.
-
-
-#### Hotfixes
-
-Occasionally for the platform, we need to skip the usual development workflow to
-address an urgent issue. This is because `develop` requires a lot of manual
-testing and might not always be in a deployable state (even though we try).
-`hotfix/*` branches are created from the `master` branch and allow us to do the
-manual testing and validation on a small set of isolated changes.
-
-Use your discretion when creating a hotfix. These are some reasons to create
-a hotfix:
-- Resolve a significant site outage
-- Fix a major bug
-- Change to the Ansible inventory (new/removed hosts)
-- Removing operator access
-
-Once the hotfix PR is merged, you should create a backmerge PR into develop (merge
-the `hotfix/*` branch into `develop).
-
 
 ## Pull requests
 
