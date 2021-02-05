@@ -240,7 +240,7 @@ jenkins_admins_permissions:
 
 jumpbox_operators: "{{ datagov_operators_test }}"
 
-pycsw_app_version: datagov/v2.4.x
+pycsw_app_version: fcs
 pycsw_base_url: https://catalog.sandbox.datagov.us
 pycsw_ckan_url: https://catalog.sandbox.datagov.us
 pycsw_db_host: "{{ catalog_pycsw_db_host }}"
