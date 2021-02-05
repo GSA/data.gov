@@ -87,11 +87,24 @@ jobs:
           disableConcurrentBuilds()
           githubProjectUrl('{{ job.github_project_url | default("https://github.com/GSA/datagov-deploy") }}')
         }
+        {% if jenkins_job_use_polling | default(False) %}
+        pipelineTriggers {
+          triggers {
+            pollSCM {
+              scmpoll_spec('H/3 * * * *')
+            }
+          }
+        }
+        {% endif %}
         definition {
           cpsScm {
             scm {
               git {
                 extensions {
+                  {% if jenkins_job_use_polling | default(False) %}
+                  cleanBeforeCheckout()
+                  disableRemotePoll(){# Work-around https://issues.jenkins.io/browse/JENKINS-42290 #}
+                  {% endif %}
                   localBranch()
                 }
                 remote {
