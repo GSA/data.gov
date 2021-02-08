@@ -108,8 +108,7 @@ ckan.redis.url = {{ inventory_ckan_redis_url}}
 #       Add ``pdf_preview`` to enable the resource preview for PDFs
 #		Add ``resource_proxy`` to enable resorce proxying and get around the
 #		same origin policy
-# ckan.plugins = usmetadata datajson datastore datapusher stats text_view recline_view googleanalyticsbasic saml2 dcat_usmetadata
-ckan.plugins = {{ (inventory_ckan_plugins_additional + inventory_ckan_plugins_default) | join(' ') }}
+ckan.plugins = {{ (inventory_ckan_plugins_default + inventory_ckan_plugins_additional) | join(' ') }}
 
 ckan.views.default_views = recline_view text_view image_view webpage_view recline_grid_view
 
