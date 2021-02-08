@@ -107,18 +107,23 @@ jenkins_jobs:
     git_url: https://github.com/gsa/datagov-deploy.git
   - name: deploy-ci-app-catalog
     git_url: https://github.com/gsa/catalog-app.git
+    git_ref: fcs
   - name: deploy-ci-app-catalog-next
     git_url: https://github.com/gsa/catalog.data.gov.git
     github_project_url: https://github.com/gsa/datagov-ckan-multi
+    git_ref: fcs
   - name: deploy-ci-app-dashboard
     git_url: https://github.com/gsa/project-open-data-dashboard.git
+    git_ref: fcs
   - name: deploy-ci-app-inventory
     git_url: https://github.com/gsa/inventory-app.git
+    git_ref: fcs
   - name: deploy-ci-app-inventory-next
     git_url: https://github.com/gsa/inventory-app.git
     git_ref: inventory_ckan_2.8
   - name: deploy-ci-app-wordpress
     git_url: https://github.com/gsa/datagov-wp-boilerplate.git
+    git_ref: fcs
 jenkins_saml_sp_entity_id: urn:gov:gsa:SAML:2.0.profiles:sp:sso:gsa:datagov-ci-jenkins
 jenkins_saml_keystore_password: "{{ vault_jenkins_saml_keystore_password }}"
 jenkins_saml_keystore_path: "{{ playbook_dir }}/files/mgmt/saml-key.jks"
