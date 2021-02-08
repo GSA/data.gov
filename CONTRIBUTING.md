@@ -306,6 +306,25 @@ Branch | Deployed to | Frequency
 See [Releases](https://github.com/GSA/datagov-deploy/wiki/Releases) for details
 on the platform deployment steps.
 
+#### Hotfixes
+
+Occasionally for the platform, we need to skip the usual development workflow to
+address an urgent issue. This is because `develop` requires a lot of manual
+testing and might not always be in a deployable state (even though we try).
+`hotfix/*` branches are created from the `master` branch and allow us to do the
+manual testing and validation on a small set of isolated changes.
+
+Use your discretion when creating a hotfix. These are some reasons to create
+a hotfix:
+- Resolve a significant site outage
+- Fix a major bug
+- Change to the Ansible inventory (new/removed hosts)
+- Removing operator access
+
+Once the hotfix PR is merged, you should create a backmerge PR into develop (merge
+the `hotfix/*` branch into `develop).
+
+
 ## Pull requests
 
 Developers should feel empowered to review each others code, even if you're not
