@@ -275,7 +275,7 @@ Now that applications are moved or are in the process of moving to `cloud.gov`, 
 
 All deployments from the `master` branch will capture a frozen state for each application via their `fcs` branch (eg [catalog.data.gov](https://github.com/GSA/catalog.data.gov/tree/fcs)).
 
-Changes to the `master` should be rare and only include security or compliance updates. The application should be sequentially deployed to sandbox, staging, and then production. If there's an issue with the deploy along
+Changes to the `master`/`main` should be rare and only include security or compliance updates. The application should be sequentially deployed to sandbox, staging, and then production. If there's an issue with the deploy along
 the way, the deploy should be halted and then the issue addressed (following the
 usual PR workflow) before starting a new deploy. See [application
 release](https://github.com/GSA/datagov-deploy/wiki/Releases#application-release)
