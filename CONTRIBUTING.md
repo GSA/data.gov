@@ -228,7 +228,7 @@ Task has one or more items that need peer review before being moved to Ready for
 ##### Exit criteria
 
 - Work has been reviewed and approved by one or more members of the data.gov team.
-- If applicable, work is ready to be included on the next release. Usually through integration in the `develop` branch.
+- If applicable, work is ready to be included on the next release. Usually through integration in the `develop` or `main` branches.
 
 #### Ready for deploy
 
