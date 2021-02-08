@@ -1,7 +1,7 @@
 ---
 # catalog
 catalog_ckan_apache_server_name: "{{ catalog_host_public }}"
-catalog_ckan_app_version: master
+catalog_ckan_app_version: fcs
 catalog_ckan_archiver_process_count: 3
 # read-only database variables
 catalog_ckan_db_host: "{{ vault_catalog_ckan_db_host }}"
@@ -224,7 +224,7 @@ newrelic_license_key: "{{ vault_newrelic_license_key }}"
 
 
 pycsw_app_environment: staging
-pycsw_app_version: datagov/v2.4.x
+pycsw_app_version: fcs
 pycsw_base_url: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
 pycsw_ckan_url: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
 pycsw_db_host: "{{ catalog_pycsw_db_host }}"

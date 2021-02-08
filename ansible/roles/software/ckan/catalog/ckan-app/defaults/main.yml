@@ -12,7 +12,7 @@ catalog_ckan_envs: ""
 # writeonly: has a db write connection for admin, redirects to readonly for non admin operations.
 # readonly: serves anonymous traffic, redirects to admin for write operations.
 catalog_ckan_readwrite_configuration: default
-catalog_ckan_app_version: master
+catalog_ckan_app_version: fcs
 catalog_ckan_disable_resource_search: false
 catalog_ckan_error_log: "{{ catalog_log_dir }}/ckan.error.log"
 catalog_ckan_harvest_fetch_process_count: 2
@@ -62,7 +62,7 @@ catalog_gunicorn_error_log: "{{ catalog_log_dir }}/gunicorn.log"
 
 app_source_path: /tmp/catalog-app
 app_repo: https://github.com/GSA/catalog-app.git
-app_repo_branch: master
+app_repo_branch: fcs
 
 # used in  production.ini/ckan_site_url and hosts
 ckan_site_domain: "http://127.0.0.1"
