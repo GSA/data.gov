@@ -28,7 +28,7 @@ provisioner:
         db_is_setup: false
         python_home: /usr
         inventory_ckan_solr_port: 8983
-        inventory_app_repo_branch: fcs
+        inventory_app_repo_branch: inventory_ckan_2.8
         inventory_next: true
         datapusher_build_pkg_branch: datagov/inventory-next
         inventory_ckan_saml2_entity_id: urn:gov:gsa:SAML:2.0.profiles:sp:sso:gsa:datagov-sandbox-inventory

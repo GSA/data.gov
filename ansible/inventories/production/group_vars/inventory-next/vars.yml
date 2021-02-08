@@ -31,7 +31,7 @@ inventory_ckan_bucket_name: "{{ inventory_next_ckan_s3_bucket_name }}"
 inventory_ckan_bucket_prefix: "{{ inventory_next_ckan_s3_bucket_prefix }}"
 ckan_site_domain: "{{ inventory_next_ckan_service_url }}"
 
-inventory_app_repo_branch: fcs
+inventory_app_repo_branch: inventory_ckan_2.8
 newrelic_app_name: inventory-next
 newrelic_enabled: true
 

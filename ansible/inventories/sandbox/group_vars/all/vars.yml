@@ -148,7 +148,7 @@ jenkins_jobs:
     git_url: https://github.com/gsa/inventory-app.git
   - name: deploy-ci-app-inventory-next
     git_url: https://github.com/gsa/inventory-app.git
-    git_ref: fcs
+    git_ref: inventory_ckan_2.8
   - name: deploy-ci-app-wordpress
     git_url: https://github.com/gsa/datagov-wp-boilerplate.git
 
