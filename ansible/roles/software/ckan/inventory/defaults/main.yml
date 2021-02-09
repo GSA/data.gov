@@ -23,6 +23,7 @@ inventory_ckan_plugins_default:
   - stats
   - text_view
   - usmetadata
+inventory_ckan_saml2_requested_authn_context: []
 
 # Use local login by default
 inventory_ckan_saml2_enabled: false
