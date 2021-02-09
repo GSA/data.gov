@@ -1,14 +1,14 @@
 ---
 # catalog
 catalog_ckan_apache_server_name: "{{ catalog_host_public }}"
-catalog_ckan_app_version: master
+catalog_ckan_app_version: fcs
 catalog_ckan_archiver_process_count: 3
 catalog_ckan_db_host: "{{ vault_catalog_ckan_db_host }}"
 catalog_ckan_db_name: "{{ vault_catalog_ckan_db_name }}"
 catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
 catalog_ckan_db_user: "{{ vault_catalog_ckan_db_user }}"
 catalog_ckan_email_from: "{{ default_email_from }}"
-catalog_ckan_harvest_fetch_process_count: 6
+catalog_ckan_harvest_fetch_process_count: 4
 catalog_ckan_plugins_additional: [saml2]
 catalog_ckan_qa_update_process_count: 5
 catalog_ckan_readwrite_configuration: readonly
@@ -34,6 +34,8 @@ catalog_next_ckan_db_primary_host: "{{ vault_catalog_next_ckan_db_primary_host }
 catalog_next_ckan_db_replica_a_host: "{{ vault_catalog_next_ckan_db_replica_a_host }}"
 catalog_next_ckan_db_replica_b_host: "{{ vault_catalog_next_ckan_db_replica_b_host }}"
 catalog_next_ckan_db_user: "{{ vault_catalog_next_ckan_db_user }}"
+catalog_next_ckan_envs: |
+  {{ newrelic_app_envs }}
 catalog_next_ckan_instance_secret: "{{ vault_catalog_next_ckan_instance_secret }}"
 catalog_next_ckan_instance_uuid: 5ab5625f-4ec5-435b-a725-55eaa36d264b
 catalog_next_ckan_postgresql_admin_host: "{{ vault_catalog_next_ckan_postgresql_admin_host }}"
@@ -48,7 +50,7 @@ catalog_next_ckan_solr_b_host: datagov-solr2p-v2.prod-ocsit.bsp.gsa.gov
 catalog_next_ckan_solr_primary_host: datagov-solrm1p-v2.prod-ocsit.bsp.gsa.gov
 catalog_next_ckan_token_dat: "{{ vault_catalog_next_ckan_token_dat }}"
 catalog_next_ckan_who_ini_secret: "{{ vault_catalog_next_ckan_who_ini_secret }}"
-catalog_next_ckan_saml2_enabled: false
+catalog_next_ckan_saml2_enabled: true
 catalog_next_ckan_who_ini_path: "etc_ckan_who.default.ini.j2"
 catalog_next_saml2_sp_public_certificate: |-
   -----BEGIN CERTIFICATE-----
@@ -203,6 +205,8 @@ inventory_ckan_solr_port: "8983"
 inventory_ckan_who_ini_path: "etc_ckan_who.saml2.ini.j2"
 
 # Inventory Next
+inventory_next_ckan_envs: |
+  {{ newrelic_app_envs }}
 inventory_next_ckan_redis_host: "redis1p.prod-ocsit.bsp.gsa.gov"
 inventory_next_ckan_redis_password: "{{ redis_password }}"
 inventory_next_ckan_s3_bucket_name: "{{ vault_inventory_next_ckan_s3_bucket_name }}"
@@ -225,10 +229,11 @@ inventory_next_postgresql_db_name: "{{ vault_inventory_next_postgresql_db_name }
 inventory_next_datapusher_db_name: "{{ vault_inventory_next_datapusher_db_name }}"
 
 # New Relic
+newrelic_enabled: true
 newrelic_license_key: "{{ vault_newrelic_license_key }}"
 
 
-pycsw_app_version: datagov/v2.4.x
+pycsw_app_version: fcs
 pycsw_base_url: https://catalog.data.gov
 pycsw_ckan_url: https://catalog.data.gov
 pycsw_db_host: "{{ catalog_pycsw_db_host }}"
@@ -246,7 +251,7 @@ catalog_url_admin: https://{{ catalog_host_admin }}
 ckan_site_domain: "{{ catalog_host_public }}"
 
 # next public urls
-catalog_host_public_next: catalog-next.data.gov
+catalog_host_public_next: catalog.data.gov
 catalog_host_admin_next: admin-catalog-next.data.gov
 
 
@@ -262,7 +267,7 @@ solr_cores:
   - catalog
   - inventory
 solr_xms: 8192m
-solr_xmx: 8192m
+solr_xmx: 12288m
 
 
 

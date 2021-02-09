@@ -7,6 +7,11 @@
 # with the configuration-as-code plugin.
 jenkins:
   systemMessage: "{{ jenkins_system_message }}"
+  globalNodeProperties:
+    - envVars:
+        env:
+        - key: "DATAGOV_WORKFLOW"
+          value: "{{ jenkins_workflow }}"
   authorizationStrategy:
     roleBased:
       roles:
@@ -92,7 +97,7 @@ jobs:
                 remote {
                   url('{{ job.git_url }}')
                 }
-                branch('refs/heads/${branch_name}')
+                branch('refs/heads/^${branch_name}')
               }
             }
           }

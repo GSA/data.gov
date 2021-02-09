@@ -4,12 +4,12 @@
 
 This is the main repository for the Data.gov Platform. We use this repository to
 [track our team's work](https://app.zenhub.com/workspaces/datagov-devsecops-579a2532d1d6ea9c3fcf5cfa/board)
-and for our [Ansible](https://www.ansible.com) playbooks that deploy all the
+and for our [Ansible](https://www.ansible.com) playbooks that deploy a static version of the
 [Data.gov site components](https://github.com/GSA/datagov-deploy/wiki/Site-components):
 
   - www.data.gov (WordPress)
-  - catalog.data.gov (CKAN 2.3)
-  - inventory.data.gov (CKAN 2.5)
+  - catalog.data.gov (CKAN 2.8)
+  - inventory.data.gov (CKAN 2.8)
   - labs.data.gov/dashboard (Project Open Data Dashboard)
 
 Additionally, each host is configured with common Services:
@@ -35,13 +35,13 @@ formerly BSP). Our sandbox environments are provisioned by
 
 GSA [VPN access](https://github.com/GSA/datagov-deploy/wiki/GSA-VPN) is required to access production and staging.
 
-Environment | Deployed from      | ISP | Jumpbox
------------ | -------------      | --- | ----
-mgmt        | `master`           | BSP | datagovjump1m.mgmt-ocsit.bsp.gsa.gov
-production  | `master` (manual)  | BSP | datagov-jump2p.prod-ocsit.bsp.gsa.gov
-staging     | `release/*` or `master` (manual)  | BSP | datagov-jump2d.dev-ocsit.bsp.gsa.gov
-sandbox     | `develop` (manual) | AWS sandbox | jump.sandbox.datagov.us
-local       | feature branches   | laptop  | localhost
+Environment | Deployment branch                      | ISP         | Jumpbox
+----------- | -----------------                      | ---         | ----
+mgmt        | `master` (semi-manual)                 | BSP         | datagovjump1m.mgmt-ocsit.bsp.gsa.gov
+production  | `master` (semi-manual)                 | BSP         | datagov-jump2p.prod-ocsit.bsp.gsa.gov
+staging     | `release/*` and `master` (semi-manual) | BSP         | datagov-jump2d.dev-ocsit.bsp.gsa.gov
+sandbox     | `develop`                              | AWS sandbox | jump.sandbox.datagov.us
+local       | feature branches                       | laptop      | localhost
 
 
 ## Usage
@@ -109,7 +109,7 @@ Or use `--limit` if you just want to focus on a single host or group.
 
     $ ansible-playbook site.yml --limit catalog-web
 
-Deploy the Catalog application.
+Deploy the static catalog application.
 
     $ ansible-playbook catalog.yml
 
@@ -177,7 +177,7 @@ wordpress | WordPress application within site.yml playbook
 
 Application playbooks deploy a single Application and its Services (e.g.
 apache2). We document supported tags and common variables here, but you should
-refer to the individual roles for the complete documentation.
+refer to the individual roles for the complete documentation. Note: deploying from the `master` branch will deploy a frozen version of each application via its `fcs` branch.
 
 _These commands assume you've activated the virtualenv with `pipenv shell` or you can
 prefix each command with `pipenv run` e.g. `pipenv run ansible`._
@@ -299,6 +299,8 @@ Deploys the www.data.gov (WordPress) application.
 Variable | Description
 -------- | -----------
 `project_git_version` | Tag, branch, or commit to deploy
+
+Note: On the `master` branch, this variable should be set to `fcs`.
 
 
 ##### Supported tags
@@ -523,15 +525,17 @@ You can configure git to automatically decrypt Vault files for reviewing diffs.
 
 ## Deployment
 
-_Note: this is a work in progress._
+Because of GSA firewalls, we split our continuous integration and delivery into
+two roles. CircleCI handles continuous integration and Jenkins handles
+deployment within the GSA firewall.
 
-Currently, deployment to BSP environments is done manually by running Ansible
-playbooks from the jumpbox hosts, within the BSP firewall. We are moving to
-automated continuous deployment via Jenkins CI server.
+On any commit, CircleCI runs the automated test suites and if successful, hands
+off deployment to Jenkins.
 
-We still use CircleCI for majority of CI needs. Any tasks requiring access to
-the GSA network (like deployment) are handed over to Jenkins (via the Jenkins
-API).
+Workflow   | Environments              | URL
+--------   | ------------              | ---
+production | staging, mgmt, production | https://ci.data.gov
+sandbox    | sandbox                   | https://ci.sandbox.datagov.us
 
 
 ### Jenkins configuration
@@ -574,10 +578,10 @@ configuration-as-code configuraiton._
 With SAML authentication enabled, you can no longer create user/service accounts
 through the UI. Instead, use the [script
 console](https://ci.sandbox.datagov.us/script) to run the script below. Set
-a random password. The return value is the API token save for later as you won't have
+a random password. The return value is the API token. Save this for later as you won't have
 another chance.
 
-The CI user should be assigned to teh `build-manager` role. This is already
+The CI user should be assigned to the `build-manager` role. This is already
 configured in our configuration-as-code.
 
 ```groovy

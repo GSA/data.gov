@@ -155,6 +155,10 @@ ckanext.saml2auth.want_assertions_signed=false
 ckanext.saml2auth.want_assertions_or_response_signed=true
 ckanext.saml2auth.enable_ckan_internal_login=false
 
+{% if inventory_ckan_saml2_requested_authn_context | length > 0 %}
+ckanext.saml2auth.requested_authn_context = {{ inventory_ckan_saml2_requested_authn_context | join(' ') }}
+{% endif %}
+
 ## Feeds Settings
 
 ckan.feeds.authority_name =

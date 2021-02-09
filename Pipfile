@@ -15,7 +15,9 @@ testinfra ="*"
 [packages]
 ansible = "~=2.8.15"
 boto = "*"
-cryptography = ">=3.2.1"
+# TODO https://github.com/GSA/datagov-deploy/issues/2770
+# Pin cryptography to < 3.4
+cryptography = "~=3.3.0"
 
 [requires]
 python_version = "3.6"

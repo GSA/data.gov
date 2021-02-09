@@ -1,6 +1,6 @@
 ---
 app_repo: https://github.com/GSA/catalog.data.gov
-catalog_ckan_app_version: master
+catalog_ckan_app_version: fcs
 catalog_ckan_wsgi_processes: 8
 catalog_ckan_apache_server_alias:
   - catalog.data.gov
@@ -18,6 +18,8 @@ catalog_ckan_redis_url: "{{ catalog_next_ckan_redis_url }}"
 catalog_ckan_service_url: https://{{ catalog_host_public_next }}
 catalog_ckan_admin_service_url: https://{{ catalog_host_admin_next }}
 catalog_ckan_saml2_enabled: "{{ catalog_next_ckan_saml2_enabled }}"
+catalog_ckan_saml2_requested_authn_context:
+  - http://idmanagement.gov/ns/assurance/aal/3?hspd12=true
 catalog_ckan_solr_host: "{{ catalog_next_ckan_solr_a_host }}"  # default. this is probably overridden in other groups/host vars
 catalog_ckan_who_ini_secret: "{{ catalog_next_ckan_who_ini_secret }}"
 
@@ -34,20 +36,12 @@ ckan_instance_secret: "{{ catalog_next_ckan_instance_secret }}"
 ckan_instance_uuid: "{{ catalog_next_ckan_instance_uuid }}"
 ckan_production_ini_template: "{{ catalog_next_ckan_production_ini_template }}"
 ckan_session_store_type: memory
-ckan_site_domain: https://catalog-next.data.gov
+ckan_site_domain: https://catalog.data.gov
 ckan_uses_gunicorn: true
 
 datagov_service: catalog-next
 
 newrelic_app_name: catalog-next
-
-# TODO enable sending harvest report emails after launch (delete these overrides)
-# https://github.com/GSA/datagov-ckan-multi/issues/400
-postfix_transport_maps:
-  - pattern: "{{ datagov_team_email }}"  # deliver mail to the data.gov team normally
-    result: smtp
-  - pattern: "*"  # discard all other mail
-    result: "discard:"
 
 # Token for working with the Google Analytics API
 token_dat: "{{ catalog_next_ckan_token_dat }}"
@@ -55,7 +49,7 @@ token_dat: "{{ catalog_next_ckan_token_dat }}"
 url_readonly: https://{{ catalog_host_public_next }}
 url_writable: https://{{ catalog_host_admin_next }}
 
-catalog_ckan_plugins_additional: []
+catalog_ckan_plugins_additional: [saml2auth]
 
 # login.gov identity sandbox
 saml2_idp_metadata_url: "https://idp.int.identitysandbox.gov/api/saml/metadata2020"

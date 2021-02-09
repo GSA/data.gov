@@ -32,9 +32,8 @@ provisioner:
         python_home: /usr
         inventory_ckan_solr_port: 8983
         db_is_setup: false
-        newrelic_license_key: some-secret
-        newrelic_app_name: inventory-molecule
-        newrelic_enabled : false
+        inventory_ckan_envs: |
+          TEST_ENV=1
       bionic:
         inventory_app_repo_branch: inventory_ckan_2.8
         inventory_next: true
