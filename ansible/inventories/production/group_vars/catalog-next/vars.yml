@@ -27,6 +27,12 @@ catalog_db_name: "{{ catalog_ckan_db_name }}"
 catalog_db_pass: "{{ catalog_ckan_db_pass }}"
 catalog_db_user: "{{ catalog_ckan_db_user }}"
 
+googleanalytics_ids:
+  - UA-42145528-2
+  - UA-17367410-17
+googleanalytics_accout_name: GSA Data.gov
+googleanalytics_token_filepath: /etc/ckan/token.dat
+
 # Before increasing pool_size check gunicorn workers
 # sqlalchemy_pool_size: 15
 # sqlalchemy_max_overflow: 25
