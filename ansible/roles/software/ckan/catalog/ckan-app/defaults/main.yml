@@ -59,8 +59,7 @@ catalog_enable_clean_harvest_logs: false
 catalog_log_dir: /var/log/ckan
 catalog_gunicorn_error_log: "{{ catalog_log_dir }}/gunicorn.log"
 
-googleanalytics_ids:
-  - UA-XXXXXXX-1
+googleanalytics_ids: []
 googleanalytics_accout_name: GSA Data.gov Fake analytics
 
 app_source_path: /tmp/catalog-app
