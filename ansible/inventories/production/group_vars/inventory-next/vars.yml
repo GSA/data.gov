@@ -36,6 +36,7 @@ newrelic_app_name: inventory-next
 newrelic_enabled: true
 
 inventory_ckan_plugins_additional: [s3filestore saml2auth]
+inventory_ckan_plugins_first: [datagov_inventory]
 
 # saml2 authentication
 inventory_ckan_saml2_enabled: true
