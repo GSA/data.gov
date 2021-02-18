@@ -247,8 +247,16 @@ ckanext.saml2auth.enable_ckan_internal_login=false
 {% endif %}
 
 # Google Analytics
-googleanalytics.ids = UA-42145528-2 UA-17367410-17
-googleanalytics.id = UA-42145528-2
+{% if googleanalytics_ids | length > 0 %}
+
+googleanalytics.ids = {{ googleanalytics_ids | join(' ') }}
+googleanalytics.id = {{ googleanalytics_ids | first }}
+googleanalytics.account = {{ googleanalytics_accout_name }}
+{% if googleanalytics_token_filepath is defined %}
+googleanalytics.token.filepath = {{ googleanalytics_token_filepath | default('') }}
+{% endif %}
+
+{% endif %}
 
 # ckanext-geodatagov settings
 
