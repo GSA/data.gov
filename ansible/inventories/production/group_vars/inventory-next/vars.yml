@@ -41,7 +41,7 @@ inventory_ckan_plugins_first: [datagov_inventory]
 # saml2 authentication
 inventory_ckan_saml2_enabled: true
 ckan_production_ini_template: inventory-next/etc_ckan_production.ini.j2
-inventory_ckan_who_ini_path: etc_ckan_who.saml2.ini.j2
+inventory_ckan_who_ini_path: inventory-next/etc_ckan_who.saml2.ini.j2
 inventory_ckan_saml2_requested_authn_context:
   - http://idmanagement.gov/ns/assurance/aal/3?hspd12=true
 
