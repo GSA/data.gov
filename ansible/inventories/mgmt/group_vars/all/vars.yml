@@ -90,7 +90,8 @@ jenkins_admins_permissions:
   - Lockable Resources/Reserve
   - Lockable Resources/Unlock
   - Lockable Resources/View
-  #- Overall/Administer
+  # TODO disable admin once configured
+  - Overall/Administer
   - Overall/Read
   - Run/Delete
   - Run/Replay
