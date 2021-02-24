@@ -60,23 +60,6 @@ pipeline {
             }
           }
         }
-        stage('deploy:mgmt') {
-          when {
-            anyOf {
-              branch 'master'
-            }
-          }
-          environment {
-            ANSIBLE_VAULT_FILE = credentials('ansible-vault-secret')
-            SSH_KEY_FILE = credentials('datagov-prod-ssh')
-          }
-          steps {
-            ansiColor('xterm') {
-              sh 'bin/jenkins-deploy ping mgmt'
-              sh 'bin/jenkins-deploy deploy mgmt site.yml'
-            }
-          }
-        }
         stage('deploy:production') {
           when {
             anyOf {
@@ -91,6 +74,23 @@ pipeline {
             ansiColor('xterm') {
               sh 'bin/jenkins-deploy ping production'
               sh 'bin/jenkins-deploy deploy production site.yml'
+            }
+          }
+        }
+        stage('deploy:mgmt') {
+          when {
+            anyOf {
+              branch 'master'
+            }
+          }
+          environment {
+            ANSIBLE_VAULT_FILE = credentials('ansible-vault-secret')
+            SSH_KEY_FILE = credentials('datagov-prod-ssh')
+          }
+          steps {
+            ansiColor('xterm') {
+              sh 'bin/jenkins-deploy ping mgmt'
+              sh 'bin/jenkins-deploy deploy mgmt site.yml'
             }
           }
         }
