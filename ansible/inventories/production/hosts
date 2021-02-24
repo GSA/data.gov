@@ -5,26 +5,14 @@ catalog-fgdc2iso1p.prod-ocsit.bsp.gsa.gov
 catalog-harvester-v1
 
 [catalog-harvester-main]
-catalog-harvester1p.prod-ocsit.bsp.gsa.gov
-
 [catalog-harvester-misc]
-catalog-harvester2p.prod-ocsit.bsp.gsa.gov
-
 [catalog-harvester-qa]
-catalog-harvester[3:6]p.prod-ocsit.bsp.gsa.gov
-
 [catalog-harvester-v1]
-catalog-harvester1p.prod-ocsit.bsp.gsa.gov
-catalog-harvester2p.prod-ocsit.bsp.gsa.gov
-catalog-harvester[3:6]p.prod-ocsit.bsp.gsa.gov
 
 [catalog-web:children]
 catalog-web-v1
 
 [catalog-web-v1]
-catalog-web[1:2]p.prod-ocsit.bsp.gsa.gov
-catalogb-web[1:2]p.prod-ocsit.bsp.gsa.gov
-
 [catalog-web-v1:children]
 catalog-admin-v1
 
