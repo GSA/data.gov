@@ -37,11 +37,11 @@ GSA [VPN access](https://github.com/GSA/datagov-deploy/wiki/GSA-VPN) is required
 
 Environment | Deployment branch                      | ISP         | Jumpbox
 ----------- | -----------------                      | ---         | ----
-mgmt        | `master` (semi-manual)                 | BSP         | datagovjump1m.mgmt-ocsit.bsp.gsa.gov
-production  | `master` (semi-manual)                 | BSP         | datagov-jump2p.prod-ocsit.bsp.gsa.gov
-staging     | `release/*` and `master` (semi-manual) | BSP         | datagov-jump2d.dev-ocsit.bsp.gsa.gov
-sandbox     | `develop`                              | AWS sandbox | jump.sandbox.datagov.us
-local       | feature branches                       | laptop      | localhost
+mgmt        | `master`         | BSP         | datagovjump1m.mgmt-ocsit.bsp.gsa.gov
+production  | `master`         | BSP         | datagov-jump2p.prod-ocsit.bsp.gsa.gov
+staging     | `master`         | BSP         | datagov-jump2d.dev-ocsit.bsp.gsa.gov
+sandbox     | `develop`        | AWS sandbox | jump.sandbox.datagov.us
+local       | feature branches | laptop      | localhost
 
 
 ## Usage
@@ -134,7 +134,7 @@ Install the common Services.
 Upgrade OS packages as a one-off command on all hosts. _Note: If you find you're
 doing one-off ansible commands often, then you should consider creating
 a [situational
-playbook](https://github.com/GSA/datagov-deploy/tree/develop/ansible/actions)._
+playbook](https://github.com/GSA/datagov-deploy/tree/master/ansible/actions)._
 
     $ ansible -m apt -a 'update_cache=yes upgrade=dist' all
 
@@ -534,7 +534,7 @@ off deployment to Jenkins.
 
 Workflow   | Environments              | URL
 --------   | ------------              | ---
-production | staging, mgmt, production | https://ci.data.gov
+production | staging, mgmt, production | https://ci-datagov.mgmt-ocsit.bsp.gsa.gov
 sandbox    | sandbox                   | https://ci.sandbox.datagov.us
 
 
@@ -549,24 +549,20 @@ to be done.
 
 1. Log into the new instance
 1. Configure credentials
-1. Add a CI bot user and API token
-
-
-#### Log into Jenkins
-
-[Log into](https://ci.sandbox.datagov.us/) the Jenkins instance using
-`jenkins_admin_username` (default: admin) and `jenkins_admin_password` (see
-vault).
+1. Add an API token for the admin user and update `jenkins_admin_password` with
+   this token.
+1. (sandbox only) Add a CI bot user and API token
 
 
 #### Configure credentials
 
-Add [credentials](https://ci.sandbox.datagov.us/credentials/) to manage secrets.
+Add [credentials](https://ci-datagov.mgmt-ocsit.bsp.gsa.gov/credentials/) to manage secrets.
 
 | Id                   | Type | Description |
 | --                   | ---- | ----------- |
 | ansible-vault-secret | file | File containing the password to the Ansible vault (ansible-secret-v2.txt). |
 | datagov-sandbox      | file | [Root SSH private key](https://drive.google.com/drive/folders/10-hk-IqA0jQAW6727pKmW46EF-nHiNLr) file for the environment. |
+| datagov-prod-ssh     | file | [Root SSH private key](https://drive.google.com/drive/folders/10-hk-IqA0jQAW6727pKmW46EF-nHiNLr) file for the environment. |
 | github-datagov-bot   | text | Personal [access token](https://github.com/settings/tokens) from the datagov-bot GitHub user. |
 
 _Note: evaluate if we want to move the credential creation to
@@ -577,7 +573,7 @@ configuration-as-code configuraiton._
 
 With SAML authentication enabled, you can no longer create user/service accounts
 through the UI. Instead, use the [script
-console](https://ci.sandbox.datagov.us/script) to run the script below. Set
+console](https://ci-datagov.mgmt-ocsit.bsp.gsa.gov/script) to run the script below. Set
 a random password. The return value is the API token. Save this for later as you won't have
 another chance.
 

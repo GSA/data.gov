@@ -206,7 +206,6 @@ Work that is currently in progress.
 - The deployment must follow our Configuration Management plan. If not possible,
   contact the Program Management team to modify the story or discuss how to
   update the Configuration Management plan.
-- Task has been merged to develop/master and should be applied to the AWS sandbox environments.
 
 #### Blocked
 
@@ -222,26 +221,14 @@ occasional nudging to get it unblocked.
 
 #### Needs Review
 
-Task has one or more items that need peer review before being moved to Ready for Deploy. 
+Task has one or more items that need peer review before being merged.
 
 
 ##### Exit criteria
 
 - Work has been reviewed and approved by one or more members of the data.gov team.
-- If applicable, work is ready to be included on the next release. Usually through integration in the `develop` or `main` branches.
-
-#### Ready for deploy
-
-Task has been merged to develop/master and applied to the sandbox environments
-(AWS via terraform) and ready to be deployed BSP staging and production
-environments.
-
-
-##### Exit criteria
-
-- Work exists on a release branch.
-- Work has been applied to BSP staging.
-- Work has been applied to BSP production.
+- Work is ready to be included on the next release.
+- Work has been merged to `master` or `main` branches.
 
 
 #### Done
@@ -284,45 +271,18 @@ for detailed manual deployment steps.
 
 ### Platform deployment (datagov-deploy)
 
-We use `develop` as the default branch and stage releases with a release branch
-(`release/*`). The BSP environment can be hard to test in, so having a staged
-release allows us to debug and fix BSP issues without slowing down sprint
-development.
-
-For [datagov-deploy][datagov-deploy], we use the [git flow
-pattern](https://danielkummer.github.io/git-flow-cheatsheet/) to coordinate
-delivery of features and bugfixes between branches. Generally, new features will
-arrive in the `develop` branch, then periodically be gathered up and deployed
-into staging via `release/*` branches, then deployed into production via the
-`master` branch.  _Note: we don't use the git-flow program itself since work
-must be merged via pull-requests, which that tool doesn't support._
+We use `master` as the default branch. Any changes are automatically deployed to
+the FCS environments after merge by
+[CI](https://ci-datagov.mgmt-ocsit.bsp.gsa.gov/). The `develop` branch is
+available ad-hoc in order to test changes within the AWS sandbox.
 
 Branch | Deployed to | Frequency
 ------ | ----------- | ---------
-`develop` | AWS sandboxes | manual
-`release/*` | BSP dev (staging) | manual
-`master` | BSP prod | manual
+`develop` | AWS sandboxes | On push
+`master` | FCS environments | On push
 
 See [Releases](https://github.com/GSA/datagov-deploy/wiki/Releases) for details
 on the platform deployment steps.
-
-#### Hotfixes
-
-Occasionally for the platform, we need to skip the usual development workflow to
-address an urgent issue. This is because `develop` requires a lot of manual
-testing and might not always be in a deployable state (even though we try).
-`hotfix/*` branches are created from the `master` branch and allow us to do the
-manual testing and validation on a small set of isolated changes.
-
-Use your discretion when creating a hotfix. These are some reasons to create
-a hotfix:
-- Resolve a significant site outage
-- Fix a major bug
-- Change to the Ansible inventory (new/removed hosts)
-- Removing operator access
-
-Once the hotfix PR is merged, you should create a backmerge PR into develop (merge
-the `hotfix/*` branch into `develop).
 
 
 ## Pull requests
@@ -341,9 +301,9 @@ What should you do when you review a PR?
   - Code is in a deployable state
 
 Any critical CI checks should be enforced by GitHub on protected branches
-(`develop` and `master`), so it's not required that CI checks are passing in
-order to approve a PR. Instead, it's important that tests have been added and
-they are running in CI.
+(`master`), so it's not required that CI checks are passing in order to approve
+a PR. Instead, it's important that tests have been added and they are running in
+CI.
 
 Data.gov encompasses many technologies (too many, in fact) and it's not
 practical to have everyone be an expert at everything nor to have only a single

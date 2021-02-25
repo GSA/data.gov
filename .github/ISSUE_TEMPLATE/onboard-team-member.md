@@ -73,11 +73,11 @@ For new Project Management Office team members, follow these additional steps:
 - [ ] [Request access](https://docs.google.com/forms/d/e/1FAIpQLSetStmwqrbMWDz_WIlh1trjhP0PFCjKXHzshsJveYmtIvlG2Q/viewform) to Data.gov systems; select “Catalog Admin” for the system, and “Data.gov team member” for justification
 - [ ] Add yourself for [AWS sandbox access](https://github.com/GSA/datagov-iam/tree/master/README.md#new-users)
 - [ ] Request access to AWS OPP account from team member
-- [ ] Add your public SSH key to [GSA/datagov-deploy](https://github.com/GSA/datagov-deploy/blob/develop/ansible/group_vars/all/vars.yml)
+- [ ] Add your public SSH key to [GSA/datagov-deploy](https://github.com/GSA/datagov-deploy/blob/master/ansible/group_vars/all/vars.yml)
 - [ ] Setup the Ansible vault
   - Clone the [datagov-deploy](https://github.com/GSA/datagov-deploy) repo
     locally
-  - Follow the setup instructions for [development](https://github.com/GSA/datagov-deploy/blob/develop/README.md#development)
+  - Follow the setup instructions for [development](https://github.com/GSA/datagov-deploy/blob/master/README.md#development)
   - Follow the [ansible-vault instructions](https://github.com/GSA/datagov-deploy#editing-vault-secrets)
   - Open a vault file `pipenv run ansible-vault view ansible/inventories/sandbox/group_vars/all/vault.yml`, you should see yaml in clear text.
 - [ ] Connect to the [GSA VPN](https://github.com/GSA/datagov-deploy/wiki/gsa-vpn) for access to the staging and production environments.

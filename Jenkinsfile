@@ -72,8 +72,8 @@ pipeline {
           }
           steps {
             ansiColor('xterm') {
-              sh 'bin/jenkins-deploy ping production'
-              sh 'bin/jenkins-deploy deploy production site.yml'
+              sh 'bin/jenkins-deploy ping production \\!jumpbox'
+              sh 'bin/jenkins-deploy deploy production site.yml --limit \\!jumpbox'
             }
           }
         }
