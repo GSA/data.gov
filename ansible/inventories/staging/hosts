@@ -97,15 +97,12 @@ catalog-web-v1
 pycsw-worker-v1
 
 [pycsw-worker-v1]
-# We configure only a single worker for pycsw, usually the misc worker.
-catalog-harvester2d.dev-ocsit.bsp.gsa.gov
 
 [redis:children]
 redis-catalog
 redis-next
 
 [redis-catalog]
-catalog-harvester1d.dev-ocsit.bsp.gsa.gov
 
 [redis-next]
 redis1d.dev-ocsit.bsp.gsa.gov

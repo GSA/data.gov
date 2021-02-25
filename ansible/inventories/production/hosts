@@ -104,8 +104,6 @@ pycsw-worker-v1
 pycsw-worker-v2
 
 [pycsw-worker-v1]
-# We configure only a single worker for pycsw, usually the misc worker.
-catalog-harvester2p.prod-ocsit.bsp.gsa.gov
 
 [pycsw-worker-v2]
 # We configure only a single worker for pycsw, usually the misc worker.
@@ -116,7 +114,6 @@ redis-catalog
 redis-next
 
 [redis-catalog]
-catalog-harvester1p.prod-ocsit.bsp.gsa.gov
 
 [redis-next]
 redis1p.prod-ocsit.bsp.gsa.gov
