@@ -56,11 +56,12 @@ function check_required_env_vars () {
 }
 
 function ping () {
-  local environment
+  local environment limit
   environment="$1"
+  limit="${2:-all}"
   check_required_env_vars
   cd ansible
-  pipenv run ansible --key-file=$SSH_KEY_FILE --vault-password-file=$ANSIBLE_VAULT_FILE --inventory "inventories/$environment" -m ping all
+  pipenv run ansible --key-file=$SSH_KEY_FILE --vault-password-file=$ANSIBLE_VAULT_FILE --inventory "inventories/$environment" -m ping "$limit"
 }
 
 function deploy () {
