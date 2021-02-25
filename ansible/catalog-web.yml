@@ -89,6 +89,9 @@
             return_content: true
             validate_certs: false
           register: response
+          retries: 3
+          delay: 10
+          until: not response.failed
         - name: assert Location redirect
           assert:
             that: response.location == "{{ url_writable }}/_tracking"
@@ -116,6 +119,9 @@
             return_content: true
             validate_certs: false
           register: response
+          retries: 3
+          delay: 10
+          until: not response.failed
         - name: assert Location redirect
           assert:
             that: response.url == "{{ url_writable }}/_tracking"
