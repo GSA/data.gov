@@ -141,7 +141,6 @@ jenkins_jobs:
     git_url: https://github.com/gsa/catalog-app.git
   - name: deploy-ci-app-catalog-next
     git_url: https://github.com/gsa/catalog.data.gov.git
-    github_project_url: https://github.com/gsa/datagov-ckan-multi
   - name: deploy-ci-app-dashboard
     git_url: https://github.com/gsa/project-open-data-dashboard.git
   - name: deploy-ci-app-inventory
