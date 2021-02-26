@@ -7,6 +7,10 @@ shopt -s extglob  # For extended pattern matching +() in slugify
 # Install virtualenv in the project directory ./.venv
 export PIPENV_VENV_IN_PROJECT=${PIPENV_VENV_IN_PROJECT:-1}
 
+# Fail if any host errors. No point in continuing on if you're just going to
+# have to start from zero on the next job.
+export ANSIBLE_ANY_ERRORS_FATAL=True
+
 # TODO create a job to update host key fingerpints and remove this.
 # Disable host key checking
 export ANSIBLE_HOST_KEY_CHECKING=False
