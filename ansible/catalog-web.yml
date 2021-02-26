@@ -98,7 +98,6 @@
             fail_msg: |
               POST redirect failed (we expect 307 redirection to the writable instance)
               {{ response.content }}
-      delegate_to: localhost
       become: false
       run_once: true
       tags:
@@ -128,7 +127,6 @@
             fail_msg: |
               POST redirect failed (we expect redirection to the writable instance)
               {{ response.content }}
-      delegate_to: localhost
       become: false
       run_once: true
       tags:
