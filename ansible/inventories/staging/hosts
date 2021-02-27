@@ -90,9 +90,6 @@ datagov-jump2d.dev-ocsit.bsp.gsa.gov
 pycsw-web-v1
 
 [pycsw-web-v1:children]
-# We install pycsw on all catalog-web hosts
-catalog-web-v1
-
 [pycsw-worker:children]
 pycsw-worker-v1
 

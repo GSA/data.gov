@@ -91,9 +91,6 @@ pycsw-web-v1
 pycsw-web-v2
 
 [pycsw-web-v1:children]
-# We install pycsw on all catalog-web hosts
-catalog-web-v1
-
 [pycsw-web-v2:children]
 # We install pycsw on readonly catalog-web hosts
 catalog-next-web-a
@@ -104,7 +101,6 @@ pycsw-worker-v1
 pycsw-worker-v2
 
 [pycsw-worker-v1]
-
 [pycsw-worker-v2]
 # We configure only a single worker for pycsw, usually the misc worker.
 catalogharvester2p.prod-ocsit.bsp.gsa.gov
