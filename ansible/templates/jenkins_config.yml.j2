@@ -113,11 +113,7 @@ jobs:
             scm {
               git {
                 extensions {
-                  {% if jenkins_job_use_polling | default(False) -%}
                   cleanBeforeCheckout()
-                  {# Work-around https://issues.jenkins.io/browse/JENKINS-42290 -#}
-                  disableRemotePoll()
-                  {% endif -%}
                   localBranch()
                 }
                 remote {
