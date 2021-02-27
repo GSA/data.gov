@@ -128,6 +128,7 @@ inventory_ckan_plugins_default:
 
 
 # jenkins
+jenkins_additional_plugins: [copyartifact]
 jenkins_config: "{{ lookup('template', 'jenkins_config.yml.j2') }}"
 jenkins_home: /data/jenkins
 jenkins_prefer_lts: true  # Use long-term-support releases instead of weekly updates
