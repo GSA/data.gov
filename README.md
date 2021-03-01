@@ -2,10 +2,14 @@
 
 # datagov-deploy
 
+_Note: most of the information in this repo refers to the "frozen" FCS environments of
+data.gov. If you are looking for documentation for cloud.gov environments, see
+the application repositories._
+
 This is the main repository for the Data.gov Platform. We use this repository to
 [track our team's work](https://app.zenhub.com/workspaces/datagov-devsecops-579a2532d1d6ea9c3fcf5cfa/board)
-and for our [Ansible](https://www.ansible.com) playbooks that deploy a static version of the
-[Data.gov site components](https://github.com/GSA/datagov-deploy/wiki/Site-components):
+and for our [Ansible](https://www.ansible.com) playbooks that deploy the
+[Data.gov site components](https://github.com/GSA/datagov-deploy/wiki/Site-components) to FCS:
 
   - www.data.gov (WordPress)
   - catalog.data.gov (CKAN 2.8)
@@ -22,7 +26,6 @@ Additionally, each host is configured with common Services:
   - New Relic (Infrastructure Monitoring)
   - Trendmicro (OSSEC-HIDS)
   - [and more...](https://github.com/GSA/datagov-deploy-common)
-
 
 See our [Roadmap](docs/roadmap.md) for where we're taking Data.gov.
 
@@ -42,6 +45,12 @@ production  | `master`         | BSP         | datagov-jump2p.prod-ocsit.bsp.gsa
 staging     | `master`         | BSP         | datagov-jump2d.dev-ocsit.bsp.gsa.gov
 sandbox     | `develop`        | AWS sandbox | jump.sandbox.datagov.us
 local       | feature branches | laptop      | localhost
+
+
+### Applications
+
+FCS environments are considered "frozen" and only accepting security updates and
+critical bug fixes. Applications are frozen on the `fcs` branch.
 
 
 ## Usage
