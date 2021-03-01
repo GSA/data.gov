@@ -18,13 +18,12 @@ These are the near-term priorities for us that will achieve the above goals.
 Milestone | Status
 --------- | ------
 Continuous Integration   | <img src="https://img.shields.io/badge/status-complete-green.svg" />
-Ansible deploy           | <img src="https://img.shields.io/badge/status-started-yellow.svg" />
-Continuous Deployment    | <img src="https://img.shields.io/badge/status-started-yellow.svg" />
-Development environments | <img src="https://img.shields.io/badge/status-not_started-lightgrey.svg" />
-CKAN upgrade             | <img src="https://img.shields.io/badge/status-not_started-lightgrey.svg" />
-Reduce maintenance scope | <img src="https://img.shields.io/badge/status-not_started-lightgrey.svg" />
-Cloud migration          | <img src="https://img.shields.io/badge/status-not_started-lightgrey.svg" />
-Dockerize services       | <img src="https://img.shields.io/badge/status-not_started-lightgrey.svg" />
+Ansible deploy           | <img src="https://img.shields.io/badge/status-complete-green.svg" />
+Continuous Deployment    | <img src="https://img.shields.io/badge/status-complete-green.svg" />
+Development environments | <img src="https://img.shields.io/badge/status-complete-green.svg" />
+CKAN upgrade             | <img src="https://img.shields.io/badge/status-started-yellow.svg" />
+Reduce maintenance scope | <img src="https://img.shields.io/badge/status-started-yellow.svg" />
+Cloud migration          | <img src="https://img.shields.io/badge/status-started-yellow.svg" />
 
 
 ### Continuous Integration
@@ -83,20 +82,6 @@ possible.
 
 ### Cloud migration
 
-Infrastructure environments are created from [Infrastructure as
-Code](https://github.com/GSA/datagov-infrastructure-live) via the CI/CD
-pipeline.
-
-Immutable artifacts for applications can be deployed automatically by CI/CD
-pipeline.
-
-Platform is able to scale dynamically based on demand.
-
-
-### Dockerize services
-
-We're using [docker-compose](https://docs.docker.com/compose/) for development
-already. These docker images are published to [Docker
-Hub](https://hub.docker.com/) where they can be composed together but are
-currently for development only. We plan to move to a Docker-centric workflow
-that allows us to deploy production services as Docker containers.
+Moving to [cloud.gov](https://cloud.gov/) allows us to deploy with CI/CD with
+immutable artifacts. We reduced the scope of maintenance by only being concerned
+with the applications and not the underlying platform.
