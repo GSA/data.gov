@@ -5,14 +5,10 @@
 # [1]: https://github.com/GSA/datagov-infrastructure-live
 
 [catalog-fgdc2iso]
-catalog-fgdc2iso1tf.internal.sandbox.datagov.us
 catalog-next-fgdc2iso1tf.internal.sandbox.datagov.us
 
 [catalog-harvester]
-catalog-harvester1tf.internal.sandbox.datagov.us
-
 [catalog-web]
-catalog-web1tf.internal.sandbox.datagov.us
 
 [catalog-next:children]
 catalog-next-web
@@ -47,10 +43,7 @@ pycsw-web
 pycsw-worker
 
 [pycsw-web-v1]
-catalog-web1tf.internal.sandbox.datagov.us
-
 [pycsw-worker-v1]
-catalog-harvester1tf.internal.sandbox.datagov.us
 
 [pycsw-web-v2]
 catalog-next-web1tf.internal.sandbox.datagov.us
@@ -69,12 +62,25 @@ pycsw-worker-v2
 [wordpress-web]
 wordpress-web1tf.internal.sandbox.datagov.us
 
+[v1]
+# TODO when admin-catalog is removed, we can remove catalog-classic in
+# datagov-infrastructure-live, but until then, we still want to keep these
+# hosts in the inventory to receive OS updates.
+catalog-harvester1tf.internal.sandbox.datagov.us
+catalog-web1tf.internal.sandbox.datagov.us
+
 [v1:children]
 catalog-harvester
 catalog-web
 inventory-web
 pycsw-web-v1
 pycsw-worker-v1
+
+[v2]
+# TODO when admin-catalog is removed, we can remove catalog-classic in
+# datagov-infrastructure-live, but until then, we still want to keep these
+# hosts in the inventory to receive OS updates.
+catalog-fgdc2iso1tf.internal.sandbox.datagov.us
 
 [v2:children]
 catalog-fgdc2iso

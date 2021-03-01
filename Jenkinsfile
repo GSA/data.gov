@@ -89,8 +89,8 @@ pipeline {
           }
           steps {
             ansiColor('xterm') {
-              sh 'bin/jenkins-deploy ping mgmt'
-              sh 'bin/jenkins-deploy deploy mgmt site.yml'
+              sh 'bin/jenkins-deploy ping mgmt \\!jumpbox'
+              sh 'bin/jenkins-deploy deploy mgmt site.yml --limit \\!jumpbox'
             }
           }
         }

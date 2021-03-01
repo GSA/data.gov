@@ -89,6 +89,13 @@ jobs:
             artifactDaysToKeepStr('')
             artifactNumToKeepStr('')
           } } }
+          {% if job.name == 'deploy-ci-platform' -%}
+          copyArtifactPermission {
+            // Comma-separated list of projects that can copy artifacts of this project.
+            // This is only necessary for the deploy-ci-platform job
+            projectNames('{{ jenkins_jobs | map(attribute="name") | join(",") }}')
+          }
+          {% endif -%}
           disableConcurrentBuilds()
           githubProjectUrl('{{ job.github_project_url | default("https://github.com/GSA/datagov-deploy") }}')
           {% if jenkins_job_use_polling | default(False) -%}
@@ -106,11 +113,7 @@ jobs:
             scm {
               git {
                 extensions {
-                  {% if jenkins_job_use_polling | default(False) -%}
                   cleanBeforeCheckout()
-                  {# Work-around https://issues.jenkins.io/browse/JENKINS-42290 -#}
-                  disableRemotePoll()
-                  {% endif -%}
                   localBranch()
                 }
                 remote {
