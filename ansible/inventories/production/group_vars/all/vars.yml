@@ -213,7 +213,7 @@ inventory_next_ckan_s3_bucket_name: "{{ vault_inventory_next_ckan_s3_bucket_name
 inventory_next_ckan_s3_bucket_prefix: "{{ vault_inventory_next_ckan_s3_bucket_prefix }}"
 inventory_next_ckan_instance_secret: "{{ vault_inventory_next_ckan_instance_secret }}"
 inventory_next_ckan_instance_uuid: "{{ vault_inventory_next_ckan_instance_uuid }}"
-inventory_next_ckan_service_url: https://inventory-next.data.gov
+inventory_next_ckan_service_url: https://inventory.data.gov
 inventory_next_ckan_solr_host: datagov-solrm1p-v2.prod-ocsit.bsp.gsa.gov
 inventory_next_ckan_who_ini_secret: "{{ vault_inventory_next_ckan_who_ini_secret }}"
 inventory_next_datastore_login_host: "{{ vault_inventory_next_datastore_login_host }}"
