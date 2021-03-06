@@ -119,7 +119,7 @@ jobs:
                 remote {
                   url('{{ job.git_url }}')
                 }
-                branch('refs/heads/{{ job.git_ref }}')
+                branch('refs/heads/{{ job.git_ref | default('master') }}')
               }
             }
           }
