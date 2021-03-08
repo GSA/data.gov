@@ -1,8 +1,19 @@
 pipeline {
   agent any
+  options {
+    disableConcurrentBuilds()
+    copyArtifactPermission('*')
+  }
   stages {
     stage('workflow:sandbox') {
-      when { anyOf { environment name: 'DATAGOV_WORKFLOW', value: 'sandbox' } }
+      when {
+        allOf {
+          environment name: 'DATAGOV_WORKFLOW', value: 'sandbox'
+          anyOf {
+            branch 'develop'
+          }
+        }
+      }
       stages {
         stage('build') {
           steps {
@@ -10,12 +21,10 @@ pipeline {
               sh 'bin/jenkins-deploy init'
               sh 'bin/jenkins-deploy build'
               sh 'tar czf datagov-deploy.tar.gz *'
-              archiveArtifacts artifacts: 'datagov-deploy.tar.gz', onlyIfSuccessful: true
             }
           }
         }
         stage('deploy:sandbox') {
-          when { anyOf { branch 'develop' } }
           environment {
             ANSIBLE_VAULT_FILE = credentials('ansible-vault-secret')
             SSH_KEY_FILE = credentials('datagov-sandbox')
@@ -30,7 +39,18 @@ pipeline {
       }
     }
     stage('workflow:production') {
-      when { anyOf { environment name: 'DATAGOV_WORKFLOW', value: 'production' } }
+      when {
+        allOf {
+          environment name: 'DATAGOV_WORKFLOW', value: 'production'
+          anyOf {
+            branch 'master'
+          }
+        }
+      }
+      environment {
+        ANSIBLE_VAULT_FILE = credentials('ansible-vault-secret')
+        SSH_KEY_FILE = credentials('datagov-prod-ssh')
+      }
       stages {
         stage('build') {
           steps {
@@ -38,21 +58,10 @@ pipeline {
               sh 'bin/jenkins-deploy init'
               sh 'bin/jenkins-deploy build'
               sh 'tar czf datagov-deploy.tar.gz *'
-              archiveArtifacts artifacts: 'datagov-deploy.tar.gz', onlyIfSuccessful: true
             }
           }
         }
         stage('deploy:staging') {
-          when {
-            anyOf {
-              branch 'release/*'
-              branch 'master'
-            }
-          }
-          environment {
-            ANSIBLE_VAULT_FILE = credentials('ansible-vault-secret')
-            SSH_KEY_FILE = credentials('datagov-prod-ssh')
-          }
           steps {
             ansiColor('xterm') {
               sh 'bin/jenkins-deploy ping staging'
@@ -61,15 +70,6 @@ pipeline {
           }
         }
         stage('deploy:production') {
-          when {
-            anyOf {
-              branch 'master'
-            }
-          }
-          environment {
-            ANSIBLE_VAULT_FILE = credentials('ansible-vault-secret')
-            SSH_KEY_FILE = credentials('datagov-prod-ssh')
-          }
           steps {
             ansiColor('xterm') {
               sh 'bin/jenkins-deploy ping production \\!jumpbox'
@@ -78,15 +78,6 @@ pipeline {
           }
         }
         stage('deploy:mgmt') {
-          when {
-            anyOf {
-              branch 'master'
-            }
-          }
-          environment {
-            ANSIBLE_VAULT_FILE = credentials('ansible-vault-secret')
-            SSH_KEY_FILE = credentials('datagov-prod-ssh')
-          }
           steps {
             ansiColor('xterm') {
               sh 'bin/jenkins-deploy ping mgmt \\!jumpbox'
@@ -98,9 +89,11 @@ pipeline {
     }
   }
   post {
+    success {
+      archiveArtifacts artifacts: 'datagov-deploy.tar.gz', onlyIfSuccessful: true
+    }
     always {
-      step([$class: 'GitHubIssueNotifier', issueAppend: true])
-      cleanWs()
+      step([$class: 'GitHubIssueNotifier', issueAppend: true, issueRepo: 'https://github.com/GSA/datagov-deploy.git'])
     }
   }
 }
