@@ -6,10 +6,6 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: inventory-ckan-trusty
-    image: ubuntu:trusty
-    groups:
-      - trusty
   - name: inventory-ckan-bionic
     image: ubuntu:bionic
     groups:
