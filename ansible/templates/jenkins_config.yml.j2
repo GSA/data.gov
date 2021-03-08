@@ -113,8 +113,8 @@ jobs:
             scm {
               git {
                 extensions {
-                  cleanBeforeCheckout()
                   localBranch()
+                  wipeWorkspace()
                 }
                 remote {
                   url('{{ job.git_url }}')
