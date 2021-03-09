@@ -148,9 +148,6 @@ jenkins_jobs:
   - name: deploy-ci-app-inventory
     git_url: https://github.com/gsa/inventory-app.git
     git_ref: fcs
-  - name: deploy-ci-app-inventory-next
-    git_url: https://github.com/gsa/inventory-app.git
-    git_ref: inventory_ckan_2.8
   - name: deploy-ci-app-wordpress
     git_url: https://github.com/gsa/datagov-wp-boilerplate.git
     git_ref: fcs
@@ -363,4 +360,5 @@ solr_cores:
 # wordpress
 # hostname needed for smoke test, IP address needed for ALB health check
 wordpress_nginx_server_name: wordpress.sandbox.datagov.us $hostname {{ ansible_default_ipv4.address }}
+wordpress_project_git_version: fcs
 wordpress_service_url: https://wordpress.sandbox.datagov.us
