@@ -115,7 +115,6 @@ redis1p.prod-ocsit.bsp.gsa.gov
 
 [solr]
 datagov-solrm1p.prod-ocsit.bsp.gsa.gov
-datagov-solr[1:2]p.prod-ocsit.bsp.gsa.gov is_solr_replica=true
 
 [solr-next]
 datagov-solrm1p-v2.prod-ocsit.bsp.gsa.gov
