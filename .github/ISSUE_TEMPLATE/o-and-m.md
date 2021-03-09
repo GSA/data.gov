@@ -25,4 +25,3 @@ You are responsible for all [O&M responsibilities](https://github.com/GSA/datago
 - [ ] Weekly [resources.data.gov link scan](https://app.circleci.com/pipelines/github/GSA/resources.data.gov?branch=main)
 - [ ] If received, the monthly [Netsparker scan](https://github.com/GSA/datagov-deploy/wiki/Operation-and-Maintenance-Responsibilities#netsparker-compliance-scan-report-from-isso) has been triaged.
 - [ ] Finishing the shift: Log the [number of alerts](https://docs.google.com/spreadsheets/d/1u1hSUAQW6FWzphog122stfB6MB9Wiq0NROT3PeicRoM/edit#gid=939071144) 
-- [ ] Finishing the shift: Release the [static sites](https://github.com/GSA/datagov-deploy/wiki/Releases#release-static-sites)
