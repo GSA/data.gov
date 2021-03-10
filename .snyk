@@ -9,62 +9,10 @@ ignore:
           https://github.com/gsa/datagov-deploy/issues/893
         expires: 2021-04-05T00:00:00.000Z
 
-  SNYK-PYTHON-ANSIBLE-1062705:
-    - '*':
-        reason: |
-          None of the [affected modules][1] are used by datagov-deploy for this
-          Moderate severity information disclosure vulnerability. We are
-          expecting a fix to Ansible 2.8.x and will apply the fix when
-          available.
-
-          [1]: https://github.com/ansible/ansible/pull/73488/files#diff-89865e71cd9bd8b5c7f02498425c8ce4a73d2e25957c685f587b0a1488204d9e
-        expires: 2021-03-08T06:00:00.000Z
-  SNYK-PYTHON-ANSIBLE-1070407:
-    - '*':
-        reason: |
-          None of the [affected modules][1] are used by datagov-deploy for this
-          Moderate severity information disclosure vulnerability. We are
-          expecting a fix to Ansible 2.8.x and will apply the fix when
-          available.
-
-          [1]: https://github.com/ansible/ansible/commit/bfea16c4f741d4cd10c8e17bf7eed14240345cb5
-        expires: 2021-03-08T06:00:00.000Z
-  SNYK-PYTHON-ANSIBLE-1070408:
-    - '*':
-        reason: |
-          We accept the risk for this moderate severity information exposure
-          issue. Our logs are secured on our jumpbox servers where only
-          authorized team members have access. We expect a fix to be made
-          available on the 2.8.x branch soon.
-        expires: 2021-03-08T06:00:00.000Z
-  SNYK-PYTHON-ANSIBLE-1070409:
-    - '*':
-        reason: |
-          None of the [affected modules][1] are used by datagov-deploy for this
-          Moderate severity information disclosure vulnerability. We are
-          expecting a fix to Ansible 2.8.x and will apply the fix when
-          available.
-
-          [1]: https://github.com/ansible/ansible/commit/0785772a03470fd2879d2f613520284997dc9dd0
-        expires: 2021-03-08T06:00:00.000Z
-  SNYK-PYTHON-PYYAML-590151:
-    - '*':
-        reason: >-
-          There is no fix for PyYaml at this time. YAML playbooks are
-          considered trusted and run only on our secured jumpboxes by our
-          operators.  These operators should only be using trusted sources as
-          well.  Risk is acceptable.
-        expires: 2021-02-19T06:00:00.000Z
-  SNYK-PYTHON-PY-1049546:
-    - '*':
-        reason: >-
-          There is no fix for Py at this time. This is introduced through molecule
-          and molecule is only used in dev environments.
-        expires: 2021-03-10T06:00:00.000Z
   SNYK-PYTHON-CRYPTOGRAPHY-1022152:
     - '*':
         reason: >-
-          An issue was created to resolve this issue within 30-days.
-          https://github.com/GSA/datagov-deploy/issues/2472
-        expires: 2021-03-10T06:00:00.000Z        
+          Mitigation patches are up to date (>3.2).
+          No fixed version at this time.
+        expires: 2021-04-10T06:00:00.000Z        
 patch: {}
