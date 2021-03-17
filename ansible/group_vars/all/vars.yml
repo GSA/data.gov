@@ -122,7 +122,6 @@ inventory_ckan_plugins_default:
   - dcat_usmetadata
   - googleanalyticsbasic
   - recline_view
-  - stats
   - text_view
   - usmetadata
 
