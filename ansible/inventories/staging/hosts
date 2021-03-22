@@ -1,28 +1,6 @@
 [catalog-fgdc2iso]
 catalog-fgdc2iso1d.dev-ocsit.bsp.gsa.gov
 
-[catalog-harvester:children]
-catalog-harvester-v1
-
-[catalog-harvester-main]
-[catalog-harvester-misc]
-[catalog-harvester-qa]
-[catalog-harvester-v1]
-
-[catalog-web:children]
-catalog-web-v1
-
-[catalog-web-v1]
-
-[catalog-web-v1:children]
-catalog-admin-v1
-
-[catalog-admin:children]
-catalog-admin-v1
-
-[catalog-admin-v1]
-catalogpub-web1d.dev-ocsit.bsp.gsa.gov
-
 [catalog-next:children]
 catalog-next-web
 catalog-next-worker
@@ -55,10 +33,7 @@ catalogweb2d.dev-ocsit.bsp.gsa.gov
 catalogpubweb1d.dev-ocsit.bsp.gsa.gov
 
 [dashboard-web:children]
-dashboard-web-v1
 dashboard-web-v2
-
-[dashboard-web-v1]
 
 [dashboard-web-v2]
 dashboardweb[1:2]d.dev-ocsit.bsp.gsa.gov
@@ -66,33 +41,16 @@ dashboardweb[1:2]d.dev-ocsit.bsp.gsa.gov
 [efk_nginx]
 [elasticsearch]
 
-[inventory-web:children]
-inventory-web-v1
-
-[inventory-web-v1]
-
 [inventory-next]
 inventory-[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [jumpbox:children]
-jumpbox-v1
 jumpbox-v2
-
-[jumpbox-v1]
 
 [jumpbox-v2]
 datagov-jump2d.dev-ocsit.bsp.gsa.gov
 
 [kibana]
-
-[pycsw-web:children]
-pycsw-web-v1
-
-[pycsw-web-v1:children]
-[pycsw-worker:children]
-pycsw-worker-v1
-
-[pycsw-worker-v1]
 
 [redis:children]
 redis-catalog
@@ -109,18 +67,6 @@ datagov-solrm1d.dev-ocsit.bsp.gsa.gov
 [solr-next]
 datagov-solrm1d-v2.dev-ocsit.bsp.gsa.gov
 datagov-solr[1:2]d-v2.dev-ocsit.bsp.gsa.gov is_solr_replica=true
-
-# trusty stack
-[v1:children]
-catalog-admin-v1
-catalog-harvester-v1
-catalog-web-v1
-dashboard-web-v1
-inventory-web-v1
-jumpbox-v1
-pycsw-web-v1
-pycsw-worker-v1
-wordpress-web-v1
 
 # bionic stack
 [v2:children]
@@ -141,10 +87,7 @@ inventory-web
 wordpress-web
 
 [wordpress-web:children]
-wordpress-web-v1
 wordpress-web-v2
-
-[wordpress-web-v1]
 
 [wordpress-web-v2]
 wordpressweb[1:2]d.dev-ocsit.bsp.gsa.gov
