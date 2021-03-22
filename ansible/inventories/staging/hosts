@@ -81,9 +81,7 @@ solr-next
 wordpress-web-v2
 
 [web:children]
-catalog-web
 dashboard-web
-inventory-web
 wordpress-web
 
 [wordpress-web:children]

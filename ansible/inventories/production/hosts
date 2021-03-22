@@ -100,7 +100,6 @@ pycsw-worker-v2
 
 [web:children]
 dashboard-web
-inventory-web
 wordpress-web
 
 [wordpress-web:children]
