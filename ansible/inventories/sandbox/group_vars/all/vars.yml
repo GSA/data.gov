@@ -138,8 +138,6 @@ jenkins_jobs:
   - name: deploy-ci-platform
     git_url: https://github.com/gsa/datagov-deploy.git
     git_ref: develop
-  - name: deploy-ci-app-catalog
-    git_url: https://github.com/gsa/catalog-app.git
   - name: deploy-ci-app-catalog-next
     git_url: https://github.com/gsa/catalog.data.gov.git
     git_ref: fcs
