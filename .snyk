@@ -24,11 +24,4 @@ ignore:
           Mitigation patches are up to date (>3.2).
           No fixed version at this time.
         expires: 2021-04-10T06:00:00.000Z
-  
-  SNYK-PYTHON-ANSIBLE-1086591:
-    - '*':
-        reason: >-
-          Requires access to logs; logs are secure and accessible by
-          authorized personnel only.
-        expires: 2021-06-25T00:00:00.000Z
 patch: {}
