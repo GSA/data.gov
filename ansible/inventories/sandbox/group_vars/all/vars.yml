@@ -27,9 +27,9 @@ catalog_db_name: "{{ catalog_ckan_db_name }}"
 catalog_db_user: "{{ catalog_ckan_db_user }}"
 
 # catalog-next
-catalog_next_ckan_db_name: ckan
-catalog_next_ckan_db_pass: "{{ vault_catalog_next_ckan_db_pass }}"
-catalog_next_ckan_db_user: ckan
+catalog_next_ckan_db_name: catalog_db_next
+catalog_next_ckan_db_pass: "{{ vault_catalog_next_postgresql_login_password }}"
+catalog_next_ckan_db_user: "{{ vault_catalog_next_postgresql_login_user }}"
 catalog_next_ckan_envs: ""
 catalog_next_ckan_fgdc2iso_host: catalog-next-fgdc2iso1tf.internal.sandbox.datagov.us
 catalog_next_ckan_redis_host: master.rep-sandbox-catalog-next.5kspe7.use1.cache.amazonaws.com
@@ -138,8 +138,6 @@ jenkins_jobs:
   - name: deploy-ci-platform
     git_url: https://github.com/gsa/datagov-deploy.git
     git_ref: develop
-  - name: deploy-ci-app-catalog
-    git_url: https://github.com/gsa/catalog-app.git
   - name: deploy-ci-app-catalog-next
     git_url: https://github.com/gsa/catalog.data.gov.git
     git_ref: fcs
