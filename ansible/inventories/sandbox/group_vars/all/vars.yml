@@ -27,9 +27,9 @@ catalog_db_name: "{{ catalog_ckan_db_name }}"
 catalog_db_user: "{{ catalog_ckan_db_user }}"
 
 # catalog-next
-catalog_next_ckan_db_name: ckan
-catalog_next_ckan_db_pass: "{{ vault_catalog_next_ckan_db_pass }}"
-catalog_next_ckan_db_user: ckan
+catalog_next_ckan_db_name: catalog_db_next
+catalog_next_ckan_db_pass: "{{ vault_catalog_next_postgresql_login_password }}"
+catalog_next_ckan_db_user: "{{ vault_catalog_next_postgresql_login_user }}"
 catalog_next_ckan_envs: ""
 catalog_next_ckan_fgdc2iso_host: catalog-next-fgdc2iso1tf.internal.sandbox.datagov.us
 catalog_next_ckan_redis_host: master.rep-sandbox-catalog-next.5kspe7.use1.cache.amazonaws.com
@@ -138,8 +138,6 @@ jenkins_jobs:
   - name: deploy-ci-platform
     git_url: https://github.com/gsa/datagov-deploy.git
     git_ref: develop
-  - name: deploy-ci-app-catalog
-    git_url: https://github.com/gsa/catalog-app.git
   - name: deploy-ci-app-catalog-next
     git_url: https://github.com/gsa/catalog.data.gov.git
     git_ref: fcs
@@ -157,8 +155,8 @@ jenkins_saml_sp_entity_id: urn:gov:gsa:SAML:2.0.profiles:sp:sso:gsa:ci_datagov_s
 jenkins_saml_keystore_password: "{{ vault_jenkins_saml_keystore_password }}"
 jenkins_saml_keystore_path: "{{ playbook_dir }}/files/sandbox/saml-key.jks"
 jenkins_saml_private_key_password: "{{ vault_jenkins_saml_private_key_password }}"
-jenkins_saml_idp_metadata_url: https://idp.int.identitysandbox.gov/api/saml/metadata2020
-jenkins_saml_idp_logout_url: https://idp.int.identitysandbox.gov/api/saml/logout2020
+jenkins_saml_idp_metadata_url: https://idp.int.identitysandbox.gov/api/saml/metadata2021
+jenkins_saml_idp_logout_url: https://idp.int.identitysandbox.gov/api/saml/logout2021
 jenkins_system_message: >
   Data.gov sandbox continuous integration and delivery service.
 jenkins_host: jenkins1tf.internal.sandbox.datagov.us
