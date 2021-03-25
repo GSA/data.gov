@@ -9,6 +9,15 @@ ignore:
           https://github.com/gsa/datagov-deploy/issues/893
         expires: 2021-04-05T00:00:00.000Z
 
+  SNYK-PYTHON-ANSIBLE-1086591:
+    - '*':
+        reason: >-
+          Managed nodes and ansible controllers are only accessible to data.gov
+          operators. Additional work will be done to scrub the logs for any
+          information exposure
+          https://github.com/GSA/datagov-deploy/issues/3027
+        expires: 2021-06-16T06:00:00.000Z
+
   SNYK-PYTHON-CRYPTOGRAPHY-1022152:
     - '*':
         reason: >-
