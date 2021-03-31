@@ -10,6 +10,7 @@ Below are the tasks that will drive the onboarding process.
 
 ### Tasks for admin or onboarding buddy
 
+- [ ] Review the rest of the checklist below before starting to work through it. Any step that does not seem relevant or necessary for the kind of work that the person onboarding will be doing should have a `-` in the checkbox and `~` around the line so it's clear that we will not be granting that particular kind of access for this person.
 - [ ] Add team member to [TTS Slack](https://handbook.18f.gov/slack/#tts-staff)
   - #datagov-alerts
   - #datagov-ckan-multi
