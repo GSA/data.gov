@@ -3,10 +3,12 @@ name: Offboard team member
 about: Checklist for offboarding a team member from Data.gov
 title: "[Offboard] <email>"
 ---
-These tasks are performed by an Admin unless noted as an action for the outgoing team member.
 
-- [ ] Team member should move all Data.gov related documents to team drives
-- [ ] Team member should document any work in progress and schedule a hand-off for any remaining tasks
+Tasks to be performed by the outgoing team member:
+- [ ] Move all Data.gov related documents to team drives
+- [ ] Document any work in progress and schedule a hand-off for any remaining tasks
+
+These tasks are performed by a team admin:
 - [ ] Remove team member's access to Google Drive
   - [Data.gov](https://drive.google.com/drive/folders/0AMRwhrSyJ5R4Uk9PVA)
   - [Data.gov Mutli Tenant](https://drive.google.com/drive/folders/0ALb0g1S27SJPUk9PVA)
