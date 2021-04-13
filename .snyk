@@ -21,7 +21,7 @@ ignore:
   SNYK-PYTHON-CRYPTOGRAPHY-1022152:
     - '*':
         reason: >-
-          Mitigation patches are up to date (>3.2).
-          No fixed version at this time.
-        expires: 2021-04-10T06:00:00.000Z
+          Pin at version 3.3.2
+          https://github.com/GSA/datagov-deploy/issues/2770
+        expires: 2021-05-12T06:00:00.000Z
 patch: {}
