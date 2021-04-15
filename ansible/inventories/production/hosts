@@ -78,7 +78,6 @@ redis-next
 redis1p.prod-ocsit.bsp.gsa.gov
 
 [solr]
-datagov-solrm1p.prod-ocsit.bsp.gsa.gov
 
 [solr-next]
 datagov-solrm1p-v2.prod-ocsit.bsp.gsa.gov
