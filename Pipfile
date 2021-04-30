@@ -10,7 +10,8 @@ ansible-lint = "<4.3.0"
 ansible = "~=2.8.15"
 selinux = "*"
 pytest = "*"
-testinfra ="*"
+testinfra = "*"
+yamllint = "*"
 
 [packages]
 ansible = "~=2.8.15"
