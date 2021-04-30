@@ -18,7 +18,7 @@ ansible = "~=2.8.15"
 boto = "*"
 # TODO https://github.com/GSA/datagov-deploy/issues/2770
 # Pin cryptography to < 3.4
-cryptography = "~=3.3.0"
+cryptography = "~=3.4.7"
 
 [requires]
 python_version = "3.6"
