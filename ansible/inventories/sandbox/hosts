@@ -55,7 +55,6 @@ wordpress-web1tf.internal.sandbox.datagov.us
 # TODO when admin-catalog is removed, we can remove catalog-classic in
 # datagov-infrastructure-live, but until then, we still want to keep these
 # hosts in the inventory to receive OS updates.
-catalog-fgdc2iso1tf.internal.sandbox.datagov.us
 
 [v2:children]
 catalog-fgdc2iso
