@@ -53,7 +53,7 @@
 - name: Fail when publishers.csv is not loaded
   fail:
     msg: "At least one real orgnization need to be created, such as General Services Administration"
-  when: '"Updated publishers" not in publishers_result.stdout'
+  when: publishers_result.stdout is defined and "Updated publishers" not in publishers_result.stdout
 
 - name: install beaker cache cleanup script
   template: src=beaker-cache-cleanup.sh.j2 dest=/usr/local/bin/beaker-cache-cleanup.sh owner=root group=root mode=0755
