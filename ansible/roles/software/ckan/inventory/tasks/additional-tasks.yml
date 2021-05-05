@@ -30,6 +30,28 @@
   become: true
   notify: restart ckan
 
+- name: Copy inventory-publishers.csv
+  copy:
+    src: "{{ playbook_dir }}/files/inventory-publishers.csv"
+    dest: "/var/tmp/publishers.csv"
+  when:
+    - inventory_next
+    - db_is_setup
+    - datagov_in_service
+
+- name: Load publishers.csv from previous task
+  command: "{{ project_source_new_code_path }}/bin/paster --plugin=ckanext-dcat_usmetadata publishers-import /var/tmp/publishers.csv -c /etc/ckan/production.ini"
+  when:
+    - inventory_next
+    - db_is_setup
+    - datagov_in_service
+  become: true
+  register: publishers_result
+  failed_when: >
+    (publishers_result.rc != 0 ) or
+    ("Updated publishers" not in publishers_result.stdout) or
+    ("was not found" in publishers_result.stdout)
+
 - name: install beaker cache cleanup script
   template: src=beaker-cache-cleanup.sh.j2 dest=/usr/local/bin/beaker-cache-cleanup.sh owner=root group=root mode=0755
 
