@@ -112,6 +112,6 @@
           Server info disclosed as
           {{ result.server if result.server is defined else result.Server }}
       when: >
-        ( result.server is defined and result.server != '' )
+        ( result.server is defined and result.server | length > 0 )
         or
-        ( result.Server is defined and result.Server != '' )
+        ( result.Server is defined and result.Server | length > 0 )
