@@ -1,6 +1,6 @@
 ---
 - name: Provisioning Inventory CKAN Stack
-  hosts: inventory-web,inventory-next
+  hosts: inventory-next
   serial: "{{ datagov_serial | default(1) }}"
 
   roles:
@@ -50,7 +50,7 @@
 
 
 - name: logrotate configuration
-  hosts: inventory-web,inventory-next
+  hosts: inventory-next
   roles:
     - role: nickhammond.logrotate
       logrotate_scripts:
@@ -65,19 +65,8 @@
             - rotate 8
 
 
-- name: NewRelic
-  hosts: inventory-web:!inventory-next
-  vars:
-    newrelic_app_name: inventory
-  roles:
-    - role: monitoring/newrelic/python-agent-ansible
-      when: common_newrelic_enabled
-  tags:
-    - newrelic
-
-
 - name: Service-level smoke tests
-  hosts: inventory-web:!inventory-next
+  hosts: inventory-next
   tags:
     - smoke
   tasks:
