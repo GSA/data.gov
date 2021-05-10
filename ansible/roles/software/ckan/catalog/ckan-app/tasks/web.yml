@@ -13,6 +13,15 @@
   become: true
   when: ckan_uses_gunicorn
 
+- name: Copy CKAN gunicorn.conf.py
+  copy:
+    src: "{{ app_source_path }}/ckan/setup/gunicorn.conf.py"
+    dest: /etc/ckan/gunicorn.conf.py
+    mode: 0644
+    remote_src: true
+  become: true
+  when: ckan_uses_gunicorn
+
 - name: Copy app .env
   template:
     src: app_env.j2

@@ -216,6 +216,18 @@
       until: not result.failed
       when: datagov_in_service | default(true)
 
+    - name: no Server info disclosed in response headers
+      # gunicorn prior to version 20.1.0 adds "server" header.
+      # Nginx/Apache adds "Server".
+      fail:
+        msg : >
+          Server info disclosed as
+          {{ result.server if result.server is defined else result.Server }}
+      when: >
+        ( result.server is defined and result.server | length > 0 )
+        or
+        ( result.Server is defined and result.Server | length > 0 )
+
 - name: Service-level admin-catalog-next.data.gov smoke tests (catalog-next)
   hosts: catalog-next-web-admin
   tags:
@@ -243,3 +255,15 @@
       register: result
       until: not result.failed
       when: datagov_in_service | default(true)
+
+    - name: no Server info disclosed in response headers
+      # gunicorn prior to version 20.1.0 adds "server" header.
+      # Nginx/Apache adds "Server".
+      fail:
+        msg : >
+          Server info disclosed as
+          {{ result.server if result.server is defined else result.Server }}
+      when: >
+        ( result.server is defined and result.server | length > 0 )
+        or
+        ( result.Server is defined and result.Server | length > 0 )
