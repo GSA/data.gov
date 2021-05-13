@@ -1,4 +1,0 @@
----
-ckan_config_path: '/etc/ckan'
-newrelic_config_path: '/etc/newrelic'
-newrelic_environment: production
