@@ -13,6 +13,7 @@ These tasks are performed by a team admin:
   - [Data.gov](https://drive.google.com/drive/folders/0AMRwhrSyJ5R4Uk9PVA)
   - [Data.gov Mutli Tenant](https://drive.google.com/drive/folders/0ALb0g1S27SJPUk9PVA)
   - [DatagovDevSecOps](https://drive.google.com/drive/folders/1Ac1dUmzTLTsDv8A8TSyLzrXo1a7hm4NF)
+- [ ] Email the ISSO to remove the user from any Google Drive folders or documents owned by security
 - [ ] Remove team member from Data.gov GitHub teams
   - [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members)
   - [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members)
