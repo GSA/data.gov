@@ -3,6 +3,8 @@ name: Offboard team member
 about: Checklist for offboarding a team member from Data.gov
 title: "[Offboard] <email>"
 ---
+All tasks should be checked and completed. For tasks that are not applicable, perhaps because the team member did not have this particular access, please **confirm** that the team member in fact has no access before marking the task complete.
+
 
 Tasks to be performed by the outgoing team member:
 - [ ] Move all Data.gov related documents to team drives
