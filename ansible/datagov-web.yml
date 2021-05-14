@@ -36,7 +36,7 @@
         # https://github.com/GSA/datagov-deploy/issues/900
         validate_certs: false
       register: result
-      retries: 5
+      retries: 10
       delay: 10
       until: not result.failed
 
@@ -101,6 +101,6 @@
       delegate_to: localhost
       become: false
       register: result
-      retries: 5
+      retries: 10
       delay: 10
       until: not result.failed

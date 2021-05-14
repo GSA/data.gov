@@ -154,6 +154,17 @@
   notify:
     - reload supervisor
 
+- name: Copy CKAN gunicorn.conf.py
+  copy:
+    src: "{{ inventory_app_source_path }}/config/gunicorn.conf.py"
+    dest: /etc/ckan/gunicorn.conf.py
+    mode: 0644
+    remote_src: true
+  become: true
+  when: inventory_next
+  notify:
+    - restart ckan
+
 - name: Copy CKAN server_start.sh
   copy:
     src: "{{ inventory_app_source_path }}/config/server_start.sh"
