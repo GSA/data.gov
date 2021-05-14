@@ -100,7 +100,7 @@ inventory_ckan_s3_bucket_name: "{{ vault_inventory_s3_bucket_name }}"
 inventory_ckan_s3_bucket_prefix: "{{ vault_inventory_s3_bucket_prefix }}"
 inventory_ckan_instance_secret: "{{ vault_inventory_ckan_instance_secret }}"
 inventory_ckan_instance_uuid: "{{ vault_inventory_ckan_instance_uuid }}"
-inventory_ckan_service_url: https://inventory.sandbox.datagov.us
+inventory_ckan_service_url: https://inventory-next.sandbox.datagov.us
 inventory_ckan_who_ini_secret: "{{ vault_inventory_ckan_who_ini_secret }}"
 inventory_ckan_solr_host: datagov-solr1tf.internal.sandbox.datagov.us
 inventory_web_datapusher_db_pass: "{{ vault_inventory_datapusher_db_pass }}"
