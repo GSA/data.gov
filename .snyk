@@ -18,6 +18,20 @@ ignore:
           https://github.com/GSA/datagov-deploy/issues/3027
         expires: 2021-06-16T06:00:00.000Z
 
+  SNYK-PYTHON-ANSIBLE-1292152:
+    - '*':
+        reason: >-
+          Managed nodes are only accessible to data.gov operators. Risk is
+          acceptable.
+        expires: 2021-08-13T06:00:00.000Z
+
+  SNYK-PYTHON-ANSIBLE-1292154:
+    - '*':
+        reason: >-
+          Managed nodes are only accessible to data.gov operators. Risk is
+          acceptable.
+        expires: 2021-08-13T06:00:00.000Z
+
   SNYK-PYTHON-CRYPTOGRAPHY-1022152:
     - '*':
         reason: >-
