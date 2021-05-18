@@ -55,7 +55,7 @@
   version: v1.0.4
 - name: gsa.datagov-deploy-jenkins
   src: https://github.com/GSA/datagov-deploy-jenkins
-  version: v1.2.2
+  version: v2.0.0
 - name: gsa.datagov-deploy-jumpbox
   src: https://github.com/GSA/datagov-deploy-jumpbox
   version: v2.3.0
