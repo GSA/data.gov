@@ -7,16 +7,14 @@ ignore:
         reason: >-
           solaris_zone module is not used, fix requires ansible 2.9
           https://github.com/gsa/datagov-deploy/issues/893
-        expires: 2021-05-19T00:00:00.000Z
+        expires: 2021-06-11T00:00:00.000Z
 
-  SNYK-PYTHON-ANSIBLE-1086591:
+  SNYK-PYTHON-ANSIBLE-1297166:
     - '*':
         reason: >-
-          Managed nodes and ansible controllers are only accessible to data.gov
-          operators. Additional work will be done to scrub the logs for any
-          information exposure
-          https://github.com/GSA/datagov-deploy/issues/3027
-        expires: 2021-06-16T06:00:00.000Z
+          Ansible 3.0 upgrade work has a July2021 milestone
+          https://github.com/GSA/datagov-deploy/issues/893
+        expires: 2021-06-11T00:00:00.000Z
 
   SNYK-PYTHON-ANSIBLE-1292152:
     - '*':
