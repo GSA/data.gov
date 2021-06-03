@@ -31,7 +31,7 @@ jobs:
       - run:
           name: install snyk
           command: sudo npm install -g snyk
-      - run: snyk monitor --project-name=GSA/datagov-deploy
+      - run: snyk monitor --project-name=GSA/datagov-deploy --org=data.gov
 
   snyk-test:
     docker:
@@ -46,7 +46,7 @@ jobs:
       - run:
           name: install snyk
           command: sudo npm install -g snyk
-      - run: snyk test --dev --project-name=GSA/datagov-deploy
+      - run: snyk test --dev --project-name=GSA/datagov-deploy --org=data.gov
 
   test:
     docker:
@@ -81,18 +81,6 @@ jobs:
             TEST_TARGETS=$(make circleci-glob | circleci tests split)
             pipenv run make ${TEST_TARGETS}
 
-  deploy-sandbox:
-    docker:
-      - image: circleci/python:3.6
-    environment:
-      JENKINS_URL: https://ci.sandbox.datagov.us
-    steps:
-      - checkout
-      - deploy:
-          name: Trigger Jenkins deploy
-          command: bin/jenkins_build deploy-ci-platform
-
-
 workflows:
   version: 2
   commit:
@@ -105,10 +93,3 @@ workflows:
             branches:
               only:
                 - master
-      - deploy-sandbox:
-          requires:
-            - lint
-            - test
-          filters:
-            branches:
-              only: develop

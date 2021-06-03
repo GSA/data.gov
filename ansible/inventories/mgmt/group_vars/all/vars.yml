@@ -90,7 +90,8 @@ jenkins_admins_permissions:
   - Lockable Resources/Reserve
   - Lockable Resources/Unlock
   - Lockable Resources/View
-  #- Overall/Administer
+  # TODO disable admin once configured
+  - Overall/Administer
   - Overall/Read
   - Run/Delete
   - Run/Replay
@@ -102,63 +103,38 @@ jenkins_admins_permissions:
   - View/Read
 
 jenkins_job_authentication_token: "{{ vault_jenkins_job_authentication_token }}"
+jenkins_job_use_polling: true
 jenkins_jobs:
   - name: deploy-ci-platform
     git_url: https://github.com/gsa/datagov-deploy.git
-  - name: deploy-ci-app-catalog
-    git_url: https://github.com/gsa/catalog-app.git
   - name: deploy-ci-app-catalog-next
     git_url: https://github.com/gsa/catalog.data.gov.git
-    github_project_url: https://github.com/gsa/datagov-ckan-multi
+    git_ref: fcs
   - name: deploy-ci-app-dashboard
     git_url: https://github.com/gsa/project-open-data-dashboard.git
+    git_ref: fcs
   - name: deploy-ci-app-inventory
     git_url: https://github.com/gsa/inventory-app.git
-  - name: deploy-ci-app-inventory-next
-    git_url: https://github.com/gsa/inventory-app.git
-    git_ref: refs/heads/inventory_ckan_2.8
+    git_ref: fcs
   - name: deploy-ci-app-wordpress
     git_url: https://github.com/gsa/datagov-wp-boilerplate.git
+    git_ref: fcs
+
 jenkins_saml_authentication_context: "http://idmanagement.gov/ns/assurance/aal/3?hspd12=true"  # Require PIV card authentication
 jenkins_saml_sp_entity_id: urn:gov:gsa:SAML:2.0.profiles:sp:sso:gsa:datagov-ci-jenkins
 jenkins_saml_keystore_password: "{{ vault_jenkins_saml_keystore_password }}"
 jenkins_saml_keystore_path: "{{ playbook_dir }}/files/mgmt/saml-key.jks"
 jenkins_saml_private_key_password: "{{ vault_jenkins_saml_private_key_password }}"
-jenkins_saml_idp_metadata_url: https://idp.int.identitysandbox.gov/api/saml/metadata2020
-jenkins_saml_idp_logout_url: https://idp.int.identitysandbox.gov/api/saml/logout2020
+jenkins_saml_idp_metadata_url: https://secure.login.gov/api/saml/metadata2021
+jenkins_saml_idp_logout_url: https://secure.login.gov/api/saml/logout2021
 jenkins_system_message: >
   Data.gov continuous integration and delivery service.
 jenkins_home: /data/jenkins
 jenkins_host: jenkins.mgmt-ocsit.bsp.gsa.gov
-jenkins_tls_key: "{{ vault_jenkins_tls_key }}"
-jenkins_tls_cert: |
-  -----BEGIN CERTIFICATE-----
-  MIIDrjCCApYCCQDzu3KSUyq/3DANBgkqhkiG9w0BAQsFADCBmDELMAkGA1UEBhMC
-  VVMxCzAJBgNVBAgMAkRDMRMwEQYDVQQHDApXYXNoaW5ndG9uMQwwCgYDVQQKDANH
-  U0ExDDAKBgNVBAsMA1RUUzEnMCUGA1UEAwweamVua2lucy5tZ210LW9jc2l0LmJz
-  cC5nc2EuZ292MSIwIAYJKoZIhvcNAQkBFhNkYXRhZ292aGVscEBnc2EuZ292MB4X
-  DTIwMTIzMDIzMDkyMFoXDTIxMTIzMDIzMDkyMFowgZgxCzAJBgNVBAYTAlVTMQsw
-  CQYDVQQIDAJEQzETMBEGA1UEBwwKV2FzaGluZ3RvbjEMMAoGA1UECgwDR1NBMQww
-  CgYDVQQLDANUVFMxJzAlBgNVBAMMHmplbmtpbnMubWdtdC1vY3NpdC5ic3AuZ3Nh
-  LmdvdjEiMCAGCSqGSIb3DQEJARYTZGF0YWdvdmhlbHBAZ3NhLmdvdjCCASIwDQYJ
-  KoZIhvcNAQEBBQADggEPADCCAQoCggEBANC1kQn9xl6/MHHg97JElUczykwQzVGP
-  7UzPEorCdwgJI4TTjQOZ0pyshsCDMNJ3ZxOVc/K/F19/iWm7txblQ/a4ltMmsnJR
-  2TgPgYIcRrbeJBKFrcFDAJnjaIs1C/AsBYtSkHnYa1XOElP8RSAzKXDJlyKTGr0l
-  MZnMo6602UGjF0gd7jV4XSWAM4i1w+HlvjEMkdK4G7Qu6sjGs5KoEFf1yPeBYmKD
-  YlC4I7TsxTKA4Vi4U1KSrubhGe+oL3CAdf86Wf8at20XO6Neyom5lQ3RIa7JZ8o8
-  lMu0pKm40rUI9Sw7LgY6cnjJ1SWep/r5FWlxRgRk2ZFRYjVdXgKJsd0CAwEAATAN
-  BgkqhkiG9w0BAQsFAAOCAQEAcRBtEu6yTokqVkVs9Erletrss3Dv8UDrFf52j45W
-  ZNWIKlBBtvwXXC2diZzNIrHKQkxfkPhUfLiFRaME45oi+K2phk7offJbFdDcJuAu
-  efZo0/4u3I9aU2xtK2XWbsyzleDKGPACCkW0nsNIzCRWCzIFAeKPCikyS1IyaV7F
-  exMXJYf3gPefY4kyqNgxv/71Log4D78V705QJJH3eaFh0EA3pKGpE0O3MPWJ6EBG
-  cbFZHpFAPxkcyCkj55O0/tGprbsbvn82v/k1nq5bKAotkzH8ZUIBJ/R2xpn8oujh
-  7gXXx3R9Z6Hdcqg4x1GbkUS4YYyX2d8QaDgmyEsiROtiig==
-  -----END CERTIFICATE-----
-
-default_tls_host_key: "{{ jenkins_tls_key }}"
-default_tls_host_certificate: "{{ jenkins_tls_cert }}"
-
-jenkins_url: ci.data.gov
+jenkins_tls_key: "{{ default_tls_host_key }}"
+jenkins_tls_cert: "{{ default_tls_host_certificate }}"
+jenkins_workflow: production
+jenkins_url: ci-datagov.mgmt-ocsit.bsp.gsa.gov
 
 
 # jumpbox

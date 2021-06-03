@@ -3,14 +3,19 @@ name: Offboard team member
 about: Checklist for offboarding a team member from Data.gov
 title: "[Offboard] <email>"
 ---
-These tasks are performed by an Admin unless noted as an action for the outgoing team member.
+All tasks should be checked and completed. For tasks that are not applicable, perhaps because the team member did not have this particular access, please **confirm** that the team member in fact has no access before marking the task complete.
 
-- [ ] Team member should move all Data.gov related documents to team drives
-- [ ] Team member should document any work in progress and schedule a hand-off for any remaining tasks
+
+Tasks to be performed by the outgoing team member:
+- [ ] Move all Data.gov related documents to team drives
+- [ ] Document any work in progress and schedule a hand-off for any remaining tasks
+
+These tasks are performed by a team admin:
 - [ ] Remove team member's access to Google Drive
   - [Data.gov](https://drive.google.com/drive/folders/0AMRwhrSyJ5R4Uk9PVA)
   - [Data.gov Mutli Tenant](https://drive.google.com/drive/folders/0ALb0g1S27SJPUk9PVA)
   - [DatagovDevSecOps](https://drive.google.com/drive/folders/1Ac1dUmzTLTsDv8A8TSyLzrXo1a7hm4NF)
+- [ ] Email the ISSO to remove the user from any Google Drive folders or documents owned by security
 - [ ] Remove team member from Data.gov GitHub teams
   - [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members)
   - [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members)
@@ -18,8 +23,9 @@ These tasks are performed by an Admin unless noted as an action for the outgoing
 - [ ] Remove team member from [the `gsa-datagov` organization](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/users) on cloud.gov
 - [ ] Remove team member from [GCP account](https://console.cloud.google.com/iam-admin/iam?project=tts-datagov)
 - [ ] Remove team member from AWS OPP account
+- [ ] Remove team member from [the SSB staging AWS account](https://054110281448.signin.aws.amazon.com/console)
 - [ ] Remove team member from [AWS sandbox access](https://github.com/GSA/datagov-iam/blob/main/README.md#new-users)
-- [ ] Remove team member from [jumpbox operators](https://github.com/GSA/datagov-deploy/blob/develop/ansible/group_vars/all/vars.yml)
+- [ ] Remove team member from [jumpbox operators](https://github.com/GSA/datagov-deploy/blob/master/ansible/group_vars/all/vars.yml)
 - [ ] Remove team member from Data.gov email lists
   - [datagov](https://groups.google.com/a/gsa.gov/forum/#!forum/datagov)
   - [datagovhelp](https://groups.google.com/a/gsa.gov/forum/#!forum/datagovhelp)

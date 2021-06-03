@@ -1,6 +1,6 @@
 ---
 # catalog
-catalog_ckan_app_version: master
+catalog_ckan_app_version: fcs
 catalog_ckan_db_host: "{{ catalog_postgresql_login_host }}"
 catalog_ckan_db_name: catalog_db
 catalog_ckan_db_pass: "{{ catalog_postgresql_login_password }}"
@@ -27,9 +27,10 @@ catalog_db_name: "{{ catalog_ckan_db_name }}"
 catalog_db_user: "{{ catalog_ckan_db_user }}"
 
 # catalog-next
-catalog_next_ckan_db_name: ckan
-catalog_next_ckan_db_pass: "{{ vault_catalog_next_ckan_db_pass }}"
-catalog_next_ckan_db_user: ckan
+catalog_next_ckan_db_name: catalog_db_next
+catalog_next_ckan_db_pass: "{{ vault_catalog_next_postgresql_login_password }}"
+catalog_next_ckan_db_user: "{{ vault_catalog_next_postgresql_login_user }}"
+catalog_next_ckan_envs: ""
 catalog_next_ckan_fgdc2iso_host: catalog-next-fgdc2iso1tf.internal.sandbox.datagov.us
 catalog_next_ckan_redis_host: master.rep-sandbox-catalog-next.5kspe7.use1.cache.amazonaws.com
 catalog_next_ckan_redis_password: "{{ vault_catalog_next_ckan_redis_password }}"
@@ -99,7 +100,7 @@ inventory_ckan_s3_bucket_name: "{{ vault_inventory_s3_bucket_name }}"
 inventory_ckan_s3_bucket_prefix: "{{ vault_inventory_s3_bucket_prefix }}"
 inventory_ckan_instance_secret: "{{ vault_inventory_ckan_instance_secret }}"
 inventory_ckan_instance_uuid: "{{ vault_inventory_ckan_instance_uuid }}"
-inventory_ckan_service_url: https://inventory.sandbox.datagov.us
+inventory_ckan_service_url: https://inventory-next.sandbox.datagov.us
 inventory_ckan_who_ini_secret: "{{ vault_inventory_ckan_who_ini_secret }}"
 inventory_ckan_solr_host: datagov-solr1tf.internal.sandbox.datagov.us
 inventory_web_datapusher_db_pass: "{{ vault_inventory_datapusher_db_pass }}"
@@ -112,6 +113,7 @@ inventory_postgresql_login_password: "{{ vault_inventory_postgresql_login_passwo
 inventory_ckan_solr_port: "{{ solr_port }}"
 
 # Inventory Next
+inventory_next_ckan_envs: ""
 inventory_next_ckan_s3_bucket_name: "{{ vault_inventory_next_ckan_s3_bucket_name }}"
 inventory_next_ckan_s3_bucket_prefix: "{{ vault_inventory_next_ckan_s3_bucket_prefix }}"
 inventory_next_ckan_instance_secret: "{{ vault_inventory_next_ckan_instance_secret }}"
@@ -131,31 +133,30 @@ inventory_next_postgresql_login_password: "{{ vault_inventory_next_postgresql_lo
 jenkins_admin_password: "{{ vault_jenkins_admin_password }}"
 jenkins_admins: "{{ datagov_operators_test | map(attribute='email') | list }}"
 jenkins_job_authentication_token: "{{ vault_jenkins_job_authentication_token }}"
+jenkins_job_use_polling: true
 jenkins_jobs:
   - name: deploy-ci-platform
     git_url: https://github.com/gsa/datagov-deploy.git
-    git_ref: refs/heads/develop
-  - name: deploy-ci-app-catalog
-    git_url: https://github.com/gsa/catalog-app.git
+    git_ref: develop
   - name: deploy-ci-app-catalog-next
     git_url: https://github.com/gsa/catalog.data.gov.git
-    github_project_url: https://github.com/gsa/datagov-ckan-multi
+    git_ref: fcs
   - name: deploy-ci-app-dashboard
     git_url: https://github.com/gsa/project-open-data-dashboard.git
+    git_ref: fcs
   - name: deploy-ci-app-inventory
     git_url: https://github.com/gsa/inventory-app.git
-  - name: deploy-ci-app-inventory-next
-    git_url: https://github.com/gsa/inventory-app.git
-    git_ref: refs/heads/inventory_ckan_2.8
+    git_ref: fcs
   - name: deploy-ci-app-wordpress
     git_url: https://github.com/gsa/datagov-wp-boilerplate.git
+    git_ref: fcs
 
 jenkins_saml_sp_entity_id: urn:gov:gsa:SAML:2.0.profiles:sp:sso:gsa:ci_datagov_sandbox
 jenkins_saml_keystore_password: "{{ vault_jenkins_saml_keystore_password }}"
 jenkins_saml_keystore_path: "{{ playbook_dir }}/files/sandbox/saml-key.jks"
 jenkins_saml_private_key_password: "{{ vault_jenkins_saml_private_key_password }}"
-jenkins_saml_idp_metadata_url: https://idp.int.identitysandbox.gov/api/saml/metadata2020
-jenkins_saml_idp_logout_url: https://idp.int.identitysandbox.gov/api/saml/logout2020
+jenkins_saml_idp_metadata_url: https://idp.int.identitysandbox.gov/api/saml/metadata2021
+jenkins_saml_idp_logout_url: https://idp.int.identitysandbox.gov/api/saml/logout2021
 jenkins_system_message: >
   Data.gov sandbox continuous integration and delivery service.
 jenkins_host: jenkins1tf.internal.sandbox.datagov.us
@@ -198,6 +199,7 @@ jenkins_tls_cert: |-
   VzQrATk1ZB3jBepMlhLBl7I=
   -----END CERTIFICATE-----
 jenkins_url: ci.sandbox.datagov.us
+jenkins_workflow: sandbox
 jenkins_admins_permissions:
   - Agent/Build
   - Agent/Configure
@@ -237,7 +239,7 @@ jenkins_admins_permissions:
 
 jumpbox_operators: "{{ datagov_operators_test }}"
 
-pycsw_app_version: datagov/v2.4.x
+pycsw_app_version: fcs
 pycsw_base_url: https://catalog.sandbox.datagov.us
 pycsw_ckan_url: https://catalog.sandbox.datagov.us
 pycsw_db_host: "{{ catalog_pycsw_db_host }}"
@@ -357,4 +359,5 @@ solr_cores:
 # wordpress
 # hostname needed for smoke test, IP address needed for ALB health check
 wordpress_nginx_server_name: wordpress.sandbox.datagov.us $hostname {{ ansible_default_ipv4.address }}
+wordpress_project_git_version: fcs
 wordpress_service_url: https://wordpress.sandbox.datagov.us

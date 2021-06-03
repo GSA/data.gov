@@ -1,6 +1,7 @@
 ---
 datagov_app_process: worker
 datagov_service: catalog
+datagov_in_service: false
 
 catalog_app_type: worker
 catalog_ckan_db_host: "{{ vault_catalog_ckan_db_host }}"

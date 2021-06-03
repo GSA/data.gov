@@ -5,13 +5,14 @@ catalog_app_type: web  # either web or worker
 catalog_ckan_access_log: "{{ catalog_log_dir }}/ckan.access.log"
 catalog_ckan_apache_server_alias: []
 catalog_ckan_apache_server_name: ckan
+catalog_ckan_envs: ""
 
 # One of [default, writeonly, readonly]
 # default: stand-alone instance, handles both read and write operations.
 # writeonly: has a db write connection for admin, redirects to readonly for non admin operations.
 # readonly: serves anonymous traffic, redirects to admin for write operations.
 catalog_ckan_readwrite_configuration: default
-catalog_ckan_app_version: master
+catalog_ckan_app_version: fcs
 catalog_ckan_disable_resource_search: false
 catalog_ckan_error_log: "{{ catalog_log_dir }}/ckan.error.log"
 catalog_ckan_harvest_fetch_process_count: 2
@@ -52,15 +53,18 @@ catalog_ckan_plugins_default:
 
 catalog_ckan_python_home: /usr
 catalog_ckan_saml2_enabled: false
+catalog_ckan_saml2_requested_authn_context: []
 catalog_harvest_enable_harvest_report: false
 catalog_enable_clean_harvest_logs: false
 catalog_log_dir: /var/log/ckan
 catalog_gunicorn_error_log: "{{ catalog_log_dir }}/gunicorn.log"
 
+googleanalytics_ids: []
+googleanalytics_accout_name: GSA Data.gov Fake analytics
 
 app_source_path: /tmp/catalog-app
 app_repo: https://github.com/GSA/catalog-app.git
-app_repo_branch: master
+app_repo_branch: fcs
 
 # used in  production.ini/ckan_site_url and hosts
 ckan_site_domain: "http://127.0.0.1"
@@ -103,4 +107,3 @@ ckan_catalog_next: false
 catalog_ckan_who_ini_path: etc_ckan_who.default.ini.j2
 ckan_production_ini_template: etc_ckan_production.ini.j2
 ckan_uses_gunicorn: false
-newrelic_app_name: catalog

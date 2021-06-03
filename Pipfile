@@ -10,12 +10,12 @@ ansible-lint = "<4.3.0"
 ansible = "~=2.8.15"
 selinux = "*"
 pytest = "*"
-testinfra ="*"
+testinfra = "*"
+yamllint = "*"
 
 [packages]
 ansible = "~=2.8.15"
 boto = "*"
-cryptography = ">=3.2.1"
 
 [requires]
 python_version = "3.6"

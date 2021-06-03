@@ -2,14 +2,18 @@
 
 # datagov-deploy
 
+_Note: most of the information in this repo refers to the "frozen" FCS environments of
+data.gov. If you are looking for documentation for cloud.gov environments, see
+the application repositories._
+
 This is the main repository for the Data.gov Platform. We use this repository to
 [track our team's work](https://app.zenhub.com/workspaces/datagov-devsecops-579a2532d1d6ea9c3fcf5cfa/board)
-and for our [Ansible](https://www.ansible.com) playbooks that deploy all the
-[Data.gov site components](https://github.com/GSA/datagov-deploy/wiki/Site-components):
+and for our [Ansible](https://www.ansible.com) playbooks that deploy the
+[Data.gov site components](https://github.com/GSA/datagov-deploy/wiki/Site-components) to FCS:
 
   - www.data.gov (WordPress)
-  - catalog.data.gov (CKAN 2.3)
-  - inventory.data.gov (CKAN 2.5)
+  - catalog.data.gov (CKAN 2.8)
+  - inventory.data.gov (CKAN 2.8)
   - labs.data.gov/dashboard (Project Open Data Dashboard)
 
 Additionally, each host is configured with common Services:
@@ -23,7 +27,6 @@ Additionally, each host is configured with common Services:
   - Trendmicro (OSSEC-HIDS)
   - [and more...](https://github.com/GSA/datagov-deploy-common)
 
-
 See our [Roadmap](docs/roadmap.md) for where we're taking Data.gov.
 
 
@@ -35,13 +38,19 @@ formerly BSP). Our sandbox environments are provisioned by
 
 GSA [VPN access](https://github.com/GSA/datagov-deploy/wiki/GSA-VPN) is required to access production and staging.
 
-Environment | Deployed from      | ISP | Jumpbox
------------ | -------------      | --- | ----
-mgmt        | `master`           | BSP | datagovjump1m.mgmt-ocsit.bsp.gsa.gov
-production  | `master` (manual)  | BSP | datagov-jump2p.prod-ocsit.bsp.gsa.gov
-staging     | `release/*` or `master` (manual)  | BSP | datagov-jump2d.dev-ocsit.bsp.gsa.gov
-sandbox     | `develop` (manual) | AWS sandbox | jump.sandbox.datagov.us
-local       | feature branches   | laptop  | localhost
+Environment | Deployment branch                      | ISP         | Jumpbox
+----------- | -----------------                      | ---         | ----
+mgmt        | `master`         | BSP         | datagovjump1m.mgmt-ocsit.bsp.gsa.gov
+production  | `master`         | BSP         | datagov-jump2p.prod-ocsit.bsp.gsa.gov
+staging     | `master`         | BSP         | datagov-jump2d.dev-ocsit.bsp.gsa.gov
+sandbox     | `develop`        | AWS sandbox | jump.sandbox.datagov.us
+local       | feature branches | laptop      | localhost
+
+
+### Applications
+
+FCS environments are considered "frozen" and only accepting security updates and
+critical bug fixes. Applications are frozen on the `fcs` branch.
 
 
 ## Usage
@@ -109,7 +118,7 @@ Or use `--limit` if you just want to focus on a single host or group.
 
     $ ansible-playbook site.yml --limit catalog-web
 
-Deploy the Catalog application.
+Deploy the static catalog application.
 
     $ ansible-playbook catalog.yml
 
@@ -134,7 +143,7 @@ Install the common Services.
 Upgrade OS packages as a one-off command on all hosts. _Note: If you find you're
 doing one-off ansible commands often, then you should consider creating
 a [situational
-playbook](https://github.com/GSA/datagov-deploy/tree/develop/ansible/actions)._
+playbook](https://github.com/GSA/datagov-deploy/tree/master/ansible/actions)._
 
     $ ansible -m apt -a 'update_cache=yes upgrade=dist' all
 
@@ -177,7 +186,7 @@ wordpress | WordPress application within site.yml playbook
 
 Application playbooks deploy a single Application and its Services (e.g.
 apache2). We document supported tags and common variables here, but you should
-refer to the individual roles for the complete documentation.
+refer to the individual roles for the complete documentation. Note: deploying from the `master` branch will deploy a frozen version of each application via its `fcs` branch.
 
 _These commands assume you've activated the virtualenv with `pipenv shell` or you can
 prefix each command with `pipenv run` e.g. `pipenv run ansible`._
@@ -299,6 +308,8 @@ Deploys the www.data.gov (WordPress) application.
 Variable | Description
 -------- | -----------
 `project_git_version` | Tag, branch, or commit to deploy
+
+Note: On the `master` branch, this variable should be set to `fcs`.
 
 
 ##### Supported tags
@@ -523,15 +534,17 @@ You can configure git to automatically decrypt Vault files for reviewing diffs.
 
 ## Deployment
 
-_Note: this is a work in progress._
+Because of GSA firewalls, we split our continuous integration and delivery into
+two roles. CircleCI handles continuous integration and Jenkins handles
+deployment within the GSA firewall.
 
-Currently, deployment to BSP environments is done manually by running Ansible
-playbooks from the jumpbox hosts, within the BSP firewall. We are moving to
-automated continuous deployment via Jenkins CI server.
+On any commit, CircleCI runs the automated test suites and if successful, hands
+off deployment to Jenkins.
 
-We still use CircleCI for majority of CI needs. Any tasks requiring access to
-the GSA network (like deployment) are handed over to Jenkins (via the Jenkins
-API).
+Workflow   | Environments              | URL
+--------   | ------------              | ---
+production | staging, mgmt, production | https://ci-datagov.mgmt-ocsit.bsp.gsa.gov
+sandbox    | sandbox                   | https://ci.sandbox.datagov.us
 
 
 ### Jenkins configuration
@@ -545,24 +558,20 @@ to be done.
 
 1. Log into the new instance
 1. Configure credentials
-1. Add a CI bot user and API token
-
-
-#### Log into Jenkins
-
-[Log into](https://ci.sandbox.datagov.us/) the Jenkins instance using
-`jenkins_admin_username` (default: admin) and `jenkins_admin_password` (see
-vault).
+1. Add an API token for the admin user and update `jenkins_admin_password` with
+   this token.
+1. (sandbox only) Add a CI bot user and API token
 
 
 #### Configure credentials
 
-Add [credentials](https://ci.sandbox.datagov.us/credentials/) to manage secrets.
+Add [credentials](https://ci-datagov.mgmt-ocsit.bsp.gsa.gov/credentials/) to manage secrets.
 
 | Id                   | Type | Description |
 | --                   | ---- | ----------- |
 | ansible-vault-secret | file | File containing the password to the Ansible vault (ansible-secret-v2.txt). |
 | datagov-sandbox      | file | [Root SSH private key](https://drive.google.com/drive/folders/10-hk-IqA0jQAW6727pKmW46EF-nHiNLr) file for the environment. |
+| datagov-prod-ssh     | file | [Root SSH private key](https://drive.google.com/drive/folders/10-hk-IqA0jQAW6727pKmW46EF-nHiNLr) file for the environment. |
 | github-datagov-bot   | text | Personal [access token](https://github.com/settings/tokens) from the datagov-bot GitHub user. |
 
 _Note: evaluate if we want to move the credential creation to
@@ -573,7 +582,7 @@ configuration-as-code configuraiton._
 
 With SAML authentication enabled, you can no longer create user/service accounts
 through the UI. Instead, use the [script
-console](https://ci.sandbox.datagov.us/script) to run the script below. Set
+console](https://ci-datagov.mgmt-ocsit.bsp.gsa.gov/script) to run the script below. Set
 a random password. The return value is the API token. Save this for later as you won't have
 another chance.
 

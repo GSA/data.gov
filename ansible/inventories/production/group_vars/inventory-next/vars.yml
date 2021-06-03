@@ -31,20 +31,23 @@ inventory_ckan_bucket_name: "{{ inventory_next_ckan_s3_bucket_name }}"
 inventory_ckan_bucket_prefix: "{{ inventory_next_ckan_s3_bucket_prefix }}"
 ckan_site_domain: "{{ inventory_next_ckan_service_url }}"
 
-inventory_app_repo_branch: inventory_ckan_2.8
+inventory_app_repo_branch: fcs
 newrelic_app_name: inventory-next
 newrelic_enabled: true
 
-inventory_ckan_plugins_additional: [s3filestore]
+inventory_ckan_plugins_additional: [s3filestore saml2auth]
+inventory_ckan_plugins_first: [datagov_inventory]
 
 # saml2 authentication
-inventory_ckan_saml2_enabled: false
-ckan_production_ini_template: etc/ckan/production.ini
-inventory_ckan_who_ini_path: etc_ckan_who.default.ini.j2
+inventory_ckan_saml2_enabled: true
+ckan_production_ini_template: inventory-next/etc_ckan_production.ini.j2
+inventory_ckan_who_ini_path: inventory-next/etc_ckan_who.saml2.ini.j2
+inventory_ckan_saml2_requested_authn_context:
+  - http://idmanagement.gov/ns/assurance/aal/3?hspd12=true
 
 # login.gov identity sandbox
-saml2_idp_metadata_url: "https://idp.int.identitysandbox.gov/api/saml/metadata2020"
-saml2_site_url: "https://inventory-next.data.gov/"
+saml2_idp_metadata_url: "https://secure.login.gov/api/saml/metadata2021"
+saml2_site_url: "https://inventory.data.gov/"
 
 saml2_sp_public_certificate: "{{ vault_inventory_next_saml2_sp_public_certificate }}"
 saml2_sp_private_key: "{{ vault_inventory_next_saml2_sp_private_key }}"

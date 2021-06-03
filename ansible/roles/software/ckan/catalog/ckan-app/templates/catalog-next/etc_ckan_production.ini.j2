@@ -103,6 +103,8 @@ search.facets = groups tags res_format responsible-party frequency source_type
 search.facets.responsible-party.title = Organizations
 ckan.search.solr_commit = true
 
+# skip doubling package_show queries to show tracking information
+ckanext.datagovcatalog.add_packages_tracking_info = false
 
 ## Redis Settings
 
@@ -236,12 +238,25 @@ ckanext.saml2auth.entity_id={{ catalog_ckan_saml2_entity_id }}
 ckanext.saml2auth.want_response_signed=false
 ckanext.saml2auth.want_assertions_signed=false
 ckanext.saml2auth.want_assertions_or_response_signed=true
-ckanext.saml2auth.enable_ckan_internal_login=true
+
+{% if catalog_ckan_saml2_requested_authn_context | length > 0 %}
+ckanext.saml2auth.requested_authn_context = {{ catalog_ckan_saml2_requested_authn_context | join(' ') }}
+{% endif %}
+
+ckanext.saml2auth.enable_ckan_internal_login=false
 {% endif %}
 
 # Google Analytics
-googleanalytics.ids = UA-42145528-2 UA-17367410-17
-googleanalytics.id = UA-42145528-2
+{% if googleanalytics_ids | length > 0 %}
+
+googleanalytics.ids = {{ googleanalytics_ids | join(' ') }}
+googleanalytics.id = {{ googleanalytics_ids | first }}
+googleanalytics.account = {{ googleanalytics_accout_name }}
+{% if googleanalytics_token_filepath is defined %}
+googleanalytics.token.filepath = {{ googleanalytics_token_filepath | default('') }}
+{% endif %}
+
+{% endif %}
 
 # ckanext-geodatagov settings
 

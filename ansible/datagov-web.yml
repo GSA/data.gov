@@ -7,9 +7,6 @@
     - { role: software/common/php-common, tags: [provision] }
     - { role: geerlingguy.git, tags: [git, provision] }
     - role: geerlingguy.nginx
-      vars:
-        # Remove nginx version info
-        nginx_server_tokens: "off"
       tags:
         - nginx
         - provision
@@ -39,7 +36,7 @@
         # https://github.com/GSA/datagov-deploy/issues/900
         validate_certs: false
       register: result
-      retries: 3
+      retries: 10
       delay: 10
       until: not result.failed
 
@@ -104,6 +101,6 @@
       delegate_to: localhost
       become: false
       register: result
-      retries: 3
+      retries: 10
       delay: 10
       until: not result.failed

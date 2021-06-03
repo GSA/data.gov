@@ -89,13 +89,15 @@
             return_content: true
             validate_certs: false
           register: response
+          retries: 3
+          delay: 10
+          until: not response.failed
         - name: assert Location redirect
           assert:
             that: response.location == "{{ url_writable }}/_tracking"
             fail_msg: |
               POST redirect failed (we expect 307 redirection to the writable instance)
               {{ response.content }}
-      delegate_to: localhost
       become: false
       run_once: true
       tags:
@@ -116,13 +118,15 @@
             return_content: true
             validate_certs: false
           register: response
+          retries: 3
+          delay: 10
+          until: not response.failed
         - name: assert Location redirect
           assert:
             that: response.url == "{{ url_writable }}/_tracking"
             fail_msg: |
               POST redirect failed (we expect redirection to the writable instance)
               {{ response.content }}
-      delegate_to: localhost
       become: false
       run_once: true
       tags:
@@ -147,42 +151,6 @@
             - daily
             - missingok
             - rotate 180
-
-
-- name: NewRelic
-  hosts: catalog-web,catalog-next-web
-  roles:
-    - role: monitoring/newrelic/python-agent-ansible
-      when:
-        - common_newrelic_enabled
-        - not ckan_uses_gunicorn
-  tags:
-    - newrelic
-
-- name: Service-level catalog.data.gov smoke tests (catalog classic)
-  hosts: catalog-web
-  tags:
-    - smoke
-  tasks:
-    - name: flush handlers
-      meta: flush_handlers
-
-    - name: assert catalog is up
-      uri:
-        url: "{{ catalog_ckan_service_url }}/api/action/status_show"
-        follow_redirects: none
-        status_code: 200
-        # TODO enable cert validation. Staging and production hosts have GSA
-        # signed certs which should be valid.
-        # https://github.com/GSA/datagov-deploy/issues/900
-        validate_certs: false
-      run_once: true
-      delegate_to: localhost
-      become: false
-      retries: 3
-      delay: 10
-      register: result
-      until: not result.failed
 
 - name: Service-level admin-catalog.data.gov smoke tests (catalog classic)
   hosts: catalog-admin
@@ -237,6 +205,18 @@
       until: not result.failed
       when: datagov_in_service | default(true)
 
+    - name: no Server info disclosed in response headers
+      # gunicorn prior to version 20.1.0 adds "server" header.
+      # Nginx/Apache adds "Server".
+      fail:
+        msg : >
+          Server info disclosed as
+          {{ result.server if result.server is defined else result.Server }}
+      when: >
+        ( result.server is defined and result.server | length > 0 )
+        or
+        ( result.Server is defined and result.Server | length > 0 )
+
 - name: Service-level admin-catalog-next.data.gov smoke tests (catalog-next)
   hosts: catalog-next-web-admin
   tags:
@@ -264,3 +244,15 @@
       register: result
       until: not result.failed
       when: datagov_in_service | default(true)
+
+    - name: no Server info disclosed in response headers
+      # gunicorn prior to version 20.1.0 adds "server" header.
+      # Nginx/Apache adds "Server".
+      fail:
+        msg : >
+          Server info disclosed as
+          {{ result.server if result.server is defined else result.Server }}
+      when: >
+        ( result.server is defined and result.server | length > 0 )
+        or
+        ( result.Server is defined and result.Server | length > 0 )

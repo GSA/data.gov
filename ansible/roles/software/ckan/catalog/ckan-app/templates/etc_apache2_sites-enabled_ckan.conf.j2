@@ -67,7 +67,10 @@
 
     Header set Referrer-Policy "origin"
 
-    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    # Avoid duplicate HSTS. Netscaler adds it for external traffic
+    <If "%{HTTP_HOST} in { '{{ ansible_fqdn }}', '{{ ansible_default_ipv4.address | default('') }}' } ">
+      Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    </If>
 
     # Header set Content-Security-Policy "default-src 'self'"
 

@@ -1,41 +1,99 @@
 pipeline {
   agent any
+  options {
+    disableConcurrentBuilds()
+    copyArtifactPermission('*')
+  }
   stages {
-    stage('build') {
-      steps {
-        ansiColor('xterm') {
-          sh 'docker build --build-arg APP_UID=$(id -u) --build-arg APP_GID=$(id -g) -t datagov/datagov-deploy .'
+    stage('workflow:sandbox') {
+      when {
+        allOf {
+          environment name: 'DATAGOV_WORKFLOW', value: 'sandbox'
+          anyOf {
+            branch 'develop'
+          }
+        }
+      }
+      stages {
+        stage('build') {
+          steps {
+            ansiColor('xterm') {
+              sh 'bin/jenkins-deploy init'
+              sh 'bin/jenkins-deploy build'
+              sh 'tar czf datagov-deploy.tar.gz *'
+            }
+          }
+        }
+        stage('deploy:sandbox') {
+          environment {
+            ANSIBLE_VAULT_FILE = credentials('ansible-vault-secret')
+            SSH_KEY_FILE = credentials('datagov-sandbox')
+          }
+          steps {
+            ansiColor('xterm') {
+              sh 'bin/jenkins-deploy ping sandbox'
+              sh 'bin/jenkins-deploy deploy sandbox site.yml'
+            }
+          }
         }
       }
     }
-    stage('ping:sandbox') {
-      when { anyOf { branch 'develop' } }
-      environment {
-        ANSIBLE_VAULT_FILE = credentials('ansible-vault-secret')
-        SSH_KEY_FILE = credentials('datagov-sandbox')
-      }
-      steps {
-        ansiColor('xterm') {
-          sh 'docker run --rm -v $SSH_KEY_FILE:$SSH_KEY_FILE -v $ANSIBLE_VAULT_FILE:$ANSIBLE_VAULT_FILE -u $(id -u) datagov/datagov-deploy:latest pipenv run ansible --key-file=$SSH_KEY_FILE --vault-password-file=$ANSIBLE_VAULT_FILE --inventory inventories/sandbox -m ping all'
+    stage('workflow:production') {
+      when {
+        allOf {
+          environment name: 'DATAGOV_WORKFLOW', value: 'production'
+          anyOf {
+            branch 'master'
+          }
         }
       }
-    }
-    stage('deploy:sandbox') {
-      when { anyOf { branch 'develop' } }
       environment {
         ANSIBLE_VAULT_FILE = credentials('ansible-vault-secret')
-        SSH_KEY_FILE = credentials('datagov-sandbox')
+        SSH_KEY_FILE = credentials('datagov-prod-ssh')
       }
-      steps {
-        ansiColor('xterm') {
-          sh 'docker run --rm -v $SSH_KEY_FILE:$SSH_KEY_FILE -v $ANSIBLE_VAULT_FILE:$ANSIBLE_VAULT_FILE -u $(id -u) datagov/datagov-deploy:latest pipenv run ansible-playbook --key-file=$SSH_KEY_FILE --vault-password-file=$ANSIBLE_VAULT_FILE --inventory inventories/sandbox site.yml --skip-tags database'
+      stages {
+        stage('build') {
+          steps {
+            ansiColor('xterm') {
+              sh 'bin/jenkins-deploy init'
+              sh 'bin/jenkins-deploy build'
+              sh 'tar czf datagov-deploy.tar.gz *'
+            }
+          }
+        }
+        stage('deploy:staging') {
+          steps {
+            ansiColor('xterm') {
+              sh 'bin/jenkins-deploy ping staging'
+              sh 'bin/jenkins-deploy deploy staging site.yml'
+            }
+          }
+        }
+        stage('deploy:production') {
+          steps {
+            ansiColor('xterm') {
+              sh 'bin/jenkins-deploy ping production \\!jumpbox'
+              sh 'bin/jenkins-deploy deploy production site.yml --limit \\!jumpbox'
+            }
+          }
+        }
+        stage('deploy:mgmt') {
+          steps {
+            ansiColor('xterm') {
+              sh 'bin/jenkins-deploy ping mgmt \\!jumpbox'
+              sh 'bin/jenkins-deploy deploy mgmt site.yml --limit \\!jumpbox'
+            }
+          }
         }
       }
     }
   }
   post {
+    success {
+      archiveArtifacts artifacts: 'datagov-deploy.tar.gz', onlyIfSuccessful: true
+    }
     always {
-      step([$class: 'GitHubIssueNotifier', issueAppend: true])
+      step([$class: 'GitHubIssueNotifier', issueAppend: true, issueRepo: 'https://github.com/GSA/datagov-deploy.git'])
     }
   }
 }

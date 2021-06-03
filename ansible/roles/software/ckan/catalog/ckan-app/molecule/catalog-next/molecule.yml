@@ -26,7 +26,7 @@ provisioner:
         ckan_catalog_next: true
         ckan_uses_gunicorn: true
         app_repo: https://github.com/GSA/catalog.data.gov
-        app_repo_branch: master
+        app_repo_branch: fcs
         ckan_production_ini_template: catalog-next/etc_ckan_production.ini.j2
         catalog_ckan_saml2_enabled: true
         catalog_ckan_who_ini_path: "catalog-next/etc_ckan_who.saml2.ini.j2"
@@ -113,7 +113,6 @@ provisioner:
           - datagovtheme
         catalog_ckan_plugins_additional:
           - saml2auth
-        newrelic_license_key: some-secret
   lint: |
     set -e
     ansible-lint

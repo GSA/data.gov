@@ -1,6 +1,6 @@
 ---
 app_repo: https://github.com/GSA/catalog.data.gov
-catalog_ckan_app_version: master
+catalog_ckan_app_version: fcs
 catalog_ckan_wsgi_processes: 8
 catalog_ckan_apache_server_alias:
   - catalog.data.gov
@@ -18,12 +18,20 @@ catalog_ckan_redis_url: "{{ catalog_next_ckan_redis_url }}"
 catalog_ckan_service_url: https://{{ catalog_host_public_next }}
 catalog_ckan_admin_service_url: https://{{ catalog_host_admin_next }}
 catalog_ckan_saml2_enabled: "{{ catalog_next_ckan_saml2_enabled }}"
+catalog_ckan_saml2_requested_authn_context:
+  - http://idmanagement.gov/ns/assurance/aal/3?hspd12=true
 catalog_ckan_solr_host: "{{ catalog_next_ckan_solr_a_host }}"  # default. this is probably overridden in other groups/host vars
 catalog_ckan_who_ini_secret: "{{ catalog_next_ckan_who_ini_secret }}"
 
 catalog_db_name: "{{ catalog_ckan_db_name }}"
 catalog_db_pass: "{{ catalog_ckan_db_pass }}"
 catalog_db_user: "{{ catalog_ckan_db_user }}"
+
+googleanalytics_ids:
+  - UA-42145528-2
+  - UA-17367410-17
+googleanalytics_accout_name: GSA Data.gov
+googleanalytics_token_filepath: /etc/ckan/token.dat
 
 # Before increasing pool_size check gunicorn workers
 # sqlalchemy_pool_size: 15
@@ -34,20 +42,12 @@ ckan_instance_secret: "{{ catalog_next_ckan_instance_secret }}"
 ckan_instance_uuid: "{{ catalog_next_ckan_instance_uuid }}"
 ckan_production_ini_template: "{{ catalog_next_ckan_production_ini_template }}"
 ckan_session_store_type: memory
-ckan_site_domain: https://catalog-next.data.gov
+ckan_site_domain: https://catalog.data.gov
 ckan_uses_gunicorn: true
 
 datagov_service: catalog-next
 
 newrelic_app_name: catalog-next
-
-# TODO enable sending harvest report emails after launch (delete these overrides)
-# https://github.com/GSA/datagov-ckan-multi/issues/400
-postfix_transport_maps:
-  - pattern: "{{ datagov_team_email }}"  # deliver mail to the data.gov team normally
-    result: smtp
-  - pattern: "*"  # discard all other mail
-    result: "discard:"
 
 # Token for working with the Google Analytics API
 token_dat: "{{ catalog_next_ckan_token_dat }}"
@@ -55,13 +55,13 @@ token_dat: "{{ catalog_next_ckan_token_dat }}"
 url_readonly: https://{{ catalog_host_public_next }}
 url_writable: https://{{ catalog_host_admin_next }}
 
-catalog_ckan_plugins_additional: []
+catalog_ckan_plugins_additional: [saml2auth]
 
 # login.gov identity sandbox
-saml2_idp_metadata_url: "https://idp.int.identitysandbox.gov/api/saml/metadata2020"
+saml2_idp_metadata_url: "https://secure.login.gov/api/saml/metadata2021"
 catalog_ckan_saml2_entity_id: urn:gov:gsa:SAML:2.0.profiles:sp:sso:gsa:datagov-production-catalog
 saml2_site_url: https://admin-catalog-next.data.gov/
-saml2_idp_url: https://idp.int.identitysandbox.gov/api/saml/auth2020
+saml2_idp_url: https://secure.login.gov/api/saml/auth2021
 saml2_sp_private_key: "{{ catalog_next_saml2_sp_private_key }}"
 saml2_sp_public_certificate: "{{ catalog_next_saml2_sp_public_certificate }}"
-saml2_idp_entry: idp.int.identitysandbox.gov
+saml2_idp_entry: secure.login.gov

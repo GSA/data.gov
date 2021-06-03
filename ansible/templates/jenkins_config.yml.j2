@@ -5,8 +5,18 @@
 # existing configuration for copy/pasting snippets. The plugin does not
 # recommend copying the entire configuration as not all options are compatible
 # with the configuration-as-code plugin.
+#
+# TODO resolve whitespace, can we set trim_blocks in Ansible?
+# Currently this file is plain text, not YAML. Be careful with Jinja tags
+# because whitespace is not trimmed by default.
+
 jenkins:
   systemMessage: "{{ jenkins_system_message }}"
+  globalNodeProperties:
+    - envVars:
+        env:
+        - key: "DATAGOV_WORKFLOW"
+          value: "{{ jenkins_workflow }}"
   authorizationStrategy:
     roleBased:
       roles:
@@ -70,34 +80,29 @@ unclassified:
 jobs:
 {% for job in jenkins_jobs %}
   - script: |
-      pipelineJob('{{ job.name }}') {
-        parameters {
-          stringParam('branch_name', '{{ job.git_ref | default('master') }}', 'Git branch to checkout and build.')
-        }
-        authenticationToken('{{ job.authentication_token | default(jenkins_job_authentication_token) }}')
-        properties {
-          buildDiscarder { strategy { logRotator {
-            daysToKeepStr('90')
-            numToKeepStr('')
-            artifactDaysToKeepStr('')
-            artifactNumToKeepStr('')
-          } } }
-          disableConcurrentBuilds()
-          githubProjectUrl('{{ job.github_project_url | default("https://github.com/GSA/datagov-deploy") }}')
-        }
-        definition {
-          cpsScm {
-            scm {
+      multibranchPipelineJob('{{ job.name }}-mb') {
+        branchSources {
+          branchSource {
+            source {
               git {
-                extensions {
-                  localBranch()
+                remote('{{ job.git_url }}')
+                credentialsId('datagov-bot-gh')
+                traits {
+                  gitBranchDiscovery()
+                  wipeWorkspaceTrait()
                 }
-                remote {
-                  url('{{ job.git_url }}')
-                }
-                branch('refs/heads/${branch_name}')
               }
             }
+          }
+        }
+        orphanedItemStrategy {
+          discardOldItems {
+            daysToKeep(90)
+          }
+        }
+        triggers {
+          periodicFolderTrigger {
+            interval('5')
           }
         }
       }

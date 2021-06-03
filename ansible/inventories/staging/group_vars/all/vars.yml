@@ -1,7 +1,7 @@
 ---
 # catalog
 catalog_ckan_apache_server_name: "{{ catalog_host_public }}"
-catalog_ckan_app_version: master
+catalog_ckan_app_version: fcs
 catalog_ckan_archiver_process_count: 3
 # read-only database variables
 catalog_ckan_db_host: "{{ vault_catalog_ckan_db_host }}"
@@ -36,6 +36,8 @@ catalog_next_ckan_db_pass: "{{ vault_catalog_next_ckan_db_pass }}"
 catalog_next_ckan_db_primary_host: "{{ vault_catalog_next_ckan_db_primary_host }}"
 catalog_next_ckan_db_replica_host: "{{ vault_catalog_next_ckan_db_replica_host }}"
 catalog_next_ckan_db_user: "{{ vault_catalog_next_ckan_db_user }}"
+catalog_next_ckan_envs: |
+  {{ newrelic_app_envs }}
 catalog_next_ckan_instance_secret: "{{ vault_catalog_next_ckan_instance_secret }}"
 catalog_next_ckan_instance_uuid: 1d6ce0c2-1e55-48c5-8d2a-37452ff57989
 catalog_next_ckan_postgresql_admin_host: "{{ vault_catalog_next_ckan_postgresql_admin_host }}"
@@ -54,36 +56,41 @@ catalog_next_ckan_saml2_enabled: true
 catalog_next_ckan_who_ini_path: "etc_ckan_who.default.ini.j2"
 catalog_next_saml2_sp_public_certificate: |-
   -----BEGIN CERTIFICATE-----
-  MIIFgjCCA2oCCQCQfAiKndGbbzANBgkqhkiG9w0BAQsFADCBgjELMAkGA1UEBhMC
-  VVMxCzAJBgNVBAgMAkRDMRMwEQYDVQQHDApXYXNoaW5ndG9uMQwwCgYDVQQKDANH
-  U0ExDDAKBgNVBAsMA1RTUzERMA8GA1UEAwwIZGF0YS5nb3YxIjAgBgkqhkiG9w0B
-  CQEWE2RhdGFnb3ZoZWxwQGdzYS5nb3YwHhcNMjEwMTEyMjM0NDEyWhcNMjIwMTEy
-  MjM0NDEyWjCBgjELMAkGA1UEBhMCVVMxCzAJBgNVBAgMAkRDMRMwEQYDVQQHDApX
-  YXNoaW5ndG9uMQwwCgYDVQQKDANHU0ExDDAKBgNVBAsMA1RTUzERMA8GA1UEAwwI
-  ZGF0YS5nb3YxIjAgBgkqhkiG9w0BCQEWE2RhdGFnb3ZoZWxwQGdzYS5nb3YwggIi
-  MA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQDAY8OZWS2L0O6WEP+F11lWOh2b
-  16hHN2QVdN4090A9lNEkqvAMo9e3nZFvODwtVn9+hkUFu4OeiZU3VDJK3IAiBJqm
-  Tl8TETlMWUl1Jijdnj/zVHtQkNb2BCSQLAr4VPayyzpGFsLPL0/AqshU3FA1ocMu
-  /nB79cxkq33f+C/czs6m6jvUxx+OZn12AXXIEkNhV0R4X0w51NzjAXeiwU8et79d
-  C3yb5RSW7mEQrvztK5DpXK37Pkx5ZnGwzFFZUN6EZGOd8prsavDO7qI42O6443Vp
-  JbGD4gLrtOzIyuK3pxtXY//Anay1Ih0Z/FFipXMwRAKKlIpHJXSL71sPgwajElVp
-  rO+CdNqQuInZ3cbUuw/a74j+RFlYvg7WUHxw91NQOKFnL4GbCM74z8TKA9Szc8oG
-  LP0blfShC3TWjT4zuVUTMwkAuQO5eDKA1JwpNTJqCoLfprTjOSEDHXVbPDQCtMhz
-  bAwhk1ANwWjA3zvTLozahs/TCxQmdJH4+iJOAOzCQJX0k/1w/KEy7MF6cgTmFbtx
-  +vVF3nXMNKwwxV9JeT/4PXASgR0lCBbVGxXRKOepdbTuK5Y00CYQqF1wfDOO9Ypo
-  b7b9tQmYvjqR+TcD2xAA0RgYyi11+VG19iQG3ydTvVgXvgnYAZuZG62c9sTtTY7o
-  hAUL8gfQjBA4GBJVmwIDAQABMA0GCSqGSIb3DQEBCwUAA4ICAQA+QV237+sr46rP
-  MOk5PnH7iLPJxqD7kAciBJNMPqZblPS7JbDWcpbPjxwFX3ARGmgSHq/kZecrCzpe
-  zGH77lTWuyYO0HqyQDT7mZ/Yd3Y0DkTIKtQlbJWk35WfWoedvvjxmEbAs3O5fUR9
-  0QsYzxpQDL7lFpzvfVUvenTAsoQZ3tGRDAnYa3fqSNh708tuhtcKxTj/HSNLeb4C
-  19Hc2XGV2VOScgnKqY+4K6Zjmc+LMWbKbz5Sp7SHtzVsRBaBXjEcw7aF4G6ZT3US
-  DODxvNH2YHkzpldTHM6D+WQY4ulVHuTdAfaZ+V0wl6cCnmRRGEjrZo8AOElos+m6
-  EgN1MeBhG+yWfyvSnJ++M3JyEsYi3VtV/Cd3NyXPDTM19/mS8Slc0QS5QhwqubnK
-  1ibCrN8epDWcMdIWfENuqWMS9aW2hNf18XSEG72bzHIfCeH9E0tTXJvktlFWB/kQ
-  k/ZzLzwUcYccDo27HhfE2noZAiUr+kZ9nH+gY5De4SQscbTznZNTKgtK8PvUUJ0n
-  OiRONOmd2w/URPLx4vjpH6v1d1Onqg+KCT08f6h1VwvBKIJVLFhhQTBDcLw78Bqd
-  b01TzoR4PPyb8b93T8xZdzQPpffuwk1MBB/KJPPC3Ux+dMDmki5WE/+i3bdPDdcx
-  JB+WSQk5o/3h9AT5HcGo+l8lZSiYMA==
+  MIIGajCCBFICCQCGVoZYp6VwmTANBgkqhkiG9w0BAQsFADCB9jELMAkGA1UEBhMC
+  VVMxHTAbBgNVBAgMFERpc3RyaWN0IG9mIENvbHVtYmlhMRMwEQYDVQQHDApXYXNo
+  aW5ndG9uMSgwJgYDVQQKDB9HZW5lcmFsIFNlcnZpY2VzIEFkbWluaXN0cmF0aW9u
+  MSowKAYDVQQLDCFUZWNobm9sb2d5IFRyYW5zZm9ybWF0aW9uIFNlcnZpY2UxIjAg
+  BgkqhkiG9w0BCQEWE2RhdGFnb3ZoZWxwQGdzYS5nb3YxOTA3BgNVBAMMMGFkbWlu
+  LWNhdGFsb2ctbmV4dC1kYXRhZ292LmRldi1vY3NpdC5ic3AuZ3NhLmdvdjAeFw0y
+  MTAzMjIxNDE1MzNaFw0yMzAzMjIxNDE1MzNaMIH2MQswCQYDVQQGEwJVUzEdMBsG
+  A1UECAwURGlzdHJpY3Qgb2YgQ29sdW1iaWExEzARBgNVBAcMCldhc2hpbmd0b24x
+  KDAmBgNVBAoMH0dlbmVyYWwgU2VydmljZXMgQWRtaW5pc3RyYXRpb24xKjAoBgNV
+  BAsMIVRlY2hub2xvZ3kgVHJhbnNmb3JtYXRpb24gU2VydmljZTEiMCAGCSqGSIb3
+  DQEJARYTZGF0YWdvdmhlbHBAZ3NhLmdvdjE5MDcGA1UEAwwwYWRtaW4tY2F0YWxv
+  Zy1uZXh0LWRhdGFnb3YuZGV2LW9jc2l0LmJzcC5nc2EuZ292MIICIjANBgkqhkiG
+  9w0BAQEFAAOCAg8AMIICCgKCAgEA18GNFPEw7sWPw1CjtqjWVt5h7Xf59uNXEZOg
+  W4xUK6bcBB/MrfEvCnxWGtEEnu06iXfzUoHfZ0wIGqwvDsLdK93XRJ4og3NEGVo8
+  fsLN/drvOqryqFKsCQiJQRFoNiIS8OHeZwqAYno2Esxl4UKsc1m7GKNprWQyAxmy
+  PZW/cdxkiHXuRjYE2dYLtGmgH1F5Q8oZAF8gBnQPf+wq9U/KI7pePmmhABus/ukl
+  oxMktC0VhwtQhhz7KXyhrefjb4U1Go2DkximibNcTXCSuqGkejBRPIs17gZgH/fE
+  1YPoXHBIdxYyEKQrj/M1s+AHBr6dN0PF7D6JUJvfRmw6GeoxekNgiBFC1vvoytPB
+  vKZ1JnpXHt411YQOcuVPjQd9TvF5wh0wOc5/B/NQfG/MU16yPao/yu+rjDCQlmnW
+  cfRyrQV3wjWlqxne/5mAM4c+eKf9pL8M0oGGVx3Z8/5oHAYQ+QtP/us4zyz1ewy6
+  zH/36xMrhm+kc6TtcL+GlvMwpQbdJz/DtizHECbJEdNCb8Axver6iTJ+fpIuaUl5
+  t1+Wj7l07Cptb1QMWjgRUQEB697uEvt31WZab4syBjbOLopfLTgTxMSs3URNC14G
+  axYbtXWjij/dqslqLTWwvVaZHuCTNznteeXMV11VefLAkvPqfugwxModO65ZEJT0
+  mpQZOc0CAwEAATANBgkqhkiG9w0BAQsFAAOCAgEAbA7+29PLqY6hREAiMYPct0LR
+  i+1TvRVXTVrVkO8GHc8EQUlbDEje2bH4lsXGkSD7sTdDgSfPTV00MTMZLp34L9EE
+  dSTCJ8WthmlWxXyIuba7LvUN3ijENhknDyADDKEbkUm3OjvaXhdlZyNmro3/0A4h
+  kqGTKnn7F476WP+HDQJQbs5GkoZ1NCSkRPdkVe/2HAkNieOUshzwM8viWZjqtaMD
+  CPGLPdislD4UtlB6+dxnBohT/GRVKnYS9ur3I5dzK1CJQTa9EiRKwykZGdkeMmfM
+  //5XGhzewz9aLzmwnwQvt6LrlBmqf5If8/+ePyqRWp6SA0UjvyTH638moeglYoPL
+  hrRTMXmF3WWGpcPK82HiwKuLYdWECe+SZDWwjO7qpcCbKjnnbOkTqgYSbS6JRG8x
+  XaNaFPA3aDzDLRCQfD664HWhwkHIhoOdVMz77yhUPJwUSliiRe+noNfJfOTsg1zN
+  C3wpG/PVkZMLfNzGPmIGeGvNLVokGZqnpYtrn0LNGbsqU8/++rJZ0QOO6nsIXnMu
+  Z26psl3X8PjotVW64pr4fGXADs0eY8xuuSS2W0LFJyEziQJpi148hbm8JNrb7EAn
+  VhkAWtYJd5ypOYV3hYpaCRnBoLXMOX8An5nOsaM0xN59/cj0eM+glKRXw2Zstp88
+  rKbKeAkw4MwOH11HiIk=
   -----END CERTIFICATE-----
 
 catalog_next_saml2_sp_private_key: "{{ vault_catalog_next_saml2_sp_private_key }}"
@@ -187,12 +194,14 @@ jumpbox_operators: "{{ datagov_operators_production }}"
 
 
 inventory_app_environment: staging
-inventory_ckan_service_url: https://inventory-datagov.dev-ocsit.bsp.gsa.gov
+inventory_ckan_service_url: https://inventory-next-datagov.dev-ocsit.bsp.gsa.gov
 inventory_ckan_solr_host: datagov-solrm1d.dev-ocsit.bsp.gsa.gov
 inventory_ckan_solr_port: "8983"
 inventory_ckan_who_ini_path: "etc_ckan_who.saml2.ini.j2"
 
 # Inventory Next
+inventory_next_ckan_envs: |
+  {{ newrelic_app_envs }}
 inventory_next_ckan_redis_host: "redis1d.dev-ocsit.bsp.gsa.gov"
 inventory_next_ckan_redis_password: "{{ redis_password }}"
 inventory_next_ckan_s3_bucket_name: "{{ vault_inventory_next_ckan_s3_bucket_name }}"
@@ -215,13 +224,14 @@ inventory_next_postgresql_db_name: "{{ vault_inventory_next_postgresql_db_name }
 inventory_next_datapusher_db_name: "{{ vault_inventory_next_datapusher_db_name }}"
 
 # New Relic
+newrelic_enabled: true
 newrelic_license_key: "{{ vault_newrelic_license_key }}"
 
 
 pycsw_app_environment: staging
-pycsw_app_version: datagov/v2.4.x
-pycsw_base_url: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
-pycsw_ckan_url: https://catalog-datagov.dev-ocsit.bsp.gsa.gov
+pycsw_app_version: fcs
+pycsw_base_url: https://catalog-next-datagov.dev-ocsit.bsp.gsa.gov
+pycsw_ckan_url: https://catalog-next-datagov.dev-ocsit.bsp.gsa.gov
 pycsw_db_host: "{{ catalog_pycsw_db_host }}"
 pycsw_db_name: "{{ catalog_pycsw_db_name }}"
 pycsw_db_password: "{{ catalog_pycsw_db_pass }}"
@@ -254,7 +264,7 @@ solr_cores:
   - catalog
   - inventory
 solr_xms: 8192m
-solr_xmx: 8192m
+solr_xmx: 12288m
 
 # SecOps user
 secops_user: "{{ vault_secops_user }}"
@@ -344,4 +354,5 @@ ci_deploy_version: develop
 
 # hostname needed for smoke test, IP address needed for ALB health check
 wordpress_nginx_server_name: wordpress-datagov.dev-ocsit.bsp.gsa.gov $hostname {{ ansible_default_ipv4.address }}
+wordpress_project_git_version: fcs
 wordpress_service_url: https://wordpress-datagov.dev-ocsit.bsp.gsa.gov

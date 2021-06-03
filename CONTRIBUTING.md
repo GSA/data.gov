@@ -206,7 +206,6 @@ Work that is currently in progress.
 - The deployment must follow our Configuration Management plan. If not possible,
   contact the Program Management team to modify the story or discuss how to
   update the Configuration Management plan.
-- Task has been merged to develop/master and should be applied to the AWS sandbox environments.
 
 #### Blocked
 
@@ -220,18 +219,16 @@ occasional nudging to get it unblocked.
   In progress.
 
 
-#### Ready for deploy
+#### Needs Review
 
-Task has been merged to develop/master and applied to the sandbox environments
-(AWS via terraform) and ready to be deployed BSP staging and production
-environments.
+Task has one or more items that need peer review before being merged.
 
 
 ##### Exit criteria
 
-- Work exists on a release branch.
-- Work has been applied to BSP staging.
-- Work has been applied to BSP production.
+- Work has been reviewed and approved by one or more members of the data.gov team.
+- Work is ready to be included on the next release.
+- Work has been merged to `master` or `main` branches.
 
 
 #### Done
@@ -259,14 +256,13 @@ Deployment works a little differently between the platform
 ([datagov-deploy][datagov-deploy]) and the application repos (e.g.
 [catalog-app](https://github.com/GSA/catalog-app)).
 
-In general, the `master` branch should be in a deployable state at all
-times.
-
+Now that applications are moved or are in the process of moving to `cloud.gov`, the `master` branch is in a frozen state and will only capture changes to any application's `fcs` branch.
 
 ### Application deployment
 
-On any change to `master`, the application should be sequentially deployed to
-sandbox, staging, and then production. If there's an issue with the deploy along
+All deployments from the `master` branch will capture a frozen state for each application via their `fcs` branch (eg [catalog.data.gov](https://github.com/GSA/catalog.data.gov/tree/fcs)).
+
+Changes to the `master`/`main` should be rare and only include security or compliance updates. The application should be sequentially deployed to sandbox, staging, and then production. If there's an issue with the deploy along
 the way, the deploy should be halted and then the issue addressed (following the
 usual PR workflow) before starting a new deploy. See [application
 release](https://github.com/GSA/datagov-deploy/wiki/Releases#application-release)
@@ -275,46 +271,18 @@ for detailed manual deployment steps.
 
 ### Platform deployment (datagov-deploy)
 
-We use `develop` as the default branch and stage releases with a release branch
-(`release/*`). The BSP environment can be hard to test in, so having a staged
-release allows us to debug and fix BSP issues without slowing down sprint
-development.
-
-For [datagov-deploy][datagov-deploy], we use the [git flow
-pattern](https://danielkummer.github.io/git-flow-cheatsheet/) to coordinate
-delivery of features and bugfixes between branches. Generally, new features will
-arrive in the `develop` branch, then periodically be gathered up and deployed
-into staging via `release/*` branches, then deployed into production via the
-`master` branch.  _Note: we don't use the git-flow program itself since work
-must be merged via pull-requests, which that tool doesn't support._
+We use `master` as the default branch. Any changes are automatically deployed to
+the FCS environments after merge by
+[CI](https://ci-datagov.mgmt-ocsit.bsp.gsa.gov/). The `develop` branch is
+available ad-hoc in order to test changes within the AWS sandbox.
 
 Branch | Deployed to | Frequency
 ------ | ----------- | ---------
-`develop` | AWS sandboxes | manual
-`release/*` | BSP dev (staging) | manual
-`master` | BSP prod | manual
+`develop` | AWS sandboxes | On push
+`master` | FCS environments | On push
 
 See [Releases](https://github.com/GSA/datagov-deploy/wiki/Releases) for details
 on the platform deployment steps.
-
-
-#### Hotfixes
-
-Occasionally for the platform, we need to skip the usual development workflow to
-address an urgent issue. This is because `develop` requires a lot of manual
-testing and might not always be in a deployable state (even though we try).
-`hotfix/*` branches are created from the `master` branch and allow us to do the
-manual testing and validation on a small set of isolated changes.
-
-Use your discretion when creating a hotfix. These are some reasons to create
-a hotfix:
-- Resolve a significant site outage
-- Fix a major bug
-- Change to the Ansible inventory (new/removed hosts)
-- Removing operator access
-
-Once the hotfix PR is merged, you should create a backmerge PR into develop (merge
-the `hotfix/*` branch into `develop).
 
 
 ## Pull requests
@@ -333,9 +301,9 @@ What should you do when you review a PR?
   - Code is in a deployable state
 
 Any critical CI checks should be enforced by GitHub on protected branches
-(`develop` and `master`), so it's not required that CI checks are passing in
-order to approve a PR. Instead, it's important that tests have been added and
-they are running in CI.
+(`master`), so it's not required that CI checks are passing in order to approve
+a PR. Instead, it's important that tests have been added and they are running in
+CI.
 
 Data.gov encompasses many technologies (too many, in fact) and it's not
 practical to have everyone be an expert at everything nor to have only a single

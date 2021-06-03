@@ -32,8 +32,8 @@ catalog_ckan_instance_uuid: "{{ vault_catalog_ckan_instance_uuid }}"
 catalog_ckan_token_dat: "{{ vault_catalog_ckan_token_dat }}"
 catalog_ckan_who_secure: "true"
 # uncomment to enable saml2 authentication
-#catalog_ckan_saml2_enabled: true
-#catalog_ckan_plugins_additional: [saml2]
+# catalog_ckan_saml2_enabled: true
+# catalog_ckan_plugins_additional: [saml2]
 saml2_site_url: https://catalog.sandbox.datagov.us/
 
 postgresql_login_host: "{{ catalog_postgresql_login_host }}"

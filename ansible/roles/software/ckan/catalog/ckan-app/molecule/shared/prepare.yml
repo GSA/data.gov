@@ -121,12 +121,6 @@
     - name: ensure python virtualenv is installed and configured
       apt: name=python-virtualenv state=present
 
-    - name: install postgis-scripts for trusty
-      apt:
-        name: postgresql-9.3-postgis-scripts
-        state: present
-      when: ansible_distribution_release == "trusty"
-
     - name: install postgis-scripts for bionic
       apt:
         name: postgresql-10-postgis-scripts

@@ -7,10 +7,6 @@ assignees: ''
 ---
 ## User Story
 
-As a [user description], I want [behavior description] so that [goal].
-
-[...or [alternatively](https://blog.crisp.se/2014/09/25/david-evans/as-a-i-want-so-that-considered-harmful)...]
-
 In order to [goal], [stakeholder] wants [change].
 
 

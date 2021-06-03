@@ -9,6 +9,8 @@ env_db_user: "{{ vault_env_db_user }}"
 env_db_pass: "{{ vault_env_db_pass }}"
 env_db_name: "{{ vault_env_db_name }}"
 
+project_git_version: fcs
+
 # AWS S3 bucket
 s3_bucket: bsp-ocsit-dev-east-appdata
 s3_prefix: datagov/dashboard/

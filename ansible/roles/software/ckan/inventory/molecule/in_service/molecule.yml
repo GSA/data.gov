@@ -6,10 +6,6 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: inventory-ckan-trusty
-    image: ubuntu:trusty
-    groups:
-      - trusty
   - name: inventory-ckan-bionic
     image: ubuntu:bionic
     groups:
@@ -33,11 +29,8 @@ provisioner:
         python_home: /usr
         inventory_ckan_solr_port: 8983
         db_is_setup: false
-        newrelic_license_key: some-secret
-        newrelic_app_name: inventory-molecule
-        newrelic_enabled: false
       bionic:
-        inventory_app_repo_branch: inventory_ckan_2.8
+        inventory_app_repo_branch: fcs
         datapusher_build_pkg_branch: datagov/inventory-next
         inventory_next: true
 scenario:

@@ -1,39 +1,6 @@
 [catalog-fgdc2iso]
 catalog-fgdc2iso1p.prod-ocsit.bsp.gsa.gov
 
-[catalog-harvester:children]
-catalog-harvester-v1
-
-[catalog-harvester-main]
-catalog-harvester1p.prod-ocsit.bsp.gsa.gov
-
-[catalog-harvester-misc]
-catalog-harvester2p.prod-ocsit.bsp.gsa.gov
-
-[catalog-harvester-qa]
-catalog-harvester[3:6]p.prod-ocsit.bsp.gsa.gov
-
-[catalog-harvester-v1]
-catalog-harvester1p.prod-ocsit.bsp.gsa.gov
-catalog-harvester2p.prod-ocsit.bsp.gsa.gov
-catalog-harvester[3:6]p.prod-ocsit.bsp.gsa.gov
-
-[catalog-web:children]
-catalog-web-v1
-
-[catalog-web-v1]
-catalog-web[1:2]p.prod-ocsit.bsp.gsa.gov
-catalogb-web[1:2]p.prod-ocsit.bsp.gsa.gov
-
-[catalog-web-v1:children]
-catalog-admin-v1
-
-[catalog-admin:children]
-catalog-admin-v1
-
-[catalog-admin-v1]
-catalogpub-web1p.prod-ocsit.bsp.gsa.gov
-
 [catalog-next:children]
 catalog-next-web
 catalog-next-worker
@@ -67,10 +34,7 @@ catalogweb[1:2]p.prod-ocsit.bsp.gsa.gov
 catalogbweb[1:2]p.prod-ocsit.bsp.gsa.gov
 
 [dashboard-web:children]
-dashboard-web-v1
 dashboard-web-v2
-
-[dashboard-web-v1]
 
 [dashboard-web-v2]
 dashboardweb[1:2]p.prod-ocsit.bsp.gsa.gov
@@ -78,20 +42,11 @@ dashboardweb[1:2]p.prod-ocsit.bsp.gsa.gov
 [efk_nginx]
 [elasticsearch]
 
-[inventory-web:children]
-inventory-web-v1
-
-[inventory-web-v1]
-inventory[1:2]p.prod-ocsit.bsp.gsa.gov
-
 [inventory-next]
 inventory-[1:2]p.prod-ocsit.bsp.gsa.gov
 
 [jumpbox:children]
-jumpbox-v1
 jumpbox-v2
-
-[jumpbox-v1]
 
 [jumpbox-v2]
 datagov-jump2p.prod-ocsit.bsp.gsa.gov
@@ -99,12 +54,7 @@ datagov-jump2p.prod-ocsit.bsp.gsa.gov
 [kibana]
 
 [pycsw-web:children]
-pycsw-web-v1
 pycsw-web-v2
-
-[pycsw-web-v1:children]
-# We install pycsw on all catalog-web hosts
-catalog-web-v1
 
 [pycsw-web-v2:children]
 # We install pycsw on readonly catalog-web hosts
@@ -112,12 +62,7 @@ catalog-next-web-a
 catalog-next-web-b
 
 [pycsw-worker:children]
-pycsw-worker-v1
 pycsw-worker-v2
-
-[pycsw-worker-v1]
-# We configure only a single worker for pycsw, usually the misc worker.
-catalog-harvester2p.prod-ocsit.bsp.gsa.gov
 
 [pycsw-worker-v2]
 # We configure only a single worker for pycsw, usually the misc worker.
@@ -128,30 +73,15 @@ redis-catalog
 redis-next
 
 [redis-catalog]
-catalog-harvester1p.prod-ocsit.bsp.gsa.gov
 
 [redis-next]
 redis1p.prod-ocsit.bsp.gsa.gov
 
 [solr]
-datagov-solrm1p.prod-ocsit.bsp.gsa.gov
-datagov-solr[1:2]p.prod-ocsit.bsp.gsa.gov is_solr_replica=true
 
 [solr-next]
 datagov-solrm1p-v2.prod-ocsit.bsp.gsa.gov
 datagov-solr[1:2]p-v2.prod-ocsit.bsp.gsa.gov is_solr_replica=true
-
-# trusty stack
-[v1:children]
-catalog-admin-v1
-catalog-harvester-v1
-catalog-web-v1
-dashboard-web-v1
-inventory-web-v1
-jumpbox-v1
-pycsw-web-v1
-pycsw-worker-v1
-wordpress-web-v1
 
 # bionic stack
 [v2:children]
@@ -168,16 +98,11 @@ pycsw-web-v2
 pycsw-worker-v2
 
 [web:children]
-catalog-web
 dashboard-web
-inventory-web
 wordpress-web
 
 [wordpress-web:children]
-wordpress-web-v1
 wordpress-web-v2
-
-[wordpress-web-v1]
 
 [wordpress-web-v2]
 wordpressweb[1:2]p.prod-ocsit.bsp.gsa.gov

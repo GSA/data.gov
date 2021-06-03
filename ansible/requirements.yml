@@ -43,25 +43,25 @@
   version: 1.0.4
 - name: gsa.datagov-deploy-dashboard
   src: https://github.com/GSA/datagov-deploy-dashboard
-  version: v1.1.6
+  version: v1.1.8
 - name: gsa.datagov-deploy-apache2
   src: https://github.com/GSA/datagov-deploy-apache2
   version: v1.3.2
 - name: gsa.datagov-deploy-common
   src: https://github.com/GSA/datagov-deploy-common
-  version: v4.3.0
+  version: v4.3.1
 - name: gsa.datagov-deploy-fgdc2iso
   src: https://github.com/GSA/datagov-deploy-fgdc2iso
-  version: v1.0.3
+  version: v1.0.4
 - name: gsa.datagov-deploy-jenkins
   src: https://github.com/GSA/datagov-deploy-jenkins
-  version: v1.2.0
+  version: v2.0.0
 - name: gsa.datagov-deploy-jumpbox
   src: https://github.com/GSA/datagov-deploy-jumpbox
   version: v2.3.0
 - name: gsa.datagov-deploy-pycsw
   src: https://github.com/GSA/datagov-deploy-pycsw
-  version: v1.1.1
+  version: v1.2.0
 - name: gsa.datagov-deploy-redis
   src: https://github.com/GSA/datagov-deploy-redis
   version: v1.0.2
@@ -70,7 +70,7 @@
   version: v1.2.1
 - name: gsa.datagov-deploy-wordpress
   src: https://github.com/GSA/datagov-deploy-wordpress.git
-  version: v1.0.10
+  version: v1.0.11
 - name: jnv.unattended-upgrades
   version: v1.8.0
 - name: jobscore.beats
@@ -94,6 +94,6 @@
 - name: robertdebock.service
   version: 2.6.0
 - name: robertdebock.tomcat
-  version: 4.5.0
+  version: 4.5.1
 - name: sbaerlocher.wp-cli
   version: 1.3.1
