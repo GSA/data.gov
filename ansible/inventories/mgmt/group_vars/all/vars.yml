@@ -119,6 +119,8 @@ jenkins_jobs:
   - name: deploy-ci-app-wordpress
     git_url: https://github.com/gsa/datagov-wp-boilerplate.git
     git_ref: fcs
+
+jenkins_saml_authentication_context: "http://idmanagement.gov/ns/assurance/aal/3?hspd12=true"  # Require PIV card authentication
 jenkins_saml_sp_entity_id: urn:gov:gsa:SAML:2.0.profiles:sp:sso:gsa:datagov-ci-jenkins
 jenkins_saml_keystore_password: "{{ vault_jenkins_saml_keystore_password }}"
 jenkins_saml_keystore_path: "{{ playbook_dir }}/files/mgmt/saml-key.jks"
