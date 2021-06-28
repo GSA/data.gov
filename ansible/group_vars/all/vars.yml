@@ -73,6 +73,9 @@ datagov_operators_test:
   - username: mogul
     email: bret.mogilefsky@gsa.gov
     public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDwVi3qaiX0pd2mqRJ5hHJgbeMuU/CP6MofaFbLjafnoMo5TTgRwakH68xok5CnQ2irSJwyH0epPKz7Jvy/CvAFkVH3qGVMCHqX2+Ybfbc5cYRCFlEJ+7Gn/ONYeegM3ZJ6MqA37VRUQIcDUvx087RQHKU1VRf+2DZtz/3Lbp/sU1F+WXM45zHfO35ckHg9mQ+FzlPpJqLUi2EG1BEJyUtqjAGUWqG8oN60+71cxynhTSqiGeqShHuEV7JZFI5Z0UwyuqIUEdClFKskYYIbwYGvujqPnYQnrlGrOqqieNlJUI2C2GokpBHCrqCFy9D9+5xLVpKF7d30QePjeSKXL5Gx7wa04/0fH3gks2U8RXCJ8WBgwi+t58Yv8mIYJRIYqHp4NaD/U3JSe0/KUx12K7poERuT0YK5W4Y1YVjZCdPwTMf5PmOk3gP0JfebfZNcSiWK5bcOkwjAEg6EIrmUei/S6eErXoszpRqYbE8O3J6U7T/lvhhAOi2dDQdhk/sWPMc5mvL+TvWWTPer2tMUMPXg8otl2GGdLxFgQ8XIfl0CEW0MC4mi7BNeI+ylwVqIwcYlMBbN2jGGpZdG4+PyKrRPQdl7jMdbnfTh1u/L7aqGxIOE7cYuLxKCUc4FUH1z5HaYT4YU7zUo0pgZSNPxOpw4UG0re2Tx+Q2ElbCIVD7pdQ== bret.mogilefsky@gsa.gov
+  - username: nickumia-reisys
+    email: nicholas.kumia@gsa.gov
+    public_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDcAZQPGvpchychD5os5TsO7ndRXwDAfbTlfM65I6GZ4 nicholas.kumia@reisystems.com
 
 inventory_ckan_plugins_default:
   - datajson
