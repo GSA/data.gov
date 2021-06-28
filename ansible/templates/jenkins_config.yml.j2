@@ -38,6 +38,9 @@ jenkins:
   securityRealm:
     saml:
       advancedConfiguration:
+        {% if jenkins_saml_authentication_context is defined -%}
+        authnContextClassRef: "{{ jenkins_saml_authentication_context }}"
+        {% endif -%}
         forceAuthn: false
         spEntityId: "{{ jenkins_saml_sp_entity_id }}"
       binding: "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
