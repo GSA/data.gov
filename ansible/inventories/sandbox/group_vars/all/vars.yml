@@ -18,10 +18,6 @@ catalog_ckan_who_ini_secret: "{{ vault_catalog_ckan_who_ini_secret }}"
 catalog_postgresql_login_host: "{{ vault_catalog_postgresql_login_host }}"
 catalog_postgresql_login_password: "{{ vault_catalog_postgresql_login_password }}"
 catalog_postgresql_login_user: "{{ vault_catalog_postgresql_login_user }}"
-catalog_pycsw_db_host: "{{ catalog_postgresql_login_host }}"
-catalog_pycsw_db_name: pycsw
-catalog_pycsw_db_pass: "{{ vault_catalog_pycsw_db_pass }}"
-catalog_pycsw_db_user: pycsw
 catalog_db_pass: "{{ catalog_ckan_db_pass }}"
 catalog_db_name: "{{ catalog_ckan_db_name }}"
 catalog_db_user: "{{ catalog_ckan_db_user }}"
@@ -238,15 +234,6 @@ jenkins_admins_permissions:
 
 
 jumpbox_operators: "{{ datagov_operators_test }}"
-
-pycsw_app_version: fcs
-pycsw_base_url: https://catalog.sandbox.datagov.us
-pycsw_ckan_url: https://catalog.sandbox.datagov.us
-pycsw_db_host: "{{ catalog_pycsw_db_host }}"
-pycsw_db_name: "{{ catalog_pycsw_db_name }}"
-pycsw_db_password: "{{ catalog_pycsw_db_pass }}"
-pycsw_db_user: "{{ catalog_pycsw_db_user }}"
-
 
 # Redis
 redis_password: "{{ vault_redis_password }}"

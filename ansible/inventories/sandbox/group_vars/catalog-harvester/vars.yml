@@ -3,8 +3,6 @@ datagov_app_process: worker
 
 catalog_app_type: worker
 
-catalog_pycsw_cron_enabled: true
-
 datagov_service: catalog
 
 postgresql_login_host: "{{ catalog_postgresql_login_host }}"
