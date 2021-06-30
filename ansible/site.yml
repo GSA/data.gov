@@ -36,9 +36,6 @@
 - import_playbook: inventory.yml
   tags:
     - inventory
-- import_playbook: pycsw.yml
-  tags:
-    - pycsw
 
 # Validation and cleanup
 #########################
