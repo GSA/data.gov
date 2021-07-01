@@ -43,7 +43,7 @@
   version: 1.0.4
 - name: gsa.datagov-deploy-dashboard
   src: https://github.com/GSA/datagov-deploy-dashboard
-  version: v1.1.8
+  version: v1.1.9
 - name: gsa.datagov-deploy-apache2
   src: https://github.com/GSA/datagov-deploy-apache2
   version: v1.3.2
@@ -67,7 +67,7 @@
   version: v1.2.1
 - name: gsa.datagov-deploy-wordpress
   src: https://github.com/GSA/datagov-deploy-wordpress.git
-  version: v1.0.11
+  version: v1.0.12
 - name: jnv.unattended-upgrades
   version: v1.8.0
 - name: jobscore.beats
