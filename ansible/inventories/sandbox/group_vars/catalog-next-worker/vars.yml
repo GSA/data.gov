@@ -3,4 +3,3 @@ datagov_app_process: worker
 
 catalog_app_type: worker
 catalog_enable_clean_harvest_logs: true
-catalog_pycsw_cron_enable: false

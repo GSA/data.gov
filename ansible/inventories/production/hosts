@@ -53,21 +53,6 @@ datagov-jump2p.prod-ocsit.bsp.gsa.gov
 
 [kibana]
 
-[pycsw-web:children]
-pycsw-web-v2
-
-[pycsw-web-v2:children]
-# We install pycsw on readonly catalog-web hosts
-catalog-next-web-a
-catalog-next-web-b
-
-[pycsw-worker:children]
-pycsw-worker-v2
-
-[pycsw-worker-v2]
-# We configure only a single worker for pycsw, usually the misc worker.
-catalogharvester2p.prod-ocsit.bsp.gsa.gov
-
 [redis:children]
 redis-catalog
 redis-next
@@ -94,8 +79,6 @@ redis-next
 solr
 solr-next
 wordpress-web-v2
-pycsw-web-v2
-pycsw-worker-v2
 
 [web:children]
 dashboard-web

@@ -22,11 +22,6 @@ catalog_ckan_admin_service_url: https://{{ catalog_host_admin }}
 catalog_ckan_who_ini_path: "etc_ckan_who.saml2.ini.j2"
 catalog_ckan_solr_host: datagov-solr1d.dev-ocsit.bsp.gsa.gov
 catalog_ckan_solr_port: "8983"
-# read-only database variables
-catalog_pycsw_db_host: "{{ vault_catalog_pycsw_db_host }}"
-catalog_pycsw_db_name: "{{ vault_catalog_pycsw_db_name }}"
-catalog_pycsw_db_pass: "{{ vault_catalog_pycsw_db_pass }}"
-catalog_pycsw_db_user: "{{ vault_catalog_pycsw_db_user }}"
 
 catalog_ckan_wsgi_processes: 4
 
@@ -226,17 +221,6 @@ inventory_next_datapusher_db_name: "{{ vault_inventory_next_datapusher_db_name }
 # New Relic
 newrelic_enabled: true
 newrelic_license_key: "{{ vault_newrelic_license_key }}"
-
-
-pycsw_app_environment: staging
-pycsw_app_version: fcs
-pycsw_base_url: https://catalog-next-datagov.dev-ocsit.bsp.gsa.gov
-pycsw_ckan_url: https://catalog-next-datagov.dev-ocsit.bsp.gsa.gov
-pycsw_db_host: "{{ catalog_pycsw_db_host }}"
-pycsw_db_name: "{{ catalog_pycsw_db_name }}"
-pycsw_db_password: "{{ catalog_pycsw_db_pass }}"
-pycsw_db_user: "{{ catalog_pycsw_db_user }}"
-
 
 # public urls
 catalog_host_public: catalog-datagov.dev-ocsit.bsp.gsa.gov

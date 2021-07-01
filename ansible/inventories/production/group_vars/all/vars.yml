@@ -22,10 +22,6 @@ catalog_ckan_who_ini_path: "etc_ckan_who.saml2.ini.j2"
 catalog_ckan_solr_port: "8983"
 catalog_ckan_solr_host: datagov-solr1p.prod-ocsit.bsp.gsa.gov
 catalog_ckan_wsgi_processes: 6
-catalog_pycsw_db_host: "{{ vault_catalog_pycsw_db_host }}"
-catalog_pycsw_db_name: "{{ vault_catalog_pycsw_db_name }}"
-catalog_pycsw_db_pass: "{{ vault_catalog_pycsw_db_pass }}"
-catalog_pycsw_db_user: "{{ vault_catalog_pycsw_db_user }}"
 
 # catalog-next
 catalog_next_ckan_db_name: "{{ vault_catalog_next_ckan_db_name }}"
@@ -235,15 +231,6 @@ inventory_next_datapusher_db_name: "{{ vault_inventory_next_datapusher_db_name }
 # New Relic
 newrelic_enabled: true
 newrelic_license_key: "{{ vault_newrelic_license_key }}"
-
-
-pycsw_app_version: fcs
-pycsw_base_url: https://catalog.data.gov
-pycsw_ckan_url: https://catalog.data.gov
-pycsw_db_host: "{{ catalog_pycsw_db_host }}"
-pycsw_db_name: "{{ catalog_pycsw_db_name }}"
-pycsw_db_password: "{{ catalog_pycsw_db_pass }}"
-pycsw_db_user: "{{ catalog_pycsw_db_user }}"
 
 # public urls
 catalog_host_public: catalog.data.gov
