@@ -170,12 +170,11 @@ These tags are supported by the site.yml platform-wide playbook.
 
 Tag       | Description
 ---       | -----------
-catalog   | Catalog application (includes PyCSW) within site.yml playbook
+catalog   | Catalog application within site.yml playbook
 common    | Common plays within site.yml playbook
 dashboard | Dashboard application within site.yml playbook
 inventory | Inventory application within site.yml playbook
 jumpbox   | Jumpbox plays within site.yml playbook
-pycsw     | Deploys only the PyCSW application
 redis     | Redis plays within site.yml playbook
 smoke     | Smoke/sanity tests
 solr      | Solr plays within site.yml playbook
@@ -218,7 +217,6 @@ Variable | Description
 
 Tag       | Description
 ---       | -----------
-pycsw     | Deploys only the PyCSW application
 smoke     | Smoke/sanity tests
 
 
@@ -261,31 +259,6 @@ Variable | Description
 
 Tag       | Description
 ---       | -----------
-smoke     | Smoke/sanity tests
-
-
-#### PyCSW
-
-PyCSW is our implementation of the Catalog Service for Web (CSW).
-
-    $ ansible-playbook pycsw.yml
-
-_Note: PyCSW is currently deployed as part of catalog.data.gov but probably
-should be deployed and scaled independently._
-
-
-##### Common variables
-
-Variable | Description
--------- | -----------
-`pycsw_app_version` | Tag, branch, or commit of pycsw to deploy
-
-
-##### Supported tags
-
-Tag      | Description
----      | -----------
-database | Configure the database with PyCSW user
 smoke     | Smoke/sanity tests
 
 
@@ -348,8 +321,6 @@ application.
 - **catalog-harvester** worker hosts for the catalog app.
 - **dashboard-web** web hosts for the Dashboard app.
 - **inventory-web** web hosts for the inventory app.
-- **pycsw-web** web hosts running the PyCSW application.
-- **pycsw-worker** worker hosts running the PyCSW jobs.
 - **wordpress-web** web hosts for the datagov/wordpress app.
 
 

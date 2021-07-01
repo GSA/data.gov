@@ -36,7 +36,6 @@ ANSIBLE_PLAYBOOKS := \
   jumpbox.yml \
   newrelic-java.yml \
   newrelic-php.yml \
-  pycsw.yml \
   redis.yml \
   site.yml \
   smoke.yml \

@@ -7,10 +7,6 @@ catalog_ckan_db_host: "{{ vault_catalog_ckan_db_host }}"
 catalog_ckan_db_name: "{{ vault_catalog_ckan_db_name }}"
 catalog_ckan_db_pass: "{{ vault_catalog_ckan_db_pass }}"
 catalog_ckan_db_user: "{{ vault_catalog_ckan_db_user }}"
-catalog_pycsw_db_host: "{{ vault_catalog_pycsw_db_host }}"
-catalog_pycsw_db_name: "{{ vault_catalog_pycsw_db_name }}"
-catalog_pycsw_db_pass: "{{ vault_catalog_pycsw_db_pass }}"
-catalog_pycsw_db_user: "{{ vault_catalog_pycsw_db_user }}"
 
 # project path
 project_source_rollback_path: /usr/lib/ckan-rollback
