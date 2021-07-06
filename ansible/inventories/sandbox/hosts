@@ -32,22 +32,6 @@ inventory-next-web1tf.internal.sandbox.datagov.us
 [jenkins]
 jenkins1tf.internal.sandbox.datagov.us
 
-[pycsw:children]
-pycsw-web
-pycsw-worker
-
-[pycsw-web-v2]
-catalog-next-web1tf.internal.sandbox.datagov.us
-
-[pycsw-worker-v2]
-catalog-harvester-next1tf.internal.sandbox.datagov.us
-
-[pycsw-web:children]
-pycsw-web-v2
-
-[pycsw-worker:children]
-pycsw-worker-v2
-
 [wordpress-web]
 wordpress-web1tf.internal.sandbox.datagov.us
 
@@ -63,7 +47,5 @@ inventory-next
 dashboard-web
 jenkins
 jumpbox
-pycsw-web-v2
-pycsw-worker-v2
 solr
 wordpress-web

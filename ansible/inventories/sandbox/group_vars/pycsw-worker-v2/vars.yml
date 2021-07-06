@@ -1,7 +1,0 @@
----
-# For testing pycsw loading from catalog-next in sandbox. We have no intention
-# of making this change in staging/production.
-pycsw_base_url: https://catalog-next.sandbox.datagov.us
-pycsw_ckan_url: https://catalog-next.sandbox.datagov.us
-
-pycsw_db_host: "{{ catalog_next_postgresql_login_host }}"

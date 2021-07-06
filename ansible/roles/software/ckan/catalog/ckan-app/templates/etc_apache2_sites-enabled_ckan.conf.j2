@@ -23,12 +23,6 @@
   ServerName {{ catalog_ckan_apache_server_name }}
   ServerAlias {{ catalog_ckan_apache_server_alias | join(' ') }} {{ ansible_fqdn }} localhost {{ ansible_default_ipv4.address | default('') }}
 
-  # CSW endpoints provided by pycsw
-  # full CSW, all metadata
-  ProxyPass /csw-all http://localhost:8001
-  # default CSW, collection level metadata
-  ProxyPass /csw http://localhost:8000
-
   {% if ckan_uses_gunicorn %}
     # gunicorn configuration
     ProxyPass / http://localhost:5000/

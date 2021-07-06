@@ -1,6 +1,3 @@
 ---
 # common
 common_ubuntu_advantage_enabled: true
-
-# pycsw
-pycsw_python_version: 3.6.12  # 3.6.x is the latest python3 that will build with our version of openssl
