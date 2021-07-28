@@ -81,21 +81,31 @@ independence of these applications from the underlying Platform.
 
 ## Sprint rituals
 
-We follow two week sprints with the following rituals.
+We follow two-week sprints with the following rituals.
 
 - Daily standup (daily)
 - Sprint planning (first Monday of the sprint)
 - Sprint review and retrospective (last Thursday of the sprint)
 
 
-## Story lifecycle
+## How we track work
 
-**Stories** represent tactical increments of individually-valuable work
+We continuously break down larger planned initiatives into **stories**. Stories represent tactical increments of individually-valuable work
 deliverable by the team within a single iteration... often an isolated change in
 functionality aimed at achieving a goal for a particular kind of stakeholder,
-whether customer, user, or operator/admin. Stories are tracked on the [Kanban
+whether customer, user, or operator/admin. 
+
+In addition to planned work, we also track reactive work unrelated to delivering new functionality or capabilities:
+* Security or compliance findings
+* Flaws in production code
+* Support requests requiring technical expertise to resolve
+* Onboarding and offboarding procedures
+
+For each of these types of work, a [corresponding template](https://github.com/GSA/datagov-deploy/tree/master/.github/ISSUE_TEMPLATE) provides structure for capturing necessary information. Individual work items are captured in [issues in the `GSA/datagov-deploy` GitHub repository](https://github.com/GSA/datagov-deploy/issues); [creating a new issue in that repository](https://github.com/GSA/datagov-deploy/issues/new/choose) kicks off the process for capturing and prioritizing new work.
+
+The collective set of open issues is visualized as cards on a [Kanban
 Board](https://app.zenhub.com/workspaces/datagov-devsecops-579a2532d1d6ea9c3fcf5cfa/board)
-and progress through these columns.
+and progress through these columns over the course of their existence.
 
 - New
 - Icebox
@@ -162,15 +172,17 @@ Work that has been de-prioritized.
 
 Work sorted by value that we are planning on doing and will groom and schedule into a sprint.
 
-
 ##### Exit criteria
 
+For all kinds of work:
+- Any critical information needed to get started on technical work is present.
+
+For stories in particular:
 - Indicate the intended benefit and who the story is for in the "as a ..., I want
   ..., so that ..." form.
-- Acceptance criteria is defined.
-- If necessary, the story includes a security testing plan and any tasks from
+- Acceptance criteria are defined.
+- If necessary, the story includes a security testing plan, and any tasks from
   that plan are included as acceptance criteria.
-
 
 #### Sprint backlog
 
