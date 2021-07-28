@@ -68,7 +68,7 @@ For new Project Management Office team members, follow these additional steps:
 
 ### Tasks for new team member
 
-- [ ] Log into [Login.gov dashboard](https://dashboard.int.identitysandbox.gov/auth/logindotgov)
+- [ ] Log into [Login.gov dashboard](https://dashboard.int.identitysandbox.gov/)
 - [ ] Ensure your GitHub account meets the criteria for [GSA GitHub org](https://github.com/GSA/GitHub-Administration/blob/master/README.md) (setup 2FA)
 - [ ] Read through the [required reading list](https://github.com/GSA/datagov-deploy/wiki/Onboarding-Offboarding#required-reading-list)
 - [ ] [Request access](https://docs.google.com/forms/d/e/1FAIpQLSetStmwqrbMWDz_WIlh1trjhP0PFCjKXHzshsJveYmtIvlG2Q/viewform) to Data.gov systems; select “Catalog Admin” for the system, and “Data.gov team member” for justification
