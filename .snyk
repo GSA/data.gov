@@ -7,40 +7,40 @@ ignore:
         reason: >-
           solaris_zone module is not used, fix requires ansible 2.9
           https://github.com/gsa/datagov-deploy/issues/893
-        expires: 2021-08-13T00:00:00.000Z
+        expires: 2021-09-06T00:00:00.000Z
 
   SNYK-PYTHON-ANSIBLE-1297166:
     - '*':
         reason: >-
           Ansible 3.0 upgrade work has a July2021 milestone
           https://github.com/GSA/datagov-deploy/issues/893
-        expires: 2021-08-13T00:00:00.000Z
+        expires: 2021-09-06T00:00:00.000Z
 
   SNYK-PYTHON-ANSIBLE-1292152:
     - '*':
         reason: >-
           Managed nodes are only accessible to data.gov operators. Risk is
           acceptable.
-        expires: 2021-08-13T06:00:00.000Z
+        expires: 2021-09-06T06:00:00.000Z
 
   SNYK-PYTHON-ANSIBLE-1292154:
     - '*':
         reason: >-
           Managed nodes are only accessible to data.gov operators. Risk is
           acceptable.
-        expires: 2021-08-13T06:00:00.000Z
+        expires: 2021-09-06T06:00:00.000Z
 
   SNYK-PYTHON-ANSIBLE-1300676:
     - '*':
         reason: >-
           Managed nodes are only accessible to data.gov operators. Risk is
           acceptable.
-        expires: 2021-08-13T06:00:00.000Z
+        expires: 2021-09-06T06:00:00.000Z
 
   SNYK-PYTHON-CRYPTOGRAPHY-1022152:
     - '*':
         reason: >-
           There is no fixed version for cryptography at this time (patch is applied, however)
           Only used in trusted environments, so risk is low.
-        expires: 2021-08-13T06:00:00.000Z
+        expires: 2021-09-06T06:00:00.000Z
 patch: {}
