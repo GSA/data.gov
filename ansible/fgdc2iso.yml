@@ -7,7 +7,7 @@
     - role: robertdebock.java
     - role: robertdebock.tomcat
       vars:
-        tomcat_version9: "9.0.46"
+        tomcat_version9: "9.0.48"
         tomcat_instances:
           - name: "tomcat"
             version: 9
