@@ -6,7 +6,7 @@
     - { role: software/common/tls, tags: [provision, tls] }
     - { role: software/common/php-common, tags: [provision] }
     - { role: geerlingguy.git, tags: [provision] }
-    - role: geerlingguy.nginx
+    - role: nginxinc.nginx
       tags:
         - nginx
         - provision
