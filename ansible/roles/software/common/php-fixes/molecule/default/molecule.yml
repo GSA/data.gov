@@ -9,6 +9,8 @@ lint: |
 platforms:
   - name: php-fixes-bionic
     image: ubuntu:bionic
+    privileged: true
+    command: "/sbin/init"
 provisioner:
   name: ansible
   lint: |
