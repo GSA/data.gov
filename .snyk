@@ -43,4 +43,16 @@ ignore:
           There is no fixed version for cryptography at this time (patch is applied, however)
           Only used in trusted environments, so risk is low.
         expires: 2021-09-30T06:00:00.000Z
+
+  SNYK-PYTHON-ANSIBLE-1583870:
+    - '*':
+        reason: >-
+          aws_ssm connection plugin is not used. No fixed version for ansible yet.
+        expires: 2021-09-30T06:00:00.000Z
+
+  SNYK-PYTHON-ANSIBLE-1583871:
+    - '*':
+        reason: >-
+          aws_ssm connection plugin is not used. No fixed version for ansible yet.
+        expires: 2021-09-30T06:00:00.000Z
 patch: {}
