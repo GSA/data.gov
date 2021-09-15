@@ -6,16 +6,60 @@
     - { role: software/common/tls, tags: [provision, tls] }
     - { role: software/common/php-common, tags: [provision] }
     - { role: geerlingguy.git, tags: [provision] }
-    - role: nginxinc.nginx
-      tags:
-        - nginx
-        - provision
     - { role: geerlingguy.php-versions, tags: [php, provision] }
     - { role: geerlingguy.php, tags: [php, provision] }
     - { role: geerlingguy.php-mysql, tags: [php, php-mysql, provision] }
     - { role: geerlingguy.php-memcached, tags: [php, php-memcached, provision] }
     - { role: software/common/php-fixes, tags: [php, provision] }
     - { role: geerlingguy.composer, tags: [php, provision] }
+
+
+- name: Deploy nginx
+  hosts: dashboard-web
+  roles:
+    - role: nginxinc.nginx
+      vars:
+        nginx_branch: stable
+        nginx_state: latest
+      tags: [nginx, provision]
+
+- name: Config nginx
+  hosts: dashboard-web
+  roles:
+    - role: nginxinc.nginx_config
+      vars:
+        nginx_config_cleanup_files:
+          - /etc/nginx/conf.d/default.conf
+
+        nginx_config_main_template_enable: true
+        nginx_config_main_template:
+          template_file: nginx.conf.j2
+          conf_file_name: nginx.conf
+          conf_file_location: /etc/nginx/
+          worker_processes: auto
+          pid: /var/run/nginx.pid
+          error_log:
+            location: /var/log/nginx/error.log
+            level: notice
+          worker_connections: 1024
+          http_enable: true
+          http_settings:
+            default_type: application/octet-stream
+            include: /etc/nginx/mime.types
+            access_log_format:
+              - name: main
+                format: |-
+                  '$remote_addr - $remote_user [$time_local] "$request" '
+                                      '$status $body_bytes_sent "$http_referer" '
+                                      '"$http_user_agent" "$http_x_forwarded_for"'
+            access_log_location:
+              - name: main
+                location: /var/log/nginx/access.log
+            sendfile: on
+            keepalive_timeout: 65
+            server_tokens: "off"
+      tags: [nginx, provision]
+
 
 
 - name: Deploying Dashboard
