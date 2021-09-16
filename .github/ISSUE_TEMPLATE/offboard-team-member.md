@@ -42,6 +42,7 @@ These tasks are performed by a team admin:
 - [ ] [Rotate Ansible Vault key](https://github.com/GSA/datagov-deploy/wiki/Keypair-Rotation#ansible-vault) and [update the canonical location](https://docs.google.com/document/d/1detdsnIuwmqz6asrIfUWrmxCr56MGschY1yV0UeC_24/edit)
 - [ ] Remove team member from PyPI packages:
   - https://pypi.org/project/ckanext-dcat-usmetadata/
+- [ ] Remove team member from [Google Search Console](https://search.google.com/)
 
 If team member is also leaving TTS:
 - [ ] Remove team member from Slack
