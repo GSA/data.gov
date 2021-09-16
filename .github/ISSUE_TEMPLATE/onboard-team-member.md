@@ -39,8 +39,8 @@ Below are the tasks that will drive the onboarding process.
 - [ ] Add team member to [Data.gov Google Analytics](https://analytics.google.com/analytics/web/#/a42145528w85560911p88728213/admin/suiteusermanagement/account) account
 - [ ] Add team member as a SpaceDeveloper in the [`development`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/eab3d327-7d9f-423b-9838-753c26fdb5a0/users), [`staging`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/3e692cdd-6d26-41ea-9698-04903dc3f742/users), and [`management`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/9a1db116-0180-42be-8ffa-7944dcf6bf50/summary) spaces in cloud.gov.
        $ cf set-space-role <email> gsa-datagov <space> SpaceDeveloper
-- [ ] Add team member to the SSB [staging](https://054110281448.signin.aws.amazon.com/console) AWS account \
-      In the IAM console: Add a user with console access, auto-generating the initial password and requiring change upon first login. Add Administrators group membership.
+- [ ] Add team member to the SSB AWS accounts \
+      Make a PR on [the Terraform file controlling access](https://github.com/18F/aws-admin/blob/main/terraform/datagov-iam.tf) to add the new person and include them in the appropriate user_groups.
 - [ ] Request Federalist access by posting in [#federalist-support](https://gsa-tts.slack.com/archives/C1NUUGTT5) with the new member's GitHub username.
 - [ ] Once member had logged into Login.gov, add them to the [data.gov team](https://dashboard.int.identitysandbox.gov/teams/174).
 
