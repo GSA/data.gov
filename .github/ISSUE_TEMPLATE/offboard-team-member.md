@@ -23,7 +23,7 @@ These tasks are performed by a team admin:
 - [ ] Remove team member from [the `gsa-datagov` organization](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/users) on cloud.gov
 - [ ] Remove team member from [GCP account](https://console.cloud.google.com/iam-admin/iam?project=tts-datagov)
 - [ ] Remove team member from AWS OPP account
-- [ ] Remove team member from [the SSB staging AWS account](https://054110281448.signin.aws.amazon.com/console)
+- [ ] Remove team member from [the SSB AWS accounts](https://github.com/18F/aws-admin/blob/main/terraform/datagov-iam.tf)
 - [ ] Remove team member from [AWS sandbox access](https://github.com/GSA/datagov-iam/blob/main/README.md#new-users)
 - [ ] Remove team member from [jumpbox operators](https://github.com/GSA/datagov-deploy/blob/master/ansible/group_vars/all/vars.yml)
 - [ ] Remove team member from Data.gov email lists
@@ -42,6 +42,7 @@ These tasks are performed by a team admin:
 - [ ] [Rotate Ansible Vault key](https://github.com/GSA/datagov-deploy/wiki/Keypair-Rotation#ansible-vault) and [update the canonical location](https://docs.google.com/document/d/1detdsnIuwmqz6asrIfUWrmxCr56MGschY1yV0UeC_24/edit)
 - [ ] Remove team member from PyPI packages:
   - https://pypi.org/project/ckanext-dcat-usmetadata/
+- [ ] Remove team member from [Google Search Console](https://search.google.com/)
 
 If team member is also leaving TTS:
 - [ ] Remove team member from Slack

@@ -210,7 +210,8 @@ ckanext.spatial.search_backend = solr
 # is not specified here.
 
 # Mark as finished Jobs in 'Running' status after x minutes (1440 min = 24 hours)
-ckan.harvest.timeout = 1440
+# Forced finish creates some issue. Make timeout 5 days to disable it (sort of) 
+ckan.harvest.timeout = 7200
 
 # define the time frame in days to clean the harvest logs
 ckan.harvest.log_timeframe = 180
