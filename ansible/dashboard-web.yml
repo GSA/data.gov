@@ -60,8 +60,6 @@
             server_tokens: "off"
       tags: [nginx, provision]
 
-
-
 - name: Deploying Dashboard
   hosts: dashboard-web
   serial: "{{ datagov_serial | default(1) }}"
