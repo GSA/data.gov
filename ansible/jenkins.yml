@@ -49,9 +49,6 @@
 - name: Install jenkins
   hosts: jenkins
   roles:
-    - role: nginxinc.nginx
-      tags:
-        - nginx
     - role: gsa.datagov-deploy-jenkins
       tags:
         - jenkins
