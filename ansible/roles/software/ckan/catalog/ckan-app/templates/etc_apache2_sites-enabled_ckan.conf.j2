@@ -55,9 +55,9 @@
     Header set X-XSS-Protection "1; mode=block"
     Header set X-Content-Type-Options "nosniff"
 
-    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Origin "https://catalog.data.gov"
     Header set Access-Control-Allow-Methods "POST, PUT, GET, DELETE, OPTIONS"
-    Header set Access-Control-Allow-Headers "X-CKAN-API-KEY, Authorization, Content-Type"
+    Header set Access-Control-Allow-Headers "X-CKAN-API-KEY, Authorization, Content-Type, x-requested-with"
 
     Header set Referrer-Policy "origin"
 
