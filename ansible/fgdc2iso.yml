@@ -17,6 +17,9 @@
   hosts: catalog-fgdc2iso
   roles:
     - role: nginxinc.nginx
+      vars:
+        nginx_branch: stable
+        nginx_state: latest
       tags: [nginx, provision]
 
 - name: Config nginx
