@@ -21,8 +21,6 @@
   version: 1.9.6
 - name: geerlingguy.jenkins
   version: 4.3.0
-- name: geerlingguy.nginx
-  version: 2.8.0
 - name: geerlingguy.php
   version: 3.7.0
 - name: geerlingguy.php-versions
@@ -43,7 +41,7 @@
   version: 1.0.4
 - name: gsa.datagov-deploy-dashboard
   src: https://github.com/GSA/datagov-deploy-dashboard
-  version: v1.1.9
+  version: v1.2.0
 - name: gsa.datagov-deploy-apache2
   src: https://github.com/GSA/datagov-deploy-apache2
   version: v1.3.2
@@ -55,7 +53,7 @@
   version: v1.0.4
 - name: gsa.datagov-deploy-jenkins
   src: https://github.com/GSA/datagov-deploy-jenkins
-  version: v2.0.0
+  version: v2.1.0
 - name: gsa.datagov-deploy-jumpbox
   src: https://github.com/GSA/datagov-deploy-jumpbox
   version: v2.3.0
@@ -67,13 +65,17 @@
   version: v1.2.1
 - name: gsa.datagov-deploy-wordpress
   src: https://github.com/GSA/datagov-deploy-wordpress.git
-  version: v1.0.12
+  version: v1.1.0
 - name: jnv.unattended-upgrades
   version: v1.8.0
 - name: jobscore.beats
   version: v1.0.0
 - name: newrelic.newrelic-infra
   version: 0.8.2
+- name: nginxinc.nginx
+  version: 0.21.0
+- name: nginxinc.nginx_config
+  version: 0.3.3
 - name: nickhammond.logrotate
   version: v0.0.5
 - name: nleutner.newrelic-php

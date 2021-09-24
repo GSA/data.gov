@@ -16,31 +16,61 @@
 - name: Deploy nginx
   hosts: catalog-fgdc2iso
   roles:
-    - role: geerlingguy.nginx
+    - role: nginxinc.nginx
       vars:
-        nginx_upstreams:
-          - name: "tomcat"
+        nginx_branch: stable
+        nginx_state: latest
+      tags: [nginx, provision]
+
+- name: Config nginx
+  hosts: catalog-fgdc2iso
+  roles:
+    - role: nginxinc.nginx_config
+      vars:
+        nginx_config_http_template_enable: true
+        nginx_config_http_template:
+          app:
+            template_file: http/default.conf.j2
+            conf_file_name: fgdc2iso.conf
+            conf_file_location: /etc/nginx/conf.d/
+            upstreams:
+              tomcat_upstream:
+                name: tomcat
+                servers:
+                  tomcat_server:
+                    address: 127.0.0.1
+                    port: 8080
             servers:
-              - "127.0.0.1:8080"
-        nginx_vhosts:
-          - listen: "80"
-            server_name: "fgdc2iso"
-            filename: "fgdc2iso.80.conf"
-            extra_parameters: |
-              location / {
-                proxy_pass http://tomcat;
-              }
-          - listen: "443 ssl"
-            server_name: "fgdc2iso"
-            filename: "fgdc2iso.443.conf"
-            extra_parameters: |
-              location / {
-                proxy_pass http://tomcat;
-              }
-              ssl_certificate     {{ fgdc2iso_tls_certificate_filepath | default(default_tls_host_certificate_filepath) }};
-              ssl_certificate_key {{ fgdc2iso_tls_key_filepath | default(default_tls_host_key_filepath) }};
-              ssl_protocols       TLSv1.2 TLSv1.3;
-              ssl_ciphers         HIGH:!aNULL:!MD5;
+              http_server:
+                listen:
+                  listen_localhost:
+                    ip: 0.0.0.0
+                    port: 80
+                server_name: fgdc2iso
+                reverse_proxy:
+                  locations:
+                    location1:
+                      location: /
+                      proxy_pass: http://tomcat
+
+              https_server:
+                listen:
+                  listen_localhost:
+                    ip: 0.0.0.0
+                    port: 443
+                    ssl: true
+                server_name: fgdc2iso
+                reverse_proxy:
+                  locations:
+                    location1:
+                      location: /
+                      proxy_pass: http://tomcat
+                ssl:
+                  cert: "{{ fgdc2iso_tls_certificate_filepath | default(default_tls_host_certificate_filepath) }}"
+                  key: "{{ fgdc2iso_tls_key_filepath | default(default_tls_host_key_filepath) }}"
+                  ciphers: "HIGH:!aNULL:!MD5"
+                  protocols: "TLSv1.2 TLSv1.3"
+
       tags: [nginx, provision]
 
 - name: Deploy fgdc2iso
