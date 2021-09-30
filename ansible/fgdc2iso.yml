@@ -42,6 +42,7 @@
                     port: 8080
             servers:
               http_server:
+                client_max_body_size: "{{ client_max_body_size | default('1m') }}"
                 listen:
                   listen_localhost:
                     ip: 0.0.0.0
