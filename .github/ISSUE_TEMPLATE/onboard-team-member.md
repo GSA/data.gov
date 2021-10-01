@@ -29,7 +29,7 @@ Below are the tasks that will drive the onboarding process.
 - [ ] Make sure team member has 2FA enabled for their GitHub account and [request](https://github.com/GSA/GitHub-Administration/blob/master/README.md#requesting-access-to-the-gsa-organization) membership to GSA GitHub org
 - [ ] Add team member to a Data.gov GitHub team (devsecops: [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members) or ckan-multi: [data-gov-ckan-multi](https://github.com/orgs/GSA/teams/data-gov-ckan-multi/members))
 - [ ] Request TTS Bug Bounty access from @bugbounty-admins in [#bug-bounty](https://gsa-tts.slack.com/archives/C0X2FMJ86)
-- [ ] Add team member to [New Relic](https://newrelic.com) with permissions:
+- [ ] Add team member to [New Relic](https://account.newrelic.com/accounts/1601367/users) with permissions:
   - Alerts manager
   - APM manager
   - Infrastructure manager
@@ -60,7 +60,7 @@ For new Project Management Office team members, follow these additional steps:
 - [ ] Add team member to [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members) GitHub team
 - [ ] Invite team member to calendar events
   - CKAN-multi project meetings
-- [ ] Promote team member to Admin in [New Relic](https://newrelic.com)
+- [ ] Promote team member to Admin in [New Relic](https://account.newrelic.com/accounts/1601367/users)
 - [ ] Add team member as an Owner to PyPI packages:
   - https://pypi.org/project/ckanext-dcat-usmetadata/
 
