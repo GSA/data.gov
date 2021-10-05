@@ -29,12 +29,11 @@ Below are the tasks that will drive the onboarding process.
 - [ ] Make sure team member has 2FA enabled for their GitHub account and [request](https://github.com/GSA/GitHub-Administration/blob/master/README.md#requesting-access-to-the-gsa-organization) membership to GSA GitHub org
 - [ ] Add team member to a Data.gov GitHub team (devsecops: [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members) or ckan-multi: [data-gov-ckan-multi](https://github.com/orgs/GSA/teams/data-gov-ckan-multi/members))
 - [ ] Request TTS Bug Bounty access from @bugbounty-admins in [#bug-bounty](https://gsa-tts.slack.com/archives/C0X2FMJ86)
-- [ ] Add team member to [New Relic](https://newrelic.com) with permissions:
+- [ ] Add team member to [New Relic](https://account.newrelic.com/accounts/1601367/users) with permissions:
   - Alerts manager
   - APM manager
   - Infrastructure manager
   - Synthetics manager
-- [ ] Add team member to [Docker Hub](https://cloud.docker.com/orgs/datagov/teams)
 - [ ] Add team member to [Snyk](https://app.snyk.io/org/data.gov/manage/members)
 - [ ] Add team member to [Data.gov Google Analytics](https://analytics.google.com/analytics/web/#/a42145528w85560911p88728213/admin/suiteusermanagement/account) account
 - [ ] Add team member as a SpaceDeveloper in the [`development`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/eab3d327-7d9f-423b-9838-753c26fdb5a0/users), [`staging`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/3e692cdd-6d26-41ea-9698-04903dc3f742/users), and [`management`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/9a1db116-0180-42be-8ffa-7944dcf6bf50/summary) spaces in cloud.gov.
@@ -61,7 +60,7 @@ For new Project Management Office team members, follow these additional steps:
 - [ ] Add team member to [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members) GitHub team
 - [ ] Invite team member to calendar events
   - CKAN-multi project meetings
-- [ ] Promote team member to Admin in [New Relic](https://newrelic.com)
+- [ ] Promote team member to Admin in [New Relic](https://account.newrelic.com/accounts/1601367/users)
 - [ ] Add team member as an Owner to PyPI packages:
   - https://pypi.org/project/ckanext-dcat-usmetadata/
 
@@ -72,16 +71,6 @@ For new Project Management Office team members, follow these additional steps:
 - [ ] Ensure your GitHub account meets the criteria for [GSA GitHub org](https://github.com/GSA/GitHub-Administration/blob/master/README.md) (setup 2FA)
 - [ ] Read through the [required reading list](https://github.com/GSA/datagov-deploy/wiki/Onboarding-Offboarding#required-reading-list)
 - [ ] [Request access](https://docs.google.com/forms/d/e/1FAIpQLSetStmwqrbMWDz_WIlh1trjhP0PFCjKXHzshsJveYmtIvlG2Q/viewform) to Data.gov systems; select “Catalog Admin” for the system, and “Data.gov team member” for justification
-- [ ] Add yourself for [AWS sandbox access](https://github.com/GSA/datagov-iam/tree/master/README.md#new-users)
-- [ ] Request access to AWS OPP account from team member
-- [ ] Add your public SSH key to [GSA/datagov-deploy](https://github.com/GSA/datagov-deploy/blob/master/ansible/group_vars/all/vars.yml)
-- [ ] Setup the Ansible vault
-  - Clone the [datagov-deploy](https://github.com/GSA/datagov-deploy) repo
-    locally
-  - Follow the setup instructions for [development](https://github.com/GSA/datagov-deploy/blob/master/README.md#development)
-  - Follow the [ansible-vault instructions](https://github.com/GSA/datagov-deploy#editing-vault-secrets)
-  - Open a vault file `pipenv run ansible-vault view ansible/inventories/sandbox/group_vars/all/vault.yml`, you should see yaml in clear text.
-- [ ] Connect to the [GSA VPN](https://github.com/GSA/datagov-deploy/wiki/gsa-vpn) for access to the staging and production environments.
 - [ ] Enable MFA for [HackerOne](https://hackerone.com/settings/auth)
 - [ ] Join [Open Data](https://digital.gov/communities/open-data/) community list
 - [ ] Request access to the [Digital Analytics Program](https://digital.gov/guides/dap/gaining-access-to-dap-data/)

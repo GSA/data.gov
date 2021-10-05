@@ -130,12 +130,8 @@ monit_apache2_mem_threshold: 82
 
 
 # Nginx
-nginx_remove_default_vhost: true
-nginx_ppa_use: true
-nginx_ppa_version: stable
-nginx_extra_conf_options: |-
-  include /etc/nginx/modules-enabled/*.conf;
-nginx_server_tokens: "off"
+# Transition to latest nginx changed default from 64 to 1, set default of 64 for all
+client_max_body_size: 64m
 
 
 # PHP
