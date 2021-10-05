@@ -1,3 +1,10 @@
+[program:ckan-harvest-object-relink]
+command=ckan --plugin=ckanext-geodatagov geodatagov harvest-object-relink -c /etc/ckan/production.ini
+stdout_logfile=/var/log/ckan/harvest-object-relink.log
+redirect_stderr=true
+autostart=false
+autorestart=false
+
 [program:ckan-clean-deleted]
 command=ckan --plugin=ckanext-geodatagov geodatagov clean-deleted -c /etc/ckan/production.ini
 stdout_logfile=/var/log/ckan/clean-deleted.log
