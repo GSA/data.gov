@@ -12,7 +12,7 @@ In order to [goal], [stakeholder] wants [change].
 
 Given above [question/risk/uncertainty], conducting [research/design/investigation/prototyping] is needed to provide factual knowledge on future steps.
 
-[timebox] of effort has been allocated and once compete, specific future steps will be identified.
+[timebox] of effort has been allocated and once compete, findings will be demonstrated and specific future actions will be decided.
 
 ## Acceptance Criteria
 
@@ -21,7 +21,8 @@ Given above [question/risk/uncertainty], conducting [research/design/investigati
 - [ ] GIVEN [a contextual precondition] \
   [AND optionally another precondition] \
   WHEN [time box] expires\
-  THEN [future steps identified]
+  THEN [findings demonstrated] \
+  AND [future action decided]
 
 ## Background
 
