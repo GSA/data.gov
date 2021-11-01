@@ -20,7 +20,7 @@ labels:
 
 <!-- description of what you expected to happen. -->
 
-# Actual behavior
+## Actual behavior
 
 <!-- description of what actually happened. -->
 
