@@ -14,7 +14,7 @@ Given above [question/risk/uncertainty], conducting [research/design/investigati
 
 [timebox] of effort has been allocated and once compete, findings will be demonstrated and specific future actions will be decided.
 
-## Acceptance Criteria
+### Acceptance Criteria
 
 [ACs should be clearly demo-able/verifiable whenever possible. Try specifying them using [BDD](https://en.wikipedia.org/wiki/Behavior-driven_development#Behavioral_specifications).]
 
