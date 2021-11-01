@@ -31,4 +31,4 @@ Given above [question/risk/uncertainty], conducting [research/design/investigati
 
 ### Sketch
 
-[Notes or a checklist reflecting our understanding of the selected approach]
+[Notes or a checklist reflecting our plan for tackling the uncertainty]
