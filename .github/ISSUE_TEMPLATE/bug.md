@@ -16,7 +16,7 @@ labels:
 
 1. Description of steps to reproduce the issue.
 
-# Expected behavior
+## Expected behavior
 
 <!-- description of what you expected to happen. -->
 
