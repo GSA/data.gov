@@ -7,7 +7,6 @@ Welcome! [The Onboarding wiki](https://github.com/GSA/datagov-deploy/wiki/Onboar
 
 Below are the tasks that will drive the onboarding process.
 
-
 ### Tasks for admin or onboarding buddy
 
 - [ ] Review the rest of the checklist below before starting to work through it. Any step that does not seem relevant or necessary for the kind of work that the person onboarding will be doing should have a `-` in the checkbox and `~` around the line so it's clear that we will not be granting that particular kind of access for this person.
@@ -37,7 +36,7 @@ Below are the tasks that will drive the onboarding process.
 - [ ] Add team member to [Snyk](https://app.snyk.io/org/data.gov/manage/members)
 - [ ] Add team member to [Data.gov Google Analytics](https://analytics.google.com/analytics/web/#/a42145528w85560911p88728213/admin/suiteusermanagement/account) account
 - [ ] Add team member as a SpaceDeveloper in the [`development`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/eab3d327-7d9f-423b-9838-753c26fdb5a0/users), [`staging`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/3e692cdd-6d26-41ea-9698-04903dc3f742/users), and [`management`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/9a1db116-0180-42be-8ffa-7944dcf6bf50/summary) spaces in cloud.gov.
-       $ cf set-space-role <email> gsa-datagov <space> SpaceDeveloper
+  - `$ cf set-space-role <email> gsa-datagov <space> SpaceDeveloper`
 - [ ] Add team member to the SSB AWS accounts \
       Make a PR on [the Terraform file controlling access](https://github.com/18F/aws-admin/blob/main/terraform/datagov-iam.tf) to add the new person and include them in the appropriate user_groups.
 - [ ] Request Federalist access by posting in [#federalist-support](https://gsa-tts.slack.com/archives/C1NUUGTT5) with the new member's GitHub username.
@@ -62,8 +61,7 @@ For new Project Management Office team members, follow these additional steps:
   - CKAN-multi project meetings
 - [ ] Promote team member to Admin in [New Relic](https://account.newrelic.com/accounts/1601367/users)
 - [ ] Add team member as an Owner to PyPI packages:
-  - https://pypi.org/project/ckanext-dcat-usmetadata/
-
+  - [ckanext-dcat-usmetadata](https://pypi.org/project/ckanext-dcat-usmetadata/)
 
 ### Tasks for new team member
 
