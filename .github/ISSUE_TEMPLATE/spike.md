@@ -8,7 +8,7 @@ assignees: ''
 
 ## Purpose
 
-In order to [goal], [stakeholder] wants [change].
+We want to [goal], but we're not sure how to do that.
 
 Given above [question/risk/uncertainty], conducting [research/design/investigation/prototyping] is needed to provide factual knowledge on future steps.
 
