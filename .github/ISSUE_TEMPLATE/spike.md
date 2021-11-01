@@ -6,7 +6,7 @@ labels: ''
 assignees: ''
 ---
 
-# Spike story
+# Purpose
 
 In order to [goal], [stakeholder] wants [change].
 
@@ -16,7 +16,7 @@ Given above [question/risk/uncertainty], conducting [research/design/investigati
 
 ## Acceptance Criteria
 
-[ACs should be clearly demoable/verifiable whenever possible. Try specifying them using [BDD](https://en.wikipedia.org/wiki/Behavior-driven_development#Behavioral_specifications).]
+[ACs should be clearly demo-able/verifiable whenever possible. Try specifying them using [BDD](https://en.wikipedia.org/wiki/Behavior-driven_development#Behavioral_specifications).]
 
 - [ ] GIVEN [a contextual precondition] \
   [AND optionally another precondition] \
