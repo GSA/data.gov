@@ -29,6 +29,6 @@ Given above [question/risk/uncertainty], conducting [research/design/investigati
 
 [Any helpful contextual notes or links to artifacts/evidence, if needed]
 
-## Sketch
+### Sketch
 
 [Notes or a checklist reflecting our understanding of the selected approach]
