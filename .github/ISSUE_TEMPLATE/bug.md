@@ -24,6 +24,6 @@ labels:
 
 <!-- description of what actually happened. -->
 
-# Sketch
+## Sketch
 
 [Notes or a checklist reflecting our understanding of the selected approach]
