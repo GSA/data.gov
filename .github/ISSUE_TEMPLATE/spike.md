@@ -6,7 +6,7 @@ labels: ''
 assignees: ''
 ---
 
-# Purpose
+## Purpose
 
 In order to [goal], [stakeholder] wants [change].
 
