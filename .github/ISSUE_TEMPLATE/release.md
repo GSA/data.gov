@@ -6,7 +6,7 @@ about: A ticket tracking each release
 
 Roll out [updates/release to production](https://github.com/GSA/datagov-deploy/wiki/Releases) so that the latest bug fixes and feature code is available.
 
-## Acceptance Criteria
+### Acceptance Criteria
 
 - [ ] Release is cut (datagov-deploy, catalog-app, inventory-app, static sites)
 - [ ] Playbook run with no errors/expected errors in sandbox
