@@ -25,7 +25,7 @@ Given above [question/risk/uncertainty], conducting [research/design/investigati
   AND [future action is decided] \
   AND [stories covering future action are created if needed]
 
-## Background
+### Background
 
 [Any helpful contextual notes or links to artifacts/evidence, if needed]
 
