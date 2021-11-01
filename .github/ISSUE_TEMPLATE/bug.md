@@ -12,22 +12,18 @@ labels:
   - error logs
   - stack trace -->
 
-
-
-
-## How to reproduce
+# How to reproduce
 
 1. Description of steps to reproduce the issue.
 
-
-## Expected behavior
+# Expected behavior
 
 <!-- description of what you expected to happen. -->
 
-
-## Actual behavior
+# Actual behavior
 
 <!-- description of what actually happened. -->
 
-## Sketch
+# Sketch
+
 [Notes or a checklist reflecting our understanding of the selected approach]
