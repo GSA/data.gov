@@ -22,7 +22,8 @@ Given above [question/risk/uncertainty], conducting [research/design/investigati
   [AND optionally another precondition] \
   WHEN [time box] expires\
   THEN [findings demonstrated] \
-  AND [future action decided]
+  AND [future action is decided] \
+  AND [stories covering future action are created if needed]
 
 ## Background
 
