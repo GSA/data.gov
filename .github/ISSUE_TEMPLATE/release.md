@@ -13,6 +13,6 @@ Roll out [updates/release to production](https://github.com/GSA/datagov-deploy/w
 - [ ] Playbook run with no errors/expected errors in staging, and all systems verified up
 - [ ] Playbook run with no errors/expected errors in production, and all systems verified up
 
-## Implementation notes
+### Implementation notes
 
 <!-- Write notes of things that went poorly that should be noted for next time. Include link to release thread if appropriate. --!>
