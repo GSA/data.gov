@@ -12,7 +12,7 @@ labels:
   - error logs
   - stack trace -->
 
-# How to reproduce
+## How to reproduce
 
 1. Description of steps to reproduce the issue.
 
