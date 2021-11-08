@@ -12,7 +12,6 @@ Below are the tasks that will drive the onboarding process.
 - [ ] Review the rest of the checklist below before starting to work through it. Any step that does not seem relevant or necessary for the kind of work that the person onboarding will be doing should have a `-` in the checkbox and `~` around the line so it's clear that we will not be granting that particular kind of access for this person.
 - [ ] Add team member to [TTS Slack](https://handbook.18f.gov/slack/#tts-staff)
   - #datagov-alerts
-  - #datagov-ckan-multi
   - #datagov-devsecops
   - #datagov-notifications
 - [ ] Invite team member to [Data.gov calendar](https://calendar.google.com/calendar/r/settings/calendar/Z3NhLmdvdl9zcjZ0NG52YjRhOTNjNnNzdHRxYXAzbjZtMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t) and events
@@ -26,7 +25,7 @@ Below are the tasks that will drive the onboarding process.
   - [Data.gov team list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagovhelp)
   - [Inventory help list](https://groups.google.com/a/gsa.gov/forum/#!forum/inventory-help)
 - [ ] Make sure team member has 2FA enabled for their GitHub account and [request](https://github.com/GSA/GitHub-Administration/blob/master/README.md#requesting-access-to-the-gsa-organization) membership to GSA GitHub org
-- [ ] Add team member to a Data.gov GitHub team (devsecops: [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members) or ckan-multi: [data-gov-ckan-multi](https://github.com/orgs/GSA/teams/data-gov-ckan-multi/members))
+- [ ] Add team member to a Data.gov GitHub team [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members)
 - [ ] Request TTS Bug Bounty access from @bugbounty-admins in [#bug-bounty](https://gsa-tts.slack.com/archives/C0X2FMJ86)
 - [ ] Add team member to [New Relic](https://account.newrelic.com/accounts/1601367/users) with permissions:
   - Alerts manager
@@ -48,17 +47,16 @@ For new Project Management Office team members, follow these additional steps:
   - [CKAN Mutli](https://drive.google.com/drive/folders/0ALb0g1S27SJPUk9PVA)
 - [ ] Add team member to email lists
   - [Data.gov support list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagov)
-- [ ] Add team member to #datagov-pmo
+- [ ] Add team member to #datagov-pmo-private
 - [ ] Add team member to additional slack channels
   - #bug-bounty
   - #bug-bounty-partners
   - #datagov-comms
-  - #opp-data-analytics
+  - #sol-data-analytics
 - [ ] Add team member to [the GCP project](https://console.cloud.google.com/iam-admin/iam?project=tts-datagov)
 - [ ] Add team member with OrgManager permissions in [the `gsa-datagov` organization](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/users) on cloud.gov
 - [ ] Add team member to [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members) GitHub team
 - [ ] Invite team member to calendar events
-  - CKAN-multi project meetings
 - [ ] Promote team member to Admin in [New Relic](https://account.newrelic.com/accounts/1601367/users)
 - [ ] Add team member as an Owner to PyPI packages:
   - [ckanext-dcat-usmetadata](https://pypi.org/project/ckanext-dcat-usmetadata/)
@@ -69,6 +67,5 @@ For new Project Management Office team members, follow these additional steps:
 - [ ] Ensure your GitHub account meets the criteria for [GSA GitHub org](https://github.com/GSA/GitHub-Administration/blob/master/README.md) (setup 2FA)
 - [ ] Read through the [required reading list](https://github.com/GSA/datagov-deploy/wiki/Onboarding-Offboarding#required-reading-list)
 - [ ] [Request access](https://docs.google.com/forms/d/e/1FAIpQLSetStmwqrbMWDz_WIlh1trjhP0PFCjKXHzshsJveYmtIvlG2Q/viewform) to Data.gov systems; select “Catalog Admin” for the system, and “Data.gov team member” for justification
-- [ ] Enable MFA for [HackerOne](https://hackerone.com/settings/auth)
 - [ ] Join [Open Data](https://digital.gov/communities/open-data/) community list
 - [ ] Request access to the [Digital Analytics Program](https://digital.gov/guides/dap/gaining-access-to-dap-data/)
