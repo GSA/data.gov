@@ -5,12 +5,13 @@ title: "[Offboard] <email>"
 ---
 All tasks should be checked and completed. For tasks that are not applicable, perhaps because the team member did not have this particular access, please **confirm** that the team member in fact has no access before marking the task complete.
 
-
 Tasks to be performed by the outgoing team member:
+
 - [ ] Move all Data.gov related documents to team drives
 - [ ] Document any work in progress and schedule a hand-off for any remaining tasks
 
 These tasks are performed by a team admin:
+
 - [ ] Remove team member's access to Google Drive
   - [Data.gov](https://drive.google.com/drive/folders/0AMRwhrSyJ5R4Uk9PVA)
   - [Data.gov Mutli Tenant](https://drive.google.com/drive/folders/0ALb0g1S27SJPUk9PVA)
@@ -41,13 +42,15 @@ These tasks are performed by a team admin:
 - [ ] Remove team member from [Data.gov Google Analytics](https://analytics.google.com/analytics/web/#/a42145528w85560911p88728213/admin/suiteusermanagement/account) account
 - [ ] [Rotate Ansible Vault key](https://github.com/GSA/datagov-deploy/wiki/Keypair-Rotation#ansible-vault) and [update the canonical location](https://docs.google.com/document/d/1detdsnIuwmqz6asrIfUWrmxCr56MGschY1yV0UeC_24/edit)
 - [ ] Remove team member from PyPI packages:
-  - https://pypi.org/project/ckanext-dcat-usmetadata/
+  - [ckanext-dcat-usmetadata](https://pypi.org/project/ckanext-dcat-usmetadata/)
 - [ ] Remove team member from [Google Search Console](https://search.google.com/)
 
 If team member is also leaving TTS:
+
 - [ ] Remove team member from Slack
 
 If the team member is also leaving GSA:
+
 - [ ] Request the user be removed from Federalist by posting to [#federalist-support](https://gsa-tts.slack.com/archives/C1NUUGTT5) with the member's GitHub username
 - [ ] Remove access from [GSA GitHub org](https://github.com/GSA/GitHub-Administration/blob/master/README.md#removing-access-to-the-gsa-organization)
 - [ ] Create "Offboard from GSA IT" ticket
