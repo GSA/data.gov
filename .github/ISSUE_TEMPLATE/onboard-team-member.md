@@ -40,6 +40,7 @@ Below are the tasks that will drive the onboarding process.
       Make a PR on [the Terraform file controlling access](https://github.com/18F/aws-admin/blob/main/terraform/datagov-iam.tf) to add the new person and include them in the appropriate user_groups.
 - [ ] Request Federalist access by posting in [#federalist-support](https://gsa-tts.slack.com/archives/C1NUUGTT5) with the new member's GitHub username.
 - [ ] Once member had logged into Login.gov, add them to the [data.gov team](https://dashboard.int.identitysandbox.gov/teams/174).
+- [ ] Add team member as form manager to any Data.gov [Touchpoints](https://touchpoints.app.cloud.gov/)
 
 For new Project Management Office team members, follow these additional steps:
 
