@@ -44,6 +44,7 @@ These tasks are performed by a team admin:
 - [ ] Remove team member from PyPI packages:
   - [ckanext-dcat-usmetadata](https://pypi.org/project/ckanext-dcat-usmetadata/)
 - [ ] Remove team member from [Google Search Console](https://search.google.com/)
+- [ ] Remove team member from any Data.gov [Touchpoints](https://touchpoints.app.cloud.gov/)
 
 If team member is also leaving TTS:
 
