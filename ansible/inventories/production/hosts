@@ -37,7 +37,6 @@ catalogbweb[1:2]p.prod-ocsit.bsp.gsa.gov
 dashboard-web-v2
 
 [dashboard-web-v2]
-dashboardweb[1:2]p.prod-ocsit.bsp.gsa.gov
 
 [efk_nginx]
 [elasticsearch]
