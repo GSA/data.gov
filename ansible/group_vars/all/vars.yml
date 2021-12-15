@@ -38,9 +38,6 @@ datagov_team_email: datagovhelp@gsa.gov
 # This list is used to authorize operators to the BSP environments
 # (production/staging). Please keep this list in alphabetical order.
 datagov_operators_production:
-  - username: adborden
-    email: aaron.borden@gsa.gov
-    public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDFtWXnfXkTvUrcGxsColboVWfaRAB57vqA0zbsz3bHXh0XngTEaOrGiT3Eg9ep6a5YZJnsO83DIfdNllYWRE45PaJsAxcTKoBZ/KRJXCVODnj/H0CoccHFCUexOpIJWjCs4IjlGRgVnp9s7DMeh021XYVUE1CeXFFLZVLpbWpDC4PkmdolD3Lu/8LJ4YkXGSmEGvzf1eVneekW301g4fhIbI9k3zZSqknpIPjVh2ZNUNssJ0K8hRSuWbyE4neTXLUlJ9gdXLXIVbpPQW/ny56jz2h9G0ImLChHit80v19WEgCH3E84Bp7hiGz2q5tW5flTOcSluCd0n7xeD0zeh5wL datagov-adborden
   - username: fxia
     email: fuhu.xia@gsa.gov
     public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3THO5PQvZoEGscVKh1RdnCEyfW62f41H8NaGNj7faV1TO2ngo1U/WyKvf1QnOanllGaPQLYeE0tsmXChz6tbKErssL04Zux+UEUfU2MHLhqsb3IkAvIKjYGIl9gvFRYDslvSxZjCXtRA+egqZlmgXpJ2+nYLMPjar3nxnN/8Je+dTIgX0EGCtOPLC8ouvSg7ZEwIf7D3C4HT/kvvGyFUDj/hUgVpxqUTaeO2ILoCgyHvAqS0hy3Fn1uStAZJ6cbub7AnmGvo4CJqamx8zVzepFBQk0+Kcsp92hXclSrsi9m/UpeCbmL0k6VbamKZHEcJUC4CfvsJ2yGT0EoMO+l5l fuhu.xia@gsa.gov
@@ -64,9 +61,6 @@ datagov_operators_production:
 # This list is used to authorize operators to the sandbox environments.  Please
 # keep this list in alphabetical order.
 datagov_operators_test:
-  - username: adborden
-    email: aaron.borden@gsa.gov
-    public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDFtWXnfXkTvUrcGxsColboVWfaRAB57vqA0zbsz3bHXh0XngTEaOrGiT3Eg9ep6a5YZJnsO83DIfdNllYWRE45PaJsAxcTKoBZ/KRJXCVODnj/H0CoccHFCUexOpIJWjCs4IjlGRgVnp9s7DMeh021XYVUE1CeXFFLZVLpbWpDC4PkmdolD3Lu/8LJ4YkXGSmEGvzf1eVneekW301g4fhIbI9k3zZSqknpIPjVh2ZNUNssJ0K8hRSuWbyE4neTXLUlJ9gdXLXIVbpPQW/ny56jz2h9G0ImLChHit80v19WEgCH3E84Bp7hiGz2q5tW5flTOcSluCd0n7xeD0zeh5wL datagov-adborden
   - username: fxia
     email: fuhu.xia@gsa.gov
     public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3THO5PQvZoEGscVKh1RdnCEyfW62f41H8NaGNj7faV1TO2ngo1U/WyKvf1QnOanllGaPQLYeE0tsmXChz6tbKErssL04Zux+UEUfU2MHLhqsb3IkAvIKjYGIl9gvFRYDslvSxZjCXtRA+egqZlmgXpJ2+nYLMPjar3nxnN/8Je+dTIgX0EGCtOPLC8ouvSg7ZEwIf7D3C4HT/kvvGyFUDj/hUgVpxqUTaeO2ILoCgyHvAqS0hy3Fn1uStAZJ6cbub7AnmGvo4CJqamx8zVzepFBQk0+Kcsp92hXclSrsi9m/UpeCbmL0k6VbamKZHEcJUC4CfvsJ2yGT0EoMO+l5l fuhu.xia@gsa.gov
