@@ -7,14 +7,14 @@ verify_ssl = true
 molecule = {extras = ["docker"],version = "~=3.2.1"}
 # Temporarily work-around issue in 4.3.0
 ansible-lint = "<4.3.0"
-ansible = "~=2.8.15"
+ansible = "~=4.10.0"
 selinux = "*"
 pytest = "*"
 testinfra = "*"
 yamllint = "*"
 
 [packages]
-ansible = "~=2.8.15"
+ansible = "~=4.10.0"
 boto = "*"
 
 [requires]
