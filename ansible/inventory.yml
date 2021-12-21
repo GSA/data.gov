@@ -16,37 +16,37 @@
     - name: flush handlers
       meta: flush_handlers
 
-    - name: assert datapusher is up
-      uri:
-        url: http://localhost:8800
-        follow_redirects: none
-        status_code: 200
-        validate_certs: false
-      retries: 10
-      delay: 10
-      register: result
-      until: not result.failed
-      become: false
-      when: datagov_in_service | default(true)
-      tags:
-        - smoke
+    # - name: assert datapusher is up
+    #   uri:
+    #     url: http://localhost:8800
+    #     follow_redirects: none
+    #     status_code: 200
+    #     validate_certs: false
+    #   retries: 10
+    #   delay: 10
+    #   register: result
+    #   until: not result.failed
+    #   become: false
+    #   when: datagov_in_service | default(true)
+    #   tags:
+    #     - smoke
 
-    - name: assert app is up
-      uri:
-        url: https://{{ ansible_fqdn }}/api/action/status_show
-        follow_redirects: none
-        status_code: 200
-        # TODO enable cert validation. Staging and production hosts have GSA
-        # signed certs which should be valid.
-        # https://github.com/GSA/datagov-deploy/issues/900
-        validate_certs: false
-      retries: 10
-      delay: 10
-      register: result
-      until: not result.failed
-      when: datagov_in_service | default(true)
-      tags:
-        - smoke
+    # - name: assert app is up
+    #   uri:
+    #     url: https://{{ ansible_fqdn }}/api/action/status_show
+    #     follow_redirects: none
+    #     status_code: 200
+    #     # TODO enable cert validation. Staging and production hosts have GSA
+    #     # signed certs which should be valid.
+    #     # https://github.com/GSA/datagov-deploy/issues/900
+    #     validate_certs: false
+    #   retries: 10
+    #   delay: 10
+    #   register: result
+    #   until: not result.failed
+    #   when: datagov_in_service | default(true)
+    #   tags:
+    #     - smoke
 
 
 - name: logrotate configuration
@@ -65,42 +65,42 @@
             - rotate 8
 
 
-- name: Service-level smoke tests
-  hosts: inventory-next
-  tags:
-    - smoke
-  tasks:
-    - name: flush handlers
-      meta: flush_handlers
+# - name: Service-level smoke tests
+#   hosts: inventory-next
+#   tags:
+#     - smoke
+#   tasks:
+#     - name: flush handlers
+#       meta: flush_handlers
 
-    - name: assert inventory service is available
-      uri:
-        url: "{{ inventory_ckan_service_url }}/api/action/status_show"
-        follow_redirects: none
-        status_code: 200
-        # TODO enable cert validation. Staging and production hosts have GSA
-        # signed certs which should be valid.
-        # https://github.com/GSA/datagov-deploy/issues/900
-        validate_certs: false
-        headers:
-          # Avoid login redirect
-          Cookie: auth_tkt=1
-      run_once: true
-      delegate_to: localhost
-      become: false
-      retries: 3
-      delay: 10
-      register: result
-      until: not result.failed
+#     - name: assert inventory service is available
+#       uri:
+#         url: "{{ inventory_ckan_service_url }}/api/action/status_show"
+#         follow_redirects: none
+#         status_code: 200
+#         # TODO enable cert validation. Staging and production hosts have GSA
+#         # signed certs which should be valid.
+#         # https://github.com/GSA/datagov-deploy/issues/900
+#         validate_certs: false
+#         headers:
+#           # Avoid login redirect
+#           Cookie: auth_tkt=1
+#       run_once: true
+#       delegate_to: localhost
+#       become: false
+#       retries: 3
+#       delay: 10
+#       register: result
+#       until: not result.failed
 
-    - name: no Server info disclosed in response headers
-      # gunicorn prior to version 20.1.0 adds "server" header.
-      # Nginx/Apache adds "Server".
-      fail:
-        msg : >
-          Server info disclosed as
-          {{ result.server if result.server is defined else result.Server }}
-      when: >
-        ( result.server is defined and result.server | length > 0 )
-        or
-        ( result.Server is defined and result.Server | length > 0 )
+#     - name: no Server info disclosed in response headers
+#       # gunicorn prior to version 20.1.0 adds "server" header.
+#       # Nginx/Apache adds "Server".
+#       fail:
+#         msg : >
+#           Server info disclosed as
+#           {{ result.server if result.server is defined else result.Server }}
+#       when: >
+#         ( result.server is defined and result.server | length > 0 )
+#         or
+#         ( result.Server is defined and result.Server | length > 0 )
