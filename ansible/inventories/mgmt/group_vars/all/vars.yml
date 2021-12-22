@@ -110,9 +110,6 @@ jenkins_jobs:
   - name: deploy-ci-app-catalog-next
     git_url: https://github.com/gsa/catalog.data.gov.git
     git_ref: fcs
-  - name: deploy-ci-app-inventory
-    git_url: https://github.com/gsa/inventory-app.git
-    git_ref: fcs
   - name: deploy-ci-app-wordpress
     git_url: https://github.com/gsa/datagov-wp-boilerplate.git
     git_ref: fcs

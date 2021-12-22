@@ -41,7 +41,6 @@ dashboard-web-v2
 [elasticsearch]
 
 [inventory-next]
-inventory-[1:2]d.dev-ocsit.bsp.gsa.gov
 
 [jumpbox:children]
 jumpbox-v2
