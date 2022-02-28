@@ -31,7 +31,6 @@ datagov-solr1tf.internal.sandbox.datagov.us
 jenkins1tf.internal.sandbox.datagov.us
 
 [wordpress-web]
-wordpress-web1tf.internal.sandbox.datagov.us
 
 [v2]
 # TODO when admin-catalog is removed, we can remove catalog-classic in
