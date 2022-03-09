@@ -19,10 +19,10 @@ catalog_ckan_plugins_default: "{{ catalog_next_ckan_plugins_default }}"
 catalog_ckan_plugins_additional: [saml2auth]
 
 # login.gov identity sandbox
-saml2_idp_metadata_url: "https://idp.int.identitysandbox.gov/api/saml/metadata2021"
+saml2_idp_metadata_url: "https://idp.int.identitysandbox.gov/api/saml/metadata2022"
 catalog_ckan_saml2_entity_id: urn:gov:gsa:SAML:2.0.profiles:sp:sso:gsa:datagov-sandbox-catalog
 saml2_site_url: "https://catalog-next.sandbox.datagov.us/"
-saml2_idp_url: https://idp.int.identitysandbox.gov/api/saml/auth2021
+saml2_idp_url: https://idp.int.identitysandbox.gov/api/saml/auth2022
 saml2_sp_private_key: "{{ vault_catalog_next_saml2_sp_private_key }}"
 saml2_sp_public_certificate: |
   -----BEGIN CERTIFICATE-----
