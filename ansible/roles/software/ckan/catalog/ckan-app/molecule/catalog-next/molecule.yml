@@ -30,10 +30,10 @@ provisioner:
         ckan_production_ini_template: catalog-next/etc_ckan_production.ini.j2
         catalog_ckan_saml2_enabled: true
         catalog_ckan_who_ini_path: "catalog-next/etc_ckan_who.saml2.ini.j2"
-        saml2_idp_metadata_url: "https://idp.int.identitysandbox.gov/api/saml/metadata2021"
+        saml2_idp_metadata_url: "https://idp.int.identitysandbox.gov/api/saml/metadata2022"
         saml2_site_url: "https://catalog-next.sandbox.datagov.us/"
         catalog_ckan_saml2_entity_id: "urn:gov:gsa:SAML:2.0.profiles:sp:sso:datagovus:catalog-next-sandbox"
-        saml2_idp_url: https://idp.int.identitysandbox.gov/api/saml/auth2021
+        saml2_idp_url: https://idp.int.identitysandbox.gov/api/saml/auth2022
         saml2_sp_public_certificate: |-
           -----BEGIN CERTIFICATE-----
           MIIEGTCCAwGgAwIBAgIJAL+dmeInc15LMA0GCSqGSIb3DQEBCwUAMIGiMQswCQYD
