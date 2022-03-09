@@ -41,7 +41,7 @@ ckan_production_ini_template: inventory-next/etc_ckan_production.ini.j2
 inventory_ckan_who_ini_path: inventory-next/etc_ckan_who.saml2.ini.j2
 
 # login.gov identity sandbox
-saml2_idp_metadata_url: "https://idp.int.identitysandbox.gov/api/saml/metadata2021"
+saml2_idp_metadata_url: "https://idp.int.identitysandbox.gov/api/saml/metadata2022"
 saml2_site_url: "https://inventory-next.sandbox.datagov.us/"
 
 saml2_sp_public_certificate: "{{ vault_inventory_next_saml2_sp_public_certificate }}"
