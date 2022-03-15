@@ -116,8 +116,8 @@ jenkins_saml_sp_entity_id: urn:gov:gsa:SAML:2.0.profiles:sp:sso:gsa:datagov-ci-j
 jenkins_saml_keystore_password: "{{ vault_jenkins_saml_keystore_password }}"
 jenkins_saml_keystore_path: "{{ playbook_dir }}/files/mgmt/saml-key.jks"
 jenkins_saml_private_key_password: "{{ vault_jenkins_saml_private_key_password }}"
-jenkins_saml_idp_metadata_url: https://secure.login.gov/api/saml/metadata2021
-jenkins_saml_idp_logout_url: https://secure.login.gov/api/saml/logout2021
+jenkins_saml_idp_metadata_url: https://secure.login.gov/api/saml/metadata2022
+jenkins_saml_idp_logout_url: https://secure.login.gov/api/saml/logout2022
 jenkins_system_message: >
   Data.gov continuous integration and delivery service.
 jenkins_home: /data/jenkins
