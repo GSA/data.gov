@@ -40,7 +40,7 @@
   src: https://github.com/GSA/ansible-os-ubuntu-16
   version: 1.0.4
 - name: gsa.datagov-deploy-dashboard
-  src: https://github.com/gsa/data.gov-dashboard
+  src: https://github.com/gsa/datagov-deploy-dashboard
   version: v1.2.1
 - name: gsa.datagov-deploy-apache2
   src: https://github.com/gsa/data.gov-apache2
