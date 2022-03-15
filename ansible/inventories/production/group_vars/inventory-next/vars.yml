@@ -46,7 +46,7 @@ inventory_ckan_saml2_requested_authn_context:
   - http://idmanagement.gov/ns/assurance/aal/3?hspd12=true
 
 # login.gov identity sandbox
-saml2_idp_metadata_url: "https://secure.login.gov/api/saml/metadata2021"
+saml2_idp_metadata_url: "https://secure.login.gov/api/saml/metadata2022"
 saml2_site_url: "https://inventory.data.gov/"
 
 saml2_sp_public_certificate: "{{ vault_inventory_next_saml2_sp_public_certificate }}"
