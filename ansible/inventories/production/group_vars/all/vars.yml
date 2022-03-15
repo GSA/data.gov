@@ -124,7 +124,7 @@ dashboard_nginx_server_name: labs.data.gov $hostname {{ ansible_default_ipv4.add
 dashboard_service_url: https://labs.data.gov/dashboard
 php_cli_memory_limit: 3192M
 
-# data.gov-wide variables
+# datagov-deploy-wide variables
 datagov_environment: production
 
 

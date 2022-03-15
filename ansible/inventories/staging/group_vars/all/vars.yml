@@ -121,7 +121,7 @@ products:
 dashboard_nginx_server_name: dashboard-datagov.dev-ocsit.bsp.gsa.gov $hostname {{ ansible_default_ipv4.address }}
 dashboard_service_url: https://dashboard-datagov.dev-ocsit.bsp.gsa.gov
 
-# data.gov-wide variables
+# datagov-deploy-wide variables
 datagov_environment: staging
 datagov_serial: "100%"
 

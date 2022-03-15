@@ -54,7 +54,7 @@ dashboard_nginx_server_name: dashboard.sandbox.datagov.us $hostname {{ ansible_d
 dashboard_service_url: https://dashboard.sandbox.datagov.us
 
 
-# data.gov-wide variables
+# datagov-deploy-wide variables
 datagov_enable_postgresql_role: true
 datagov_environment: sandbox
 datagov_sandbox_env: sandbox

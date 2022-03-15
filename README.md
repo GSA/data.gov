@@ -25,7 +25,7 @@ Additionally, each host is configured with common Services:
   - Filebeat (Logging)
   - New Relic (Infrastructure Monitoring)
   - Trendmicro (OSSEC-HIDS)
-  - [and more...](https://github.com/gsa/data.gov-common)
+  - [and more...](https://github.com/gsa/datagov-deploy-common)
 
 See our [Roadmap](docs/roadmap.md) for where we're taking Data.gov.
 

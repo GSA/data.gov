@@ -43,28 +43,28 @@
   src: https://github.com/gsa/datagov-deploy-dashboard
   version: v1.2.1
 - name: gsa.datagov-deploy-apache2
-  src: https://github.com/gsa/data.gov-apache2
+  src: https://github.com/gsa/datagov-deploy-apache2
   version: v1.3.2
 - name: gsa.datagov-deploy-common
-  src: https://github.com/gsa/data.gov-common
+  src: https://github.com/gsa/datagov-deploy-common
   version: v4.3.3
 - name: gsa.datagov-deploy-fgdc2iso
-  src: https://github.com/gsa/data.gov-fgdc2iso
+  src: https://github.com/gsa/datagov-deploy-fgdc2iso
   version: v1.0.4
 - name: gsa.datagov-deploy-jenkins
-  src: https://github.com/gsa/data.gov-jenkins
+  src: https://github.com/gsa/datagov-deploy-jenkins
   version: v2.1.1
 - name: gsa.datagov-deploy-jumpbox
-  src: https://github.com/gsa/data.gov-jumpbox
+  src: https://github.com/gsa/datagov-deploy-jumpbox
   version: v2.3.0
 - name: gsa.datagov-deploy-redis
-  src: https://github.com/gsa/data.gov-redis
+  src: https://github.com/gsa/datagov-deploy-redis
   version: v1.0.2
 - name: gsa.datagov-deploy-solr
-  src: https://github.com/gsa/data.gov-solr.git
+  src: https://github.com/gsa/datagov-deploy-solr.git
   version: v1.2.1
 - name: gsa.datagov-deploy-wordpress
-  src: https://github.com/gsa/data.gov-wordpress.git
+  src: https://github.com/gsa/datagov-deploy-wordpress.git
   version: v1.1.1
 - name: jnv.unattended-upgrades
   version: v1.8.0

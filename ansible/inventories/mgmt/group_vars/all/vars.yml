@@ -22,7 +22,7 @@ products:
   - filebeat
 
 
-# data.gov-wide variables
+# datagov-deploy-wide variables
 datagov_environment: mgmt
 default_tls_host_key: "{{ vault_default_tls_host_key }}"
 default_tls_host_certificate: |-
