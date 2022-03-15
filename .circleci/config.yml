@@ -31,7 +31,7 @@ jobs:
       - run:
           name: install snyk
           command: sudo npm install -g snyk
-      - run: snyk monitor --project-name=GSA/datagov-deploy --org=data.gov
+      - run: snyk monitor --project-name=GSA/data.gov --org=data.gov
 
   snyk-test:
     docker:
