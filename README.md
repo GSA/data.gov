@@ -1,6 +1,6 @@
 [![CircleCI](https://circleci.com/gh/GSA/datagov-deploy.svg?style=svg)](https://circleci.com/gh/GSA/datagov-deploy)
 
-# datagov-deploy
+# data.gov main repository
 
 _Note: most of the information in this repo refers to the "frozen" FCS environments of
 data.gov. If you are looking for documentation for cloud.gov environments, see
