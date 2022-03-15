@@ -331,4 +331,4 @@ If approved, you may merge immediately or leave it to the author. A single
 approval is all that is needed to merge.
 
 
-[datagov-deploy]: https://github.com/gsa/data.gov
+[data.gov]: https://github.com/gsa/data.gov
