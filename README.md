@@ -9,7 +9,7 @@ the application repositories._
 This is the main repository for the Data.gov Platform. We use this repository to
 [track our team's work](https://app.zenhub.com/workspaces/datagov-devsecops-579a2532d1d6ea9c3fcf5cfa/board)
 and for our [Ansible](https://www.ansible.com) playbooks that deploy the
-[Data.gov site components](https://github.com/GSA/datagov-deploy/wiki/Site-components) to FCS:
+[Data.gov site components](https://github.com/gsa/data.gov/wiki/Site-components) to FCS:
 
   - www.data.gov (WordPress)
   - catalog.data.gov (CKAN 2.8)
@@ -25,7 +25,7 @@ Additionally, each host is configured with common Services:
   - Filebeat (Logging)
   - New Relic (Infrastructure Monitoring)
   - Trendmicro (OSSEC-HIDS)
-  - [and more...](https://github.com/GSA/datagov-deploy-common)
+  - [and more...](https://github.com/gsa/data.gov-common)
 
 See our [Roadmap](docs/roadmap.md) for where we're taking Data.gov.
 
@@ -36,7 +36,7 @@ Production and staging environments are deployed to FAS Cloud Services (FCS,
 formerly BSP). Our sandbox environments are provisioned by
 [GSA/datagov-infrastructure-live](https://github.com/gsa/datagov-infrastructure-live).
 
-GSA [VPN access](https://github.com/GSA/datagov-deploy/wiki/GSA-VPN) is required to access production and staging.
+GSA [VPN access](https://github.com/gsa/data.gov/wiki/GSA-VPN) is required to access production and staging.
 
 Environment | Deployment branch                      | ISP         | Jumpbox
 ----------- | -----------------                      | ---         | ----
@@ -143,7 +143,7 @@ Install the common Services.
 Upgrade OS packages as a one-off command on all hosts. _Note: If you find you're
 doing one-off ansible commands often, then you should consider creating
 a [situational
-playbook](https://github.com/GSA/datagov-deploy/tree/master/ansible/actions)._
+playbook](https://github.com/gsa/data.gov/tree/master/ansible/actions)._
 
     $ ansible -m apt -a 'update_cache=yes upgrade=dist' all
 

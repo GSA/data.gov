@@ -77,7 +77,7 @@
         status_code: 200
         # TODO enable cert validation. Staging and production hosts have GSA
         # signed certs which should be valid.
-        # https://github.com/GSA/datagov-deploy/issues/900
+        # https://github.com/gsa/data.gov/issues/900
         validate_certs: false
       register: result
       retries: 3
@@ -101,7 +101,7 @@
         status_code: 200
         # TODO enable cert validation. Staging and production hosts have GSA
         # signed certs which should be valid.
-        # https://github.com/GSA/datagov-deploy/issues/900
+        # https://github.com/gsa/data.gov/issues/900
         validate_certs: false
       run_once: true
       delegate_to: localhost

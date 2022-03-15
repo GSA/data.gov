@@ -10,7 +10,7 @@
     Verified with CKAN 2.8/2.9 on AWS and local postgres db
 
     More discussion can be found here:
-    https://github.com/GSA/datagov-deploy/issues/2038
+    https://github.com/gsa/data.gov/issues/2038
 '''
 
 import ConfigParser

@@ -132,7 +132,7 @@ jenkins_job_authentication_token: "{{ vault_jenkins_job_authentication_token }}"
 jenkins_job_use_polling: true
 jenkins_jobs:
   - name: deploy-ci-platform
-    git_url: https://github.com/gsa/datagov-deploy.git
+    git_url: https://github.com/gsa/data.gov.git
     git_ref: develop
   - name: deploy-ci-app-catalog-next
     git_url: https://github.com/gsa/catalog.data.gov.git
@@ -273,7 +273,7 @@ newrelic_license_key: "{{ nrinfragent_license_key }}"
 # postfix
 default_email_from: no-reply@datagov.us
 # I've left some breadcrumbs from my testing of
-# https://github.com/GSA/datagov-deploy/issues/1796 below in case we pick up
+# https://github.com/gsa/data.gov/issues/1796 below in case we pick up
 # that work.
 postfix_install:
   - postfix
@@ -299,7 +299,7 @@ postfix_transport_maps:
     result: "discard:"
 postfix_raw_options:
   - |
-    # Postfix needs a value set https://github.com/GSA/datagov-deploy/issues/1795
+    # Postfix needs a value set https://github.com/gsa/data.gov/issues/1795
     smtpd_relay_restrictions = permit_mynetworks, reject_unauth_destination
 # Configure postfix as an email sink: rewrite all recipients to root local user
 #postfix_recipient_canonical_maps:

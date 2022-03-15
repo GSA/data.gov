@@ -6,14 +6,14 @@ ignore:
     - '*':
         reason: >-
           solaris_zone module is not used, fix requires ansible 2.9
-          https://github.com/gsa/datagov-deploy/issues/893
+          https://github.com/gsa/data.gov/issues/893
         expires: 2022-03-31T00:00:00.000Z
 
   SNYK-PYTHON-ANSIBLE-1297166:
     - '*':
         reason: >-
           Ansible 3.0 upgrade work has a March2021 milestone
-          https://github.com/GSA/datagov-deploy/issues/893
+          https://github.com/gsa/data.gov/issues/893
         expires: 2022-03-31T00:00:00.000Z
 
   SNYK-PYTHON-ANSIBLE-1292152:
