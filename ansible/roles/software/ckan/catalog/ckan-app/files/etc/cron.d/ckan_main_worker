@@ -1,1 +1,1 @@
-# */3 * * * * root supervisorctl start harvest-run > /dev/null
+*/3 * * * * root supervisorctl start harvest-run > /dev/null

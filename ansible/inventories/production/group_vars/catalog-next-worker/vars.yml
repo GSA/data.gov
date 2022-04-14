@@ -3,7 +3,7 @@ datagov_app_process: worker
 
 catalog_app_type: worker
 
-datagov_in_service: false
+datagov_in_service: true
 
 # catalog-workers write to database
 catalog_ckan_db_host: "{{ catalog_next_ckan_db_primary_host }}"
