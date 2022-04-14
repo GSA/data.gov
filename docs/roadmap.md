@@ -28,7 +28,7 @@ Cloud migration          | <img src="https://img.shields.io/badge/status-started
 
 ### Continuous Integration
 
-[datagov-deploy](https://github.com/GSA/datagov-deploy) is a huge repo and
+[data.gov](https://github.com/gsa/data.gov) is a huge repo and
 difficult to develop on. We're breaking out roles into individual repos that can
 are easier to develop and test.
 

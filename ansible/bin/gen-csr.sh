@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# https://github.com/GSA/datagov-deploy/wiki/TLS-SSL-Certificates
+# https://github.com/gsa/data.gov/wiki/TLS-SSL-Certificates
 #
 # Generates a CSR for a list of domains suitable for the GSA certificate
 # program. SANs are read from stdin.

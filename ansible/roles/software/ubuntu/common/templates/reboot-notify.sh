@@ -18,5 +18,5 @@ to reboot this host.
 
 --
 reboot-notify is a cron job configured for Data.gov
-https://github.com/GSA/datagov-deploy
+https://github.com/gsa/data.gov
 EOF

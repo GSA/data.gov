@@ -93,7 +93,7 @@ pipeline {
       archiveArtifacts artifacts: 'datagov-deploy.tar.gz', onlyIfSuccessful: true
     }
     always {
-      step([$class: 'GitHubIssueNotifier', issueAppend: true, issueRepo: 'https://github.com/GSA/datagov-deploy.git'])
+      step([$class: 'GitHubIssueNotifier', issueAppend: true, issueRepo: 'https://github.com/gsa/data.gov.git'])
     }
   }
 }

@@ -22,7 +22,7 @@ products:
   - filebeat
 
 
-# data.gov-wide variables
+# datagov-deploy-wide variables
 datagov_environment: mgmt
 default_tls_host_key: "{{ vault_default_tls_host_key }}"
 default_tls_host_certificate: |-
@@ -106,7 +106,7 @@ jenkins_job_authentication_token: "{{ vault_jenkins_job_authentication_token }}"
 jenkins_job_use_polling: true
 jenkins_jobs:
   - name: deploy-ci-platform
-    git_url: https://github.com/gsa/datagov-deploy.git
+    git_url: https://github.com/gsa/data.gov.git
   - name: deploy-ci-app-catalog-next
     git_url: https://github.com/gsa/catalog.data.gov.git
     git_ref: fcs
@@ -151,7 +151,7 @@ postfix_raw_options:
     smtpd_tls_mandatory_ciphers = high
     smtpd_tls_mandatory_exclude_ciphers = aNULL, MD5
   - |
-    # Postfix needs a value set https://github.com/GSA/datagov-deploy/issues/1795
+    # Postfix needs a value set https://github.com/gsa/data.gov/issues/1795
     smtpd_relay_restrictions = permit_mynetworks, reject_unauth_destination
 postfix_relayhost: smtp.gsa.gov
 postfix_relayhost_port: 25

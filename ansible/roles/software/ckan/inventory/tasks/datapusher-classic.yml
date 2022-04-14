@@ -11,7 +11,7 @@
     build_pkg_requirements: "{{ datapusher_build_pkg_requirements }}"
     virtualenv: "{{ datapusher_virtual_env }}"
 
-# TODO remove this code to resolve https://github.com/GSA/datagov-deploy/issues/1177
+# TODO remove this code to resolve https://github.com/gsa/data.gov/issues/1177
 - name: "Datapusher json content-type temp fix (content-type: application/json does not work now)"
   replace:
     dest: /usr/lib/datapusher/lib/python2.7/site-packages/ckanserviceprovider/web.py

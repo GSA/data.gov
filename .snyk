@@ -21,12 +21,14 @@ ignore:
           https://github.com/gsa/data.gov/issues/893
         expires: 2022-09-31T00:00:00.000Z
 
+
   SNYK-PYTHON-ANSIBLE-1297166:
     - '*':
         reason: >-
           Ansible 3.0 upgrade work has a March2021 milestone
           https://github.com/gsa/data.gov/issues/893
         expires: 2022-09-31T00:00:00.000Z
+
 
   SNYK-PYTHON-ANSIBLE-1292152:
     - '*':

@@ -124,7 +124,7 @@ dashboard_nginx_server_name: labs.data.gov $hostname {{ ansible_default_ipv4.add
 dashboard_service_url: https://labs.data.gov/dashboard
 php_cli_memory_limit: 3192M
 
-# data.gov-wide variables
+# datagov-deploy-wide variables
 datagov_environment: production
 
 
@@ -287,7 +287,7 @@ postfix_raw_options:
     smtpd_tls_mandatory_ciphers = high
     smtpd_tls_mandatory_exclude_ciphers = aNULL, MD5
   - |
-    # Postfix needs a value set https://github.com/GSA/datagov-deploy/issues/1795
+    # Postfix needs a value set https://github.com/gsa/data.gov/issues/1795
     smtpd_relay_restrictions = permit_mynetworks, reject_unauth_destination
 postfix_relayhost: smtp.gsa.gov
 postfix_relayhost_port: 25

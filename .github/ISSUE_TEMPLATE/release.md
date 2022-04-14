@@ -4,7 +4,7 @@ about: A ticket tracking each release
 ---
 ## Release MM/DD/YYYY
 
-Roll out [updates/release to production](https://github.com/GSA/datagov-deploy/wiki/Releases) so that the latest bug fixes and feature code is available.
+Roll out [updates/release to production](https://github.com/gsa/data.gov/wiki/Releases) so that the latest bug fixes and feature code is available.
 
 ### Acceptance Criteria
 

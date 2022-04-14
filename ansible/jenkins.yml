@@ -67,7 +67,7 @@
         status_code: 200,403
         # TODO enable cert validation. Staging and production hosts have GSA
         # signed certs which should be valid.
-        # https://github.com/GSA/datagov-deploy/issues/900
+        # https://github.com/gsa/data.gov/issues/900
         validate_certs: false
       register: result
       until: (result.status == 403 or result.status == 200) and (result.content.find("Please wait while") == -1)

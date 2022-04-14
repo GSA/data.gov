@@ -101,7 +101,7 @@ In addition to planned work, we also track reactive work unrelated to delivering
 * Support requests requiring technical expertise to resolve
 * Onboarding and offboarding procedures
 
-For each of these types of work, a [corresponding template](https://github.com/GSA/datagov-deploy/tree/master/.github/ISSUE_TEMPLATE) provides structure for capturing necessary information. Individual work items are captured in [issues in the `GSA/datagov-deploy` GitHub repository](https://github.com/GSA/datagov-deploy/issues); [creating a new issue in that repository](https://github.com/GSA/datagov-deploy/issues/new/choose) kicks off the process for capturing and prioritizing new work.
+For each of these types of work, a [corresponding template](https://github.com/gsa/data.gov/tree/master/.github/ISSUE_TEMPLATE) provides structure for capturing necessary information. Individual work items are captured in [issues in the `GSA/datagov-deploy` GitHub repository](https://github.com/gsa/data.gov/issues); [creating a new issue in that repository](https://github.com/gsa/data.gov/issues/new/choose) kicks off the process for capturing and prioritizing new work.
 
 The collective set of open issues is visualized as cards on a [Kanban
 Board](https://app.zenhub.com/workspaces/datagov-devsecops-579a2532d1d6ea9c3fcf5cfa/board)
@@ -277,7 +277,7 @@ All deployments from the `master` branch will capture a frozen state for each ap
 Changes to the `master`/`main` should be rare and only include security or compliance updates. The application should be sequentially deployed to sandbox, staging, and then production. If there's an issue with the deploy along
 the way, the deploy should be halted and then the issue addressed (following the
 usual PR workflow) before starting a new deploy. See [application
-release](https://github.com/GSA/datagov-deploy/wiki/Releases#application-release)
+release](https://github.com/gsa/data.gov/wiki/Releases#application-release)
 for detailed manual deployment steps.
 
 
@@ -293,7 +293,7 @@ Branch | Deployed to | Frequency
 `develop` | AWS sandboxes | On push
 `master` | FCS environments | On push
 
-See [Releases](https://github.com/GSA/datagov-deploy/wiki/Releases) for details
+See [Releases](https://github.com/gsa/data.gov/wiki/Releases) for details
 on the platform deployment steps.
 
 
@@ -331,4 +331,4 @@ If approved, you may merge immediately or leave it to the author. A single
 approval is all that is needed to merge.
 
 
-[datagov-deploy]: https://github.com/GSA/datagov-deploy
+[data.gov]: https://github.com/gsa/data.gov
