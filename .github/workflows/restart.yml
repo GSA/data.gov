@@ -1,0 +1,31 @@
+---
+name: restart egress proxy
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 0 * * ?'  # every day at midnight
+
+jobs:
+  restart-egress-dev:
+    concurrency: development
+    name: restart egress (dev)
+    environment: development
+    runs-on: ubuntu-latest
+    env:
+      APP_URL: https://inventory.data.gov
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+            ref: feature/egress-proxy-restarts  # just for testing, REMOVE
+      - name: cf restart
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          command: cf restart egress-proxy-gsa-datagov-development --strategy rolling
+          cf_org: gsa-datagov
+          cf_space: development-egress
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
+      - name: egress smoke test
+        run: bin/egress-smoke.sh development
