@@ -27,5 +27,19 @@ jobs:
           cf_space: development-egress
           cf_username: ${{secrets.CF_SERVICE_USER}}
           cf_password: ${{secrets.CF_SERVICE_AUTH}}
-      - name: egress smoke test
-        run: bin/egress-smoke.sh development
+      - name: egress space smoke test
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          cf_org: gsa-datagov
+          cf_space: development-egress
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
+        run: bin/egress-smoke.sh egress
+      - name: app space smoke test
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          cf_org: gsa-datagov
+          cf_space: development-egress
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
+        run: bin/egress-smoke.sh app

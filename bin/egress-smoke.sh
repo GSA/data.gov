@@ -1,14 +1,37 @@
 #!/bin/bash
 
+# Smoke test for testing egress
+
 set -o errexit
 set -o pipefail
 set -o nounset
 set -x
 
+SPACE=$2
+ALLOW_DOMAIN="data.gov"
+DENY_DOMAIN="bing.com"
+
+function test_egress {
+    [ "$2" == "$(curl -I --silent https://"$1" | head -n 1 | cut -d$' ' -f2)" ]
+}
+
 # Application may not be fully available immediately, wait 15 seconds
 sleep 15
 
-curl --fail --silent ${APP_URL}/api/action/status_show?$(date +%s) > /dev/null
-# [ "403" == "$(curl --silent --output /dev/null --write-out %{http_code} ${APP_URL}/dataset?$(date +%s))" ]
+if [ "$SPACE" == "egress" ]; then
+    # in the egress space, the egress app itself should be able to reach anything
+    DENY_CODE=200
+elif [ "$SPACE" == "app" ]; then
+    # in the app space, the app's egress should be restricted
+    DENY_CODE=403
+else
+    false || echo 'Error: SPACE not found'
+fi
+
+test_egress "$ALLOW_DOMAIN" 200
+echo "Allow domain ok"
+
+test_egress "$DENY_DOMAIN" "$DENY_CODE"
+echo "Deny domain ok"
 
 echo ok
