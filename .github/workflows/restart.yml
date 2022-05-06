@@ -38,7 +38,7 @@ jobs:
       - name: app space smoke test
         uses: cloud-gov/cg-cli-tools@main
         with:
-          run: bin/egress-smoke.sh app
+          command: bin/egress-smoke.sh app
           cf_org: gsa-datagov
           cf_space: development-egress
           cf_username: ${{secrets.CF_SERVICE_USER}}
