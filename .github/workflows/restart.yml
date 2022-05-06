@@ -4,7 +4,7 @@ name: restart egress proxy
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 0 * * ?'  # every day at midnight
+    - cron: '0 0 * * *'  # every day at midnight
 
 jobs:
   restart-egress-dev:
