@@ -3,8 +3,13 @@ name: restart egress proxy
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *'  # every day at midnight
+  # just for testing, REMOVE
+  push:
+    branches:
+      - 'feature/egress-proxy-restarts'
+  # commented for testing, REMOVE
+  #schedule:
+    #- cron: '0 0 * * *'  # every day at midnight
 
 jobs:
   restart-egress-dev:
