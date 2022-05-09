@@ -12,7 +12,9 @@ ALLOW_DOMAIN="data.gov"
 DENY_DOMAIN="bing.com"
 
 function test_egress {
-    [ "$2" == "$(curl -I --silent https://"$1" | head -n 1 | cut -d$' ' -f2)" ]
+    DOMAIN=$1
+    CODE=$2
+    [ "$CODE" == "$(curl -I --silent https://"$DOMAIN" | head -n 1 | cut -d$' ' -f2)" ]
 }
 
 # Application may not be fully available immediately, wait 15 seconds
