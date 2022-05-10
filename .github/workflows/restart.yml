@@ -17,8 +17,6 @@ jobs:
     name: restart egress (dev)
     environment: development
     runs-on: ubuntu-latest
-    env:
-      APP_URL: https://inventory.data.gov
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -32,19 +30,22 @@ jobs:
           cf_space: development-egress
           cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
           cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
-      - name: egress space smoke test
+  restart-egress-staging:
+    concurrency: staging
+    name: restart egress (staging)
+    environment: staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          ref: feature/egress-proxy-restarts  # just for testing, REMOVE
+      - name: cf restart
         uses: cloud-gov/cg-cli-tools@main
         with:
-          command: bin/egress-smoke.sh egress
+          command: cf restart egress-proxy-gsa-datagov-staging --strategy rolling
           cf_org: gsa-datagov
-          cf_space: development-egress
+          cf_space: staging-egress
           cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
           cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
-      - name: app space smoke test
-        uses: cloud-gov/cg-cli-tools@main
-        with:
-          command: bin/egress-smoke.sh app
-          cf_org: gsa-datagov
-          cf_space: development
-          cf_username: ${{secrets.CF_SERVICE_USER}}
-          cf_password: ${{secrets.CF_SERVICE_AUTH}}
+
