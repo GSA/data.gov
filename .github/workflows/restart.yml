@@ -3,13 +3,8 @@ name: restart egress proxy
 
 on:
   workflow_dispatch:
-  # just for testing, REMOVE
-  push:
-    branches:
-      - 'feature/egress-proxy-restarts'
-  # commented for testing, REMOVE
-  #schedule:
-    #- cron: '0 0 * * *'  # every day at midnight
+  schedule:
+    - cron: '0 0 * * *'  # every day at midnight
 
 jobs:
 
@@ -21,8 +16,6 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-        with:
-          ref: feature/egress-proxy-restarts  # just for testing, REMOVE
       - name: cf restart
         uses: cloud-gov/cg-cli-tools@main
         with:
@@ -40,8 +33,6 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-        with:
-          ref: feature/egress-proxy-restarts  # just for testing, REMOVE
       - name: cf restart
         uses: cloud-gov/cg-cli-tools@main
         with:
@@ -59,8 +50,6 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-        with:
-          ref: feature/egress-proxy-restarts  # just for testing, REMOVE
       - name: cf restart
         uses: cloud-gov/cg-cli-tools@main
         with:
