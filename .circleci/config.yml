@@ -11,7 +11,7 @@ jobs:
           keys:
             - v6-pipenv-{{ checksum "Pipfile.lock" }}
             - v6-pipenv-
-      - run: pipenv sync --dev
+      - run: echo Test; pipenv sync --dev
       - run: pipenv run make vendor
       - run: pipenv run make lint
 
