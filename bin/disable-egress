@@ -1,0 +1,47 @@
+#!/bin/bash
+set -e
+set -o pipefail
+
+help()
+{
+    echo
+    echo "$0: disables egress proxy for a given app."
+    echo "Syntax: disable-egress <APP>"
+    echo "  <APP> must be a valid cf app in the current space with egress enabled."
+    #echo "Options:"
+    #echo "  --space <SPACE>: #TODO"
+    echo
+    echo "To re-enable egress for an app, use enable-egress."
+    exit 1
+}
+
+app="$1"
+#startspace=$( cf target | grep space: | awk --field-separator ' ' '{ print $2 }')
+
+if [ -z "$app" ]; then
+    echo "No app provided."
+    help
+else
+    echo "Checking for app $app in space.."
+    if cf apps | awk --field-separator ' ' '{ print $1 }' | grep -q "$app"; then
+        echo "$app found."
+        echo "Unsetting environment variable http_proxy.."
+        cf unset-env "$app" http_proxy
+        echo "Unsetting environment variable https_proxy.."
+        cf unset-env "$app" https_proxy
+        echo "Checking network policy.."
+        read -r source dest protocol port space <<< "$( cf network-policies --source "$app" | tail -n +4 | cut -w -f 1-5 )"
+        #echo "source is $source"
+        #echo "dest is $dest"
+        #echo "protocol is $protocol"
+        #echo "port is $port"
+        #echo "space is $space"
+        echo "Removing network policy.."
+        cf remove-network-policy "$source" "$dest" -s "$space" --protocol "$protocol" --port "$port"
+        echo "Restarting $app.."
+        cf restart "$app"
+    else
+        echo "App not found in space."
+        help
+    fi
+fi
