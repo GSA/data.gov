@@ -1,0 +1,25 @@
+---
+name: disable egress proxy
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  disable-egress-dashboard-dev:
+    concurrency: development
+    name: disable egress dashboard (dev)
+    environment: development
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: disable egress
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          command: bin/disable-egress dashboard
+          cf_org: gsa-datagov
+          cf_space: development
+          cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
+          cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
+
