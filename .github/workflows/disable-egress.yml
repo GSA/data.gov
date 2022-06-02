@@ -74,7 +74,7 @@ jobs:
           cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
           cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
 
-  disable-egress-dasboard-stage:
+  disable-egress-dashboard-stage:
     concurrency: staging
     name: disable egress dashboard (staging)
     environment: staging
