@@ -136,7 +136,7 @@ jobs:
       - name: disable egress
         uses: cloud-gov/cg-cli-tools@main
         with:
-          command: bin/disable-egress dasboard
+          command: bin/disable-egress dashboard
           cf_org: gsa-datagov
           cf_space: production
           cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
