@@ -20,8 +20,8 @@ jobs:
           command: bin/disable-egress catalog
           cf_org: gsa-datagov
           cf_space: development
-          cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
-          cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
 
   disable-egress-dashboard-dev:
     concurrency: development
@@ -37,8 +37,8 @@ jobs:
           command: bin/disable-egress dashboard
           cf_org: gsa-datagov
           cf_space: development
-          cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
-          cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
 
   disable-egress-inventory-dev:
     concurrency: development
@@ -54,8 +54,8 @@ jobs:
           command: bin/disable-egress inventory
           cf_org: gsa-datagov
           cf_space: development
-          cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
-          cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
 
   disable-egress-catalog-stage:
     concurrency: staging
@@ -71,8 +71,8 @@ jobs:
           command: bin/disable-egress catalog
           cf_org: gsa-datagov
           cf_space: staging
-          cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
-          cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
 
   disable-egress-dashboard-stage:
     concurrency: staging
@@ -88,8 +88,8 @@ jobs:
           command: bin/disable-egress dashboard-stage
           cf_org: gsa-datagov
           cf_space: staging
-          cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
-          cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
 
   disable-egress-inventory-stage:
     concurrency: staging
@@ -105,8 +105,8 @@ jobs:
           command: bin/disable-egress inventory
           cf_org: gsa-datagov
           cf_space: staging
-          cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
-          cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
 
   disable-egress-catalog-prod:
     concurrency: production
@@ -122,8 +122,8 @@ jobs:
           command: bin/disable-egress catalog
           cf_org: gsa-datagov
           cf_space: production
-          cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
-          cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
 
   disable-egress-dasboard-prod:
     concurrency: production
@@ -139,8 +139,8 @@ jobs:
           command: bin/disable-egress dashboard
           cf_org: gsa-datagov
           cf_space: production
-          cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
-          cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
 
   disable-egress-inventory-prod:
     concurrency: production
@@ -156,6 +156,6 @@ jobs:
           command: bin/disable-egress inventory
           cf_org: gsa-datagov
           cf_space: production
-          cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
-          cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
 
