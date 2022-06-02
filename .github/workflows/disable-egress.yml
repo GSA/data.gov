@@ -76,7 +76,7 @@ jobs:
 
   disable-egress-dasboard-stage:
     concurrency: staging
-    name: disable egress dasboard (staging)
+    name: disable egress dashboard (staging)
     environment: staging
     runs-on: ubuntu-latest
     steps:
