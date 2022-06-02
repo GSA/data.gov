@@ -6,6 +6,23 @@ on:
 
 jobs:
 
+  disable-egress-catalog-dev:
+    concurrency: development
+    name: disable egress catalog (dev)
+    environment: development
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: disable egress
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          command: bin/disable-egress catalog
+          cf_org: gsa-datagov
+          cf_space: development
+          cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
+          cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
+
   disable-egress-dashboard-dev:
     concurrency: development
     name: disable egress dashboard (dev)
@@ -20,6 +37,125 @@ jobs:
           command: bin/disable-egress dashboard
           cf_org: gsa-datagov
           cf_space: development
+          cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
+          cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
+
+  disable-egress-inventory-dev:
+    concurrency: development
+    name: disable egress inventory (dev)
+    environment: development
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: disable egress
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          command: bin/disable-egress inventory
+          cf_org: gsa-datagov
+          cf_space: development
+          cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
+          cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
+
+  disable-egress-catalog-stage:
+    concurrency: staging
+    name: disable egress catalog (staging)
+    environment: staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: disable egress
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          command: bin/disable-egress catalog
+          cf_org: gsa-datagov
+          cf_space: staging
+          cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
+          cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
+
+  disable-egress-dasboard-stage:
+    concurrency: staging
+    name: disable egress dasboard (staging)
+    environment: staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: disable egress
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          command: bin/disable-egress dasboard
+          cf_org: gsa-datagov
+          cf_space: staging
+          cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
+          cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
+
+  disable-egress-inventory-stage:
+    concurrency: staging
+    name: disable egress inventory (staging)
+    environment: staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: disable egress
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          command: bin/disable-egress inventory
+          cf_org: gsa-datagov
+          cf_space: staging
+          cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
+          cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
+
+  disable-egress-catalog-prod:
+    concurrency: production
+    name: disable egress catalog (production)
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: disable egress
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          command: bin/disable-egress catalog
+          cf_org: gsa-datagov
+          cf_space: production
+          cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
+          cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
+
+  disable-egress-dasboard-prod:
+    concurrency: production
+    name: disable egress dasboard (production)
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: disable egress
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          command: bin/disable-egress dasboard
+          cf_org: gsa-datagov
+          cf_space: production
+          cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
+          cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
+
+  disable-egress-inventory-prod:
+    concurrency: production
+    name: disable egress inventory (production)
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: disable egress
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          command: bin/disable-egress inventory
+          cf_org: gsa-datagov
+          cf_space: production
           cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
           cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
 
