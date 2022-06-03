@@ -24,9 +24,9 @@ jobs:
       - name: disable egress
         uses: cloud-gov/cg-cli-tools@main
         with:
-          command: bin/disable-egress ${{ github.events.inputs.appName }}
+          command: bin/disable-egress ${{ appName }}
           cf_org: gsa-datagov
-          cf_space: ${{ github.events.inputs.appSpace }}
+          cf_space: ${{ appSpace }}
           cf_username: ${{secrets.CF_SERVICE_USER}}
           cf_password: ${{secrets.CF_SERVICE_AUTH}}
   disable-egress-staging:
@@ -41,9 +41,9 @@ jobs:
       - name: disable egress
         uses: cloud-gov/cg-cli-tools@main
         with:
-          command: bin/disable-egress ${{ github.events.inputs.appName }}
+          command: bin/disable-egress ${{ appName }}
           cf_org: gsa-datagov
-          cf_space: ${{ github.events.inputs.appSpace }}
+          cf_space: ${{ appSpace }}
           cf_username: ${{secrets.CF_SERVICE_USER}}
           cf_password: ${{secrets.CF_SERVICE_AUTH}}
   disable-egress-production:
@@ -58,8 +58,8 @@ jobs:
       - name: disable egress
         uses: cloud-gov/cg-cli-tools@main
         with:
-          command: bin/disable-egress ${{ github.events.inputs.appName }}
+          command: bin/disable-egress ${{ appName }}
           cf_org: gsa-datagov
-          cf_space: ${{ github.events.inputs.appSpace }}
+          cf_space: ${{ appSpace }}
           cf_username: ${{secrets.CF_SERVICE_USER}}
           cf_password: ${{secrets.CF_SERVICE_AUTH}}
