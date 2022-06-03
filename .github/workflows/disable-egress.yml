@@ -13,9 +13,9 @@ on:
 
 jobs:
   disable-egress:
-    concurrency: ${{ appSpace }}
+    concurrency: ${{ inputs.appSpace }}
     name: disable egress catalog (dev)
-    environment: ${{ appSpace }}
+    environment: ${{ inputs.appSpace }}
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -23,8 +23,8 @@ jobs:
       - name: disable egress
         uses: cloud-gov/cg-cli-tools@main
         with:
-          command: bin/disable-egress ${{ appName }}
+          command: bin/disable-egress ${{ inputs.appName }}
           cf_org: gsa-datagov
-          cf_space: ${{ appSpace }}
+          cf_space: ${{ inputs.appSpace }}
           cf_username: ${{secrets.CF_SERVICE_USER}}
           cf_password: ${{secrets.CF_SERVICE_AUTH}}
