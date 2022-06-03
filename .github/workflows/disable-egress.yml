@@ -12,10 +12,45 @@ on:
         required: true
 
 jobs:
-  disable-egress:
-    concurrency: ${{ inputs.appSpace }}
+  disable-egress-development:
+    if: github.event.inputs.appSpace == 'development'
+    concurrency: development
     name: disable egress catalog (dev)
-    environment: ${{ inputs.appSpace }}
+    environment: development
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: disable egress
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          command: bin/disable-egress ${{ inputs.appName }}
+          cf_org: gsa-datagov
+          cf_space: ${{ inputs.appSpace }}
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
+  disable-egress-staging:
+    if: github.event.inputs.appSpace == 'staging'
+    concurrency: staging
+    name: disable egress catalog (staging)
+    environment: staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: disable egress
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          command: bin/disable-egress ${{ inputs.appName }}
+          cf_org: gsa-datagov
+          cf_space: ${{ inputs.appSpace }}
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
+  disable-egress-production:
+    if: github.event.inputs.appSpace == 'production'
+    concurrency: production
+    name: disable egress catalog (production)
+    environment: production
     runs-on: ubuntu-latest
     steps:
       - name: checkout
