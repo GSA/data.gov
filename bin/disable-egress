@@ -36,7 +36,6 @@ else
         #echo "protocol is $protocol"
         #echo "port is $port"
         #echo "space is $space"
-        echo "Removing network policy.."
         cf remove-network-policy "$source" "$dest" -s "$space" --protocol "$protocol" --port "$port"
         echo "Restarting $app.."
         cf restart "$app"
