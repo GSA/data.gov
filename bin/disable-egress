@@ -23,14 +23,14 @@ if [ -z "$app" ]; then
     help
 else
     echo "Checking for app $app in space.."
-    if cf apps | cut -w -f 1 | grep -q -E "(^|\s)$app($|\s)"; then
+    if cf apps | cut -d " " -f 1 | grep -q -E "(^|\s)$app($|\s)"; then
         echo "$app found."
         echo "Unsetting environment variable http_proxy.."
         cf unset-env "$app" http_proxy
         echo "Unsetting environment variable https_proxy.."
         cf unset-env "$app" https_proxy
         echo "Checking network policy.."
-        read -r source dest protocol port space <<< "$( cf network-policies --source "$app" | tail -n +4 | cut -w -f 1-5 )"
+        read -r source dest protocol port space <<< "$( cf network-policies --source "$app" | tail -n +4 | cut -d " " -f 1-5 )"
         #echo "source is $source"
         #echo "dest is $dest"
         #echo "protocol is $protocol"
