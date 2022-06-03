@@ -15,7 +15,7 @@ jobs:
   disable-egress-development:
     if: github.event.inputs.appSpace == 'development'
     concurrency: development
-    name: disable egress catalog (dev)
+    name: disable egress (dev)
     environment: development
     runs-on: ubuntu-latest
     steps:
@@ -32,7 +32,7 @@ jobs:
   disable-egress-staging:
     if: github.event.inputs.appSpace == 'staging'
     concurrency: staging
-    name: disable egress catalog (staging)
+    name: disable egress (staging)
     environment: staging
     runs-on: ubuntu-latest
     steps:
@@ -49,7 +49,7 @@ jobs:
   disable-egress-production:
     if: github.event.inputs.appSpace == 'production'
     concurrency: production
-    name: disable egress catalog (production)
+    name: disable egress (production)
     environment: production
     runs-on: ubuntu-latest
     steps:
