@@ -12,6 +12,7 @@ selinux = "*"
 pytest = "*"
 testinfra = "*"
 yamllint = "*"
+cookiecutter = ">=2.1.1"
 
 [packages]
 ansible = "~=2.8.15"

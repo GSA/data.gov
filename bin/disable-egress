@@ -24,14 +24,14 @@ if [ -z "$app" ]; then
     help
 else
     echo "Checking for app $app in space.."
-    if cf apps | tr -s ' ' | cut -d " " -f 1 | grep -q -E "(^|\s)$app($|\s)"; then
+    if cf apps | tr -s ' ' | cut -d ' ' -f 1 | grep -q -E "(^|\s)$app($|\s)"; then
         echo "$app found."
         echo "Unsetting environment variable http_proxy.."
         cf unset-env "$app" http_proxy
         echo "Unsetting environment variable https_proxy.."
         cf unset-env "$app" https_proxy
         echo "Checking network policy.."
-        read -r source dest protocol port space <<< "$( cf network-policies --source "$app" | tail -n +4 | tr -s ' ' | cut -d " " -f 1-5 )"
+        read -r source dest protocol port space <<< "$( cf network-policies --source "$app" | tail -n +4 | tr -s ' ' | cut -d ' ' -f 1-5 )"
         if [ -z "$dest" ] && [ -z "$protocol" ] && [ -z "$port" ] &&  [ -z "$space" ]; then
             # network policy already empty, pass
             echo "Network policy not found, continuing.."
