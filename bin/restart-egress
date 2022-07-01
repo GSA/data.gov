@@ -2,7 +2,7 @@
 set -e
 set -o pipefail
 
-for app in $("cf apps | tail -n +4 | tr -s " " | cut -d ' ' -f 1")
+for app in $(cf apps | tail -n +4 | tr -s ' ' | cut -d ' ' -f 1)
 do
     cf restart $app
 done
