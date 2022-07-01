@@ -4,7 +4,7 @@ name: restart egress proxy
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'  # every day at midnight
+    - cron: '0 3 * * *'  # every day at 3am UTC
 
 jobs:
 
@@ -19,7 +19,7 @@ jobs:
       - name: cf restart
         uses: cloud-gov/cg-cli-tools@main
         with:
-          command: cf restart egress-proxy-gsa-datagov-development --strategy rolling
+          command: bin/restart-egress
           cf_org: gsa-datagov
           cf_space: development-egress
           cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
@@ -36,7 +36,7 @@ jobs:
       - name: cf restart
         uses: cloud-gov/cg-cli-tools@main
         with:
-          command: cf restart egress-proxy-gsa-datagov-staging --strategy rolling
+          command: bin/restart-egress
           cf_org: gsa-datagov
           cf_space: staging-egress
           cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
@@ -53,7 +53,7 @@ jobs:
       - name: cf restart
         uses: cloud-gov/cg-cli-tools@main
         with:
-          command: cf restart egress-proxy-gsa-datagov-prod --strategy rolling
+          command: bin/restart-egress
           cf_org: gsa-datagov
           cf_space: prod-egress
           cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
