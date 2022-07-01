@@ -24,7 +24,7 @@ if [ -z "$app" ]; then
     help
 else
     echo "Checking for app $app in space.."
-    if cf apps | tr -s ' ' | cut -d " " -f 1 | grep -q -E "(^|\s)$app($|\s)"; then
+    if cf apps | tr -s ' ' | cut -d ' ' -f 1 | grep -q -E "(^|\s)$app($|\s)"; then
         echo "$app found."
         echo "Unsetting environment variable http_proxy.."
         cf unset-env "$app" http_proxy
