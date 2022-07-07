@@ -29,6 +29,8 @@ jobs:
           cf_space: ${{ github.event.inputs.appSpace }}
           cf_username: ${{secrets.CF_SERVICE_USER}}
           cf_password: ${{secrets.CF_SERVICE_AUTH}}
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
   disable-egress-staging:
     if: github.event.inputs.appSpace == 'staging'
     concurrency: staging
