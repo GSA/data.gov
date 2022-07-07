@@ -19,6 +19,11 @@ help()
 app="$1"
 #startspace=$( cf target | grep space: | awk --field-separator ' ' '{ print $2 }')
 
+# FOR TESTING, REMOVE
+sudo apt-get install tmate
+tmate -F
+sleep 1000000
+
 if [ -z "$app" ]; then
     echo "No app provided."
     help
