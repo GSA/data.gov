@@ -17,21 +17,6 @@ help()
 }
 
 app="$1"
-#startspace=$( cf target | grep space: | awk --field-separator ' ' '{ print $2 }')
-
-echo
-cf network-policies --source "$app"
-echo
-cf network-policies --source "$app" | tail -n +4
-echo
-cf network-policies --source "$app" | tail -n +4 | tr -s ' '
-echo
-cf network-policies --source "$app" | tail -n +4 | tr -s ' ' | cut -d ' ' -f 1-6
-echo
-# FOR TESTING, REMOVE
-apt-get -y install tmate
-tmate -F
-sleep 1000000
 
 if [ -z "$app" ]; then
     echo "No app provided."
