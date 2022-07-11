@@ -20,16 +20,19 @@ jobs:
     environment: development
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
+      - name: checkout datagov
         uses: actions/checkout@v3
+        with:
+          path: datagov
       - name: checkout cg-egress-proxy
         uses: actions/checkout@v3
         with:
           repository: 'GSA/cg-egress-proxy'
+          path: cg-egress-proxy
       - name: enable egress
         uses: cloud-gov/cg-cli-tools@main
         with:
-          #command: bin/enable-egress ${{ github.event.inputs.appName }} ${{ github.event.inputs.appSpace }}
+          #command: datagov/bin/enable-egress ${{ github.event.inputs.appName }} ${{ github.event.inputs.appSpace }}
           command: apt-get -y install tmate; tmate -F
           cf_org: gsa-datagov
           cf_space: ${{ github.event.inputs.appSpace }}
