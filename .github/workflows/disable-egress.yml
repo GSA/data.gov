@@ -11,6 +11,7 @@ on:
         description: 'Cloud Foundry Space'
         required: true
 
+# jobs need to be triplicated due to git hub config being in environment for each cf space
 jobs:
   disable-egress-development:
     if: github.event.inputs.appSpace == 'development'
@@ -47,7 +48,7 @@ jobs:
           cf_username: ${{secrets.CF_SERVICE_USER}}
           cf_password: ${{secrets.CF_SERVICE_AUTH}}
   disable-egress-production:
-    if: github.event.inputs.appSpace == 'production'
+    if: github.event.inputs.appSpace == 'prod'
     concurrency: production
     name: disable egress (production)
     environment: production
