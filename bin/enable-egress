@@ -27,7 +27,8 @@ elif [ -z "$space" ]; then
     echo "No app provided."
     help
 else
-    #cg-egress-proxy/bin/cf-deployproxy $app "$space-egress"
-    apt-get install tmate
-    tmate -F
+    cp "egress/acl/${app}.allow.acl" ../cg-egress-proxy/
+    cp "egress/acl/${app}.deny.acl" ../cg-egress-proxy/
+
+    cg-egress-proxy/bin/cf-deployproxy $app $space
 fi
