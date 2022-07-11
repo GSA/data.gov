@@ -1,0 +1,77 @@
+---
+name: enable egress proxy
+
+on:
+  workflow_dispatch:
+    inputs:
+      appName:
+        description: 'App Name'
+        required: true
+      appSpace:
+        description: 'Cloud Foundry Space'
+        required: true
+
+jobs:
+  enable-egress-development:
+    if: github.event.inputs.appSpace == 'development'
+    concurrency: development
+    name: enable egress (dev)
+    environment: development
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: checkout cg-egress-proxy
+        uses: actions/checkout@v3
+        with:
+          repository: 'GSA/cg-egress-proxy'
+      - name: enable egress
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          command: bin/enable-egress ${{ github.event.inputs.appName }}
+          cf_org: gsa-datagov
+          cf_space: ${{ github.event.inputs.appSpace }}
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
+  enable-egress-staging:
+    if: github.event.inputs.appSpace == 'staging'
+    concurrency: staging
+    name: enable egress (staging)
+    environment: staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: checkout cg-egress-proxy
+        uses: actions/checkout@v3
+        with:
+          repository: 'GSA/cg-egress-proxy'
+      - name: enable egress
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          command: bin/enable-egress ${{ github.event.inputs.appName }}
+          cf_org: gsa-datagov
+          cf_space: ${{ github.event.inputs.appSpace }}
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
+  enable-egress-production:
+    if: github.event.inputs.appSpace == 'production'
+    concurrency: production
+    name: enable egress (production)
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: checkout cg-egress-proxy
+        uses: actions/checkout@v3
+        with:
+          repository: 'GSA/cg-egress-proxy'
+      - name: enable egress
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          command: bin/enable-egress ${{ github.event.inputs.appName }}
+          cf_org: gsa-datagov
+          cf_space: ${{ github.event.inputs.appSpace }}
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
