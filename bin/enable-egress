@@ -17,30 +17,17 @@ help()
 }
 
 app="$1"
+space="$2"
 #startspace=$( cf target | grep space: | awk --field-separator ' ' '{ print $2 }')
 
 if [ -z "$app" ]; then
     echo "No app provided."
     help
+elif [ -z "$space" ]; then
+    echo "No app provided."
+    help
 else
-    echo "Checking for app $app in space.."
-    if cf apps | awk --field-separator ' ' '{ print $1 }' | grep -q "$app"; then
-        echo "$app found."
-        echo "Setting environment variable http_proxy.."
-        cf set-env "$app" http_proxy 'https://secretrandomuser:secretrandompassword@proxy-gsa-datagov-development-dashboard.apps.internal:8080'
-        echo "Setting environment variable https_proxy.."
-        cf set-env "$app" https_proxy 'https://secretrandomuser:secretrandompassword@proxy-gsa-datagov-development-dashboard.apps.internal:8080'
-        #echo "source is $source"
-        #echo "dest is $dest"
-        #echo "protocol is $protocol"
-        #echo "port is $port"
-        #echo "space is $space"
-        echo "Adding network policy.."
-        cf add-network-policy "$source" "$dest" -s "$space" --protocol "$protocol" --port "$port"
-        echo "Restarting $app.."
-        cf restart "$app"
-    else
-        echo "App not found in space."
-        help
-    fi
+    #cg-egress-proxy/bin/cf-deployproxy $app "$space-egress"
+    apt-get install tmate
+    tmate -F
 fi

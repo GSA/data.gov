@@ -29,7 +29,7 @@ jobs:
       - name: enable egress
         uses: cloud-gov/cg-cli-tools@main
         with:
-          command: bin/enable-egress ${{ github.event.inputs.appName }}
+          command: bin/enable-egress $${{ github.event.inputs.appName }} {{ github.event.inputs.appSpace }}
           cf_org: gsa-datagov
           cf_space: ${{ github.event.inputs.appSpace }}
           cf_username: ${{secrets.CF_SERVICE_USER}}
@@ -50,7 +50,7 @@ jobs:
       - name: enable egress
         uses: cloud-gov/cg-cli-tools@main
         with:
-          command: bin/enable-egress ${{ github.event.inputs.appName }}
+          command: bin/enable-egress $${{ github.event.inputs.appName }} {{ github.event.inputs.appSpace }}
           cf_org: gsa-datagov
           cf_space: ${{ github.event.inputs.appSpace }}
           cf_username: ${{secrets.CF_SERVICE_USER}}
@@ -71,7 +71,7 @@ jobs:
       - name: enable egress
         uses: cloud-gov/cg-cli-tools@main
         with:
-          command: bin/enable-egress ${{ github.event.inputs.appName }}
+          command: bin/enable-egress $${{ github.event.inputs.appName }} {{ github.event.inputs.appSpace }}
           cf_org: gsa-datagov
           cf_space: ${{ github.event.inputs.appSpace }}
           cf_username: ${{secrets.CF_SERVICE_USER}}
