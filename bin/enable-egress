@@ -28,8 +28,13 @@ elif [ -z "$space" ]; then
     echo "No app provided."
     help
 else
+    # cg-egress-proxy needs jq 🤷
+    if ! command -v jq &> /dev/null; then
+        apt-get install jq -y
+    fi
+
     cp "$DATAGOV_DIR/egress/acl/${app}.allow.acl" "$CG_DIR"
     cp "$DATAGOV_DIR/egress/acl/${app}.deny.acl" "$CG_DIR"
 
-    "$CG_DIR/bin/cf-deployproxy" "$app" "$space"
+    "$CG_DIR/bin/cf-deployproxy" "$app" "$space-egress"
 fi
