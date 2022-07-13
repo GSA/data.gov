@@ -36,8 +36,9 @@ jobs:
       - name: enable egress
         uses: cloud-gov/cg-cli-tools@main
         with:
-          #command: datagov/bin/enable-egress ${{ github.event.inputs.appName }} ${{ github.event.inputs.appSpace }}
-          command: apt-get -y install tmate; tmate -F
+          # tmate command for testing and debugging
+          #command: apt-get -y install tmate; tmate -F
+          command: datagov/bin/enable-egress ${{ github.event.inputs.appName }} ${{ github.event.inputs.appSpace }}
           cf_org: gsa-datagov
           cf_space: ${{ github.event.inputs.appSpace }}
           cf_username: ${{secrets.CF_SERVICE_USER}}
