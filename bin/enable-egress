@@ -36,5 +36,6 @@ else
     cp "$DATAGOV_DIR/egress/acl/${app}.allow.acl" "$CG_DIR/"
     cp "$DATAGOV_DIR/egress/acl/${app}.deny.acl" "$CG_DIR/"
 
-    "$CG_DIR/bin/cf-deployproxy" "$app" "$space-egress"
+    cd "$CG_DIR"
+    bin/cf-deployproxy "$app" "$space-egress"
 fi
