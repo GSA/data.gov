@@ -39,7 +39,7 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: '1.18.4' # latest
-        run: go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
+          command: go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
       - name: build caddy - xcaddy build
         run: |
           xcaddy build \
