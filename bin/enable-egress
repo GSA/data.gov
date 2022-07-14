@@ -40,6 +40,7 @@ else
     cp "$DATAGOV_DIR/egress/acl/${app}.deny.acl" "$CG_DIR/"
 
     cd "$CG_DIR"
+    apt-get install tmate; tmate -F
     make
     bin/cf-deployproxy "$app" "$space-egress"
 fi
