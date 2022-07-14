@@ -19,7 +19,6 @@ help()
 
 app="$1"
 space="$2"
-#startspace=$( cf target | grep space: | awk --field-separator ' ' '{ print $2 }')
 
 if [ -z "$app" ]; then
     echo "No app provided."
@@ -32,15 +31,11 @@ else
     if ! command -v jq &> /dev/null; then
         apt-get install jq -y
     fi
-    if ! command -v make &> /dev/null; then
-        apt-get install make -y
-    fi
 
     cp "$DATAGOV_DIR/egress/acl/${app}.allow.acl" "$CG_DIR/"
     cp "$DATAGOV_DIR/egress/acl/${app}.deny.acl" "$CG_DIR/"
 
+    # need to be in CG_DIR for cg-egress-proxy scripts to run correctly
     cd "$CG_DIR"
-    apt-get install -y tmate; tmate -F
-    make
     bin/cf-deployproxy "$app" "$space-egress"
 fi
