@@ -58,4 +58,85 @@ jobs:
           cf_space: ${{ github.event.inputs.appSpace }}
           cf_username: ${{secrets.CF_SERVICE_USER}}
           cf_password: ${{secrets.CF_SERVICE_AUTH}}
-# TODO: stage/prod jobs
+  enable-egress-staging:
+    if: github.event.inputs.appSpace == 'staging'
+    concurrency: staging
+    name: enable egress (staging)
+    environment: staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout datagov
+        uses: actions/checkout@v3
+        with:
+          path: ${{ env.DATAGOV_DIR }}
+      - name: checkout cg-egress-proxy
+        uses: actions/checkout@v3
+        with:
+          repository: 'GSA/cg-egress-proxy'
+          path: ${{ env.CG_DIR }}
+
+      # trying to emulate https://github.com/GSA/cg-egress-proxy/blob/main/Dockerfile
+      - name: build caddy - setup go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.18.4' # latest
+      - name: build caddy - get xcaddy
+        run: go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
+      - name: build caddy - xcaddy build
+        run: |
+          xcaddy build \
+            --with github.com/hairyhenderson/caddy-teapot-module@v0.0.3-0 \
+            --with github.com/caddyserver/forwardproxy@caddy2 \
+            --output ${{ env.CG_DIR }}/proxy/caddy
+
+      - name: enable egress
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          # tmate command for testing and debugging
+          #command: apt-get -y install tmate; tmate -F
+          command: datagov/bin/enable-egress ${{ github.event.inputs.appName }} ${{ github.event.inputs.appSpace }}
+          cf_org: gsa-datagov
+          cf_space: ${{ github.event.inputs.appSpace }}
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
+  enable-egress-production:
+    if: github.event.inputs.appSpace == 'prod'
+    concurrency: production
+    name: enable egress (prod)
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout datagov
+        uses: actions/checkout@v3
+        with:
+          path: ${{ env.DATAGOV_DIR }}
+      - name: checkout cg-egress-proxy
+        uses: actions/checkout@v3
+        with:
+          repository: 'GSA/cg-egress-proxy'
+          path: ${{ env.CG_DIR }}
+
+      # trying to emulate https://github.com/GSA/cg-egress-proxy/blob/main/Dockerfile
+      - name: build caddy - setup go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.18.4' # latest
+      - name: build caddy - get xcaddy
+        run: go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
+      - name: build caddy - xcaddy build
+        run: |
+          xcaddy build \
+            --with github.com/hairyhenderson/caddy-teapot-module@v0.0.3-0 \
+            --with github.com/caddyserver/forwardproxy@caddy2 \
+            --output ${{ env.CG_DIR }}/proxy/caddy
+
+      - name: enable egress
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          # tmate command for testing and debugging
+          #command: apt-get -y install tmate; tmate -F
+          command: datagov/bin/enable-egress ${{ github.event.inputs.appName }} ${{ github.event.inputs.appSpace }}
+          cf_org: gsa-datagov
+          cf_space: ${{ github.event.inputs.appSpace }}
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
