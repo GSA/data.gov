@@ -9,7 +9,7 @@ on:
         required: true
         type: choice
         options:
-          - catalog
+          - "catalog-web"
           - dashboard
       appSpace:
         description: 'Cloud Foundry Space'
