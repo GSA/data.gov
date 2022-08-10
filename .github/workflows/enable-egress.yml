@@ -7,9 +7,18 @@ on:
       appName:
         description: 'App Name'
         required: true
+        type: choice
+        options:
+          - "catalog-web"
+          - dashboard
       appSpace:
         description: 'Cloud Foundry Space'
         required: true
+        type: choice
+        options:
+          - development
+          - staging
+          - prod
 
 env:
   DATAGOV_DIR: datagov
