@@ -1,8 +1,0 @@
----
-- name: Solr
-  hosts: solr,solr-next
-  roles:
-    - role: geerlingguy.java
-      vars:
-        java_packages: "{{ solr_java_packages }}"
-    - role: gsa.datagov-deploy-solr

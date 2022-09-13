@@ -1,5 +1,0 @@
-# Enable viewing ansible-vault diffs by configuring the diff conversion command
-#     $ git config --global diff.ansible-vault.textconv "ansible-vault view"
-vault.yml diff=ansible-vault merge=binary
-
-Pipfile.lock merge=binary linguist-generated

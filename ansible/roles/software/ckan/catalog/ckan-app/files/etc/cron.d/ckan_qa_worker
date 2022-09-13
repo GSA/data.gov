@@ -1,1 +1,0 @@
-*/5 * * * * root supervisorctl start celery-mem-check > /dev/null

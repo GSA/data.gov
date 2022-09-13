@@ -1,7 +1,0 @@
----
-- hosts: all
-  roles:
-    - nleutner.newrelic-php
-  vars:
-    newrelic_license_key: "{{ vault_nrinfragent_license_key }}"
-    newrelic_agent_appname: "{{ inventory_hostname_short }}"

@@ -1,4 +1,0 @@
----
-catalog_ckan_worker_type: misc_worker
-catalog_enable_clean_harvest_logs: "{{ datagov_in_service | default(true) }}"
-catalog_harvest_enable_harvest_report: true

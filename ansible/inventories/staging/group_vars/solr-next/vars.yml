@@ -1,9 +1,0 @@
----
-datagov_service: solr
-
-solr_master_server: datagov-solrm1d-v2.dev-ocsit.bsp.gsa.gov
-solr_cores:
-  - catalog-next
-  - inventory-next
-
-trendmicro_policy_id: "{{ trendmicro_policy_id_app }}"

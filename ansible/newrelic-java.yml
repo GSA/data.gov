@@ -1,9 +1,0 @@
----
-- hosts: all
-  roles:
-    - monitoring/newrelic/java-agent-ansible
-  vars:
-    newrelic_license_key: "{{ vault_nrinfragent_license_key }}"
-    newrelic_java_agent_host_app: tomcat6
-    newrelic_java_agent_version: 3.40.0
-    newrelic_java_agent_app_name: "{{ inventory_hostname_short }}"

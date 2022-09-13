@@ -1,6 +1,0 @@
----
-ubu16gsa_is_router: true  # work around https://github.com/gsa/data.gov/issues/1786
-
-# In sandbox, we use python3 on bionic web hosts
-# https://github.com/GSA/datagov-infrastructure-modules/issues/32
-ansible_python_interpreter: /usr/bin/python3

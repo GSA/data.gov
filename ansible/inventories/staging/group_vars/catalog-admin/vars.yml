@@ -1,3 +1,0 @@
----
-catalog_ckan_apache_server_name: "{{ catalog_host_admin }}"
-catalog_ckan_readwrite_configuration: writeonly

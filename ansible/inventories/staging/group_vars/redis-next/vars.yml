@@ -1,5 +1,0 @@
----
-datagov_service: redis
-
-# Trendmicro firewall policy
-trendmicro_policy_id: "{{ trendmicro_policy_id_app }}"
