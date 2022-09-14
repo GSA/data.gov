@@ -3,6 +3,8 @@
 
 ## Codebases
 
+### Primary Codebases
+
 | Application/Service       | Repository 
 |---------------------------|-----------
 | catalog.data.gov          | https://github.com/GSA/catalog.data.gov
@@ -18,7 +20,39 @@
 | New Static Site           | https://github.com/GSA/datagov-11ty/
 | Egress Proxy              | https://github.com/GSA/cg-egress-proxy
 
-## Minimum required apps
+### Auxilary Codebases (also maintained by us)
+
+| Application/Service                       | Repository 
+|-------------------------------------------|-----------
+| Cloud Service Broker (development)        | https://github.com/GSA/cloud-service-broker
+| ckanext-datagovcatalog                    | https://github.com/GSA/ckanext-datagovcatalog
+| ckanext-datagovtheme                      | https://github.com/GSA/ckanext-datagovtheme
+| ckanext-datajson                          | https://github.com/GSA/ckanext-datajson
+| ckanext-geodatagov                        | https://github.com/GSA/ckanext-geodatagov
+| ckanext-googleanalyticsbasic              | https://github.com/GSA/ckanext-googleanalyticsbasic
+| ckanext-dcat_usmetadata                   | https://github.com/GSA/ckanext-dcat_usmetadata
+| ckanext-usmetadata                        | https://github.com/GSA/ckanext-usmetadata
+| dedupe (harvesting)                       | https://github.com/GSA/datagov-dedupe
+| SSB Compliance Diagrams                   | https://github.com/GSA/datagov-compliance
+| Load testing software                     | https://github.com/GSA/datagov-load-testing
+
+### Upstream Codebases (critical to our applications)
+
+| Application/Service                           | Repository 
+|-----------------------------------------------|-----------
+| CKAN                                          | https://github.com/ckan/ckan
+| ckanext-dcat                                  | https://github.com/ckan/ckanext-dcat
+| ckanext-harvest                               | https://github.com/ckan/ckanext-harvest
+| ckanext-saml2auth                             | https://github.com/keitaroinc/ckanext-saml2auth
+| PyZ3950                                       | https://github.com/asl2/PyZ3950
+| ckanext-xloader                               | https://github.com/ckan/ckanext-xloader
+| ckanext-envvars                               | https://github.com/okfn/ckanext-envvars
+| docker-ckan (development)                     | https://github.com/okfn/docker-ckan
+| AWS Broker (all cloud.gov AWS-based services) | https://github.com/cloud-gov/aws-broker
+
+## Applications + Services
+
+### Minimum required apps
 
 | App Name                              | Cloud.gov space                                  | Application/Service                   | Deployment Code
 |---------------------------------------|--------------------------------------------------|---------------------------------------|---------------------
@@ -41,7 +75,7 @@
 | egress-proxy-gsa-datagov-development  | development-egress                               | Egress Proxy (dashboard.data.gov)
 | proxy-gsa-datagov-development-catalog | development-egress                               | Egress Proxy (catalog.data.gov)
 
-## Apps to be deprecated
+### Apps to be deprecated
 
 | App Name                  | Cloud.gov space                                  | Application/Service
 |---------------------------|--------------------------------------------------|----------------------
@@ -50,7 +84,7 @@
 | dashboard-stage           | staging                                          | dashboard.data.gov
 | www-redirects             | development, staging, prod                       | Old Static Site
 
-## Minimum services
+### Minimum services
 
 | Service Name              | Cloud.gov space                                  | Application/Service                      | Deployment Code
 |---------------------------|--------------------------------------------------|------------------------------------------|----------------------
@@ -78,7 +112,7 @@
 | inventory-s3              | development, staging, prod                       | inventory.data.gov                       | ⬆️
 | inventory-solr            | development, staging, prod                       | inventory.data.gov                       | ⬆️
 
-## Services to be deprecated
+### Services to be deprecated
 
 | Service Name              | Cloud.gov space                                  | Application/Service
 |---------------------------|--------------------------------------------------|----------------------
