@@ -1,8 +1,0 @@
----
-- name: Converge
-  hosts: all
-  roles:
-    - role: ckan-app
-      catalog_ckan_email_from: no-reply@data.gov
-      catalog_ckan_readwrite_configuration: writeonly
-      url_readonly: https://readonly.ckan

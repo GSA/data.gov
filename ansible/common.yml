@@ -1,5 +1,0 @@
----
-- name: Install Common role for Baseline Image
-  hosts: all
-  roles:
-    - role: gsa.datagov-deploy-common

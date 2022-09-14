@@ -1,3 +1,0 @@
----
-inventory_ckan_envs: "{{ inventory_next_ckan_envs }}"
-inventory_next: true

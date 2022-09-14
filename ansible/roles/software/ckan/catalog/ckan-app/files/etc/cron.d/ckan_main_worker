@@ -1,1 +1,0 @@
-*/5 * * * * root supervisorctl start harvest-run > /dev/null

@@ -1,4 +1,0 @@
----
-# TODO re-enable after debugging with secops https://github.com/gsa/data.gov/issues/811#issuecomment-765806833
-trendmicro_enabled: false
-trendmicro_policy_id: "{{ trendmicro_policy_id_mgmt_web }}"

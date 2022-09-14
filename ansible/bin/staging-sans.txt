@@ -1,7 +1,0 @@
-admin-catalog-datagov.dev-ocsit.bsp.gsa.gov
-admin-catalog-next-datagov.dev-ocsit.bsp.gsa.gov
-catalog-next-datagov.dev-ocsit.bsp.gsa.gov
-dashboard-datagov.dev-ocsit.bsp.gsa.gov
-inventory-datagov.dev-ocsit.bsp.gsa.gov
-inventory-next-datagov.dev-ocsit.bsp.gsa.gov
-wordpress-datagov.dev-ocsit.bsp.gsa.gov

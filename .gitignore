@@ -11,10 +11,6 @@ pkg/
 .env
 .secrets/
 .vagrant
-secrets.yml
-ansible-secret.txt
-ansible/*.retry
-ansible/logs
 
 # Ignoring symlinks
 #config/

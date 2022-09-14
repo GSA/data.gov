@@ -1,8 +1,0 @@
----
-- import_playbook: catalog-web.yml
-  tags:
-    - web
-
-- import_playbook: catalog-worker.yml
-  tags:
-    - worker
