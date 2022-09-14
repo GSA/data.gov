@@ -11,6 +11,7 @@ on:
         options:
           - "catalog-web"
           - dashboard
+          - "dashboard-stage"
       appSpace:
         description: 'Cloud Foundry Space'
         required: true
