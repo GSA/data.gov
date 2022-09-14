@@ -49,6 +49,9 @@
 | ckanext-envvars                               | https://github.com/okfn/ckanext-envvars
 | docker-ckan (development)                     | https://github.com/okfn/docker-ckan
 | AWS Broker (all cloud.gov AWS-based services) | https://github.com/cloud-gov/aws-broker
+| Python Buildpack                              | https://github.com/cloudfoundry/python-buildpack
+| Apt Buildpack                                 | https://github.com/cloudfoundry/apt-buildpack
+| NGINX Buildpack                               | https://github.com/cloudfoundry/nginx-buildpack
 
 ## Applications + Services
 
