@@ -1,0 +1,6 @@
+  *.gov
+  *.amazonaws.com
+  *.mil
+  raw.githubusercontent.com
+  *.cloudfoundry.org
+  *.github.com
