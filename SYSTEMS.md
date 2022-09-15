@@ -48,10 +48,14 @@
 | ckanext-xloader                               | https://github.com/ckan/ckanext-xloader
 | ckanext-envvars                               | https://github.com/okfn/ckanext-envvars
 | docker-ckan (development)                     | https://github.com/okfn/docker-ckan
+| Cloud Service Broker (production)             | https://github.com/cloudfoundry/cloud-service-broker
 | AWS Broker (all cloud.gov AWS-based services) | https://github.com/cloud-gov/aws-broker
 | Python Buildpack                              | https://github.com/cloudfoundry/python-buildpack
 | Apt Buildpack                                 | https://github.com/cloudfoundry/apt-buildpack
 | NGINX Buildpack                               | https://github.com/cloudfoundry/nginx-buildpack
+| Cloudfoundry CLI                              | https://github.com/cloudfoundry/cli
+| Cloud.gov Github Actions CLI                  | https://github.com/cloud-gov/cg-cli-tools
+| SSB Github Action Terraform Deploy            | https://github.com/dflook/terraform-github-actions
 
 ## Applications + Services
 
