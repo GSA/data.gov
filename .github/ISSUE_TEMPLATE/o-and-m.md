@@ -7,12 +7,32 @@ assignees: ''
 ---
 As part of day-to-day operation of Data.gov, there are many [Operation and Maintenance (O&M) responsibilities](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities). Instead of having the entire team watching notifications and risking some notifications slipping through the cracks, we have created an [O&M Triage role](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#om-triage-rotation). One person on the team is assigned the Triage role which rotates each sprint. _This is not meant to be a 24/7 responsibility, only East Coast business hours. If you are unavailable, please note when you will be unavailable in Slack and ask for someone to take on the role for that time._
 
-Each day, you should start your triage by looking through the notification channels for anything **urgent** that came in after hours that might need immediate attention:
+## Routine Tasks
+- Check Action tabs for each _active_ repositories
+  - [Inventory Restart Action](https://github.com/GSA/inventory-app/actions/workflows/restart.yml)
+  - [Inventory deploy Action](https://github.com/GSA/inventory-app/actions/workflows/deploy.yml)
+  - [Catalog Restart Action](https://github.com/GSA/catalog.data.gov/actions/workflows/restart.yml)
+  - [Catalog Deploy Action](https://github.com/GSA/catalog.data.gov/actions/workflows/publish.yml)
+  - [Solr Brokerpak Release Action](https://github.com/GSA/datagov-brokerpak-solr/actions/workflows/release.yml)
+  - [SSB Deploy Action](https://github.com/GSA/datagov-ssb/actions/workflows/apply.yml)
+- Verify each Solr Leader/Followers are functional
 
-- [#datagov-alerts](https://gsa-tts.slack.com/archives/C4RGAM1Q8) may contain critical host alerts
-- [Bug bounty report (ad-hoc email)](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#bug-bounty-report-ad-hoc-email)
-- [Vulnerable dependency notifications (daily email reports)](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#vulnerable-dependency-notifications-daily-email-reports)
+  Use this command to find Solr URLs and credentials in the `prod` space.
+  ```
+  $ cf t -s prod
+  $ cf env catalog-web | grep solr -C 2 | grep "uri\|solr_follower_individual_urls\|password\|username"
+  ```
+  - Verify their Start time is in sync with Solr Memory Alert history at path `/solr/#/`
+  - Verify each follower stays with Solr leader at path `/solr/#/ckan/core-overview`
+  - Verify each Solr is responsive by running a few queries at `/solr/#/ckan/query`
 
+- Examine the Solr Memory Utilization Graph to catch any abnormal incidences.
+
+  Log in to `tts-jump` AWS account with role `SSBDev@ssb-production`, go to custom [SolrAlarm dashboard](https://us-west-2.console.aws.amazon.com/cloudwatch/home?region=us-west-2#dashboards:name=SolrAlarms;start=PT24H) to see the graph for the past 24 hours. There should not be any Solr instance has MemoryUtilization go above 90% threshold. Each Solr should not restart too often (more than a few times a week)
+- Verify harvesting jobs are running, go through Error reports to catch unusual errors that need attention [[Wiki doc](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#harvest-job-report-daily-email-report)]
+- Go through NewRelic logs to make sure each app's log is current
+- Watch for user email requests
+- Watch in [#datagov-alerts](https://gsa-tts.slack.com/archives/C4RGAM1Q8) and [Vulnerable dependency notifications (daily email reports)](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#vulnerable-dependency-notifications-daily-email-reports) for critical alerts.
 
 ## Acceptance criteria
 
