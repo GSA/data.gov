@@ -25,6 +25,7 @@ As part of day-to-day operation of Data.gov, there are many [Operation and Maint
   - Verify their Start time is in sync with Solr Memory Alert history at path `/solr/#/`
   - Verify each follower stays with Solr leader at path `/solr/#/ckan/core-overview`
   - Verify each Solr is responsive by running a few queries at `/solr/#/ckan/query`
+  - Inspect each Solr's logging for abnormal errors at `/solr/#/~logging`
 
 - Examine the Solr Memory Utilization Graph to catch any abnormal incidences.
 
