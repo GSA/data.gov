@@ -30,6 +30,7 @@
 | ckanext-datajson                          | https://github.com/GSA/ckanext-datajson
 | ckanext-geodatagov                        | https://github.com/GSA/ckanext-geodatagov
 | ckanext-googleanalyticsbasic              | https://github.com/GSA/ckanext-googleanalyticsbasic
+| ckanext-qa                                | https://github.com/GSA/ckanext-qa
 | ckanext-dcat_usmetadata                   | https://github.com/GSA/ckanext-dcat_usmetadata
 | ckanext-usmetadata                        | https://github.com/GSA/ckanext-usmetadata
 | dedupe (harvesting)                       | https://github.com/GSA/datagov-dedupe
@@ -44,6 +45,8 @@
 | ckanext-dcat                                  | https://github.com/ckan/ckanext-dcat
 | ckanext-harvest                               | https://github.com/ckan/ckanext-harvest
 | ckanext-saml2auth                             | https://github.com/keitaroinc/ckanext-saml2auth
+| ckanext-report                                | https://github.com/ckan/ckanext-report
+| ckanext-archiver                              | https://github.com/ckan/ckanext-archiver
 | PyZ3950                                       | https://github.com/asl2/PyZ3950
 | ckanext-xloader                               | https://github.com/ckan/ckanext-xloader
 | ckanext-envvars                               | https://github.com/okfn/ckanext-envvars
