@@ -14,7 +14,13 @@ As part of day-to-day operation of Data.gov, there are many [Operation and Maint
   - [Catalog Restart Action](https://github.com/GSA/catalog.data.gov/actions/workflows/restart.yml)
   - [Catalog Deploy Action](https://github.com/GSA/catalog.data.gov/actions/workflows/publish.yml)
   - [Solr Brokerpak Release Action](https://github.com/GSA/datagov-brokerpak-solr/actions/workflows/release.yml)
+    - Note the release version
+  - [EKS Brokerpak Release Action](https://github.com/GSA/datagov-brokerpak-eks/actions/workflows/release.yml)
+    - Note the release version
+  - [SMTP Brokerpak Release Action](https://github.com/GSA/datagov-brokerpak-smtp/actions/workflows/release.yml)
+    - Note the release version
   - [SSB Deploy Action](https://github.com/GSA/datagov-ssb/actions/workflows/apply.yml)
+    - Validate it is using the most recent (working) releases of each brokerpak.
 - Verify each Solr Leader/Followers are functional
 
   Use this command to find Solr URLs and credentials in the `prod` space.
@@ -33,6 +39,7 @@ As part of day-to-day operation of Data.gov, there are many [Operation and Maint
 - Verify harvesting jobs are running, go through Error reports to catch unusual errors that need attention [[Wiki doc](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#harvest-job-report-daily-email-report)]
 - Go through NewRelic logs to make sure each app's log is current
 - Watch for user email requests
+- Triage DMARC Report from Google (daily) sent to datagovhelp@gsa.gov (only for catalog in prod).
 - Watch in [#datagov-alerts](https://gsa-tts.slack.com/archives/C4RGAM1Q8) and [Vulnerable dependency notifications (daily email reports)](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#vulnerable-dependency-notifications-daily-email-reports) for critical alerts.
 
 ## Acceptance criteria
