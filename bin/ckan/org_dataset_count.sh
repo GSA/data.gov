@@ -11,6 +11,6 @@ do
     organization_with_0_datasets=$(($organization_with_0_datasets+1))
   fi
   echo "$org: $dataset_count"
+  echo $organization_with_0_datasets with 0 datasets
 done
 
-echo $organization_with_0_datasets with 0 datasets
