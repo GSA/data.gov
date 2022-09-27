@@ -7,10 +7,10 @@ organization_with_0_datasets=0
 curl -sL $route_to_check/api/action/organization_list | jq -rc .result[] | while read -r org
 do
   dataset_count=$(curl -sL "$route_to_check/api/action/package_search?fq=organization:$org" | jq .result.count)
-  echo "$org: $dataset_count"
   if [[ "$dataset_count" = "0" ]]; then
-    organization_with_0_datasets=$((organization_with_0_datasets+1))
+    organization_with_0_datasets=$(($organization_with_0_datasets+1))
   fi
+  echo "$org: $dataset_count"
 done
 
 echo $organization_with_0_datasets with 0 datasets
