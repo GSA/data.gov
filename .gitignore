@@ -60,3 +60,5 @@ gen-csr-out
 # ansible-galaxy vendored roles
 ansible/roles/vendor
 .vscode/settings.json
+
+output
