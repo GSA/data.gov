@@ -1,0 +1,47 @@
+---
+name: toggle egress proxy
+
+on:
+  workflow_dispatch:
+    inputs:
+      toggle-egress:
+        description: 'Enable/disable egress proxy'
+        required: true
+        type: choice
+        options:
+          - "enable"
+          - "disable"
+      appName:
+        description: 'App Name'
+        required: true
+        type: choice
+        options:
+          - "catalog-web"
+          - dashboard
+          - "dashboard-stage"
+    environ:
+      description: 'Cloud Foundry Space'
+      required: true
+      type: choice
+      options:
+        - development
+        - staging
+        - prod
+
+jobs:
+  toggle-egress:
+    concurrency: ${{ github.event.inputs.environ }}
+    name: ${{github.envent.inputs.toggle-egress}} egress (${{ github.event.inputs.environ }})
+    environment: ${{ github.event.inputs.environ }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: ${{github.envent.inputs.toggle-egress}} egress
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          command: bin/${{github.envent.inputs.toggle-egress}}-egress ${{ github.event.inputs.appName }}
+          cf_org: gsa-datagov
+          cf_space: ${{ github.event.inputs.environ }}
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
