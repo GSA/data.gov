@@ -12,5 +12,5 @@ jobs:
     steps:
       - uses: actions/add-to-project@v0.3.0
         with:
-          project-url: 'https://github.com/orgs/GSA/projects/24/views/1'
+          project-url: 'https://github.com/orgs/GSA/projects/11/views/1'
           github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
