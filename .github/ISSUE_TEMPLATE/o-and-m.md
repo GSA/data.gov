@@ -35,7 +35,7 @@ As part of day-to-day operation of Data.gov, there are many [Operation and Maint
 
 - Examine the Solr Memory Utilization Graph to catch any abnormal incidences.
 
-  Log in to `tts-jump` AWS account with role `SSBDev@ssb-production`, go to custom [SolrAlarm dashboard](https://us-west-2.console.aws.amazon.com/cloudwatch/home?region=us-west-2#dashboards:name=SolrAlarms;start=PT24H) to see the graph for the past 24 hours. There should not be any Solr instance has MemoryUtilization go above 90% threshold. Each Solr should not restart too often (more than a few times a week)
+  Log in to `tts-jump` AWS account with role `SSBDev@ssb-production`, go to custom [SolrAlarm dashboard](https://us-west-2.console.aws.amazon.com/cloudwatch/home?region=us-west-2#dashboards:name=CatalogProdSolr;start=PT72H) to see the graph for the past 72 hours. There should not be any Solr instance that has MemoryUtilization go above 90% threshold without getting restarted. Each Solr should not restart too often (more than a few times a week)
 - Verify harvesting jobs are running, go through Error reports to catch unusual errors that need attention [[Wiki doc](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#harvest-job-report-daily-email-report)]
 - Watch for user email requests
 - Triage DMARC Report from Google (daily) sent to datagovhelp@gsa.gov (only for catalog in prod).
