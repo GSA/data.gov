@@ -12,6 +12,7 @@ on:
           - "catalog-web"
           - dashboard
           - "dashboard-stage"
+          - inventory
       appSpace:
         description: 'Cloud Foundry Space'
         required: true
