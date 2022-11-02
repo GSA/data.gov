@@ -10,11 +10,11 @@ in either the `catalog.data.gov` or `inventory-app` repositories.
 
 Add the file dynamically into the docker compose volume and then run,
 
-Catalog.data.gov Prerequisites:
+Prerequisites:
 - `mkdir temp` in root of repo
 - add `- ./temp:/temp` to `ckan` service volumes in `docker-compose.yml`
 - add `test_get_routes.py` to root of repo
 
 docker-compose run ckan bash -c "pip install pytest mock pylons factory-boy pytest-ckan && pytest /app/test_get_routes.py"
 
-Output file: `tmp/routes.txt`
+Output file: `temp/routes.txt`
