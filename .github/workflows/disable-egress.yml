@@ -1,7 +1,7 @@
 ---
 name: disable egress proxy
 
-on:
+on:   # yamllint disable-line rule:truthy
   workflow_dispatch:
     inputs:
       appName:
@@ -12,6 +12,7 @@ on:
           - "catalog-web"
           - dashboard
           - "dashboard-stage"
+          - inventory
       appSpace:
         description: 'Cloud Foundry Space'
         required: true
@@ -21,7 +22,9 @@ on:
           - staging
           - prod
 
-# jobs need to be triplicated due to git hub config being in environment for each cf space
+# jobs need to be triplicated due to git hub config being in environment
+# for each cf space
+# TODO ticket to fix this: https://github.com/GSA/data.gov/issues/3996
 jobs:
   disable-egress-development:
     if: github.event.inputs.appSpace == 'development'
