@@ -9,11 +9,11 @@ on:   # yamllint disable-line rule:truthy
 jobs:
 
   restart-egress:
-    concurrency: development
     strategy:
       matrix:
         environ: [development, staging, prod]
     name: restart egress (${{matrix.environ}})
+    concurrency: ${{matrix.environ}}
     environment: ${{matrix.environ}}
     runs-on: ubuntu-latest
     steps:
