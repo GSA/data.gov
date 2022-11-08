@@ -10,6 +10,9 @@ on:   # yamllint disable-line rule:truthy
         type: choice
         options:
           - "catalog-web"
+          - "catalog-admin"
+          - "catalog-fetch"
+          - "catalog-gather"
           - dashboard
           - "dashboard-stage"
           - inventory
@@ -27,44 +30,9 @@ on:   # yamllint disable-line rule:truthy
 # TODO ticket to fix this: https://github.com/GSA/data.gov/issues/3996
 jobs:
   disable-egress-development:
-    if: github.event.inputs.appSpace == 'development'
-    concurrency: development
-    name: disable egress (dev)
-    environment: development
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-      - name: disable egress
-        uses: cloud-gov/cg-cli-tools@main
-        with:
-          command: bin/disable-egress ${{ github.event.inputs.appName }}
-          cf_org: gsa-datagov
-          cf_space: ${{ github.event.inputs.appSpace }}
-          cf_username: ${{secrets.CF_SERVICE_USER}}
-          cf_password: ${{secrets.CF_SERVICE_AUTH}}
-  disable-egress-staging:
-    if: github.event.inputs.appSpace == 'staging'
-    concurrency: staging
-    name: disable egress (staging)
-    environment: staging
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-      - name: disable egress
-        uses: cloud-gov/cg-cli-tools@main
-        with:
-          command: bin/disable-egress ${{ github.event.inputs.appName }}
-          cf_org: gsa-datagov
-          cf_space: ${{ github.event.inputs.appSpace }}
-          cf_username: ${{secrets.CF_SERVICE_USER}}
-          cf_password: ${{secrets.CF_SERVICE_AUTH}}
-  disable-egress-production:
-    if: github.event.inputs.appSpace == 'prod'
-    concurrency: production
-    name: disable egress (production)
-    environment: production
+    concurrency: ${{ github.event.inputs.appSpace }}
+    name: disable egress -- ${{ github.event.inputs.appSpace }}
+    environment: ${{ github.event.inputs.appSpace }}
     runs-on: ubuntu-latest
     steps:
       - name: checkout
