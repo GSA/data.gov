@@ -35,7 +35,7 @@ env:
 jobs:
   enable-egress:
     concurrency: ${{ github.event.inputs.appSpace }}
-    name: enable egress -- ${{ github.event.inputs.appSpace }}
+    name: ${{ github.event.inputs.appName }} -- ${{ github.event.inputs.appSpace }}
     environment: ${{ github.event.inputs.appSpace }}
     runs-on: ubuntu-latest
     steps:

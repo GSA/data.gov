@@ -31,7 +31,7 @@ on:   # yamllint disable-line rule:truthy
 jobs:
   disable-egress-development:
     concurrency: ${{ github.event.inputs.appSpace }}
-    name: disable egress -- ${{ github.event.inputs.appSpace }}
+    name: ${{ github.event.inputs.appName }} -- ${{ github.event.inputs.appSpace }}
     environment: ${{ github.event.inputs.appSpace }}
     runs-on: ubuntu-latest
     steps:

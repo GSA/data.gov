@@ -8,10 +8,13 @@ on:   # yamllint disable-line rule:truthy
 
 jobs:
 
-  restart-egress-dev:
+  restart-egress:
     concurrency: development
-    name: restart egress (dev)
-    environment: development
+    strategy:
+      matrix:
+        environ: [development, staging, prod]
+    name: restart egress (${{matrix.environ}})
+    environment: ${{matrix.environ}}
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -21,40 +24,6 @@ jobs:
         with:
           command: bin/restart-egress
           cf_org: gsa-datagov
-          cf_space: development-egress
-          cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
-          cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
-
-  restart-egress-staging:
-    concurrency: staging
-    name: restart egress (staging)
-    environment: staging
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-      - name: cf restart
-        uses: cloud-gov/cg-cli-tools@main
-        with:
-          command: bin/restart-egress
-          cf_org: gsa-datagov
-          cf_space: staging-egress
-          cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
-          cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
-
-  restart-egress-prod:
-    concurrency: production
-    name: restart egress (prod)
-    environment: production
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-      - name: cf restart
-        uses: cloud-gov/cg-cli-tools@main
-        with:
-          command: bin/restart-egress
-          cf_org: gsa-datagov
-          cf_space: prod-egress
+          cf_space: ${{matrix.environ}}-egress
           cf_username: ${{secrets.CF_SERVICE_EGRESS_USER}}
           cf_password: ${{secrets.CF_SERVICE_EGRESS_AUTH}}
