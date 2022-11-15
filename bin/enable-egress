@@ -37,5 +37,5 @@ else
 
     # need to be in CG_DIR for cg-egress-proxy scripts to run correctly
     cd "$CG_DIR"
-    bin/cf-deployproxy "$app" "$space-egress"
+    bin/cf-deployproxy -a "$app" -s "$space-egress"
 fi
