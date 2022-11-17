@@ -24,7 +24,7 @@ if [ -z "$app" ]; then
     echo "No app provided."
     help
 elif [ -z "$space" ]; then
-    echo "No app provided."
+    echo "No space provided."
     help
 else
     # cg-egress-proxy needs jq 🤷
@@ -32,8 +32,13 @@ else
         apt-get install jq -y
     fi
 
-    cp "$DATAGOV_DIR/egress/acl/${app}.allow.acl" "$CG_DIR/"
-    cp "$DATAGOV_DIR/egress/acl/${app}.deny.acl" "$CG_DIR/"
+    if [[ "$space" == 'development' ]]; then
+      cp "$DATAGOV_DIR/egress/acl/${space}.allow.acl" "$CG_DIR/${app}.allow.acl"
+      cp "$DATAGOV_DIR/egress/acl/${space}.deny.acl" "$CG_DIR/${app}.allow.acl"
+    else
+      cp "$DATAGOV_DIR/egress/acl/allow.acl" "$CG_DIR/${app}.allow.acl"
+      cp "$DATAGOV_DIR/egress/acl/deny.acl" "$CG_DIR/${app}.deny.acl"
+    fi
 
     # need to be in CG_DIR for cg-egress-proxy scripts to run correctly
     cd "$CG_DIR"
