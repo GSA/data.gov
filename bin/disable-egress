@@ -29,7 +29,7 @@ else
         echo "Unsetting environment variable proxy_url.."
         cf unset-env "$app" proxy_url
         echo "Checking network policy.."
-        read -r source dest protocol port space <<< "$( cf network-policies --source "$app" | tail -n +4 | tr -s ' ' | cut -d ' ' -f 1-5 )"
+        read -r source dest protocol port space organization <<< "$( cf network-policies --source "$app" | tail -n +4 | tr -s ' ' | cut -d ' ' -f 1-6 )"
         if [ -z "$dest" ] && [ -z "$protocol" ] && [ -z "$port" ] &&  [ -z "$space" ]; then
             # network policy already empty, pass
             echo "Network policy not found, continuing.."
