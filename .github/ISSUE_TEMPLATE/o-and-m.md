@@ -50,6 +50,7 @@ You are responsible for all [O&M responsibilities](https://github.com/gsa/data.g
 
 - [ ] [Audit log updated](https://docs.google.com/spreadsheets/d/1z6lqmyNxC7s5MiTt9f6vT41IS2DLLJl4HwEqXvvft40/edit) for [AU-6 Log auditing](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#au-6-log-auditing) (**Friday**).
 - [ ] Any [New Relic alerts](https://alerts.newrelic.com/accounts/1601367/incidents) have been addressed or GH issues created.
+- [ ] Weekly [Duplicate check](https://github.com/GSA/data.gov/wiki/Operation-and-Maintenance-Responsibilities#duplicate-check) has been done, and any pertinent issues created.
 - [ ] Weekly [Nessus scan](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#nessus-host-scan-report-from-isso) has been triaged.
 - [ ] Weekly [Snyk scan](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#automated-dependency-updates-ad-hoc-github-prs) is complete.
 - [ ] Weekly [resources.data.gov link scan](https://app.circleci.com/pipelines/github/GSA/resources.data.gov?branch=main)
