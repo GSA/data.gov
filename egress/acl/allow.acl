@@ -1,6 +1,6 @@
   *.gov
-  *.amazonaws.com
   *.mil
+  s3-us-gov-west-1.amazonaws.com
   *.opendata.arcgis.com
   services3.arcgis.com
   data.srcity.org
