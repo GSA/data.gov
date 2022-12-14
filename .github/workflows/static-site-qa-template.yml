@@ -11,7 +11,7 @@ jobs:
       image: ruby:3.1
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Install ruby dependencies
         run: bundle
       - name: Build static site
