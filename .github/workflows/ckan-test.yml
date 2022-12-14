@@ -71,7 +71,7 @@ jobs:
     - name: Run tests
       run: |
         set -o pipefail
-        pytest --ckan-ini=test.ini --cov=ckanext.${{ ext_name }} --cov-fail-under=${CODE_COVERAGE_THRESHOLD_REQUIRED} --disable-warnings ckanext/${{ ext_name }}/tests | tee pytest-coverage.txt
+        pytest --ckan-ini=test.ini --cov=ckanext.${{ inputs.ext_name }} --cov-fail-under=${CODE_COVERAGE_THRESHOLD_REQUIRED} --disable-warnings ckanext/${{ inputs.ext_name }}/tests | tee pytest-coverage.txt
     - name: Report test coverage
       if: ${{ always() }}
       uses: coroo/pytest-coverage-commentator@v1.0.2
