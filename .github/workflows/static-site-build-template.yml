@@ -1,0 +1,18 @@
+name: Static Site Build Template
+
+on:   # yamllint disable-line rule:truthy
+  workflow_call:
+
+jobs:
+  build:
+    name: Build Static Site
+    runs-on: ubuntu-latest
+    container:
+      image: ruby:3.1
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: Install ruby dependencies
+        run: bundle
+      - name: Build static site
+        run: bundle exec jekyll build
