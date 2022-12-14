@@ -54,6 +54,7 @@ jobs:
       redis:
           image: redis:3
     env:
+      ENV_FILE: .env
       CKAN_SQLALCHEMY_URL: postgresql://ckan_default:pass@postgres/ckan_test
       CKAN_DATASTORE_WRITE_URL: postgresql://datastore_write:pass@postgres/datastore_test
       CKAN_DATASTORE_READ_URL: postgresql://datastore_read:pass@postgres/datastore_test
@@ -67,7 +68,11 @@ jobs:
         pip install -r requirements.txt -r dev-requirements.txt -e .
     - name: Setup extension (CKAN >= 2.9)
       run: |
+        source $ENV_FILE
         ckan -c test.ini db init
+        if [[ $(cat requirements.txt | grep 'ckanext-harvest') ]]; then
+          ckan -c test.ini harvester initdb
+        fi
     - name: Run tests
       run: |
         set -o pipefail
