@@ -7,6 +7,9 @@ on:   # yamllint disable-line rule:truthy
       ext_name:
         required: true
         type: string
+      plugins:
+        required: true
+        type: string
 
 env:
   CODE_COVERAGE_THRESHOLD_REQUIRED: 35
@@ -54,12 +57,20 @@ jobs:
       redis:
           image: redis:3
     env:
-      ENV_FILE: .env
       CKAN_SQLALCHEMY_URL: postgresql://ckan_default:pass@db/ckan_test
       CKAN_DATASTORE_WRITE_URL: postgresql://datastore_write:pass@db/datastore_test
       CKAN_DATASTORE_READ_URL: postgresql://datastore_read:pass@db/datastore_test
       CKAN_SOLR_URL: http://solr:8983/solr/ckan
       CKAN_REDIS_URL: redis://redis:6379/1
+      CKAN_DATAPUSHER_URL: http://localhost:8080/  # datapusher is not really enabled
+      CKAN_SITE_ID: default
+      CKAN_SITE_URL: http://ckan:5000
+      CKAN_SYSADMIN_NAME: admin
+      CKAN_SYSADMIN_PASSWORD: password
+      CKAN_SYSADMIN_EMAIL: your_email@example.com
+      CKAN__STORAGE_PATH: /var/lib/ckan
+      CKAN__PLUGINS: ${{ inputs.plugins }}
+      PYTHONDONTWRITEBYTECODE: 1
 
     steps:
     - uses: actions/checkout@v3
@@ -68,7 +79,6 @@ jobs:
         pip install -r requirements.txt -r dev-requirements.txt -e .
     - name: Setup extension (CKAN >= 2.9)
       run: |
-        source $ENV_FILE
         ckan -c test.ini db init
         if [[ $(cat requirements.txt | grep 'ckanext-harvest') ]]; then
           ckan -c test.ini harvester initdb
