@@ -1,0 +1,74 @@
+---
+name: CKAN Testing Template
+
+on:   # yamllint disable-line rule:truthy
+  workflow_call:
+    inputs:
+      ext_name:
+        required: true
+        type: string
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+      - name: Install requirements
+        run: pip install flake8 pycodestyle
+      - name: Run flake8
+        run: flake8 . --count --show-source --statistics --exclude ckan
+
+  test:
+    strategy:
+      matrix:
+        ckan-version: [2.9.5, 2.9, 2.9.7]
+        include:
+        - ckan-version: 2.9.5
+          services-version: 2.9
+        - ckan-version: 2.9
+          services-version: 2.9
+        - ckan-version: 2.9.7
+          services-version: 2.9
+      fail-fast: false
+
+    name: CKAN ${{ matrix.ckan-version }}
+    runs-on: ubuntu-latest
+    container:
+      image: openknowledge/ckan-dev:${{ matrix.ckan-version }}
+    services:
+      solr:
+        image: datagov/catalog.data.gov.solr:latest
+      postgres:
+        image: ckan/ckan-postgres-dev:${{ matrix.services-version }}
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      redis:
+          image: redis:3
+    env:
+      CKAN_SQLALCHEMY_URL: postgresql://ckan_default:pass@postgres/ckan_test
+      CKAN_DATASTORE_WRITE_URL: postgresql://datastore_write:pass@postgres/datastore_test
+      CKAN_DATASTORE_READ_URL: postgresql://datastore_read:pass@postgres/datastore_test
+      CKAN_SOLR_URL: http://solr:8983/solr/ckan
+      CKAN_REDIS_URL: redis://redis:6379/1
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install requirements
+      run: |
+        pip install -r requirements.txt -r dev-requirements.txt -e .
+    - name: Setup extension (CKAN >= 2.9)
+      run: |
+        ckan -c test.ini db init
+    - name: Run tests
+      run: |
+        set -o pipefail
+        pytest --ckan-ini=test.ini --cov=ckanext.${{ ext_name }} --cov-fail-under=${CODE_COVERAGE_THRESHOLD_REQUIRED} --disable-warnings ckanext/${{ ext_name }}/tests | tee pytest-coverage.txt
+    - name: Report test coverage
+      if: ${{ always() }}
+      uses: coroo/pytest-coverage-commentator@v1.0.2
