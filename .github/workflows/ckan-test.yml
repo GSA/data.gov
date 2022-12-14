@@ -76,7 +76,13 @@ jobs:
     - uses: actions/checkout@v3
     - name: Install requirements
       run: |
-        pip install -r requirements.txt -r dev-requirements.txt -e .
+        if [[ -f requirements.txt ]]; then
+          pip install -r requirements.txt
+        fi
+        if [[ -f dev-requirements.txt]]; then
+          pip install -r dev-requirements.txt
+        fi
+        pip install -e .
     - name: Setup extension (CKAN >= 2.9)
       run: |
         ckan -c test.ini db init
