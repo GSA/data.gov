@@ -8,6 +8,9 @@ on:   # yamllint disable-line rule:truthy
         required: true
         type: string
 
+env:
+  CODE_COVERAGE_THRESHOLD_REQUIRED: 35
+
 jobs:
   lint:
     runs-on: ubuntu-latest
