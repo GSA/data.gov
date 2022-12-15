@@ -76,7 +76,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: Install requirements
       run: |
-        sudo apk add tzdata
+        sudo apk add tzdata python3-dev
         cp /usr/share/zoneinfo/America/New_York /etc/localtime
         if [[ -f requirements.txt ]]; then
           pip install -r requirements.txt
