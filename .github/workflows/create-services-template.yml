@@ -1,0 +1,31 @@
+---
+name: Create Cloud.gov Services Template
+
+on:   # yamllint disable-line rule:truthy
+  workflow_call:
+    inputs:
+      environ:
+        required: true
+        type: string
+    secrets:
+      CF_SERVICE_USER:
+        required: true
+      CF_SERVICE_AUTH:
+        required: true
+
+jobs:
+  create-cloudgov-services:
+    name: create services (${{ inputs.environ }})
+    environment: ${{ inputs.environ }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: create services
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          command: ./create-cloudgov-services.sh
+          cf_org: gsa-datagov
+          cf_space: ${{ inputs.environ }}
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
