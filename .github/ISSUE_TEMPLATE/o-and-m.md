@@ -14,8 +14,12 @@ As part of day-to-day operation of Data.gov, there are many [Operation and Maint
   - [Catalog Restart Action](https://github.com/GSA/catalog.data.gov/actions/workflows/restart.yml)
   - [Catalog Deploy Action](https://github.com/GSA/catalog.data.gov/actions/workflows/publish.yml)
   - [Catalog DB-Solr-Sync Action](https://github.com/GSA/catalog.data.gov/actions/workflows/db-solr-sync-automated.yml)
-    
-    These actions should finish in minutes. Exam the amount of datasets affected if it takes long to finish. 
+    - These actions should finish in minutes. Exam the amount of datasets affected if it takes long to finish. 
+  - **Snyk Scans**
+    - [Inventory Snyk Scan](https://github.com/GSA/inventory-app/actions/workflows/snyk.yml)
+    - [Catalog Snyk Scan](https://github.com/GSA/catalog.data.gov/actions/workflows/snyk.yml)
+      - If either of these actions failed and a PR was created, review and approve/triage it as needed
+      - If either of these actions failed and a PR was not created, an unfixable vulnerability was found, check the Snyk UI Console to triage the vulnerability.
   - [Solr Brokerpak Release Action](https://github.com/GSA/datagov-brokerpak-solr/actions/workflows/release.yml)
     - Note the release version
   - [EKS Brokerpak Release Action](https://github.com/GSA/datagov-brokerpak-eks/actions/workflows/release.yml)
