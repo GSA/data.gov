@@ -30,7 +30,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        app: [ ${{ inputs.app_names }} ]
+        app: ${{ fromJSON(inputs.app_names) }}
         include:
           - app: catalog-web
             smoketest: true
