@@ -1,4 +1,4 @@
-name: Static Site Build Template
+name: Static Site Build & Test Template
 
 on:   # yamllint disable-line rule:truthy
   workflow_call:
@@ -7,12 +7,25 @@ jobs:
   build:
     name: Build Static Site
     runs-on: ubuntu-latest
-    container:
-      image: ruby:3.1
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: Install ruby dependencies
-        run: bundle
-      - name: Build static site
-        run: bundle exec jekyll build
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+      - name: Install Node Dependencies
+        run: |
+          if [[ -f package.json ]]; then
+            sudo apt update; 
+            sudo apt install -y npm;
+            npm install
+          fi
+      - name: Build
+        run: |
+          if [[ -f gulpfile.js ]]; then
+            ./node_modules/.bin/gulp
+          fi
+          bundle exec jekyll build
+      - name: Test Internal Links
+        run: bundle exec htmlproofer --check-html --disable-external _site
