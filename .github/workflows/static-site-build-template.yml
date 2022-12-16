@@ -7,14 +7,24 @@ jobs:
   build:
     name: Build Static Site
     runs-on: ubuntu-latest
-    container:
-      image: ruby:3.1
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: Install ruby dependencies
-        run: bundle
-      - name: Build static site
-        run: bundle exec jekyll build
+      - name: Install Dependencies
+        run: |
+          sudo apt update
+          if [[ -f package.json ]]; then
+            sudo apt install -y npm;
+            npm install
+          fi        
+          sudo apt install ruby
+          sudo gem install bundler
+          bundle  
+      - name: Build
+        run: |
+          if [[ -f gulpfile.js ]]; then
+            ./node_modules/.bin/gulp
+          fi
+          bundle exec jekyll build
       - name: Test Internal Links
         run: bundle exec htmlproofer --check-html --disable-external _site
