@@ -1,4 +1,4 @@
-name: Static Site Build Template
+name: Static Site Build & Test Template
 
 on:   # yamllint disable-line rule:truthy
   workflow_call:
@@ -16,3 +16,5 @@ jobs:
         run: bundle
       - name: Build static site
         run: bundle exec jekyll build
+      - name: Test Internal Links
+        run: bundle exec htmlproofer --check-html --disable-external _site

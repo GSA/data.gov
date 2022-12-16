@@ -16,5 +16,5 @@ jobs:
         run: bundle
       - name: Build static site
         run: bundle exec jekyll build
-      - name: Test HTML Links
+      - name: Test External Links
         run: bundle exec htmlproofer --check-html _site
