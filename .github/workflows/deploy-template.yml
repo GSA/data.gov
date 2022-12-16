@@ -37,6 +37,10 @@ jobs:
         with:
           name: python-vendored
           path: vendor
+      - name: Modify robots.txt in dev
+        if: ${{ matrix.robots-dev && inputs.environ == 'development' }}
+        run: |
+          cp proxy/public/robots.develop.txt proxy/public/robots.txt
       - name: deploy ${{ matrix.app }}
         uses: cloud-gov/cg-cli-tools@main
         with:
