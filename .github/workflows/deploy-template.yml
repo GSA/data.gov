@@ -29,13 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        app: ${{ fromJSON(inputs.app_names) }}
-        include:
-          - smoketest: true
-            app: catalog-web
-          - smoketest: true
-            app: inventory
+      matrix: ${{ fromJSON(inputs.app_names) }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
