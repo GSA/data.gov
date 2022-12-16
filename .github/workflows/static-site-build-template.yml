@@ -10,16 +10,17 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: Install Dependencies
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+      - name: Install Node Dependencies
         run: |
-          sudo apt update
           if [[ -f package.json ]]; then
+            sudo apt update; 
             sudo apt install -y npm;
             npm install
-          fi        
-          sudo apt install ruby
-          sudo gem install bundler
-          bundle  
+          fi
       - name: Build
         run: |
           if [[ -f gulpfile.js ]]; then
