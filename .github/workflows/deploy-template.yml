@@ -32,10 +32,10 @@ jobs:
       matrix:
         app: ${{ fromJSON(inputs.app_names) }}
         include:
-          - app: catalog-web
-            smoketest: true
-          - app: inventory
-            smoketest: true
+          - smoketest: true
+            app: catalog-web
+          - smoketest: true
+            app: inventory
     steps:
       - name: checkout
         uses: actions/checkout@v3
