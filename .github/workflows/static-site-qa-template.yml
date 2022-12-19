@@ -7,13 +7,13 @@ jobs:
   qa:
     name: QA Static Site
     runs-on: ubuntu-latest
-    container:
-      image: ruby:3.1
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: Install ruby dependencies
-        run: bundle
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
       - name: Build static site
         run: bundle exec jekyll build
       - name: Test External Links
