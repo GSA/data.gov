@@ -13,8 +13,15 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.1'
-          bundler-cache: true
-      - name: Build static site
-        run: bundle exec jekyll build
-      - name: Test External Links
-        run: bundle exec htmlproofer --check-html _site
+          bundler-cache: true #runs `bundle install`
+      - name: NPM install
+        run: |
+          sudo apt update;
+          sudo apt install -y npm;
+          npm install
+      - name: Build
+        run: |
+          npm run build
+      - name: QA
+        run: |
+          npm run qa
