@@ -16,12 +16,10 @@ jobs:
           bundler-cache: true #runs `bundle install`
       - name: NPM install
         run: |
-          sudo apt update;
-          sudo apt install -y npm;
+          sudo apt update
+          sudo apt install -y npm
           npm install
       - name: Build
-        run: |
-          npm run build
+        run: npm run build
       - name: Test
-        run: |
-          npm run test
+        run: npm test
