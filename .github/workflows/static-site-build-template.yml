@@ -14,8 +14,8 @@ jobs:
         with:
           ruby-version: '3.1'
           bundler-cache: true #runs `bundle install`
-      - name: Install node.js.
-        uses: actions/setup-node@v2
+      - name: Install node.js
+        uses: actions/setup-node@v3
         with:
           node-version: '16'
       - name: Install NPM dependencies
