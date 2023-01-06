@@ -25,3 +25,8 @@ jobs:
         run: npm run build
       - name: Test
         run: npm test
+      - name: Woke scan
+        uses: get-woke/woke-action@v0
+        with:
+          # Cause the check to fail on any broke rules
+          fail-on-error: false
