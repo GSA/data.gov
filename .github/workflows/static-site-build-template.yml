@@ -14,12 +14,19 @@ jobs:
         with:
           ruby-version: '3.1'
           bundler-cache: true #runs `bundle install`
-      - name: NPM install
-        run: |
-          sudo apt update
-          sudo apt install -y npm
-          npm install
+      - name: Install node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Install NPM dependencies
+        shell: bash
+        run: npm install
       - name: Build
         run: npm run build
       - name: Test
         run: npm test
+      - name: Woke scan
+        uses: get-woke/woke-action@v0
+        with:
+          # Cause the check to fail on any broke rules
+          fail-on-error: false
