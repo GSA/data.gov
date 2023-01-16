@@ -15,7 +15,7 @@ These repositories will automatically create failure tickets, so no need to chec
   - [Catalog Deploy Action](https://github.com/GSA/catalog.data.gov/actions/workflows/publish.yml)
 
 ### Snyk Scans
-Snyk will create PR's if a dependency needs to be updated, so no need to check the Snyk console directly.
+For Catalog and Inventory, snyk will create PR's if a dependency needs to be updated.
   - [Inventory Snyk Scan](https://github.com/GSA/inventory-app/actions/workflows/snyk.yml)
   - [Catalog Snyk Scan](https://github.com/GSA/catalog.data.gov/actions/workflows/snyk.yml)
 
