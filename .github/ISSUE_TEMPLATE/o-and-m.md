@@ -13,6 +13,7 @@ These repositories will automatically create failure tickets, so no need to chec
   - [Inventory deploy Action](https://github.com/GSA/inventory-app/actions/workflows/deploy.yml)
   - [Catalog Restart Action](https://github.com/GSA/catalog.data.gov/actions/workflows/restart.yml)
   - [Catalog Deploy Action](https://github.com/GSA/catalog.data.gov/actions/workflows/publish.yml)
+  - [Check Stuck Harvest Jobs](https://github.com/GSA/catalog.data.gov/actions/workflows/check-stuck-harvest-jobs.yml)
 
 ### Snyk Scans
 For Catalog and Inventory, snyk will create PR's if a dependency needs to be updated.
@@ -27,21 +28,10 @@ If either of these actions failed and a PR was not created, an unfixable vulnera
 
 ### GH Actions
 Check Action tabs for each _active_ repositories, as these will not create issues automatically on failure
-  - [Catalog DB-Solr-Sync Action](https://github.com/GSA/catalog.data.gov/actions/workflows/db-solr-sync-automated.yml)
-  - [Solr Brokerpak Release Action](https://github.com/GSA/datagov-brokerpak-solr/actions/workflows/release.yml)
-    - Note the release version
-  - [EKS Brokerpak Release Action](https://github.com/GSA/datagov-brokerpak-eks/actions/workflows/release.yml)
-    - Note the release version
-  - [SMTP Brokerpak Release Action](https://github.com/GSA/datagov-brokerpak-smtp/actions/workflows/release.yml)
-    - Note the release version
-  - [SSB Deploy Action](https://github.com/GSA/datagov-ssb/actions/workflows/apply.yml)
-  - [Check Stuck Harvest Jobs](https://github.com/GSA/catalog.data.gov/actions/workflows/check-stuck-harvest-jobs.yml)
-  
-  Validate that deployments are using the most recent (working) releases of each brokerpak.
-  
-  The above actions should finish in minutes. Examine the amount of datasets affected if it takes long to finish.
-
-### Harvester
+  - [Catalog DB-Solr-Sync Action](https://github.com/GSA/catalog.data.gov/actions/workflows/db-solr-sync-automated.yml) The actions should finish in minutes. Examine the amount of datasets affected if it takes long to finish.
+  - [Tracking Update Action](https://github.com/GSA/catalog.data.gov/actions/workflows/tracking-update.yml) The action should take 1 - 2 hours to finish on prod. Examine the amount of datasets affected or Solr index speed if the time is way off.
+    
+### Miscs
 - Verify harvesting jobs are running, go through Error reports to catch unusual errors that need attention [[Wiki doc](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#harvest-job-report-daily-email-report)]
 - Watch for user email requests
 - Triage DMARC Report from Google (daily) sent to datagovhelp@gsa.gov (only for catalog in prod).
