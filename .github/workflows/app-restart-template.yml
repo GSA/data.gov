@@ -7,9 +7,6 @@ on:   # yamllint disable-line rule:truthy
       environ:
         required: true
         type: string
-      app_url:
-        required: true
-        type: string
       app_names:
         required: true
         type: string
@@ -18,8 +15,6 @@ on:   # yamllint disable-line rule:truthy
       CF_SERVICE_USER:
         required: true
       CF_SERVICE_AUTH:
-        required: true
-      ADD_TO_PROJECT_PAT:
         required: true
 
 jobs:
