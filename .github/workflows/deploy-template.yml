@@ -41,8 +41,6 @@ jobs:
         if: ${{ matrix.robots-dev && inputs.environ == 'development' }}
         run: |
           cp proxy/public/robots.develop.txt proxy/public/robots.txt
-      - name: Check restart & deploy traffic
-        run: bin/check-running-job ${{ matrix.app }}
       - name: deploy ${{ matrix.app }}
         uses: cloud-gov/cg-cli-tools@main
         with:
