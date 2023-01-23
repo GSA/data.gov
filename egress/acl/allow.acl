@@ -1,17 +1,21 @@
-  *.gov
-  *.mil
-  s3-us-gov-west-1.amazonaws.com
-  *.opendata.arcgis.com
-  services3.arcgis.com
-  data.srcity.org
-  portal.opentopography.org
-  data.arlingtonva.us
-  nycopendata.socrata.com
-  data.cityofchicago.org
-  data.sfgov.org
-  data.townofcary.org
-  data.lacity.org
-  data.muni.org
-  dataworks.siouxfalls.org
-  www.chapelhillopendata.org
-  openei.org
+*.gov
+*.mil
+s3-us-gov-west-1.amazonaws.com
+*.opendata.arcgis.com
+*.hub.arcgis.com
+services3.arcgis.com
+data.srcity.org
+portal.opentopography.org
+data.arlingtonva.us
+nycopendata.socrata.com
+data.cityofchicago.org
+data.sfgov.org
+data.townofcary.org
+data.lacity.org
+data.muni.org
+dataworks.siouxfalls.org
+www.chapelhillopendata.org
+openei.org
+www.opendataphilly.org
+data.wprdc.org
+bloomington.data.socrata.com
