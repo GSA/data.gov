@@ -28,18 +28,18 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: checkout
-        uses: actions/checkout@v3
         with:
           repository: gsa/data.gov
           path: './datagov'
-          ref: 'feature/restarts-reformat'
+          ref: 'feature/restarts-reformat'  # TODO remove after testing
+      - name: checkout
+        uses: actions/checkout@v3
       - name: Setup tmate session  # check path to check-running-job
         uses: mxschmitt/action-tmate@v3
       - name: deploy ${{ matrix.app }}
         uses: cloud-gov/cg-cli-tools@main
         with:
-          command: bin/restart-app ${{ matrix.app }}
+          command: datagov/bin/restart-app ${{ matrix.app }}
           cf_org: gsa-datagov
           cf_space: ${{ inputs.environ }}
           cf_username: ${{secrets.CF_SERVICE_USER}}

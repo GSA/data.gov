@@ -1,7 +1,12 @@
 #!/bin/bash
 app_to_restart=$1
 
-source bin/check-running-job
+# may move depending on template or not
+if [ -f bin/check-running-job ]; then
+    source bin/check-running-job
+elif [ -f datagov/bin/check-running-job ]; then
+    source datagov/bin/check-running-job
+fi
 check_running_job "$app_to_restart"
 
 # details here
