@@ -33,6 +33,7 @@ jobs:
         with:
           repository: gsa/data.gov
           path: './datagov'
+          ref: 'feature/restarts-reformat'
       - name: Setup tmate session  # check path to check-running-job
         uses: mxschmitt/action-tmate@v3
       - name: deploy ${{ matrix.app }}
