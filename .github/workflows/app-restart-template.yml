@@ -28,6 +28,13 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          repository: gsa/data.gov
+          path: './datagov'
+      - name: Setup tmate session  # check path to check-running-job
+        uses: mxschmitt/action-tmate@v3
       - name: deploy ${{ matrix.app }}
         uses: cloud-gov/cg-cli-tools@main
         with:
