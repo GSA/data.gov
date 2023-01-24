@@ -1,0 +1,61 @@
+---
+name: App Restart Template
+
+on:   # yamllint disable-line rule:truthy
+  workflow_call:
+    inputs:
+      environ:
+        required: true
+        type: string
+      app_names:
+        required: true
+        type: string
+
+    secrets:
+      CF_SERVICE_USER:
+        required: true
+      CF_SERVICE_AUTH:
+        required: true
+
+jobs:
+  deploy:
+    name: deploy (${{ inputs.environ }})
+    environment: ${{ inputs.environ }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(inputs.app_names) }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          repository: gsa/data.gov
+          path: './datagov'
+      - name: deploy ${{ matrix.app }}
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          command: datagov/bin/restart-app ${{ matrix.app }}
+          cf_org: gsa-datagov
+          cf_space: ${{ inputs.environ }}
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
+      - name: smoke test
+        if: ${{ matrix.smoketest }}
+        run: |
+          sleep 10
+          curl --fail --silent ${{ inputs.app_url }}\
+          /api/action/status_show?$(date +%s)
+      - name: Create Issue if it fails 😢
+        if: ${{ failure() && github.ref == 'refs/heads/main' }}
+        uses: JasonEtco/create-an-issue@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          GITHUB_JOB: ${{ toJson(github)['job'] }}
+          GITHUB_ATTEMPTS: ${{ github.run_attempt }}
+          LAST_COMMIT: ${{ github.sha }}
+          LAST_RUN_BY: ${{ github.actor }}
+          RUN_ID: ${{ github.run_id }}
+        with:
+          filename: .github/deploy_failure.md
+          assignees: ${{ github.actor }}
+          update_existing: true

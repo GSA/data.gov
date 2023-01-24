@@ -1,0 +1,23 @@
+#!/bin/bash
+app_to_restart=$1
+
+# may move depending on template or not
+if [ -f bin/check-running-job ]; then
+    source bin/check-running-job
+elif [ -f datagov/bin/check-running-job ]; then
+    source datagov/bin/check-running-job
+fi
+check_running_job "$app_to_restart"
+
+# details here
+# https://github.com/GSA/catalog.data.gov/pull/550
+instances=$(cf app "$app_to_restart" | grep '^instances:' | sed 's/.*\///')
+if [[ $instances == 1 ]]; then
+  cf restart "$app_to_restart" --strategy rolling
+else
+  for (( i=1; i<=instances; i++ ))
+  do
+    cf restart-app-instance "$app_to_restart" $((i-1))
+    sleep 90
+  done
+fi

@@ -1,0 +1,33 @@
+#!/bin/bash
+
+function check_running_job {
+    # Input any app name
+    app_to_check=$1
+
+    # Install jq
+    apt install -y jq
+
+    # Check if deployment is happening, if so ignore
+    guid=$(cf app "$app_to_check" --guid)
+    running=$(\
+        cf curl "/v3/deployments?status_values=ACTIVE" \
+        | jq --arg guid "$guid" ".resources[] |
+            select(.relationships.app.data.guid == \$guid ) |
+            .relationships.app.data.guid" \
+    )
+    if [ "$running" != "" ]; then
+            echo "Deployment in progress for $app_to_check, not doing anything"
+            exit 0
+    fi
+
+    # If there is more than one instance of 'instances', the app is already restarting
+    if [[ $(cf app "$app_to_check" | grep -c '^instances:') -gt 1 ]]; then
+      echo "Deployment or Restart in progress... not doing anything"
+      exit 0
+    fi
+}
+
+# attempting https://stackoverflow.com/a/29967433/20735210
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    check_running_job "$@"
+fi
