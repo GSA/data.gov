@@ -29,13 +29,10 @@ env:
   DATAGOV_DIR: datagov
   CG_DIR: cg-egress-proxy
 
-# jobs need to be triplicated due to git hub config being in environment
-# for each cf space
-# TODO ticket to fix this: https://github.com/GSA/data.gov/issues/3996
 jobs:
   enable-egress:
     concurrency: ${{ github.event.inputs.appSpace }}
-    name: ${{ github.event.inputs.appName }} -- ${{ github.event.inputs.appSpace }}
+    name: ${{ github.event.inputs.appName }} -- ${{ github.event.inputs.appSpace }}  # yamllint disable-line rule:line-length
     environment: ${{ github.event.inputs.appSpace }}
     runs-on: ubuntu-latest
     steps:
@@ -54,13 +51,12 @@ jobs:
       - name: build caddy - setup go
         uses: actions/setup-go@v3
         with:
-          go-version: '1.18.4'  # latest
+          go-version: '1.19.5'  # latest
       - name: build caddy - get xcaddy
         run: go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
       - name: build caddy - xcaddy build
         run: >
           xcaddy build
-          --with github.com/hairyhenderson/caddy-teapot-module@v0.0.3-0
           --with github.com/caddyserver/forwardproxy@caddy2
           --output ${{ env.CG_DIR }}/proxy/caddy
 
@@ -70,7 +66,7 @@ jobs:
           # tmate command for testing and debugging
           # command: apt-get -y install tmate; tmate -F
           command: >
-            datagov/bin/enable-egress
+            ${{ env.DATAGOV_DIR }}/bin/enable-egress
             ${{ github.event.inputs.appName }}
             ${{ github.event.inputs.appSpace }}
           cf_org: gsa-datagov
