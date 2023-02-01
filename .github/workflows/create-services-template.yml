@@ -25,7 +25,7 @@ jobs:
           repository: gsa/data.gov
           path: './datagov'
       - name: check restart & deploy traffic
-        run: datagov/bin/check-running-job ${{ matrix.app }}
+        run: datagov/bin/check-running-job ${{ matrix.app }} --wait
       - name: checkout
         uses: actions/checkout@v3
       - name: create services
