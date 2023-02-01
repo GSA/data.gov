@@ -19,6 +19,13 @@ jobs:
     environment: ${{ inputs.environ }}
     runs-on: ubuntu-latest
     steps:
+      - name: checkout datagov
+        uses: actions/checkout@v3
+        with:
+          repository: gsa/data.gov
+          path: './datagov'
+      - name: check restart & deploy traffic
+        run: datagov/bin/check-running-job ${{ matrix.app }}
       - name: checkout
         uses: actions/checkout@v3
       - name: create services
