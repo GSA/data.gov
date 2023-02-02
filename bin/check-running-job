@@ -39,7 +39,7 @@ function check_running_job {
                 check_running_job "$1" "$2"
         else
             echo "Deployment in progress for $app_to_check, not doing anything"
-            exit 1
+            exit 0
         fi
     else
         echo "No job running for app $app_to_check"
@@ -48,7 +48,7 @@ function check_running_job {
     # If there is more than one instance of 'instances', the app is already restarting
     if [[ $(cf app "$app_to_check" | grep -c '^instances:') -gt 1 ]]; then
       echo "Deployment or Restart in progress... not doing anything"
-      exit 1
+      exit 0
     fi
 }
 
