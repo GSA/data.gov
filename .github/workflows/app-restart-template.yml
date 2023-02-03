@@ -34,7 +34,9 @@ jobs:
       - name: deploy ${{ matrix.app }}
         uses: cloud-gov/cg-cli-tools@main
         with:
-          command: datagov/bin/check-running-job ${{ matrix.app }} && cf restart ${{ matrix.app }} --strategy rolling  # yamllint disable-line rule:line-length
+          command: >
+            datagov/bin/check-running-job ${{ matrix.app }} &&
+            cf restart ${{ matrix.app }} --strategy rolling
           cf_org: gsa-datagov
           cf_space: ${{ inputs.environ }}
           cf_username: ${{secrets.CF_SERVICE_USER}}

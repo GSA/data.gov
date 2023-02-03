@@ -42,8 +42,6 @@ jobs:
         with:
           repository: gsa/data.gov
           path: './datagov'
-      - name: check restart & deploy traffic
-        run: datagov/bin/check-running-job ${{ matrix.app }} --wait
       - name: Modify robots.txt in dev
         if: ${{ matrix.robots-dev && inputs.environ == 'development' }}
         run: |
@@ -52,6 +50,7 @@ jobs:
         uses: cloud-gov/cg-cli-tools@main
         with:
           command: >
+            datagov/bin/check-running-job ${{ matrix.app }} --wait &&
             cf push ${{ matrix.app }}
             --vars-file vars.${{ inputs.environ }}.yml
             --strategy rolling
