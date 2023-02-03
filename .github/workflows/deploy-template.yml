@@ -37,6 +37,13 @@ jobs:
         with:
           name: python-vendored
           path: vendor
+      - name: checkout datagov
+        uses: actions/checkout@v3
+        with:
+          repository: gsa/data.gov
+          path: './datagov'
+      - name: check restart & deploy traffic
+        run: datagov/bin/check-running-job ${{ matrix.app }} --wait
       - name: Modify robots.txt in dev
         if: ${{ matrix.robots-dev && inputs.environ == 'development' }}
         run: |
