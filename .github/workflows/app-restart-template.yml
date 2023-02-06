@@ -18,8 +18,8 @@ on:   # yamllint disable-line rule:truthy
         required: true
 
 jobs:
-  deploy:
-    name: deploy (${{ inputs.environ }})
+  restart:
+    name: restart (${{ inputs.environ }})
     environment: ${{ inputs.environ }}
     runs-on: ubuntu-latest
     strategy:
@@ -31,7 +31,7 @@ jobs:
         with:
           repository: gsa/data.gov
           path: './datagov'
-      - name: deploy ${{ matrix.app }}
+      - name: restart ${{ matrix.app }}
         uses: cloud-gov/cg-cli-tools@main
         with:
           command: >
