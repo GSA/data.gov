@@ -58,6 +58,6 @@ jobs:
           LAST_RUN_BY: ${{ github.actor }}
           RUN_ID: ${{ github.run_id }}
         with:
-          filename: datagov/.github/deploy_failure.md
+          filename: datagov/.github/restart_failure.md
           assignees: ${{ github.actor }}
           update_existing: true
