@@ -13,6 +13,9 @@ on:   # yamllint disable-line rule:truthy
       app_names:
         required: true
         type: string
+      repo_name:
+        required: true
+        type: string
 
     secrets:
       CF_SERVICE_USER:
@@ -74,6 +77,7 @@ jobs:
           LAST_COMMIT: ${{ github.sha }}
           LAST_RUN_BY: ${{ github.actor }}
           RUN_ID: ${{ github.run_id }}
+          REPO: ${{ inputs.repo_name }}
         with:
           filename: .github/deploy_failure.md
           assignees: ${{ github.actor }}
