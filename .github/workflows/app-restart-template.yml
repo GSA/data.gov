@@ -35,7 +35,7 @@ jobs:
         uses: cloud-gov/cg-cli-tools@main
         with:
           command: >
-            datagov/bin/check-running-job ${{ matrix.app }} &&
+            datagov/bin/check-running-job ${{ matrix.app }} ||
             cf restart ${{ matrix.app }} --strategy rolling
           cf_org: gsa-datagov
           cf_space: ${{ inputs.environ }}

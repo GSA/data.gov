@@ -50,7 +50,7 @@ jobs:
         uses: cloud-gov/cg-cli-tools@main
         with:
           command: >
-            datagov/bin/check-running-job ${{ matrix.app }} --wait &&
+            datagov/bin/check-running-job ${{ matrix.app }} --wait ||
             cf push ${{ matrix.app }}
             --vars-file vars.${{ inputs.environ }}.yml
             --strategy rolling

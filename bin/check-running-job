@@ -43,6 +43,7 @@ function check_running_job {
         fi
     else
         echo "No job running for app $app_to_check"
+        exit 1
     fi
 
     # If there is more than one instance of 'instances', the app is already restarting
