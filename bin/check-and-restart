@@ -1,5 +1,7 @@
 #!/bin/bash
 
+ok_to_restart="1"
+
 function check_running_job {
     [[ $# -eq 0 ]] && echo "Error: no app provided" && exit 1
 
@@ -39,7 +41,7 @@ function check_running_job {
                 check_running_job "$1" "$2"
         else
             echo "Deployment in progress for $app_to_check, not doing anything"
-            exit 0
+            ok_to_restart="0"
         fi
     else
         echo "No job running for app $app_to_check"
@@ -48,8 +50,50 @@ function check_running_job {
     # If there is more than one instance of 'instances', the app is already restarting
     if [[ $(cf app "$app_to_check" | grep -c '^instances:') -gt 1 ]]; then
       echo "Deployment or Restart in progress... not doing anything"
-      exit 0
+      ok_to_restart="0"
+    fi
+
+    # For harvesters, make sure they are not in the middle of harvesting jobs
+    if [[ "$app_to_check" == "catalog-gather" || "$app_to_check" == "catalog-fetch" ]]; then
+        ## Utility Functions
+        # Get the number of lines in the log (int)
+        log_count () { cf logs --recent "$app_to_check" | wc -l; }
+
+        # Get the time of the last line in the log (int)
+        current_time=$(date --utc +%s)
+        log_last_time () {
+            date --utc --date="$(cf logs --recent "$app_to_check" | tail -n 1 | awk '{split($0,time," "); print time[1]}')" +%s
+        }
+
+        # First we check if any instance CPU is busy
+        instances=$(cf app "$app_to_check" | grep '^instances:' | sed 's/.*\///')
+        cf app "$app_to_check" | tail -n "$instances" | awk '{ split($4,cpu,"."); print cpu[1]}' | while read -r cpu ; do
+            if [[ $cpu > 1 ]]; then
+                echo "CPU is busy! Not going to restart"
+                ok_to_restart="0"
+            else
+                echo "CPU showing no harvesting activity for this instance."
+            fi
+        done;
+
+        # Check the age of the last log
+        # If there are only two lines, there are no logs
+        if [[ $ok_to_restart == "1" && $((`log_count` > 2)) == '1' ]]; then
+        # if the timestamp is younger than 15 mins from start of script
+            if [[ $((current_time - `log_last_time` < 900)) == '1' ]]; then
+                echo "Logs are too new! Not going to restart"
+                ok_to_restart="0"
+            else
+                echo "Logs showing no harvesting activity for $app_to_check."
+            fi
+        fi
     fi
 }
 
 check_running_job "$@"
+
+if [[ $ok_to_restart == "1" ]]; then
+    cf restart "$app_to_check" --strategy rolling
+else
+    echo "Restart $app_to_check cancelled."
+fi
