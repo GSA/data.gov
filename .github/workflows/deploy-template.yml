@@ -49,11 +49,7 @@ jobs:
       - name: deploy ${{ matrix.app }}
         uses: cloud-gov/cg-cli-tools@main
         with:
-          command: >
-            datagov/bin/check-running-job ${{ matrix.app }} --wait &&
-            cf push ${{ matrix.app }}
-            --vars-file vars.${{ inputs.environ }}.yml
-            --strategy rolling
+          command: datagov/bin/check-and-renew ${{ matrix.app }} deploy ${{ inputs.environ }} --wait
           cf_org: gsa-datagov
           cf_space: ${{ inputs.environ }}
           cf_username: ${{secrets.CF_SERVICE_USER}}
