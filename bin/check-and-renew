@@ -21,7 +21,7 @@ function check_running_job {
 
   # Input whether it's deploy or restart
   if [[ -n "$2" ]]; then
-    if [[ $2 != 'deploy' | $2 != 'restart' ]]; then
+    if [[ ! $2 =~ ^(deploy|restart)$ ]]; then
       echo "Need to specify 'deploy' or 'restart'"
       exit 1
     fi
