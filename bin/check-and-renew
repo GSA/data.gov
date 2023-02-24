@@ -52,7 +52,7 @@ function check_running_job {
     if [[ $wait_for_app == 'true' ]]; then
       echo "Waiting on currently running job $app_to_check.."
       sleep 10
-      check_running_job "$1" "$2"
+      check_running_job "$app_to_check" "$wait"
     else
       echo "Deployment in progress for $app_to_check, not doing anything"
       ok_to_restart="NO"
@@ -68,7 +68,7 @@ function check_running_job {
   fi
 
   # For harvesters, make sure they are not in the middle of harvesting jobs
-  if [[ "$2" == "restart" ]]; then
+  if [[ "$action" == "restart" ]]; then
     if [[ "$app_to_check" == "catalog-gather" || "$app_to_check" == "catalog-fetch" ]]; then
       ## Utility Functions
       # Get the number of lines in the log (int)
@@ -108,12 +108,14 @@ function check_running_job {
 
 check_running_job "$@"
 
-if [[ "$2" == "restart" ]]; then
+if [[ "$action" == "restart" ]]; then
   if [[ $ok_to_restart == "YES" ]]; then
       cf restart "$app_to_check" --strategy rolling
   else
       echo "Restart $app_to_check cancelled."
   fi
-else
+fi
+
+if [[ "$action" == "deploy" ]]; then
   cf push "$app_to_check" --vars-file vars.$space.yml --strategy rolling
 fi
