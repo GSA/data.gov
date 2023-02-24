@@ -34,7 +34,7 @@ jobs:
       - name: restart ${{ matrix.app }}
         uses: cloud-gov/cg-cli-tools@main
         with:
-          command: datagov/bin/check-and-restart ${{ matrix.app }}
+          command: datagov/bin/check-and-renew ${{ matrix.app }} restart
           cf_org: gsa-datagov
           cf_space: ${{ inputs.environ }}
           cf_username: ${{secrets.CF_SERVICE_USER}}
