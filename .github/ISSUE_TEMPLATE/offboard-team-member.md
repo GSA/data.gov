@@ -36,6 +36,7 @@ These tasks are performed by a team admin:
 - [ ] Remove team member from [New Relic](https://newrelic.com)
 - [ ] Remove team member from [Docker Hub](https://cloud.docker.com/orgs/datagov/teams)
 - [ ] Remove team member from [Data.gov system accounts](https://github.com/gsa/data.gov/wiki/CKAN-commands#system-administrator-accounts) on Inventory and Catalog
+- [ ] Remove team member from CKAN users `[ckan-domain]/user/` on Inventory and Catalog
 - [ ] Remove team member from TTS Bug Bounty access [#bug-bounty-partners](https://gsa-tts.slack.com/messages/C5JQCD9PH)
 - [ ] Remove team member from [Snyk](https://app.snyk.io/org/data.gov/manage/members)
 - [ ] Remove team member from [Data.gov Google Analytics](https://analytics.google.com/analytics/web/#/a42145528w85560911p88728213/admin/suiteusermanagement/account) account
