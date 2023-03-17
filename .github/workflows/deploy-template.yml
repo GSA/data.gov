@@ -39,8 +39,8 @@ jobs:
           path: vendor
       - uses: actions/download-artifact@v3
         with:
-          name: vendor-nginx
-          path: proxy/modules
+          name: nginx-vendored
+          path: proxy/modules/
       - name: checkout datagov
         uses: actions/checkout@v3
         with:
