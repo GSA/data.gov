@@ -37,6 +37,10 @@ jobs:
         with:
           name: python-vendored
           path: vendor
+      - uses: actions/download-artifact@v3
+        with:
+          name: python-vendored
+          path: vendor-nginx
       - name: checkout datagov
         uses: actions/checkout@v3
         with:
