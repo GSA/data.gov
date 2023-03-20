@@ -14,21 +14,33 @@ As part of day-to-day operation of Data.gov, there are many [Operation and Maint
 
 
 ## Acceptance criteria
-You are responsible for all [O&M responsibilities](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities) this week. We've highlighted a few so they're not forgotten.
+You are responsible for all [O&M responsibilities](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities) this week. We've highlighted a few so they're not forgotten. You can copy each checklist into your daily report.
 
-| Task                      | Friday          | Monday         | Tuesday       | Wednesday        | Thursday          | Friday          | Monday         | Tuesday       | Wednesday        | Thursday          |   Weekly/Monthly        |
-|---------------------------|-----------------|-----------------|-----------------|-----------------|-----------------|-----------------|-----------------|-----------------|-----------------|-----------------|-----------------|
-| Check Deployments         | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | ➖ |
-| Check Restarts         | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | ➖ |
-| Check [Snyk Scans](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#automated-dependency-updates-ad-hoc-github-prs)         | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | <ul><li>[ ] Catalog</li><li>[ ] Inventory</li></ul> | ➖ |
-| Check Catalog Auto Tasks  | <ul><li>[ ] DB-Solr Sync</li><li>[ ] Tracking Update</li><li>[ ] Stuck Jobs</li></ul> |<ul><li>[ ] DB-Solr Sync</li><li>[ ] Tracking Update</li><li>[ ] Stuck Jobs</li></ul> | <ul><li>[ ] DB-Solr Sync</li><li>[ ] Tracking Update</li><li>[ ] Stuck Jobs</li></ul> | <ul><li>[ ] DB-Solr Sync</li><li>[ ] Tracking Update</li><li>[ ] Stuck Jobs</li></ul> | <ul><li>[ ] DB-Solr Sync</li><li>[ ] Tracking Update</li><li>[ ] Stuck Jobs</li></ul> | <ul><li>[ ] DB-Solr Sync</li><li>[ ] Tracking Update</li><li>[ ] Stuck Jobs</li></ul> |<ul><li>[ ] DB-Solr Sync</li><li>[ ] Tracking Update</li><li>[ ] Stuck Jobs</li></ul> | <ul><li>[ ] DB-Solr Sync</li><li>[ ] Tracking Update</li><li>[ ] Stuck Jobs</li></ul> | <ul><li>[ ] DB-Solr Sync</li><li>[ ] Tracking Update</li><li>[ ] Stuck Jobs</li></ul> | <ul><li>[ ] DB-Solr Sync</li><li>[ ] Tracking Update</li><li>[ ] Stuck Jobs</li></ul> | ➖ |
-| Check [Harvesting Emails](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#harvest-job-report-daily-email-report)         | <ul><li>[ ] Catalog</li></ul> | <ul><li>[ ] Catalog</li></ul> | <ul><li>[ ] Catalog</li></ul> | <ul><li>[ ] Catalog</li></ul> | <ul><li>[ ] Catalog</li></ul> | <ul><li>[ ] Catalog</li></ul> | <ul><li>[ ] Catalog</li></ul> | <ul><li>[ ] Catalog</li></ul> | <ul><li>[ ] Catalog</li></ul> | <ul><li>[ ] Catalog</li></ul> | ➖ |
-| [New Relic Alerts](https://alerts.newrelic.com/accounts/1601367/incidents) Triaged  | <ul><li>[ ] </li></ul> | <ul><li>[ ] </li></ul> | <ul><li>[ ] </li></ul> | <ul><li>[ ] </li></ul> | <ul><li>[ ] </li></ul> | <ul><li>[ ] </li></ul> | <ul><li>[ ] </li></ul> | <ul><li>[ ] </li></ul> | <ul><li>[ ] </li></ul> | <ul><li>[ ] </li></ul> | ➖ |
-| Triage DMARC Report from Google  | <ul><li>[ ] </li></ul> | <ul><li>[ ] </li></ul> | <ul><li>[ ] </li></ul> | <ul><li>[ ] </li></ul> | <ul><li>[ ] </li></ul> | <ul><li>[ ] </li></ul> | <ul><li>[ ] </li></ul> | <ul><li>[ ] </li></ul> | <ul><li>[ ] </li></ul> | <ul><li>[ ] </li></ul> | ➖ |
-| Check [Catalog Solr](https://github.com/GSA/data.gov/wiki/Operation-and-Maintenance-Responsibilities#solr)         | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | <ul><li>[ ] Week 1</li><li>[ ] Week 2</li></ul> |
-| [Audit Log](https://docs.google.com/spreadsheets/d/1z6lqmyNxC7s5MiTt9f6vT41IS2DLLJl4HwEqXvvft40/edit) [*AU-6*](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#au-6-log-auditing)         | <ul><li>[ ] </li></ul> | ➖ | ➖ | ➖ | ➖ | <ul><li>[ ] </li></ul> | ➖ | ➖ | ➖ | ➖ | ➖ |
-| [Catalog Dupe Check](https://github.com/GSA/data.gov/wiki/Operation-and-Maintenance-Responsibilities#duplicate-check)         | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | <ul><li>[ ] Week 1</li><li>[ ] Week 2</li></ul> |
-| [Invicti Scan](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#netsparker-compliance-scan-report-from-isso)         | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | ➖ | <ul><li>[ ] Week 1</li><li>[ ] Week 2</li></ul> |
+```
+## Daily Checklist
+Check [Production States](https://github.com/GSA/data.gov/wiki/Automated-O&M-Tasks)
+- [ ] Catalog 
+- [ ] Inventory
 
-- [ ] Weekly [resources.data.gov link scan](https://app.circleci.com/pipelines/github/GSA/resources.data.gov?branch=main)
-- [ ] Finishing the shift: Log the [number of alerts](https://docs.google.com/spreadsheets/d/1u1hSUAQW6FWzphog122stfB6MB9Wiq0NROT3PeicRoM/edit#gid=939071144) 
+Check [Snyk Scans](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#automated-dependency-updates-ad-hoc-github-prs)
+- [ ] Catalog 
+- [ ] Inventory
+
+Check [Harvesting Emails](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#harvest-job-report-daily-email-report)
+- [ ] Catalog
+
+Other
+- [ ] [New Relic Alerts](https://alerts.newrelic.com/accounts/1601367/incidents) Triaged
+- [ ] Triage DMARC Report from Google
+```
+
+```
+## Weekly Checklist
+- [ ] [Audit Log](https://docs.google.com/spreadsheets/d/1z6lqmyNxC7s5MiTt9f6vT41IS2DLLJl4HwEqXvvft40/edit) (more info on [AU-3 and AU-6 Log auditing](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#au-3-and-au-6-log-auditing))
+- [ ] Check [Catalog Solr](https://github.com/GSA/data.gov/wiki/Operation-and-Maintenance-Responsibilities#solr)
+- [ ] [Catalog Dupe Check](https://github.com/GSA/data.gov/wiki/Operation-and-Maintenance-Responsibilities#duplicate-check)
+- [ ] [Invicti Scan](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#netsparker-compliance-scan-report-from-isso)
+- [ ] [resources.data.gov link scan](https://app.circleci.com/pipelines/github/GSA/resources.data.gov?branch=main)
+```
+
+Finishing the shift: Log the [number of alerts](https://docs.google.com/spreadsheets/d/1u1hSUAQW6FWzphog122stfB6MB9Wiq0NROT3PeicRoM/edit#gid=939071144) 
