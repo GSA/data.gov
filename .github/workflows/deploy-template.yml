@@ -47,7 +47,7 @@ jobs:
         run: |
           cp proxy/public/robots.develop.txt proxy/public/robots.txt
       - name: deploy ${{ matrix.app }}
-        uses: cloud-gov/cg-cli-tools@main
+        uses: gsa/cg-cli-tools@key-not-accessible
         with:
           command: datagov/bin/check-and-renew ${{ matrix.app }} deploy ${{ inputs.environ }} --wait
           cf_org: gsa-datagov
