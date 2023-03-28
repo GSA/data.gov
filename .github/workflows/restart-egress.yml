@@ -20,7 +20,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v3
       - name: cf restart
-        uses: cloud-gov/cg-cli-tools@main
+        uses: gsa/cg-cli-tools@key-not-accessible
         with:
           command: bin/restart-egress
           cf_org: gsa-datagov
