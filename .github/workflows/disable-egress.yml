@@ -38,7 +38,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v3
       - name: disable egress
-        uses: gsa/cg-cli-tools@key-not-accessible
+        uses: cloud-gov/cg-cli-tools@main
         with:
           command: bin/disable-egress ${{ github.event.inputs.appName }}
           cf_org: gsa-datagov

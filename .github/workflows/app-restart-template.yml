@@ -32,7 +32,7 @@ jobs:
           repository: gsa/data.gov
           path: './datagov'
       - name: restart ${{ matrix.app }}
-        uses: gsa/cg-cli-tools@key-not-accessible
+        uses: cloud-gov/cg-cli-tools@main
         with:
           command: datagov/bin/check-and-renew ${{ matrix.app }} restart
           cf_org: gsa-datagov
