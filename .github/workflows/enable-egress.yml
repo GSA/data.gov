@@ -62,7 +62,7 @@ jobs:
           --output ${{ env.CG_DIR }}/proxy/caddy
 
       - name: enable egress
-        uses: gsa/cg-cli-tools@key-not-accessible
+        uses: cloud-gov/cg-cli-tools@main
         with:
           # tmate command for testing and debugging
           # command: apt-get -y install tmate; tmate -F
