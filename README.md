@@ -1,6 +1,33 @@
 # data.gov main repository
 
-[![CircleCI](https://circleci.com/gh/GSA/datagov-deploy.svg?style=svg)](https://circleci.com/gh/GSA/datagov-deploy)
+### Data.gov Egress Actions
+[![disable egress proxy](https://github.com/GSA/data.gov/actions/workflows/disable-egress.yml/badge.svg)](https://github.com/GSA/data.gov/actions/workflows/disable-egress.yml)
+[![enable egress proxy](https://github.com/GSA/data.gov/actions/workflows/enable-egress.yml/badge.svg)](https://github.com/GSA/data.gov/actions/workflows/enable-egress.yml)
+[![restart egress proxy](https://github.com/GSA/data.gov/actions/workflows/restart-egress.yml/badge.svg)](https://github.com/GSA/data.gov/actions/workflows/restart-egress.yml)
+
+### Catalog.data.gov Actions
+[![1 - Commit](https://github.com/GSA/catalog.data.gov/actions/workflows/commit.yml/badge.svg)](https://github.com/GSA/catalog.data.gov/actions/workflows/commit.yml)
+[![2 - Publish & Deploy](https://github.com/GSA/catalog.data.gov/actions/workflows/publish.yml/badge.svg)](https://github.com/GSA/catalog.data.gov/actions/workflows/publish.yml)
+[![3 - Restart Apps](https://github.com/GSA/catalog.data.gov/actions/workflows/restart.yml/badge.svg)](https://github.com/GSA/catalog.data.gov/actions/workflows/restart.yml)
+[![4 - Automated CKAN Jobs](https://github.com/GSA/catalog.data.gov/actions/workflows/ckan_auto.yml/badge.svg)](https://github.com/GSA/catalog.data.gov/actions/workflows/ckan_auto.yml)
+[![5 - Run CKAN Command](https://github.com/GSA/catalog.data.gov/actions/workflows/ckan.yml/badge.svg)](https://github.com/GSA/catalog.data.gov/actions/workflows/ckan.yml)
+[![Check for Snyk Vulnerabilities](https://github.com/GSA/catalog.data.gov/actions/workflows/snyk.yml/badge.svg)](https://github.com/GSA/catalog.data.gov/actions/workflows/snyk.yml)
+
+### Inventory.data.gov Actions
+[![commit](https://github.com/GSA/inventory-app/actions/workflows/commit.yml/badge.svg)](https://github.com/GSA/inventory-app/actions/workflows/commit.yml)
+[![deploy](https://github.com/GSA/inventory-app/actions/workflows/deploy.yml/badge.svg)](https://github.com/GSA/inventory-app/actions/workflows/deploy.yml)
+[![restart application](https://github.com/GSA/inventory-app/actions/workflows/restart.yml/badge.svg)](https://github.com/GSA/inventory-app/actions/workflows/restart.yml)
+[![Update Inventory Publishers List](https://github.com/GSA/inventory-app/actions/workflows/update_publishers.yml/badge.svg)](https://github.com/GSA/inventory-app/actions/workflows/update_publishers.yml)
+[![Check for Snyk Vulnerabilities](https://github.com/GSA/inventory-app/actions/workflows/snyk.yml/badge.svg)](https://github.com/GSA/inventory-app/actions/workflows/snyk.yml)
+
+### Static Site Actions
+| Site / Repo                     | Badges                                  |
+|---------------------------------|-----------------------------------------|
+| [data.gov](https://github.com/GSA/datagov-11ty)                        | [![Build & Test](https://github.com/GSA/datagov-11ty/actions/workflows/build.yml/badge.svg)](https://github.com/GSA/datagov-11ty/actions/workflows/build.yml) |
+| [resources.data.gov](https://github.com/GSA/resources.data.gov/)              | [![Build & Test](https://github.com/GSA/datagov-11ty/actions/workflows/build.yml/badge.svg)](https://github.com/GSA/datagov-11ty/actions/workflows/build.yml) [![QA](https://github.com/GSA/resources.data.gov/actions/workflows/qa.yml/badge.svg)](https://github.com/GSA/resources.data.gov/actions/workflows/qa.yml) |
+| [strategy.data.gov](https://github.com/GSA/data-strategy/)                   | [![Build & Test](https://github.com/GSA/data-strategy/actions/workflows/build.yml/badge.svg)](https://github.com/GSA/data-strategy/actions/workflows/build.yml) [![QA](https://github.com/GSA/data-strategy/actions/workflows/qa.yml/badge.svg)](https://github.com/GSA/data-strategy/actions/workflows/qa.yml) |
+| [federation.data.gov](https://github.com/gsa/us-data-federation)             | [![Build](https://github.com/GSA/us-data-federation/actions/workflows/build.yml/badge.svg)](https://github.com/GSA/us-data-federation/actions/workflows/build.yml) [![QA](https://github.com/GSA/us-data-federation/actions/workflows/qa.yml/badge.svg)](https://github.com/GSA/us-data-federation/actions/workflows/qa.yml) |
+| [sdg.data.gov](https://github.com/GSA/sdg-indicators-usa)                    | [![Build Static Site](https://github.com/GSA/sdg-indicators-usa/actions/workflows/build.yml/badge.svg)](https://github.com/GSA/sdg-indicators-usa/actions/workflows/build.yml) [![QA Static Site](https://github.com/GSA/sdg-indicators-usa/actions/workflows/qa.yml/badge.svg)](https://github.com/GSA/sdg-indicators-usa/actions/workflows/qa.yml) |
 
 This is the main repository for the Data.gov Platform. We use this repository
 primarily to [track our team's work](https://github.com/orgs/GSA/projects/11),
