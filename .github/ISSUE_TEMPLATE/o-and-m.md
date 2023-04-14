@@ -16,29 +16,13 @@ As part of day-to-day operation of Data.gov, there are many [Operation and Maint
 You are responsible for all [O&M responsibilities](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities) this week. We've highlighted a few so they're not forgotten. You can copy each checklist into your daily report.
 
 ## Daily Checklist
-Check Deployments
-- [ ] Catalog
-- [ ] Inventory
-
-Check Restarts
-- [ ] Catalog
-- [ ] Inventory
-
-Check [Snyk Scans](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#automated-dependency-updates-ad-hoc-github-prs)
-- [ ] Catalog
-- [ ] Inventory
-
-Check Catalog Auto Tasks
-> **Note**
+Check Production State/Actions
+- [ ] [README](https://github.com/GSA/data.gov)
+> **Note: Catalog Auto Tasks**
 > You will need to update the chart values manually. Click the Action link in each issue and grab the values from `monitor task output` and `check runtime`.
-
 - [ ] [DB-Solr Sync](https://github.com/GSA/catalog.data.gov/issues/848)
 - [ ] [Tracking Update](https://github.com/GSA/catalog.data.gov/issues/847)
-
-Check [Harvesting Emails](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#harvest-job-report-daily-email-report)
-- [ ] Catalog
-
-Other
+- [ ] Check [Harvesting Emails](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#harvest-job-report-daily-email-report)
 - [ ] [New Relic Alerts](https://alerts.newrelic.com/accounts/1601367/incidents) Triaged
 - [ ] Triage DMARC Report from Google
 
