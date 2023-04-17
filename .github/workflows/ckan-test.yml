@@ -30,14 +30,14 @@ jobs:
   test:
     strategy:
       matrix:
-        ckan-version: [2.9.5, 2.9, 2.9.7]
+        ckan-version: [2.9, 2.9.7, '2.10']
         include:
-        - ckan-version: 2.9.5
-          services-version: 2.9
         - ckan-version: 2.9
           services-version: 2.9
         - ckan-version: 2.9.7
           services-version: 2.9
+        - ckan-version: '2.10'
+          services-version: '2.10'
       fail-fast: false
 
     name: CKAN ${{ matrix.ckan-version }}
