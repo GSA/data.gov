@@ -20,7 +20,7 @@
 | New Static Site           | https://github.com/GSA/datagov-11ty/
 | Egress Proxy              | https://github.com/GSA/cg-egress-proxy
 
-### Auxilary Codebases (also maintained by us)
+### Auxiliary Codebases (also maintained by us)
 
 | Application/Service                       | Repository 
 |-------------------------------------------|-----------
