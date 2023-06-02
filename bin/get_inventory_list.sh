@@ -40,4 +40,4 @@ echo -e $output1 >> AWS_resource_inventory.csv
 echo -e $output2 >> AWS_resource_inventory.csv
 echo -e $output3 >> AWS_resource_inventory.csv
 
-echo "### Done. Pleaes upload AWS_resource_inventory.csv to 'system inventory' on google drive. ### "
+echo "### Done. Please upload AWS_resource_inventory.csv to 'system inventory' on google drive. ### "

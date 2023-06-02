@@ -5,7 +5,7 @@ ok_to_restart="YES"
 function check_running_job {
   [[ $# -eq 0 ]] && echo "Error: no app provided" && exit 1
 
-  # Get wait arugment if supplied
+  # Get wait argument if supplied
   if [[ -n $4 && $4 == '--wait' ]]; then
     wait_for_app='true'
   fi
