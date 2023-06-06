@@ -43,8 +43,8 @@ jobs:
       - name: checkout cg-egress-proxy
         uses: actions/checkout@v3
         with:
-          repository: 'GSA/cg-egress-proxy'
-          ref: "c7fdf64c9442d1700ccfe2566f099584e472febb"
+          repository: 'GSA-TTS/cg-egress-proxy'
+          ref: "4d4aacf85cea46699571df93df46919e489128be"
           path: ${{ env.CG_DIR }}
 
       # trying to emulate:
