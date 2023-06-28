@@ -26,7 +26,6 @@ Below are the tasks that will drive the onboarding process.
   - [Inventory help list](https://groups.google.com/a/gsa.gov/forum/#!forum/inventory-help)
 - [ ] Make sure team member has 2FA enabled for their GitHub account and [request](https://github.com/GSA/GitHub-Administration/blob/master/README.md#requesting-access-to-the-gsa-organization) membership to GSA GitHub org
 - [ ] Add team member to a Data.gov GitHub team [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members)
-- [ ] Request TTS Bug Bounty access from @bugbounty-admins in [#bug-bounty](https://gsa-tts.slack.com/archives/C0X2FMJ86)
 - [ ] Add team member to [New Relic](https://account.newrelic.com/accounts/1601367/users) with permissions:
   - Alerts manager
   - APM manager
@@ -50,7 +49,6 @@ For new Project Management Office team members, follow these additional steps:
   - [Data.gov support list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagov)
 - [ ] Add team member to #datagov-pmo-private
 - [ ] Add team member to additional slack channels
-  - #bug-bounty
   - #bug-bounty-partners
   - #datagov-comms
   - #sol-data-analytics
