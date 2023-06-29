@@ -30,13 +30,13 @@ jobs:
   test:
     strategy:
       matrix:
-        ckan-version: [2.9.7, '2.10', '2.10.01']
+        ckan-version: [2.9.7, '2.10', '2.10.1']
         include:
         - ckan-version: 2.9.7
           services-version: 2.9
         - ckan-version: '2.10'
           services-version: '2.10'
-        - ckan-version: '2.10.01'
+        - ckan-version: '2.10.1'
           services-version: '2.10'
       fail-fast: false
 
