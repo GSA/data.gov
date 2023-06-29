@@ -37,7 +37,7 @@ jobs:
         - ckan-version: '2.10'
           services-version: '2.10'
         - ckan-version: '2.10.01'
-          services-version: '2.10.01'
+          services-version: '2.10'
       fail-fast: false
 
     name: CKAN ${{ matrix.ckan-version }}
