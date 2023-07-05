@@ -32,13 +32,8 @@ else
         apt-get install jq -y
     fi
 
-    if [[ "$space" == 'development' ]]; then
-      cp "$DATAGOV_DIR/egress/acl/${space}.allow.acl" "$CG_DIR/${app}.allow.acl"
-      cp "$DATAGOV_DIR/egress/acl/${space}.deny.acl" "$CG_DIR/${app}.deny.acl"
-    else
-      cp "$DATAGOV_DIR/egress/acl/allow.acl" "$CG_DIR/${app}.allow.acl"
-      cp "$DATAGOV_DIR/egress/acl/deny.acl" "$CG_DIR/${app}.deny.acl"
-    fi
+    cp "$DATAGOV_DIR/egress/acl/${space}.allow.acl" "$CG_DIR/${app}.allow.acl"
+    cp "$DATAGOV_DIR/egress/acl/${space}.deny.acl" "$CG_DIR/${app}.deny.acl"
 
     # need to be in CG_DIR for cg-egress-proxy scripts to run correctly
     cd "$CG_DIR"
