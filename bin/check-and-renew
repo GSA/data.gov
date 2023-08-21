@@ -83,7 +83,7 @@ function check_running_job {
       # First we check if any instance CPU is busy
       instances=$(cf app "$app_to_check" | grep '^instances:' | sed 's/.*\///')
       cf app "$app_to_check" | tail -n "$instances" | awk '{ split($4,cpu,"."); print cpu[1]}' | while read -r cpu ; do
-        if [[ $cpu > 1 ]]; then
+        if [[ $cpu -gt 1 ]]; then
           echo "CPU is busy! Not going to restart"
           ok_to_restart="NO"
         else
@@ -93,9 +93,9 @@ function check_running_job {
 
       # Check the age of the last log
       # If there are only two lines, there are no logs
-      if [[ $ok_to_restart == "YES" && $((`log_count` > 2)) == '1' ]]; then
-        # if the timestamp is younger than 15 mins from start of script
-        if [[ $((current_time - `log_last_time` < 900)) == '1' ]]; then
+      if [[ $ok_to_restart == "YES" && $(($(log_count) > 2)) == '1' ]]; then
+        # if the timestamp is younger than 40 mins from start of script
+        if [[ $((current_time - $(log_last_time) < 2400)) == '1' ]]; then
           echo "Logs are too new! Not going to restart"
           ok_to_restart="NO"
         else
