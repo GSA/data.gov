@@ -94,7 +94,7 @@ function check_running_job {
       # Check the age of the last log
       # If there are only two lines, there are no logs
       if [[ $ok_to_restart == "YES" && $(($(log_count) > 2)) == '1' ]]; then
-        # if the timestamp is younger than 15 mins from start of script
+        # if the timestamp is younger than 40 mins from start of script
         if [[ $((current_time - $(log_last_time) < 2400)) == '1' ]]; then
           echo "Logs are too new! Not going to restart"
           ok_to_restart="NO"
