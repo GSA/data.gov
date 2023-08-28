@@ -30,6 +30,9 @@ Check Production State/Actions
 ## Weekly Checklist
 - [ ] [Audit Log](https://docs.google.com/spreadsheets/d/1z6lqmyNxC7s5MiTt9f6vT41IS2DLLJl4HwEqXvvft40/edit) (more info on [AU-3 and AU-6 Log auditing](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#au-3-and-au-6-log-auditing))
 - [ ] [Tracking Update](https://github.com/GSA/catalog.data.gov/issues/847)
+    - NOTE: This job will consistently timeout, but it is processing results ((more details)[https://github.com/GSA/data.gov/issues/4345])
 - [ ] Check [Catalog Solr](https://github.com/GSA/data.gov/wiki/Operation-and-Maintenance-Responsibilities#solr)
 - [ ] [Catalog Dupe Check](https://github.com/GSA/data.gov/wiki/Operation-and-Maintenance-Responsibilities#duplicate-check)
+
+## Monthly Checklist
 - [ ] [Invicti Scan](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#netsparker-compliance-scan-report-from-isso)
