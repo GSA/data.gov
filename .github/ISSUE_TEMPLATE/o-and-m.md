@@ -9,17 +9,11 @@ As part of day-to-day operation of Data.gov, there are many [Operation and Maint
 
 Check the [O&M Rotation Schedule](https://docs.google.com/spreadsheets/d/1cF73HkzFuQth3z9voLfVO1Cc4kjBd6ecHGE2gkj5LCc/edit?usp=sharing) for future planning.
 
-## Miscs
--   Watch for user email requests
--   Watch in [#datagov-alerts](https://gsa-tts.slack.com/archives/C4RGAM1Q8) and [Vulnerable dependency notifications (daily email reports)](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#vulnerable-dependency-notifications-daily-email-reports) for critical alerts.
--   Monitor and improve [Data.gov O&M Dashboard](https://onenr.io/0LREMrzdrRa)
-
 ## Acceptance criteria
 You are responsible for all [O&M responsibilities](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities) this week. We've highlighted a few so they're not forgotten. You can copy each checklist into your daily report.
 
 ## Daily Checklist
-Check Production State/Actions
-- [ ] [README](https://github.com/GSA/data.gov)
+- [ ] [Check Production State/Actions](https://github.com/GSA/data.gov)
 > **Note: Catalog Auto Tasks**
 > You will need to update the chart values manually. Click the Action link in each issue and grab the values from `monitor task output` and `check runtime`.
 - [ ] [DB-Solr Sync](https://github.com/GSA/catalog.data.gov/issues/848)
@@ -36,3 +30,10 @@ Check Production State/Actions
 
 ## Monthly Checklist
 - [ ] [Invicti Scan](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#netsparker-compliance-scan-report-from-isso)
+
+## Reference
+-   Watch for user email requests
+-   Watch in [#datagov-alerts](https://gsa-tts.slack.com/archives/C4RGAM1Q8) and [Vulnerable dependency notifications (daily email reports)](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#vulnerable-dependency-notifications-daily-email-reports) for critical alerts.
+-   Monitor and improve [Data.gov O&M Dashboard](https://onenr.io/0LREMrzdrRa)
+-   Update and revise [Data.gov O&M Tasks](https://docs.google.com/document/d/1SVkY7SUhkcu6IAXIyuVo-s_E_Z400Is1JG9v5rbI7mI/edit?usp=sharing)
+
