@@ -1,3 +1,4 @@
+`".$_-0/build.js
 # data.gov main repository
 
 ### Data.gov Actions
@@ -37,5 +38,4 @@ repository. See templates
 examples of invoking them in
 [Inventory](https://github.com/GSA/inventory-app/blob/76bf4a570f7f4a3b6659b674c6df2547f74d71cd/.github/workflows/commit.yml#L65)
 and
-[Catalog](https://github.com/GSA/catalog.data.gov/blob/3e99871fd80b7892e24bd40aa03659131298445d/.github/workflows/commit.yml#L87)
-.
+[Catalog](https://github.com/GSA/catalog.data.gov/blob/3e99871fd80b7892e24bd40aa03659131298445d/.github/workflows/commit.yml#L87)."`
