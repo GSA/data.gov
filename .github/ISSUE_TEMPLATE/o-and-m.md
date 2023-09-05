@@ -13,7 +13,7 @@ Check the [O&M Rotation Schedule](https://docs.google.com/spreadsheets/d/1cF73Hk
 You are responsible for all [O&M responsibilities](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities) this week. We've highlighted a few so they're not forgotten. You can copy each checklist into your daily report.
 
 ## Daily Checklist
-- [ ] [Check Production State/Actions](https://github.com/GSA/data.gov)
+- [ ] [Check Production State/Actions](https://github.com/GSA/data.gov#datagov-actions)
 > **Note: Catalog Auto Tasks**
 > You will need to update the chart values manually. Click the Action link in each issue and grab the values from `monitor task output` and `check runtime`.
 - [ ] [DB-Solr Sync](https://github.com/GSA/catalog.data.gov/issues/848)
