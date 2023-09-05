@@ -110,12 +110,17 @@ check_running_job "$@"
 
 if [[ "$action" == "restart" ]]; then
   if [[ $ok_to_restart == "YES" ]]; then
-      cf restart "$app_to_check" --strategy rolling
+    cf restart "$app_to_check" --strategy rolling
   else
-      echo "Restart $app_to_check cancelled."
+    echo "Restart of $app_to_check cancelled."
   fi
 fi
 
 if [[ "$action" == "deploy" ]]; then
-  cf push "$app_to_check" --vars-file vars.$space.yml --strategy rolling
+  if [[ $ok_to_restart == "YES" ]]; then
+    cf push "$app_to_check" --vars-file vars.$space.yml --strategy rolling
+  else
+    echo "Deployment for $app_to_check cancelled."
+    exit 1
+  fi
 fi
