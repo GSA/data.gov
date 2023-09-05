@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ok_to_restart="YES"
+ok_to_proceed="YES"
 
 function check_running_job {
   [[ $# -eq 0 ]] && echo "Error: no app provided" && exit 1
@@ -55,7 +55,7 @@ function check_running_job {
       check_running_job "$app_to_check" "$wait"
     else
       echo "Deployment in progress for $app_to_check, not doing anything"
-      ok_to_restart="NO"
+      ok_to_proceed="NO"
     fi
   else
       echo "No job running for app $app_to_check"
@@ -64,7 +64,7 @@ function check_running_job {
   # If there is more than one instance of 'instances', the app is already restarting
   if [[ $(cf app "$app_to_check" | grep -c '^instances:') -gt 1 ]]; then
     echo "Deployment or Restart in progress... not doing anything"
-    ok_to_restart="NO"
+    ok_to_proceed="NO"
   fi
 
   # For harvesters, make sure they are not in the middle of harvesting jobs
@@ -85,7 +85,7 @@ function check_running_job {
       cf app "$app_to_check" | tail -n "$instances" | awk '{ split($4,cpu,"."); print cpu[1]}' | while read -r cpu ; do
         if [[ $cpu -gt 1 ]]; then
           echo "CPU is busy! Not going to restart"
-          ok_to_restart="NO"
+          ok_to_proceed="NO"
         else
           echo "CPU showing no harvesting activity for this instance."
         fi
@@ -93,11 +93,11 @@ function check_running_job {
 
       # Check the age of the last log
       # If there are only two lines, there are no logs
-      if [[ $ok_to_restart == "YES" && $(($(log_count) > 2)) == '1' ]]; then
+      if [[ $ok_to_proceed == "YES" && $(($(log_count) > 2)) == '1' ]]; then
         # if the timestamp is younger than 40 mins from start of script
         if [[ $((current_time - $(log_last_time) < 2400)) == '1' ]]; then
           echo "Logs are too new! Not going to restart"
-          ok_to_restart="NO"
+          ok_to_proceed="NO"
         else
           echo "Logs showing no harvesting activity for $app_to_check."
         fi
@@ -109,7 +109,7 @@ function check_running_job {
 check_running_job "$@"
 
 if [[ "$action" == "restart" ]]; then
-  if [[ $ok_to_restart == "YES" ]]; then
+  if [[ $ok_to_proceed == "YES" ]]; then
     cf restart "$app_to_check" --strategy rolling
   else
     echo "Restart of $app_to_check cancelled."
@@ -117,10 +117,13 @@ if [[ "$action" == "restart" ]]; then
 fi
 
 if [[ "$action" == "deploy" ]]; then
-  if [[ $ok_to_restart == "YES" ]]; then
+  if [[ $ok_to_proceed == "YES" ]]; then
     cf push "$app_to_check" --vars-file vars.$space.yml --strategy rolling
   else
-    echo "Deployment for $app_to_check cancelled."
-    exit 1
+    # Recursively call itself until Github Actions times out
+    sleep 600
+    $0 "$@"
   fi
 fi
+
+echo "Action timed out"
