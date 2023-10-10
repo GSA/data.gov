@@ -1,9 +1,10 @@
 ---
 name: Compliance finding
 about: A finding identified in a security compliance scan or report.
-labels:
-  - bug
-  - compliance
+title: ''
+labels: bug
+assignees: ''
+
 ---
 
 _Please keep any sensitive details in [Google Drive](https://docs.google.com/document/d/1rW0VOzfCrjXOI0O1gTAOm225_fTbu5Cjrg7yJTYYBBg/edit)._

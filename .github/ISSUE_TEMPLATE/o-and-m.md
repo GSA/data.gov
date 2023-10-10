@@ -1,10 +1,12 @@
 ---
 name: Operations+Maintenance Rotation
 about: For keeping track of typical O+M tasks
-title: 'O+M'
+title: O+M
 labels: ''
 assignees: ''
+
 ---
+
 As part of day-to-day operation of Data.gov, there are many [Operation and Maintenance (O&M) responsibilities](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities). Instead of having the entire team watching notifications and risking some notifications slipping through the cracks, we have created an [O&M Triage role](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#om-triage-rotation). One person on the team is assigned the Triage role which rotates each sprint. _This is not meant to be a 24/7 responsibility, only East Coast business hours. If you are unavailable, please note when you will be unavailable in Slack and ask for someone to take on the role for that time._
 
 Check the [O&M Rotation Schedule](https://docs.google.com/spreadsheets/d/1cF73HkzFuQth3z9voLfVO1Cc4kjBd6ecHGE2gkj5LCc/edit?usp=sharing) for future planning.
@@ -36,4 +38,3 @@ You are responsible for all [O&M responsibilities](https://github.com/gsa/data.g
 -   Watch in [#datagov-alerts](https://gsa-tts.slack.com/archives/C4RGAM1Q8) and [Vulnerable dependency notifications (daily email reports)](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#vulnerable-dependency-notifications-daily-email-reports) for critical alerts.
 -   Monitor and improve [Data.gov O&M Dashboard](https://onenr.io/0LREMrzdrRa)
 -   Update and revise [Data.gov O&M Tasks](https://docs.google.com/document/d/1SVkY7SUhkcu6IAXIyuVo-s_E_Z400Is1JG9v5rbI7mI/edit?usp=sharing)
-
