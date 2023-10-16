@@ -9,22 +9,22 @@
 |---------------------------|-----------
 | catalog.data.gov          | https://github.com/GSA/catalog.data.gov
 | inventory.data.gov        | https://github.com/GSA/inventory-app/
-| dashboard.data.gov        | https://github.com/GSA/project-open-data-dashboard/
 | SSB                       | https://github.com/GSA/datagov-ssb/
-| Solr                      | https://github.com/GSA/datagov-brokerpak-solr
-| SMTP                      | https://github.com/GSA/datagov-brokerpak-smtp
-| EKS                       | https://github.com/GSA/datagov-brokerpak-eks
+| Solr                      | https://github.com/GSA-TTS/datagov-brokerpak-solr
+| SMTP                      | https://github.com/GSA-TTS/datagov-brokerpak-smtp
+| EKS                       | https://github.com/GSA-TTS/datagov-brokerpak-eks
 | Logstack                  | https://github.com/GSA/datagov-logstack/
 | Backup-manager            | https://github.com/GSA/cf-backup-manager
-| Old Static Site           | https://github.com/GSA/datagov-website/
 | New Static Site           | https://github.com/GSA/datagov-11ty/
 | Egress Proxy              | https://github.com/GSA/cg-egress-proxy
+| CKAN User Management      | https://github.com/GSA/datagov-account-management
 
 ### Auxiliary Codebases (also maintained by us)
 
 | Application/Service                       | Repository 
 |-------------------------------------------|-----------
 | Cloud Service Broker (development)        | https://github.com/GSA/cloud-service-broker
+| NEW Harvesting Testing Repo               | https://github.com/GSA/datagov-harvesting-logic
 | ckanext-datagovcatalog                    | https://github.com/GSA/ckanext-datagovcatalog
 | ckanext-datagovtheme                      | https://github.com/GSA/ckanext-datagovtheme
 | ckanext-datajson                          | https://github.com/GSA/ckanext-datajson
@@ -36,6 +36,7 @@
 | dedupe (harvesting)                       | https://github.com/GSA/datagov-dedupe
 | SSB Compliance Diagrams                   | https://github.com/GSA/datagov-compliance
 | Load testing software                     | https://github.com/GSA/datagov-load-testing
+| Terraform ALB Controller                  | https://github.com/GSA/terraform-kubernetes-aws-load-balancer-controller
 
 ### Upstream Codebases (critical to our applications)
 
@@ -59,6 +60,20 @@
 | Cloudfoundry CLI                              | https://github.com/cloudfoundry/cli
 | Cloud.gov Github Actions CLI                  | https://github.com/cloud-gov/cg-cli-tools
 | SSB Github Action Terraform Deploy            | https://github.com/dflook/terraform-github-actions
+
+### Deprecated Codebases
+
+| Application/Service                       | Repository 
+|-------------------------------------------|-----------
+| dashboard.data.gov                        | https://github.com/GSA/project-open-data-dashboard/
+| Old Static Site                           | https://github.com/GSA/datagov-website/
+
+### Special Mention Codebases
+
+| Application/Service                       | Repository 
+|-------------------------------------------|-----------
+| Harvester 2.0 AWS Test                    | https://github.com/GSA/datagov-harvester-test-aws
+| Harvester 2.0 Cloud.gov Test              | https://github.com/GSA/datagov-harvester-test-cloudgov
 
 ## Applications + Services
 
@@ -89,9 +104,6 @@
 
 | App Name                  | Cloud.gov space                                  | Application/Service
 |---------------------------|--------------------------------------------------|----------------------
-| dashboard                 | prod                                             | dashboard.data.gov
-| dashboard-dev             | development                                      | dashboard.data.gov
-| dashboard-stage           | staging                                          | dashboard.data.gov
 | www-redirects             | development, staging, prod                       | Old Static Site
 
 ### Minimum services
