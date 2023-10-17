@@ -125,5 +125,3 @@ if [[ "$action" == "deploy" ]]; then
     $0 "$@"
   fi
 fi
-
-echo "Action timed out"
