@@ -1,5 +1,5 @@
-                        *.gov
-                        *.mil
+                       *.gov
+                       *.mil
         s3-us-gov-west-1.amazonaws.com
                    *.hub.arcgis.com
               *.opendata.arcgis.com
@@ -20,3 +20,4 @@
                     data.townofcary.org
                     data.wprdc.org
                     data.arlingtonva.us
+                       *.newrelic.com
