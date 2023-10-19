@@ -52,7 +52,7 @@ If team member is also leaving TTS:
 
 If the team member is also leaving GSA:
 
-- [ ] Request the user be removed from Federalist by posting to [#federalist-support](https://gsa-tts.slack.com/archives/C1NUUGTT5) with the member's GitHub username
+- [ ] Remove team member from Pages under the "Actions" header within the org `gsa-tts-data-and-analytics`
 - [ ] Remove access from [GSA GitHub org](https://github.com/GSA/GitHub-Administration/blob/master/README.md#removing-access-to-the-gsa-organization)
 - [ ] Create "Offboard from GSA IT" ticket
 - [ ] Notify HSPD-12 if needed
