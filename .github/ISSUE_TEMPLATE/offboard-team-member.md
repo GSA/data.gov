@@ -40,9 +40,15 @@ These tasks are performed by a team admin:
 - [ ] Remove team member from TTS Bug Bounty access [#bug-bounty-partners](https://gsa-tts.slack.com/messages/C5JQCD9PH)
 - [ ] Remove team member from [Snyk](https://app.snyk.io/org/data.gov/manage/members)
 - [ ] Remove team member from [Data.gov Google Analytics](https://analytics.google.com/analytics/web/#/a42145528w85560911p88728213/admin/suiteusermanagement/account) account
-- [ ] [Rotate Ansible Vault key](https://github.com/gsa/data.gov/wiki/Keypair-Rotation#ansible-vault) and [update the canonical location](https://docs.google.com/document/d/1detdsnIuwmqz6asrIfUWrmxCr56MGschY1yV0UeC_24/edit)
 - [ ] Remove team member from PyPI packages:
+  - [ckanext-geodatagov](https://pypi.org/project/ckanext-geodatagov/)
+  - [ckanext-datagovtheme](https://pypi.org/project/ckanext-datagovtheme/)
+  - [ckanext-datajson](https://pypi.org/project/ckanext-datajson/)
   - [ckanext-dcat-usmetadata](https://pypi.org/project/ckanext-dcat-usmetadata/)
+  - [ckanext-usmetadata](https://pypi.org/project/ckanext-usmetadata/)
+  - [ckanext-metrics-dashboard](https://pypi.org/project/ckanext-metrics-dashboard/)
+  - [ckanext-datagovcatalog](https://pypi.org/project/ckanext-datagovcatalog/)
+  - [ckanext-googleanalyticsbasic](https://pypi.org/project/ckanext-googleanalyticsbasic/)
 - [ ] Remove team member from [Google Search Console](https://search.google.com/search-console/about)
 - [ ] Remove team member from any Data.gov [Touchpoints](https://touchpoints.app.cloud.gov/)
 
