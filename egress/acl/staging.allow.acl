@@ -4,10 +4,12 @@
                    *.hub.arcgis.com
               *.opendata.arcgis.com
                services3.arcgis.com
+                    data.arlingtonva.us
                      www.chapelhillopendata.org
                     data.cityofchicago.org
                     data.lacity.org
                     data.muni.org
+                       *.newrelic.com
                          opendataphilly.org
                      www.opendataphilly.org
                          openei.org
@@ -20,5 +22,3 @@
                        *.tigbox.com
                     data.townofcary.org
                     data.wprdc.org
-                    data.arlingtonva.us
-                       *.newrelic.com

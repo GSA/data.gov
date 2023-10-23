@@ -9,6 +9,7 @@
                 data.cityofchicago.org
                 data.lacity.org
                 data.muni.org
+                   *.newrelic.com
                      opendataphilly.org
                  www.opendataphilly.org
                      openei.org
@@ -21,4 +22,3 @@
                    *.tigbox.com
                 data.townofcary.org
                 data.wprdc.org
-                   *.newrelic.com
