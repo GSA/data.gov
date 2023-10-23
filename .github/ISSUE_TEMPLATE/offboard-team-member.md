@@ -23,10 +23,7 @@ These tasks are performed by a team admin:
   - [data-gov-ckan-multi](https://github.com/orgs/GSA/teams/data-gov-ckan-multi/members)
 - [ ] Remove team member from [the `gsa-datagov` organization](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/users) on cloud.gov
 - [ ] Remove team member from [GCP account](https://console.cloud.google.com/iam-admin/iam?project=tts-datagov)
-- [ ] Remove team member from AWS OPP account
 - [ ] Remove team member from [the SSB AWS accounts](https://github.com/18F/aws-admin/blob/main/terraform/datagov-iam.tf)
-- [ ] Remove team member from [AWS sandbox access](https://github.com/GSA/datagov-iam/blob/main/README.md#new-users)
-- [ ] Remove team member from [jumpbox operators](https://github.com/gsa/data.gov/blob/master/ansible/group_vars/all/vars.yml)
 - [ ] Remove team member from Data.gov email lists
   - [datagov](https://groups.google.com/a/gsa.gov/forum/#!forum/datagov)
   - [datagovhelp](https://groups.google.com/a/gsa.gov/forum/#!forum/datagovhelp)
@@ -40,9 +37,15 @@ These tasks are performed by a team admin:
 - [ ] Remove team member from TTS Bug Bounty access [#bug-bounty-partners](https://gsa-tts.slack.com/messages/C5JQCD9PH)
 - [ ] Remove team member from [Snyk](https://app.snyk.io/org/data.gov/manage/members)
 - [ ] Remove team member from [Data.gov Google Analytics](https://analytics.google.com/analytics/web/#/a42145528w85560911p88728213/admin/suiteusermanagement/account) account
-- [ ] [Rotate Ansible Vault key](https://github.com/gsa/data.gov/wiki/Keypair-Rotation#ansible-vault) and [update the canonical location](https://docs.google.com/document/d/1detdsnIuwmqz6asrIfUWrmxCr56MGschY1yV0UeC_24/edit)
 - [ ] Remove team member from PyPI packages:
+  - [ckanext-geodatagov](https://pypi.org/project/ckanext-geodatagov/)
+  - [ckanext-datagovtheme](https://pypi.org/project/ckanext-datagovtheme/)
+  - [ckanext-datajson](https://pypi.org/project/ckanext-datajson/)
   - [ckanext-dcat-usmetadata](https://pypi.org/project/ckanext-dcat-usmetadata/)
+  - [ckanext-usmetadata](https://pypi.org/project/ckanext-usmetadata/)
+  - [ckanext-metrics-dashboard](https://pypi.org/project/ckanext-metrics-dashboard/)
+  - [ckanext-datagovcatalog](https://pypi.org/project/ckanext-datagovcatalog/)
+  - [ckanext-googleanalyticsbasic](https://pypi.org/project/ckanext-googleanalyticsbasic/)
 - [ ] Remove team member from [Google Search Console](https://search.google.com/search-console/about)
 - [ ] Remove team member from any Data.gov [Touchpoints](https://touchpoints.app.cloud.gov/)
 
