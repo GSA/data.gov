@@ -75,6 +75,7 @@ jobs:
     - name: Install requirements
       run: |
         sudo apk add tzdata swig python3-dev
+        sudo apk add proj-util proj-dev geos-dev
         cp /usr/share/zoneinfo/America/New_York /etc/localtime
         if [[ -f requirements.txt ]]; then
           pip install -r requirements.txt
