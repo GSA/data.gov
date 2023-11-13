@@ -58,7 +58,13 @@ For new Project Management Office team members, follow these additional steps:
 - [ ] Invite team member to calendar events
 - [ ] Promote team member to Admin in [New Relic](https://account.newrelic.com/accounts/1601367/users)
 - [ ] Add team member as an Owner to PyPI packages:
-  - [ckanext-dcat-usmetadata](https://pypi.org/project/ckanext-dcat-usmetadata/)
+  - [ckanext-geodatagov](https://pypi.org/project/ckanext-geodatagov)
+  - [ckanext-datagovtheme](https://pypi.org/project/ckanext-datagovtheme)
+  - [ckanext-datajson](https://pypi.org/project/ckanext-datajson)
+  - [ckanext-dcat-usmetadata](https://pypi.org/project/ckanext-dcat-usmetadata)
+  - [ckanext-usmetadata](https://pypi.org/project/ckanext-usmetadata)
+  - [ckanext-metrics-dashboard](https://pypi.org/project/ckanext-metrics-dashboard)
+  - [ckanext-datagovcatalog](https://pypi.org/project/ckanext-datagovcatalog)
 
 ### Tasks for new team member
 

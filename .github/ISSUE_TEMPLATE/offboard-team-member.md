@@ -45,7 +45,6 @@ These tasks are performed by a team admin:
   - [ckanext-usmetadata](https://pypi.org/project/ckanext-usmetadata/)
   - [ckanext-metrics-dashboard](https://pypi.org/project/ckanext-metrics-dashboard/)
   - [ckanext-datagovcatalog](https://pypi.org/project/ckanext-datagovcatalog/)
-  - [ckanext-googleanalyticsbasic](https://pypi.org/project/ckanext-googleanalyticsbasic/)
 - [ ] Remove team member from [Google Search Console](https://search.google.com/search-console/about)
 - [ ] Remove team member from any Data.gov [Touchpoints](https://touchpoints.app.cloud.gov/)
 
