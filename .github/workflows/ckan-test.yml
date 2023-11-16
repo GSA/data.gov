@@ -69,7 +69,7 @@ jobs:
       CKAN__STORAGE_PATH: /var/lib/ckan
       CKAN__PLUGINS: ${{ inputs.plugins }}
       PYTHONDONTWRITEBYTECODE: 1
-
+    
     steps:
     - uses: actions/checkout@v3
     - name: Install requirements
@@ -77,6 +77,7 @@ jobs:
         sudo apk add tzdata swig python3-dev
         sudo apk add proj-util proj-dev geos-dev
         cp /usr/share/zoneinfo/America/New_York /etc/localtime
+        pip install --upgrade pip
         if [[ -f requirements.txt ]]; then
           pip install -r requirements.txt
         fi
