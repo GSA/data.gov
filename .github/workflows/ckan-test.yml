@@ -77,7 +77,7 @@ jobs:
         sudo apk add tzdata swig python3-dev
         sudo apk add proj-util proj-dev geos-dev
         cp /usr/share/zoneinfo/America/New_York /etc/localtime
-        pip install --upgrade pip
+        /usr/bin/python3 -m pip install --upgrade pip
         if [[ -f requirements.txt ]]; then
           pip install -r requirements.txt
         fi
