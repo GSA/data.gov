@@ -31,6 +31,9 @@ You are responsible for all [O&M responsibilities](https://github.com/gsa/data.g
 ## Monthly Checklist
 - [ ] [Invicti Scan](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#netsparker-compliance-scan-report-from-isso)
 
+## ad-hoc checklist
+- [ ] audit/review applications on cloud foundry and determine what can be stopped and/or deleted. 
+
 ## Reference
 -   Watch for user email requests
 -   Watch in [#datagov-alerts](https://gsa-tts.slack.com/archives/C4RGAM1Q8) and [Vulnerable dependency notifications (daily email reports)](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#vulnerable-dependency-notifications-daily-email-reports) for critical alerts.
