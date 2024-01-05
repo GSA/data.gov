@@ -2,9 +2,12 @@
 set -e
 set -o pipefail
 
-for app in $(cf apps | tail -n +4 | tr -s ' ' | cut -d ' ' -f 1)
+while read -r app_line
 do
-    cf restart "$app" --strategy rolling
-done
-
-
+    app_name=$(echo "$app_line"| tr -s ' ' | cut -d ' ' -f1)
+    app_count=$(echo "$app_line"| tr -s ' ' | cut -d ' ' -f3 | cut -d ':' -f2 | cut -d '/' -f1)
+    # restart the app if the app does not have 0 running instances
+    if [ "$app_count" -ne 0 ]; then
+        cf restart "$app_name" --strategy rolling;
+    fi
+done < <(cf apps | tail -n +4)
