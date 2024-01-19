@@ -79,5 +79,4 @@ jobs:
           REPO: ${{ github.repository }}
         with:
           filename: datagov/.github/deploy_failure.md
-          assignees: ${{ github.actor }}
           update_existing: true
