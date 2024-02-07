@@ -121,12 +121,13 @@ fi
 
 if [[ "$action" == "scale" ]]; then
   if [[ $ok_to_proceed == "YES" ]]; then
-    # set scale_to to a safe number but it should not be used
-    # since the scale_calculate.sh always export a new number
-    scale_to=7
     # call scale functions to get the scale_to value
     source "$(dirname "$0")/scale_calculate.sh"
     set_scale_number
+    if [[ -z $scale_to ]]; then
+      echo "Scale to value not set. Cancelling scale."
+      exit 1
+    fi
     # get $scale_to from the environment vars
     echo "Scaling $app_to_check to $scale_to"
     cf scale "$app_to_check" -i "$scale_to"

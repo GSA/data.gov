@@ -45,7 +45,13 @@ function set_scale_direction {
 
 function set_scale_number {
   # get the total number of instances
-  total_instances=$(echo "$app_status" | grep -oP 'instances:\s+\K\d+')
+  total_instances=$(echo "$app_status" | grep '^instances:' | awk '{print $2}' | cut -d '/' -f 2)
+  # exit if the total instances is not a number
+  if ! [[ "$total_instances" =~ ^[0-9]+$ ]]; then
+    echo "Total instances is not a number. Exiting. Here is the output of the app status:"
+    echo "$app_status"
+    exit 1
+  fi
   echo "Current total instances: $total_instances"
   # call the scale direction
   set_scale_direction
