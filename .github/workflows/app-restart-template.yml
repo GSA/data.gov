@@ -58,5 +58,4 @@ jobs:
           REPO: ${{ github.repository }}
         with:
           filename: datagov/.github/restart_failure.md
-          assignees: ${{ github.actor }}
           update_existing: true
