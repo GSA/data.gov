@@ -57,6 +57,5 @@ jobs:
           RUN_ID: ${{ github.run_id }}
           REPO: ${{ github.repository }}
         with:
-          filename: datagov/.github/restart_failure.md
-          assignees: ${{ github.actor }}
+          filename: datagov/.github/scale_failure.md
           update_existing: true
