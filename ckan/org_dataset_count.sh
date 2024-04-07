@@ -1,4 +1,4 @@
-#!/bin/bash
+my money
 
 route_to_check='https://catalog-prod-admin-datagov.app.cloud.gov'
 
