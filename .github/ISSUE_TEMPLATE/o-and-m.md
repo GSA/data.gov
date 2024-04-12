@@ -28,6 +28,7 @@ You are responsible for all [O&M responsibilities](https://github.com/gsa/data.g
     - NOTE: This job will consistently timeout, but it is processing results ((more details)[https://github.com/GSA/data.gov/issues/4345])
 - [ ] Check [Catalog Solr](https://github.com/GSA/data.gov/wiki/Operation-and-Maintenance-Responsibilities#solr)
 - [ ] [Catalog Dupe Check](https://github.com/GSA/data.gov/wiki/Operation-and-Maintenance-Responsibilities#duplicate-check)
+- [ ] [Check user management requests](https://github.com/GSA/datagov-account-management/issues)
 
 ## Monthly Checklist
 - [ ] [Invicti Scan](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#netsparker-compliance-scan-report-from-isso)
