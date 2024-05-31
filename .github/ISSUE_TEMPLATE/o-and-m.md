@@ -29,6 +29,7 @@ You are responsible for all [O&M responsibilities](https://github.com/gsa/data.g
 - [ ] Check [Catalog Solr](https://github.com/GSA/data.gov/wiki/Operation-and-Maintenance-Responsibilities#solr)
 - [ ] [Catalog Dupe Check](https://github.com/GSA/data.gov/wiki/Operation-and-Maintenance-Responsibilities#duplicate-check)
 - [ ] [Check user management requests](https://github.com/GSA/datagov-account-management/issues)
+- [ ] [Check Snyk Dashboard and cleanup](https://github.com/GSA/data.gov/wiki/Dependency-scanning#weekly-review)
 
 ## Monthly Checklist
 - [ ] [Invicti Scan](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#netsparker-compliance-scan-report-from-isso)
