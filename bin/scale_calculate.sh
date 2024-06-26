@@ -1,11 +1,11 @@
 #!/bin/bash
 
 MAX_INSTANCES=9
-MIN_INSTANCES=5
+MIN_INSTANCES=3
 SCALE_STEP=2
 
 CPU_BUSY_THRESHOLD=300
-CPU_IDLE_THRESHOLD=230
+CPU_IDLE_THRESHOLD=220
 
 app_status=$(cf app catalog-web)
 scale_direction=""
