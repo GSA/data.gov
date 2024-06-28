@@ -1,13 +1,12 @@
 ---
 name: restart egress proxy
 
-on:   # yamllint disable-line rule:truthy
+on: # yamllint disable-line rule:truthy
   workflow_dispatch:
   schedule:
-    - cron: '0 3 * * *'  # every day at 3am UTC
+    - cron: "0 3 * * *" # every day at 3am UTC
 
 jobs:
-
   restart-egress:
     strategy:
       matrix:
@@ -18,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: cf restart
         uses: cloud-gov/cg-cli-tools@main
         with:

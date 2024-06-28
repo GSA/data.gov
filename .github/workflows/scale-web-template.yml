@@ -1,7 +1,7 @@
 ---
 name: Scale Web Template
 
-on:   # yamllint disable-line rule:truthy
+on: # yamllint disable-line rule:truthy
   workflow_call:
     inputs:
       environ:
@@ -27,10 +27,10 @@ jobs:
       matrix: ${{ fromJSON(inputs.app_names) }}
     steps:
       - name: checkout datagov
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: gsa/data.gov
-          path: './datagov'
+          path: "./datagov"
       - name: scale ${{ matrix.app }}
         uses: cloud-gov/cg-cli-tools@main
         with:
