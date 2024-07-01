@@ -1,7 +1,7 @@
 ---
 name: CKAN Testing Template
 
-on:   # yamllint disable-line rule:truthy
+on: # yamllint disable-line rule:truthy
   workflow_call:
     inputs:
       ext_name:
@@ -18,10 +18,10 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.8'
+          python-version: "3.8"
       - name: Install requirements
         run: pip install flake8 pycodestyle
       - name: Run flake8
@@ -30,12 +30,12 @@ jobs:
   test:
     strategy:
       matrix:
-        ckan-version: ['2.10', '2.10.1']
+        ckan-version: ["2.10", "2.10.1"]
         include:
-        - ckan-version: '2.10'
-          services-version: '2.10'
-        - ckan-version: '2.10.1'
-          services-version: '2.10'
+          - ckan-version: "2.10"
+            services-version: "2.10"
+          - ckan-version: "2.10.1"
+            services-version: "2.10"
       fail-fast: false
 
     name: CKAN ${{ matrix.ckan-version }}
@@ -53,14 +53,14 @@ jobs:
           POSTGRES_DB: postgres
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
       redis:
-          image: redis:3
+        image: redis:3
     env:
       CKAN_SQLALCHEMY_URL: postgresql://ckan_default:pass@db/ckan_test
       CKAN_DATASTORE_WRITE_URL: postgresql://datastore_write:pass@db/datastore_test
       CKAN_DATASTORE_READ_URL: postgresql://datastore_read:pass@db/datastore_test
       CKAN_SOLR_URL: http://solr:8983/solr/ckan
       CKAN_REDIS_URL: redis://redis:6379/1
-      CKAN_DATAPUSHER_URL: http://localhost:8080/  # datapusher is not really enabled
+      CKAN_DATAPUSHER_URL: http://localhost:8080/ # datapusher is not really enabled
       CKAN_SITE_ID: default
       CKAN_SITE_URL: http://ckan:5000
       CKAN_SYSADMIN_NAME: admin
@@ -71,29 +71,29 @@ jobs:
       PYTHONDONTWRITEBYTECODE: 1
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Install requirements
-      run: |
-        sudo apk add tzdata swig python3-dev
-        sudo apk add proj-util proj-dev geos-dev
-        cp /usr/share/zoneinfo/America/New_York /etc/localtime
-        if [[ -f requirements.txt ]]; then
-          pip install -r requirements.txt
-        fi
-        if [[ -f dev-requirements.txt ]]; then
-          pip install -r dev-requirements.txt
-        fi
-        pip install -e .
-    - name: Setup extension (CKAN >= 2.9)
-      run: |
-        ckan -c test.ini db init
-        if [[ $(cat requirements.txt | grep 'ckanext-harvest') ]]; then
-          ckan -c test.ini harvester initdb
-        fi
-    - name: Run tests
-      run: |
-        set -o pipefail
-        pytest --ckan-ini=test.ini --cov=ckanext.${{ inputs.ext_name }} --cov-fail-under=${CODE_COVERAGE_THRESHOLD_REQUIRED} --disable-warnings ckanext/${{ inputs.ext_name }}/tests | tee pytest-coverage.txt
-    - name: Report test coverage
-      if: ${{ always() }}
-      uses: coroo/pytest-coverage-commentator@v1.0.2
+      - uses: actions/checkout@v4
+      - name: Install requirements
+        run: |
+          sudo apk add tzdata swig python3-dev
+          sudo apk add proj-util proj-dev geos-dev
+          cp /usr/share/zoneinfo/America/New_York /etc/localtime
+          if [[ -f requirements.txt ]]; then
+            pip install -r requirements.txt
+          fi
+          if [[ -f dev-requirements.txt ]]; then
+            pip install -r dev-requirements.txt
+          fi
+          pip install -e .
+      - name: Setup extension (CKAN >= 2.9)
+        run: |
+          ckan -c test.ini db init
+          if [[ $(cat requirements.txt | grep 'ckanext-harvest') ]]; then
+            ckan -c test.ini harvester initdb
+          fi
+      - name: Run tests
+        run: |
+          set -o pipefail
+          pytest --ckan-ini=test.ini --cov=ckanext.${{ inputs.ext_name }} --cov-fail-under=${CODE_COVERAGE_THRESHOLD_REQUIRED} --disable-warnings ckanext/${{ inputs.ext_name }}/tests | tee pytest-coverage.txt
+      - name: Report test coverage
+        if: ${{ always() }}
+        uses: coroo/pytest-coverage-commentator@v1.0.2

@@ -1,6 +1,6 @@
 name: Static Site QA Template
 
-on:   # yamllint disable-line rule:truthy
+on: # yamllint disable-line rule:truthy
   workflow_call:
 
 jobs:
@@ -9,15 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.1'
+          ruby-version: "3.1"
           bundler-cache: true #runs `bundle install`
       - name: Install node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
       - name: Install NPM dependencies
         shell: bash
         run: npm install

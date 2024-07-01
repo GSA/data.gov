@@ -1,11 +1,11 @@
 ---
 name: disable egress proxy
 
-on:   # yamllint disable-line rule:truthy
+on: # yamllint disable-line rule:truthy
   workflow_dispatch:
     inputs:
       appName:
-        description: 'App Name'
+        description: "App Name"
         required: true
         type: choice
         options:
@@ -17,7 +17,7 @@ on:   # yamllint disable-line rule:truthy
           - "dashboard-stage"
           - inventory
       appSpace:
-        description: 'Cloud Foundry Space'
+        description: "Cloud Foundry Space"
         required: true
         type: choice
         options:
@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: disable egress
         uses: cloud-gov/cg-cli-tools@main
         with:

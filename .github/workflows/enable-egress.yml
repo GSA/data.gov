@@ -1,11 +1,11 @@
 ---
 name: enable egress proxy
 
-on:   # yamllint disable-line rule:truthy
+on: # yamllint disable-line rule:truthy
   workflow_dispatch:
     inputs:
       appName:
-        description: 'App Name'
+        description: "App Name"
         required: true
         type: choice
         options:
@@ -17,7 +17,7 @@ on:   # yamllint disable-line rule:truthy
           - "dashboard-stage"
           - inventory
       appSpace:
-        description: 'Cloud Foundry Space'
+        description: "Cloud Foundry Space"
         required: true
         type: choice
         options:
@@ -32,27 +32,27 @@ env:
 jobs:
   enable-egress:
     concurrency: ${{ github.event.inputs.appSpace }}
-    name: ${{ github.event.inputs.appName }} -- ${{ github.event.inputs.appSpace }}  # yamllint disable-line rule:line-length
+    name: ${{ github.event.inputs.appName }} -- ${{ github.event.inputs.appSpace }} # yamllint disable-line rule:line-length
     environment: ${{ github.event.inputs.appSpace }}
     runs-on: ubuntu-latest
     steps:
       - name: checkout datagov
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: ${{ env.DATAGOV_DIR }}
       - name: checkout cg-egress-proxy
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
-          repository: 'GSA-TTS/cg-egress-proxy'
+          repository: "GSA-TTS/cg-egress-proxy"
           ref: "4d4aacf85cea46699571df93df46919e489128be"
           path: ${{ env.CG_DIR }}
 
       # trying to emulate:
       # https://github.com/GSA/cg-egress-proxy/blob/main/Dockerfile
       - name: build caddy - setup go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
-          go-version: 'stable'
+          go-version: "stable"
       - name: build caddy - get xcaddy
         run: go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
       - name: build caddy - xcaddy build
