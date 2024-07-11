@@ -18,9 +18,10 @@ These tasks are performed by a team admin:
   - [DatagovDevSecOps](https://drive.google.com/drive/folders/1Ac1dUmzTLTsDv8A8TSyLzrXo1a7hm4NF)
 - [ ] Email the ISSO to remove the user from any Google Drive folders or documents owned by security
 - [ ] Remove team member from Data.gov GitHub teams
-  - [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members)
-  - [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members)
-  - [data-gov-ckan-multi](https://github.com/orgs/GSA/teams/data-gov-ckan-multi/members)
+  - [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin)
+  - [data-gov-team](https://github.com/orgs/GSA/teams/data-gov-team)
+  - [data-gov-dev-team](https://github.com/orgs/GSA/teams/data-gov-dev-team)
+  - [data-gov-ckan-multi](https://github.com/orgs/GSA/teams/data-gov-ckan-multi)
 - [ ] Remove team member from [the `gsa-datagov` organization](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/users) on cloud.gov
 - [ ] Remove team member from [GCP account](https://console.cloud.google.com/iam-admin/iam?project=tts-datagov)
 - [ ] Remove team member from [the SSB AWS accounts](https://github.com/18F/aws-admin/blob/main/terraform/datagov-iam.tf)

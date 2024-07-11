@@ -25,7 +25,9 @@ Below are the tasks that will drive the onboarding process.
   - [Data.gov team list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagovhelp)
   - [Inventory help list](https://groups.google.com/a/gsa.gov/forum/#!forum/inventory-help)
 - [ ] Make sure team member has 2FA enabled for their GitHub account and [request](https://github.com/GSA/GitHub-Administration/blob/master/README.md#requesting-access-to-the-gsa-organization) membership to GSA GitHub org
-- [ ] Add team member to a Data.gov GitHub team [data-gov-support](https://github.com/orgs/GSA/teams/data-gov-support/members)
+- [ ] Add team member to a Data.gov GitHub team:
+  - [ ] for non-development roles: [data-gov-team](https://github.com/orgs/GSA/teams/data-gov-team)
+  - [ ] for development roles: [data-gov-dev-team](https://github.com/orgs/GSA/teams/data-gov-dev-team)
 - [ ] Add team member to [New Relic](https://account.newrelic.com/accounts/1601367/users) with permissions:
   - Alerts manager
   - APM manager
