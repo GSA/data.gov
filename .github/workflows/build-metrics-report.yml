@@ -13,10 +13,7 @@ jobs:
   fetch-report:
     defaults:
       run:
-        working-directory: metrics    
-    env: 
-      AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID_METRICS}}
-      AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY_METRICS}}
+        working-directory: metrics
     runs-on: ubuntu-latest
     name: Fetch Reports
     steps:
@@ -34,6 +31,16 @@ jobs:
         with:
             poetry-version: ${{ env.POETRY_VERSION }}
 
+      - name: Setup a local virtual environment (if no poetry.toml file)
+        run: |
+          poetry config virtualenvs.create true --local
+          poetry config virtualenvs.in-project true --local
+      - uses: actions/cache@v3
+        name: Define a cache for the virtual environment based on the dependencies lock file
+        with:
+          path: ./.venv
+          key: venv-${{ hashFiles('poetry.lock') }}      
+
       - name: Install Dependencies
         run: |
             poetry env use ${{ env.PY_VERSION }}
@@ -43,7 +50,10 @@ jobs:
         env:
             GA_CREDENTIALS_JSON: ${{ secrets.GA_CREDENTIALS_JSON }}
         run: |
-            echo $GA_CREDENTIALS_JSON | base64 --decode > datagov_metrics/credentials.json
+            echo $GA_CREDENTIALS_JSON | base64 --decode > datagov_metrics/credentials.json            
       - name: Run Python script
+        env:
+          AWS_ACCESS_KEY_ID_METRICS: ${{ secrets.AWS_ACCESS_KEY_ID_METRICS }}
+          AWS_SECRET_ACCESS_KEY_METRICS: ${{ secrets.AWS_SECRET_ACCESS_KEY_METRICS }}
         run: |
             poetry run python datagov_metrics
