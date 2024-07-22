@@ -202,15 +202,10 @@ def write_data_to_csv(response):
         if response.get("rows"):
             writer.writerows(
                 [
-                    *[
-                        [val["value"] for val in row.get("dimensionValues") or []]
-                        for row in response["rows"]
-                    ],
-                    *[
-                        [val["value"] for val in row["metricValues"]]
-                        for row in response["rows"]
-                    ],
+                    *[val["value"] for val in row.get("dimensionValues") or []],
+                    *[val["value"] for val in row["metricValues"]],
                 ]
+                for row in response["rows"]
             )
         return csv_buffer.getvalue()
 

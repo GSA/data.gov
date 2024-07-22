@@ -35,7 +35,7 @@ jobs:
         run: |
           poetry config virtualenvs.create true --local
           poetry config virtualenvs.in-project true --local
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Define a cache for the virtual environment based on the dependencies lock file
         with:
           path: ./.venv
@@ -55,5 +55,6 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID_METRICS: ${{ secrets.AWS_ACCESS_KEY_ID_METRICS }}
           AWS_SECRET_ACCESS_KEY_METRICS: ${{ secrets.AWS_SECRET_ACCESS_KEY_METRICS }}
+          AWS_DEFAULT_REGION: us-gov-west-1
         run: |
             poetry run python datagov_metrics
