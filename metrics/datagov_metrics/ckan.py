@@ -4,8 +4,6 @@ import io
 from datagov_metrics.s3_util import put_data_to_s3
 
 CKAN_BASE_URL = "https://catalog.data.gov/api/action/package_search"
-ORG_LIST_API_ROUTE = "/api/action/organization_list"
-PACKAGE_SEARCH_API_ROUTE = "/api/action/package_search"
 QUERIES = {
     "harvest_sources": '?fq=dataset_type:harvest&facet.field=["organization"]&facet.limit=200&rows=0',
     "datasets_per_org": '?q=*:*&facet.field=["organization"]&facet.limit=200&rows=0',
