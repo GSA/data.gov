@@ -62,3 +62,7 @@ ansible/roles/vendor
 .vscode/settings.json
 
 output
+
+## dont ignore
+# metrics
+!metrics/.env
