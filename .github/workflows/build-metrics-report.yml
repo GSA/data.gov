@@ -3,7 +3,7 @@ name: Build Metrics Report
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *" # every day at 12am UTC
+    - cron: "0 0 1 * *" # runs first day of every month at 12am UTC
 
 env:
   PY_VERSION: "3.10"

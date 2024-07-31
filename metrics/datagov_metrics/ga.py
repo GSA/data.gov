@@ -1,4 +1,5 @@
-import datetime
+from datetime import datetime, timedelta
+import calendar
 import io
 import csv
 
@@ -17,12 +18,14 @@ analytics = build("analyticsdata", "v1beta", credentials=credentials)
 properties = analytics.properties()
 
 
-def date_range(days_ago: int):
-    today = datetime.date.today().strftime("%Y-%m-%d")
-    days_ago_strfmt = (
-        datetime.date.today() - datetime.timedelta(days=days_ago)
-    ).strftime("%Y-%m-%d")
-    return [{"startDate": days_ago_strfmt, "endDate": today}]
+def date_range_last_month():
+    last_month = datetime.today().replace(day=1) - timedelta(days=1)
+    last_day = calendar.monthrange(last_month.year, last_month.month)[1]
+    end_date = datetime(last_month.year, last_month.month, last_day).strftime(
+        "%Y-%m-%d"
+    )
+    start_date = datetime(last_month.year, last_month.month, 1).strftime("%Y-%m-%d")
+    return [{"startDate": start_date, "endDate": end_date}]
 
 
 def get_org_list():
@@ -47,7 +50,7 @@ def setup_organization_reports():
 
         # report most viewd dataset pages per organization
         org_reports[f"{org}__page_requests__last30"] = {
-            "dateRanges": date_range(30),
+            "dateRanges": date_range_last_month(),
             "dimensions": [
                 {"name": "pagePath"},
                 {"name": "customEvent:DATAGOV_dataset_organization"},
@@ -60,7 +63,7 @@ def setup_organization_reports():
 
         # report most downloaded files per organization
         org_reports[f"{org}__download_requests__last30"] = {
-            "dateRanges": date_range(30),
+            "dateRanges": date_range_last_month(),
             "dimensions": [
                 {"name": "linkUrl"},
                 {"name": "customEvent:DATAGOV_dataset_organization"},
@@ -90,7 +93,7 @@ def setup_organization_reports():
 
         # report most clicked outboud links per organization
         org_reports[f"{org}__link_requests__last30"] = {
-            "dateRanges": date_range(30),
+            "dateRanges": date_range_last_month(),
             "dimensions": [
                 {"name": "linkUrl"},
                 {"name": "customEvent:DATAGOV_dataset_organization"},
@@ -121,7 +124,7 @@ def setup_global_reports():
     global_reports = {}
 
     global_reports["global__page_requests__last30"] = {
-        "dateRanges": date_range(30),
+        "dateRanges": date_range_last_month(),
         "dimensions": [{"name": "pagePath"}],
         # TODO add filter to clean up pages?
         # "dimensionFilter": {},
@@ -130,12 +133,12 @@ def setup_global_reports():
     }
 
     global_reports["global__total_pageviews__last30"] = {
-        "dateRanges": date_range(30),
+        "dateRanges": date_range_last_month(),
         "metrics": [{"name": "screenPageViews"}],
     }
 
     global_reports["global__top_search_terms__last30"] = {
-        "dateRanges": date_range(30),
+        "dateRanges": date_range_last_month(),
         "dimensions": [{"name": "searchTerm"}],
         "dimensionFilter": {
             "andGroup": {
@@ -167,7 +170,7 @@ def setup_global_reports():
     }
 
     global_reports["global__device_category__last30"] = {
-        "dateRanges": date_range(30),
+        "dateRanges": date_range_last_month(),
         "dimensions": [{"name": "deviceCategory"}],
         "metrics": [{"name": "activeUsers"}],
         "orderBys": [{"metric": {"metricName": "activeUsers"}, "desc": True}],
