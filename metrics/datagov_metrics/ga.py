@@ -29,11 +29,11 @@ def date_range_last_month():
 
 
 def get_org_list():
-    url = "https://catalog.data.gov/api/action/organization_list"
+    url = 'https://catalog.data.gov/api/action/package_search?q=*:*&facet.field=["organization"]&facet.limit=200&rows=0'
     repo = requests.get(url)
     data = repo.json()
 
-    return data["result"]
+    return data["result"]["search_facets"]["organization"]["items"]
 
 
 def setup_organization_reports():
@@ -41,15 +41,17 @@ def setup_organization_reports():
     org_reports = {}
 
     for org in orgs:
+        org_name = org["name"]
+        org_display_name = org["display_name"]
         org_dimension_filter = {
             "filter": {
                 "fieldName": "customEvent:DATAGOV_dataset_organization",
-                "stringFilter": {"matchType": "CONTAINS", "value": org},
+                "stringFilter": {"matchType": "CONTAINS", "value": org_display_name},
             }
         }
 
         # report most viewd dataset pages per organization
-        org_reports[f"{org}__page_requests__last30"] = {
+        org_reports[f"{org_name}__page_requests__last30"] = {
             "dateRanges": date_range_last_month(),
             "dimensions": [
                 {"name": "pagePath"},
@@ -62,7 +64,7 @@ def setup_organization_reports():
         }
 
         # report most downloaded files per organization
-        org_reports[f"{org}__download_requests__last30"] = {
+        org_reports[f"{org_name}__download_requests__last30"] = {
             "dateRanges": date_range_last_month(),
             "dimensions": [
                 {"name": "linkUrl"},
@@ -92,7 +94,7 @@ def setup_organization_reports():
         }
 
         # report most clicked outboud links per organization
-        org_reports[f"{org}__link_requests__last30"] = {
+        org_reports[f"{org_name}__link_requests__last30"] = {
             "dateRanges": date_range_last_month(),
             "dimensions": [
                 {"name": "linkUrl"},
