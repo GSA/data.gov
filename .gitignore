@@ -63,6 +63,6 @@ ansible/roles/vendor
 
 output
 
-## dont ignore
-# metrics
+# Metrics
 !metrics/.env
+metrics/*/credentials.json

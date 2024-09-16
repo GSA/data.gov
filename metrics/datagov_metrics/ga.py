@@ -11,6 +11,8 @@ from googleapiclient.discovery import build
 KEY_FILE_LOCATION = "datagov_metrics/credentials.json"
 GA4_PROPERTY_ID = "properties/381392243"
 
+SEARCH_RESULTS_LIMIT = 50
+
 credentials = service_account.Credentials.from_service_account_file(
     KEY_FILE_LOCATION, scopes=["https://www.googleapis.com/auth/analytics.readonly"]
 )
@@ -50,7 +52,7 @@ def setup_organization_reports():
             }
         }
 
-        # report most viewd dataset pages per organization
+        # report most viewed dataset pages per organization
         org_reports[f"{org_name}__page_requests__last30"] = {
             "dateRanges": date_range_last_month(),
             "dimensions": [
@@ -142,6 +144,7 @@ def setup_global_reports():
     global_reports["global__top_search_terms__last30"] = {
         "dateRanges": date_range_last_month(),
         "dimensions": [{"name": "searchTerm"}],
+        "limit": SEARCH_RESULTS_LIMIT,
         "dimensionFilter": {
             "andGroup": {
                 "expressions": [
