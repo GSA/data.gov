@@ -39,6 +39,8 @@ Below are the tasks that will drive the onboarding process.
   - `$ cf set-space-role <email> gsa-datagov <space> SpaceDeveloper`
 - [ ] Add team member to the SSB AWS accounts \
       Make a PR on [the Terraform file controlling access](https://github.com/18F/aws-admin/blob/main/terraform/datagov-iam.tf) to add the new person and include them in the appropriate user_groups.
+      
+  - [See here](https://docs.google.com/document/d/1mwASz1SDiGcpbeSTTILrliDsUKzg1mjy2u11JmvFW2k/edit?usp=drive_link) for AWS Account ID and access instructions
 - [ ] Request Federalist access by posting in [#federalist-support](https://gsa-tts.slack.com/archives/C1NUUGTT5) with the new member's GitHub username.
 - [ ] Once member had logged into Login.gov, add them to the [data.gov team](https://dashboard.int.identitysandbox.gov/teams/174).
 - [ ] Add team member as form manager to any Data.gov [Touchpoints](https://touchpoints.app.cloud.gov/)
