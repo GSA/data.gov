@@ -135,6 +135,8 @@ fi
 
 if [[ "$action" == "deploy" ]]; then
   if [[ $ok_to_proceed == "YES" ]]; then
+    app_guid=$(cf app --guid "$app_to_check")
+    cf curl -X POST /v3/apps/${app_guid}/actions/clear_buildpack_cache
     cf push "$app_to_check" --vars-file vars.$space.yml --strategy rolling
   else
     # Recursively call itself until Github Actions times out
