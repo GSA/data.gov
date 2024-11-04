@@ -141,39 +141,6 @@ def setup_global_reports():
         "metrics": [{"name": "screenPageViews"}],
     }
 
-    global_reports["global__top_search_terms__last30"] = {
-        "dateRanges": date_range_last_month(),
-        "dimensions": [{"name": "searchTerm"}],
-        "limit": SEARCH_RESULTS_LIMIT,
-        "dimensionFilter": {
-            "andGroup": {
-                "expressions": [
-                    {
-                        "notExpression": {
-                            "filter": {
-                                "fieldName": "searchTerm",
-                                "stringFilter": {"matchType": "EXACT", "value": ""},
-                            }
-                        }
-                    },
-                    {
-                        "notExpression": {
-                            "filter": {
-                                "fieldName": "searchTerm",
-                                "stringFilter": {
-                                    "matchType": "EXACT",
-                                    "value": "Search datasets...",
-                                },
-                            }
-                        }
-                    },
-                ]
-            }
-        },
-        "metrics": [{"name": "eventCount"}],
-        "orderBys": [{"metric": {"metricName": "eventCount"}, "desc": True}],
-    }
-
     global_reports["global__device_category__last30"] = {
         "dateRanges": date_range_last_month(),
         "dimensions": [{"name": "deviceCategory"}],
