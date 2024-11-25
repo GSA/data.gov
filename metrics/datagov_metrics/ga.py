@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 import calendar
 import io
 import csv
+from functools import lru_cache
 
 from datagov_metrics.s3_util import put_data_to_s3
 import requests
@@ -19,7 +20,7 @@ credentials = service_account.Credentials.from_service_account_file(
 analytics = build("analyticsdata", "v1beta", credentials=credentials)
 properties = analytics.properties()
 
-
+@lru_cache()
 def date_range_last_month():
     last_month = datetime.today().replace(day=1) - timedelta(days=1)
     last_day = calendar.monthrange(last_month.year, last_month.month)[1]
@@ -187,11 +188,15 @@ def write_data_to_csv(response):
 
 def main():
     reports = setup_reports()
+    end_date = date_range_last_month()[0]["endDate"] # for example, 2024-10-31
     for report in reports:
         print(f"Fetching report: {report}")
         fetched_report = fetch_report(reports[report])
         csv_data = write_data_to_csv(fetched_report)
-        put_data_to_s3(f"{report}.csv", csv_data)
+        put_data_to_s3(f"{report}.{end_date}.csv", csv_data)
+
+    # This file get refreshed every time at the end of report generation
+    put_data_to_s3("report-end-date.txt", end_date)
 
 
 if __name__ == "__main__":
