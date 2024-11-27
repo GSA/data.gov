@@ -2,6 +2,7 @@ import requests
 import csv
 import io
 from datagov_metrics.s3_util import put_data_to_s3
+from datagov_metrics.ga import date_range_last_month
 
 CKAN_BASE_URL = "https://catalog.data.gov/api/action/package_search"
 QUERIES = {
@@ -34,9 +35,10 @@ def write_data_to_csv(response):
 
 def main():
     data = get_data()
+    end_date = date_range_last_month()[0]["endDate"] # for example, 2024-10-31
     for k, v in data.items():
         csv_data = write_data_to_csv(v)
-        put_data_to_s3(f"global__{k}.csv", csv_data)
+        put_data_to_s3(f"global__{k}.{end_date}.csv", csv_data)
 
 
 if __name__ == "__main__":
