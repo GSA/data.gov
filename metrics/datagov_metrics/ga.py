@@ -149,6 +149,57 @@ def setup_global_reports():
         "orderBys": [{"metric": {"metricName": "activeUsers"}, "desc": True}],
     }
 
+    global_reports["global__download_requests__last30"] = {
+        "dateRanges": date_range_last_month(),
+        "dimensions": [
+            {"name": "linkUrl"},
+            {"name": "fileExtension"},
+            {"name": "fileName"},
+        ],
+        "dimensionFilter": {
+            "andGroup": {
+                "expressions": [
+                    {
+                        "filter": {
+                            "fieldName": "eventName",
+                            "stringFilter": {
+                                "matchType": "EXACT",
+                                "value": "file_download",
+                            },
+                        }
+                    },
+                ],
+            },
+        },
+        "metrics": [{"name": "eventCount"}],
+        "orderBys": [{"metric": {"metricName": "eventCount"}, "desc": True}],
+    }
+
+    global_reports["global__link_requests__last30"] = {
+        "dateRanges": date_range_last_month(),
+        "dimensions": [
+            {"name": "linkUrl"},
+            {"name": "customEvent:DATAGOV_dataset_organization"},
+            {"name": "customEvent:DATAGOV_dataset_publisher"},
+            {"name": "outbound"},
+        ],
+        "dimensionFilter": {
+            "andGroup": {
+                "expressions": [
+                    {
+                        "filter": {
+                            "fieldName": "outbound",
+                            "stringFilter": {"matchType": "EXACT", "value": "true"},
+                        }
+                    },
+                ],
+            },
+        },
+        "metrics": [{"name": "eventCount"}],
+        "orderBys": [{"metric": {"metricName": "eventCount"}, "desc": True}],
+    }
+
+
     return global_reports
 
 
