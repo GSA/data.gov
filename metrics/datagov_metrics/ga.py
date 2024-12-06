@@ -75,6 +75,8 @@ def setup_organization_reports():
                 {"name": "customEvent:DATAGOV_dataset_publisher"},
                 {"name": "fileExtension"},
                 {"name": "fileName"},
+                {"name": "pageLocation"},
+                {"name": "pageTitle"},
             ],
             "dimensionFilter": {
                 "andGroup": {
@@ -104,6 +106,8 @@ def setup_organization_reports():
                 {"name": "customEvent:DATAGOV_dataset_organization"},
                 {"name": "customEvent:DATAGOV_dataset_publisher"},
                 {"name": "outbound"},
+                {"name": "pageLocation"},
+                {"name": "pageTitle"},
             ],
             "dimensionFilter": {
                 "andGroup": {
