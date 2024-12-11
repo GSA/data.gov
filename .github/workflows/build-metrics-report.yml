@@ -3,7 +3,7 @@ name: Build Metrics Report
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
   schedule:
-    - cron: "0 0 1 * *" # runs first day of every month at 12am UTC
+    - cron: "0 0 2 * *" # Runs at 00:00 UTC on 2nd day of the month - to account for GA4 reporting latency
 
 env:
   PY_VERSION: "3.10"
