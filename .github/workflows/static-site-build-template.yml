@@ -6,7 +6,7 @@ on: # yamllint disable-line rule:truthy
 jobs:
   build:
     name: Build Static Site
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04 # until appArmor Puppeteer issue fixed: https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#issues-with-apparmor-on-ubuntu
     steps:
       - name: checkout
         uses: actions/checkout@v4
