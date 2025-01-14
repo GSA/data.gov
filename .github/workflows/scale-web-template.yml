@@ -7,6 +7,9 @@ on: # yamllint disable-line rule:truthy
       environ:
         required: true
         type: string
+      app_url:
+        required: true
+        type: string
       app_names:
         required: true
         type: string
