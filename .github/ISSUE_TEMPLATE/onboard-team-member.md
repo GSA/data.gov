@@ -14,6 +14,9 @@ Below are the tasks that will drive the onboarding process.
   - #datagov-alerts
   - #datagov-devsecops
   - #datagov-notifications
+- [ ] Add team member to [TTS Slack user groups](https://slack.com/help/articles/212906697-Create-a-user-group#edit-a-user-group)
+  - @datagov-team
+  - @datagov-dev-team (if applicable)
 - [ ] Invite team member to [Data.gov calendar](https://calendar.google.com/calendar/r/settings/calendar/Z3NhLmdvdl9zcjZ0NG52YjRhOTNjNnNzdHRxYXAzbjZtMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t) and events
   - Daily sync
   - Sprint planning

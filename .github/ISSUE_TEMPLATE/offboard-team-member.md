@@ -48,6 +48,9 @@ These tasks are performed by a team admin:
   - [ckanext-datagovcatalog](https://pypi.org/project/ckanext-datagovcatalog/)
 - [ ] Remove team member from [Google Search Console](https://search.google.com/search-console/about)
 - [ ] Remove team member from any Data.gov [Touchpoints](https://touchpoints.app.cloud.gov/)
+- [ ] Remove team member from TTS Slack User Groups
+  - @datagov-team
+  - @datagov-dev-team (if applicable)
 
 If team member is also leaving TTS:
 
