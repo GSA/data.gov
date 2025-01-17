@@ -29,6 +29,10 @@ These tasks are performed by a team admin:
   - [datagov](https://groups.google.com/a/gsa.gov/forum/#!forum/datagov)
   - [datagovhelp](https://groups.google.com/a/gsa.gov/forum/#!forum/datagovhelp)
   - [inventory-help](https://groups.google.com/a/gsa.gov/forum/#!forum/inventory-help)
+- [ ] Remove team member from [Google Groups](https://groups.google.com/my-groups)
+  - datagov-team
+  - DataGov
+  - Data.gov Help
 - [ ] Remove team member from [Data.gov calendar](https://calendar.google.com/calendar/r/settings/calendar/Z3NhLmdvdl9zcjZ0NG52YjRhOTNjNnNzdHRxYXAzbjZtMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t) and events
 - [ ] Remove team member from [Login.gov team](https://dashboard.int.identitysandbox.gov/teams/174).
 - [ ] Remove team member from [New Relic](https://newrelic.com)
@@ -48,6 +52,10 @@ These tasks are performed by a team admin:
   - [ckanext-datagovcatalog](https://pypi.org/project/ckanext-datagovcatalog/)
 - [ ] Remove team member from [Google Search Console](https://search.google.com/search-console/about)
 - [ ] Remove team member from any Data.gov [Touchpoints](https://touchpoints.app.cloud.gov/)
+- [ ] Remove team member from TTS Slack User Groups
+  - @datagov-team
+  - @datagov-dev-team (if applicable)
+- [ ] Remove team member from Pages under the "Actions" header within the org `gsa-tts-data-and-analytics`
 
 If team member is also leaving TTS:
 
@@ -55,7 +63,6 @@ If team member is also leaving TTS:
 
 If the team member is also leaving GSA:
 
-- [ ] Remove team member from Pages under the "Actions" header within the org `gsa-tts-data-and-analytics`
 - [ ] Remove access from [GSA GitHub org](https://github.com/GSA/GitHub-Administration/blob/master/README.md#removing-access-to-the-gsa-organization)
 - [ ] Create "Offboard from GSA IT" ticket
 - [ ] Notify HSPD-12 if needed

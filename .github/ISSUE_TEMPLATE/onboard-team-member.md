@@ -14,6 +14,9 @@ Below are the tasks that will drive the onboarding process.
   - #datagov-alerts
   - #datagov-devsecops
   - #datagov-notifications
+- [ ] Add team member to [TTS Slack user groups](https://slack.com/help/articles/212906697-Create-a-user-group#edit-a-user-group)
+  - @datagov-team
+  - @datagov-dev-team (if applicable)
 - [ ] Invite team member to [Data.gov calendar](https://calendar.google.com/calendar/r/settings/calendar/Z3NhLmdvdl9zcjZ0NG52YjRhOTNjNnNzdHRxYXAzbjZtMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t) and events
   - Daily sync
   - Sprint planning
@@ -24,26 +27,32 @@ Below are the tasks that will drive the onboarding process.
 - [ ] Add team member to email lists
   - [Data.gov team list](https://groups.google.com/a/gsa.gov/forum/#!forum/datagovhelp)
   - [Inventory help list](https://groups.google.com/a/gsa.gov/forum/#!forum/inventory-help)
+- [ ] Add team member to [Google Groups](https://groups.google.com/my-groups)
+  - datagov-team
+  - DataGov
+  - Data.gov Help
 - [ ] Make sure team member has 2FA enabled for their GitHub account and [request](https://github.com/GSA/GitHub-Administration/blob/master/README.md#requesting-access-to-the-gsa-organization) membership to GSA GitHub org
 - [ ] Add team member to a Data.gov GitHub team:
   - [ ] for non-development roles: [data-gov-team](https://github.com/orgs/GSA/teams/data-gov-team)
   - [ ] for development roles: [data-gov-dev-team](https://github.com/orgs/GSA/teams/data-gov-dev-team)
-- [ ] Add team member to [New Relic](https://account.newrelic.com/accounts/1601367/users) with permissions:
-  - Alerts manager
-  - APM manager
-  - Infrastructure manager
-  - Synthetics manager
+- [ ] Add team member to [New Relic](https://account.newrelic.com/accounts/1601367/users) with Full Platform access, along with the following user groups:
+  - Solutions-Data.gov
+  - Solutions-Data.gov_Admin
 - [ ] Add team member to [Snyk](https://app.snyk.io/org/data.gov/manage/members)
-- [ ] Add team member to [Data.gov Google Analytics](https://analytics.google.com/analytics/web/#/a42145528w85560911p88728213/admin/suiteusermanagement/account) account
-- [ ] Add team member as a SpaceDeveloper in the [`development`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/eab3d327-7d9f-423b-9838-753c26fdb5a0/users), [`staging`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/3e692cdd-6d26-41ea-9698-04903dc3f742/users), and [`management`](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/spaces/9a1db116-0180-42be-8ffa-7944dcf6bf50/summary) spaces in cloud.gov.
-  - `$ cf set-space-role <email> gsa-datagov <space> SpaceDeveloper`
+- [ ] Add team member to [Data.gov Google Analytics](https://analytics.google.com/analytics/web/#/a42145528p381392243/admin/suiteusermanagement/account) account
+  - Choose Viewer role for Contractors, or Administrator for PMO team members
+- [ ] [Invite user](https://account.fr.cloud.gov/invite) to Cloud.gov platform
+- [ ] Once user has a Cloud.gov account, add team member to the [gsa-datagov organization](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/users/manage?setByUsername=true) and give them access to the following roles
+  - Organization: gsa-datagov -- User
+  - All spaces - Developer
 - [ ] Add team member to the SSB AWS accounts \
       Make a PR on [the Terraform file controlling access](https://github.com/18F/aws-admin/blob/main/terraform/datagov-iam.tf) to add the new person and include them in the appropriate user_groups.
       
   - [See here](https://docs.google.com/document/d/1mwASz1SDiGcpbeSTTILrliDsUKzg1mjy2u11JmvFW2k/edit?usp=drive_link) for AWS Account ID and access instructions
-- [ ] Request Federalist access by posting in [#federalist-support](https://gsa-tts.slack.com/archives/C1NUUGTT5) with the new member's GitHub username.
-- [ ] Once member had logged into Login.gov, add them to the [data.gov team](https://dashboard.int.identitysandbox.gov/teams/174).
-- [ ] Add team member as form manager to any Data.gov [Touchpoints](https://touchpoints.app.cloud.gov/)
+- [ ] Invite team member to Cloud.gov Pages [organization] (https://cloud.gov/pages/documentation/adding-users/#adding-a-new-user)
+- [ ] Once member had logged into Login.gov, add them to the [data.gov team](https://dashboard.int.identitysandbox.gov/teams/174) with appropriate role.
+- [ ] [Login to Touchpoints](https://touchpoints.digital.gov/) to create a Touchpoint user account.
+- [ ] Once team member has created a Touchpoints account, add them as as form manager to any Data.gov [Touchpoints form](https://touchpoints.app.cloud.gov/)
 
 For new Project Management Office team members, follow these additional steps:
 
