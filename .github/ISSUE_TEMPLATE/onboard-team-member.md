@@ -51,8 +51,8 @@ Below are the tasks that will drive the onboarding process.
   - [See here](https://docs.google.com/document/d/1mwASz1SDiGcpbeSTTILrliDsUKzg1mjy2u11JmvFW2k/edit?usp=drive_link) for AWS Account ID and access instructions
 - [ ] Invite team member to Cloud.gov Pages [organization] (https://cloud.gov/pages/documentation/adding-users/#adding-a-new-user)
 - [ ] Once member had logged into Login.gov, add them to the [data.gov team](https://dashboard.int.identitysandbox.gov/teams/174) with appropriate role.
-- [ ] [Login to Touchpoints](https://touchpoints.digital.gov/) to create a Touchpoint user account.
-- [ ] Once team member has created a Touchpoints account, add them as as form manager to any Data.gov [Touchpoints form](https://touchpoints.app.cloud.gov/)
+- [ ] Invite team member to [Touchpoints](https://touchpoints.digital.gov/) if they don't already have an account.
+  - [ ] Once team member has created a Touchpoints account, add them as as form manager to any Data.gov [Touchpoints form](https://touchpoints.app.cloud.gov/)
 
 For new Project Management Office team members, follow these additional steps:
 
