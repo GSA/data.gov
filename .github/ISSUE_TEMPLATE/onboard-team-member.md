@@ -32,7 +32,7 @@ Below are the tasks that will drive the onboarding process.
   - DataGov
   - Data.gov Help
 - [ ] Make sure team member has 2FA enabled for their GitHub account and [request](https://github.com/GSA/GitHub-Administration/blob/master/README.md#requesting-access-to-the-gsa-organization) membership to GSA GitHub org
-- [ ] Add team member to a Data.gov GitHub team:
+- [ ] Add team member to a Data.gov GitHub team, and change their role to Maintainer if they are part of the PMO team:
   - [ ] for non-development roles: [data-gov-team](https://github.com/orgs/GSA/teams/data-gov-team)
   - [ ] for development roles: [data-gov-dev-team](https://github.com/orgs/GSA/teams/data-gov-dev-team)
 - [ ] Add team member to [New Relic](https://account.newrelic.com/accounts/1601367/users) with Full Platform access, along with the following user groups:
@@ -67,7 +67,9 @@ For new Project Management Office team members, follow these additional steps:
   - #sol-data-analytics
 - [ ] Add team member to [the GCP project](https://console.cloud.google.com/iam-admin/iam?project=tts-datagov)
 - [ ] Add team member with OrgManager permissions in [the `gsa-datagov` organization](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/users) on cloud.gov
-- [ ] Add team member to [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members) GitHub team
+- [ ] Add team member to Github PMO teams and set their role as Maintainer
+  - [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members) 
+  - [data-gov-bots](https://github.com/orgs/GSA/teams/data-gov-bots/members) for dev roles
 - [ ] Invite team member to calendar events
 - [ ] Promote team member to Admin in [New Relic](https://account.newrelic.com/accounts/1601367/users)
 - [ ] Add team member as an Owner to PyPI packages:
@@ -83,6 +85,9 @@ For new Project Management Office team members, follow these additional steps:
 
 - [ ] Log into [Login.gov dashboard](https://dashboard.int.identitysandbox.gov/)
 - [ ] Ensure your GitHub account meets the criteria for [GSA GitHub org](https://github.com/GSA/GitHub-Administration/blob/master/README.md) (setup 2FA)
+- [ ] Configure your Github profile to [sign commits]
+  - Follow Github's instructions for generating a GPG key [here](https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key)
+  - Or use the SSH key you already [have](https://calebhearth.com/sign-git-with-ssh). More [here]((https://github.com/GSA/data.gov/issues/4768#issuecomment-2471611946)).
 - [ ] Read through the [required reading list](https://github.com/gsa/data.gov/wiki/Onboarding-Offboarding#required-reading-list)
   - [ ] Once you have access to cloud.gov, run through [training](https://github.com/gsa/data.gov/wiki/cloud.gov#onboarding-training)
 - [ ] [Request access](https://docs.google.com/forms/d/e/1FAIpQLSetStmwqrbMWDz_WIlh1trjhP0PFCjKXHzshsJveYmtIvlG2Q/viewform) to Data.gov systems; select “Catalog Admin” for the system, and “Data.gov team member” for justification
