@@ -83,7 +83,9 @@ For new Project Management Office team members, follow these additional steps:
 
 ### Tasks for new team member
 
-- [ ] Log into [Login.gov dashboard](https://dashboard.int.identitysandbox.gov/)
+- [ ] Log into [Login.gov dashboard](https://login.gov/)
+  - [ ] Ensure that you set up PIV as part of your 2FA in [Login.gov](https://login.gov/)
+  - [ ] Test logging into [Login.gov Sandbox](https://dashboard.int.identitysandbox.gov/)
 - [ ] Ensure your GitHub account meets the criteria for [GSA GitHub org](https://github.com/GSA/GitHub-Administration/blob/master/README.md) (setup 2FA)
 - [ ] Configure your Github profile to [sign commits]
   - Follow Github's instructions for generating a GPG key [here](https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key)
