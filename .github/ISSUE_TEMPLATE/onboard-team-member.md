@@ -65,7 +65,6 @@ For new Project Management Office team members, follow these additional steps:
   - #bug-bounty-partners
   - #datagov-comms
   - #sol-data-analytics
-- [ ] Add team member to [the GCP project](https://console.cloud.google.com/iam-admin/iam?project=tts-datagov)
 - [ ] Add team member with OrgManager permissions in [the `gsa-datagov` organization](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/users) on cloud.gov
 - [ ] Add team member to Github PMO teams and set their role as Maintainer
   - [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members) 
