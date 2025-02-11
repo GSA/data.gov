@@ -84,9 +84,8 @@ For new Project Management Office team members, follow these additional steps:
 
 ### Tasks for new team member
 
-- [ ] Log into [Login.gov dashboard](https://login.gov/)
-  - [ ] Ensure that you set up PIV as part of your 2FA in [Login.gov](https://login.gov/)
-  - [ ] Test logging into [Login.gov Sandbox](https://dashboard.int.identitysandbox.gov/)
+- [ ] Log into [Login.gov dashboard](https://secure.login.gov/) or create account with GSA email address
+- [ ] Once an account is created, click "Add Your Government Employee ID" in the left hand nav, and add your PIV card to the account
 - [ ] Ensure your GitHub account meets the criteria for [GSA GitHub org](https://github.com/GSA/GitHub-Administration/blob/master/README.md) (setup 2FA)
 - [ ] Configure your Github profile to [sign commits]
   - Follow Github's instructions for generating a GPG key [here](https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key)
@@ -95,4 +94,4 @@ For new Project Management Office team members, follow these additional steps:
   - [ ] Once you have access to cloud.gov, run through [training](https://github.com/gsa/data.gov/wiki/cloud.gov#onboarding-training)
 - [ ] [Request access](https://docs.google.com/forms/d/e/1FAIpQLSetStmwqrbMWDz_WIlh1trjhP0PFCjKXHzshsJveYmtIvlG2Q/viewform) to Data.gov systems; select “Catalog Admin” for the system, and “Data.gov team member” for justification
 - [ ] Join [Open Data](https://digital.gov/communities/open-data/) community list
-- [ ] Request access to the [Digital Analytics Program](https://digital.gov/guides/dap/gaining-access-to-dap-data/)
+- [ ] Request access to the [Digital Analytics Program](https://digital.gov/guides/dap/gaining-access-to-dap-data/) by emailing dap@gsa.gov
