@@ -69,6 +69,7 @@ For new Project Management Office team members, follow these additional steps:
 - [ ] Add team member to Github PMO teams and set their role as Maintainer
   - [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members) 
   - [data-gov-bots](https://github.com/orgs/GSA/teams/data-gov-bots/members) for dev roles
+- [ ] Add team member as a collaborator for our Slack App that manages webhook notifications <https://api.slack.com/apps/A03F7BJBMMF/>
 - [ ] Invite team member to calendar events
 - [ ] Promote team member to Admin in [New Relic](https://account.newrelic.com/accounts/1601367/users)
 - [ ] Add team member as an Owner to PyPI packages:
