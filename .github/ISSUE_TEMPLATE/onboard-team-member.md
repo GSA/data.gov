@@ -72,18 +72,20 @@ For new Project Management Office team members, follow these additional steps:
 - [ ] Invite team member to calendar events
 - [ ] Promote team member to Admin in [New Relic](https://account.newrelic.com/accounts/1601367/users)
 - [ ] Add team member as an Owner to PyPI packages:
-  - [ckanext-geodatagov](https://pypi.org/project/ckanext-geodatagov)
-  - [ckanext-datagovtheme](https://pypi.org/project/ckanext-datagovtheme)
-  - [ckanext-datajson](https://pypi.org/project/ckanext-datajson)
-  - [ckanext-dcat-usmetadata](https://pypi.org/project/ckanext-dcat-usmetadata)
-  - [ckanext-usmetadata](https://pypi.org/project/ckanext-usmetadata)
-  - [ckanext-metrics-dashboard](https://pypi.org/project/ckanext-metrics-dashboard)
-  - [ckanext-datagovcatalog](https://pypi.org/project/ckanext-datagovcatalog)
+  - [ckanext-usmetadata](https://pypi.org/project/ckanext-usmetadata/)
+  - [ckanext-metrics-dashboard](https://pypi.org/project/ckanext-metrics-dashboard/)
+  - [ckanext-datagovtheme](https://pypi.org/project/ckanext-datagovtheme/)
+  - [ckanext-datagovcatalog](https://pypi.org/project/ckanext-datagovcatalog/)`
+  - [ckanext-datajson](https://pypi.org/project/ckanext-datajson/)
+  - [ckanext-geodatagov](https://pypi.org/project/ckanext-geodatagov/)
+  - [datagvo-harvesting-logic](https://pypi.org/project/datagov-harvesting-logic/)
+  - [ckanext-dcat-usmetadata](https://pypi.org/project/ckanext-dcat-usmetadata/)
+  - [ckanext-gooogleanalyticsbasic](https://pypi.org/project/ckanext-googleanalyticsbasic/)
 
 ### Tasks for new team member
 
-- [ ] Log into [Login.gov dashboard](https://login.gov/)
-  - [ ] Ensure that you set up PIV as part of your 2FA in [Login.gov](https://login.gov/)
+- [ ] Log into [Login.gov dashboard](https://secure.login.gov/) or create account with GSA email address
+  - [ ] Once an account is created, click "Add Your Government Employee ID" in the left hand nav, and add your PIV card to the account
   - [ ] Test logging into [Login.gov Sandbox](https://dashboard.int.identitysandbox.gov/)
 - [ ] Ensure your GitHub account meets the criteria for [GSA GitHub org](https://github.com/GSA/GitHub-Administration/blob/master/README.md) (setup 2FA)
 - [ ] Configure your Github profile to [sign commits]
@@ -93,4 +95,4 @@ For new Project Management Office team members, follow these additional steps:
   - [ ] Once you have access to cloud.gov, run through [training](https://github.com/gsa/data.gov/wiki/cloud.gov#onboarding-training)
 - [ ] [Request access](https://docs.google.com/forms/d/e/1FAIpQLSetStmwqrbMWDz_WIlh1trjhP0PFCjKXHzshsJveYmtIvlG2Q/viewform) to Data.gov systems; select “Catalog Admin” for the system, and “Data.gov team member” for justification
 - [ ] Join [Open Data](https://digital.gov/communities/open-data/) community list
-- [ ] Request access to the [Digital Analytics Program](https://digital.gov/guides/dap/gaining-access-to-dap-data/)
+- [ ] Request access to the [Digital Analytics Program](https://digital.gov/guides/dap/gaining-access-to-dap-data/) by emailing dap@gsa.gov
