@@ -41,6 +41,8 @@ Below are the tasks that will drive the onboarding process.
 - [ ] Add team member to [Snyk](https://app.snyk.io/org/data.gov/manage/members)
 - [ ] Add team member to [Data.gov Google Analytics](https://analytics.google.com/analytics/web/#/a42145528p381392243/admin/suiteusermanagement/account) account
   - Choose Viewer role for Contractors, or Administrator for PMO team members
+- [ ] Add team member to [Google Search Console](https://search.google.com/search-console/users?resource_id=sc-domain%3Adata.gov)
+  - Grant "Full" permissions for Contractors, and "Owner" permissions for PMO team members
 - [ ] [Invite user](https://account.fr.cloud.gov/invite) to Cloud.gov platform
 - [ ] Once user has a Cloud.gov account, add team member to the [gsa-datagov organization](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/users/manage?setByUsername=true) and give them access to the following roles
   - Organization: gsa-datagov -- User

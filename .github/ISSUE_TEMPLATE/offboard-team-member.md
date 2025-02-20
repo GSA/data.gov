@@ -42,6 +42,7 @@ These tasks are performed by a team admin:
 - [ ] Remove team member from [Snyk](https://app.snyk.io/org/data.gov/manage/members)
 - [ ] Remove team member from [Data.gov Google Analytics](https://analytics.google.com/analytics/web/#/a42145528w85560911p88728213/admin/suiteusermanagement/account) account
 - [ ] Remove team member as a collaborator for our Slack App that manages webhook notifications <https://api.slack.com/apps/A03F7BJBMMF/>
+- [ ] Remove team member from [Google Search Console](https://search.google.com/search-console/users?resource_id=sc-domain%3Adata.gov)
 - [ ] Remove team member from PyPI packages:
   - [ckanext-usmetadata](https://pypi.org/project/ckanext-usmetadata/)
   - [ckanext-metrics-dashboard](https://pypi.org/project/ckanext-metrics-dashboard/)
