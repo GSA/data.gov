@@ -32,9 +32,9 @@ Below are the tasks that will drive the onboarding process.
   - DataGov
   - Data.gov Help
 - [ ] Make sure team member has 2FA enabled for their GitHub account and [request](https://github.com/GSA/GitHub-Administration/blob/master/README.md#requesting-access-to-the-gsa-organization) membership to GSA GitHub org
-- [ ] Add team member to a Data.gov GitHub team, and change their role to Maintainer if they are part of the PMO team:
-  - [ ] for non-development roles: [data-gov-team](https://github.com/orgs/GSA/teams/data-gov-team)
-  - [ ] for development roles: [data-gov-dev-team](https://github.com/orgs/GSA/teams/data-gov-dev-team)
+- [ ] Add team member to a Data.gov GitHub teams:
+  - [ ] For development roles, add team member to [data-gov-dev-team](https://github.com/orgs/GSA/teams/data-gov-dev-team), and change their role to Maintainer if they are part of the PMO team.
+  - [ ] For non-development roles that aren't PMO, add them to [data-gov-team](https://github.com/orgs/GSA/teams/data-gov-team)
 - [ ] Add team member to [New Relic](https://account.newrelic.com/accounts/1601367/users) with Full Platform access, along with the following user groups:
   - Solutions-Data.gov
   - Solutions-Data.gov_Admin
@@ -88,7 +88,8 @@ For new Project Management Office team members, follow these additional steps:
 ### Tasks for new team member
 
 - [ ] Log into [Login.gov dashboard](https://secure.login.gov/) or create account with GSA email address
-- [ ] Once an account is created, click "Add Your Government Employee ID" in the left hand nav, and add your PIV card to the account
+  - [ ] Once an account is created, click "Add Your Government Employee ID" in the left hand nav, and add your PIV card to the account
+  - [ ] Test logging into [Login.gov Sandbox](https://dashboard.int.identitysandbox.gov/)
 - [ ] Ensure your GitHub account meets the criteria for [GSA GitHub org](https://github.com/GSA/GitHub-Administration/blob/master/README.md) (setup 2FA)
 - [ ] Configure your Github profile to [sign commits]
   - Follow Github's instructions for generating a GPG key [here](https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key)
