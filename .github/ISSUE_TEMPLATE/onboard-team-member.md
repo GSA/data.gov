@@ -38,6 +38,7 @@ Below are the tasks that will drive the onboarding process.
 - [ ] Add team member to [New Relic](https://account.newrelic.com/accounts/1601367/users) with Full Platform access, along with the following user groups:
   - Solutions-Data.gov
   - Solutions-Data.gov_Admin
+- [ ] Add team member to [Docker Hub](https://cloud.docker.com/orgs/datagov/teams)
 - [ ] Add team member to [Snyk](https://app.snyk.io/org/data.gov/manage/members)
 - [ ] Add team member to [Data.gov Google Analytics](https://analytics.google.com/analytics/web/#/a42145528p381392243/admin/suiteusermanagement/account) account
   - Choose Viewer role for Contractors, or Administrator for PMO team members
