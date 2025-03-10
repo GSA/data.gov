@@ -42,4 +42,5 @@ You are responsible for all [O&M responsibilities](https://github.com/gsa/data.g
 -   Watch in [#datagov-alerts](https://gsa-tts.slack.com/archives/C4RGAM1Q8) and [Vulnerable dependency notifications (daily email reports)](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#vulnerable-dependency-notifications-daily-email-reports) for critical alerts.
 -   Monitor and improve [Data.gov O&M Dashboard](https://onenr.io/0LREMrzdrRa)
 -   Update and revise [Data.gov O&M Tasks](https://docs.google.com/document/d/1SVkY7SUhkcu6IAXIyuVo-s_E_Z400Is1JG9v5rbI7mI/edit?usp=sharing)
+-   Any non-routine blockers/failures should be written up in [O&M Events Notes](https://github.com/GSA/data.gov/wiki/Operation-and-Maintenance-Event-Notes)
 
