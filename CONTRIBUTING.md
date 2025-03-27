@@ -84,8 +84,8 @@ independence of these applications from the underlying Platform.
 We follow two-week sprints with the following rituals.
 
 - Daily standup (daily)
-- Sprint planning (first Monday of the sprint)
-- Sprint review and retrospective (last Thursday of the sprint)
+- Sprint planning (first Thursday of the sprint)
+- Sprint review and retrospective (last Wednesday of the sprint)
 
 
 ## How we track work
@@ -103,17 +103,17 @@ In addition to planned work, we also track reactive work unrelated to delivering
 
 For each of these types of work, a [corresponding template](https://github.com/gsa/data.gov/tree/master/.github/ISSUE_TEMPLATE) provides structure for capturing necessary information. Individual work items are captured in [issues in the `GSA/datagov-deploy` GitHub repository](https://github.com/gsa/data.gov/issues); [creating a new issue in that repository](https://github.com/gsa/data.gov/issues/new/choose) kicks off the process for capturing and prioritizing new work.
 
-The collective set of open issues is visualized as cards on a [Kanban
-Board](https://app.zenhub.com/workspaces/datagov-devsecops-579a2532d1d6ea9c3fcf5cfa/board)
+The collective set of open issues is visualized as cards on a [Github Projects
+Board](https://github.com/orgs/GSA/projects/11/views/1)
 and progress through these columns over the course of their existence.
 
-- New
+- No Status
 - Icebox
-- Product backlog
+- Queue
 - Sprint backlog
 - In progress
 - Blocked
-- Ready for deploy
+- Needs Review
 - Done
 - Closed
 
@@ -145,7 +145,7 @@ the "exit criteria" for the current column, which are listed below.
 ### Columns
 
 
-#### New
+#### No Status
 
 New issues that need to be triaged.
 
@@ -168,7 +168,7 @@ Work that has been de-prioritized.
 - Items are sorted into Product backlog for grooming.
 
 
-#### Product Backlog
+#### Queue
 
 Work sorted by value that we are planning on doing and will groom and schedule into a sprint.
 
