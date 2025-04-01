@@ -17,8 +17,6 @@ jobs:
         with:
           node-version-file: "package.json"
       - name: Fetch Dependencies
-        shell: bash
         run: npm ci
       - name: Check Broken Links
-        shell: bash
         run: npm run qa
