@@ -35,12 +35,13 @@ You are responsible for all [O&M responsibilities](https://github.com/gsa/data.g
 - [ ] [Invicti Scan](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#netsparker-compliance-scan-report-from-isso)
 
 ## ad-hoc checklist
-- [ ] audit/review applications on cloud foundry and determine what can be stopped and/or deleted. 
+- [ ] Audit applications on [Cloud.gov Dashboard](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/summary) and determine what can be stopped and/or deleted. 
 
 ## Reference
 -   Watch for user email requests
 -   Watch in [#datagov-alerts](https://gsa-tts.slack.com/archives/C4RGAM1Q8) and [Vulnerable dependency notifications (daily email reports)](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#vulnerable-dependency-notifications-daily-email-reports) for critical alerts.
 -   Monitor and improve [Data.gov O&M Dashboard](https://onenr.io/0LREMrzdrRa)
 -   Update and revise [Data.gov O&M Tasks](https://docs.google.com/document/d/1SVkY7SUhkcu6IAXIyuVo-s_E_Z400Is1JG9v5rbI7mI/edit?usp=sharing)
+-   Fix broken links in the [tracked issue reports](https://github.com/GSA/data.gov/issues/5162)
 -   Any non-routine blockers/failures should be written up in [O&M Events Notes](https://github.com/GSA/data.gov/wiki/Operation-and-Maintenance-Event-Notes)
 
