@@ -83,6 +83,7 @@ jobs:
           if [[ -f dev-requirements.txt ]]; then
             pip install -r dev-requirements.txt
           fi
+          pip install packaging==21.3
           pip install -e .
       - name: Setup extension (CKAN >= 2.9)
         run: |
