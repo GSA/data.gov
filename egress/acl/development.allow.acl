@@ -1,4 +1,4 @@
-                   *.gov
+egress/acl/development.allow.acl-milodernjun:patch-1                   *.gov
                    *.mil
     s3-us-gov-west-1.amazonaws.com
                *.hub.arcgis.com
