@@ -25,8 +25,8 @@ If you are looking for documentation for cloud.gov environments, see the
 application repositories:
 
 -   www.data.gov (Static site on Cloud.gov Pages). [[repo](https://github.com/GSA/datagov-11ty)]
--   catalog.data.gov (CKAN 2.10.4) [[repo](https://github.com/GSA/catalog.data.gov)]
--   inventory.data.gov (CKAN 2.10.4) [[repo](https://github.com/GSA/inventory-app)]
+-   catalog.data.gov (CKAN 2.11.2) [[repo](https://github.com/GSA/catalog.data.gov)]
+-   inventory.data.gov (CKAN 2.11.2) [[repo](https://github.com/GSA/inventory-app)]
 
 ## GitHub Actions and Templates
 
