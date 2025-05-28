@@ -25,7 +25,7 @@ jobs:
       - name: Install requirements
         run: pip install flake8 pycodestyle
       - name: Run flake8
-        run: flake8 . --count --show-source --statistics --exclude ckan
+        run: flake8 . --count --show-source --statistics --exclude ckan --ignore=W503
 
   test:
     strategy:
