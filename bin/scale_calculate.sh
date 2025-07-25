@@ -56,8 +56,15 @@ function set_scale_number {
   # call the scale direction
   set_scale_direction
 
-  # if the direction is up and the total instances is less than the max instances
+  # if the direction is up but it is already max instances
+  if [ "$scale_direction" == "up" ] && [ "$total_instances" -ge "$MAX_INSTANCES" ]; then
+    echo "Already at or above max instances ($MAX_INSTANCES). Cannot scale up further."
+    echo "$app_status"
+    exit 1
+  fi
+
   if [ "$scale_direction" == "up" ] && [ "$total_instances" -lt "$MAX_INSTANCES" ]; then
+    # if the direction is up and the total instances is less than the max instances
     export scale_to=$((total_instances + SCALE_STEP))
     echo "Scaling up to $scale_to"
   elif [ "$scale_direction" == "down" ] && [ "$total_instances" -gt "$MIN_INSTANCES" ]; then
