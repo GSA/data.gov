@@ -13,6 +13,9 @@ on: # yamllint disable-line rule:truthy
           - "catalog-admin"
           - "catalog-fetch"
           - "catalog-gather"
+          - "catalog-next-web"
+          - "catalog-next-admin"
+          - "datagov-harvest"
           - dashboard
           - "dashboard-stage"
           - inventory
