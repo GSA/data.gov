@@ -21,27 +21,28 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.8"
+          python-version: "3.10"
       - name: Install requirements
         run: pip install flake8 pycodestyle
       - name: Run flake8
-        run: flake8 . --count --show-source --statistics --exclude ckan
+        run: flake8 . --count --show-source --statistics --exclude ckan --ignore=W503
 
   test:
     strategy:
       matrix:
-        ckan-version: ["2.10", "2.10.1"]
+        ckan-version: ["2.11.0", "2.11"]
         include:
-          - ckan-version: "2.10"
-            services-version: "2.10"
-          - ckan-version: "2.10.1"
-            services-version: "2.10"
+          - ckan-version: "2.11.0"
+            services-version: "2.11"
+          - ckan-version: "2.11"
+            services-version: "2.11"
       fail-fast: false
 
     name: CKAN ${{ matrix.ckan-version }}
     runs-on: ubuntu-latest
     container:
-      image: openknowledge/ckan-dev:${{ matrix.ckan-version }}
+      image: ckan/ckan-dev:${{ matrix.ckan-version }}
+      options: --user root
     services:
       solr:
         image: datagov/catalog.data.gov.solr:latest
@@ -74,25 +75,24 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install requirements
         run: |
-          sudo apk add tzdata swig python3-dev
-          sudo apk add proj-util proj-dev geos-dev
+          apt-get update && apt-get install -y libgeos-dev swig
           cp /usr/share/zoneinfo/America/New_York /etc/localtime
-          if [[ -f requirements.txt ]]; then
+          if [ -f requirements.txt ]; then
             pip install -r requirements.txt
           fi
-          if [[ -f dev-requirements.txt ]]; then
+          if [ -f dev-requirements.txt ]; then
             pip install -r dev-requirements.txt
           fi
           pip install -e .
       - name: Setup extension (CKAN >= 2.9)
         run: |
           ckan -c test.ini db init
-          if [[ $(cat requirements.txt | grep 'ckanext-harvest') ]]; then
-            ckan -c test.ini harvester initdb
+          if [ $(cat requirements.txt | grep 'ckanext-harvest') ]; then
+            ckan -c test.ini db upgrade -p harvest
           fi
       - name: Run tests
         run: |
-          set -o pipefail
+          set -e
           pytest --ckan-ini=test.ini --cov=ckanext.${{ inputs.ext_name }} --cov-fail-under=${CODE_COVERAGE_THRESHOLD_REQUIRED} --disable-warnings ckanext/${{ inputs.ext_name }}/tests | tee pytest-coverage.txt
       - name: Report test coverage
         if: ${{ always() }}
