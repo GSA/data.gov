@@ -1,5 +1,6 @@
                        *.gov
                        *.mil
+                       *.internal                       
         s3-us-gov-west-1.amazonaws.com
                    *.hub.arcgis.com
               *.opendata.arcgis.com
