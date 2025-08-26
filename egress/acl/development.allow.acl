@@ -1,3 +1,4 @@
+                   *.internal
                    *.gov
                    *.mil
     s3-us-gov-west-1.amazonaws.com
