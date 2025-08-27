@@ -19,6 +19,7 @@ on: # yamllint disable-line rule:truthy
           - dashboard
           - "dashboard-stage"
           - inventory
+          - "fxia-test"
       appSpace:
         description: "Cloud Foundry Space"
         required: true
