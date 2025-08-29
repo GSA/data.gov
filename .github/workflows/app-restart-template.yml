@@ -34,7 +34,24 @@ jobs:
         with:
           repository: gsa/data.gov
           path: "./datagov"
-      - name: restart ${{ matrix.app }}
+      - name: "restart ${{ matrix.app }}"
+        id: restart1
+        uses: cloud-gov/cg-cli-tools@main
+        continue-on-error: true
+        with:
+          command: datagov/bin/check-and-renew ${{ matrix.app }} restart
+          cf_org: gsa-datagov
+          cf_space: ${{ inputs.environ }}
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
+      - name: "wait 5-30 seconds before retry"
+        if: ${{ steps.restart1.outcome == 'failure' }}
+        run: |
+          SLEEP=$(( (RANDOM % 26) + 5 ))
+          echo "Sleeping $SLEEP seconds before retry"
+          sleep "$SLEEP"
+      - name: "restart again: ${{ matrix.app }}"
+        if: ${{ steps.restart1.outcome == 'failure' }}
         uses: cloud-gov/cg-cli-tools@main
         with:
           command: datagov/bin/check-and-renew ${{ matrix.app }} restart
