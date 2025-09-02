@@ -1,0 +1,100 @@
+---
+name: Restart Attempt
+
+on: # yamllint disable-line rule:truthy
+  workflow_call:
+    inputs:
+      environ:
+        required: true
+        type: string
+      app_url:
+        required: false
+        type: string
+      app:
+        required: true
+        type: string
+      smoketest:
+        required: false
+        type: boolean
+        default: false
+      sleep_before:
+        required: false
+        type: boolean
+        default: false
+
+    secrets:
+      CF_SERVICE_USER:
+        required: true
+      CF_SERVICE_AUTH:
+        required: true
+
+jobs:
+  attempt:
+    name: attempt for ${{ inputs.app }} (${{ inputs.environ }})
+    runs-on: ubuntu-latest
+    env:
+      CF_ORG: gsa-datagov
+      CF_SPACE: ${{ inputs.environ }}
+      CF_USERNAME: ${{ secrets.CF_SERVICE_USER }}
+      CF_PASSWORD: ${{ secrets.CF_SERVICE_AUTH }}
+    steps:
+      - name: checkout datagov
+        uses: actions/checkout@v4
+        with:
+          repository: gsa/data.gov
+          path: "./datagov"
+
+      - name: try to download success marker
+        id: get_artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: restart-success-${{ inputs.app }}
+          path: success_artifact
+          merge-multiple: false
+        continue-on-error: true
+
+      - name: check if skip
+        id: gate
+        run: |
+          if [ -f success_artifact/success.txt ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: wait 5-30 seconds before attempt
+        if: ${{ inputs.sleep_before && steps.gate.outputs.skip == 'false' }}
+        run: |
+          SLEEP=$(( (RANDOM % 26) + 5 ))
+          echo "Sleeping $SLEEP seconds before attempt"
+          sleep "$SLEEP"
+
+      - name: restart ${{ inputs.app }}
+        if: ${{ steps.gate.outputs.skip == 'false' }}
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          command: datagov/bin/check-and-renew ${{ inputs.app }} restart
+          cf_org: ${{ env.CF_ORG }}
+          cf_space: ${{ env.CF_SPACE }}
+          cf_username: ${{ env.CF_USERNAME }}
+          cf_password: ${{ env.CF_PASSWORD }}
+
+      - name: smoke test
+        if: ${{ steps.gate.outputs.skip == 'false' && inputs.smoketest }}
+        run: |
+          sleep 10
+          curl --fail --silent ${{ inputs.app_url }}\
+          /api/action/status_show?$(date +%s)
+
+      - name: mark success
+        if: ${{ success() }}
+        run: echo "ok" > success.txt
+
+      - name: upload success marker
+        if: ${{ success() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: restart-success-${{ inputs.app }}
+          path: success.txt
+          retention-days: 1
+
