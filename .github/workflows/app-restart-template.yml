@@ -28,6 +28,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix: ${{ fromJSON(inputs.app_names) }}
+    env:
+      CF_ORG: gsa-datagov
+      CF_SPACE: ${{ inputs.environ }}
+      CF_USERNAME: ${{secrets.CF_SERVICE_USER}}
+      CF_PASSWORD: ${{secrets.CF_SERVICE_AUTH}}
     steps:
       - name: checkout datagov
         uses: actions/checkout@v4
@@ -40,10 +45,10 @@ jobs:
         continue-on-error: true
         with:
           command: datagov/bin/check-and-renew ${{ matrix.app }} restart
-          cf_org: gsa-datagov
-          cf_space: ${{ inputs.environ }}
-          cf_username: ${{secrets.CF_SERVICE_USER}}
-          cf_password: ${{secrets.CF_SERVICE_AUTH}}
+          cf_org: ${{ env.CF_ORG }}
+          cf_space: ${{ env.CF_SPACE }}
+          cf_username: ${{ env.CF_USERNAME }}
+          cf_password: ${{ env.CF_PASSWORD }}
       - name: "wait 5-30 seconds before retry"
         if: ${{ steps.restart1.outcome == 'failure' }}
         run: |
@@ -57,10 +62,10 @@ jobs:
         continue-on-error: true
         with:
           command: datagov/bin/check-and-renew ${{ matrix.app }} restart
-          cf_org: gsa-datagov
-          cf_space: ${{ inputs.environ }}
-          cf_username: ${{secrets.CF_SERVICE_USER}}
-          cf_password: ${{secrets.CF_SERVICE_AUTH}}
+          cf_org: ${{ env.CF_ORG }}
+          cf_space: ${{ env.CF_SPACE }}
+          cf_username: ${{ env.CF_USERNAME }}
+          cf_password: ${{ env.CF_PASSWORD }}
       - name: "wait 5-30 seconds before retry"
         if: ${{ steps.restart2.outcome == 'failure' }}
         run: |
@@ -74,10 +79,10 @@ jobs:
         continue-on-error: true
         with:
           command: datagov/bin/check-and-renew ${{ matrix.app }} restart
-          cf_org: gsa-datagov
-          cf_space: ${{ inputs.environ }}
-          cf_username: ${{secrets.CF_SERVICE_USER}}
-          cf_password: ${{secrets.CF_SERVICE_AUTH}}
+          cf_org: ${{ env.CF_ORG }}
+          cf_space: ${{ env.CF_SPACE }}
+          cf_username: ${{ env.CF_USERNAME }}
+          cf_password: ${{ env.CF_PASSWORD }}
       - name: "wait 5-30 seconds before retry"
         if: ${{ steps.restart3.outcome == 'failure' }}
         run: |
@@ -89,10 +94,10 @@ jobs:
         uses: cloud-gov/cg-cli-tools@main
         with:
           command: datagov/bin/check-and-renew ${{ matrix.app }} restart
-          cf_org: gsa-datagov
-          cf_space: ${{ inputs.environ }}
-          cf_username: ${{secrets.CF_SERVICE_USER}}
-          cf_password: ${{secrets.CF_SERVICE_AUTH}}
+          cf_org: ${{ env.CF_ORG }}
+          cf_space: ${{ env.CF_SPACE }}
+          cf_username: ${{ env.CF_USERNAME }}
+          cf_password: ${{ env.CF_PASSWORD }}
       - name: smoke test
         if: ${{ matrix.smoketest }}
         run: |
