@@ -22,6 +22,12 @@ on: # yamllint disable-line rule:truthy
         type: boolean
         default: false
 
+    secrets:
+      CF_SERVICE_USER:
+        required: true
+      CF_SERVICE_AUTH:
+        required: true
+
 jobs:
   attempt:
     name: attempt for ${{ inputs.app }} (${{ inputs.environ }})
