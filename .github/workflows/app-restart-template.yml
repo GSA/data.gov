@@ -14,12 +14,6 @@ on: # yamllint disable-line rule:truthy
         required: true
         type: string
 
-    secrets:
-      CF_SERVICE_USER:
-        required: true
-      CF_SERVICE_AUTH:
-        required: true
-
 jobs:
   restart:
     name: restart (${{ inputs.environ }})
