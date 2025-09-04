@@ -20,8 +20,20 @@ on: # yamllint disable-line rule:truthy
         required: true
 
 jobs:
+  precheck:
+    name: verify CF creds
+    runs-on: ubuntu-latest
+    steps:
+      - name: verify CF creds presence (no value output)
+        run: |
+          if [ -n "${{ secrets.CF_SERVICE_USER }}" ] && [ -n "${{ secrets.CF_SERVICE_AUTH }}" ]; then
+            echo "CF creds present"
+          else
+            echo "CF creds missing" && exit 1
+          fi
   attempt1:
     name: restart (${{ inputs.environ }}) attempt 1
+    needs: precheck
     strategy:
       fail-fast: false
       matrix: ${{ fromJSON(inputs.app_names) }}

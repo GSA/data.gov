@@ -65,12 +65,18 @@ jobs:
           echo "Sleeping $SLEEP seconds before attempt"
           sleep "$SLEEP"
 
+      - name: verify CF creds presence (no value output)
+        if: ${{ steps.gate.outputs.skip == 'false' }}
+        run: |
+          if [ -n "${{ secrets.CF_SERVICE_USER }}" ] && [ -n "${{ secrets.CF_SERVICE_AUTH }}" ]; then
+            echo "CF creds present"
+          else
+            echo "CF creds missing" && exit 1
+          fi
+
       - name: restart ${{ inputs.app }}
         if: ${{ steps.gate.outputs.skip == 'false' }}
         uses: cloud-gov/cg-cli-tools@main
-        env:
-          CF_USERNAME: ${{ secrets.CF_SERVICE_USER }}
-          CF_PASSWORD: ${{ secrets.CF_SERVICE_AUTH }}
         with:
           command: datagov/bin/check-and-renew ${{ inputs.app }} restart
           cf_org: ${{ env.CF_ORG }}
