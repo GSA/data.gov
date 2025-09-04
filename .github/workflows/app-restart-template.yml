@@ -21,57 +21,35 @@ on: # yamllint disable-line rule:truthy
         required: true
 
 jobs:
-  attempt1:
-    name: restart (${{ inputs.environ }}) attempt 1
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJSON(inputs.app_names) }}
-    uses: ./.github/workflows/restart-attempt.yml
-    secrets: inherit
-    with:
-      environ: ${{ inputs.environ }}
-      app_url: ${{ inputs.app_url }}
-      app: ${{ matrix.app }}
-      smoketest: ${{ matrix.smoketest }}
-      sleep_before: false
-
-  attempt2:
-    name: restart (${{ inputs.environ }}) attempt 2
-    needs: attempt1
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJSON(inputs.app_names) }}
-    uses: ./.github/workflows/restart-attempt.yml
-    secrets: inherit
-    with:
-      environ: ${{ inputs.environ }}
-      app_url: ${{ inputs.app_url }}
-      app: ${{ matrix.app }}
-      smoketest: ${{ matrix.smoketest }}
-      sleep_before: true
-
-  attempt3:
-    name: restart (${{ inputs.environ }}) attempt 3
-    needs: attempt2
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJSON(inputs.app_names) }}
-    uses: ./.github/workflows/restart-attempt.yml
-    secrets: inherit
-    with:
-      environ: ${{ inputs.environ }}
-      app_url: ${{ inputs.app_url }}
-      app: ${{ matrix.app }}
-      smoketest: ${{ matrix.smoketest }}
-      sleep_before: true
-
-  report_failures:
-    name: report failures
-    if: ${{ failure() && github.ref == 'refs/heads/main' }}
-    needs: [attempt1, attempt2, attempt3]
+  restart:
+    name: restart (${{ inputs.environ }})
+    environment: ${{ inputs.environ }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(inputs.app_names) }}
     steps:
+      - name: checkout datagov
+        uses: actions/checkout@v4
+        with:
+          repository: gsa/data.gov
+          path: "./datagov"
+      - name: restart ${{ matrix.app }}
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          command: datagov/bin/check-and-renew ${{ matrix.app }} restart
+          cf_org: gsa-datagov
+          cf_space: ${{ inputs.environ }}
+          cf_username: ${{secrets.CF_SERVICE_USER}}
+          cf_password: ${{secrets.CF_SERVICE_AUTH}}
+      - name: smoke test
+        if: ${{ matrix.smoketest }}
+        run: |
+          sleep 10
+          curl --fail --silent ${{ inputs.app_url }}\
+          /api/action/status_show?$(date +%s)
       - name: Create Issue if it fails 😢
+        if: ${{ failure() && github.ref == 'refs/heads/main' }}
         uses: JasonEtco/create-an-issue@v2
         env:
           GITHUB_TOKEN: ${{ secrets.ADD_TO_PROJECT_PAT }}
