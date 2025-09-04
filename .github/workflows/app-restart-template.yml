@@ -25,6 +25,4 @@ jobs:
       environ: ${{ inputs.environ }}
       app_url: ${{ inputs.app_url }}
       app: ${{ matrix.app }}
-      smoketest: ${{ matrix.smoketest }}
       sleep_before: false
-
