@@ -68,6 +68,9 @@ jobs:
       - name: restart ${{ inputs.app }}
         if: ${{ steps.gate.outputs.skip == 'false' }}
         uses: cloud-gov/cg-cli-tools@main
+        env:
+          CF_USERNAME: ${{ secrets.CF_SERVICE_USER }}
+          CF_PASSWORD: ${{ secrets.CF_SERVICE_AUTH }}
         with:
           command: datagov/bin/check-and-renew ${{ inputs.app }} restart
           cf_org: ${{ env.CF_ORG }}
