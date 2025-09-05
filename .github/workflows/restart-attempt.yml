@@ -66,15 +66,6 @@ jobs:
           echo "Sleeping $SLEEP seconds before attempt"
           sleep "$SLEEP"
 
-      - name: verify CF creds presence (no value output)
-        if: ${{ steps.gate.outputs.skip == 'false' }}
-        run: |
-          if [ -n "${{ secrets.CF_SERVICE_USER }}" ] && [ -n "${{ secrets.CF_SERVICE_AUTH }}" ]; then
-            echo "CF creds present"
-          else
-            echo "CF creds missing" && exit 1
-          fi
-
       - name: restart ${{ inputs.app }}
         if: ${{ steps.gate.outputs.skip == 'false' }}
         uses: cloud-gov/cg-cli-tools@main
@@ -100,7 +91,6 @@ jobs:
         if: ${{ success() }}
         uses: actions/upload-artifact@v4
         with:
-          name: restart-success-${{ inputs.app }}
+          name: restart-success-${{ inputs.environ }}-${{ inputs.app }}
           path: success.txt
           retention-days: 1
-
