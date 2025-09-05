@@ -84,11 +84,11 @@ jobs:
           /api/action/status_show?$(date +%s)
 
       - name: mark success
-        if: ${{ success() }}
+        if: ${{ success() && steps.gate.outputs.skip == 'false' }}
         run: echo "ok" > success.txt
 
       - name: upload success marker
-        if: ${{ success() }}
+        if: ${{ success() && steps.gate.outputs.skip == 'false' }}
         uses: actions/upload-artifact@v4
         with:
           name: restart-success-${{ inputs.environ }}-${{ inputs.app }}
