@@ -45,7 +45,7 @@ jobs:
         id: get_artifact
         uses: actions/download-artifact@v4
         with:
-          name: restart-success-${{ inputs.app }}
+          name: restart-success-${{ inputs.environ }}-${{ inputs.app }}
           path: success_artifact
           merge-multiple: false
         continue-on-error: true
