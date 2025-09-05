@@ -13,16 +13,12 @@ on: # yamllint disable-line rule:truthy
       app_names:
         required: true
         type: string
-    secrets:
-      CF_SERVICE_USER:
-        required: true
-      CF_SERVICE_AUTH:
-        required: true
 
 jobs:
   precheck:
     name: verify CF creds
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environ }}
     steps:
       - name: verify CF creds presence (no value output)
         run: |
@@ -31,6 +27,7 @@ jobs:
           else
             echo "CF creds missing" && exit 1
           fi
+          
   attempt1:
     name: restart (${{ inputs.environ }}) attempt 1
     needs: precheck

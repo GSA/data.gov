@@ -30,6 +30,7 @@ jobs:
   attempt:
     name: attempt for ${{ inputs.app }} (${{ inputs.environ }})
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environ }}
     env:
       CF_ORG: gsa-datagov
       CF_SPACE: ${{ inputs.environ }}
