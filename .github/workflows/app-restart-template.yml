@@ -21,9 +21,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJSON(inputs.app_names) }}
     uses: ./.github/workflows/restart-attempt.yml
-    secrets:
-      CF_SERVICE_USER: ${{ secrets.CF_SERVICE_USER }}
-      CF_SERVICE_AUTH: ${{ secrets.CF_SERVICE_AUTH }}
+    secrets: inherit
     with:
       environ: ${{ inputs.environ }}
       app_url: ${{ inputs.app_url }}
@@ -37,9 +35,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJSON(inputs.app_names) }}
     uses: ./.github/workflows/restart-attempt.yml
-    secrets:
-      CF_SERVICE_USER: ${{ secrets.CF_SERVICE_USER }}
-      CF_SERVICE_AUTH: ${{ secrets.CF_SERVICE_AUTH }}
+    secrets: inherit
     with:
       environ: ${{ inputs.environ }}
       app_url: ${{ inputs.app_url }}
