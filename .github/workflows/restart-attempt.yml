@@ -1,0 +1,93 @@
+---
+name: Restart Attempt
+
+on: # yamllint disable-line rule:truthy
+  workflow_call:
+    inputs:
+      environ:
+        required: true
+        type: string
+      app_url:
+        required: false
+        type: string
+      app:
+        required: true
+        type: string
+      smoketest:
+        required: false
+        type: boolean
+        default: false
+      is_retry:
+        required: false
+        type: boolean
+        default: false
+jobs:
+  attempt:
+    name: attempt for ${{ inputs.app }} (${{ inputs.environ }})
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environ }}
+    env:
+      CF_ORG: gsa-datagov
+      CF_SPACE: ${{ inputs.environ }}
+    steps:
+      - name: checkout datagov
+        uses: actions/checkout@v4
+        with:
+          repository: gsa/data.gov
+          path: "./datagov"
+
+      - name: try to download success marker
+        if: ${{ inputs.is_retry }}
+        id: get_artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: restart-success-${{ inputs.environ }}-${{ inputs.app }}
+          path: success_artifact
+          merge-multiple: false
+        continue-on-error: true
+
+      - name: check if skip
+        if: ${{ inputs.is_retry }}
+        id: gate
+        run: |
+          if [ -f success_artifact/success.txt ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: wait 5-30 seconds before attempt
+        if: ${{ inputs.is_retry && steps.gate.outputs.skip == 'false' }}
+        run: |
+          SLEEP=$(( (RANDOM % 26) + 5 ))
+          echo "Sleeping $SLEEP seconds before attempt"
+          sleep "$SLEEP"
+
+      - name: restart ${{ inputs.app }}
+        if: ${{ !inputs.is_retry || steps.gate.outputs.skip == 'false' }}
+        uses: cloud-gov/cg-cli-tools@main
+        with:
+          command: datagov/bin/check-and-renew ${{ inputs.app }} restart
+          cf_org: ${{ env.CF_ORG }}
+          cf_space: ${{ env.CF_SPACE }}
+          cf_username: ${{ secrets.CF_SERVICE_USER }}
+          cf_password: ${{ secrets.CF_SERVICE_AUTH }}
+
+      - name: smoke test
+        if: ${{ inputs.smoketest && (!inputs.is_retry || steps.gate.outputs.skip == 'false') }}
+        run: |
+          sleep 10
+          curl --fail --silent ${{ inputs.app_url }}\
+          /api/action/status_show?$(date +%s)
+
+      - name: mark success
+        if: ${{ success() && (!inputs.is_retry || steps.gate.outputs.skip == 'false') }}
+        run: echo "ok" > success.txt
+
+      - name: upload success marker
+        if: ${{ success() && (!inputs.is_retry || steps.gate.outputs.skip == 'false') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: restart-success-${{ inputs.environ }}-${{ inputs.app }}
+          path: success.txt
+          retention-days: 1
