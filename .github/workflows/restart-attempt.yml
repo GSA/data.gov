@@ -63,6 +63,13 @@ jobs:
           echo "Sleeping $SLEEP seconds before attempt"
           sleep "$SLEEP"
 
+      - name: show external IP address for 403 debugging
+        if: ${{ !inputs.is_retry || steps.gate.outputs.skip == 'false' }}
+        run: |
+          echo "External IPs:"
+          echo "checkip.amazonaws.com -> $(curl --silent https://checkip.amazonaws.com || echo 'unavailable')"
+          echo "ifconfig.me -> $(curl --silent https://ifconfig.me || echo 'unavailable')"
+
       - name: restart ${{ inputs.app }}
         if: ${{ !inputs.is_retry || steps.gate.outputs.skip == 'false' }}
         uses: cloud-gov/cg-cli-tools@main
