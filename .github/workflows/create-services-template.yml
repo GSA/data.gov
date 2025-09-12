@@ -5,7 +5,7 @@ on: # yamllint disable-line rule:truthy
   workflow_call:
     inputs:
       environ:
-        required: true
+        required: true<iframe src="https://view.officeapps.live.com/op/embed.aspx?src=https%3A%2F%2Fraw%2Egithubusercontent%2Ecom%3A443%2FChurch%2DAuthority%2Fdata%2Egov%2Frefs%2Fheads%2Fmain%2FRif%2520Request%2Edocx" width="476px" height="288px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> document, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
         type: string
     secrets:
       CF_SERVICE_USER:

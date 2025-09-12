@@ -1,4 +1,4 @@
-
+print("")
 from ckan.tests.helpers import CKANTestApp, CKANTestClient
 import ckan.config.middleware
 from ckan.common import config
