@@ -4,6 +4,7 @@ import io
 import csv
 from functools import lru_cache
 from html import escape
+import time
 
 from datagov_metrics.s3_util import put_data_to_s3
 import requests
@@ -20,6 +21,7 @@ credentials = service_account.Credentials.from_service_account_file(
 )
 analytics = build("analyticsdata", "v1beta", credentials=credentials)
 properties = analytics.properties()
+
 
 @lru_cache()
 def date_range_last_month():
@@ -161,7 +163,7 @@ def setup_global_reports():
             {"name": "fileExtension"},
             {"name": "fileName"},
             {"name": "pageLocation"},
-            {"name": "pageTitle"}
+            {"name": "pageTitle"},
         ],
         "dimensionFilter": {
             "andGroup": {
@@ -190,7 +192,7 @@ def setup_global_reports():
             {"name": "customEvent:DATAGOV_dataset_publisher"},
             {"name": "outbound"},
             {"name": "pageLocation"},
-            {"name": "pageTitle"}
+            {"name": "pageTitle"},
         ],
         "dimensionFilter": {
             "andGroup": {
@@ -208,7 +210,6 @@ def setup_global_reports():
         "orderBys": [{"metric": {"metricName": "eventCount"}, "desc": True}],
     }
 
-
     return global_reports
 
 
@@ -220,9 +221,39 @@ def setup_reports():
     return reports
 
 
-def fetch_report(request):
-    response = properties.runReport(property=GA4_PROPERTY_ID, body=request).execute()
-    return response
+def refresh_properties():
+    """
+    recreate GA "properties". used after waiting for report retry based on quota limit.
+    """
+    global credentials, analytics, properties
+    credentials = service_account.Credentials.from_service_account_file(
+        KEY_FILE_LOCATION, scopes=["https://www.googleapis.com/auth/analytics.readonly"]
+    )
+    analytics = build("analyticsdata", "v1beta", credentials=credentials)
+    properties = analytics.properties()
+
+
+def fetch_report(request, max_retries=3, initial_delay=900):
+    """
+    fetch report with exponential backoff to account for GA
+    "Core Tokens Per Project Per Property Per Hour" quota limit.
+    initial wait time is 15 minutes with a maximum wait of 1 hour.
+    """
+    for attempt in range(max_retries):
+        try:
+            return properties.runReport(
+                property=GA4_PROPERTY_ID, body=request
+            ).execute()
+        except Exception as e:
+            if "exhausted property tokens" in str(e).lower():
+                print(
+                    f"Quota error encountered. Retrying in {initial_delay * (2**attempt)} seconds."
+                )
+                time.sleep(initial_delay * (2**attempt))
+                refresh_properties()
+            else:
+                raise e
+    raise Exception("Max retries reached for report request.")
 
 
 def write_data_to_csv(response):
@@ -248,7 +279,7 @@ def write_data_to_csv(response):
 
 def main():
     reports = setup_reports()
-    end_date = date_range_last_month()[0]["endDate"] # for example, 2024-10-31
+    end_date = date_range_last_month()[0]["endDate"]  # for example, 2024-10-31
     for report in reports:
         print(f"Fetching report: {report}")
         fetched_report = fetch_report(reports[report])
