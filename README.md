@@ -1,4 +1,4 @@
-# data.gov main repository
+# Data.gov Main Repository
 
 ### Data.gov Actions
 
