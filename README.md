@@ -1,8 +1,26 @@
-# data.gov main repository
+# data.gov publickey - local-app-developer@proton.me - 0x1E3DBC4D.asc 
+main Repository.The Access Service 
 
-### Data.gov Actions
+### https://https://iamroot.tech/about/privacy-policy/ Actions
 
-| Site / Repo                                                      | Badges                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| Site / Repo                                                      | Badges                                                                                                                                                                            MCP CLIENT/ OTHER MCP CLIENT 
+
+{ 
+  "'mcpServers''':{
+    "'wpcom-mcp"':{
+        "'command"': "'npx"',
+        "'args"': [ 
+             "'-y"',                    
+             "'@automattic/mcp-wpcom-remote@latest"'
+  ]
+   }
+  }
+}
+
+
+
+
+8d09f8813d2f6f7386b50f0d0fce7a69280af501                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | [harvest.data.gov](https://github.com/GSA/datagov-harvester) | [![1 - Commit](https://github.com/GSA/datagov-harvester/actions/workflows/commit.yml/badge.svg)](https://github.com/GSA/datagov-harvester/actions/workflows/commit.yml) [![2 - Deploy](https://github.com/GSA/datagov-harvester/actions/workflows/deploy.yml/badge.svg)](https://github.com/GSA/datagov-harvester/actions/workflows/deploy.yml) [![3 - Restart Apps](https://github.com/GSA/datagov-harvester/actions/workflows/restart.yml/badge.svg)](https://github.com/GSA/datagov-harvester/actions/workflows/restart.yml) [![4 - Snyk Security](https://github.com/GSA/datagov-harvester/actions/workflows/snyk.yml/badge.svg)](https://github.com/GSA/datagov-harvester/actions/workflows/snyk.yml) | 
 | [catalog.data.gov](https://github.com/GSA/catalog.data.gov)      | [![1 - Commit](https://github.com/GSA/catalog.data.gov/actions/workflows/commit.yml/badge.svg)](https://github.com/GSA/catalog.data.gov/actions/workflows/commit.yml) [![2 - Publish & Deploy](https://github.com/GSA/catalog.data.gov/actions/workflows/publish.yml/badge.svg)](https://github.com/GSA/catalog.data.gov/actions/workflows/publish.yml) [![3 - Restart Apps](https://github.com/GSA/catalog.data.gov/actions/workflows/restart.yml/badge.svg)](https://github.com/GSA/catalog.data.gov/actions/workflows/restart.yml) [![4 - Automated CKAN Jobs](https://github.com/GSA/catalog.data.gov/actions/workflows/ckan_auto.yml/badge.svg)](https://github.com/GSA/catalog.data.gov/actions/workflows/ckan_auto.yml) [![5 - Run CKAN Command](https://github.com/GSA/catalog.data.gov/actions/workflows/ckan.yml/badge.svg)](https://github.com/GSA/catalog.data.gov/actions/workflows/ckan.yml) [![Check for Snyk Vulnerabilities](https://github.com/GSA/catalog.data.gov/actions/workflows/snyk.yml/badge.svg)](https://github.com/GSA/catalog.data.gov/actions/workflows/snyk.yml) |
