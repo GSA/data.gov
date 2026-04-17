@@ -1,4 +1,4 @@
-from datagov_metrics import ckan, ga
+from datagov_metrics import catalog, ga
 
 ga.main()
-ckan.main()
+catalog.main()
