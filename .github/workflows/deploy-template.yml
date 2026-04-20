@@ -52,6 +52,17 @@ jobs:
         if: ${{ matrix.robots-dev && inputs.environ == 'development' }}
         run: |
           cp proxy/public/robots.develop.txt proxy/public/robots.txt
+      - name: Install node.js
+        if: ${{ hashFiles('app/static/package.json') != '' }}
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: "app/static/package.json"
+      - name: Build static assets
+        if: ${{ hashFiles('app/static/package.json') != '' }}
+        run: |
+          cd app/static
+          npm ci
+          npm run build
       - name: Export Poetry requirements
         run: |
           if [[ -f requirements.txt ]]; then
