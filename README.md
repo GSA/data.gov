@@ -1,4 +1,5 @@
 # data.gov main repository
+[![DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/GSA/data.gov)
 
 ### Data.gov Actions
 
