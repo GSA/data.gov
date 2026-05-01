@@ -1,9 +1,10 @@
 ---
-name: Spike 
+name: Spike
 about: Research, design, investigate, prototype
 title: ''
 labels: ''
 assignees: ''
+
 ---
 
 ## Purpose
