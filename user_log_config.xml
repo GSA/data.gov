@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<!-- <timestamp key="timestamp" datePattern="yyyyMMdd'-'HHmmss.SSS"/> -->
+	<!-- this is a file appender that the root logger will post events to. Setting 
+		the level on the root logger will moderate verbosity. Individual facilities 
+		can be turned off as shown below. -->
+
+	<appender name="DEBUG"
+		class="gov.gsa.pivconformance.conformancelib.utilities.TimeStampedFileAppender">
+		<file>logs/debug/debug.log</file>
+		<encoder>
+			<pattern>%date %level [%thread] [%file:%L] %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="BIOMETRICINFORMATIONTEMPLATESGROUPTEMPLATE"
+		class="gov.gsa.pivconformance.conformancelib.utilities.TimeStampedFileAppender">
+		<file>logs/containers/BiometricInformationTemplatesGroupTemplate.log
+		</file>
+		<encoder>
+			<pattern>%date %level [%thread] [%file:%L] %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+
+	<appender name="CARDCAPABILITYCONTAINER"
+		class="gov.gsa.pivconformance.conformancelib.utilities.TimeStampedFileAppender">
+		<file>logs/containers/CardCapabilityContainer.log</file>
+		<encoder>
+			<pattern>%date %level [%thread] [%file:%L] %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+
+	<appender name="CARDHOLDERUNIQUEIDENTIFIER"
+		class="gov.gsa.pivconformance.conformancelib.utilities.TimeStampedFileAppender">
+		<file>logs/containers/CardHolderUniqueIdentifier.log</file>
+		<encoder>
+			<pattern>%date %level [%thread] [%file:%L] %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+		
+	<appender name="CARDHOLDERFINGERPRINTS"
+		class="gov.gsa.pivconformance.conformancelib.utilities.TimeStampedFileAppender">
+		<file>logs/containers/CardholderFingerprints.log</file>
+		<encoder>
+			<pattern>%date %level [%thread] [%file:%L] %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+
+	<appender name="CARDHOLDERFACIALIMAGE"
+		class="gov.gsa.pivconformance.conformancelib.utilities.TimeStampedFileAppender">
+		<file>logs/containers/CardholderFacialImage.log</file>
+		<encoder>
+			<pattern>%date %level [%thread] [%file:%L] %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+
+	<appender name="CARDHOLDERIRISIMAGES"
+		class="gov.gsa.pivconformance.conformancelib.utilities.TimeStampedFileAppender">
+		<file>logs/containers/CardholderIrisImages.log</file>
+		<encoder>
+			<pattern>%date %level [%thread] [%file:%L] %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="DISCOVERYOBJECT"
+		class="gov.gsa.pivconformance.conformancelib.utilities.TimeStampedFileAppender">
+		<file>logs/containers/DiscoveryObject.log</file>
+		<encoder>
+			<pattern>%date %level [%thread] [%file:%L] %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="KEYHISTORYOBJECT"
+		class="gov.gsa.pivconformance.conformancelib.utilities.TimeStampedFileAppender">
+		<file>logs/containers/KeyHistoryObject.log</file>
+		<encoder>
+			<pattern>%date %level [%thread] [%file:%L] %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+
+	<appender name="PAIRINGCODEREFERENCEDATACONTAINER"
+		class="gov.gsa.pivconformance.conformancelib.utilities.TimeStampedFileAppender">
+		<file>logs/containers/PairingCodeReferenceDataContainer.log</file>
+		<encoder>
+			<pattern>%date %level [%thread] [%file:%L] %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+
+	<appender name="PRINTEDINFORMATION"
+		class="gov.gsa.pivconformance.conformancelib.utilities.TimeStampedFileAppender">
+		<file>logs/containers/PrintedInformation.log</file>
+		<encoder>
+			<pattern>%date %level [%thread] [%file:%L] %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="SECUREMESSAGINGCERTIFICATESIGNER"
+		class="gov.gsa.pivconformance.conformancelib.utilities.TimeStampedFileAppender">
+		<file>logs/containers/SecureMessagingCertificateSigner.log</file>
+		<encoder>
+			<pattern>%date %level [%thread] [%file:%L] %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+
+	<appender name="SECURITYOBJECT"
+		class="gov.gsa.pivconformance.conformancelib.utilities.TimeStampedFileAppender">
+		<file>logs/containers/SecurityObject.log</file>
+		<encoder>
+			<pattern>%date %level [%thread] [%file:%L] %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="X509CERTIFICATEFORPIVAUTHENTICATION"
+		class="gov.gsa.pivconformance.conformancelib.utilities.TimeStampedFileAppender">
+		<file>logs/containers/X509CertificateForPIVAuthentication.log</file>
+		<encoder>
+			<pattern>%date %level [%thread] [%file:%L] %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="X509CERTIFICATEFORCARDAUTHENTICATION"
+		class="gov.gsa.pivconformance.conformancelib.utilities.TimeStampedFileAppender">
+		<file>logs/containers/X509CertificateForCardAuthentication.log</file>
+		<encoder>
+			<pattern>%date %level [%thread] [%file:%L] %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="X509CERTIFICATEFORDIGITALSIGNATURE"
+		class="gov.gsa.pivconformance.conformancelib.utilities.TimeStampedFileAppender">
+		<file>logs/containers/X509CertificateForDigitalSignature.log</file>
+		<encoder>
+			<pattern>%date %level [%thread] [%file:%L] %msg%n</pattern>
+		</encoder>
+	</appender>	
+
+	<appender name="X509CERTIFICATEFORKEYMANAGEMENT"
+		class="gov.gsa.pivconformance.conformancelib.utilities.TimeStampedFileAppender">
+		<file>logs/containers/X509CertificateForKeyManagement.log</file>
+		<encoder>
+			<pattern>%date %level [%thread] [%file:%L] %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- this log is used by conformance tests/atoms in progress. it can be 
+		omitted if there's no need to crack this stream out into a separate file. -->
+
+	<appender name="TESTLOG"
+		class="gov.gsa.pivconformance.conformancelib.utilities.TimeStampedFileAppender">
+		<file>logs/testlog/test_progress.log</file>
+		<encoder>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss},%level,"%msg"%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- This is the appender that produces the conformance results CSV. In 
+		order to get test reports, it **MUST** be called CONFORMANCELOG -->
+
+	<appender name="CONFORMANCELOG"
+		class="gov.gsa.pivconformance.conformancelib.utilities.TimeStampedFileAppender">
+		<file>logs/conformancelog/conformance_results.csv</file>
+
+		<!-- the application will search out this appender by name and manually 
+			rotate it at the beginning of each conformance run. this triggering policy 
+			is necessary to allow logback to append to a log without knowing how to rotate 
+			it. -->
+
+		<triggeringPolicy
+			class="gov.gsa.conformancelib.configuration.ManualTriggeringPolicy" />
+		<encoder>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss},%msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- This is the appender that produces the APDU traces. In order to get 
+		traces, it **MUST** be called APDULOG -->
+
+	<appender name="APDULOG"
+		class="gov.gsa.pivconformance.conformancelib.utilities.TimeStampedFileAppender">
+		<file>logs/apdu/apdu_transmission.log</file>
+
+		<!-- the application will search out this appender by name and manually 
+			rotate it at the beginning of each conformance run. this triggering policy 
+			is necessary to allow logback to append to a log without knowing how to rotate 
+			it. -->
+
+		<triggeringPolicy
+			class="gov.gsa.conformancelib.configuration.ManualTriggeringPolicy" />
+		<encoder>
+			<pattern>%date %level [%thread] [%file:%L] %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- this is fully optional and probably only desirable during development -->
+	<appender name="STDOUT"
+		class="gov.gsa.pivconformance.conformancelib.utilities.TimeStampedFileAppender"
+		type="Console">
+		<encoder>
+			<pattern>%date %level [%thread] [%file:%L] %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<root level="DEBUG">
+		<appender-ref ref="STDOUT" />
+		<encoder>
+			<pattern>%date %level [%thread] [%file:%L] %msg%n
+			</pattern>
+		</encoder>
+	</root>
+
+	<logger level="DEBUG" name="gov.gsa">
+		<appender-ref ref="DEBUG" />
+		<encoder>
+			<pattern>%date %level [%thread] [%file:%L] %msg%n
+			</pattern>
+		</encoder>
+	</logger>
+
+	<!-- These are especially noisy log facilities and therefore a good example 
+		of how to quash log output that isn't wanted while allowing other messages 
+		to go through the logging apparatus -->
+
+	<logger level="OFF"
+		name="gov.gsa.pivconformance.cardlib.card.client.X509CertificateDataObject.TLVParser" />
+	<logger level="OFF"
+		name="gov.gsa.conformancelib.configuration.TestStepModel" />
+
+	<!-- split test progress to its own appender -->
+	<logger level="INFO" name="gov.gsa.pivconformance.conformancelib.testProgress">
+		<appender-ref ref="TESTLOG" />
+	</logger>
+
+	<!-- split test results into a CSV -->
+	<logger level="INFO" name="gov.gsa.pivconformance.conformancelib.testResult">
+		<appender-ref ref="CONFORMANCELOG" />
+	</logger>
+
+	<!-- APDUs into a separate log -->
+	<logger level="DEBUG" name="gov.gsa.pivconformance.cardlib">
+		<appender-ref ref="APDULOG" />
+	</logger>
+
+	<logger level="DEBUG"
+		name="BiometricInformationTemplatesGroupTemplate">
+		<appender-ref
+			ref="BIOMETRICINFORMATIONTEMPLATESGROUPTEMPLATE" />
+	</logger>
+
+	<logger level="DEBUG"
+		name="CardCapabilityContainer">
+		<appender-ref ref="CARDCAPABILITYCONTAINER" />
+	</logger>
+	
+	<logger level="DEBUG"
+		name="CardHolderUniqueIdentifier">
+		<appender-ref ref="CARDHOLDERUNIQUEIDENTIFIER" />
+	</logger>	
+	
+	<logger level="DEBUG"
+		name="CardholderFingerprints">
+		<appender-ref ref="CARDHOLDERFINGERPRINTS" />
+	</logger>
+
+	<logger level="DEBUG"
+		name="CardholderFacialImage">
+		<appender-ref ref="CARDHOLDERFACIALIMAGE" />
+	</logger>
+
+	<logger level="DEBUG"
+		name="CardholderIrisImages">
+		<appender-ref ref="CARDHOLDERIRISIMAGES" />
+	</logger>
+
+	<logger level="DEBUG"
+		name="DiscoveryObject">
+		<appender-ref ref="DISCOVERYOBJECT" />
+	</logger>
+
+	<logger level="DEBUG"
+		name="KeyHistoryObject">
+		<appender-ref ref="KEYHISTORYOBJECT" />
+	</logger>
+
+	<logger level="DEBUG"
+		name="PairingCodeReferenceDataContainer">
+		<appender-ref ref="PAIRINGCODEREFERENCEDATACONTAINER" />
+	</logger>
+	
+	<logger level="DEBUG"
+		name="PrintedInformation">
+		<appender-ref ref="PRINTEDINFORMATION" />
+	</logger>
+
+	<logger level="DEBUG"
+		name="SecureMessagingCertificateSigner">
+		<appender-ref ref="SECUREMESSAGINGCERTIFICATESIGNER" />
+	</logger>
+
+	<logger level="DEBUG"
+		name="SecurityObject">
+		<appender-ref ref="SECURITYOBJECT" />
+	</logger>
+
+	<logger level="DEBUG"
+		name="X509CertificateForPIVAuthentication">
+		<appender-ref ref="X509CERTIFICATEFORPIVAUTHENTICATION" />
+	</logger>
+
+	<logger level="DEBUG"
+		name="X509CertificateForCardAuthentication">
+		<appender-ref ref="X509CERTIFICATEFORCARDAUTHENTICATION" />
+	</logger>
+
+	<logger level="DEBUG"
+		name="X509CertificateForDigitalSignature">
+		<appender-ref ref="X509CERTIFICATEFORDIGITALSIGNATURE" />
+	</logger>
+
+	<logger level="DEBUG"
+		name="X509CertificateForKeyManagement">
+		<appender-ref ref="X509CERTIFICATEFORKEYMANAGEMENT" />
+	</logger>
+
+</configuration>
