@@ -16,11 +16,11 @@ The following is a proposed replacement for SYSTEMS.md. Rows marked ⚠️ VERIF
 | catalog.data.gov (legacy) | https://github.com/GSA/catalog.data.gov | Legacy CKAN catalog at catalog-old.data.gov -- maintained through fall 2026 |
 | harvest.data.gov | https://github.com/GSA/datagov-harvester | Standalone harvest pipeline |
 | inventory.data.gov | https://github.com/GSA/inventory-app | CKAN-based -- maintained until reprogrammed off CKAN (target fall 2026) |
-| www.data.gov | https://github.com/GSA/datagov-website | ⚠️ VERIFY: confirm this is still the correct repo for www.data.gov |
+| www.data.gov | https://github.com/GSA/datagov-11ty | 
 | resources.data.gov | https://github.com/GSA/resources.data.gov | Static site on cloud.gov Pages |
 | strategy.data.gov | https://github.com/GSA/data-strategy | Static site on cloud.gov Pages |
 | Egress Proxy | https://github.com/GSA/cg-egress-proxy | |
-| CKAN User Management | https://github.com/GSA/datagov-account-management | |
+| CKAN User Management | https://github.com/GSA/datagov-account-management | Repo used to help manage account add/update/delete requests for Inventory/Catalog |
 | Logstack | https://github.com/GSA/datagov-logstack | ⚠️ VERIFY: confirm still in active use |
 | SSB | https://github.com/GSA/datagov-ssb | ⚠️ VERIFY: confirm still in use post-catalog migration |
 | Solr | https://github.com/GSA-TTS/datagov-brokerpak-solr | ⚠️ VERIFY: Solr now on separate AWS instance for inventory -- confirm if brokerpak still applies |
@@ -32,15 +32,15 @@ The following is a proposed replacement for SYSTEMS.md. Rows marked ⚠️ VERIF
 
 | Application/Service | Repository |
 |-------------------------------------------|------------|
-| ckanext-datagovcatalog | https://github.com/GSA/ckanext-datagovcatalog |
-| ckanext-datagovtheme | https://github.com/GSA/ckanext-datagovtheme |
-| ckanext-datajson | https://github.com/GSA/ckanext-datajson |
-| ckanext-geodatagov | https://github.com/GSA/ckanext-geodatagov |
-| ckanext-googleanalyticsbasic | https://github.com/GSA/ckanext-googleanalyticsbasic |
-| ckanext-qa | https://github.com/GSA/ckanext-qa |
-| ckanext-dcat_usmetadata | https://github.com/GSA/ckanext-dcat_usmetadata |
-| ckanext-usmetadata | https://github.com/GSA/ckanext-usmetadata |
-| SSB Compliance Diagrams | https://github.com/GSA/datagov-compliance |
+| ckanext-datagovcatalog | https://github.com/GSA/ckanext-datagovcatalog | OLD |
+| ckanext-datagovtheme | https://github.com/GSA/ckanext-datagovtheme | OLD |
+| ckanext-datajson | https://github.com/GSA/ckanext-datajson | KEEP |
+| ckanext-geodatagov | https://github.com/GSA/ckanext-geodatagov | OLD |
+| ckanext-googleanalyticsbasic | https://github.com/GSA/ckanext-googleanalyticsbasic | OLD |
+| ckanext-qa | https://github.com/GSA/ckanext-qa | OLD |
+| ckanext-dcat_usmetadata | https://github.com/GSA/ckanext-dcat_usmetadata | Unk. |
+| ckanext-usmetadata | https://github.com/GSA/ckanext-usmetadata | Unk. |
+| SSB Compliance Diagrams | https://github.com/GSA/datagov-compliance | KEEP |
 
 ### Upstream Codebases (critical to inventory.data.gov)
 
