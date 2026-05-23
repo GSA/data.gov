@@ -1,4 +1,306 @@
----
+---3081f5300d06092a864886f70d010101050003818d0030818902818100c3a7d5e9f1b4c8d2
+e0f3a9b7c5d1e6f0a4b8c2d6e1f5a3b7c9d2e4f6a1b3c5d7e9f0a2c4e6b8d0f2a5c7e9b1d3
+f5a7c9e1b3d5f7a9c1e3f5b7d9f1a3c5e7b9d1f3a5c7e9b1d3f5a7c9e1b3d5f7a9c1e3f5b7
+d9f1a30203010001
+import time
+import random
+import uuid
+import logging
+import requests
+from datetime import datetime, timezone
+
+# Configuration
+API_URL = "https://staging.example.com/storage"
+API_KEY = "REPLACE_WITH_KEY"
+MAX_RETRIES = 5
+BACKOFF_BASE = 2
+JITTER = 0.25
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
+
+def generate_identifier(batch_date=None, seq=None):
+    date = batch_date or datetime.now(timezone.utc).strftime("%Y%m%d")
+    unique = uuid.uuid4().hex[:8].upper()
+    seq_part = f"{seq:04d}" if seq is not None else "0001"
+    return f"LOT-{date}-{unique}-{seq_part}"
+
+def print_label(item_id, product_code, batch_number, date):
+    return f"Label: {item_id}, {product_code}, {batch_number}, {date}"
+
+def scan_label(label):
+    # Replace with real scanner integration; return True/False
+    return random.random() > 0.1
+
+def build_payload(item_id, product_code, batch_number, timestamp, location, status, run_id, operator_id, label_image_url=None):
+    return {
+        "identifier": item_id,
+        "product_code": product_code,
+        "batch_number": batch_number,
+        "timestamp": timestamp,
+        "location": location,
+        "status": status,
+        "source_run_id": run_id,
+        "operator_id": operator_id,
+        "label_image_url": label_image_url
+    }
+
+def post_to_storage_api(payload, idempotency_key):
+    headers = {"Authorization": f"Bearer {API_KEY}", "Idempotency-Key": idempotency_key}
+    try:
+        resp = requests.post(API_URL, json=payload, headers=headers, timeout=10)
+        return {"success": resp.ok, "status_code": resp.status_code, "body": resp.json() if resp.content else None}
+    except requests.RequestException as e:
+        return {"success": False, "error": str(e)}
+
+def retry_post(payload, idempotency_key):
+    for attempt in range(1, MAX_RETRIES + 1):
+        result = post_to_storage_api(payload, idempotency_key)
+        if result.get("success"):
+            return result
+        sleep_time = (BACKOFF_BASE ** (attempt - 1)) * (1 + random.uniform(-JITTER, JITTER))
+        logging.warning("Post failed (attempt %d): %s; sleeping %.2fs", attempt, result.get("error") or result.get("status_code"), sleep_time)
+        time.sleep(sleep_time)
+    return {"success": False, "error": "Max retries exceeded"}
+
+def mark_item_as_stored(item_id, storage_record_id):
+    logging.info("Item %s marked as stored (storage_id=%s).", item_id, storage_record_id)
+
+def log_failure(item_id, error):
+    logging.error("Item %s failed: %s", item_id, error)
+
+def run_pilot(num_items=10, product_code="SKU-12345", batch_number=None, location="WH-A-01", operator_id="operator-1"):
+    run_id = uuid.uuid4().hex
+    batch_number = batch_number or f"BATCH-{datetime.now(timezone.utc).strftime('%Y%m%d')}-A"
+    for i in range(1, num_items + 1):
+        item_id = generate_identifier(seq=i)
+        date = datetime.now(timezone.utc).date().isoformat()
+        label = print_label(item_id, product_code, batch_number, date)
+        if not scan_label(label):
+            log_failure(item_id, "Label scanning failed")
+            # Save scan artifact here
+            continue
+        timestamp = datetime.now(timezone.utc).isoformat()
+        payload = build_payload(item_id, product_code, batch_number, timestamp, location, "Released", run_id, operator_id)
+        result = retry_post(payload, idempotency_key=item_id)
+        if result.get("success"):
+            storage_id = result.get("body", {}).get("storage_record_id", "unknown")
+            mark_item_as_stored(item_id, storage_id)
+            # Save success artifact here
+        else:
+            log_failure(item_id, result.get("error") or result.get("status_code"))
+            # Save failure artifact here
+
+if __name__ == "__main__":
+    run_pilot()import time
+import uuid
+import random
+import logging
+import requests
+from datetime import datetime, timezone
+
+# Configuration
+API_URL = "https://storage.example.com/api/v1/items"
+API_TOKEN = "REPLACE_WITH_SECURE_TOKEN"
+PRODUCT_CODE = "SKU-12345"
+BATCH_NUMBER = "BATCH-20260508-A"
+LOCATION = "WH-A-01"
+MAX_RETRIES = 5
+BASE_BACKOFF = 1.0  # seconds
+DRY_RUN = False
+
+# Logger setup
+logger = logging.getLogger("pilot_run")
+handler = logging.StreamHandler()
+formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.setLevel(logging.INFO)
+
+def generate_identifier():
+    # Use UUID4 for uniqueness; keep human-friendly prefix
+    return f"LOT-{uuid.uuid4().hex[:8].upper()}-0001"
+
+def print_label(item_id, product_code, batch_number, date_str):
+    label = f"Label: {item_id}, {product_code}, {batch_number}, {date_str}"
+    logger.info(f"Printed label for {item_id}")
+    return label
+
+def scan_label(label):
+    # Replace with real scanner integration; here we simulate with high success rate
+    return random.random() > 0.05
+
+def build_payload(item_id, product_code, batch_number, timestamp, location, status):
+    return {
+        "identifier": item_id,
+        "product_code": product_code,
+        "batch_number": batch_number,
+        "timestamp": timestamp,
+        "location": location,
+        "status": status,
+        "idempotency_key": item_id
+    }
+
+def post_to_storage_api(payload):
+    if DRY_RUN:
+        logger.info("Dry run mode: skipping API call")
+        return {"success": True, "status_code": 200, "body": None}
+    headers = {
+        "Authorization": f"Bearer {API_TOKEN}",
+        "Content-Type": "application/json",
+        "Idempotency-Key": payload["idempotency_key"]
+    }
+    try:
+        resp = requests.post(API_URL, json=payload, headers=headers, timeout=10)
+        success = resp.status_code in (200, 201)
+        return {"success": success, "status_code": resp.status_code, "body": resp.text}
+    except requests.RequestException as e:
+        logger.exception("HTTP request failed")
+        return {"success": False, "error": str(e)}
+
+def mark_item_as_stored(item_id):
+    logger.info(f"Item {item_id} marked as stored.")
+
+def log_failure(item_id, error):
+    logger.error(f"Item {item_id} failed: {error}")
+
+def retry_with_backoff(func, args=(), kwargs=None, max_retries=MAX_RETRIES, base_backoff=BASE_BACKOFF):
+    if kwargs is None:
+        kwargs = {}
+    for attempt in range(1, max_retries + 1):
+        result = func(*args, **kwargs)
+        if result.get("success"):
+            return result
+        # Exponential backoff with jitter
+        sleep_time = base_backoff * (2 ** (attempt - 1))
+        jitter = random.uniform(0, sleep_time * 0.1)
+        time.sleep(sleep_time + jitter)
+    return result
+
+def run_pilot(num_items=10):
+    date_str = datetime.now(timezone.utc).date().isoformat()
+    for _ in range(num_items):
+        item_id = generate_identifier()
+        label = print_label(item_id, PRODUCT_CODE, BATCH_NUMBER, date_str)
+        if not scan_label(label):
+            log_failure(item_id, "Label scanning failed.")
+            continue
+        timestamp = datetime.now(timezone.utc).isoformat()
+        payload = build_payload(item_id, PRODUCT_CODE, BATCH_NUMBER, timestamp, LOCATION, "Released")
+        response = retry_with_backoff(post_to_storage_api, args=(payload,))
+        if response.get("success"):
+            mark_item_as_stored(item_id)
+        else:
+            log_failure(item_id, response.get("error") or f"HTTP {response.get('status_code')}")
+            # Optionally create a ticket or escalate here
+
+if __name__ == "__main__":
+    run_pilot(10)
+
+import time
+import uuid
+import random
+import logging
+import requests
+from datetime import datetime, timezone
+
+# Configuration
+API_URL = "https://storage.example.com/api/v1/items"
+API_TOKEN = "REPLACE_WITH_SECURE_TOKEN"
+PRODUCT_CODE = "SKU-12345"
+BATCH_NUMBER = "BATCH-20260508-A"
+LOCATION = "WH-A-01"
+MAX_RETRIES = 5
+BASE_BACKOFF = 1.0  # seconds
+DRY_RUN = False
+
+# Logger setup
+logger = logging.getLogger("pilot_run")
+handler = logging.StreamHandler()
+formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.setLevel(logging.INFO)
+
+def generate_identifier():
+    # Use UUID4 for uniqueness; keep human-friendly prefix
+    return f"LOT-{uuid.uuid4().hex[:8].upper()}-0001"
+
+def print_label(item_id, product_code, batch_number, date_str):
+    label = f"Label: {item_id}, {product_code}, {batch_number}, {date_str}"
+    logger.info(f"Printed label for {item_id}")
+    return label
+
+def scan_label(label):
+    # Replace with real scanner integration; here we simulate with high success rate
+    return random.random() > 0.05
+
+def build_payload(item_id, product_code, batch_number, timestamp, location, status):
+    return {
+        "identifier": item_id,
+        "product_code": product_code,
+        "batch_number": batch_number,
+        "timestamp": timestamp,
+        "location": location,
+        "status": status,
+        "idempotency_key": item_id
+    }
+
+def post_to_storage_api(payload):
+    if DRY_RUN:
+        logger.info("Dry run mode: skipping API call")
+        return {"success": True, "status_code": 200, "body": None}
+    headers = {
+        "Authorization": f"Bearer {API_TOKEN}",
+        "Content-Type": "application/json",
+        "Idempotency-Key": payload["idempotency_key"]
+    }
+    try:
+        resp = requests.post(API_URL, json=payload, headers=headers, timeout=10)
+        success = resp.status_code in (200, 201)
+        return {"success": success, "status_code": resp.status_code, "body": resp.text}
+    except requests.RequestException as e:
+        logger.exception("HTTP request failed")
+        return {"success": False, "error": str(e)}
+
+def mark_item_as_stored(item_id):
+    logger.info(f"Item {item_id} marked as stored.")
+
+def log_failure(item_id, error):
+    logger.error(f"Item {item_id} failed: {error}")
+
+def retry_with_backoff(func, args=(), kwargs=None, max_retries=MAX_RETRIES, base_backoff=BASE_BACKOFF):
+    if kwargs is None:
+        kwargs = {}
+    for attempt in range(1, max_retries + 1):
+        result = func(*args, **kwargs)
+        if result.get("success"):
+            return result
+        # Exponential backoff with jitter
+        sleep_time = base_backoff * (2 ** (attempt - 1))
+        jitter = random.uniform(0, sleep_time * 0.1)
+        time.sleep(sleep_time + jitter)
+    return result
+
+def run_pilot(num_items=10):
+    date_str = datetime.now(timezone.utc).date().isoformat()
+    for _ in range(num_items):
+        item_id = generate_identifier()
+        label = print_label(item_id, PRODUCT_CODE, BATCH_NUMBER, date_str)
+        if not scan_label(label):
+            log_failure(item_id, "Label scanning failed.")
+            continue
+        timestamp = datetime.now(timezone.utc).isoformat()
+        payload = build_payload(item_id, PRODUCT_CODE, BATCH_NUMBER, timestamp, LOCATION, "Released")
+        response = retry_with_backoff(post_to_storage_api, args=(payload,))
+        if response.get("success"):
+            mark_item_as_stored(item_id)
+        else:
+            log_failure(item_id, response.get("error") or f"HTTP {response.get('status_code')}")
+            # Optionally create a ticket or escalate here
+
+if __name__ == "__main__":
+    run_pilot(10)
+
 name: Create Cloud.gov Services Template
 
 on: # yamllint disable-line rule:truthy

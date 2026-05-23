@@ -1,0 +1,4 @@
+﻿Control ID,Control Name,Objective,Frequency,Owner,Evidence,A‑123 Link
+ITC‑1,PKI Key Management,"Ensure keys are generated, stored, rotated, and destroyed securely",Quarterly,CIO,"HSM logs, key lifecycle records",ITC‑1
+ITC‑2,Access Control Enforcement,Ensure MFA and RBAC protect signing systems,Quarterly,"CIO, CISO","Access logs, RBAC mapping",ITC‑2
+ITC‑3,Audit Logging & Monitoring,Ensure digital signature events are logged and reviewed,Quarterly,CISO,"Audit logs, review reports",ITC‑3

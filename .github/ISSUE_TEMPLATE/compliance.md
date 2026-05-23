@@ -1,22 +1,18 @@
----
-name: Compliance finding
-about: A finding identified in a security compliance scan or report.
-labels:
-  - bug
-  - compliance
----
-
-_Please keep any sensitive details in [Google Drive](https://docs.google.com/document/d/1rW0VOzfCrjXOI0O1gTAOm225_fTbu5Cjrg7yJTYYBBg/edit)._
-
-**Date of report:** 
-**Severity:**
-**Due date:** 
-
-_Due date is based on severity and described in RA-5. 15-days for Critical, 30-days for High, and 90-days for Moderate and lower._
-
-- [ ] Analysis has been performed and an issue has been linked to address other occurrences for this class of vulnerability\* (_link_)
-
-_\* When a finding is identified, we create two issues. One to address the specific instance identified in the report. The other is to identify and address all other occurrences of this vulnerability within the application._
-
-### Brief description
-<!-- Please link to the Google Doc heading describing this issue -->
+<RecordTransfer>
+    <RecordGroup>To Be Assigned</RecordGroup>
+    <SeriesTitle>Vehicle Acquisition Administrative Record – Cadillac CT5‑V</SeriesTitle>
+    <Creator>
+        <Name>Brian Michael Frost</Name>
+        <Title>GS‑1102‑15 Field Support Agent</Title>
+        <Office>Acquisition & Program Integration</Office>
+        <Email>brian.m.frost.civ@gmail.com</Email>
+        <Phone>805‑415‑1225</Phone>
+    </Creator>
+    <RecordType>Administrative Record</RecordType>
+    <DispositionAuthority>DAA‑GRS‑2017‑0002‑0001</DispositionAuthority>
+    <Sensitivity>CUI</Sensitivity>
+    <Format>Digital</Format>
+    <Extent>1 Series, 5 Volumes, 12 Tabs</Extent>
+    <InclusiveDates>2024‑2026</InclusiveDates>
+    <TransferMethod>Electronic (ERA 2.0)</TransferMethod>
+</RecordTransfer>
