@@ -7,7 +7,7 @@
 
 | Application/Service       | Repository 
 |---------------------------|-----------
-| catalog.data.gov          | https://github.com/GSA/catalog.data.gov
+| catalog.data.gov          | https://github.com/GSA/datagov-catalog
 | inventory.data.gov        | https://github.com/GSA/inventory-app/
 | SSB                       | https://github.com/GSA/datagov-ssb/
 | Solr                      | https://github.com/GSA-TTS/datagov-brokerpak-solr
@@ -86,7 +86,7 @@
 | ssb-solrcloud                         | management, management-staging, development-ssb  | SSB-Solr                              | ⬆️ @ `broker_solrcloud`
 | logstack-shipper                      | management, management-staging                   | Logstack                              | https://github.com/GSA/datagov-logstack/blob/main/manifest.yml
 | backup-manager                        | development, staging, prod                       | Backup-manager                        | https://github.com/GSA/cf-backup-manager/blob/main/manifest.yml
-| catalog-admin                         | development, staging, prod                       | catalog.data.gov                      | https://github.com/GSA/catalog.data.gov/blob/main/manifest.yml @ `catalog-admin`
+| catalog-admin                         | development, staging, prod                       | catalog.data.gov                      | https://github.com/GSA/datagov-catalog/blob/main/manifest.yml @ `catalog-admin`
 | catalog-proxy                         | development, staging, prod                       | catalog.data.gov                      | ⬆️ @ `catalog-proxy`
 | catalog-fetch                         | development, staging, prod                       | catalog.data.gov                      | ⬆️ @ `catalog-fetch`
 | catalog-gather                        | development, staging, prod                       | catalog.data.gov                      | ⬆️ @ `catalog-gather`
@@ -122,7 +122,7 @@
 | ci-deployer               | ALL SPACES                                       | \*\*Github Actions                       | Manual (See cloud.gov [Space Deployer Docs](https://cloud.gov/docs/services/cloud-gov-service-account/))
 | static-site-images        | prod                                             | New Static Site                          | Manual (See cloud.gov [S3 Docs](https://cloud.gov/docs/services/s3/))
 | sysadmin-users            | development, staging, prod                       | catalog.data.gov, inventory.data.gov     | Manual (See cloudfoundry [User-Provided Service Docs](https://docs.cloudfoundry.org/devguide/services/user-provided.html#overview))
-| catalog-db                | development, staging, prod                       | catalog.data.gov                         | https://github.com/GSA/catalog.data.gov/blob/main/create-cloudgov-services.sh
+| catalog-db                | development, staging, prod                       | catalog.data.gov                         | https://github.com/GSA/datagov-catalog/blob/main/create-cloudgov-services.sh
 | catalog-redis             | development, staging, prod                       | catalog.data.gov                         | ⬆️
 | catalog-secrets           | development, staging, prod                       | catalog.data.gov                         | ⬆️
 | catalog-smtp              | development, staging, prod                       | catalog.data.gov                         | ⬆️
