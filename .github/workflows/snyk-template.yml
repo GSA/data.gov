@@ -1,0 +1,96 @@
+---
+name: Snyk Scan Template
+
+on: # yamllint disable-line rule:truthy
+  workflow_call:
+    inputs:
+      all_projects:
+        description: Scan all supported dependency projects in the caller repository
+        required: false
+        type: boolean
+        default: true
+      node_version:
+        description: Node.js version used to install the Snyk CLI
+        required: false
+        type: string
+        default: "20"
+      severity_threshold:
+        description: Minimum vulnerability severity that fails the scan
+        required: false
+        type: string
+        default: medium
+      issue_labels:
+        description: Comma-separated labels for scan failure issues
+        required: false
+        type: string
+        default: "bug,o&m,compliance"
+    secrets:
+      SNYK_TOKEN:
+        required: true
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  snyk:
+    name: Snyk Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node_version }}
+
+      - name: Install Snyk CLI
+        run: npm install --global snyk
+
+      - name: Scan dependencies
+        shell: bash
+        env:
+          ALL_PROJECTS: ${{ inputs.all_projects }}
+          SEVERITY_THRESHOLD: ${{ inputs.severity_threshold }}
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: |
+          args=("--severity-threshold=${SEVERITY_THRESHOLD}")
+
+          if [[ "${ALL_PROJECTS}" == "true" ]]; then
+            args+=("--all-projects")
+          fi
+
+          snyk test "${args[@]}"
+
+      - name: Create issue for failure
+        if: ${{ failure() && github.event_name == 'schedule' }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_LABELS: ${{ inputs.issue_labels }}
+        run: |
+          repository_name="${GITHUB_REPOSITORY#*/}"
+          title="Snyk Check Failed: ${repository_name}"
+          run_url="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          issue_number="$(
+            gh issue list \
+              --repo "${GITHUB_REPOSITORY}" \
+              --state open \
+              --search "\"${title}\" in:title" \
+              --json number \
+              --jq '.[0].number'
+          )"
+
+          if [[ -n "${issue_number}" ]]; then
+            gh issue comment "${issue_number}" \
+              --repo "${GITHUB_REPOSITORY}" \
+              --body "Snyk failed again: ${run_url}"
+          else
+            gh issue create \
+              --repo "${GITHUB_REPOSITORY}" \
+              --title "${title}" \
+              --label "${ISSUE_LABELS}" \
+              --body "The ${repository_name} Snyk scan failed: ${run_url}"
+          fi
