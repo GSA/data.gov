@@ -41,7 +41,7 @@ jobs:
     name: CKAN ${{ matrix.ckan-version }}
     runs-on: ubuntu-latest
     container:
-      image: openknowledge/ckan-dev:${{ matrix.ckan-version }}
+      image: ckan/ckan-dev:${{ matrix.ckan-version }}
     services:
       solr:
         image: datagov/catalog.data.gov.solr:latest
@@ -74,8 +74,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install requirements
         run: |
-          sudo apk add tzdata swig python3-dev
-          sudo apk add proj-util proj-dev geos-dev
+          apk add tzdata swig python3-dev
+          apk add proj-util proj-dev geos-dev
           cp /usr/share/zoneinfo/America/New_York /etc/localtime
           if [[ -f requirements.txt ]]; then
             pip install -r requirements.txt
@@ -83,6 +83,7 @@ jobs:
           if [[ -f dev-requirements.txt ]]; then
             pip install -r dev-requirements.txt
           fi
+          pip install packaging==21.3
           pip install -e .
       - name: Setup extension (CKAN >= 2.9)
         run: |
