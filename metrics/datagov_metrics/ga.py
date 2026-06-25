@@ -120,6 +120,16 @@ def setup_organization_reports():
                                 "stringFilter": {"matchType": "EXACT", "value": "true"},
                             }
                         },
+                        {
+                            "filter": {
+                                "fieldName": "pageLocation",
+                                "stringFilter": {
+                                    "matchType": "CONTAINS",
+                                    "value": "catalog.data.gov",
+                                    "caseSensitive": False,
+                                },
+                            }
+                        },
                         org_dimension_filter,
                     ],
                 },
