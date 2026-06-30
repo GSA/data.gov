@@ -30,7 +30,7 @@ jobs:
       matrix: ${{ fromJSON(inputs.app_names) }}
     steps:
       - name: checkout datagov
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: gsa/data.gov
           path: "./datagov"

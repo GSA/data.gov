@@ -9,13 +9,13 @@ jobs:
     runs-on: ubuntu-22.04 # until appArmor Puppeteer issue fixed: https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#issues-with-apparmor-on-ubuntu
     steps:
       - name: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.1"
           bundler-cache: true #runs `bundle install`
       - name: Install node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: "20"
       - name: Install NPM dependencies
