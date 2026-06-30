@@ -34,9 +34,9 @@ jobs:
       matrix: ${{ fromJSON(inputs.app_names) }}
     steps:
       - name: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: checkout datagov
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: gsa/data.gov
           path: "./datagov"
@@ -54,7 +54,7 @@ jobs:
           cp proxy/public/robots.develop.txt proxy/public/robots.txt
       - name: Install node.js
         if: ${{ hashFiles('app/static/package.json') != '' }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: "app/static/package.json"
       - name: Build static assets

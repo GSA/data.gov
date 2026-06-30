@@ -18,16 +18,16 @@ jobs:
     name: Fetch Reports
     steps:
       - name: Check out the code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 1
       - name: Set up Python ${{ env.PY_VERSION }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
             python-version: ${{ env.PY_VERSION }}
 
       - name: Install Poetry
-        uses: abatilo/actions-poetry@v2
+        uses: abatilo/actions-poetry@v4
         with:
             poetry-version: ${{ env.POETRY_VERSION }}
 
@@ -35,7 +35,7 @@ jobs:
         run: |
           poetry config virtualenvs.create true --local
           poetry config virtualenvs.in-project true --local
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         name: Define a cache for the virtual environment based on the dependencies lock file
         with:
           path: ./.venv
