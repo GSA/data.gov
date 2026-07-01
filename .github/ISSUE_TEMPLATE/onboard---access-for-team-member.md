@@ -28,7 +28,7 @@ Welcome! [The Onboarding wiki](https://github.com/gsa/data.gov/wiki/Onboarding-O
 - [ ] Make sure team member has 2FA enabled for their GitHub account and [request](https://github.com/GSA/GitHub-Administration/blob/master/README.md#requesting-access-to-the-gsa-organization) membership to GSA GitHub org
 - [ ] Add team member to a Data.gov GitHub teams such as [data-gov-dev-team](https://github.com/orgs/GSA/teams/data-gov-dev-team), and change their role to Maintainer if they are part of the PMO team. For non-development roles that aren't PMO, add them to [data-gov-team](https://github.com/orgs/GSA/teams/data-gov-team)
 - [ ] Add Government team member to Github PMO teams and set their role as Maintainer
-  - [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members) 
+  - [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members)
   - [data-gov-bots](https://github.com/orgs/GSA/teams/data-gov-bots/members) for dev roles
 
 **Slack**
@@ -40,7 +40,7 @@ Welcome! [The Onboarding wiki](https://github.com/gsa/data.gov/wiki/Onboarding-O
 **Google**
 - [ ] Invite ALL team members to [Data.gov calendar events](https://calendar.google.com/calendar/r/settings/calendar/Z3NhLmdvdl9zcjZ0NG52YjRhOTNjNnNzdHRxYXAzbjZtMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t)
 - [ ] Add ALL team members to Google Drive [Data.gov](https://drive.google.com/drive/folders/0AMRwhrSyJ5R4Uk9PVA)
-- [ ] Add ALL team members to Google Groups & Emails: datagovhelp@gsa.gov; datagovteam@gsa.gov; datagov@gsa.gov; inventory-help@gsa.gov; 
+- [ ] Add ALL team members to Google Groups & Emails: datagovhelp@gsa.gov; datagovteam@gsa.gov; datagov@gsa.gov; inventory-help@gsa.gov;
 
 **Cloud.gov**
 - [ ] [Invite user](https://account.fr.cloud.gov/invite) to Cloud.gov platform and add team member to the [gsa-datagov organization](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/users/manage?setByUsername=true) and give them access to the following roles:  Organization: gsa-datagov -- User; All spaces - Developer
@@ -50,7 +50,6 @@ Welcome! [The Onboarding wiki](https://github.com/gsa/data.gov/wiki/Onboarding-O
 ### Needs Special Review due to limited licenses or limited need
 - [ ] Add team member to [New Relic](https://account.newrelic.com/accounts/1601367/users) with Full Platform access, along with the following user groups: Solutions-Data.gov; Solutions-Data.gov_Admin
 - [ ] Promote Government team member to Admin in [New Relic](https://account.newrelic.com/accounts/1601367/users)
-- [ ] Add team member to [Docker Hub](https://cloud.docker.com/orgs/datagov/teams)
 - [ ] Add team member to [Snyk](https://app.snyk.io/org/data.gov/manage/members)
   - Choose Viewer role for Contractors, or Administrator for PMO team members
   - Grant "Full" permissions for Contractors, and "Owner" permissions for PMO team members
