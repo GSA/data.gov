@@ -15,7 +15,7 @@ on: # yamllint disable-line rule:truthy
         type: string
         default: "20"
       npm_working_directory:
-        description: Directory containing a package-lock.json to install before scanning
+        description: Directory containing a package.json to install before scanning
         required: false
         type: string
         default: ""
@@ -64,7 +64,13 @@ jobs:
       - name: Install Node.js dependencies
         if: ${{ inputs.npm_working_directory != '' }}
         working-directory: ${{ inputs.npm_working_directory }}
-        run: npm ci
+        shell: bash
+        run: |
+          if [[ -f package-lock.json || -f npm-shrinkwrap.json ]]; then
+            npm ci
+          else
+            npm install
+          fi
 
       - name: Set up Python
         if: ${{ inputs.python_requirements_file != '' }}
