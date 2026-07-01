@@ -14,6 +14,21 @@ on: # yamllint disable-line rule:truthy
         required: false
         type: string
         default: "20"
+      npm_working_directory:
+        description: Directory containing a package.json to install before scanning
+        required: false
+        type: string
+        default: ""
+      python_requirements_file:
+        description: Requirements file to install before scanning
+        required: false
+        type: string
+        default: ""
+      python_version:
+        description: Python version used to install scan dependencies
+        required: false
+        type: string
+        default: "3.x"
       severity_threshold:
         description: Minimum vulnerability severity that fails the scan
         required: false
@@ -45,6 +60,27 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: ${{ inputs.node_version }}
+
+      - name: Install Node.js dependencies
+        if: ${{ inputs.npm_working_directory != '' }}
+        working-directory: ${{ inputs.npm_working_directory }}
+        shell: bash
+        run: |
+          if [[ -f package-lock.json || -f npm-shrinkwrap.json ]]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Set up Python
+        if: ${{ inputs.python_requirements_file != '' }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ inputs.python_version }}
+
+      - name: Install Python dependencies
+        if: ${{ inputs.python_requirements_file != '' }}
+        run: python -m pip install --requirement "${{ inputs.python_requirements_file }}"
 
       - name: Install Snyk CLI
         run: npm install --global snyk
