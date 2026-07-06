@@ -35,7 +35,7 @@ def date_range_last_month():
 
 
 def get_org_list():
-    url = "https://harvest.data.gov/organizations/?paginate=false"
+    url = "https://harvest.data.gov/api/organizations/?paginate=false"
     repo = requests.get(url)
     if repo.ok:
         return repo.json()
