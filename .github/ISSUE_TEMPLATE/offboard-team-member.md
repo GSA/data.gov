@@ -27,7 +27,7 @@ These tasks are performed by a team admin:
   - [data-gov-dev-team](https://github.com/orgs/GSA/teams/data-gov-dev-team)
   - [data-gov-ckan-multi](https://github.com/orgs/GSA/teams/data-gov-ckan-multi)
 - [ ] Remove team member from [the `gsa-datagov` organization](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/users) on cloud.gov
-- [ ] Remove team member from [the SSB AWS accounts](https://github.com/18F/aws-admin/blob/main/terraform/datagov-iam.tf)
+- [ ] (defunct) Remove team member from [the SSB AWS accounts](https://github.com/18F/aws-admin/blob/main/terraform/datagov-iam.tf)
 - [ ] Remove team member from Data.gov email lists
   - [datagov](https://groups.google.com/a/gsa.gov/forum/#!forum/datagov)
   - [datagovhelp](https://groups.google.com/a/gsa.gov/forum/#!forum/datagovhelp)
@@ -48,14 +48,9 @@ These tasks are performed by a team admin:
 - [ ] Remove team member from [Google Search Console](https://search.google.com/search-console/users?resource_id=sc-domain%3Adata.gov)
 - [ ] Remove team member from PyPI packages:
   - [ckanext-usmetadata](https://pypi.org/project/ckanext-usmetadata/)
-  - [ckanext-metrics-dashboard](https://pypi.org/project/ckanext-metrics-dashboard/)
-  - [ckanext-datagovtheme](https://pypi.org/project/ckanext-datagovtheme/)
-  - [ckanext-datagovcatalog](https://pypi.org/project/ckanext-datagovcatalog/)`
   - [ckanext-datajson](https://pypi.org/project/ckanext-datajson/)
-  - [ckanext-geodatagov](https://pypi.org/project/ckanext-geodatagov/)
-  - [datagvo-harvesting-logic](https://pypi.org/project/datagov-harvesting-logic/)
   - [ckanext-dcat-usmetadata](https://pypi.org/project/ckanext-dcat-usmetadata/)
-  - [ckanext-gooogleanalyticsbasic](https://pypi.org/project/ckanext-googleanalyticsbasic/)
+
 - [ ] Remove team member from [Google Search Console](https://search.google.com/search-console/about)
 - [ ] Remove team member from any Data.gov [Touchpoints](https://touchpoints.app.cloud.gov/)
 - [ ] Remove team member from TTS Slack User Groups
