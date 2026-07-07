@@ -15,6 +15,7 @@ on: # yamllint disable-line rule:truthy
           - "catalog-gather"
           - "catalog-next-web"
           - "catalog-next-admin"
+          - "datagov-catalog-proxy"
           - "datagov-harvest"
           - dashboard
           - "dashboard-stage"
