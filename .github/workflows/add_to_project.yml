@@ -5,6 +5,8 @@ on:   # yamllint disable-line rule:truthy
   issues:
     types: [opened, labeled]
 
+permissions: {}
+
 jobs:
   add-to-project:
     name: Add issue to project

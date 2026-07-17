@@ -31,6 +31,9 @@ on: # yamllint disable-line rule:truthy
 # jobs need to be triplicated due to git hub config being in environment
 # for each cf space
 # TODO ticket to fix this: https://github.com/GSA/data.gov/issues/3996
+permissions:
+  contents: read
+
 jobs:
   disable-egress-development:
     concurrency: ${{ github.event.inputs.appSpace }}

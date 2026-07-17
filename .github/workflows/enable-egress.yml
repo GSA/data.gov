@@ -32,6 +32,9 @@ env:
   DATAGOV_DIR: datagov
   CG_DIR: cg-egress-proxy
 
+permissions:
+  contents: read
+
 jobs:
   enable-egress:
     concurrency: ${{ github.event.inputs.appSpace }}

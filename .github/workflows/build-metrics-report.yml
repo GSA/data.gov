@@ -9,6 +9,9 @@ env:
   PY_VERSION: "3.10"
   POETRY_VERSION: "1.7.1"
 
+permissions:
+  contents: read
+
 jobs:
   fetch-report:
     defaults:
