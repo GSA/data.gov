@@ -53,7 +53,7 @@ jobs:
       # trying to emulate:
       # https://github.com/GSA/cg-egress-proxy/blob/main/Dockerfile
       - name: build caddy - setup go
-        uses: actions/setup-go@v6
+        uses: actions/setup-go@v7
         with:
           go-version: "stable"
       - name: build caddy - get xcaddy

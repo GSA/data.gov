@@ -20,7 +20,7 @@ jobs:
           ruby-version: ${{ inputs.ruby-version }}
           bundler-cache: true #runs `bundle install`
       - name: Install node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: "20"
       - name: Install NPM dependencies
