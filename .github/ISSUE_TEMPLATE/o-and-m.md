@@ -20,6 +20,7 @@ You are responsible for all [O&M responsibilities](https://github.com/gsa/data.g
 > **Note: Catalog Auto Tasks**
 > You will need to update the chart values manually. Click the Action link in each issue and grab the values from `monitor task output` and `check runtime`.
 - [ ] [Check auto generated O&M tickets](https://github.com/orgs/GSA/projects/11?pane=issue&itemId=47716346) from no status column
+- [ ] [Review and triage O&M tickets due this month](https://github.com/orgs/GSA/projects/11/views/31)
 - [ ] Check [Harvesting Emails](https://github.com/gsa/data.gov/wiki/Operation-and-Maintenance-Responsibilities#harvest-job-report-daily-email-report)
 - [ ] [New Relic Alerts](https://alerts.newrelic.com/accounts/1601367/incidents) Triaged
 - [ ] Check each github repo's Security tab to traige issues found by Dependabot and Code scan
