@@ -25,7 +25,7 @@ jobs:
         with:
           fetch-depth: 1
       - name: Set up Python ${{ env.PY_VERSION }}
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
             python-version: ${{ env.PY_VERSION }}
 
