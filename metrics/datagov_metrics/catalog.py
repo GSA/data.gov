@@ -9,7 +9,7 @@ def get_data() -> dict:
     output = {}
 
     queries = {
-        "harvest_sources": "https://harvest.data.gov/organizations/?paginate=false",
+        "harvest_sources": "https://harvest.data.gov/api/organizations/?paginate=false",
         "datasets_per_org": "https://catalog.data.gov/api/organizations",
     }
 
