@@ -66,3 +66,11 @@ output
 # Metrics
 !metrics/.env
 metrics/*/credentials.json
+
+.vscode
+
+# Personal Copilot tooling (local only)
+AGENTS.md
+.github/skills
+
+issue-drafts/
