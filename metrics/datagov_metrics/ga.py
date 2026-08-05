@@ -35,11 +35,10 @@ def date_range_last_month():
 
 
 def get_org_list():
-    url = 'https://catalog.data.gov/api/action/package_search?q=*:*&facet.field=["organization"]&facet.limit=200&rows=0'
+    url = "https://harvest.data.gov/api/organizations/?paginate=false"
     repo = requests.get(url)
-    data = repo.json()
-
-    return data["result"]["search_facets"]["organization"]["items"]
+    if repo.ok:
+        return repo.json()
 
 
 def setup_organization_reports():
@@ -47,8 +46,8 @@ def setup_organization_reports():
     org_reports = {}
 
     for org in orgs:
-        org_name = org["name"]
-        org_display_name = escape(org["display_name"])
+        org_name = org["slug"]
+        org_display_name = escape(org["name"])
         org_dimension_filter = {
             "filter": {
                 "fieldName": "customEvent:DATAGOV_dataset_organization",
@@ -119,6 +118,16 @@ def setup_organization_reports():
                             "filter": {
                                 "fieldName": "outbound",
                                 "stringFilter": {"matchType": "EXACT", "value": "true"},
+                            }
+                        },
+                        {
+                            "filter": {
+                                "fieldName": "pageLocation",
+                                "stringFilter": {
+                                    "matchType": "CONTAINS",
+                                    "value": "catalog.data.gov",
+                                    "caseSensitive": False,
+                                },
                             }
                         },
                         org_dimension_filter,

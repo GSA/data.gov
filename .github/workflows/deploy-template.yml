@@ -34,9 +34,9 @@ jobs:
       matrix: ${{ fromJSON(inputs.app_names) }}
     steps:
       - name: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: checkout datagov
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: gsa/data.gov
           path: "./datagov"
@@ -52,6 +52,30 @@ jobs:
         if: ${{ matrix.robots-dev && inputs.environ == 'development' }}
         run: |
           cp proxy/public/robots.develop.txt proxy/public/robots.txt
+      - name: Install node.js
+        if: ${{ hashFiles('app/static/package.json') != '' }}
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: "app/static/package.json"
+      - name: Build static assets
+        if: ${{ hashFiles('app/static/package.json') != '' }}
+        run: |
+          cd app/static
+          npm ci
+          npm run build
+      - name: Export Poetry requirements
+        run: |
+          if [[ -f requirements.txt ]]; then
+            echo "requirements.txt already exists"
+            exit 0
+          fi
+          if [[ ! -f pyproject.toml ]]; then
+            echo "No pyproject.toml found; skipping Poetry export"
+            exit 0
+          fi
+          python -m pip install --upgrade pip
+          python -m pip install poetry poetry-plugin-export
+          poetry export -f requirements.txt --output requirements.txt --without-hashes
       - name: deploy ${{ matrix.app }}
         uses: cloud-gov/cg-cli-tools@main
         with:

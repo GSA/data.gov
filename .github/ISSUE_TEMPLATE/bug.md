@@ -1,8 +1,10 @@
 ---
 name: Bug
 about: Description of a bug or defect
-labels:
-  - bug
+title: ''
+labels: bug
+assignees: ''
+
 ---
 
 <!-- description of the issue, please including any relevant information:

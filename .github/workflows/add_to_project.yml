@@ -5,12 +5,14 @@ on:   # yamllint disable-line rule:truthy
   issues:
     types: [opened, labeled]
 
+permissions: {}
+
 jobs:
   add-to-project:
     name: Add issue to project
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/add-to-project@v0.3.0
+      - uses: actions/add-to-project@v2.0.0
         with:
           project-url: 'https://github.com/orgs/GSA/projects/11/views/1'
           github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}

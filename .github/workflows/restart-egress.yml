@@ -6,6 +6,9 @@ on: # yamllint disable-line rule:truthy
   schedule:
     - cron: "0 3 * * *" # every day at 3am UTC
 
+permissions:
+  contents: read
+
 jobs:
   restart-egress:
     strategy:
@@ -17,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: cf restart
         uses: cloud-gov/cg-cli-tools@main
         with:

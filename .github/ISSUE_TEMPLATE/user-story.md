@@ -4,7 +4,9 @@ about: Story about a new user feature
 title: ''
 labels: ''
 assignees: ''
+
 ---
+
 ## User Story
 
 In order to [goal], [stakeholder] wants [change].

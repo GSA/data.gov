@@ -2,7 +2,11 @@
 name: Offboard team member
 about: Checklist for offboarding a team member from Data.gov
 title: "[Offboard] <email>"
+labels: ''
+assignees: ''
+
 ---
+
 All tasks should be checked and completed. For tasks that are not applicable, perhaps because the team member did not have this particular access, please **confirm** that the team member in fact has no access before marking the task complete.
 
 Tasks to be performed by the outgoing team member:
@@ -23,7 +27,7 @@ These tasks are performed by a team admin:
   - [data-gov-dev-team](https://github.com/orgs/GSA/teams/data-gov-dev-team)
   - [data-gov-ckan-multi](https://github.com/orgs/GSA/teams/data-gov-ckan-multi)
 - [ ] Remove team member from [the `gsa-datagov` organization](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/users) on cloud.gov
-- [ ] Remove team member from [the SSB AWS accounts](https://github.com/18F/aws-admin/blob/main/terraform/datagov-iam.tf)
+- [ ] (defunct) Remove team member from [the SSB AWS accounts](https://github.com/18F/aws-admin/blob/main/terraform/datagov-iam.tf)
 - [ ] Remove team member from Data.gov email lists
   - [datagov](https://groups.google.com/a/gsa.gov/forum/#!forum/datagov)
   - [datagovhelp](https://groups.google.com/a/gsa.gov/forum/#!forum/datagovhelp)
@@ -35,7 +39,6 @@ These tasks are performed by a team admin:
 - [ ] Remove team member from [Data.gov calendar](https://calendar.google.com/calendar/r/settings/calendar/Z3NhLmdvdl9zcjZ0NG52YjRhOTNjNnNzdHRxYXAzbjZtMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t) and events
 - [ ] Remove team member from [Login.gov team](https://dashboard.int.identitysandbox.gov/teams/174).
 - [ ] Remove team member from [New Relic](https://newrelic.com)
-- [ ] Remove team member from [Docker Hub](https://cloud.docker.com/orgs/datagov/teams)
 - [ ] Remove team member from [Data.gov system accounts](https://github.com/gsa/data.gov/wiki/CKAN-commands#system-administrator-accounts) on Inventory and Catalog
 - [ ] Remove team member from CKAN users `[ckan-domain]/user/` on Inventory and Catalog
 - [ ] Remove team member from TTS Bug Bounty access [#bug-bounty-partners](https://gsa-tts.slack.com/messages/C5JQCD9PH)
@@ -45,14 +48,9 @@ These tasks are performed by a team admin:
 - [ ] Remove team member from [Google Search Console](https://search.google.com/search-console/users?resource_id=sc-domain%3Adata.gov)
 - [ ] Remove team member from PyPI packages:
   - [ckanext-usmetadata](https://pypi.org/project/ckanext-usmetadata/)
-  - [ckanext-metrics-dashboard](https://pypi.org/project/ckanext-metrics-dashboard/)
-  - [ckanext-datagovtheme](https://pypi.org/project/ckanext-datagovtheme/)
-  - [ckanext-datagovcatalog](https://pypi.org/project/ckanext-datagovcatalog/)`
   - [ckanext-datajson](https://pypi.org/project/ckanext-datajson/)
-  - [ckanext-geodatagov](https://pypi.org/project/ckanext-geodatagov/)
-  - [datagvo-harvesting-logic](https://pypi.org/project/datagov-harvesting-logic/)
   - [ckanext-dcat-usmetadata](https://pypi.org/project/ckanext-dcat-usmetadata/)
-  - [ckanext-gooogleanalyticsbasic](https://pypi.org/project/ckanext-googleanalyticsbasic/)
+
 - [ ] Remove team member from [Google Search Console](https://search.google.com/search-console/about)
 - [ ] Remove team member from any Data.gov [Touchpoints](https://touchpoints.app.cloud.gov/)
 - [ ] Remove team member from TTS Slack User Groups
