@@ -38,7 +38,7 @@ on: # yamllint disable-line rule:truthy
         description: Comma-separated labels for scan failure issues
         required: false
         type: string
-        default: "bug,o&m,compliance"
+        default: "bug,O&M,Security - compliance"
     secrets:
       SNYK_TOKEN:
         required: true
