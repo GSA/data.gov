@@ -51,16 +51,9 @@ Welcome! [The Onboarding wiki](https://github.com/gsa/data.gov/wiki/Onboarding-O
 - [ ] Add team member to [New Relic](https://account.newrelic.com/accounts/1601367/users) with Full Platform access, along with the following user groups: Solutions-Data.gov; Solutions-Data.gov_Admin
 - [ ] Promote Government team member to Admin in [New Relic](https://account.newrelic.com/accounts/1601367/users)
 - [ ] Add team member to [Snyk](https://app.snyk.io/org/data.gov/manage/members)
-  - Choose Viewer role for Contractors, or Administrator for PMO team members
-  - Grant "Full" permissions for Contractors, and "Owner" permissions for PMO team members
-- [ ] Add team member to the SSB AWS accounts: Make a PR on [the Terraform file controlling access](https://github.com/18F/aws-admin/blob/main/terraform/datagov-iam.tf) to add the new person and include them in the appropriate user_groups.  [See here](https://docs.google.com/document/d/1mwASz1SDiGcpbeSTTILrliDsUKzg1mjy2u11JmvFW2k/edit?usp=drive_link) for AWS Account ID and access instructions
+  Choose Group member role for Contractors, or Group admin for PMO team members
+- [ ] (Optional, currently no member can be added) Add team member to the SSB AWS accounts: Make a PR on [the Terraform file controlling access](https://github.com/18F/aws-admin/blob/main/terraform/datagov-iam.tf) to add the new person and include them in the appropriate user_groups.  [See here](https://docs.google.com/document/d/1mwASz1SDiGcpbeSTTILrliDsUKzg1mjy2u11JmvFW2k/edit?usp=drive_link) for AWS Account ID and access instructions
 - [ ] Add team member as an Owner to PyPI packages:
   - [ckanext-usmetadata](https://pypi.org/project/ckanext-usmetadata/)
-  - [ckanext-metrics-dashboard](https://pypi.org/project/ckanext-metrics-dashboard/)
-  - [ckanext-datagovtheme](https://pypi.org/project/ckanext-datagovtheme/)
-  - [ckanext-datagovcatalog](https://pypi.org/project/ckanext-datagovcatalog/)`
   - [ckanext-datajson](https://pypi.org/project/ckanext-datajson/)
-  - [ckanext-geodatagov](https://pypi.org/project/ckanext-geodatagov/)
-  - [datagvo-harvesting-logic](https://pypi.org/project/datagov-harvesting-logic/)
   - [ckanext-dcat-usmetadata](https://pypi.org/project/ckanext-dcat-usmetadata/)
-  - [ckanext-gooogleanalyticsbasic](https://pypi.org/project/ckanext-googleanalyticsbasic/)

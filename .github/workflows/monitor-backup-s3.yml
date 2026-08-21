@@ -1,0 +1,71 @@
+---
+name: Monitor backup-s3
+
+on: # yamllint disable-line rule:truthy
+  workflow_dispatch:
+  schedule:
+    - cron: "0 13 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  monitor:
+    name: Check latest scheduled backup-s3 run
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check latest scheduled backup-s3 run
+        shell: bash
+        env:
+          TARGET_REPOSITORY: GSA/cf-backup-manager
+          TARGET_WORKFLOW: backup-s3.yml
+          # GitHub can disable scheduled workflows after long repository inactivity.
+          # Keep this badge red if the upstream schedule stops producing runs.
+          MAX_AGE_DAYS: "14"
+        run: |
+          set -euo pipefail
+
+          # Query only scheduled runs so manual workflow_dispatch runs do not mask
+          # an inactive or broken schedule.
+          latest_run="$(
+            curl \
+              --fail \
+              --silent \
+              --show-error \
+              --location \
+              --header "Accept: application/vnd.github+json" \
+              --header "X-GitHub-Api-Version: 2022-11-28" \
+              "https://api.github.com/repos/${TARGET_REPOSITORY}/actions/workflows/${TARGET_WORKFLOW}/runs?event=schedule&per_page=1" \
+              | jq -c '.workflow_runs[0] // empty'
+          )"
+
+          if [[ -z "${latest_run}" ]]; then
+            echo "No scheduled ${TARGET_WORKFLOW} runs found for ${TARGET_REPOSITORY}."
+            exit 1
+          fi
+
+          # Freshness catches disabled or inactive schedules; status catches a
+          # recently triggered scheduled backup that still failed.
+          latest_created_at="$(jq -r '.created_at' <<< "${latest_run}")"
+          latest_status="$(jq -r '.status' <<< "${latest_run}")"
+          latest_conclusion="$(jq -r '.conclusion' <<< "${latest_run}")"
+          latest_url="$(jq -r '.html_url' <<< "${latest_run}")"
+
+          latest_epoch="$(date -u -d "${latest_created_at}" +%s)"
+          cutoff_epoch="$(date -u -d "${MAX_AGE_DAYS} days ago" +%s)"
+
+          if (( latest_epoch < cutoff_epoch )); then
+            echo "Latest scheduled ${TARGET_WORKFLOW} run is stale: ${latest_created_at}."
+            echo "Expected a scheduled run within the last ${MAX_AGE_DAYS} days."
+            echo "${latest_url}"
+            exit 1
+          fi
+
+          if [[ "${latest_status}" != "completed" || "${latest_conclusion}" != "success" ]]; then
+            echo "Latest scheduled ${TARGET_WORKFLOW} run did not complete successfully."
+            echo "status=${latest_status} conclusion=${latest_conclusion}"
+            echo "${latest_url}"
+            exit 1
+          fi
+
+          echo "Latest scheduled ${TARGET_WORKFLOW} run is fresh and successful: ${latest_created_at}."

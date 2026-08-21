@@ -1,0 +1,20 @@
+name: Snyk Scan
+
+on:
+  schedule:
+    - cron: "0 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  snyk:
+    uses: GSA/data.gov/.github/workflows/snyk-template.yml@main
+    with:
+      all_projects: true
+      node_version: "20"
+      severity_threshold: medium
+    secrets:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

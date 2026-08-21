@@ -54,7 +54,7 @@ jobs:
           cp proxy/public/robots.develop.txt proxy/public/robots.txt
       - name: Install node.js
         if: ${{ hashFiles('app/static/package.json') != '' }}
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version-file: "app/static/package.json"
       - name: Build static assets

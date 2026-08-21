@@ -9,6 +9,10 @@ env:
   PY_VERSION: "3.10"
   POETRY_VERSION: "1.7.1"
 
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   fetch-report:
     defaults:
@@ -22,7 +26,7 @@ jobs:
         with:
           fetch-depth: 1
       - name: Set up Python ${{ env.PY_VERSION }}
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
             python-version: ${{ env.PY_VERSION }}
 
@@ -58,3 +62,32 @@ jobs:
           AWS_DEFAULT_REGION: us-gov-west-1
         run: |
             poetry run python datagov_metrics
+
+      - name: Create issue for scheduled failure
+        if: ${{ failure() && github.event_name == 'schedule' }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="Build Metrics Report Failed"
+          run_url="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          issue_number="$(
+            gh issue list \
+              --repo "${GITHUB_REPOSITORY}" \
+              --state open \
+              --search "\"${title}\" in:title" \
+              --json number \
+              --jq '.[0].number'
+          )"
+
+          if [[ -n "${issue_number}" ]]; then
+            gh issue comment "${issue_number}" \
+              --repo "${GITHUB_REPOSITORY}" \
+              --body "Build Metrics Report failed again: ${run_url}"
+          else
+            gh issue create \
+              --repo "${GITHUB_REPOSITORY}" \
+              --title "${title}" \
+              --label "bug,o&m" \
+              --body "The scheduled Build Metrics Report workflow failed: ${run_url}"
+          fi
