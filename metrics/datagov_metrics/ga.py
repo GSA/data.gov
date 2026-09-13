@@ -266,7 +266,12 @@ def fetch_report(request, max_retries=3, initial_delay=900):
 
 
 def write_data_to_csv(response):
-    """Reshape the response CSV."""
+    """Reshape the response CSV.
+
+    The BOM prefix tells spreadsheet apps (notably Excel) and browsers
+    that the payload is UTF-8. Without it, non-ASCII page titles come
+    out as mojibake (e.g. "Um novo Ã­ndice") on download.
+    """
     with io.StringIO() as csv_buffer:
         writer = csv.writer(csv_buffer, delimiter=",")
         writer.writerow(
@@ -283,7 +288,7 @@ def write_data_to_csv(response):
                 ]
                 for row in response["rows"]
             )
-        return csv_buffer.getvalue()
+        return "\ufeff" + csv_buffer.getvalue()
 
 
 def main():
