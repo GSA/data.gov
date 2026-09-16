@@ -7,6 +7,7 @@ Content-Type on the S3 object, Excel/browsers decoded them as Latin-1.
 
 import sys
 import types
+import unittest
 from unittest.mock import MagicMock
 
 
@@ -61,20 +62,23 @@ GA_RESPONSE = {
 }
 
 
-def test_csv_starts_with_utf8_bom():
-    csv_data = ga.write_data_to_csv(GA_RESPONSE)
-    assert csv_data.startswith("\ufeff")
+class TestCsvEncoding(unittest.TestCase):
+    def test_csv_starts_with_utf8_bom(self):
+        csv_data = ga.write_data_to_csv(GA_RESPONSE)
+        self.assertTrue(csv_data.startswith("\ufeff"))
+
+    def test_csv_round_trips_non_ascii_titles(self):
+        csv_data = ga.write_data_to_csv(GA_RESPONSE)
+        self.assertIn("Um novo índice para medir", csv_data)
+        self.assertIn("연방준비제도", csv_data)
+        # the exact mojibake from the issue must not appear
+        self.assertNotIn("Ã\xad", csv_data)
+
+    def test_s3_upload_declares_csv_utf8_content_type(self):
+        s3_util.put_data_to_s3("report.csv", "\ufeffa,b\n")
+        _, kwargs = s3_util.s3_client.put_object.call_args
+        self.assertEqual(kwargs["ContentType"], "text/csv; charset=utf-8")
 
 
-def test_csv_round_trips_non_ascii_titles():
-    csv_data = ga.write_data_to_csv(GA_RESPONSE)
-    assert "Um novo índice para medir" in csv_data
-    assert "연방준비제도" in csv_data
-    # the exact mojibake from the issue must not appear
-    assert "Ã\xad" not in csv_data
-
-
-def test_s3_upload_declares_csv_utf8_content_type():
-    s3_util.put_data_to_s3("report.csv", "\ufeffa,b\n")
-    _, kwargs = s3_util.s3_client.put_object.call_args
-    assert kwargs["ContentType"] == "text/csv; charset=utf-8"
+if __name__ == "__main__":
+    unittest.main()
