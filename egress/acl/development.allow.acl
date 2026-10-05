@@ -1,10 +1,10 @@
-                             *.github.io
-                             *.gov
-                             *.hub.arcgis.com
-                             *.mil
-                             *.opendata.arcgis.com
-                             *.tigbox.com
-                             bloomington.data.socrata.com
+                                  *.github.io
+                                *.gov
+                            *.hub.arcgis.com
+                                *.mil
+                       *.opendata.arcgis.com
+                                *.tigbox.com
+                 bloomington.data.socrata.com
                              data.arlingtonva.us
                              data.cityofchicago.org
                              data.lacity.org
@@ -13,17 +13,17 @@
                              data.srcity.org
                              data.townofcary.org
                              data.wprdc.org
-                             federallabs.org
-                             nehopendatastorage.blob.core.windows.net
-                             nycopendata.socrata.com
-                             opendata.cityofboise.org
-                             opendataphilly.org
-                             openei.org
-                             portal.opentopography.org
-                             raw.githubusercontent.com
-                             s3-us-gov-west-1.amazonaws.com
-                             services3.arcgis.com
-                             tva.com
-                             www.chapelhillopendata.org
-                             www.google-analytics.com
-                             www.opendataphilly.org
+                                  federallabs.org
+     nehopendatastorage.blob.core.windows.net
+                      nycopendata.socrata.com
+                         opendata.cityofboise.org
+                                  opendataphilly.org
+                                  openei.org
+                           portal.opentopography.org
+                              raw.githubusercontent.com
+                 s3-us-gov-west-1.amazonaws.com
+                        services3.arcgis.com
+                                  tva.com
+                              www.chapelhillopendata.org
+                              www.google-analytics.com
+                              www.opendataphilly.org
