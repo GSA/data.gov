@@ -1,26 +1,31 @@
-                                *.gov
-                            *.hub.arcgis.com
-                                *.mil
-                       *.opendata.arcgis.com
-                 bloomington.data.socrata.com
-                             data.arlingtonva.us
-                             data.cityofchicago.org
-                             data.lacity.org
-                             data.muni.org
-                             data.sfgov.org
-                             data.srcity.org
-                             data.townofcary.org
-                             data.wprdc.org
-                                  federallabs.org
-     nehopendatastorage.blob.core.windows.net
-                      nycopendata.socrata.com
-                         opendata.cityofboise.org
-                                  opendataphilly.org
-                                  openei.org
-                           portal.opentopography.org
-                 s3-us-gov-west-1.amazonaws.com
-                        services3.arcgis.com
-                                  tva.com
-                              www.chapelhillopendata.org
-                              www.google-analytics.com
-                              www.opendataphilly.org
+*.hub.arcgis.com
+*.opendata.arcgis.com
+bloomington.data.socrata.com
+nycopendata.socrata.com
+s3-us-gov-west-1.amazonaws.com
+services3.arcgis.com
+tva.com
+www.google-analytics.com
+
+*.gov
+
+*.mil
+
+nehopendatastorage.blob.core.windows.net
+
+data.cityofchicago.org
+data.lacity.org
+data.muni.org
+data.sfgov.org
+data.srcity.org
+data.townofcary.org
+data.wprdc.org
+federallabs.org
+opendata.cityofboise.org
+opendataphilly.org
+openei.org
+portal.opentopography.org
+www.chapelhillopendata.org
+www.opendataphilly.org
+
+data.arlingtonva.us
