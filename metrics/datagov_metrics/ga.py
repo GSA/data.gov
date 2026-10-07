@@ -3,7 +3,6 @@ import calendar
 import io
 import csv
 from functools import lru_cache
-from html import escape
 import time
 
 from datagov_metrics.s3_util import put_data_to_s3
@@ -47,7 +46,7 @@ def setup_organization_reports():
 
     for org in orgs:
         org_name = org["slug"]
-        org_display_name = escape(org["name"])
+        org_display_name = org["name"]
         org_dimension_filter = {
             "filter": {
                 "fieldName": "customEvent:DATAGOV_dataset_organization",
