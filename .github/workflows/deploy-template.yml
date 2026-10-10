@@ -35,6 +35,11 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v7
+        with:
+          # cf push uploads the working tree, so any submodule the calling
+          # repo pins has to be populated here or it deploys as an empty
+          # directory. No-op for callers without submodules.
+          submodules: true
       - name: checkout datagov
         uses: actions/checkout@v7
         with:

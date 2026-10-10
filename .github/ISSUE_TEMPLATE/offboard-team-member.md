@@ -18,14 +18,12 @@ These tasks are performed by a team admin:
 
 - [ ] Remove team member's access to Google Drive
   - [Data.gov](https://drive.google.com/drive/folders/0AMRwhrSyJ5R4Uk9PVA)
-  - [Data.gov Mutli Tenant](https://drive.google.com/drive/folders/0ALb0g1S27SJPUk9PVA)
   - [DatagovDevSecOps](https://drive.google.com/drive/folders/1Ac1dUmzTLTsDv8A8TSyLzrXo1a7hm4NF)
 - [ ] Email the ISSO to remove the user from any Google Drive folders or documents owned by security
 - [ ] Remove team member from Data.gov GitHub teams
   - [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin)
   - [data-gov-team](https://github.com/orgs/GSA/teams/data-gov-team)
   - [data-gov-dev-team](https://github.com/orgs/GSA/teams/data-gov-dev-team)
-  - [data-gov-ckan-multi](https://github.com/orgs/GSA/teams/data-gov-ckan-multi)
 - [ ] Remove team member from [the `gsa-datagov` organization](https://dashboard.fr.cloud.gov/cloud-foundry/2oBn9LBurIXUNpfmtZCQTCHnxUM/organizations/90047c5d-337f-4802-bd48-2149a4265040/users) on cloud.gov
 - [ ] (defunct) Remove team member from [the SSB AWS accounts](https://github.com/18F/aws-admin/blob/main/terraform/datagov-iam.tf)
 - [ ] Remove team member from Data.gov email lists
@@ -39,8 +37,10 @@ These tasks are performed by a team admin:
 - [ ] Remove team member from [Data.gov calendar](https://calendar.google.com/calendar/r/settings/calendar/Z3NhLmdvdl9zcjZ0NG52YjRhOTNjNnNzdHRxYXAzbjZtMEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t) and events
 - [ ] Remove team member from [Login.gov team](https://dashboard.int.identitysandbox.gov/teams/174).
 - [ ] Remove team member from [New Relic](https://newrelic.com)
-- [ ] Remove team member from [Data.gov system accounts](https://github.com/gsa/data.gov/wiki/CKAN-commands#system-administrator-accounts) on Inventory and Catalog
-- [ ] Remove team member from CKAN users `[ckan-domain]/user/` on Inventory and Catalog
+- [ ] Remove team member from Inventory
+  -  Delete the team member [via the Inventory UI](https://docs.ckan.org/en/2.9/sysadmin-guide.html#managing-users)
+  -  Remove team member from [Data.gov system admin accounts](https://github.com/gsa/data.gov/wiki/CKAN-commands#system-administrator-accounts)
+- [ ] Remove team member from [Harvest](https://github.com/GSA/datagov-harvester/blob/main/docs/developer.md#user-management)
 - [ ] Remove team member from TTS Bug Bounty access [#bug-bounty-partners](https://gsa-tts.slack.com/messages/C5JQCD9PH)
 - [ ] Remove team member from [Snyk](https://app.snyk.io/org/data.gov/manage/members)
 - [ ] Remove team member from [Data.gov Google Analytics](https://analytics.google.com/analytics/web/#/a42145528w85560911p88728213/admin/suiteusermanagement/account) account
@@ -50,8 +50,6 @@ These tasks are performed by a team admin:
   - [ckanext-usmetadata](https://pypi.org/project/ckanext-usmetadata/)
   - [ckanext-datajson](https://pypi.org/project/ckanext-datajson/)
   - [ckanext-dcat-usmetadata](https://pypi.org/project/ckanext-dcat-usmetadata/)
-
-- [ ] Remove team member from [Google Search Console](https://search.google.com/search-console/about)
 - [ ] Remove team member from any Data.gov [Touchpoints](https://touchpoints.app.cloud.gov/)
 - [ ] Remove team member from TTS Slack User Groups
   - @datagov-team

@@ -9,6 +9,7 @@
                          opendata.cityofboise.org
                              data.cityofchicago.org
                                   federallabs.org
+                                  *.github.io
                               raw.githubusercontent.com
                               www.google-analytics.com
                              data.lacity.org
@@ -24,5 +25,6 @@
                              data.srcity.org
                                 *.tigbox.com
                              data.townofcary.org
+                              www.tva.com
      nehopendatastorage.blob.core.windows.net
                              data.wprdc.org

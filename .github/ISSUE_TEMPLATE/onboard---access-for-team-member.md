@@ -26,10 +26,8 @@ Welcome! [The Onboarding wiki](https://github.com/gsa/data.gov/wiki/Onboarding-O
 **GitHub**
 - [ ] Review this ticket and modify it as necessary
 - [ ] Make sure team member has 2FA enabled for their GitHub account and [request](https://github.com/GSA/GitHub-Administration/blob/master/README.md#requesting-access-to-the-gsa-organization) membership to GSA GitHub org
-- [ ] Add team member to a Data.gov GitHub teams such as [data-gov-dev-team](https://github.com/orgs/GSA/teams/data-gov-dev-team), and change their role to Maintainer if they are part of the PMO team. For non-development roles that aren't PMO, add them to [data-gov-team](https://github.com/orgs/GSA/teams/data-gov-team)
-- [ ] Add Government team member to Github PMO teams and set their role as Maintainer
-  - [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members)
-  - [data-gov-bots](https://github.com/orgs/GSA/teams/data-gov-bots/members) for dev roles
+- [ ] Add all team members to the Data.gov GitHub development team [data-gov-dev-team](https://github.com/orgs/GSA/teams/data-gov-dev-team), and change their role to Maintainer if they are part of the PMO team. For non-development roles that aren't PMO, add them to [data-gov-team](https://github.com/orgs/GSA/teams/data-gov-team)
+- [ ] Add **Government** team members to the Github PMO team [data-gov-admins](https://github.com/orgs/GSA/teams/data-gov-admin/members) and set their role as Maintainer.
 
 **Slack**
 - [ ] Add ALL team members to Slack Channels such as #datagov-____ (unlocked); #dev; #admins-github; #g-content; #cloud-engineering; #login-partner-support

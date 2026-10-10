@@ -16,7 +16,14 @@ s3_client = boto3.client(
 
 
 def put_data_to_s3(file_name, csv_data):
-    response = s3_client.put_object(Bucket=AWS_S3_BUCKET, Key=file_name, Body=csv_data)
+    # Explicit CSV UTF-8 content type so downloads aren't served as
+    # binary/octet-stream and misdecoded (mojibake) by browsers/Excel.
+    response = s3_client.put_object(
+        Bucket=AWS_S3_BUCKET,
+        Key=file_name,
+        Body=csv_data,
+        ContentType="text/csv; charset=utf-8",
+    )
 
     status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")
 
