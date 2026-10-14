@@ -10,6 +10,7 @@ on: # yamllint disable-line rule:truthy
         type: choice
         options:
           - "datagov-harvest"
+          - "datagov-catalog"
       appSpace:
         description: "Cloud Foundry Space"
         required: true
