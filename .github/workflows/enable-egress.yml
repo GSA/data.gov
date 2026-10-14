@@ -9,16 +9,7 @@ on: # yamllint disable-line rule:truthy
         required: true
         type: choice
         options:
-          - "catalog-web"
-          - "catalog-admin"
-          - "catalog-fetch"
-          - "catalog-gather"
-          - "catalog-next-web"
-          - "catalog-next-admin"
           - "datagov-harvest"
-          - dashboard
-          - "dashboard-stage"
-          - inventory
       appSpace:
         description: "Cloud Foundry Space"
         required: true
