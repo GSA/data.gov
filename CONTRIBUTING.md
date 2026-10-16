@@ -65,6 +65,6 @@ For emergency deployments outside of the normal CI/CD pipeline, see [Break Glass
 | catalog.data.gov | https://github.com/GSA/datagov-catalog |
 | harvest.data.gov | https://github.com/GSA/datagov-harvester |
 | inventory.data.gov | https://github.com/GSA/inventory-app |
-| www.data.gov | https://github.com/GSA/datagov-website |
+| www.data.gov | https://github.com/GSA/data.gov |
 | resources.data.gov | https://github.com/GSA/resources.data.gov |
 | strategy.data.gov | https://github.com/GSA/data-strategy |
