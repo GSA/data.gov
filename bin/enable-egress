@@ -32,11 +32,12 @@ else
         apt-get install jq -y
     fi
 
-    # An app with its own lists (egress/acl/<app>.allow.acl and .deny.acl)
-    # uses them in every space; other apps use the space's shared lists.
+    # An app with its own lists for this space
+    # (egress/acl/<app>.<space>.allow.acl and .deny.acl) uses them; other apps
+    # use the space's shared lists.
     acl="${space}"
-    if [ -f "$DATAGOV_DIR/egress/acl/${app}.allow.acl" ]; then
-        acl="${app}"
+    if [ -f "$DATAGOV_DIR/egress/acl/${app}.${space}.allow.acl" ]; then
+        acl="${app}.${space}"
     fi
     echo "Using egress/acl/${acl}.allow.acl and egress/acl/${acl}.deny.acl"
 
