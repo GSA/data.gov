@@ -4,6 +4,8 @@ Thanks for contributing to Data.gov. This document describes how our team works.
 
 We follow the [GSA Code of Conduct](https://github.com/GSA/open-source-policy/blob/master/CODE_OF_CONDUCT.md) and expect all contributors to do the same.
 
+**Statement: By contributing to this repository, you agree to adhere to the [GSA Social Media Policy](https://www.gsa.gov/directives-library/gsa-social-media-policy-2). We expect all contributors, both internal and external, to engage respectfully and professionally in all project-related public communications.**
+
 ## How we work
 
 Data.gov is a small team covering a broad portfolio. We work in the open, default to GitHub for all work tracking, and share everything that isn't sensitive.
