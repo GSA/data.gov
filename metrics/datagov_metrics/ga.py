@@ -131,6 +131,17 @@ def setup_organization_reports():
                             }
                         },
                         org_dimension_filter,
+                        # Requires the matching class on catalog dataset links;
+                        # earlier clicks cannot be distinguished from shared links.
+                        {
+                            "filter": {
+                                "fieldName": "linkClasses",
+                                "stringFilter": {
+                                    "matchType": "CONTAINS",
+                                    "value": "dataset-outbound-link",
+                                },
+                            }
+                        },
                     ],
                 },
             },
