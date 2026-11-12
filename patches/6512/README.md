@@ -48,6 +48,8 @@ commits; the resulting files were compared with the implementation checkouts.
 Both application changes have been committed and pushed to the contributor's
 forks on branch `fix/6512-title-sort`:
 
+- Catalog PR: https://github.com/GSA/datagov-catalog/pull/514
+- Harvester PR: https://github.com/GSA/datagov-harvester/pull/1101
 - [Catalog: `7b992acc321f09eaf16386dd3ed31e69a8fdf09c`](https://github.com/rafamolina1/datagov-catalog/commit/7b992acc321f09eaf16386dd3ed31e69a8fdf09c)
 - [Harvester: `5cce80f8506e39fe7cc50ef27ba42dff4d0376d1`](https://github.com/rafamolina1/datagov-harvester/commit/5cce80f8506e39fe7cc50ef27ba42dff4d0376d1)
 
@@ -93,5 +95,5 @@ works; after catalog deploy, smoke-test `/search?sort=title`, filters, and curso
 pagination. The harvester patch adds these checks to its existing reindex runbook.
 Rolling back catalog does not require removing the additional index subfield.
 
-No deployment, production reindex, PR creation, or GitHub issue update was
-performed as part of this implementation.
+The implementation has been submitted through the linked application PRs.
+No production deployment or reindex has been performed.
