@@ -32,17 +32,41 @@ else
         apt-get install jq -y
     fi
 
-    # An app with its own lists for this space
-    # (egress/acl/<app>.<space>.allow.acl and .deny.acl) uses them; other apps
-    # use the space's shared lists.
-    acl_prefix="${space}"
-    if [ -f "$DATAGOV_DIR/egress/acl/${app}.${space}.allow.acl" ]; then
-        acl_prefix="${app}.${space}"
-    fi
-    echo "Using egress/acl/${acl_prefix}.allow.acl and egress/acl/${acl_prefix}.deny.acl"
+    acl_dir="$DATAGOV_DIR/egress/acl"
+    allow_candidates=(
+        "$acl_dir/$app/$space.allow.acl"
+        "$acl_dir/$app/allow.acl"
+    )
+    deny_candidates=(
+        "$acl_dir/$app/$space.deny.acl"
+        "$acl_dir/$app/deny.acl"
+    )
+    allow_file=""
+    deny_file=""
 
-    cp "$DATAGOV_DIR/egress/acl/${acl_prefix}.allow.acl" "$CG_DIR/${app}.allow.acl"
-    cp "$DATAGOV_DIR/egress/acl/${acl_prefix}.deny.acl" "$CG_DIR/${app}.deny.acl"
+    for index in "${!allow_candidates[@]}"; do
+        candidate_allow="${allow_candidates[$index]}"
+        candidate_deny="${deny_candidates[$index]}"
+
+        if [ -f "$candidate_allow" ] || [ -f "$candidate_deny" ]; then
+            if [ ! -f "$candidate_allow" ] || [ ! -f "$candidate_deny" ]; then
+                echo "ACL policy must include both ${candidate_allow} and ${candidate_deny}." >&2
+                exit 1
+            fi
+            allow_file="$candidate_allow"
+            deny_file="$candidate_deny"
+            break
+        fi
+    done
+
+    if [ -z "$allow_file" ]; then
+        echo "No ACL policy found for $app in $space." >&2
+        exit 1
+    fi
+
+    echo "Using ${allow_file#"$DATAGOV_DIR/"} and ${deny_file#"$DATAGOV_DIR/"}"
+    cp "$allow_file" "$CG_DIR/${app}.allow.acl"
+    cp "$deny_file" "$CG_DIR/${app}.deny.acl"
 
     # need to be in CG_DIR for cg-egress-proxy scripts to run correctly
     cd "$CG_DIR"

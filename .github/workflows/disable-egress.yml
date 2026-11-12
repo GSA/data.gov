@@ -11,6 +11,7 @@ on: # yamllint disable-line rule:truthy
         options:
           - "datagov-harvest"
           - "datagov-harvest-validator"
+          - "inventory"
       appSpace:
         description: "Cloud Foundry Space"
         required: true
