@@ -1,0 +1,72 @@
+diff --git a/docs/ops/opensearch-reindex.md b/docs/ops/opensearch-reindex.md
+index 8e951ed..80d9cbc 100644
+--- a/docs/ops/opensearch-reindex.md
++++ b/docs/ops/opensearch-reindex.md
+@@ -12,6 +12,25 @@ cuts over with no downtime. Nothing needs to be run by hand.
+ See [Zero-downtime OpenSearch deployment](opensearch-zero-downtime-deployment.md)
+ for the full release sequence and failure recovery.
+ 
++## Title sorting rollout (GSA/data.gov#6512)
++
++The `title.normalized` keyword subfield requires a full reindex of existing
++datasets. Adding the mapping alone does not populate the subfield for documents
++already in the index. Label the harvester mapping PR
++`force re-index recommended` and complete the replacement-cluster release in
++each environment before deploying catalog's `sort=title` support there.
++
++Before deploying catalog, verify the replacement index has the subfield with
++the `lowercase_normalizer` normalizer, and compare the counts of documents
++with an indexed `title` and `title.normalized`. Check a search ordered by
++`title.normalized` ascending, with missing values last and `_id` descending
++as a tie-breaker, including a title containing uppercase letters.
++
++After deploying catalog, smoke-test `/search?sort=title`, query/filter
++preservation in the UI, and cursor pagination. If the catalog release needs
++to be rolled back, the added subfield is compatible with the previous catalog
++version; it does not require reverting the index mapping.
++
+ ## Manual / advanced
+ 
+ The following exist for ops troubleshooting — repairing drift outside of a
+diff --git a/search/mappings.py b/search/mappings.py
+index aa751f9..131f995 100644
+--- a/search/mappings.py
++++ b/search/mappings.py
+@@ -6,6 +6,12 @@ MAPPINGS = {
+             "type": "text",
+             "analyzer": TEXT_ANALYZER,
+             "search_analyzer": TEXT_ANALYZER,
++            "fields": {
++                "normalized": {
++                    "type": "keyword",
++                    "normalizer": KEYWORD_NORMALIZER,
++                },
++            },
+         },
+         "slug": {"type": "keyword"},
+         "type": {"type": "keyword"},
+diff --git a/tests/unit/search/test_mappings.py b/tests/unit/search/test_mappings.py
+index 096033d..da741d4 100644
+--- a/tests/unit/search/test_mappings.py
++++ b/tests/unit/search/test_mappings.py
+@@ -1,6 +1,20 @@
++from search.config import KEYWORD_NORMALIZER, SETTINGS, TEXT_ANALYZER
+ from search.mappings import MAPPINGS
+ 
+ 
++def test_title_supports_case_insensitive_sort_without_changing_text_search():
++    title = MAPPINGS["properties"]["title"]
++    assert title["type"] == "text"
++    assert title["analyzer"] == title["search_analyzer"] == TEXT_ANALYZER
++    assert title["fields"]["normalized"] == {
++        "type": "keyword",
++        "normalizer": KEYWORD_NORMALIZER,
++    }
++    assert SETTINGS["analysis"]["normalizer"][KEYWORD_NORMALIZER]["filter"] == [
++        "lowercase"
++    ]
++
++
+ def test_has_download_field_mapping():
+     assert MAPPINGS["properties"]["has_download"]["type"] == "boolean"
+ 
