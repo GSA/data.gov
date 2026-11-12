@@ -8,7 +8,7 @@ Content-Type on the S3 object, Excel/browsers decoded them as Latin-1.
 import sys
 import types
 import unittest
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 
 def _load_modules():
@@ -78,6 +78,49 @@ class TestCsvEncoding(unittest.TestCase):
         s3_util.put_data_to_s3("report.csv", "\ufeffa,b\n")
         _, kwargs = s3_util.s3_client.put_object.call_args
         self.assertEqual(kwargs["ContentType"], "text/csv; charset=utf-8")
+
+
+class TestOrgOutboundLinks(unittest.TestCase):
+    def test_org_outbound_report_filters_on_dataset_link_class(self):
+        with patch.object(
+            ga,
+            "get_org_list",
+            return_value=[{"slug": "fed-reserve", "name": "Federal Reserve"}],
+        ):
+            reports = ga.setup_organization_reports()
+        outbound = reports["fed-reserve__link_requests__last30"]
+        expressions = outbound["dimensionFilter"]["andGroup"]["expressions"]
+        link_filters = [
+            expression["filter"]
+            for expression in expressions
+            if expression.get("filter", {}).get("fieldName") == "linkClasses"
+        ]
+
+        self.assertEqual(
+            link_filters,
+            [
+                {
+                    "fieldName": "linkClasses",
+                    "stringFilter": {
+                        "matchType": "CONTAINS",
+                        "value": "dataset-outbound-link",
+                    },
+                }
+            ],
+        )
+        for other_report in (
+            reports["fed-reserve__download_requests__last30"],
+            ga.setup_global_reports()["global__link_requests__last30"],
+        ):
+            other_expressions = other_report["dimensionFilter"]["andGroup"][
+                "expressions"
+            ]
+            self.assertFalse(
+                any(
+                    expression.get("filter", {}).get("fieldName") == "linkClasses"
+                    for expression in other_expressions
+                )
+            )
 
 
 if __name__ == "__main__":
