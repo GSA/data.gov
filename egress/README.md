@@ -6,10 +6,15 @@
 `acl/`. The files contain one entry per line (a hostname, `*.` wildcard, IP,
 CIDR range, or `all`) and can't contain comments.
 
-- `acl/<space>.allow.acl` and `acl/<space>.deny.acl` are the shared lists, used
-  by any app without its own.
-- `acl/<app>.<space>.allow.acl` and `acl/<app>.<space>.deny.acl`, when
-  present, are used for that app in that space instead.
+The script selects the first policy pair that exists, in this order:
+
+1. `acl/<app>/<space>.allow.acl` and `<space>.deny.acl`
+2. `acl/<app>/allow.acl` and `deny.acl`
+
+Use an app default when its policy is the same in every space, and add a space
+override only where its policy differs. Every app must have a policy for every
+space where it is deployed. Every policy must include both files; a partial
+pair is an error.
 
 A list can't be empty, so a deny list with nothing to deny holds the
 placeholder `somewebsitesothisisntempty.com`.
