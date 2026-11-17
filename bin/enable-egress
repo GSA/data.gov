@@ -46,5 +46,12 @@ else
 
     # need to be in CG_DIR for cg-egress-proxy scripts to run correctly
     cd "$CG_DIR"
-    bin/cf-deployproxy -a "$app" -s "$space-egress" -e "proxy_url"
+    # cf-deployproxy generates fresh proxy credentials
+    # cf push prints the manifest diff, including the PROXY_USERNAME/PROXY_PASSWORD env
+    # redact them using sed.
+    bin/cf-deployproxy -a "$app" -s "$space-egress" -e "proxy_url" 2>&1 \
+        | sed -E \
+            -e 's/(PROXY_(USERNAME|PASSWORD):).*/\1 [REDACTED]/' \
+            -e 's/^(#  -->(username|password):).*/\1 [REDACTED]/' \
+            -e 's#(https?://)[^:/@ ]+:[^@ ]+@#\1[REDACTED]@#g'
 fi
