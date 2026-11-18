@@ -1,0 +1,314 @@
+diff --git a/app/api_schemas.py b/app/api_schemas.py
+index 15f333f..c6cd0b4 100644
+--- a/app/api_schemas.py
++++ b/app/api_schemas.py
+@@ -26,7 +26,10 @@ ORGANIZATION_TYPE_ENUM = PyEnum(
+ )
+ SORT_BY_ENUM = PyEnum(
+     "SortBy",
+-    [(a, a) for a in ("relevance", "popularity", "distance", "last_harvested_date")],
++    [
++        (a, a)
++        for a in ("relevance", "popularity", "distance", "last_harvested_date", "title")
++    ],
+ )
+ 
+ 
+diff --git a/app/routes.py b/app/routes.py
+index b401db2..d5ecbd9 100644
+--- a/app/routes.py
++++ b/app/routes.py
+@@ -116,7 +116,7 @@ def build_page_sequence(cur: int, total_pages: int, edge: int = 1, around: int =
+ 
+ 
+ SITEMAP_PAGE_SIZE = 10000
+-ALLOWED_SORTS = {"relevance", "popularity", "distance", "last_harvested_date"}
++ALLOWED_SORTS = {"relevance", "popularity", "distance", "last_harvested_date", "title"}
+ 
+ 
+ def _homepage_dataset_total(default_total: int) -> int:
+diff --git a/app/search/mappings.py b/app/search/mappings.py
+index 2965640..98464b3 100644
+--- a/app/search/mappings.py
++++ b/app/search/mappings.py
+@@ -6,6 +6,12 @@ MAPPINGS = {
+             "type": "text",
+             "analyzer": TEXT_ANALYZER,
+             "search_analyzer": TEXT_ANALYZER,
++            "fields": {
++                "normalized": {
++                    "type": "keyword",
++                    "normalizer": KEYWORD_NORMALIZER,
++                },
++            },
+         },
+         "slug": {"type": "keyword"},
+         "type": {"type": "keyword"},
+diff --git a/app/search/queries/registry.py b/app/search/queries/registry.py
+index 4bcb3ca..ecb4898 100644
+--- a/app/search/queries/registry.py
++++ b/app/search/queries/registry.py
+@@ -290,6 +290,12 @@ def build_sort_clause(sort_by: str, sort_point: Any = None) -> list[dict]:
+     """Return the OpenSearch sort clause for the requested key."""
+     sort_key = (sort_by or "relevance").lower()
+ 
++    if sort_key == "title":
++        return [
++            {"title.normalized": {"order": "asc", "missing": "_last"}},
++            {"_id": {"order": "desc"}},
++        ]
++
+     if sort_key == "distance":
+         if sort_point:
+             return [
+diff --git a/app/templates/components/filters/sort_control.html b/app/templates/components/filters/sort_control.html
+index dda266e..3f587c8 100644
+--- a/app/templates/components/filters/sort_control.html
++++ b/app/templates/components/filters/sort_control.html
+@@ -14,6 +14,7 @@
+     <label class="results-sort__label" for="sort-select">Sort by</label>
+     <select class="usa-select results-sort__select" name="sort" id="sort-select" form="{{ form_id }}">
+         <option value="relevance" {% if sort_value == 'relevance' %}selected{% endif %}>Relevance</option>
++        <option value="title" {% if sort_value == 'title' %}selected{% endif %}>Title (A-Z)</option>
+         <option value="popularity" {% if sort_value == 'popularity' %}selected{% endif %}>Popularity</option>
+         <option value="last_harvested_date" {% if sort_value == 'last_harvested_date' %}selected{% endif %}>Last Published Date</option>
+         {% if allow_distance %}
+diff --git a/docs/api-changelog.md b/docs/api-changelog.md
+index be75bd4..3c3d747 100644
+--- a/docs/api-changelog.md
++++ b/docs/api-changelog.md
+@@ -11,6 +11,26 @@ Issues that result in an entry in this changelog should be labeled
+ 
+ ## Unreleased
+ 
++### Added
++
++#### Alphabetical dataset search ordering
++
++**Issue:** GSA/data.gov#6512
++**Endpoint:** `GET /search`
++
++Use `sort=title` to order results by the full dataset title, ascending and
++case-insensitive. For example: `/search?q=climate&keyword=temperature&sort=title`.
++The original title is preserved in results. Accents, punctuation, and numbers
++follow OpenSearch lexical ordering; this is not locale-specific or natural
++numeric ordering. Missing titles appear last, and equal normalized titles are
++ordered by document ID descending for stable pagination on an unchanged index.
++
++The response reports `sort: "title"`. Continue pagination using the returned
++`after` cursor with the same query, filters, and sort. Start without `after`
++when changing the sort.
++
++**Compatibility:** Additive; existing sort options and the default remain unchanged.
++
+ ### Changed
+ 
+ #### Organizations list excludes organizations with no datasets
+diff --git a/tests/browser/test_filters.py b/tests/browser/test_filters.py
+index e63137e..4b14ec9 100644
+--- a/tests/browser/test_filters.py
++++ b/tests/browser/test_filters.py
+@@ -4,6 +4,8 @@ These tests require the demo filter fixture data loaded into the running app
+ (for example via ``make test-browser-with-data``).
+ """
+ 
++from urllib.parse import parse_qs, urlparse
++
+ from playwright.sync_api import Page, expect
+ 
+ from tests.browser.filter_helpers import (
+@@ -160,6 +162,43 @@ def test_sort_by_popularity_preserves_active_filters(page: Page) -> None:
+     expect_result_visible(page, "Red Cross Blood Drive Schedule")
+ 
+ 
++def test_title_sort_preserves_query_and_repeated_keyword_filters(page: Page) -> None:
++    page.goto("/?q=health&keyword=health&keyword=food&sort=popularity")
++    with page.expect_navigation():
++        sort_select(page).select_option(label="Title (A-Z)")
++
++    expect(sort_select(page)).to_have_value("title")
++    query = parse_qs(urlparse(page.url).query)
++    assert query["q"] == ["health"]
++    assert query["keyword"] == ["health", "food"]
++    assert query["sort"] == ["title"]
++    assert "after" not in query
++    headings = page.locator(".usa-collection__heading a")
++    assert headings.count() >= 2
++    titles = [title.strip().lower() for title in headings.all_text_contents()]
++    assert titles == sorted(titles)
++    expect(page.locator("#keyword-chips .tag-link")).to_have_count(2)
++
++
++def test_title_sort_pagination_keeps_query_and_filters(page: Page) -> None:
++    page.goto("/?q=health&keyword=health&keyword=food&sort=title&results=1")
++    headings = page.locator(".usa-collection__heading a")
++    expect(headings).to_have_count(1)
++    first_title = headings.first.inner_text()
++    with page.expect_response(lambda response: "/search?" in response.url):
++        page.get_by_role("button", name="Show more results").click()
++    expect(headings).not_to_have_count(1)
++
++    assert headings.first.inner_text() == first_title
++    titles = [title.strip().lower() for title in headings.all_text_contents()]
++    assert titles == sorted(titles)
++    query = parse_qs(urlparse(page.url).query)
++    assert query["q"] == ["health"]
++    assert query["keyword"] == ["health", "food"]
++    assert query["sort"] == ["title"]
++    expect(sort_select(page)).to_have_value("title")
++
++
+ def test_bfcache_restore_removes_stale_loading_overlay(page: Page) -> None:
+     """A loading overlay left over from a prior navigation must be torn down
+     when the browser restores the page from the back/forward cache, so it
+diff --git a/tests/unit/search/test_mappings.py b/tests/unit/search/test_mappings.py
+index ef21b89..fe4de0b 100644
+--- a/tests/unit/search/test_mappings.py
++++ b/tests/unit/search/test_mappings.py
+@@ -1,6 +1,20 @@
++from app.search.config import KEYWORD_NORMALIZER, SETTINGS, TEXT_ANALYZER
+ from app.search.mappings import MAPPINGS
+ 
+ 
++def test_title_supports_case_insensitive_sort_without_changing_text_search():
++    title = MAPPINGS["properties"]["title"]
++    assert title["type"] == "text"
++    assert title["analyzer"] == title["search_analyzer"] == TEXT_ANALYZER
++    assert title["fields"]["normalized"] == {
++        "type": "keyword",
++        "normalizer": KEYWORD_NORMALIZER,
++    }
++    assert SETTINGS["analysis"]["normalizer"][KEYWORD_NORMALIZER]["filter"] == [
++        "lowercase"
++    ]
++
++
+ def test_has_download_field_mapping():
+     assert MAPPINGS["properties"]["has_download"]["type"] == "boolean"
+ 
+diff --git a/tests/unit/search/test_title_sort.py b/tests/unit/search/test_title_sort.py
+new file mode 100644
+index 0000000..d7e7715
+--- /dev/null
++++ b/tests/unit/search/test_title_sort.py
+@@ -0,0 +1,120 @@
++from unittest.mock import patch
++from urllib.parse import parse_qs, urlparse
++
++import pytest
++from bs4 import BeautifulSoup
++
++from app.api_schemas import SearchQuery, SearchResults
++from app.models import Organization
++from app.search.config import INDEX_NAME
++from app.search.queries import build_sort_clause
++
++
++@pytest.mark.parametrize("sort", ["title", "TITLE"])
++def test_title_sort_clause(sort):
++    assert build_sort_clause(sort) == [
++        {"title.normalized": {"order": "asc", "missing": "_last"}},
++        {"_id": {"order": "desc"}},
++    ]
++
++
++def test_title_sort_is_available_in_request_and_response_schemas():
++    assert SearchQuery().load({"sort": "title"})["sort"].value == "title"
++    assert "title" in SearchResults().fields["sort"].enum.__members__
++
++
++def test_title_sort_api_preserves_filters_and_paginates_equal_and_missing_titles(
++    interface, db_client
++):
++    client = interface.opensearch.client
++    titles = ["alpha", "ALPHA", "alpha", "Beta", "The Zebra", "zebra", None, None]
++    for number, title in enumerate(titles, 1):
++        document = {
++            "slug": f"title-{number}",
++            "description": "catalogsort",
++            "keyword": ["included", "second"],
++        }
++        # Cover both an absent title and an explicit null.
++        if number != 7:
++            document["title"] = title
++        client.index(index=INDEX_NAME, id=f"{number:02}", body=document)
++    for doc_id, description, keywords in [
++        ("query-excluded", "unrelated", ["included", "second"]),
++        ("filter-excluded", "catalogsort", ["included"]),
++    ]:
++        client.index(
++            index=INDEX_NAME,
++            id=doc_id,
++            body={"title": "Aardvark", "description": description, "keyword": keywords},
++        )
++    client.indices.refresh(index=INDEX_NAME)
++
++    params = [
++        ("q", "catalogsort"),
++        ("keyword", "included"),
++        ("keyword", "second"),
++        ("sort", "title"),
++        ("per_page", "2"),
++    ]
++    results = []
++    after = None
++    with patch("app.routes.interface", interface):
++        for page in range(4):
++            query = params + ([("after", after)] if after else [])
++            response = db_client.get("/search", query_string=query)
++            assert response.status_code == 200
++            data = response.get_json()
++            assert data["sort"] == "title"
++            assert len(data["results"]) == 2
++            results.extend(data["results"])
++            after = data.get("after")
++            assert bool(after) == (page < 3)
++
++    assert [row["slug"] for row in results] == [
++        f"title-{number}" for number in [3, 2, 1, 4, 5, 6, 8, 7]
++    ]
++    assert [row.get("title") for row in results] == [
++        "alpha",
++        "ALPHA",
++        "alpha",
++        "Beta",
++        "The Zebra",
++        "zebra",
++        None,
++        None,
++    ]
++
++
++@pytest.mark.parametrize("organization_page", [False, True])
++def test_title_sort_selection_and_pagination_keep_search_state(
++    interface_with_dataset, db_client, organization_page
++):
++    interface = interface_with_dataset
++    organization = interface.db.query(Organization).first()
++    path = f"/organization/{organization.slug}" if organization_page else "/"
++    params = [
++        ("q", "health"),
++        ("keyword", "health"),
++        ("sort", "title"),
++        ("results", "1"),
++    ]
++
++    with patch("app.routes.interface", interface):
++        response = db_client.get(path, query_string=params)
++
++    assert response.status_code == 200
++    soup = BeautifulSoup(response.text, "html.parser")
++    option = soup.select_one('#sort-select option[value="title"]')
++    assert option.get_text() == "Title (A-Z)"
++    assert option.has_attr("selected")
++    assert soup.select_one('input[name="sort"][type="hidden"]')["value"] == "title"
++    form = soup.select_one("#filter-form")
++    assert form.select_one('input[name="after"]') is None
++    more = soup.select_one("button[hx-get]")
++    assert more is not None
++    for attribute in ["hx-get", "hx-push-url"]:
++        query = parse_qs(urlparse(more[attribute]).query)
++        assert query["sort"] == ["title"]
++        assert query["q"] == ["health"]
++        assert query["keyword"] == ["health"]
++    assert "after" in parse_qs(urlparse(more["hx-get"]).query)
